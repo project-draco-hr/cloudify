@@ -1,0 +1,3 @@
+CommandManager manager
+String contextPath
+String hostContext

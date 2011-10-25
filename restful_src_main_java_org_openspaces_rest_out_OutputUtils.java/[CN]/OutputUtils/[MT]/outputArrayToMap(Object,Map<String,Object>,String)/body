@@ -9,6 +9,6 @@
     uriPathArray[i]=completeURL.concat("/" + i);
   }
   String[] commands=completeURL.split("/");
-  outputMap.put(commands[commands.length - 1] + "-Elements",uriPathArray);
+  outputMap.put(commands[commands.length - 1] + "-Elements",getRelativePathURLS(uriPathArray));
   outputMap.put(commands[commands.length - 1] + "-Size",arrayLength);
 }

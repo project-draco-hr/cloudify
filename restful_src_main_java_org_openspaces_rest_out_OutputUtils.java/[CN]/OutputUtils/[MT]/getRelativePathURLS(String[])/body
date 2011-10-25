@@ -1,0 +1,10 @@
+{
+  String[] returnURLS=new String[uriPathArray.length];
+  for (int i=0; i < uriPathArray.length; i++) {
+    int contextIndex=uriPathArray[i].indexOf(getHostContext());
+    String relativePath=uriPathArray[i].substring(contextIndex);
+    String newUrlPath=getHostAddress() + relativePath;
+    returnURLS[i]=newUrlPath;
+  }
+  return returnURLS;
+}
