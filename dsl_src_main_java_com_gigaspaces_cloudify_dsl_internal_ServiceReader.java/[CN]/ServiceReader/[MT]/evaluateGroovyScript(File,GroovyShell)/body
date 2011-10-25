@@ -12,10 +12,10 @@ catch (  final IOException e) {
     throw new IllegalStateException("The file " + dslFile + " could not be read",e);
   }
 catch (  MissingMethodException e) {
-    throw new IllegalArgumentException("Coud not resolve DSL entry with name: " + e.getMethod(),e);
+    throw new IllegalArgumentException("Could not resolve DSL entry with name: " + e.getMethod(),e);
   }
 catch (  MissingPropertyException e) {
-    throw new IllegalArgumentException("Coud not resolve DSL entry with name: " + e.getProperty(),e);
+    throw new IllegalArgumentException("Could not resolve DSL entry with name: " + e.getProperty(),e);
   }
  finally {
     if (reader != null) {
