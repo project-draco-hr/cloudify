@@ -3,6 +3,7 @@
     throw new ErrorStatusException("application_not_found",applicationFile.getAbsolutePath());
   }
   long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
+  logger.info("Evaluating groovy application file");
   final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
   normalizeApplicationName(application);
   File zipFile=null;
@@ -19,6 +20,7 @@
       throw new ErrorStatusException("application_file_format_mismatch",applicationFile.getPath());
     }
   }
+  logger.info("Uploading application file to the restful gateway");
   String serviceOrder=adminFacade.installApplication(zipFile,applicationName);
   if (!applicationFile.isFile()) {
     zipFile.delete();
