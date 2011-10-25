@@ -1,0 +1,24 @@
+{
+  Connection conn=null;
+  Statement st=null;
+  try {
+    Class.forName("com.j_spaces.jdbc.driver.GDriver").newInstance();
+    final String url="jdbc:gigaspaces:url:jini://*/*/" + dataGridName + "?locators="+ locator;
+    conn=DriverManager.getConnection(url);
+    st=conn.createStatement();
+    final String query="SELECT * FROM com.gigaspaces.rackspace.examples.Data";
+    final ResultSet rs=st.executeQuery(query);
+    int i=0;
+    while (rs.next()) {
+      System.out.println("Data [" + (i++) + "] "+ rs.getString("data"));
+    }
+  }
+  finally {
+    if (st != null) {
+      st.close();
+    }
+    if (conn != null) {
+      conn.close();
+    }
+  }
+}

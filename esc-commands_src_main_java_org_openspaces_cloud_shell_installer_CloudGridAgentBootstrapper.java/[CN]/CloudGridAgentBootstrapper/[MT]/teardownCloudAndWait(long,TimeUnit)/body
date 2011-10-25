@@ -1,0 +1,13 @@
+{
+  long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  try {
+    ShellUtils.checkNotNull("providerDirectory",providerDirecotry);
+    Cloud cloudDsl=ServiceReader.getCloudFromDirectory(providerDirecotry);
+    final CloudMachineProvisioningConfig config=CloudDSLToCloudMachineProvisioningConfig.convert(cloudDsl);
+    String managementGroup=config.getManagementGroup();
+    destroyManagementServers(managementGroup,config,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
+ catch (  IOException e) {
+    throw new CLIException("bootstrap-cloud failed",e);
+  }
+}

@@ -1,0 +1,15 @@
+{
+  File folder=new File(logsDirectory);
+  File[] files=folder.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    File dir,    String name){
+      return java.util.regex.Pattern.matches("my.*\\.log.*",name);
+    }
+  }
+);
+  Assert.assertTrue(files.length == EXPECTED_NUMBER_OF_FILE_PARTS);
+  for (  File file : files) {
+    long fileSize=file.length();
+    double fileSizeInKB=(double)fileSize / LOG_IO_BUFFER_SIZE_BYTES;
+    Assert.assertTrue(fileSizeInKB < MAX_LOG_FILE_SIZE_DOUBLE + 1);
+  }
+}

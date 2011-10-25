@@ -1,0 +1,15 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to list applications");
+  }
+  Application app=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
+  if (app == null) {
+    return errorStatus(FAILED_TO_LOCATE_APP,applicationName);
+  }
+  ProcessingUnits pus=app.getProcessingUnits();
+  List<String> puNames=new ArrayList<String>(pus.getSize());
+  for (  ProcessingUnit pu : pus) {
+    puNames.add(pu.getName());
+  }
+  return successStatus(puNames);
+}

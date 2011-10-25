@@ -1,0 +1,18 @@
+{
+  final MemoryCapacityRequirement memoryCapacityRequirement=capacityRequirements.getRequirement(new MemoryCapacityRequirement().getType());
+  if (!memoryCapacityRequirement.equalsZero()) {
+    setReservedMemoryCapacityPerMachineInMB(memoryCapacityRequirement.getMemoryInMB());
+  }
+  final CpuCapacityRequirement cpuCapacityRequirement=capacityRequirements.getRequirement(new CpuCapacityRequirement().getType());
+  if (!memoryCapacityRequirement.equalsZero()) {
+    setReservedCpuCapacityPerMachineInMB(cpuCapacityRequirement.getCpu().doubleValue());
+  }
+  final Map<String,Long> reservedInMB=new HashMap<String,Long>();
+  for (  final CapacityRequirement requirement : capacityRequirements.getRequirements()) {
+    if (requirement instanceof DriveCapacityRequirement) {
+      final DriveCapacityRequirement driveRequirement=(DriveCapacityRequirement)requirement;
+      reservedInMB.put(driveRequirement.getDrive(),driveRequirement.getDriveCapacityInMB());
+    }
+  }
+  setReservedDriveCapacityPerMachineInMB(reservedInMB);
+}

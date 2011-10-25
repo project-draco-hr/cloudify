@@ -1,0 +1,8 @@
+{
+  if (this.initialized) {
+    return "ServiceContext [dir=" + serviceDirectory + ", clusterInfo="+ clusterInfo+ "]";
+  }
+ else {
+    return "ServiceContext [NOT INITIALIZED]";
+  }
+}

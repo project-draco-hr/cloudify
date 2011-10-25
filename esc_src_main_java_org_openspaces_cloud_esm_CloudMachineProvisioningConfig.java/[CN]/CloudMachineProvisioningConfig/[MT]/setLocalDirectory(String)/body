@@ -1,0 +1,3 @@
+{
+  properties.put(LOCAL_DIRECTORY_KEY,localDir);
+}

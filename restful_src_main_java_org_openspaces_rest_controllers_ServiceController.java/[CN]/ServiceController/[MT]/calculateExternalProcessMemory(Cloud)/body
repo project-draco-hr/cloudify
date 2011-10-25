@@ -1,0 +1,5 @@
+{
+  long cloudExternalProcessMemoryInMB=cloud.getMachineMemoryMB() - cloud.getReservedMemoryCapacityPerMachineInMB() - 100;
+  logger.fine("cloud.machineMemoryMB = " + cloud.getMachineMemoryMB() + "MB\n"+ "cloud.reservedMemoryCapacityPerMachineInMB = "+ cloud.getReservedMemoryCapacityPerMachineInMB()+ "MB\n"+ "cloudExternalProcessMemoryInMB = "+ cloudExternalProcessMemoryInMB+ "MB"+ "cloudExternalProcessMemoryInMB = cloud.machineMemoryMB - "+ "cloud.reservedMemoryCapacityPerMachineInMB"+ " = "+ cloudExternalProcessMemoryInMB);
+  return cloudExternalProcessMemoryInMB;
+}

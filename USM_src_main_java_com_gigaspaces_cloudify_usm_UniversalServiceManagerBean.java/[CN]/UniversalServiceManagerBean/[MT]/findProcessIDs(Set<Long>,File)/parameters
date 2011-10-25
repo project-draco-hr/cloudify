@@ -1,0 +1,2 @@
+Set<Long> childrenBefore
+File pidFile

@@ -1,0 +1,4 @@
+{
+  adminFacade.disconnect();
+  return messages.getString("disconnected_successfully");
+}

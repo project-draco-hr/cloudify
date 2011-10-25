@@ -1,0 +1,4 @@
+{
+  String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName;
+  client.delete(url);
+}

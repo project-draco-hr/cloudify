@@ -1,0 +1,32 @@
+{
+  ZipFile zipFile=null;
+  try {
+    final File baseDir=TestRecipe.createTempDir();
+    zipFile=new ZipFile(inputFile);
+    final Enumeration<? extends ZipEntry> entries=zipFile.entries();
+    while (entries.hasMoreElements()) {
+      final ZipEntry entry=entries.nextElement();
+      if (entry.isDirectory()) {
+        logger.fine("Extracting directory: " + entry.getName());
+        final File dir=new File(baseDir,entry.getName());
+        dir.mkdir();
+        continue;
+      }
+      logger.finer("Extracting file: " + entry.getName());
+      final File file=new File(baseDir,entry.getName());
+      file.getParentFile().mkdirs();
+      ServiceReader.copyInputStream(zipFile.getInputStream(entry),new BufferedOutputStream(new FileOutputStream(file)));
+    }
+    return baseDir;
+  }
+  finally {
+    if (zipFile != null) {
+      try {
+        zipFile.close();
+      }
+ catch (      final IOException e) {
+        logger.log(Level.SEVERE,"Failed to close zip file after unzipping zip contents",e);
+      }
+    }
+  }
+}

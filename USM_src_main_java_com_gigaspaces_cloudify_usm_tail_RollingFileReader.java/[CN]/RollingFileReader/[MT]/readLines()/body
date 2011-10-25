@@ -1,0 +1,41 @@
+{
+  RandomAccessFile randomAccessFile=null;
+  try {
+    randomAccessFile=new RandomAccessFile(this.file,"r");
+    if (this.filePointer > randomAccessFile.length()) {
+      this.filePointer=0;
+    }
+    randomAccessFile.seek(filePointer);
+    byte[] buffer=new byte[((int)randomAccessFile.length()) - (int)this.filePointer];
+    randomAccessFile.read(buffer);
+    this.filePointer=randomAccessFile.length();
+    randomAccessFile.close();
+    this.lastModified=this.file.lastModified();
+    retryCounter=0;
+    this.fileLength=file.length();
+    return new String(buffer);
+  }
+ catch (  FileNotFoundException e) {
+    retryCounter++;
+    if (retryCounter > DEFAULT_NUMBER_OF_RETRIES) {
+      logger.warning("In RollingFileReader: file not found." + DEFAULT_NUMBER_OF_RETRIES + " Retries failed.");
+      this.exists=false;
+      return "";
+    }
+ else {
+      try {
+        logger.warning("file not found: " + file.getName() + ". Retring attempt #"+ retryCounter);
+        Thread.sleep(TIMEOUT_BETWEEN_RETRIES);
+      }
+ catch (      InterruptedException e1) {
+        e1.printStackTrace();
+      }
+      return readLines();
+    }
+  }
+ finally {
+    if (randomAccessFile != null) {
+      randomAccessFile.close();
+    }
+  }
+}

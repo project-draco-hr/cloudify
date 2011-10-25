@@ -1,0 +1,4 @@
+{
+  sb.append(record.getMessage() + System.getProperty("line.separator"));
+  flush();
+}

@@ -1,0 +1,13 @@
+{
+  this.service=service;
+  this.admin=admin;
+  this.serviceDirectory=dir;
+  this.clusterInfo=clusterInfo;
+  if (admin != null) {
+    boolean found=this.admin.getLookupServices().waitFor(1,5,TimeUnit.SECONDS);
+    if (!found) {
+      throw new IllegalStateException("A service context could not be created as the Admin API could not find a lookup service in the network, using groups: " + Arrays.toString(admin.getGroups()) + " and locators: "+ Arrays.toString(admin.getLocators()));
+    }
+  }
+  initialized=true;
+}

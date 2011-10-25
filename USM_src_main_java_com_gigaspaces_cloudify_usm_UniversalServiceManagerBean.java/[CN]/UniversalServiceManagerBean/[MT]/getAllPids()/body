@@ -1,0 +1,10 @@
+{
+  long[] pids;
+  try {
+    pids=this.sigar.getProcList();
+  }
+ catch (  final SigarException se) {
+    throw new USMException("Failed to look up process IDs. Error was: " + se.getMessage(),se);
+  }
+  return pids;
+}

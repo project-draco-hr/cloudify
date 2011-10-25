@@ -1,0 +1,7 @@
+{
+  String thumbprint=executeEncUtil("-thumbprint","-cert",certFile.getAbsolutePath());
+  if (thumbprint.endsWith("\n")) {
+    thumbprint=thumbprint.substring(0,thumbprint.length() - 1);
+  }
+  return thumbprint.trim();
+}

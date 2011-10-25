@@ -1,0 +1,3 @@
+{
+  logger.info("The filename was changed");
+}

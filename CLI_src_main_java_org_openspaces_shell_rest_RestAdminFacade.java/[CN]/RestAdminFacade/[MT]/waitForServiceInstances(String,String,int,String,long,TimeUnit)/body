@@ -1,0 +1,34 @@
+{
+  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  int serviceShutDownEvents=0;
+  String pollingURL="processingUnits/Names/" + serviceName;
+  waitForService(serviceName,pollingURL,timeoutErrorMessage,timeout,timeunit);
+  logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
+  Integer currentNumberOfInstances=0;
+  while (System.currentTimeMillis() < end) {
+    Map<String,Object> map=client.getAdminData(pollingURL);
+    currentNumberOfInstances=(Integer)map.get("Instances-Size");
+    if ("partitioned-sync2backup".equals(map.get("ClusterSchema"))) {
+      plannedNumberOfInstances=Integer.valueOf((String)map.get("TotalNumberOfInstances"));
+    }
+    logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,currentNumberOfInstances));
+    if (currentNumberOfInstances != null && plannedNumberOfInstances == currentNumberOfInstances) {
+      return plannedNumberOfInstances;
+    }
+    List<String> eventLogs=getUnreadEventLogs(applicationName,serviceName);
+    if (eventLogs != null) {
+      printEventLogs(eventLogs);
+      if (isEventLogContainsShutdown(eventLogs,serviceName)) {
+        serviceShutDownEvents++;
+        if (serviceShutDownEvents == plannedNumberOfInstances) {
+          throw new CLIException("Service " + serviceName + " Failed to instantiate");
+        }
+      }
+    }
+    if (plannedNumberOfInstances < currentNumberOfInstances) {
+      throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_exceeded_planned"),plannedNumberOfInstances,currentNumberOfInstances));
+    }
+    Thread.sleep(POLLING_INTERVAL);
+  }
+  throw new TimeoutException(timeoutErrorMessage);
+}

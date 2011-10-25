@@ -1,0 +1,3 @@
+{
+  return errorStatus(FAILED_TO_LOCATE_SERVICE,serviceName);
+}

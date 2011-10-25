@@ -1,0 +1,30 @@
+{
+  try {
+    usmLifecycleBean.firePreStop(reason);
+  }
+ catch (  USMException e) {
+    logger.log(Level.SEVERE,"Failed to execute pre stop event: " + e.getMessage(),e);
+  }
+  try {
+    killMonitoredProcessChain();
+  }
+ catch (  final USMException e) {
+    logger.log(Level.SEVERE,"Failed to shut down actual process (" + this.actualProcessID + ")",e);
+  }
+  if ((this.actualProcessID != this.childProcessID) && (this.childProcessID != 0)) {
+    try {
+      if (USMUtils.isProcessAlive(this.childProcessID)) {
+        usmLifecycleBean.getProcessKiller().killProcess(this.childProcessID);
+      }
+    }
+ catch (    final USMException e) {
+      logger.log(Level.SEVERE,"Failed to shut down child process (" + this.childProcessID + ")",e);
+    }
+  }
+  try {
+    usmLifecycleBean.firePostStop(reason);
+  }
+ catch (  USMException e) {
+    logger.log(Level.SEVERE,"Failed to execute post stop event: " + e.getMessage(),e);
+  }
+}

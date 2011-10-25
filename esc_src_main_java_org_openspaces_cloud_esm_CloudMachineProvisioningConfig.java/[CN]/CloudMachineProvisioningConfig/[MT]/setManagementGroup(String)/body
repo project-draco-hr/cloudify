@@ -1,0 +1,3 @@
+{
+  properties.put(MANAGEMENT_GROUP_KEY,value);
+}

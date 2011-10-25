@@ -1,0 +1,10 @@
+{
+  Map<String,Object> container=(Map<String,Object>)client.getAdmin("GridServiceContainers");
+  @SuppressWarnings("unchecked") List<String> containerUris=(List<String>)container.get("Uids-Elements");
+  Set<String> containerUids=new HashSet<String>();
+  for (  String containerUri : containerUris) {
+    String uid=containerUri.substring(containerUri.lastIndexOf("/"));
+    containerUids.add(uid);
+  }
+  return containerUids;
+}

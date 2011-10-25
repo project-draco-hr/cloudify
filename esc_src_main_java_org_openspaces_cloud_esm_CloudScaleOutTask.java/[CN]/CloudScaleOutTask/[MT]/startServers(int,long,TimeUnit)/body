@@ -1,0 +1,96 @@
+{
+  if (timeout < 0) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  logger.info("Starting a new cloud machines with group: " + machineGroup);
+  this.servers=deployer.createServers(machineGroup,numberOfMachines);
+  NodeMetadata server=this.getServers().iterator().next();
+  this.getDetails().setUsername(server.getCredentials().identity);
+  final String credential=server.getCredentials().credential;
+  File tempFile=null;
+  if (credential == null) {
+    if ((this.getDetails().getKeyFile() == null) || (this.getDetails().getKeyFile().length() == 0)) {
+      throw new InstallerException("Expected to receive a key " + "file for authentication to new server");
+    }
+    tempFile=new File(this.getDetails().getKeyFile());
+  }
+ else   if (credential.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
+    FileWriter writer=null;
+    try {
+      tempFile=File.createTempFile("gs-esm-key",".pem");
+      writer=new FileWriter(tempFile);
+      writer.write(credential);
+      this.getDetails().setKeyFile(tempFile.getAbsolutePath());
+    }
+ catch (    final IOException e) {
+      throw new InstallerException("Failed to create a temporary file for cloud server's key file",e);
+    }
+ finally {
+      if (writer != null) {
+        try {
+          writer.close();
+        }
+ catch (        final IOException e) {
+        }
+      }
+    }
+  }
+ else {
+    this.getDetails().setPassword(server.getCredentials().credential);
+  }
+  final File keyFile=tempFile;
+  ExecutorService exeService=Executors.newFixedThreadPool(numberOfMachines);
+  try {
+    List<Future<Exception>> futures=new ArrayList<Future<Exception>>();
+    for (    final NodeMetadata node : servers) {
+      Future<Exception> future=exeService.submit(new Callable<Exception>(){
+        public Exception call(){
+          logServerDetails(node,keyFile);
+          try {
+            waitUntilServerIsActive(node.getId(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+          }
+ catch (          TimeoutException e) {
+            return e;
+          }
+catch (          InterruptedException e) {
+            return e;
+          }
+          return null;
+        }
+      }
+);
+      futures.add(future);
+    }
+    for (    Future<Exception> future : futures) {
+      try {
+        Exception e=future.get();
+        if (e != null) {
+          if (e instanceof TimeoutException) {
+            throw (TimeoutException)e;
+          }
+          if (e instanceof InterruptedException) {
+            throw (InterruptedException)e;
+          }
+          throw new InstallerException("Failed creating machines",e);
+        }
+      }
+ catch (      ExecutionException e) {
+        throw new InstallerException("Failed creating machines",e);
+      }
+    }
+  }
+  finally {
+    exeService.shutdown();
+  }
+  InstallationDetails[] result=new InstallationDetails[numberOfMachines];
+  int index=0;
+  for (  NodeMetadata node : servers) {
+    InstallationDetails details=getDetails().clone();
+    details.setPrivateIp(node.getPrivateAddresses().iterator().next());
+    details.setPublicIp(node.getPublicAddresses().iterator().next());
+    result[index]=details;
+    index+=1;
+  }
+  return result;
+}

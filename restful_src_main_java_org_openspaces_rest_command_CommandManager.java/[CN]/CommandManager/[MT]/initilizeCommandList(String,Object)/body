@@ -1,0 +1,12 @@
+{
+  this.listOfCommands=new ArrayList<CommandObject>();
+  String[] delimitedCommands=commands.split("/");
+  CommandObject commandObject;
+  CommandObject previousCommand=new CommandObject(root);
+  for (  String rawCommandString : delimitedCommands) {
+    commandObject=new CommandObject(rawCommandString);
+    commandObject.setPreviousCommandObject(previousCommand);
+    listOfCommands.add(commandObject);
+    previousCommand=commandObject;
+  }
+}

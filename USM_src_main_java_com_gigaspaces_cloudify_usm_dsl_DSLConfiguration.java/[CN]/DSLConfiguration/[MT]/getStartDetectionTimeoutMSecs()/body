@@ -1,0 +1,3 @@
+{
+  return this.service.getLifecycle().getStartDetectionTimeoutSecs() * 1000;
+}

@@ -1,0 +1,13 @@
+{
+  Collections.sort(list);
+  this.targetList=new ArrayList<JmxGenericClient.JmxBeanAttributes>();
+  JmxBeanAttributes current=null;
+  for (  final JmxAttribute jmxAttribute : list) {
+    if ((current == null) || (!jmxAttribute.getObjectName().equals(current.getObjectName()))) {
+      current=new JmxBeanAttributes(jmxAttribute.getObjectName());
+      this.targetList.add(current);
+    }
+    current.add(jmxAttribute);
+  }
+  this.numOfTargets=list.size();
+}

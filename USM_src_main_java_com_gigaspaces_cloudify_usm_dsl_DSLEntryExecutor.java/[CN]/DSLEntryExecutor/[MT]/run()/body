@@ -1,0 +1,13 @@
+{
+  if (entry == null) {
+    return EventResult.SUCCESS;
+  }
+  try {
+    Object result=launcher.launchProcess(entry,workDir,params);
+    return new EventResult(result);
+  }
+ catch (  USMException e) {
+    logger.log(Level.SEVERE,"Failed to execute entry: " + entry,e);
+    return new EventResult(e);
+  }
+}

@@ -1,0 +1,45 @@
+{
+  DirectedGraph<Service,DefaultEdge> graph=new DefaultDirectedGraph<Service,DefaultEdge>(DefaultEdge.class);
+  Map<String,Service> servicesByName=new HashMap<String,Service>();
+  List<Service> services=application.getServices();
+  for (  Service service : services) {
+    servicesByName.put(service.getName(),service);
+    graph.addVertex(service);
+  }
+  for (  Service service : services) {
+    List<String> dependsList=service.getDependsOn();
+    if (dependsList != null) {
+      for (      String depends : dependsList) {
+        Service dependency=servicesByName.get(depends);
+        if (dependency == null) {
+          throw new IllegalArgumentException("Dependency '" + depends + "' of service: "+ service.getName()+ " was not found");
+        }
+        graph.addEdge(dependency,service);
+      }
+    }
+  }
+  CycleDetector<Service,DefaultEdge> cycleDetector=new CycleDetector<Service,DefaultEdge>(graph);
+  boolean containsCycle=cycleDetector.detectCycles();
+  if (containsCycle) {
+    Set<Service> servicesInCycle=cycleDetector.findCycles();
+    StringBuilder sb=new StringBuilder();
+    boolean first=true;
+    for (    Service service : servicesInCycle) {
+      if (!first) {
+        sb.append(",");
+      }
+ else {
+        first=false;
+      }
+      sb.append(service.getName());
+    }
+    String cycleString=sb.toString();
+    throw new IllegalArgumentException("The dependency graph of application: " + application.getName() + " contains one or more cycles. The services that form a cycle are part of the following group: "+ cycleString);
+  }
+  TopologicalOrderIterator<Service,DefaultEdge> iterator=new TopologicalOrderIterator<Service,DefaultEdge>(graph);
+  List<Service> orderedList=new ArrayList<Service>();
+  while (iterator.hasNext()) {
+    orderedList.add(iterator.next());
+  }
+  return orderedList;
+}

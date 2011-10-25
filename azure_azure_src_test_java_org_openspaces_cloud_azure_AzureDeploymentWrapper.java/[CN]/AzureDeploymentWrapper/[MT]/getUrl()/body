@@ -1,0 +1,11 @@
+{
+  try {
+    String output=azureConfig.getDeploymentUrl(hostedService,slot);
+    output=output.trim();
+    return output;
+  }
+ catch (  Exception e) {
+    Assert.fail("Failed getting url: " + e.getLocalizedMessage());
+  }
+  return null;
+}

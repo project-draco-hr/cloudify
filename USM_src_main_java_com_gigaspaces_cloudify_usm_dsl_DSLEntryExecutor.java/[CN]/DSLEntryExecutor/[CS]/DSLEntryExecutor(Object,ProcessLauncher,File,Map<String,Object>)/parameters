@@ -1,0 +1,4 @@
+Object entry
+ProcessLauncher launcher
+File workDir
+Map<String,Object> params

@@ -1,0 +1,4 @@
+{
+  this.logsDirectory=dir;
+  this.regex=regex;
+}

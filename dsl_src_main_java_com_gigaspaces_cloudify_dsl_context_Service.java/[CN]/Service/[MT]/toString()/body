@@ -1,0 +1,3 @@
+{
+  return "Service [getName()=" + getName() + ", getNumberOfPlannedInstances()="+ getNumberOfPlannedInstances()+ ", getNumberOfActualInstances()="+ getNumberOfActualInstances()+ ", getInstances()="+ Arrays.toString(getInstances())+ "]";
+}

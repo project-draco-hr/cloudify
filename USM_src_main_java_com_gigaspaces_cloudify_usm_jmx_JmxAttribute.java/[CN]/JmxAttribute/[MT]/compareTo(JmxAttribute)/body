@@ -1,0 +1,7 @@
+{
+  int beanComparison=this.getObjectName().compareTo(o.getObjectName());
+  if (beanComparison != 0) {
+    return beanComparison;
+  }
+  return this.getAttributeName().compareTo(o.getAttributeName());
+}

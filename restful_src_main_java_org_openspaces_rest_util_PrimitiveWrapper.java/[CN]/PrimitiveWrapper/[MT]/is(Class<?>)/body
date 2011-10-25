@@ -1,0 +1,3 @@
+{
+  return (cls.isPrimitive() || PRIMITIVE_WRAPPER_TYPES.contains(cls));
+}

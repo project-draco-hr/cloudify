@@ -1,0 +1,4 @@
+{
+  String currentTime=new SimpleDateFormat("HH:MM").format(new Date());
+  return MessageFormat.format(getMessageBundle().getString("expected_execution_time"),currentTime);
+}

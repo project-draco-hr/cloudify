@@ -1,0 +1,14 @@
+{
+  converted=CloudDSLToCloudMachineProvisioningConfig.convert(cloud);
+  Class<?> cloudClass=cloud.getClass();
+  Method[] cloudMethods=cloudClass.getMethods();
+  Class<?> machineProvisioningClass=converted.getClass();
+  Method[] machineProvisioningMethods=machineProvisioningClass.getMethods();
+  for (  Method cloudMethod : cloudMethods) {
+    for (    Method provisioningMethod : machineProvisioningMethods) {
+      if (provisioningMethod.getName().equals(cloudMethod.getName()) && isValidObjectGetter(cloudMethod)) {
+        compareObjects(cloudMethod,provisioningMethod);
+      }
+    }
+  }
+}

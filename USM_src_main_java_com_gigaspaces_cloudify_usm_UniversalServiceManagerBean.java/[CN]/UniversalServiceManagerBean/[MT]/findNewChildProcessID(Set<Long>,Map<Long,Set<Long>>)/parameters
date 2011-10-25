@@ -1,0 +1,2 @@
+Set<Long> childrenBefore
+Map<Long,Set<Long>> procTree

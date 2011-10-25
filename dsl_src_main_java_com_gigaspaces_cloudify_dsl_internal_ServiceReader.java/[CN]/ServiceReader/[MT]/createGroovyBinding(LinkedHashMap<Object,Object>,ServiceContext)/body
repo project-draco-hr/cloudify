@@ -1,0 +1,13 @@
+{
+  final Binding binding=new Binding();
+  if (properties != null) {
+    Set<Entry<Object,Object>> entries=properties.entrySet();
+    for (    Entry<Object,Object> entry : entries) {
+      binding.setVariable((String)entry.getKey(),entry.getValue());
+    }
+    if (context != null) {
+      binding.setVariable("context",context);
+    }
+  }
+  return binding;
+}

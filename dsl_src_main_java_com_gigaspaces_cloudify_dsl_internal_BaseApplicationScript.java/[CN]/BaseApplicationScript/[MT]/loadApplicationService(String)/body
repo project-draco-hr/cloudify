@@ -1,0 +1,10 @@
+{
+  final String serviceDirName=this.applicationDir + File.separator + serviceName;
+  File serviceDir=new File(serviceDirName);
+  if (!serviceDir.exists() || !serviceDir.isDirectory()) {
+    throw new java.lang.IllegalStateException("Could not find service directory: " + serviceDir + " while loading application");
+  }
+  DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(serviceDir);
+  Service service=result.getService();
+  return service;
+}

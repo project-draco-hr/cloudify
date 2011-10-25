@@ -1,0 +1,26 @@
+{
+  final ObjectName beanName=new ObjectName(t.getObjectName());
+  final String[] attributeNames=t.getAttributeNames();
+  try {
+    final AttributeList vals=mbsc.getAttributes(beanName,attributeNames);
+    @SuppressWarnings("rawtypes") final Iterator it=vals.iterator();
+    while (it.hasNext()) {
+      final Attribute att=(Attribute)it.next();
+      if (att.getValue() instanceof Exception) {
+        logger.log(Level.WARNING,"Failed to read JMX attribute: " + att.getName() + " in bean: "+ t.getObjectName(),att.getValue());
+      }
+ else {
+        final JmxAttribute result=t.setValueAndReturnAttribute(att.getName(),att.getValue());
+        resultList.add(result);
+      }
+    }
+  }
+ catch (  final Exception e) {
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("Failed to read Attributes for JMX Bean: " + t + ": "+ e.getMessage());
+    }
+    if (logger.isLoggable(Level.FINE)) {
+      logger.log(Level.FINE,"Failed to read Attributes for JMX Bean: " + t,e);
+    }
+  }
+}

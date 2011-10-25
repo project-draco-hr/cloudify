@@ -1,0 +1,5 @@
+{
+  super();
+  this.exitValue=exitValue;
+  this.output=output;
+}

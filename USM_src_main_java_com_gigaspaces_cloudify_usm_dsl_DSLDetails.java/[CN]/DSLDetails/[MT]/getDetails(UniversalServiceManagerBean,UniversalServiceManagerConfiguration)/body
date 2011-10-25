@@ -1,0 +1,6 @@
+{
+  Service service=((DSLConfiguration)config).getService();
+  HashMap<String,Object> map=new HashMap<String,Object>();
+  map.put("icon",service.getIcon());
+  return map;
+}

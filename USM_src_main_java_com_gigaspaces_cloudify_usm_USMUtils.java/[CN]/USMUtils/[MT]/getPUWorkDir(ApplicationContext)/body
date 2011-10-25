@@ -1,0 +1,46 @@
+{
+  File puWorkDir=null;
+  if (isRunningInGSC(ctx)) {
+    final ServiceClassLoader scl=(ServiceClassLoader)ctx.getClassLoader();
+    final URL url=scl.getSlashPath();
+    URI uri;
+    try {
+      uri=url.toURI();
+    }
+ catch (    final URISyntaxException e) {
+      throw new IllegalArgumentException("Failed to create URI from URL: " + url,e);
+    }
+    puWorkDir=new File(uri);
+  }
+ else {
+    final ResourceApplicationContext rac=(ResourceApplicationContext)ctx;
+    try {
+      final Field resourcesField=rac.getClass().getDeclaredField("resources");
+      final boolean accessibleBefore=resourcesField.isAccessible();
+      resourcesField.setAccessible(true);
+      final Resource[] resources=(Resource[])resourcesField.get(rac);
+      for (      final Resource resource : resources) {
+        final File file=resource.getFile();
+        if (file.getName().equals("pu.xml") && file.getParentFile().getName().equals("spring") && file.getParentFile().getParentFile().getName().equals("META-INF")) {
+          puWorkDir=resource.getFile().getParentFile().getParentFile().getParentFile();
+          break;
+        }
+      }
+      resourcesField.setAccessible(accessibleBefore);
+    }
+ catch (    final Exception e) {
+      throw new IllegalArgumentException("Could not find pu.xml in the ResourceApplicationContext",e);
+    }
+    if (puWorkDir == null) {
+      throw new IllegalArgumentException("Could not find pu.xml in the ResourceApplicationContext");
+    }
+  }
+  if (!puWorkDir.exists()) {
+    throw new IllegalStateException("Could not find PU work dir at: " + puWorkDir);
+  }
+  final File puExtDir=new File(puWorkDir,"ext");
+  if (!puExtDir.exists()) {
+    throw new IllegalStateException("Could not find PU ext dir at: " + puExtDir);
+  }
+  return puWorkDir;
+}

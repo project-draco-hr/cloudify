@@ -1,0 +1,3 @@
+{
+  return "JmxBeanAttributes [beanName=" + objectName + ", attributes="+ attributes+ "]";
+}

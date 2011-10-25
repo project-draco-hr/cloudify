@@ -1,0 +1,14 @@
+{
+  String javaPath=getJavaPath();
+  final String gsHome=Environment.getHomeDirectory();
+  final String[] COMMAND_LINE={"-Dcom.gs.home=" + gsHome,"-Dorg.hyperic.sigar.path=" + gsHome + "/lib/platform/sigar","-Dcom.gs.usm.RecipeShutdownTimeout=" + timeout,IntegratedProcessingUnitContainer.class.getName(),"-cluster","id=1","total_members=1"};
+  CommandLine cmdLine=new CommandLine(javaPath);
+  for (  String param : COMMAND_LINE) {
+    cmdLine.addArgument(param);
+  }
+  if (this.serviceFileName != null) {
+    cmdLine.addArgument("-properties");
+    cmdLine.addArgument("embed://" + CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME + "="+ this.serviceFileName);
+  }
+  return cmdLine;
+}

@@ -1,0 +1,4 @@
+{
+  String[] zonesArray=(String[])zones.toArray(new String[0]);
+  properties.putArray(ZONES_KEY,zonesArray,ZONES_SEPARATOR);
+}

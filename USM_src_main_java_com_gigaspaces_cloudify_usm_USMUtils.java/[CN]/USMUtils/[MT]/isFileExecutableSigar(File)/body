@@ -1,0 +1,12 @@
+{
+  long mode;
+  try {
+    logger.info("Checking if file " + file + " is executable using sigar");
+    mode=SigarHolder.getSigar().getFileInfo(file.getAbsolutePath()).getMode();
+  }
+ catch (  final SigarException e) {
+    throw new USMException("Failed to check if file " + file.getAbsolutePath() + " is executable",e);
+  }
+  final long executable=mode & FileInfo.MODE_UEXECUTE;
+  return (executable > 0);
+}

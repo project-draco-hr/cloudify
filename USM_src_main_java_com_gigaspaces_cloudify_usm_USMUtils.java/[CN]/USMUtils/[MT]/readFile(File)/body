@@ -1,0 +1,30 @@
+{
+  BufferedReader reader=null;
+  try {
+    reader=new BufferedReader(new FileReader(file));
+    final StringBuilder sb=new StringBuilder();
+    while (true) {
+      final String line=reader.readLine();
+      if (line == null) {
+        break;
+      }
+ else {
+        sb.append(line).append("\n");
+      }
+    }
+    reader.close();
+    return sb.toString();
+  }
+ catch (  final IOException ioe) {
+    throw new USMException("Failed to read contents of file: " + file,ioe);
+  }
+ finally {
+    if (reader != null) {
+      try {
+        reader.close();
+      }
+ catch (      final IOException ioe) {
+      }
+    }
+  }
+}

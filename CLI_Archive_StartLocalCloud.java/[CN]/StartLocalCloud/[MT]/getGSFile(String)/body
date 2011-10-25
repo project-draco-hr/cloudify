@@ -1,0 +1,11 @@
+{
+  final String absoluteFileName=Environment.getHomeDirectory() + File.separator + relativeFileName;
+  File file=new File(absoluteFileName);
+  if (!file.exists()) {
+    throw new FileNotFoundException("File: " + file + " was not found");
+  }
+  if (!file.isFile()) {
+    throw new IOException(file + " is not a file");
+  }
+  return file;
+}

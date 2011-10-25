@@ -1,0 +1,14 @@
+{
+  Map<String,String> customProperties=service.getCustomProperties();
+  File usmLibDir=null;
+  if (customProperties != null) {
+    String usmJarPathProp=customProperties.get(USM_JAR_PATH_PROP);
+    if (usmJarPathProp != null) {
+      usmLibDir=new File(usmJarPathProp);
+    }
+  }
+  if (usmLibDir == null) {
+    usmLibDir=new File(Environment.getHomeDirectory() + "/lib/platform/usm");
+  }
+  return usmLibDir;
+}

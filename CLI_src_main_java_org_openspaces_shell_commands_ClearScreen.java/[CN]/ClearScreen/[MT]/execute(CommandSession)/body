@@ -1,0 +1,7 @@
+{
+  System.out.print("\33[2J");
+  System.out.flush();
+  System.out.print("\33[1;1H");
+  System.out.flush();
+  return null;
+}

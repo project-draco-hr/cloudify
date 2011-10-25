@@ -1,0 +1,5 @@
+{
+  String executionPath=getExecutionPath(request);
+  this.commandURL=getRestUrl(request) + "/" + executionPath;
+  initilizeCommandList(executionPath,root);
+}

@@ -1,0 +1,5 @@
+{
+  this.accountName=accountName;
+  this.accountKey=accountKey;
+  this.containerName=containerName;
+}

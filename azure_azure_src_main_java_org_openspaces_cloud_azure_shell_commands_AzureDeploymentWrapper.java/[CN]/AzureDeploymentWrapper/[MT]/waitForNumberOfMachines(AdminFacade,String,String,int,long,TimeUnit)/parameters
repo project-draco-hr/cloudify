@@ -1,0 +1,6 @@
+AdminFacade adminFacade
+String applicationName
+String serviceName
+int numberOfMachines
+long timeout
+TimeUnit timeunit

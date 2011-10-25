@@ -1,0 +1,36 @@
+{
+  DSLObjectInitializerData data=getDSLInitializers().get(name);
+  if (data == null) {
+    return null;
+  }
+  if (this.activeObject == null) {
+    if (!data.isAllowRootNode()) {
+      throw new DSLException("Elements of  type " + name + " may not be used as the root node of a DSL");
+    }
+  }
+ else {
+    if (data.isAllowInternalNode()) {
+      if (data.getParentElement() != null) {
+        DSLObjectInitializerData parentType=getDSLInitializers().get(data.getParentElement());
+        if (parentType == null) {
+          throw new IllegalStateException("The DSL type " + name + " has a declared parent type of "+ data.getParentElement()+ " which is not a known type. This should not happen.");
+        }
+        if (!parentType.getClazz().isAssignableFrom(this.activeObject.getClass())) {
+          throw new DSLException("The type: " + name + " may only be nested under elements of type "+ parentType.getName());
+        }
+      }
+    }
+ else {
+      throw new DSLException("Elements of type: " + name + " may not be placed in internal nodes");
+    }
+  }
+  try {
+    return data.clazz.newInstance();
+  }
+ catch (  InstantiationException e) {
+    throw new DSLException("Failed to create new element of type " + data.getName() + " with class: "+ data.clazz,e);
+  }
+catch (  IllegalAccessException e) {
+    throw new DSLException("Failed to create new element of type " + data.getName() + " with class: "+ data.clazz,e);
+  }
+}

@@ -1,0 +1,35 @@
+{
+  usmLifecycleBean.externalProcessDied();
+synchronized (this.stateMutex) {
+    if (this.state == USMState.SHUTTING_DOWN) {
+      return;
+    }
+    try {
+      usmLifecycleBean.firePostStop(StopReason.PROCESS_FAILURE);
+    }
+ catch (    Exception e) {
+      logger.log(Level.SEVERE,"The Post Stop event failed to execute after an anexpected failure of the process: " + e.getMessage(),e);
+    }
+    new Thread(new Runnable(){
+      @Override public void run(){
+        try {
+          Thread.sleep(postDeathWaitPeriodMillis);
+        }
+ catch (        final InterruptedException e) {
+        }
+        try {
+          launch();
+        }
+ catch (        final USMException e) {
+          logger.log(Level.SEVERE,"Failed to re-launch the external process after a previous failure: " + e.getMessage(),e);
+          logger.severe("Marking this USM as failed so it will be recycled by GSM");
+          markUSMAsFailed(e);
+        }
+catch (        TimeoutException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+).start();
+  }
+}

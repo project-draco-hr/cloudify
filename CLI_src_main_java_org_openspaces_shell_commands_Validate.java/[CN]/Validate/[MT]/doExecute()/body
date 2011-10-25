@@ -1,0 +1,8 @@
+{
+  String absolutePath=dsl.getAbsolutePath();
+  if (!dsl.exists()) {
+    throw new IllegalArgumentException(MessageFormat.format(messages.getString("file_doesnt_exist"),absolutePath));
+  }
+  ServiceReader.getServiceFromFile(dsl,dsl.getParentFile());
+  return MessageFormat.format(messages.getString("validated_successfully"),absolutePath);
+}

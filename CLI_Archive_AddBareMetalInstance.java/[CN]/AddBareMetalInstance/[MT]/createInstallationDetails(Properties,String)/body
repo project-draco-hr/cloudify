@@ -1,0 +1,13 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setLocalDir(props.getProperty("localDir","C:/docBaseBare"));
+  details.setLocator(props.getProperty("lookupGroups",System.getenv("LOOKUPGROUPS")));
+  details.setLus(false);
+  details.setPassword(props.getProperty("password"));
+  details.setPrivateIp(machine);
+  details.setRemoteDir(props.getProperty("remoteDir","/tmp/gs-files"));
+  details.setTargetIP(machine);
+  details.setUsername(props.getProperty("username"));
+  details.setZones(this.serviceName);
+  return details;
+}

@@ -1,0 +1,30 @@
+{
+  long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  if (details.getLocator() == null) {
+    details.setLocator(details.getPrivateIp());
+  }
+  logger.info("Executing agentless installer with the following details:\n" + details.toString());
+  String sshIpAddress=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
+  checkConnection(sshIpAddress,SSH_PORT,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  try {
+    Set<String> excludedFiles=new HashSet<String>();
+    if (!details.isLus() && details.getManagementOnlyFiles() != null) {
+      excludedFiles.addAll(Arrays.asList(details.getManagementOnlyFiles()));
+    }
+    copyFiles(sshIpAddress,details.getUsername(),details.getPassword(),details.getLocalDir(),details.getRemoteDir(),details.getKeyFile(),excludedFiles,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
+ catch (  final FileSystemException e) {
+    throw new InstallerException("Uploading files to remote server failed.",e);
+  }
+catch (  final IOException e) {
+    throw new InstallerException("Uploading files to remote server failed.",e);
+  }
+  String remoteDirectory=details.getRemoteDir();
+  if (remoteDirectory.endsWith("/")) {
+    remoteDirectory=remoteDirectory.substring(0,remoteDirectory.length() - 1);
+  }
+  String scriptPath=remoteDirectory + "/" + STARTUP_SCRIPT_NAME;
+  String command=new ShellCommandBuilder().exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.getPrivateIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVar(CLOUDIFY_LINK_ENV,details.getCloudifyUrl() != null ? ("\"" + details.getCloudifyUrl() + "\"") : "").exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).chmodExecutable(scriptPath).call(scriptPath).toString();
+  logger.info("Calling startup script on target: " + sshIpAddress + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
+  sshCommand(sshIpAddress,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+}

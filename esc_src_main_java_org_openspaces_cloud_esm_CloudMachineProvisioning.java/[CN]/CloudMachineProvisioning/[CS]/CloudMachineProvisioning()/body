@@ -1,0 +1,3 @@
+{
+  logger.info("CloudMachineProvisioning instance has been constructed");
+}

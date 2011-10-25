@@ -1,0 +1,3 @@
+{
+  fireEvent(LifecycleEvents.PRE_SERVICE_STOP,this.preServiceStopListeners,null);
+}

@@ -1,0 +1,21 @@
+{
+  Set<String> containerUids=new HashSet<String>();
+  int numberOfInstances=this.getInstanceList(applicationName,serviceName).size();
+  for (int i=0; i < numberOfInstances; i++) {
+    String containerUrl="applications/Names/" + applicationName + "/ProcessingUnits/Names/"+ serviceName+ "/Instances/"+ i+ "/GridServiceContainer/Uid";
+    try {
+      Map<String,Object> container=(Map<String,Object>)client.getAdmin(containerUrl);
+      if (container == null) {
+        throw new IllegalStateException("Could not find container " + containerUrl);
+      }
+      if (!container.containsKey("Uid")) {
+        throw new IllegalStateException("Could not find AgentUid of container " + containerUrl);
+      }
+      containerUids.add((String)container.get("Uid"));
+    }
+ catch (    CLIException e) {
+      throw new ErrorStatusException("cant_find_service_for_app",serviceName,applicationName);
+    }
+  }
+  return containerUids;
+}

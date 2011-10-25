@@ -1,0 +1,17 @@
+{
+  if (!active) {
+    return null;
+  }
+  final ProcessLauncher retval=(ProcessLauncher)createBeanIfNotExistsType(new DefaultProcessLauncher(),ProcessLauncher.class);
+  if (retval != null) {
+    this.launcher=retval;
+  }
+ else {
+    final Collection<ProcessLauncher> launchers=this.context.getBeanFactory().getBeansOfType(ProcessLauncher.class).values();
+    if (launchers.size() == 0) {
+      throw new IllegalStateException("No ProcessLauncher was found in Context!");
+    }
+    this.launcher=launchers.iterator().next();
+  }
+  return retval;
+}

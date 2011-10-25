@@ -1,0 +1,28 @@
+{
+  final JMXServiceURL jmxUrl=createJMXServiceURL();
+  JMXConnector jmxc=null;
+  final Map<String,Object> env=createEnvironment();
+  final ArrayList<JmxAttribute> resultList=new ArrayList<JmxAttribute>(this.numOfTargets);
+  try {
+    jmxc=JMXConnectorFactory.connect(jmxUrl,env);
+    final MBeanServerConnection mbsc=jmxc.getMBeanServerConnection();
+    for (    final JmxBeanAttributes t : targetList) {
+      handleJMXBean(resultList,mbsc,t);
+    }
+    return resultList;
+  }
+ catch (  final Exception e) {
+    final String msg="Failed to fetch JMX values for " + host + ","+ port+ ". Error: "+ e;
+    logger.severe(msg);
+  }
+ finally {
+    if (jmxc != null) {
+      try {
+        jmxc.close();
+      }
+ catch (      final IOException e) {
+      }
+    }
+  }
+  return null;
+}

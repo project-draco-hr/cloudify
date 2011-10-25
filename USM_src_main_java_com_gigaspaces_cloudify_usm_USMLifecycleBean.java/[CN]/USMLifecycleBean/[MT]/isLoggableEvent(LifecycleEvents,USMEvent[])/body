@@ -1,0 +1,18 @@
+{
+  if (eventLogger.isLoggable(Level.INFO)) {
+    if (listeners != null) {
+      if (listeners.length > 0) {
+        if (listeners.length == 1) {
+          if (listeners[0] instanceof DSLCommandsLifecycleListener) {
+            DSLCommandsLifecycleListener dslListener=(DSLCommandsLifecycleListener)listeners[0];
+            if (!dslListener.isEventExists(event)) {
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+    }
+  }
+  return false;
+}

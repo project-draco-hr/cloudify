@@ -1,0 +1,9 @@
+{
+  if (this.client == null) {
+    client=new JmxGenericClient();
+    client.setHost(this.host);
+    client.setPort(this.port);
+    client.setTargets(this.targets);
+  }
+  return client.getAttributes();
+}

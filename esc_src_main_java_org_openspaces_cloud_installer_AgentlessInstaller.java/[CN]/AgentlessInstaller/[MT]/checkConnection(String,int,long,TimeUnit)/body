@@ -1,0 +1,27 @@
+{
+  long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  InetSocketAddress addr=new InetSocketAddress(ip,port);
+  logger.info("Checking connection to: " + addr);
+  while (System.currentTimeMillis() + CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS < end) {
+    Thread.sleep(CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS);
+    final Socket sock=new Socket();
+    try {
+      sock.connect(addr,CONNECTION_TEST_SOCKET_CONNECT_TIMEOUT_MILLIS);
+      return;
+    }
+ catch (    final IOException e) {
+      logger.fine("Checking connection to: " + addr);
+    }
+ finally {
+      if (sock != null) {
+        try {
+          sock.close();
+        }
+ catch (        IOException e) {
+          logger.fine("Failed to close socket");
+        }
+      }
+    }
+  }
+  throw new TimeoutException("Failed connecting to " + ip + ":"+ port);
+}

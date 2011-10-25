@@ -1,0 +1,30 @@
+{
+  logger.info("Setting Properties of Cloud Machine Provisioning: " + properties.toString());
+  this.config=new CloudMachineProvisioningConfig(properties);
+  logger.fine("Setting local dir to be the same as remote dir in cloud configuration");
+  config.setLocalDirectory(config.getRemoteDirectory());
+  try {
+    this.deployer=new JCloudsDeployer(config.getProvider(),config.getUser(),config.getApiKey());
+    this.deployer.setImageId(config.getImageId());
+    this.deployer.setMinRamMegabytes((int)config.getMachineMemoryMB());
+    this.deployer.setHardwareId(config.getHardwareId());
+    this.deployer.setSecurityGroup(config.getSecurityGroup());
+    this.deployer.setKeyPair(config.getKeyPair());
+  }
+ catch (  final IOException e) {
+    throw new IllegalStateException("Failed to create cloud Deployer",e);
+  }
+  final String tmpGridName=this.config.getGridName();
+  if (tmpGridName == null) {
+    logger.warning("Property gridName is null! Proper clean up of handler will not be possible!");
+  }
+ else {
+    this.gridName=tmpGridName;
+  }
+  String prefix=config.getMachineNamePrefix();
+  if ((prefix == null) || (prefix.length() == 0)) {
+    prefix="gs_esm_gsa_";
+  }
+  this.machineNamePrefix=prefix + new Random().nextInt(ESM_NAME_RANDOM_LIMIT) + "_";
+  logger.info("Creating cloud jclouds context deployer with user: " + config.getUser());
+}

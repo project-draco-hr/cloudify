@@ -1,0 +1,9 @@
+{
+  try {
+    return adminFacade.getServicesList(getCurrentApplicationName());
+  }
+ catch (  final ErrorStatusException e) {
+    logger.warning("Could not get list of services: " + e.getReasonCode());
+    return null;
+  }
+}

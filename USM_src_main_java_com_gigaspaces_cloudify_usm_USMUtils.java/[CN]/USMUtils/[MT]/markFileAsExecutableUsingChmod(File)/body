@@ -1,0 +1,18 @@
+{
+  try {
+    logger.info("File " + file + " will be marked as executable using chmod command");
+    final Process p=Runtime.getRuntime().exec(new String[]{"chmod","+x",file.getAbsolutePath()});
+    final int result=p.waitFor();
+    logger.info("chmod command finished with result = " + result);
+    if (result != 0) {
+      logger.warning("chmod command did not terminate successfully. File " + file + " may not be executable!");
+    }
+    return (result == 0);
+  }
+ catch (  final IOException e) {
+    throw new USMException("Failed to execute chmod command:  chmod +x " + file.getAbsolutePath(),e);
+  }
+catch (  final InterruptedException e) {
+    throw new USMException("Failed to execute chmod command on file " + file,e);
+  }
+}

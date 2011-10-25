@@ -1,0 +1,4 @@
+{
+  Object[] arr=(Object[])value;
+  applyPropertyToObject(this.activeObject,name,arr[0]);
+}

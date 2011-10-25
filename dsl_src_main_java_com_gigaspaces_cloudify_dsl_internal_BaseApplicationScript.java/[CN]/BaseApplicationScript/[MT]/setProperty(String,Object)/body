@@ -1,0 +1,16 @@
+{
+  if (this.inServiceBlock) {
+    try {
+      handleServiceParameter(name,value);
+    }
+ catch (    FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+catch (    PackagingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+ else {
+    applyPropertyToObject(this.activeObject,name,value);
+  }
+}

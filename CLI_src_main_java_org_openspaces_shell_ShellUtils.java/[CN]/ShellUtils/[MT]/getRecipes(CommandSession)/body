@@ -1,0 +1,3 @@
+{
+  return (Map<String,File>)session.get(Constants.RECIPES);
+}

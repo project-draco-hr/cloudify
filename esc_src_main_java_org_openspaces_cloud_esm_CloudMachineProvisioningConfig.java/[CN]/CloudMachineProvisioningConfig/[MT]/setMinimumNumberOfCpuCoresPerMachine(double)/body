@@ -1,0 +1,3 @@
+{
+  properties.putDouble(NUMBER_OF_CPU_CORES_PER_MACHINE_KEY,minimumCpuCoresPerMachine);
+}

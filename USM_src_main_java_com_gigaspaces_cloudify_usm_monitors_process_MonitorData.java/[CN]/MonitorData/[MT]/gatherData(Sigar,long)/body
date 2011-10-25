@@ -1,0 +1,51 @@
+{
+  try {
+    final ProcCpu pcpu=sigar.getProcCpu(pid);
+    processCpuUsage=pcpu.getPercent();
+    processCpuKernelTime=pcpu.getSys();
+    totalProcessCpuTime=pcpu.getTotal();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+  try {
+    processArguments=sigar.getProcArgs(pid);
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+  try {
+    final ProcCred prcred=sigar.getProcCred(pid);
+    processGroupId=prcred.getGid();
+    processUserId=prcred.getUid();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+  try {
+    final ProcCredName prcredname=sigar.getProcCredName(pid);
+    processOwnerGroupName=prcredname.getGroup();
+    processOwnerUserName=prcredname.getUser();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+  try {
+    final ProcMem pmem=sigar.getProcMem(pid);
+    totalNumOfPageFaults=pmem.getPageFaults();
+    totalProcessResidentalMemory=pmem.getResident();
+    totalProcessSharedMemory=pmem.getShare();
+    totalProcessVirtualMemory=pmem.getSize();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+  try {
+    final ProcState prcstat=sigar.getProcState(pid);
+    kernelSchedulingPriority=prcstat.getPriority();
+    numOfActiveThreads=prcstat.getThreads();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
+  }
+}

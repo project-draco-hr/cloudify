@@ -1,0 +1,17 @@
+{
+  final File logDir=new File(logsDirectory);
+  FileSystemUtils.deleteRecursively(logDir);
+  logDir.mkdirs();
+  final File logFile=new File(logDir,String.format("%s%s",System.getProperty("file.separator"),LOG_FILENAME));
+  final PatternLayout pl=new PatternLayout(LOG_PATTERN);
+  rfp=new RollingFileAppender(pl,logFile.getCanonicalPath(),true);
+  rfp.setImmediateFlush(true);
+  rfp.setBufferedIO(false);
+  rfp.setBufferSize(LOG_IO_BUFFER_SIZE_BYTES);
+  rfp.setMaxBackupIndex(MAX_LOG_BACKUP_FILES);
+  rfp.setMaxFileSize(MAX_LOG_FILE_SIZE);
+  logger.setLevel(Level.INFO);
+  logger.addAppender(rfp);
+  logger.getAllAppenders();
+  logger.info("Log directory: " + logDir.getAbsolutePath());
+}

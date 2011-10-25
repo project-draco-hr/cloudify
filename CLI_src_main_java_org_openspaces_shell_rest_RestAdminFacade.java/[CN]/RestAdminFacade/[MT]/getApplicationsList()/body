@@ -1,0 +1,3 @@
+{
+  return (List<String>)client.get("/service/applications");
+}

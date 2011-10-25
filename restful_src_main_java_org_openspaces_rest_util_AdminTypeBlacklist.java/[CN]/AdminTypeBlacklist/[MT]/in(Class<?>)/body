@@ -1,0 +1,6 @@
+{
+  if (cls == null) {
+    throw new RuntimeException("cls != null");
+  }
+  return ADMIN_TYPE_BLACKLIST.contains(cls);
+}

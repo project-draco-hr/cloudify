@@ -1,0 +1,21 @@
+{
+  File folder=new File(logsDirectory);
+  File[] files=folder.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    File dir,    String name){
+      return java.util.regex.Pattern.matches(regex,name);
+    }
+  }
+);
+  for (  File file : files) {
+    if (!logFileMap.containsKey(file.getName())) {
+      logFileMap.put(file.getName(),new RollingFileReader(file));
+    }
+  }
+  Iterator<RollingFileReader> iterator=logFileMap.values().iterator();
+  while (iterator.hasNext()) {
+    RollingFileReader next=iterator.next();
+    if (!next.exists()) {
+      iterator.remove();
+    }
+  }
+}

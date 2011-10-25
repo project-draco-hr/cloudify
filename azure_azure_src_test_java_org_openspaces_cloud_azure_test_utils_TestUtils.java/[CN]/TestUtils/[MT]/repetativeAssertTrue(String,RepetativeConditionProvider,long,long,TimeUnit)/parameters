@@ -1,0 +1,5 @@
+String message
+RepetativeConditionProvider condition
+long pollingInterval
+long timeout
+TimeUnit timeUnit

@@ -1,0 +1,39 @@
+{
+  isDebugMode=Boolean.valueOf(System.getProperty(IS_DEBUG_MODE_SYSTEM_PROPERTY,Boolean.toString(false)));
+  String localWorkingDirPath=System.getProperty(LOCAL_WORKING_DIR_SYSTEM_PROPERTY_KEY);
+  Assert.assertNotNull(LOCAL_WORKING_DIR_SYSTEM_PROPERTY_KEY + " system property has to exists",localWorkingDirPath);
+  File localWorkingDir=new File(localWorkingDirPath);
+  Assert.assertTrue(localWorkingDir.getPath() + " does not exist",localWorkingDir.isDirectory());
+  File gigaSpacesCloudifyZip=new File(localWorkingDir,GIGASPACES_LATEST_ZIP);
+  File gigaSpacesCloudifyDir=new File(localWorkingDir,GIGASPACES_LATEST_HOME);
+  Assert.assertTrue(gigaSpacesCloudifyDir.getPath() + " does not exist",gigaSpacesCloudifyDir.isDirectory());
+  applicationFile=new File(gigaSpacesCloudifyDir,APPLICATION_RELATIVE_TO_CLOUDIFY_PATH);
+  Assert.assertTrue(applicationFile.getPath() + " does not exist",applicationFile.isDirectory());
+  cliExecutablePath=new File(gigaSpacesCloudifyDir,RELATIVE_CLI_PATH);
+  File azureConfigExec=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_CONFIG_EXEC_PATH);
+  File azurePropertiesFile=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_PROPERTIES_PATH);
+  boolean runMe=false;
+  if (runMe && gigaSpacesCloudifyZip.isFile()) {
+    log("Uploading new vesrion of gigaspaces cloudify to blob store");
+    AzureStorageContainer container=new AzureStorageContainer(AZURE_ACCOUNT_NAME,AZURE_ACCOUNT_KEY,AZURE_CONTAINER_NAME);
+    container.connect();
+    container.putBlob(GIGASPACES_LATEST_ZIP,gigaSpacesCloudifyZip.getAbsolutePath());
+  }
+  Properties newAzureProps=new Properties();
+  newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_NAME_KEY,AZURE_ACCOUNT_NAME);
+  newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_KEY_KEY,AZURE_ACCOUNT_KEY);
+  newAzureProps.setProperty(AZURE_PROPERTIES_CONTAINER_NAME_KEY,AZURE_CONTAINER_NAME);
+  newAzureProps.setProperty(AZURE_PROPERTIES_WORKER_ROLE_FOLDER_KEY,RELATIVE_WORKER_ROLE_DIR);
+  newAzureProps.setProperty(AZURE_PROPERTIES_CS_PACK_FOLDER_KEY,CS_PACK_FOLDER);
+  newAzureProps.setProperty(AZURE_PROPERTIES_RDP_CERT_FILE_KEY,RDP_CERT_FILE);
+  newAzureProps.setProperty(AZURE_PROPERTIES_RDP_PFX_FILE_KEY,RDP_PFX_FILE);
+  newAzureProps.setProperty(AZURE_PROPERITES_CERTIFICATE_THUMBPRINT_KEY,AZURE_CERTIFICATE_THUMBPRINT);
+  newAzureProps.setProperty(AZURE_PROPERITES_SUBSCRIPTION_ID_KEY,AZURE_SUBSCRIPTION_ID);
+  newAzureProps.setProperty(AZURE_PROPERTIES_RDP_LOGIN_USERNAME_KEY,AZURE_RDP_LOGIN_USERNAME);
+  newAzureProps.setProperty(AZURE_PROPERTIES_RDP_LOGIN_ENCRYPTED_PASSWORD,AZURE_RDP_LOGIN_ENCRYPTED_PASSWORD);
+  log("Overriding azure.properties file");
+  FileOutputStream fos=new FileOutputStream(azurePropertiesFile);
+  newAzureProps.store(fos,null);
+  fos.close();
+  deployment=new AzureDeploymentWrapper(azureConfigExec,AZURE_SUBSCRIPTION_ID,AZURE_CERTIFICATE_THUMBPRINT,AZURE_HOSTED_SERVICE,AZURE_SLOT,null,null,null,null);
+}

@@ -1,0 +1,22 @@
+{
+  if (timeout < 0) {
+    throw new TimeoutException("Timeout waiting for grid service agent.");
+  }
+  final AtomicReference<GridServiceAgent> gsaRef=new AtomicReference<GridServiceAgent>(null);
+  final CountDownLatch gridServiceAgentAddedLatch=new CountDownLatch(1);
+  admin.getGridServiceAgents().getGridServiceAgentAdded().add(new GridServiceAgentAddedEventListener(){
+    public void gridServiceAgentAdded(    final GridServiceAgent gridServiceAgent){
+      if (gridServiceAgent.getMachine().getHostAddress().equals(hostAddress)) {
+        gsaRef.set(gridServiceAgent);
+        gridServiceAgentAddedLatch.countDown();
+      }
+    }
+  }
+);
+  gridServiceAgentAddedLatch.await(unit.toMillis(timeout),TimeUnit.MILLISECONDS);
+  final GridServiceAgent gsa=gsaRef.get();
+  if (gsa == null) {
+    throw new TimeoutException("Timeout waiting for grid service agent.");
+  }
+  return gsa;
+}

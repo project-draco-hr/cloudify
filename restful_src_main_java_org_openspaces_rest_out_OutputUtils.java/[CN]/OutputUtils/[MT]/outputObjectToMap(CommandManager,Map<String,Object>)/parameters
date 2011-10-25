@@ -1,0 +1,2 @@
+CommandManager manager
+Map<String,Object> outputMap

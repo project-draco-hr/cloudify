@@ -1,0 +1,25 @@
+{
+  logger.fine("Executing getServiceMonitors()");
+  final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
+  csm.getMonitors().put(CloudifyConstants.USM_MONITORS_STATE_ID,getState());
+  final ServiceMonitors[] res=new ServiceMonitors[]{csm};
+  if (!getState().equals(USMState.RUNNING)) {
+    return res;
+  }
+  final Map<String,Object> map=csm.getMonitors();
+  map.put(CloudifyConstants.USM_MONITORS_CHILD_PROCESS_ID,this.childProcessID);
+  map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,this.actualProcessID);
+  for (  final Monitor monitor : usmLifecycleBean.getMonitors()) {
+    try {
+      logger.fine("Executing monitor: " + monitor);
+      map.putAll(monitor.getMonitorValues(this,usmLifecycleBean.getConfiguration()));
+    }
+ catch (    final MonitorException e) {
+      logger.log(Level.SEVERE,"Failed to execute a USM service monitor",e);
+    }
+  }
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Monitors are: " + Arrays.toString(res));
+  }
+  return res;
+}

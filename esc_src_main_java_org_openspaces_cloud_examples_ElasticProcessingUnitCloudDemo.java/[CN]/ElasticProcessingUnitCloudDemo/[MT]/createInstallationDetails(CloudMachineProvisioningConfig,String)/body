@@ -1,0 +1,16 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setLocalDir(config.getLocalDirectory());
+  details.setRemoteDir(config.getRemoteDirectory());
+  details.setLocator(null);
+  details.setPrivateIp(null);
+  details.setLus(true);
+  if ((config.getKeyPair() != null) && (config.getKeyPair().length() > 0)) {
+    final File keyFile=new File(details.getLocalDir(),config.getKeyFile());
+    if (!keyFile.exists()) {
+      throw new IllegalArgumentException("keyfile : " + keyFile.getAbsolutePath() + " not found");
+    }
+    details.setKeyFile(keyFile.getAbsolutePath());
+  }
+  return details;
+}

@@ -1,0 +1,23 @@
+{
+  while (true) {
+    try {
+      final String line=reader.readLine();
+      if (line == null) {
+        return;
+      }
+      if (this.verbose) {
+        System.out.println(line);
+      }
+ else {
+        for (        String filter : FILTERS) {
+          if (line.indexOf(filter) >= 0) {
+            System.out.println(line);
+          }
+        }
+      }
+    }
+ catch (    IOException e) {
+      return;
+    }
+  }
+}

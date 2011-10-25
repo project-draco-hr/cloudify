@@ -1,0 +1,11 @@
+{
+  String pathname=getProperty(properties,name);
+  if (pathname == null || pathname.length() == 0) {
+    throw new CLIException("Cannot find property " + name + " in file "+ AzureUtils.getAzurePropertiesFile().getAbsolutePath());
+  }
+  File file=toAbsoluteFile(pathname);
+  if (!file.exists()) {
+    throw new CLIException(file.getAbsolutePath() + " does not exist.");
+  }
+  return file;
+}

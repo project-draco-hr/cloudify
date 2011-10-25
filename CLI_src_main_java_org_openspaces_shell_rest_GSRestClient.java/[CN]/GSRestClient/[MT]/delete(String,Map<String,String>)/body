@@ -1,0 +1,9 @@
+{
+  final HttpDelete httpdelete=new HttpDelete(getFullUrl(relativeUrl));
+  if (params != null) {
+    for (    final Map.Entry<String,String> entry : params.entrySet()) {
+      httpdelete.getParams().setParameter(entry.getKey(),entry.getValue());
+    }
+  }
+  executeHttpMethod(httpdelete);
+}

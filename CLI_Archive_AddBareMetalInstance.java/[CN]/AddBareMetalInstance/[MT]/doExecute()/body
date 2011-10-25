@@ -1,0 +1,24 @@
+{
+  final Properties props=getProperties();
+  logger.info("Scanning for machine");
+  final String machine=chooseMachine(props);
+  if (machine == null) {
+    return "No machine available for scale out";
+  }
+  logger.info("Selected machine: " + machine);
+  final AgentlessInstaller installer=new AgentlessInstaller();
+  final InstallationDetails details=createInstallationDetails(props,machine);
+  try {
+    installer.installOnMachineWithIP(details,5,TimeUnit.MINUTES);
+  }
+ catch (  final TimeoutException e) {
+    e.printStackTrace();
+  }
+catch (  final InterruptedException e) {
+    e.printStackTrace();
+  }
+catch (  final InstallerException e) {
+    e.printStackTrace();
+  }
+  return "Machine " + machine + " started up successfully in zone: "+ this.serviceName;
+}

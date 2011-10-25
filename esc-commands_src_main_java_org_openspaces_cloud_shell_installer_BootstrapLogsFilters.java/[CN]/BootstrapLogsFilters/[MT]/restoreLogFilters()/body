@@ -1,0 +1,3 @@
+{
+  sshOutputLogger.setFilter(sshOutputFilter);
+}

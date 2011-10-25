@@ -1,0 +1,3 @@
+{
+  logger.info("The tailed file is not found");
+}

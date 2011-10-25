@@ -1,0 +1,53 @@
+{
+  final String gridName="myElasticDataGrid";
+  final String esmNodeName="gs_esm_manager";
+  final Properties props=ElasticProcessingUnitCloudDemo.loadProperties();
+  final CloudMachineProvisioningConfig config=new CloudMachineProvisioningConfig(props);
+  config.setMachineNamePrefix("gs_esm_gsa_");
+  config.setGridName(gridName);
+  System.out.println("Deploying Data Grid..");
+  final InstallationDetails details=ElasticProcessingUnitCloudDemo.createInstallationDetails(config,null);
+  final String locator=ElasticProcessingUnitCloudDemo.startESMNode(esmNodeName,details,config);
+  config.setLocalDirectory(config.getRemoteDirectory());
+  final Admin admin=new AdminFactory().addLocator(locator).createAdmin();
+  final GridServiceManager gsm=admin.getGridServiceManagers().waitForAtLeastOne(30,TimeUnit.SECONDS);
+  if (gsm == null) {
+    System.err.println("GSM was not found!");
+    System.exit(1);
+  }
+  config.setMachineNamePrefix("gs_esm_gsa_");
+  config.setLocator(locator);
+  System.out.println("Deploying processing unit with config: " + config.getProperties());
+  final ProcessingUnit pu=gsm.deploy(new ElasticSpaceDeployment(gridName).maxMemoryCapacity(4,MemoryUnit.GIGABYTES).memoryCapacityPerContainer(256,MemoryUnit.MEGABYTES).scale(new ManualCapacityScaleConfigurer().memoryCapacity(1,MemoryUnit.GIGABYTES).create()).dedicatedMachineProvisioning(config));
+  try {
+    System.out.println("Waiting for data grid deployment completion ..");
+    final Space space=pu.waitForSpace();
+    while (!space.waitFor(space.getTotalNumberOfInstances(),10,TimeUnit.SECONDS)) {
+      System.out.println("Waiting for all partitions to deploy. " + "Available: " + space.getNumberOfInstances() + ", "+ "Required: "+ space.getTotalNumberOfInstances());
+      for (      final String host : admin.getMachines().getHostsByAddress().keySet()) {
+        System.out.println(host + "\n");
+      }
+    }
+    System.out.println("All instances have been deployed, the Data Grid is ready for action");
+    final GigaSpace gigaSpace=space.getGigaSpace();
+    System.out.println("Writing 1000 objects");
+    for (long i=0; i < 1000; i++) {
+      gigaSpace.write(new Data(i,"message" + i,ElasticProcessingUnitCloudDemo.createInfo(i)));
+    }
+    System.out.println("Reading 1000 objects");
+    final Data[] d=gigaSpace.readMultiple(new SQLQuery<Data>(Data.class,"info.salary < 11000 and info.salary >= 10000"),Integer.MAX_VALUE);
+    System.out.println("SQLQuery<Data>(Data.class, info.salary < 15000 and info.salary >= 8000) results -> [" + d.length + " ]");
+    System.out.println("Reading 1000 using JDBC connector objects");
+    JDBCQuery.testJDBC(locator,gridName);
+    pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(4,MemoryUnit.GIGABYTES).create());
+    pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(2,MemoryUnit.GIGABYTES).create());
+    System.out.println("Done!");
+    System.exit(0);
+  }
+ catch (  final Exception ex) {
+    ex.printStackTrace();
+    System.out.println("Caught exception: Undeploying... ");
+    pu.undeploy();
+    System.exit(1);
+  }
+}

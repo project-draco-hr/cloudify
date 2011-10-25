@@ -1,0 +1,6 @@
+{
+  if (nicAddress == null) {
+    throw new IllegalStateException("nicAddress cannot be null");
+  }
+  return nicAddress + ":" + lusPort;
+}

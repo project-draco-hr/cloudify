@@ -1,0 +1,14 @@
+{
+  final Sigar sigar=SigarHolder.getSigar();
+  ProcState procState=null;
+  try {
+    procState=sigar.getProcState(pid);
+  }
+ catch (  final SigarException e) {
+    if ("No such process".equals(e.getMessage())) {
+      return null;
+    }
+    throw new USMException("Failed to check if process with PID: " + pid + " is alive. Error was: "+ e.getMessage(),e);
+  }
+  return procState;
+}

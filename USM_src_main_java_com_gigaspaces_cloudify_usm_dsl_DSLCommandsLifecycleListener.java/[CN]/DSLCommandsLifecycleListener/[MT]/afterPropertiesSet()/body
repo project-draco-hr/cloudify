@@ -1,0 +1,3 @@
+{
+  this.lifecycle=((DSLConfiguration)configuration).getService().getLifecycle();
+}

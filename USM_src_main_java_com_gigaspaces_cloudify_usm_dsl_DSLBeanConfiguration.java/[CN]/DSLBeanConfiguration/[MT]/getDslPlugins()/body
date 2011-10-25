@@ -1,0 +1,24 @@
+{
+  if (!active) {
+    return null;
+  }
+  final List<PluginDescriptor> plugins=this.service.getPlugins();
+  if ((plugins == null) || (plugins.size() == 0)) {
+    return null;
+  }
+  for (  final PluginDescriptor descriptor : plugins) {
+    final Plugin plugin=createPlugin(descriptor);
+    if (plugin != null) {
+      final String name=(descriptor.getName() == null ? descriptor.getClassName() : descriptor.getName());
+      try {
+        this.context.getBeanFactory().getBean(name);
+        throw new IllegalArgumentException("The name: " + name + " is already in use and can't be used to identify a plugin");
+      }
+ catch (      NoSuchBeanDefinitionException e) {
+      }
+      this.context.getBeanFactory().registerSingleton(name,plugin);
+      this.context.getBeanFactory().autowireBean(plugin);
+    }
+  }
+  return null;
+}

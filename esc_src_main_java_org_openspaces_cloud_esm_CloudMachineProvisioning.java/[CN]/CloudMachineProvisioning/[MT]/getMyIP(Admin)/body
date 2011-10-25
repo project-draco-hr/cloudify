@@ -1,0 +1,23 @@
+{
+  logger.info("LOOKING UP NIC ADDRESS!");
+  final String nic=System.getenv("NIC_ADDR");
+  if (nic != null) {
+    logger.info("ESM IP found in environment: " + nic);
+    return nic;
+  }
+  final Admin tempAdmin=new AdminFactory().addGroup(admin.getGroups()[0]).addLocator(admin.getLocators()[0].toString()).createAdmin();
+  try {
+    final ElasticServiceManager esm=tempAdmin.getElasticServiceManagers().waitForAtLeastOne(30,TimeUnit.SECONDS);
+    if (esm == null) {
+      throw new IllegalStateException("Could not find ESM in admin API. This should not be possible. " + "Check Admin API settings!" + " Locator = " + Arrays.toString(tempAdmin.getLocators()) + " Groups = "+ Arrays.toString(tempAdmin.getGroups()));
+    }
+    final String ip=esm.getMachine().getHostAddress();
+    logger.info("ESM Scale Handler is running on IP: " + ip);
+    return ip;
+  }
+  finally {
+    if (tempAdmin != null) {
+      tempAdmin.close();
+    }
+  }
+}

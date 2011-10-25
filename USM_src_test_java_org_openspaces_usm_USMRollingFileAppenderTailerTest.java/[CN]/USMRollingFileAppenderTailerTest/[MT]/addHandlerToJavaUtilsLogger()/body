@@ -1,0 +1,14 @@
+{
+  java.util.logging.Logger logger=java.util.logging.Logger.getLogger("");
+  ;
+  StringHandler sh=new StringHandler();
+  logger.addHandler(sh);
+  Handler[] handlers=logger.getHandlers();
+  for (  Handler handler : handlers) {
+    if (handler instanceof ConsoleHandler) {
+      logger.removeHandler(handler);
+      break;
+    }
+  }
+  return sh;
+}

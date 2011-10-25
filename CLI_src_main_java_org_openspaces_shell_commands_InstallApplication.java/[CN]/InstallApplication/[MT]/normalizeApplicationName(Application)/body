@@ -1,0 +1,12 @@
+{
+  if ((applicationName == null) || (applicationName.length() == 0)) {
+    applicationName=application.getName();
+  }
+  if ((applicationName == null) || (applicationName.length() == 0)) {
+    applicationName=applicationFile.getName();
+    final int endIndex=applicationName.lastIndexOf('.');
+    if (endIndex > 0) {
+      applicationName=applicationName.substring(0,endIndex);
+    }
+  }
+}

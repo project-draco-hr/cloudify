@@ -1,0 +1,4 @@
+{
+  System.out.println(invoke.toString() + "  " + invoke2.toString());
+  Assert.isTrue(invoke.equals(invoke2));
+}

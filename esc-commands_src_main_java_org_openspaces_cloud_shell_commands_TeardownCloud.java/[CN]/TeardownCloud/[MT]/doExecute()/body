@@ -1,0 +1,12 @@
+{
+  CloudGridAgentBootstrapper installer=new CloudGridAgentBootstrapper();
+  String pathSeparator=System.getProperty("file.separator");
+  File providerDirectory=new File(ShellUtils.getCliDirectory(),"plugins" + pathSeparator + "esc"+ pathSeparator+ cloudProvider);
+  installer.setProviderDirectory(providerDirectory);
+  installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
+  installer.setProgressInSeconds(10);
+  installer.setVerbose(verbose);
+  installer.setForce(force);
+  installer.teardownCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  return "Cloud terminated succesfully.";
+}

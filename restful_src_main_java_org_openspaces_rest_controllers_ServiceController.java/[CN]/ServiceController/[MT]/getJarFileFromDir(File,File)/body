@@ -1,0 +1,15 @@
+{
+  if (!serviceFileOrDir.isAbsolute()) {
+    serviceFileOrDir=new File(serviceDirectory,serviceFileOrDir.getPath());
+  }
+  if (serviceFileOrDir.isDirectory()) {
+    File jarFile=File.createTempFile(serviceFileOrDir.getName(),".jar");
+    ZipUtils.zip(serviceFileOrDir,jarFile);
+    jarFile.deleteOnExit();
+    return jarFile;
+  }
+ else   if (serviceFileOrDir.isFile()) {
+    return serviceFileOrDir;
+  }
+  throw new FileNotFoundException("The service deployment file was not found in " + serviceFileOrDir);
+}

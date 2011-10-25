@@ -1,0 +1,18 @@
+{
+  final Set<? extends NodeMetadata> nodes=getServers(filter);
+  final Set<NodeMetadata> runningNodes=new HashSet<NodeMetadata>();
+  Iterator<? extends NodeMetadata> nodesIterator=nodes.iterator();
+  while (nodesIterator.hasNext()) {
+    NodeMetadata node=nodesIterator.next();
+    if (node.getState() != NodeState.TERMINATED) {
+      runningNodes.add(node);
+    }
+  }
+  if (runningNodes.isEmpty()) {
+    return null;
+  }
+  if (runningNodes.size() != 1) {
+    throw new IllegalStateException("runningNodes.size() == " + runningNodes.size() + " != 1");
+  }
+  return runningNodes.iterator().next();
+}

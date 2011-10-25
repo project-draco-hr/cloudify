@@ -1,0 +1,3 @@
+String hostedServiceName
+File certificateFile
+String certificateFilePassword

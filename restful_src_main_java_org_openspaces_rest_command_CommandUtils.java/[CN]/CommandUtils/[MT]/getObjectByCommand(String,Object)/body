@@ -1,0 +1,4 @@
+{
+  Method commandMethod=getGetterMethodFromObject(command,someObject.getClass());
+  return OutputUtils.safeInvoke(commandMethod,someObject);
+}

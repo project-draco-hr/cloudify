@@ -1,0 +1,33 @@
+{
+  logger.info("Attempting to set file as executable using REFLECTION");
+  Method method=null;
+  try {
+    method=File.class.getMethod("setExecutable",new Class[]{Boolean.TYPE});
+  }
+ catch (  final SecurityException e) {
+    throw new USMException("Failed to check if file " + file.getAbsolutePath() + " is executable",e);
+  }
+catch (  final NoSuchMethodException e) {
+  }
+  if (method == null) {
+    logger.info("setExecutable not supported by JDK. Must be using Java Version < 1.6");
+    return false;
+  }
+  try {
+    final boolean retval=(Boolean)method.invoke(file,true);
+    logger.info("File " + file + " was marked as executable");
+    if (!retval) {
+      logger.warning("File: " + file + " is not executable. "+ "Attempt to mark it as executable has failed. "+ "Execution of this command may not be possible");
+    }
+    return retval;
+  }
+ catch (  final IllegalArgumentException e) {
+    throw new USMException("Failed to make file " + file.getAbsolutePath() + " as executable",e);
+  }
+catch (  final IllegalAccessException e) {
+    throw new USMException("Failed to make file " + file.getAbsolutePath() + " as executable",e);
+  }
+catch (  final InvocationTargetException e) {
+    throw new USMException("Failed to make file " + file.getAbsolutePath() + " as executable",e);
+  }
+}

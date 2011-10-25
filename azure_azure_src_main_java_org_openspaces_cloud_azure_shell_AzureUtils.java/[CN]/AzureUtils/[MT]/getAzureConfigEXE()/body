@@ -1,0 +1,3 @@
+{
+  return toAbsoluteFile(AZURECONFIG_EXE);
+}

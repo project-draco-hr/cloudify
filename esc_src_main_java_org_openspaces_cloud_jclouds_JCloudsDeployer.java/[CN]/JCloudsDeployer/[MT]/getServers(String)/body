@@ -1,0 +1,9 @@
+{
+  return getServers(new Predicate<ComputeMetadata>(){
+    public boolean apply(    ComputeMetadata input){
+      final NodeMetadata node=(NodeMetadata)input;
+      return node.getGroup() != null && node.getGroup().equals(group);
+    }
+  }
+);
+}

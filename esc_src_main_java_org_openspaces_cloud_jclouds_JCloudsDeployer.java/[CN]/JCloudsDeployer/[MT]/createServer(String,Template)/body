@@ -1,0 +1,10 @@
+{
+  final Set<? extends NodeMetadata> nodes=createServersWithRetry(serverName,1,template);
+  if (nodes.isEmpty()) {
+    return null;
+  }
+  if (nodes.size() != 1) {
+    throw new IllegalStateException();
+  }
+  return nodes.iterator().next();
+}

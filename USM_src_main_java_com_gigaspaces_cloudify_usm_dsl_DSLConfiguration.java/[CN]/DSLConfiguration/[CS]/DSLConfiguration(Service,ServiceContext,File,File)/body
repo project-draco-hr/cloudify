@@ -1,0 +1,6 @@
+{
+  this.service=service;
+  this.serviceContext=serviceContext;
+  this.puExtDir=puExtDir;
+  this.serviceFile=serviceFile;
+}

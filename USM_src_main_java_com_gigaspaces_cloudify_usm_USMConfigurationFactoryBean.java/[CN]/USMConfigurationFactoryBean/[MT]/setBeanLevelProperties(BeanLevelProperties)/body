@@ -1,0 +1,7 @@
+{
+  final Properties props=beanLevelProperties.getContextProperties();
+  if (props != null) {
+    this.serviceFileName=props.getProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME);
+    this.propertiesFileName=props.getProperty(CloudifyConstants.CONTEXT_PROPERTY_PROPERTIES_FILE_NAME);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  HashSet<Class<?>> ret=new HashSet<Class<?>>();
+  ret.add(void.class);
+  ret.add(Void.class);
+  ret.add(Admin.class);
+  return ret;
+}

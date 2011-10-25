@@ -1,0 +1,28 @@
+{
+  Application app=this.admin.getApplications().waitFor(applicationName,10,TimeUnit.SECONDS);
+  if (app == null) {
+    return RestUtils.errorStatus(ResponseConstants.FAILED_TO_LOCATE_APP,applicationName);
+  }
+  ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
+  StringBuilder sb=new StringBuilder();
+  if (pus.length > 0) {
+    List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
+    for (    ProcessingUnit processingUnit : uninstallOrder) {
+      try {
+        processingUnit.undeploy();
+      }
+ catch (      Exception e) {
+        final String msg="Failed to undeploy processing unit: " + processingUnit.getName() + " while uninstalling application "+ applicationName+ ". Uninstall will continue, but service "+ processingUnit.getName()+ " may remain in an unstable state";
+        logger.log(Level.SEVERE,msg,e);
+        sb.append(msg).append("\n");
+      }
+    }
+  }
+  final String errors=sb.toString();
+  if (errors.length() == 0) {
+    return RestUtils.successStatus();
+  }
+ else {
+    return RestUtils.errorStatus(errors);
+  }
+}

@@ -1,0 +1,46 @@
+{
+  if (!applicationFile.exists()) {
+    throw new ErrorStatusException("application_not_found",applicationFile.getAbsolutePath());
+  }
+  long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
+  final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+  normalizeApplicationName(application);
+  File zipFile=null;
+  if (!applicationFile.isFile()) {
+    zipFile=File.createTempFile("application",".zip");
+    zipFile.deleteOnExit();
+    ZipUtils.zip(applicationFile,zipFile);
+  }
+ else {
+    if ((applicationFile.getName().endsWith(".zip")) || (applicationFile.getName().endsWith(".jar"))) {
+      zipFile=applicationFile;
+    }
+ else {
+      throw new ErrorStatusException("application_file_format_mismatch",applicationFile.getPath());
+    }
+  }
+  String serviceOrder=adminFacade.installApplication(zipFile,applicationName);
+  if (!applicationFile.isFile()) {
+    zipFile.delete();
+  }
+  if (serviceOrder.charAt(0) != '[' && serviceOrder.charAt(serviceOrder.length() - 1) != ']') {
+    throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);
+  }
+  if (serviceOrder.length() > 2) {
+    serviceOrder=serviceOrder.substring(1,serviceOrder.length() - 1);
+    logger.fine("Services will be installed in the following order: " + serviceOrder);
+    for (    String serviceName : serviceOrder.split(Pattern.quote(","))) {
+      String trimmedServiceName=serviceName.trim();
+      Service service=getServiceByName(application,trimmedServiceName);
+      int plannedNumberOfInstances=service.getNumInstances();
+      try {
+        plannedNumberOfInstances=adminFacade.waitForServiceInstances(trimmedServiceName,applicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+        logger.info(MessageFormat.format(messages.getString("service_install_ended"),trimmedServiceName));
+      }
+ catch (      CLIException ex) {
+        return MessageFormat.format(messages.getString("application_installation_failed"),applicationName);
+      }
+    }
+  }
+  return this.getFormattedMessage("application_installed_succesfully",applicationName);
+}

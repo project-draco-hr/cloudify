@@ -1,0 +1,4 @@
+{
+  StartLocalCloud cmd=new StartLocalCloud();
+  cmd.doExecute();
+}

@@ -1,0 +1,3 @@
+{
+  return properties.get(REMOTE_DIRECTORY_KEY,REMOTE_DIRECTORY_DEFAULT);
+}

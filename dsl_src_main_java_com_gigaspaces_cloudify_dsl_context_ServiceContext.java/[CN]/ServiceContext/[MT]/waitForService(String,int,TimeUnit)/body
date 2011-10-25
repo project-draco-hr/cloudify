@@ -1,0 +1,16 @@
+{
+  checkInitialized();
+  if (this.admin != null) {
+    ProcessingUnit pu=waitForProcessingUnitFromAdmin(name,timeout,unit);
+    if (pu == null) {
+      return null;
+    }
+ else {
+      return new com.gigaspaces.cloudify.dsl.context.Service(pu);
+    }
+  }
+  if (name.equals(this.service.getName())) {
+    return new com.gigaspaces.cloudify.dsl.context.Service(name,service.getNumInstances());
+  }
+  throw new IllegalArgumentException("When running in the integrated container, Service Context only includes the running service");
+}

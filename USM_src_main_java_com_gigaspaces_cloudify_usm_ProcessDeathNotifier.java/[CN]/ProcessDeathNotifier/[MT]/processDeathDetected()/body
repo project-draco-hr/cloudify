@@ -1,0 +1,7 @@
+{
+  if (processDead) {
+    return;
+  }
+  processDead=true;
+  usm.onProcessDeath();
+}

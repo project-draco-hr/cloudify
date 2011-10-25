@@ -1,0 +1,26 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to invoke bean " + beanName + " of service "+ serviceName+ " of application "+ applicationName);
+  }
+  ProcessingUnit pu=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.severe("Could not find service " + serviceName);
+    return unavailableServiceError(serviceName);
+  }
+  InternalProcessingUnitInstance pui=findInstanceById(pu,instanceId);
+  final String instanceName=buildServiceInstanceName(pui);
+  if (pui == null) {
+    logger.severe("Could not find service instance " + instanceId + " for service "+ serviceName);
+    return errorStatus(ResponseConstants.SERVICE_INSTANCE_UNAVAILABLE,applicationName,serviceName,Integer.toString(instanceId));
+  }
+  try {
+    Future<?> future=pui.invoke(beanName,params);
+    Object invocationResult=future.get();
+    Object finalResult=postProcessInvocationResult(invocationResult,instanceName);
+    return successStatus(finalResult);
+  }
+ catch (  Exception e) {
+    logger.severe("Error invoking pu instance " + serviceName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName());
+    return errorStatus(FAILED_TO_INVOKE_INSTANCE,applicationName,serviceName,Integer.toString(instanceId));
+  }
+}

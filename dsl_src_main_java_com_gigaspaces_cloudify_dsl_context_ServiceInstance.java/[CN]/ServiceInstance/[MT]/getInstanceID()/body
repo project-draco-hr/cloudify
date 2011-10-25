@@ -1,0 +1,8 @@
+{
+  if (pui != null) {
+    return pui.getInstanceId();
+  }
+ else {
+    return 1;
+  }
+}

@@ -1,0 +1,33 @@
+{
+  String os=System.getProperty("os.name");
+  logger.fine("os.name = " + os);
+  if (os == null) {
+    throw new java.lang.IllegalStateException("The System Property variable 'os.name' was not set");
+  }
+  os=os.toLowerCase();
+  CommandLine cmdLine=null;
+  boolean isWindows=os.startsWith("win");
+  if (isWindows) {
+    cmdLine=new CommandLine(WINDOWS_EXECUTABLE);
+    for (    String param : WINDOWS_PREFIX) {
+      cmdLine.addArgument(param);
+    }
+  }
+ else {
+    cmdLine=new CommandLine(LINUX_EXECUTABLE);
+  }
+  for (  String param : AGENT_PARAMETERS) {
+    cmdLine.addArgument(param);
+  }
+  if (isWindows) {
+    for (    String param : WINDOWS_SUFFIX) {
+      cmdLine.addArgument(param);
+    }
+  }
+ else {
+    for (    String param : LINUX_SUFFIX) {
+      cmdLine.addArgument(param);
+    }
+  }
+  return cmdLine;
+}

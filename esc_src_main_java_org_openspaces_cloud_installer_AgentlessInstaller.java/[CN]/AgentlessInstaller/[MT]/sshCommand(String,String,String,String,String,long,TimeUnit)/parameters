@@ -1,0 +1,7 @@
+String host
+String command
+String username
+String password
+String keyFile
+long timeout
+TimeUnit unit

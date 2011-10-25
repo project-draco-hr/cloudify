@@ -1,0 +1,3 @@
+{
+  return properties.get(API_KEY_KEY);
+}

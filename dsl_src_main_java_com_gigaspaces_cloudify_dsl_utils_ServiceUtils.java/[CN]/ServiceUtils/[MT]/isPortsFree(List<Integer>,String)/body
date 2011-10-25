@@ -1,0 +1,20 @@
+{
+  Socket sock=new Socket();
+  for (  int port : portList) {
+    try {
+      sock.connect(new InetSocketAddress(hostName,port));
+      sock.close();
+      return false;
+    }
+ catch (    IOException e) {
+    }
+ finally {
+      try {
+        sock.close();
+      }
+ catch (      IOException e) {
+      }
+    }
+  }
+  return true;
+}

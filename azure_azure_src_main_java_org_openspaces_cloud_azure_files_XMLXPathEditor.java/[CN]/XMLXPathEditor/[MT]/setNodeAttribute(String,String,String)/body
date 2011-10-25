@@ -1,0 +1,3 @@
+{
+  setNodeAttribute(xPathExpression,attributeName,attributeValue,document);
+}

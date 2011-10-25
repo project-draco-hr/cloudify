@@ -1,0 +1,6 @@
+{
+  List<String> newCommand=new LinkedList<String>();
+  newCommand.add(newPart);
+  newCommand.addAll(originalCommandLine.subList(1,originalCommandLine.size()));
+  return newCommand;
+}

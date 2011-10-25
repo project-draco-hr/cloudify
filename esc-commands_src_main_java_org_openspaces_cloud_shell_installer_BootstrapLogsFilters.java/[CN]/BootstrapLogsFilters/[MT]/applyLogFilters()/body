@@ -1,0 +1,9 @@
+{
+  Filter newFilter=new Filter(){
+    @Override public boolean isLoggable(    LogRecord record){
+      return verbose;
+    }
+  }
+;
+  sshOutputLogger.setFilter(newFilter);
+}

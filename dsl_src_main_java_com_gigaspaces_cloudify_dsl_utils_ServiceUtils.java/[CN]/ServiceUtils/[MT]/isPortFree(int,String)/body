@@ -1,0 +1,5 @@
+{
+  List<Integer> list=new ArrayList<Integer>();
+  list.add(port);
+  return isPortsFree(list,host);
+}

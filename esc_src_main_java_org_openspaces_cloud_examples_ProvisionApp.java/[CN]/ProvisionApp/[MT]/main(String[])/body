@@ -1,0 +1,56 @@
+{
+  final int memoryPerContainer=6144;
+  final String gridName="helloProc";
+  final String esmNodeName="gs_esm_manager_hello";
+  final String appJar="hello-processor.jar";
+  final Properties props=ProvisionApp.loadProperties();
+  final CloudMachineProvisioningConfig config=new CloudMachineProvisioningConfig(props);
+  config.setMachineNamePrefix("gs_esm_gsa_");
+  config.setGridName(gridName);
+  config.setsDedicatedManagementMachines(true);
+  System.out.println("Deploying Application ..");
+  final InstallationDetails details=ProvisionApp.createInstallationDetails(config,null);
+  final String locator=ProvisionApp.startManagementNode(esmNodeName,details,config);
+  System.out.println("Connecting to server at: " + locator);
+  config.setLocalDirectory(config.getRemoteDirectory());
+  final Admin admin=new AdminFactory().addLocator(locator).createAdmin();
+  final GridServiceManager gsm=admin.getGridServiceManagers().waitForAtLeastOne(30,TimeUnit.SECONDS);
+  if (gsm == null) {
+    System.err.println("GSM was not found!");
+    System.exit(1);
+  }
+  config.setMachineNamePrefix("gs_esm_gsa_");
+  config.setLocator(locator);
+  final ProcessingUnit pu=gsm.deploy(new ElasticStatefulProcessingUnitDeployment(new File(appJar)).maxMemoryCapacity(memoryPerContainer * 8,MemoryUnit.MEGABYTES).memoryCapacityPerContainer(memoryPerContainer,MemoryUnit.MEGABYTES).highlyAvailable(true).scale(new ManualCapacityScaleConfigurer().memoryCapacity(memoryPerContainer * 4,MemoryUnit.MEGABYTES).create()).dedicatedMachineProvisioning(config));
+  try {
+    System.out.println("Waiting for deployment completion ..");
+    final Space space=pu.waitForSpace();
+    while (!space.waitFor(space.getTotalNumberOfInstances(),10,TimeUnit.SECONDS)) {
+      System.out.println("Waiting for all partitions to deploy. " + "Available: " + space.getNumberOfInstances() + ", "+ "Required: "+ space.getTotalNumberOfInstances());
+      for (      final String host : admin.getMachines().getHostsByAddress().keySet()) {
+        System.out.println(host + "\n");
+      }
+    }
+    System.out.println("All instances have been deployed. Confirming Application is ready.");
+    final GigaSpace gigaSpace=space.getGigaSpace();
+    System.out.println("Writing TestData object");
+    for (long i=0; i < 100; i++) {
+      gigaSpace.write(new TestData(i,"message" + i,ProvisionApp.createInfo(i)));
+    }
+    System.out.println("Scaling out");
+    pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(memoryPerContainer * 8,MemoryUnit.MEGABYTES).create());
+    System.out.println("Reading TestData objects");
+    final TestData[] d=gigaSpace.readMultiple(new SQLQuery<TestData>(TestData.class,"info.salary < 11000 and info.salary >= 10000"),Integer.MAX_VALUE);
+    for (int i=0; i < d.length; i++) {
+      System.out.println("Result Data [" + i + "] is -> "+ d[i]);
+    }
+    System.out.println("Done Writing and reading TestData!");
+    System.exit(0);
+  }
+ catch (  final Exception ex) {
+    ex.printStackTrace();
+    System.out.println("Caught exception: Undeploying... ");
+    pu.undeploy();
+    System.exit(1);
+  }
+}

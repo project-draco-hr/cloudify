@@ -1,0 +1,13 @@
+{
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (processingUnit == null) {
+    return unavailableServiceError(serviceName);
+  }
+  for (  ProcessingUnitInstance instance : processingUnit.getInstances()) {
+    if (instance.getInstanceId() == instanceId) {
+      instance.decrement();
+      return successStatus();
+    }
+  }
+  return errorStatus(SERVICE_INSTANCE_UNAVAILABLE);
+}

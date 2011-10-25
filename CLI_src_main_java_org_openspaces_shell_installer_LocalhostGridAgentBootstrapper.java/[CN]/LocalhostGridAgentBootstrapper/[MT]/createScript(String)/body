@@ -1,0 +1,32 @@
+{
+  File tempFile;
+  try {
+    tempFile=File.createTempFile("run-gs-agent",isWindows() ? ".bat" : ".sh");
+  }
+ catch (  IOException e) {
+    throw new CLIException(e);
+  }
+  tempFile.deleteOnExit();
+  BufferedWriter out=null;
+  try {
+    try {
+      out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile)));
+      if (!isWindows()) {
+        out.write(LINUX_SCRIPT_PREFIX);
+      }
+      out.write(text);
+    }
+  finally {
+      if (out != null) {
+        out.close();
+      }
+    }
+  }
+ catch (  final IOException e) {
+    throw new CLIException(e);
+  }
+  if (!isWindows()) {
+    tempFile.setExecutable(true,true);
+  }
+  return tempFile;
+}

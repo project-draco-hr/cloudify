@@ -1,0 +1,7 @@
+{
+  Set<String> containerUids=new HashSet<String>();
+  for (  String serviceName : getServicesList(applicationName)) {
+    containerUids.addAll(getGridServiceContainerUidsForService(applicationName,serviceName));
+  }
+  return containerUids;
+}

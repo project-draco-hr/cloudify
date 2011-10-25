@@ -1,0 +1,3 @@
+{
+  return this.listOfCommands.get(listOfCommands.size() - 1);
+}

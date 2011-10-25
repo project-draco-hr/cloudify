@@ -1,0 +1,21 @@
+{
+  if (componentTypeStr != null) {
+    try {
+      ComponentType componentType=componentTypeFromLowerCaseComponentName(componentTypeStr);
+switch (componentType) {
+case SERVICE:
+        return adminFacade.getServicesList(getCurrentApplicationName());
+case APPLICATION:
+      return adminFacade.getApplicationsList();
+default :
+    logger.warning("Unhandled component type:" + componentType);
+  return null;
+}
+}
+ catch (Exception e) {
+logger.warning("Cloud not get list of component of type: " + componentTypeStr + ": "+ e.getMessage());
+return null;
+}
+}
+return null;
+}

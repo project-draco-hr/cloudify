@@ -1,0 +1,18 @@
+{
+  try {
+    while (true) {
+      try {
+        if (!USMUtils.isProcessAlive(pid)) {
+          notifier.processDeathDetected();
+          return;
+        }
+      }
+ catch (      final USMException e) {
+        logger.log(Level.WARNING,"failed to check if process: " + pid + " is alive",e);
+      }
+      Thread.sleep(intervalMs);
+    }
+  }
+ catch (  final InterruptedException e) {
+  }
+}

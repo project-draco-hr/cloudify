@@ -1,0 +1,3 @@
+{
+  return getFixedPointRangeXPath(roleName,internalEndpointName) + "/@max";
+}

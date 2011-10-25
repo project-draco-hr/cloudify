@@ -1,0 +1,28 @@
+{
+  if (this.groovyCommandLinePrefixParams != null) {
+    return;
+  }
+  final String home=Environment.getHomeDirectory();
+  final File homeDir=new File(home);
+  final String groovyPath=createGroovyPath(homeDir);
+  final StringBuilder sb=new StringBuilder();
+  final List<File> jars=getJarFilesForGroovyClasspath(homeDir,workingDir);
+  if (jars != null) {
+    for (    final File jar : jars) {
+      sb.append(jar.getAbsolutePath()).append(File.pathSeparator);
+    }
+  }
+  final ArrayList<String> groovyCommandParams=new ArrayList<String>();
+  groovyCommandParams.add(groovyPath);
+  if (USMUtils.isWindows()) {
+    modifyWindowsCommandLine(groovyCommandParams,workingDir);
+  }
+  String classPathEnv=System.getenv("CLASSPATH");
+  if (classPathEnv == null) {
+    classPathEnv="";
+  }
+  classPathEnv=classPathEnv + File.pathSeparator + sb.toString();
+  logger.info("Setting ClassPath environment variable for child processes to: " + classPathEnv);
+  this.groovyEnvironmentClassPath=classPathEnv;
+  this.groovyCommandLinePrefixParams=groovyCommandParams;
+}

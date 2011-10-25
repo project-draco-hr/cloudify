@@ -1,0 +1,3 @@
+{
+  properties.putBoolean(CONNECTED_TO_PRIVATE_IP_KEY,value);
+}

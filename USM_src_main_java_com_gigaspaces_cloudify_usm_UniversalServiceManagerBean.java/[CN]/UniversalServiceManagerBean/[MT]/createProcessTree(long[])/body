@@ -1,0 +1,22 @@
+{
+  final HashMap<Long,Set<Long>> map=new HashMap<Long,Set<Long>>();
+  for (  final long pid : pids) {
+    final Set<Long> childSet=map.get(pid);
+    if (childSet == null) {
+      map.put(pid,new HashSet<Long>());
+    }
+    try {
+      final long ppid=this.sigar.getProcState(pid).getPpid();
+      Set<Long> set=map.get(ppid);
+      if (set == null) {
+        set=new HashSet<Long>();
+        map.put(ppid,set);
+      }
+      set.add(pid);
+    }
+ catch (    final SigarException e) {
+      logger.log(Level.WARNING,"Failed to get Parent Process for process: " + pid,e);
+    }
+  }
+  return map;
+}

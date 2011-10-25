@@ -1,0 +1,16 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to list instances for service " + serviceName + " of application "+ applicationName);
+  }
+  ProcessingUnit pu=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.severe("Could not find service " + serviceName);
+    return unavailableServiceError(serviceName);
+  }
+  Map<Integer,String> instanceMap=new HashMap<Integer,String>();
+  ProcessingUnitInstance[] instances=pu.getInstances();
+  for (  ProcessingUnitInstance instance : instances) {
+    instanceMap.put(instance.getInstanceId(),instance.getVirtualMachine().getMachine().getHostName());
+  }
+  return successStatus(instanceMap);
+}

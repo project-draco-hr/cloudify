@@ -1,0 +1,5 @@
+{
+  if (isLoggableEvent(event,listeners)) {
+    eventLogger.info(eventPrefix + event + " completed successfully");
+  }
+}

@@ -1,0 +1,19 @@
+{
+  final Properties props=new Properties();
+  String key=null;
+  for (  final String str : args) {
+    if (key == null) {
+      if (str.startsWith("-")) {
+        key=str.substring(1);
+      }
+ else {
+        key=str;
+      }
+    }
+ else {
+      props.put(key,str);
+      key=null;
+    }
+  }
+  return props;
+}

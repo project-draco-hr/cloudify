@@ -1,0 +1,35 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to invoke bean " + beanName + " of service "+ serviceName+ " of application "+ applicationName);
+  }
+  ProcessingUnit pu=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.severe("Could not find service " + serviceName);
+    return unavailableServiceError(serviceName);
+  }
+  Map<String,Object> invocationResult=new HashMap<String,Object>();
+  ProcessingUnitInstance[] instances=pu.getInstances();
+  Map<String,Future<Object>> futures=new HashMap<String,Future<Object>>(instances.length);
+  for (  ProcessingUnitInstance instance : instances) {
+    String serviceInstanceName=buildServiceInstanceName(instance);
+    try {
+      Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(beanName,params);
+      futures.put(serviceInstanceName,future);
+    }
+ catch (    Exception e) {
+      logger.severe("Error invoking service " + serviceName + ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName());
+      invocationResult.put(serviceInstanceName,"pu_instance_invocation_failure");
+    }
+  }
+  for (  Map.Entry<String,Future<Object>> entry : futures.entrySet()) {
+    try {
+      Object result=entry.getValue().get();
+      result=postProcessInvocationResult(result,entry.getKey());
+      invocationResult.put(entry.getKey(),result);
+    }
+ catch (    Exception e) {
+      invocationResult.put(entry.getKey(),"Invocation failure: " + e.getMessage());
+    }
+  }
+  return successStatus(invocationResult);
+}

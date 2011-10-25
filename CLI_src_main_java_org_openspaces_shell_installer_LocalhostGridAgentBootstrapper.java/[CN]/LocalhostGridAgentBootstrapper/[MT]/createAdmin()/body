@@ -1,0 +1,19 @@
+{
+  final AdminFactory adminFactory=new AdminFactory();
+  if (lookupGroups != null) {
+    adminFactory.addGroups(lookupGroups);
+  }
+  if (lookupLocators != null) {
+    adminFactory.addLocators(lookupLocators);
+  }
+  final Admin admin=adminFactory.create();
+  if (verbose) {
+    if (admin.getLocators().length > 0) {
+      logger.info("Lookup Locators=" + convertLookupLocatorToString(admin.getLocators()));
+    }
+    if (admin.getGroups().length > 0) {
+      logger.info("Lookup Groups=" + StringUtils.arrayToDelimitedString(admin.getGroups(),","));
+    }
+  }
+  return admin;
+}

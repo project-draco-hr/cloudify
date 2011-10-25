@@ -1,0 +1,7 @@
+{
+  String urlStr=url.toExternalForm();
+  if (!urlStr.endsWith("/")) {
+    urlStr+="/";
+  }
+  return urlStr;
+}

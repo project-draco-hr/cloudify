@@ -1,0 +1,16 @@
+{
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      flushDns();
+      try {
+        adminFacade.connect(null,null,restAdminUrl);
+        return true;
+      }
+ catch (      CLIException e) {
+      }
+      logger.log(Level.INFO,"Waiting for role instances and REST Admin server.");
+      return false;
+    }
+  }
+);
+}

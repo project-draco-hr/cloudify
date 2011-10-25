@@ -1,0 +1,3 @@
+{
+  properties.put(REMOTE_DIRECTORY_KEY,remoteDir);
+}

@@ -1,0 +1,21 @@
+{
+  final Set<String> nodeNames=new HashSet<String>();
+  nodeNames.add(node);
+  final InetAddress address=InetAddress.getByName(node);
+  nodeNames.add(address.getHostAddress());
+  nodeNames.add(address.getHostName());
+  final int sizeBefore=nodeNames.size();
+  nodeNames.removeAll(activeNodes);
+  final int sizeAfter=nodeNames.size();
+  if (sizeAfter != sizeBefore) {
+    return false;
+  }
+  try {
+    AgentlessInstaller.checkConnection(node,22,10,TimeUnit.SECONDS);
+  }
+ catch (  final Exception e) {
+    logger.info("Failed connection test on port 22 for machine: " + node);
+    return false;
+  }
+  return true;
+}

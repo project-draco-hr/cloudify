@@ -1,0 +1,9 @@
+{
+  if (events.length > 0) {
+    allEvents.addAll(Arrays.asList(events));
+    if (events.length > 1) {
+      Arrays.sort(events,eventsComparator);
+    }
+  }
+  return events;
+}

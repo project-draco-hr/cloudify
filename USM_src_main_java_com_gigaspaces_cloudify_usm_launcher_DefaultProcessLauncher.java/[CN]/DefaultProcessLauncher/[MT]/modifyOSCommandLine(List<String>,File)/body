@@ -1,0 +1,10 @@
+{
+  final String runParam=commandLineParams.get(0);
+  if (USMUtils.isWindows()) {
+    modifyWindowsCommandLine(commandLineParams,puWorkDir);
+  }
+ else {
+    markLinuxTargetAsExecutable(runParam,puWorkDir);
+    modifyLinuxCommandLine(commandLineParams,puWorkDir);
+  }
+}

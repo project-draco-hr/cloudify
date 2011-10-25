@@ -1,0 +1,11 @@
+{
+  if (this.eventLogger == null) {
+    this.eventLogger=java.util.logging.Logger.getLogger(USMLifecycleBean.class.getPackage().getName() + ".USMEventLogger.USM");
+  }
+  if (puName != null) {
+    this.eventPrefix=puName + "-" + this.instanceId+ " ";
+  }
+ else {
+    this.eventPrefix="USM-1 ";
+  }
+}

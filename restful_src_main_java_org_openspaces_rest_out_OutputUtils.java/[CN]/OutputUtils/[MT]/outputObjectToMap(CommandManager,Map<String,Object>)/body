@@ -1,0 +1,6 @@
+{
+  Object object=manager.getFinalCommand().getCommandObject();
+  String commandURL=manager.getCommandURL();
+  String commandName=manager.getFinalCommandName();
+  simpleOutputObjectToMap(object,commandURL,commandName,outputMap);
+}

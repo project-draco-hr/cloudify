@@ -1,0 +1,13 @@
+{
+  this.url=(String)config.get(URL_KEY);
+  if (this.url == null) {
+    throw new IllegalArgumentException("Argument url in " + this.getClass().getName() + " is mandatory");
+  }
+  if (config.containsKey(RESPONSE_CODES_KEY)) {
+    Object codesValue=config.get(RESPONSE_CODES_KEY);
+    if (List.class.isAssignableFrom(codesValue.getClass())) {
+      @SuppressWarnings("unchecked") List<Integer> codes=(List<Integer>)codesValue;
+      this.allowedResponseCodes=new HashSet<Integer>(codes);
+    }
+  }
+}

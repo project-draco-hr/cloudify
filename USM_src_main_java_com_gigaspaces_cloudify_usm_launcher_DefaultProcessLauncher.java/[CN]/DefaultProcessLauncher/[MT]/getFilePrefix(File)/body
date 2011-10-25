@@ -1,0 +1,8 @@
+{
+  String prefixToSearch=executableFile.getName();
+  final int index=prefixToSearch.lastIndexOf('.');
+  if (index >= 0) {
+    prefixToSearch=prefixToSearch.substring(0,index);
+  }
+  return prefixToSearch;
+}

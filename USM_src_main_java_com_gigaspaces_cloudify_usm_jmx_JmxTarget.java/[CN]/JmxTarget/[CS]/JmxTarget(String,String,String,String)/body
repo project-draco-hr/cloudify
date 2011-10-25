@@ -1,0 +1,7 @@
+{
+  this.domain=domain;
+  this.type=type;
+  this.attr=attr;
+  this.dispName=dispName;
+  this.value=null;
+}

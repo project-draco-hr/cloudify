@@ -1,0 +1,66 @@
+{
+  final SimpleBlockingJavaProcess simple=new SimpleBlockingJavaProcess();
+  final Properties props=SimpleBlockingJavaProcess.createProperties(args);
+  if (props.getProperty("port") != null) {
+    String[] ports=props.getProperty("port").split(",");
+    for (    String port : ports) {
+      simple.startServerTask(Integer.parseInt(port));
+    }
+  }
+  String fileOutputPath=props.getProperty("filePath");
+  final boolean dieOnParentDeath=Boolean.parseBoolean(props.getProperty("dieOnParentDeath",Boolean.TRUE.toString()));
+  System.out.println("dieOnParentDeath = " + dieOnParentDeath);
+  final MBeanServer mbs=ManagementFactory.getPlatformMBeanServer();
+  final ObjectName mbeanName=new ObjectName("org.openspaces.usm.examples.simplejavaprocess:type=SimpleBlockingJavaProcess");
+  mbs.registerMBean(simple,mbeanName);
+  simple.startReaderTask();
+  boolean parentProcessDied=false;
+  File f=null;
+  if (fileOutputPath == null) {
+    f=File.createTempFile("simpleProcessLog",".log");
+  }
+ else {
+    f=new File(fileOutputPath);
+    if (!f.exists()) {
+      f.createNewFile();
+    }
+  }
+  System.out.println("Simple Java Process will write to file: " + f.getAbsolutePath());
+  FileWriter fstream=new FileWriter(f);
+  BufferedWriter out=new BufferedWriter(fstream);
+  while (true) {
+    simple.incCounter();
+    if (simple.getCounter() != 3) {
+      out.write(simple.getCounter());
+    }
+ else {
+      out.write("Hello_World");
+    }
+    out.flush();
+    try {
+      System.out.println("system.out: Still alive...");
+      System.err.println("system.err: Still alive...");
+      if (!parentProcessDied) {
+        parentProcessDied=simple.getLatch().await(5,TimeUnit.SECONDS);
+        if (parentProcessDied) {
+          System.out.println("Parent process Died");
+          if (dieOnParentDeath) {
+            System.out.println("Exiting");
+            out.close();
+            break;
+          }
+        }
+      }
+ else {
+        Thread.sleep(1000);
+      }
+    }
+ catch (    final InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+  out.close();
+  simple.stopExecutorService();
+  mbs.unregisterMBean(mbeanName);
+  System.exit(0);
+}

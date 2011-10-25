@@ -1,0 +1,19 @@
+{
+  final File toolsDir=new File(homeDir,"tools");
+  final File groovyDir=new File(toolsDir,"groovy");
+  final File binDir=new File(groovyDir,"bin");
+  File groovyFile=null;
+  if (USMUtils.isWindows()) {
+    groovyFile=new File(binDir,"groovy.bat");
+  }
+ else {
+    groovyFile=new File(binDir,"groovy");
+  }
+  if (!groovyFile.exists()) {
+    throw new FileNotFoundException("Could not find groovy executable: " + groovyFile.getAbsolutePath());
+  }
+  if (USMUtils.isLinuxOrUnix()) {
+    USMUtils.markFileAsExecutable(sigar,groovyFile);
+  }
+  return groovyFile.getAbsolutePath();
+}

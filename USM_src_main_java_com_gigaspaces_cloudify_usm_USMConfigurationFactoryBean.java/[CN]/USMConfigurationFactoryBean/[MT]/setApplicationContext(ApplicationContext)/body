@@ -1,0 +1,6 @@
+{
+  this.applicationContext=ctx;
+  this.isRunningInGSC=USMUtils.isRunningInGSC(ctx);
+  this.puWorkDir=USMUtils.getPUWorkDir(ctx);
+  this.puExtDir=new File(puWorkDir,"ext");
+}

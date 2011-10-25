@@ -1,0 +1,5 @@
+{
+  Service service=readService(recipeFolder);
+  File packedFile=Packager.pack(recipeFolder,service);
+  return packedFile;
+}

@@ -1,0 +1,13 @@
+{
+  if (nicAddress == null) {
+    try {
+      nicAddress=Constants.getHostAddress();
+    }
+ catch (    UnknownHostException e) {
+      throw new CLIException(e);
+    }
+  }
+  if (verbose) {
+    logger.info("NIC Address=" + nicAddress);
+  }
+}

@@ -1,0 +1,22 @@
+{
+  HashSet<String> blackList=new HashSet<String>();
+  blackList.add("getReplicationStatus com.j_spaces.core.admin.JSpaceAdminProxy");
+  blackList.add("getClusterConfigFile com.j_spaces.core.admin.JSpaceAdminProxy");
+  blackList.add("getTargetSpaces com.gigaspaces.internal.client.spaceproxy.SpaceProxyImpl");
+  blackList.add("getAppDomainId com.gigaspaces.internal.client.spaceproxy.SpaceProxyImpl");
+  blackList.add("getDotnetProxyHandleId com.gigaspaces.internal.client.spaceproxy.SpaceProxyImpl");
+  blackList.add("getReplicationStatus com.gigaspaces.internal.lrmi.stubs.LRMISpaceImpl");
+  blackList.add("getReplicationTarget com.gigaspaces.internal.lrmi.stubs.LRMISpaceImpl");
+  blackList.add("getClusterConfigFile com.gigaspaces.internal.lrmi.stubs.LRMISpaceImpl");
+  blackList.add("getSpacePump com.gigaspaces.internal.lrmi.stubs.LRMISpaceImpl");
+  blackList.add("getLocalConfig com.j_spaces.core.admin.JSpaceAdminProxy");
+  blackList.add("getReplicationStatus com.gigaspaces.reflect.$GSProxy10");
+  blackList.add("getReplicationStatus com.gigaspaces.reflect.$GSProxy12");
+  blackList.add("getClusterConfigFile com.gigaspaces.reflect.$GSProxy12");
+  blackList.add("getReplicationTarget com.gigaspaces.reflect.$GSProxy10");
+  blackList.add("getSpacePump com.gigaspaces.reflect.$GSProxy10");
+  blackList.add("getReplicationStatus com.gigaspaces.reflect.$GSProxy9");
+  blackList.add("getClusterConfigFile com.gigaspaces.reflect.$GSProxy10");
+  blackList.add("getThreadSecurityContext com.gigaspaces.internal.client.spaceproxy.SpaceProxyImpl");
+  return blackList;
+}

@@ -1,0 +1,3 @@
+ArrayList<JmxAttribute> resultList
+MBeanServerConnection mbsc
+JmxBeanAttributes t

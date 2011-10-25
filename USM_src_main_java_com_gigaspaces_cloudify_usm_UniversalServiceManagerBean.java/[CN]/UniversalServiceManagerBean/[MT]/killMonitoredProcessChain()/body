@@ -1,0 +1,12 @@
+{
+  final List<Long> list=USMUtils.getProcessParentChain(this.actualProcessID,this.myPid);
+  logger.info("Killing child processes in chain: " + list);
+  for (  final Long pid : list) {
+    if (USMUtils.isProcessAlive(pid)) {
+      usmLifecycleBean.getProcessKiller().killProcess(pid);
+    }
+ else {
+      logger.info("Process: " + pid + " is dead.");
+    }
+  }
+}

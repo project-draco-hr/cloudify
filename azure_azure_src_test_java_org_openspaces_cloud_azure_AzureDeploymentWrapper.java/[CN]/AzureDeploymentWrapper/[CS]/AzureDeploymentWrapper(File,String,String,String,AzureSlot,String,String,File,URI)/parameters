@@ -1,0 +1,9 @@
+File azureConfigExe
+String subscriptionId
+String certificateThumbprint
+String hostedService
+AzureSlot slot
+String name
+String label
+File cscfgFile
+URI packageUri

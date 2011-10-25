@@ -1,0 +1,41 @@
+{
+  Class<?> clazz=null;
+  try {
+    final String className=descriptor.getClassName();
+    if ((className == null) || (className.length() == 0)) {
+      throw new IllegalArgumentException("Plugin must have a class name");
+    }
+    clazz=Class.forName(className);
+  }
+ catch (  final ClassNotFoundException e) {
+    logger.log(Level.SEVERE,"Class " + descriptor.getClassName() + " for Plugin was not found",e);
+    throw new IllegalArgumentException("Could not find class: " + descriptor.getClassName() + " for plugin "+ descriptor.getName(),e);
+  }
+  Object obj;
+  try {
+    obj=clazz.newInstance();
+  }
+ catch (  final InstantiationException e) {
+    logger.log(Level.SEVERE,"Plugin of class " + descriptor.getClassName() + " could not be created",e);
+    return null;
+  }
+catch (  final IllegalAccessException e) {
+    logger.log(Level.SEVERE,"Plugin of class " + descriptor.getClassName() + " could not be created",e);
+    return null;
+  }
+  Plugin plugin=null;
+  if (obj instanceof Plugin) {
+    plugin=(Plugin)obj;
+  }
+ else {
+    logger.log(Level.SEVERE,"Plugin of class " + descriptor.getClassName() + " does not "+ "implement the required Plugin interface and will not be created");
+    return null;
+  }
+  if (!(plugin instanceof USMComponent)) {
+    logger.log(Level.SEVERE,"Plugin of class " + descriptor.getClassName() + " does not "+ "implement the required USMComponent interface and will not be created");
+    throw new IllegalArgumentException("Plugin of class " + descriptor.getClassName() + " does not "+ "implement the required USMComponent interface and will not be created");
+  }
+  plugin.setServiceContext(this.serviceContext);
+  plugin.setConfig(descriptor.getConfig());
+  return plugin;
+}

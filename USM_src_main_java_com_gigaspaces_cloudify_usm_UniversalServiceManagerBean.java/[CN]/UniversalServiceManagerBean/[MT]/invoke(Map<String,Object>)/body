@@ -1,0 +1,35 @@
+{
+  logger.fine("Invoke called with parameters: " + namedArgs);
+  Map<String,Object> result=new HashMap<String,Object>();
+  result.put(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_ID,this.instanceId);
+  if (namedArgs == null) {
+    logger.severe("recieved empty named arguments map");
+    throw new IllegalArgumentException("Invoke recieved null as input");
+  }
+  final String commandName=(String)namedArgs.get(CloudifyConstants.INVOCATION_PARAMETER_COMMAND_NAME);
+  if (commandName == null) {
+    logger.severe("Command Name parameter in invoke is missing");
+    throw new IllegalArgumentException("Command Name parameter in invoke is missing");
+  }
+  result.put(CloudifyConstants.INVOCATION_RESPONSE_COMMAND_NAME,commandName);
+  final Service service=((DSLConfiguration)usmLifecycleBean.getConfiguration()).getService();
+  final Object customCommand=service.getCustomCommands().get(commandName);
+  if (customCommand == null) {
+    throw new IllegalArgumentException("Command: " + commandName + " does not exist in service: "+ service.getName());
+  }
+  try {
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Executing custom command: " + commandName + ". Custom command is: "+ customCommand);
+    }
+    EventResult executionResult=new DSLEntryExecutor(customCommand,this.usmLifecycleBean.getLauncher(),this.getPuExtDir(),namedArgs).run();
+    result.put(CloudifyConstants.INVOCATION_RESPONSE_STATUS,executionResult.isSuccess());
+    result.put(CloudifyConstants.INVOCATION_RESPONSE_EXCEPTION,executionResult.getException());
+    result.put(CloudifyConstants.INVOCATION_RESPONSE_RESULT,executionResult.getResult());
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Failed to execute the executeOnAllInstances section of custom command " + commandName + " on instance "+ instanceId,e);
+    result.put(CloudifyConstants.INVOCATION_RESPONSE_STATUS,false);
+    result.put(CloudifyConstants.INVOCATION_RESPONSE_EXCEPTION,e);
+  }
+  return result;
+}

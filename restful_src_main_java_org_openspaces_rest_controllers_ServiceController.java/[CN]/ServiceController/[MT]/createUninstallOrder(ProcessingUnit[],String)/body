@@ -1,0 +1,43 @@
+{
+  DirectedGraph<ProcessingUnit,DefaultEdge> graph=new DefaultDirectedGraph<ProcessingUnit,DefaultEdge>(DefaultEdge.class);
+  for (  ProcessingUnit processingUnit : pus) {
+    graph.addVertex(processingUnit);
+  }
+  Map<String,ProcessingUnit> puByName=new HashMap<String,ProcessingUnit>();
+  for (  ProcessingUnit processingUnit : pus) {
+    puByName.put(processingUnit.getName(),processingUnit);
+  }
+  for (  ProcessingUnit processingUnit : pus) {
+    final String dependsOn=(String)processingUnit.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON);
+    if (dependsOn == null) {
+      logger.warning("Could not find the " + CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON + " property for processing unit "+ processingUnit.getName());
+    }
+ else {
+      String[] dependencies=dependsOn.replace("[","").replace("]","").split(",");
+      for (      String puName : dependencies) {
+        final String normalizedPuName=puName.trim();
+        if (normalizedPuName.length() > 0) {
+          ProcessingUnit dependency=puByName.get(normalizedPuName);
+          if (dependency == null) {
+            logger.severe("Could not find Processing Unit " + normalizedPuName + " that Processing Unit "+ processingUnit.getName()+ " depends on");
+          }
+ else {
+            graph.addEdge(processingUnit,dependency);
+          }
+        }
+      }
+    }
+  }
+  CycleDetector<ProcessingUnit,DefaultEdge> cycleDetector=new CycleDetector<ProcessingUnit,DefaultEdge>(graph);
+  boolean containsCycle=cycleDetector.detectCycles();
+  if (containsCycle) {
+    logger.warning("Detected a cycle in the dependencies of application: " + applicationName + " while preparing to uninstall. The service in this application will be uninstalled in a random order");
+    return Arrays.asList(pus);
+  }
+  TopologicalOrderIterator<ProcessingUnit,DefaultEdge> iterator=new TopologicalOrderIterator<ProcessingUnit,DefaultEdge>(graph);
+  List<ProcessingUnit> orderedList=new ArrayList<ProcessingUnit>();
+  while (iterator.hasNext()) {
+    orderedList.add(iterator.next());
+  }
+  return orderedList;
+}

@@ -1,0 +1,6 @@
+{
+  if (!warFile.isAbsolute()) {
+    warFile=new File(Environment.getHomeDirectory(),warFile.getPath());
+  }
+  return warFile;
+}

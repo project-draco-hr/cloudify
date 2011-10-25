@@ -1,0 +1,5 @@
+{
+  final String json=GSRestClient.mapToJson(map);
+  final JavaType javaType=TypeFactory.type(InvocationResult.class);
+  return objectMapper.readValue(json,javaType);
+}

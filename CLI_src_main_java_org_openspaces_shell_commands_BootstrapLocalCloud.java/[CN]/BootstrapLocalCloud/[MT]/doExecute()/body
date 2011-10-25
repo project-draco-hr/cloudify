@@ -1,0 +1,13 @@
+{
+  if (timeoutInMinutes < 0) {
+    throw new CLIException("-timeout cannot be negative");
+  }
+  LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  installer.setVerbose(verbose);
+  installer.setLookupGroups(lookupGroups);
+  installer.setNicAddress(nicAddress);
+  installer.setProgressInSeconds(10);
+  installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
+  installer.startLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  return "Local-cloud started succesfully. Use the teardown-localcloud command to shutdown all processes.";
+}

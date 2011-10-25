@@ -1,0 +1,16 @@
+{
+  if (!file.exists()) {
+    return false;
+  }
+  if (USMUtils.isWindows()) {
+    return true;
+  }
+  if (USMUtils.markFileAsExecutableUsingJdk(file)) {
+    return true;
+  }
+  if (USMUtils.isFileExecutableSigar(file)) {
+    return true;
+  }
+  logger.info("File " + file + " is not executable according to sigar");
+  return USMUtils.markFileAsExecutableUsingChmod(file);
+}

@@ -1,0 +1,6 @@
+{
+  final String url=getFullUrl(relativeUrl);
+  logger.finer("performing http get to url: " + url);
+  final HttpGet httpMethod=new HttpGet(url);
+  return executeHttpMethod(httpMethod);
+}

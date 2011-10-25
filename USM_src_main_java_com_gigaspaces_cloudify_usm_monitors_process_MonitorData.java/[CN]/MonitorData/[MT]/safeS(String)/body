@@ -1,0 +1,9 @@
+{
+  if (v == null) {
+    return "";
+  }
+  if (v.equals("null")) {
+    return "";
+  }
+  return v;
+}

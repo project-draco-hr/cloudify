@@ -1,0 +1,9 @@
+{
+  final File[] jars=dir.listFiles(new FileFilter(){
+    @Override public boolean accept(    final File pathname){
+      return pathname.getName().endsWith(".jar") && pathname.isFile();
+    }
+  }
+);
+  return jars;
+}

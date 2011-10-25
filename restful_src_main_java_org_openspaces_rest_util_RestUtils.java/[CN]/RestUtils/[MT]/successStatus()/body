@@ -1,0 +1,3 @@
+{
+  return newHashMap(mapEntry(STATUS_KEY,(Object)SUCCESS));
+}

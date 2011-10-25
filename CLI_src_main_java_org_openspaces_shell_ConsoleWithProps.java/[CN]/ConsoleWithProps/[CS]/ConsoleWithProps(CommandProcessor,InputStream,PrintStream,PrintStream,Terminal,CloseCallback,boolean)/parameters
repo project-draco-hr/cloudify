@@ -1,0 +1,7 @@
+CommandProcessor commandProcessor
+InputStream input
+PrintStream output
+PrintStream err
+Terminal terminal
+CloseCallback callback
+boolean isInteractive

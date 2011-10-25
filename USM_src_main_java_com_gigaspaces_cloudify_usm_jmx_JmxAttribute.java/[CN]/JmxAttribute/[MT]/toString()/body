@@ -1,0 +1,3 @@
+{
+  return "JmxAttribute [objectName=" + objectName + ", attributeName="+ attributeName+ ", displayName="+ displayName+ "]";
+}

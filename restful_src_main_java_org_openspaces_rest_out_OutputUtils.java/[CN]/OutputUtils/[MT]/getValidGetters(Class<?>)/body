@@ -1,0 +1,10 @@
+{
+  Method[] allMethods=aClass.getMethods();
+  List<Method> validGetterMethods=new ArrayList<Method>();
+  for (  Method method : allMethods) {
+    if (isValidObjectGetter(method)) {
+      validGetterMethods.add(method);
+    }
+  }
+  return validGetterMethods;
+}

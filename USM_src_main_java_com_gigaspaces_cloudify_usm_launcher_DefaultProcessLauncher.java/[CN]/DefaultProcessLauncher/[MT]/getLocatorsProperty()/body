@@ -1,0 +1,10 @@
+{
+  String property=System.getProperty("com.gs.jini_lus.locators");
+  if (property == null) {
+    property=System.getenv("LOOKUPLOCATORS");
+  }
+  if (property != null) {
+    property=property.replace("\"","");
+  }
+  return property;
+}

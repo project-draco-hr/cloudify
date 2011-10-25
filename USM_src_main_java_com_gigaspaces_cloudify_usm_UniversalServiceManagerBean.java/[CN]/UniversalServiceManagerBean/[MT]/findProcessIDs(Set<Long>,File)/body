@@ -1,0 +1,17 @@
+{
+  if (pidFile != null) {
+    return;
+  }
+  final long[] allPids=getAllPids();
+  final Map<Long,Set<Long>> procTree=createProcessTree(allPids);
+  this.childProcessID=findNewChildProcessID(childrenBefore,procTree);
+  logger.info("Looking for actual process ID in process tree");
+  this.actualProcessID=findLeafProcessID(this.childProcessID,procTree);
+  checkForConsoleProcess(this.actualProcessID);
+  try {
+    logProcessDetails();
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.SEVERE,"Failed to log process details",e);
+  }
+}

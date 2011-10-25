@@ -1,0 +1,7 @@
+{
+  final ClusterInfo info=new ClusterInfo();
+  info.setInstanceId(getIntEnvironmentVariable(CloudifyConstants.USM_ENV_INSTANCE_ID,1));
+  info.setName(getEnvironmentVariable(CloudifyConstants.USM_ENV_CLUSTER_NAME,"USM"));
+  info.setNumberOfInstances(getIntEnvironmentVariable(CloudifyConstants.USM_ENV_NUMBER_OF_INSTANCES,1));
+  return info;
+}

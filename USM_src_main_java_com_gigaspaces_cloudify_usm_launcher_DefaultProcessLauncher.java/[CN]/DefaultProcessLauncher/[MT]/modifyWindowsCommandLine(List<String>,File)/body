@@ -1,0 +1,17 @@
+{
+  final String firstParam=commandLineParams.get(0);
+  if (firstParam.endsWith(".bat")) {
+    for (int i=0; i < WINDOWS_BATCH_FILE_PREFIX_PARAMS.length; i++) {
+      commandLineParams.add(i,WINDOWS_BATCH_FILE_PREFIX_PARAMS[i]);
+    }
+  }
+  File file=new File(firstParam);
+  if (!file.isAbsolute()) {
+    file=new File(workingDir,firstParam);
+  }
+  if (!file.exists()) {
+    for (int i=0; i < WINDOWS_BATCH_FILE_PREFIX_PARAMS.length; i++) {
+      commandLineParams.add(i,WINDOWS_BATCH_FILE_PREFIX_PARAMS[i]);
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  Class<?> aClass=object.getClass();
+  if (PrimitiveWrapper.is(aClass)) {
+    outputMap.put(rawCommandName,object.toString());
+    return;
+  }
+  List<Method> validGetterMethods=getValidGetters(aClass);
+  Object resultObject=null;
+  String commandName;
+  for (  Method method : validGetterMethods) {
+    Class<?> methodReturnType=method.getReturnType();
+    commandName=getGetterCommandName(method.getName());
+    String nextCommandURL=null;
+    if (isDetailsGetter(method)) {
+      resultObject=safeInvoke(method,object);
+      if (!isNull(resultObject)) {
+        HashMap<String,Object> detailsMap=new HashMap<String,Object>();
+        simpleOutputObjectToMap(resultObject,commandURL + "/" + commandName,commandName,detailsMap);
+        outputMap.put(commandName,detailsMap);
+      }
+    }
+ else     if (methodReturnType.isArray()) {
+      resultObject=safeInvoke(method,object);
+      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      OutputUtils.outputArrayToMap(resultObject,outputMap,nextCommandURL);
+    }
+ else     if (Map.class.isAssignableFrom(methodReturnType)) {
+      resultObject=safeInvoke(method,object);
+      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      OutputUtils.outputMapToMap(resultObject,outputMap,nextCommandURL);
+    }
+ else     if (List.class.isAssignableFrom(methodReturnType)) {
+      resultObject=safeInvoke(method,object);
+      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      OutputUtils.outputListToMap(resultObject,outputMap,nextCommandURL);
+    }
+ else     if (PrimitiveWrapper.is(methodReturnType)) {
+      resultObject=safeInvoke(method,object);
+      if (!isNull(resultObject)) {
+        outputMap.put(commandName,resultObject.toString());
+      }
+    }
+ else {
+      outputMap.put(commandName,commandURL.concat("/" + commandName));
+    }
+  }
+}

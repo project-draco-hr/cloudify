@@ -1,0 +1,4 @@
+{
+  adminFacade.addInstance(getCurrentApplicationName(),serviceName,timeout);
+  return messages.getString("added_instance_successfully");
+}

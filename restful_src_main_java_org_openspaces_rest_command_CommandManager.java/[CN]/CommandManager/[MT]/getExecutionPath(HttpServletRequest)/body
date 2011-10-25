@@ -1,0 +1,7 @@
+{
+  String executionPath=(String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+  if (executionPath.endsWith("/")) {
+    executionPath=executionPath.substring(0,executionPath.length() - 1);
+  }
+  return executionPath;
+}

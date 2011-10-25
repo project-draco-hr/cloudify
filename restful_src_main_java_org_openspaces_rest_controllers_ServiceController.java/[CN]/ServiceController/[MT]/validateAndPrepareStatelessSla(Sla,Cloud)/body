@@ -1,0 +1,9 @@
+{
+  validateMemoryCapacityPerContainer(sla,cloud);
+  if (sla.getMemoryCapacity() != null) {
+    throw new DSLException("memoryCapacity SLA is not supported in this service");
+  }
+  if (sla.getMaxMemoryCapacity() != null) {
+    throw new DSLException("maxMemoryCapacity SLA is not supported in this service");
+  }
+}

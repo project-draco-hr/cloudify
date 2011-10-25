@@ -1,0 +1,6 @@
+{
+  if (!active) {
+    return null;
+  }
+  return new ProcessDetails();
+}

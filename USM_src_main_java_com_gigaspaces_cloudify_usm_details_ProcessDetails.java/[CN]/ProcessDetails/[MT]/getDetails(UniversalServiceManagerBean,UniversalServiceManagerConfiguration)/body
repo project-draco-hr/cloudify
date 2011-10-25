@@ -1,0 +1,6 @@
+{
+  final Map<String,Object> map=new HashMap<String,Object>();
+  map.put("GSC PID",usm.getContainerPid());
+  map.put("Working Directory",usm.getPuExtDir().getAbsolutePath());
+  return map;
+}

@@ -1,0 +1,10 @@
+{
+  this.applicationDir=this.getProperty(DSLUtils.APPLICATION_DIR);
+  if (this.applicationDir == null) {
+    throw new java.lang.IllegalStateException("Could not read application DSL file as the application Directory was not set");
+  }
+  this.application=new Application();
+  this.activeObject=this.application;
+  closure.call();
+  return this.application;
+}

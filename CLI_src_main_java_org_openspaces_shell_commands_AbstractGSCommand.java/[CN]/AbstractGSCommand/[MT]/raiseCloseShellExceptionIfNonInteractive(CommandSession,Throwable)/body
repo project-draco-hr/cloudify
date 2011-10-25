@@ -1,0 +1,6 @@
+{
+  if (!(Boolean)(session.get(Constants.INTERACTIVE_MODE))) {
+    session.put(Constants.LAST_COMMAND_EXCEPTION,t);
+    throw new CloseShellException();
+  }
+}

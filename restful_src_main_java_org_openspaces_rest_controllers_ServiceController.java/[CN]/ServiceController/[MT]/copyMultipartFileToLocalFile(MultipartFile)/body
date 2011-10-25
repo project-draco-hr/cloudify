@@ -1,0 +1,6 @@
+{
+  final File tmpfile=File.createTempFile("gs___",srcFile.getOriginalFilename());
+  srcFile.transferTo(tmpfile);
+  tmpfile.deleteOnExit();
+  return tmpfile;
+}

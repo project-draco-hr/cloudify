@@ -1,0 +1,4 @@
+{
+  setProperty(name,args);
+  return null;
+}

@@ -1,0 +1,38 @@
+{
+  if (this.regex == "" || this.filePath == "") {
+    throw new USMException("When using the FileLivnessDetector, both the file path and regex should be defined.");
+  }
+  File file=new File(this.filePath);
+  if (!file.isAbsolute()) {
+    file=new File(serviceDirectory,this.filePath);
+  }
+  FileTailerListener listener=new FileTailerListener(this.regex);
+  Tailer tailer=null;
+  try {
+    long startTime=System.currentTimeMillis();
+    while (System.currentTimeMillis() < startTime + timeoutInSeconds * 1000) {
+      if (file.exists()) {
+        if (tailer == null) {
+          tailer=Tailer.create(file,listener,TIMEOUT_BETWEEN_FILE_QUERYING,false);
+        }
+        if (listener.isProcessUp()) {
+          logger.info("The regular expression " + this.regex + " was found in the process log");
+          return true;
+        }
+      }
+      try {
+        Thread.sleep(TIMEOUT_BETWEEN_FILE_QUERYING);
+      }
+ catch (      InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  finally {
+    if (tailer != null) {
+      tailer.stop();
+    }
+  }
+  logger.info("The regular expression " + this.regex + " was NOT found in the process log");
+  return false;
+}

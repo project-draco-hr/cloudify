@@ -1,0 +1,6 @@
+{
+  final ElasticServiceManager esm=getESM();
+  if (esm == null) {
+    throw new IllegalStateException("Could not find an ESM in the cluster. Groups: " + Arrays.toString(this.admin.getGroups()));
+  }
+}

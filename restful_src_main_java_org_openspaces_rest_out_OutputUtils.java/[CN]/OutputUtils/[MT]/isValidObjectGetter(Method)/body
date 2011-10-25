@@ -1,0 +1,26 @@
+{
+  String methodName=method.getName();
+  Class<?> retType=method.getReturnType();
+  if (methodName.equals("getClass")) {
+    return false;
+  }
+  if (methodName.endsWith("Changed") || methodName.endsWith("Removed") || methodName.endsWith("Added")) {
+    return false;
+  }
+  if (retType.getCanonicalName().contains(".events")) {
+    return false;
+  }
+  if (method.getParameterTypes().length > 0) {
+    return false;
+  }
+  if (AdminTypeBlacklist.in(retType)) {
+    return false;
+  }
+  if (methodName.startsWith("is") && (retType.equals(boolean.class) || retType.equals(Boolean.class))) {
+    return true;
+  }
+ else   if (!methodName.startsWith("get")) {
+    return false;
+  }
+  return true;
+}

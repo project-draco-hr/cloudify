@@ -1,0 +1,9 @@
+{
+  File cassandraDslFile=new File(CORRUPTED_RESOURCES_PATH + "cassandra_UI_ommited-service.groovy");
+  File cassandraWorkDir=new File(CORRUPTED_RESOURCES_PATH);
+  Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir).getService();
+  assertNotNull(service);
+  assertNull(service.getUserInterface());
+  ServiceTestUtil.validateName(service,nameInGroovy);
+  ServiceTestUtil.validateIcon(service);
+}

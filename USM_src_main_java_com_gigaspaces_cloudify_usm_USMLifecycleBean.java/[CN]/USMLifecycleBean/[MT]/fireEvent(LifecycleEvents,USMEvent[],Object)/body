@@ -1,0 +1,45 @@
+{
+  if (listeners != null && listeners.length > 0) {
+    logEventStart(event,listeners);
+    for (    final USMEvent listener : listeners) {
+      EventResult er=null;
+switch (event) {
+case PRE_SERVICE_START:
+        er=((PreServiceStartListener)listener).onPreServiceStart();
+      break;
+case INIT:
+    er=((InitListener)listener).onInit();
+  break;
+case PRE_INSTALL:
+er=((PreInstallListener)listener).onPreInstall();
+break;
+case POST_INSTALL:
+er=((PostInstallListener)listener).onPostInstall();
+break;
+case PRE_START:
+er=((PreStartListener)listener).onPreStart((StartReason)reason);
+break;
+case POST_START:
+er=((PostStartListener)listener).onPostStart((StartReason)reason);
+break;
+case PRE_STOP:
+er=((PreStopListener)listener).onPreStop((StopReason)reason);
+break;
+case POST_STOP:
+er=((PostStopListener)listener).onPostStop((StopReason)reason);
+break;
+case SHUTDOWN:
+er=((ShutdownListener)listener).onShutdown();
+break;
+case PRE_SERVICE_STOP:
+er=((PreServiceStopListener)listener).onPreServiceStop();
+break;
+}
+if (!er.isSuccess()) {
+logEventFailure(event,listeners,er);
+throw new USMException("Failed to execute event: " + event + ". Error was: "+ er.getException());
+}
+}
+logEventSuccess(event,listeners);
+}
+}

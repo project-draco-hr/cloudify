@@ -1,0 +1,38 @@
+{
+  this.session=session;
+  messages=ShellUtils.getMessageBundle();
+  try {
+    if (adminAware) {
+      adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
+      if (!adminFacade.isConnected()) {
+        throw new ErrorStatusException("not_connected");
+      }
+    }
+    Object result=doExecute();
+    return result;
+  }
+ catch (  ErrorStatusException e) {
+    if (verbose) {
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e),e);
+    }
+ else {
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e));
+    }
+    raiseCloseShellExceptionIfNonInteractive(session,e);
+  }
+catch (  CLIException e) {
+    if (!verbose) {
+      e.setStackTrace(new StackTraceElement[]{});
+    }
+    logger.log(Level.WARNING,"",e);
+    raiseCloseShellExceptionIfNonInteractive(session,e);
+  }
+catch (  Throwable e) {
+    if (!verbose) {
+      e.setStackTrace(new StackTraceElement[]{});
+    }
+    logger.log(Level.SEVERE,"",e);
+    raiseCloseShellExceptionIfNonInteractive(session,e);
+  }
+  return MessageFormat.format(messages.getString("op_failed"),"");
+}

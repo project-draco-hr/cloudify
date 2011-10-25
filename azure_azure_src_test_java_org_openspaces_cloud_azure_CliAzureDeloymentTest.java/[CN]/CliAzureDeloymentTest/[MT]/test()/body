@@ -1,0 +1,68 @@
+{
+  List<List<String>> commands=new ArrayList<List<String>>();
+  String applicationAbsolutePath=applicationFile.getAbsolutePath().replaceAll(Pattern.quote("\\"),"/");
+  List<String> boostrapApplicationCommand=Arrays.asList("azure:bootstrap-app","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),"-azure-svc",AZURE_HOSTED_SERVICE,"-azure-pwd",RDP_PFX_FILE_PASSWORD,applicationAbsolutePath);
+  commands.add(boostrapApplicationCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  String deploymentUrl=deployment.getUrl();
+  final URL restAdminMachinesUrl=getMachinesUrl(deploymentUrl);
+  log("Getting number of running machines");
+  repetativeAssert("Number of machines",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        return EXPECTED_NUMBER_OF_MACHINES == getNumberOfMachines(restAdminMachinesUrl);
+      }
+ catch (      Exception e) {
+        return false;
+      }
+    }
+  }
+);
+  List<String> connectCommand=Arrays.asList("azure:connect-app","-azure-svc",AZURE_HOSTED_SERVICE);
+  List<String> installApplicationCommand=Arrays.asList("install-application",applicationAbsolutePath);
+  commands.add(connectCommand);
+  commands.add(installApplicationCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  final URI travelApplicationUrl=getTravelApplicationUrl(deploymentUrl).toURI();
+  RepetativeConditionProvider applicationInstalledCondition=new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        return isUrlAvailable(travelApplicationUrl.toURL());
+      }
+ catch (      Exception e) {
+        return false;
+      }
+    }
+  }
+;
+  repetativeAssert("Failed waiting for travel application",applicationInstalledCondition);
+  List<String> setInstancesScaleOutCommand=Arrays.asList("azure:set-instances","-azure-svc",AZURE_HOSTED_SERVICE,TOMCAT_SERVICE,NUMBER_OF_INSTANCES_FOR_TOMCAT_SERVICE);
+  commands.add(connectCommand);
+  commands.add(setInstancesScaleOutCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  repetativeAssert("Failed waiting for scale out",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        return getNumberOfMachines(restAdminMachinesUrl) == EXPECTED_NUMBER_OF_MACHINES + 1;
+      }
+ catch (      Exception e) {
+        return false;
+      }
+    }
+  }
+);
+  List<String> uninstallApplicationCommand=Arrays.asList("uninstall-application","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),APPLICATION_NAME);
+  commands.add(connectCommand);
+  commands.add(uninstallApplicationCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  Assert.assertFalse("Travel application should not be running",isUrlAvailable(travelApplicationUrl.toURL()));
+  commands.add(connectCommand);
+  commands.add(installApplicationCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  repetativeAssert("Failed waiting for travel application",applicationInstalledCondition);
+}

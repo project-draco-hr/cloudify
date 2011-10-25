@@ -1,0 +1,24 @@
+{
+  if (USMUtils.isWindows()) {
+    List<String> otherCommandLine=null;
+    if (map.entrySet().size() > 1) {
+      otherCommandLine=lookUpCommandLineForOS(map,"Linux");
+    }
+    if (otherCommandLine == null) {
+      otherCommandLine=getCommandLineFromValue(map.values().iterator().next());
+    }
+    final List<String> alternativeCommandLine=createWindowsCommandLineFromLinux(otherCommandLine,workDir);
+    return alternativeCommandLine;
+  }
+ else {
+    List<String> otherCommandLine=null;
+    if (map.entrySet().size() > 1) {
+      otherCommandLine=lookUpCommandLineForOS(map,"Windows");
+    }
+    if (otherCommandLine == null) {
+      otherCommandLine=getCommandLineFromValue(map.values().iterator().next());
+    }
+    final List<String> alternativeCommandLine=createLinuxCommandLineFromWindows(otherCommandLine,workDir);
+    return alternativeCommandLine;
+  }
+}

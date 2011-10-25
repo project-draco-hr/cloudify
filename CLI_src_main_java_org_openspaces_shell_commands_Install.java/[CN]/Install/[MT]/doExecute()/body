@@ -1,0 +1,15 @@
+{
+  if (!serviceFile.exists()) {
+    throw new ErrorStatusException("service_file_doesnt_exist",serviceFile.getPath());
+  }
+  File packedFile;
+  if (serviceFile.isDirectory()) {
+    packedFile=Pack.doPack(serviceFile);
+  }
+ else {
+    packedFile=serviceFile;
+  }
+  String currentApplicationName=getCurrentApplicationName();
+  String serviceName=adminFacade.install(currentApplicationName,packedFile);
+  return MessageFormat.format(messages.getString("installed_succesfully"),serviceName,currentApplicationName);
+}

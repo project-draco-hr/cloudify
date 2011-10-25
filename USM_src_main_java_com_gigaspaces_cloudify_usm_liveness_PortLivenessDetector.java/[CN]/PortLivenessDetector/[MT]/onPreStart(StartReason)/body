@@ -1,0 +1,8 @@
+{
+  for (  Integer port : this.portList) {
+    if (!ServiceUtils.isPortFree(port,hostName)) {
+      throw new IllegalStateException("The Port Liveness Detector found that port " + port + " is IN USE before the process was launched!");
+    }
+  }
+  return EventResult.SUCCESS;
+}

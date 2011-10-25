@@ -1,0 +1,6 @@
+{
+  if (relativeUrl.startsWith("/")) {
+    relativeUrl=relativeUrl.substring(1);
+  }
+  return urlStr + relativeUrl;
+}

@@ -1,0 +1,16 @@
+{
+  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  while (System.currentTimeMillis() < end) {
+    try {
+      Map<String,Object> pu=client.getAdminData(url);
+      if (serviceName.equals(pu.get("Name"))) {
+        return;
+      }
+    }
+ catch (    CLIException e) {
+      Thread.sleep(POLLING_INTERVAL);
+    }
+    Thread.sleep(POLLING_INTERVAL);
+  }
+  throw new TimeoutException(timeoutErrorMessage);
+}

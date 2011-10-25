@@ -1,0 +1,15 @@
+{
+switch (level) {
+case DEBUG:
+    return logger.isLoggable(Level.FINE);
+case INFO:
+  return logger.isLoggable(Level.INFO);
+case WARN:
+return logger.isLoggable(Level.WARNING);
+case ERROR:
+return logger.isLoggable(Level.SEVERE);
+case FATAL:
+return logger.isLoggable(Level.SEVERE);
+}
+return false;
+}

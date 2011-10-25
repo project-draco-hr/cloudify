@@ -1,0 +1,6 @@
+{
+  final File[] jars=getJarFilesFromDir(dir);
+  if (jars != null) {
+    list.addAll(Arrays.asList(jars));
+  }
+}

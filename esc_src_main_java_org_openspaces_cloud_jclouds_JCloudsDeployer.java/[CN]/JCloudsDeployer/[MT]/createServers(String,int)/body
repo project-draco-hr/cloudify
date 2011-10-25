@@ -1,0 +1,17 @@
+{
+  Set<? extends NodeMetadata> nodes=null;
+  try {
+    logger.info("JClouds Deployer is creating new machines with group: " + groupName + ". This may take a few minutes");
+    nodes=createServersWithRetry(groupName,numberOfMachines,getTemplate());
+  }
+ catch (  final RunNodesException e) {
+    throw new InstallerException("Failed to start Cloud server with JClouds",e);
+  }
+  if (nodes.isEmpty()) {
+    throw new IllegalStateException("Failed to create machines");
+  }
+  if (nodes.size() > numberOfMachines) {
+    throw new IllegalStateException("Created too manys machines");
+  }
+  return nodes;
+}

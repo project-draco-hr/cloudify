@@ -1,0 +1,16 @@
+{
+  if (inServiceBlock) {
+    throw new java.lang.IllegalStateException("Nested services are not supported");
+  }
+  inServiceBlock=true;
+  serviceBlockInitialized=false;
+  currentService=null;
+  closure.call();
+  if (this.currentService == null) {
+    throw new IllegalArgumentException("Service element must specify the service name in the first line");
+  }
+  application.getServices().add(this.currentService);
+  inServiceBlock=false;
+  serviceBlockInitialized=false;
+  currentService=null;
+}

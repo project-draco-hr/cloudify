@@ -1,0 +1,3 @@
+{
+  this.properties=new StringProperties(new HashMap<String,String>());
+}

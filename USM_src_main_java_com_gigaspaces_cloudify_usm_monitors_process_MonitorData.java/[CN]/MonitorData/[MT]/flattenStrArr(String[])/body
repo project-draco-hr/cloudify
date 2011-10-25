@@ -1,0 +1,10 @@
+{
+  if (arr == null) {
+    return "";
+  }
+  final StringBuilder res=new StringBuilder();
+  for (  final String str : arr) {
+    res.append(' ').append(str);
+  }
+  return res.toString();
+}

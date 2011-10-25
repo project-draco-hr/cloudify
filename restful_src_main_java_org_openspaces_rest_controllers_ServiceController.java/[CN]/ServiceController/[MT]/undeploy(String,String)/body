@@ -1,0 +1,8 @@
+{
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (processingUnit == null) {
+    return unavailableServiceError(serviceName);
+  }
+  processingUnit.undeploy();
+  return successStatus();
+}

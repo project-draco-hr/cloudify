@@ -1,0 +1,5 @@
+File azureConfigExeFile
+File encUtilExeFile
+String subscriptionId
+String certificateThumbprint
+boolean verbose

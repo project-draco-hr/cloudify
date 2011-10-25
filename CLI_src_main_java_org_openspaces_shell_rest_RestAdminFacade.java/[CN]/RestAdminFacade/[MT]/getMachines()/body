@@ -1,0 +1,11 @@
+{
+  Map<String,Object> map=client.getAdminData("machines/HostsByAddress");
+  @SuppressWarnings("unchecked") List<String> list=(List<String>)map.get("HostsByAddress-Elements");
+  List<String> result=new ArrayList<String>(list.size());
+  for (  String host : list) {
+    String[] parts=host.split("/");
+    String ip=parts[parts.length - 1];
+    result.add(ip);
+  }
+  return result;
+}

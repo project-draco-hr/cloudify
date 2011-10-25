@@ -1,0 +1,3 @@
+{
+  return properties.get(MANAGEMENT_GROUP_KEY,MANAGEMENT_GROUP_DEFAULT);
+}

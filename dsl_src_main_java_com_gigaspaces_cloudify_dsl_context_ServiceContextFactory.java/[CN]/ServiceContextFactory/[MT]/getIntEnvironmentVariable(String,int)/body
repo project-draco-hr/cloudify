@@ -1,0 +1,11 @@
+{
+  final String var=getEnvironmentVariable(name,"" + defaultValue);
+  try {
+    final int val=Integer.parseInt(var);
+    return val;
+  }
+ catch (  final NumberFormatException nfe) {
+    logger.severe("Failed to parse integer environment variable: " + name + ". Value was: "+ var+ ". Using default value "+ defaultValue+ " instead");
+    return defaultValue;
+  }
+}

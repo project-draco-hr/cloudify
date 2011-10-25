@@ -1,0 +1,9 @@
+{
+  this.workFolder=workFolder;
+  this.properties=properties;
+  gs=createGroovyShell(properties);
+  this.runningInGSC=runningInGSC;
+  this.clusterInfo=clusterInfo;
+  this.admin=admin;
+  this.context=new ServiceContext();
+}

@@ -1,0 +1,3 @@
+{
+  return convertCommandLineStringToParts(commandLine).get(0);
+}

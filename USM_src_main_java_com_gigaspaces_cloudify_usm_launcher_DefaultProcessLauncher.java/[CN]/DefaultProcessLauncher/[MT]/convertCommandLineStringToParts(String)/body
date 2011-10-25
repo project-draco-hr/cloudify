@@ -1,0 +1,8 @@
+{
+  List<String> list=new LinkedList<String>();
+  String[] parts=commandLine.split(" ");
+  for (  String part : parts) {
+    list.add(part);
+  }
+  return list;
+}

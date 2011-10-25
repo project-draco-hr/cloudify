@@ -1,0 +1,3 @@
+{
+  getEditor().setNodeAttribute("/ServiceConfiguration/Role/Certificates/Certificate","thumbprint",thumbprint);
+}

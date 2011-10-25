@@ -1,0 +1,13 @@
+{
+  final AlternativeExecutableFileNameFilter filter=new AlternativeExecutableFileNameFilter(){
+    String prefix;
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.startsWith(prefix) && (name.endsWith(".bat") || name.endsWith(".exe"));
+    }
+    @Override public void setPrefix(    final String prefix){
+      this.prefix=prefix;
+    }
+  }
+;
+  return createCommandLineFromAlternativeOS(puWorkDir,linuxCommandLine,filter);
+}

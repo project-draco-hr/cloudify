@@ -1,0 +1,8 @@
+{
+  logger.info("Setting File as executable: " + originalCommandLineRunParam);
+  final File file=getFileFromRelativeOrAbsolutePath(puWorkDir,originalCommandLineRunParam);
+  if (file != null) {
+    logger.info("File: " + file + " will be marked as executable");
+    USMUtils.markFileAsExecutable(sigar,file);
+  }
+}

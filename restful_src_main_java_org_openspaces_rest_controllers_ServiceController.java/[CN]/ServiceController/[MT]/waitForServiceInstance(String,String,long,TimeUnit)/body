@@ -1,0 +1,7 @@
+{
+  ProcessingUnit pu=this.admin.getProcessingUnits().waitFor(serviceName,timeout,timeUnit);
+  if (pu == null) {
+    return false;
+  }
+  return pu.waitFor(1,timeout,timeUnit);
+}

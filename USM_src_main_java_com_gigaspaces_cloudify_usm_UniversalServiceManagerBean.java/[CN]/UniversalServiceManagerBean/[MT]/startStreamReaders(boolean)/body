@@ -1,0 +1,14 @@
+{
+  final ProcessDeathNotifier notifier;
+  if (useNotifier) {
+    notifier=new ProcessDeathNotifier(this);
+  }
+ else {
+    notifier=null;
+  }
+  final Level level=Level.parse(this.streamLoggerLevel);
+  inputReader=new ProcessStreamReaderTask(process.getInputStream(),notifier,level,usmLifecycleBean.getOutputReaderLoggerName());
+  errorReader=new ProcessStreamReaderTask(process.getErrorStream(),notifier,level,usmLifecycleBean.getErrorReaderLoggerName());
+  executors.submit(inputReader);
+  executors.submit(errorReader);
+}

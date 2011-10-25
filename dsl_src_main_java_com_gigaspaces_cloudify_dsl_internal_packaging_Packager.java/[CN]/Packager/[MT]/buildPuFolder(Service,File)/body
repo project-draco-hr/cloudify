@@ -1,0 +1,49 @@
+{
+  File destPuFolder=File.createTempFile("gs_usm_","");
+  FileUtils.forceDelete(destPuFolder);
+  FileUtils.forceMkdir(destPuFolder);
+  logger.finer("created temp directory " + destPuFolder.getAbsolutePath());
+  final File extFolder=new File(destPuFolder,"/ext");
+  FileUtils.forceMkdir(extFolder);
+  final File libFolder=new File(destPuFolder.getAbsolutePath(),"/lib");
+  FileUtils.forceMkdir(libFolder);
+  final File springFolder=new File(destPuFolder.getAbsolutePath(),"/META-INF/spring");
+  FileUtils.forceMkdir(springFolder);
+  logger.finer("created pu structure under " + destPuFolder);
+  final SVNFileFilter svnFileFilter=new SVNFileFilter();
+  FileUtils.copyDirectory(srcFolder,extFolder,new FileFilter(){
+    @Override public boolean accept(    File pathname){
+      boolean f1=svnFileFilter.accept(pathname);
+      boolean f2=!(pathname.isDirectory() && pathname.getName().equals("usmlib"));
+      return f1 && f2;
+    }
+  }
+);
+  logger.finer("copied files from " + srcFolder.getAbsolutePath() + " to "+ extFolder.getAbsolutePath());
+  File srcUsmLibDir=new File(srcFolder,"usmlib");
+  if (srcUsmLibDir.exists()) {
+    FileUtils.copyDirectory(srcUsmLibDir,libFolder,svnFileFilter);
+  }
+  final File usmLibDir=getUsmLibDir(service);
+  final File srcUsmJar=new File(usmLibDir,"usm.jar");
+  if (!srcUsmJar.exists()) {
+    throw new PackagingException("could not find usm.jar");
+  }
+  FileUtils.copyDirectory(usmLibDir,libFolder,svnFileFilter);
+  logger.finer("copied " + srcUsmJar.getName());
+  final InputStream puXmlStream=Packager.class.getClassLoader().getResourceAsStream("META-INF/spring/default_usm_pu.xml");
+  if (puXmlStream == null) {
+    throw new PackagingException("can not find locate default pu.xml");
+  }
+  final File destPuXml=new File(springFolder,"pu.xml");
+  FileUtils.copyInputStreamToFile(puXmlStream,destPuXml);
+  logger.finer("copied pu.xml");
+  try {
+    puXmlStream.close();
+  }
+ catch (  IOException e) {
+    logger.log(Level.SEVERE,"failed to close defaul_usm_pu.xml stream",e);
+  }
+  logger.finer("created pu folder " + destPuFolder.getAbsolutePath());
+  return destPuFolder;
+}

@@ -1,0 +1,23 @@
+{
+  FileReader reader=null;
+  try {
+    reader=new FileReader(NODES_PROPERTIES_FILE_NAME);
+    final Properties props=new Properties();
+    props.load(reader);
+    return props;
+  }
+ catch (  final FileNotFoundException e) {
+    try {
+      createDefaultPropertiesFile();
+    }
+ catch (    final IOException ioe) {
+      throw new IOException("File " + NODES_PROPERTIES_FILE_NAME + " was not found. Attempted to create default file, but failed: "+ e.getMessage(),ioe);
+    }
+    throw new FileNotFoundException("File: " + NODES_PROPERTIES_FILE_NAME + " was not found. A default file was generated in the local directory. "+ "Please set the required values before trying again");
+  }
+ finally {
+    if (reader != null) {
+      reader.close();
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  String commandName=null;
+  if (getterName.startsWith("is")) {
+    commandName=getterName.substring(2);
+  }
+ else   if (getterName.startsWith("get")) {
+    commandName=getterName.substring(3);
+  }
+  return commandName;
+}

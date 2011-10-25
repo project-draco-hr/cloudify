@@ -1,0 +1,9 @@
+{
+  if (!isConnected()) {
+    doConnect(user,password,url);
+    this.connected=true;
+  }
+ else {
+    throw new ErrorStatusException("already_connected");
+  }
+}

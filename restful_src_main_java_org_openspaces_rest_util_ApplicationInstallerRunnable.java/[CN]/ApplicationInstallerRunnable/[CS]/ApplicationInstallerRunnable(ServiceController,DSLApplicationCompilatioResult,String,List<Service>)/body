@@ -1,0 +1,7 @@
+{
+  super();
+  this.controller=controller;
+  this.result=result;
+  this.applicationName=applicationName;
+  this.services=services;
+}

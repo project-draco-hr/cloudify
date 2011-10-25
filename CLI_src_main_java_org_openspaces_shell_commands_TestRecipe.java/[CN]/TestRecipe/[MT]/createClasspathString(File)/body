@@ -1,0 +1,14 @@
+{
+  String currentClassPathEnv=System.getenv("CLASSPATH");
+  if (currentClassPathEnv == null) {
+    currentClassPathEnv="";
+  }
+  currentClassPathEnv+=File.pathSeparator;
+  StringBuilder sb=new StringBuilder(currentClassPathEnv);
+  for (  String jarDir : JAR_DIRS) {
+    File dir=getDirIfExists(jarDir);
+    sb.append(dir.getAbsolutePath()).append(File.separator).append("*").append(File.pathSeparator);
+  }
+  sb.append(serviceFolder.getAbsolutePath()).append(File.separator).append(File.pathSeparator);
+  return sb.toString();
+}

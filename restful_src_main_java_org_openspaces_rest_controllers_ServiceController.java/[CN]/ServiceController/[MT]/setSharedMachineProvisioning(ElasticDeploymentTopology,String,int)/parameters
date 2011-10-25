@@ -1,0 +1,3 @@
+ElasticDeploymentTopology deployment
+String zone
+int reservedMemoryCapacityPerMachineInMB

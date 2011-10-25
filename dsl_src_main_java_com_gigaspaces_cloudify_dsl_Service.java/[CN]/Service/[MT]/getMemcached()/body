@@ -1,0 +1,7 @@
+{
+  Memcached service=null;
+  if (this.serviceProcessingUnit instanceof Memcached) {
+    service=(Memcached)serviceProcessingUnit;
+  }
+  return service;
+}

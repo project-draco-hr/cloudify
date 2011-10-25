@@ -1,0 +1,5 @@
+{
+  for (  CommandObject command : listOfCommands) {
+    command.runCommand();
+  }
+}

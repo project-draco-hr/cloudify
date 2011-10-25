@@ -1,0 +1,29 @@
+{
+  HttpURLConnection connection=(HttpURLConnection)machinesRestAdminUrl.openConnection();
+  try {
+    InputStream is=connection.getInputStream();
+    StringBuilder sb=new StringBuilder();
+    BufferedReader reader=new BufferedReader(new InputStreamReader(is));
+    String line=reader.readLine();
+    if (line != null) {
+      sb.append(line);
+    }
+    while ((line=reader.readLine()) != null) {
+      sb.append(line);
+    }
+    String json=sb.toString();
+    Pattern pattern=Pattern.compile("\"Size\":\"([0-9]+)\"");
+    Matcher matcher=pattern.matcher(json);
+    if (matcher.find()) {
+      String rawSize=matcher.group(1);
+      int size=Integer.parseInt(rawSize);
+      return size;
+    }
+ else {
+      return 0;
+    }
+  }
+  finally {
+    connection.disconnect();
+  }
+}

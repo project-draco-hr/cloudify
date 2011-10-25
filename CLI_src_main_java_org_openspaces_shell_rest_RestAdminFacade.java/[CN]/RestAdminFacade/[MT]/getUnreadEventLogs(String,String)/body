@@ -1,0 +1,4 @@
+{
+  List<Map<String,String>> allEventsExecutedList=(List<Map<String,String>>)client.get(SERVICE_CONTROLLER_URL + "/applications/" + applicationName+ "/services/"+ serviceName+ "/USMEventsLogs/");
+  return eventLoggingTailer.getLinesToPrint(allEventsExecutedList);
+}

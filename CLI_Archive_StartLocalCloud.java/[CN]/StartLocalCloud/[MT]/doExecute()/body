@@ -1,0 +1,36 @@
+{
+  Admin admin=createAdmin();
+  boolean lusFound=admin.getLookupServices().waitFor(1,2,TimeUnit.SECONDS);
+  if (lusFound) {
+    return getFormattedMessage("lus_already_running",Arrays.toString(admin.getGroups()));
+  }
+  try {
+    startLocalAgent(admin);
+  }
+ catch (  ExecuteException e) {
+    logger.log(Level.SEVERE,"Failed to start local cloud agent",e);
+  }
+catch (  IOException e) {
+    logger.log(Level.SEVERE,"Failed to start local cloud agent",e);
+  }
+  try {
+    deployRestAdminServer(admin);
+  }
+ catch (  IOException e) {
+    logger.log(Level.SEVERE,"Failed to start REST Admin Server",e);
+  }
+  if (session != null) {
+    this.adminFacade=(AbstractAdminFacade)session.get(Constants.ADMIN_FACADE);
+  }
+ else {
+    this.adminFacade=new RestAdminFacade();
+  }
+  adminFacade.connect(null,null,"http://localhost:8080/restful");
+  try {
+    deployWebUI(admin);
+  }
+ catch (  Exception e) {
+    logger.log(Level.SEVERE,"Failed to start Web UI for local cloud",e);
+  }
+  return getFormattedMessage("local_cloud_started");
+}

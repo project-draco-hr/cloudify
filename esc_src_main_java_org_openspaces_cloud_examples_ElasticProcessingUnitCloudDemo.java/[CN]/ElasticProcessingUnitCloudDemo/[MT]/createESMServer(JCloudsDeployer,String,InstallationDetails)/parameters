@@ -1,0 +1,3 @@
+JCloudsDeployer deployer
+String name
+InstallationDetails details

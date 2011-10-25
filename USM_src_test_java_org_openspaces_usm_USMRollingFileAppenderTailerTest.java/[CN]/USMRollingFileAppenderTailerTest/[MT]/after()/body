@@ -1,0 +1,6 @@
+{
+  if (rfp != null) {
+    rfp.close();
+  }
+  FileSystemUtils.deleteRecursively(new File(logsDirectory));
+}

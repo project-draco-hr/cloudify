@@ -1,0 +1,14 @@
+{
+  int timeout=Integer.valueOf(params.get("timeout"));
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (processingUnit == null) {
+    return unavailableServiceError(serviceName);
+  }
+  int before=processingUnit.getNumberOfInstances();
+  processingUnit.incrementInstance();
+  boolean result=processingUnit.waitFor(before + 1,timeout,TimeUnit.SECONDS);
+  if (result) {
+    return successStatus();
+  }
+  return errorStatus(ResponseConstants.FAILED_TO_ADD_INSTANCE,applicationName,serviceName);
+}

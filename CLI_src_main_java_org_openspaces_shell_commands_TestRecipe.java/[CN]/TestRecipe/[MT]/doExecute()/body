@@ -1,0 +1,33 @@
+{
+  File serviceFolder=null;
+  try {
+    File packagedRecipe=packageRecipe();
+    serviceFolder=createServiceFolder(packagedRecipe);
+    logger.info("Executing service in temporary folder: " + serviceFolder);
+    final String classpath=createClasspathString(serviceFolder);
+    logger.fine("Setting Test Processing Unit's Classpath to: " + classpath);
+    CommandLine cmdLine=createCommandLine();
+    logger.fine("Setting Test Processing Unit's Command line to: " + cmdLine);
+    Map<Object,Object> env=new HashMap<Object,Object>();
+    env.putAll(System.getenv());
+    env.put("CLASSPATH",classpath);
+    int result=executeRecipe(cmdLine,env);
+    if (result != 0) {
+      if (result == 1) {
+        logger.warning("Recipe exited abnormally with exit value 1. " + "This may indicate that the external process did not shutdown on time and was forcibly shutdown by the execution watchdog.");
+      }
+      throw new CLIException(getFormattedMessage("test_recipe_failure",result));
+    }
+  }
+  finally {
+    if (serviceFolder != null) {
+      try {
+        FileUtils.deleteDirectory(serviceFolder);
+      }
+ catch (      IOException e) {
+        logger.log(Level.SEVERE,"Failed to delete temporary service folder: " + serviceFolder,e);
+      }
+    }
+  }
+  return getFormattedMessage("test_recipe_success");
+}

@@ -1,0 +1,5 @@
+{
+  this.pu=pu;
+  this.name=pu.getName();
+  planned=0;
+}

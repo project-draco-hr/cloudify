@@ -1,0 +1,22 @@
+{
+  logger.finer("received request to deploy");
+  File tmpfile=File.createTempFile("gs___",null);
+  File dest=new File(tmpfile.getParent(),srcFile.getOriginalFilename());
+  tmpfile.delete();
+  srcFile.transferTo(dest);
+  GridServiceManager gsm=getGsm();
+  ProcessingUnit pu;
+  if (gsm != null) {
+    pu=gsm.deploy(new ProcessingUnitDeployment(dest).setContextProperty("com.gs.application",applicationName));
+    dest.delete();
+  }
+ else {
+    return errorStatus(FAILED_TO_LOCATE_GSM);
+  }
+  if (pu == null) {
+    return errorStatus(FAILED_TO_LOCATE_SERVICE_AFTER_DEPLOYMENT,applicationName);
+  }
+ else {
+    return successStatus(pu.getName());
+  }
+}

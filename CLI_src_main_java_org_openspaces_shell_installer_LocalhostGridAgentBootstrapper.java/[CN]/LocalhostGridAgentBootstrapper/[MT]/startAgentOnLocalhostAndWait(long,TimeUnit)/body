@@ -1,0 +1,24 @@
+{
+  if (zone == null || zone.length() == 0) {
+    throw new CLIException("Agent must be started with a zone");
+  }
+  setDefaultNicAddress();
+  ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  connectionLogs.supressConnectionErrors();
+  final Admin admin=createAdmin();
+  try {
+    setLookupDefaults(admin);
+    try {
+      waitForExistingAgent(admin,WAIT_EXISTING_AGENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
+      throw new CLIException("Agent already running on local machine. Use shutdown-agent first.");
+    }
+ catch (    TimeoutException e) {
+    }
+    runGsAgentOnLocalHost("agent",AGENT_ARGUMENTS);
+    waitForNewAgent(admin,timeout,timeunit);
+  }
+  finally {
+    admin.close();
+    connectionLogs.restoreConnectionErrors();
+  }
+}

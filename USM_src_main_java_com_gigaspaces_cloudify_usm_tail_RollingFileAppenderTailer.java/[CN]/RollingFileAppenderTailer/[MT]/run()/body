@@ -1,0 +1,17 @@
+{
+  try {
+    getLogFilesMap(logFileMap);
+    for (    String key : logFileMap.keySet()) {
+      if (logFileMap.get(key).wasModified()) {
+        String lines=logFileMap.get(key).readLines();
+        String seporatedLines[]=lineSplitPattern.split(lines);
+        for (        String line : seporatedLines) {
+          logger.info(line);
+        }
+      }
+    }
+  }
+ catch (  Exception e) {
+    logger.warning("Exception thrown: " + e.getMessage());
+  }
+}

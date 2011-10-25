@@ -1,0 +1,11 @@
+{
+  logger.finer("received request to deploy");
+  final byte[] propsBytes=propsFile.getBytes();
+  final Properties props=new Properties();
+  final InputStream is=new ByteArrayInputStream(propsBytes);
+  props.load(is);
+  File dest=copyMultipartFileToLocalFile(srcFile);
+  dest.deleteOnExit();
+  deployElasticProcessingUnit(serviceName,applicationName,zone,dest,props);
+  return successStatus();
+}

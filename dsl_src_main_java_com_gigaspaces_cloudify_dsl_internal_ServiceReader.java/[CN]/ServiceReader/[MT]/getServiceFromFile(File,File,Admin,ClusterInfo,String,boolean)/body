@@ -1,0 +1,30 @@
+{
+  LinkedHashMap<Object,Object> properties=null;
+  try {
+    properties=createServiceProperties(dslFile,workDir,propertiesFileName);
+  }
+ catch (  Exception e) {
+    String fileName=propertiesFileName;
+    if (fileName == null) {
+      fileName="<default properties file>";
+    }
+    throw new IllegalArgumentException("Failed to load properties file " + fileName,e);
+  }
+  final ServiceContext ctx=new ServiceContext();
+  final GroovyShell gs=ServiceReader.createGroovyShellForService(properties,ctx);
+  Object result=evaluateGroovyScript(dslFile,gs);
+  if (result == null) {
+    throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a service object");
+  }
+  if (!(result instanceof Service)) {
+    throw new IllegalStateException("The file: " + dslFile + " did not evaluate to the required object type");
+  }
+  final Service service=(Service)result;
+  if (isRunningInGSC) {
+    ctx.init(service,admin,workDir.getAbsolutePath(),clusterInfo);
+  }
+ else {
+    ctx.initInIntegratedContainer(service,workDir.getAbsolutePath());
+  }
+  return new DSLServiceCompilationResult(service,ctx,dslFile);
+}

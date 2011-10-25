@@ -1,0 +1,8 @@
+{
+  final JmxAttribute att=this.attributesByName.get(name);
+  if (att == null) {
+    throw new java.lang.IllegalStateException("Attempted to set value of JMX attribute that does not exist. Attribute name: " + name + ", bean name: "+ this.objectName);
+  }
+  att.setValue(value);
+  return att;
+}

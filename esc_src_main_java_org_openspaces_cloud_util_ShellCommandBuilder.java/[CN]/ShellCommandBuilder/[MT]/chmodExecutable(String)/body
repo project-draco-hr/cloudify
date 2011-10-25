@@ -1,0 +1,5 @@
+{
+  sb.append("chmod +x " + path);
+  separate();
+  return this;
+}

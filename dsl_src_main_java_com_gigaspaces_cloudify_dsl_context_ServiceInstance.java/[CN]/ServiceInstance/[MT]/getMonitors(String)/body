@@ -1,0 +1,13 @@
+{
+  if (this.pui == null) {
+    return null;
+  }
+  Collection<ServiceMonitors> allMonitors=this.pui.getStatistics().getMonitors().values();
+  for (  ServiceMonitors serviceMonitors : allMonitors) {
+    Object res=serviceMonitors.getMonitors().get(serviceMonitorsKey);
+    if (res != null) {
+      return res;
+    }
+  }
+  return null;
+}

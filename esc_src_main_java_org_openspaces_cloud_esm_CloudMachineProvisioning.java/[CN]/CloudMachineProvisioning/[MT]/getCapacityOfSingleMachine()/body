@@ -1,0 +1,3 @@
+{
+  return new CapacityRequirements(new MemoryCapacityRequirement(config.getMachineMemoryMB()),new CpuCapacityRequirement(config.getMinimumNumberOfCpuCoresPerMachine()));
+}

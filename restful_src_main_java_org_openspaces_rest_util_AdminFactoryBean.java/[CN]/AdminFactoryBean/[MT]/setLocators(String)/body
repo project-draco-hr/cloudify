@@ -1,0 +1,5 @@
+{
+  for (  String locator : locators) {
+    adminFactory.addLocator(locator);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  if (invocationResult.isSuccess()) {
+    return getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+  }
+ else {
+    return getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+  }
+}

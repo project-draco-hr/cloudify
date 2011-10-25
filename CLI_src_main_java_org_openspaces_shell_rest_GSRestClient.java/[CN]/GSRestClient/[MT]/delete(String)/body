@@ -1,0 +1,3 @@
+{
+  delete(relativeUrl,null);
+}

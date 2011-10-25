@@ -1,0 +1,16 @@
+{
+  ProcessingUnit webUi=admin.getProcessingUnits().getProcessingUnit("gs-webui");
+  if (webUi == null) {
+    System.out.println("Deploying Web-UI WAR file to Service Grid");
+    webUi=gsm.deploy(new ProcessingUnitDeployment("D:/Gigaspaces/gigaspaces-xap-premium-8.0.1-ga/tools/gs-webui/gs-webui.war"));
+    if (!webUi.waitFor(1,60,TimeUnit.SECONDS)) {
+      System.err.println("Web UI not deployed!");
+      System.exit(1);
+    }
+  }
+  final Map<String,Object> details=webUi.getInstances()[0].getServiceDetailsByServiceId().values().iterator().next().getAttributes();
+  final String webHost=(String)details.get("host");
+  final int port=(Integer)details.get("port");
+  final String ctx=(String)details.get("context-path");
+  System.out.println("Web UI successfully deployed and available at: http://" + webHost + ":"+ port+ ctx);
+}

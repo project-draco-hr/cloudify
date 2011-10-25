@@ -1,0 +1,8 @@
+String applicationName
+String serviceName
+String zone
+File extractedServiceFolder
+Properties contextProperties
+StatelessProcessingUnit puConfig
+Cloud cloud
+int numberOfInstances

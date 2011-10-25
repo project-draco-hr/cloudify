@@ -1,0 +1,5 @@
+CommandProcessorImpl commandProcessor
+InputStream input
+PrintStream output
+PrintStream err
+Terminal terminal

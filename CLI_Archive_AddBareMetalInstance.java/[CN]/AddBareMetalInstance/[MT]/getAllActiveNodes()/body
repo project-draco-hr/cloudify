@@ -1,0 +1,6 @@
+{
+  final List<String> machines=this.adminFacade.getMachines();
+  final HashSet<String> res=new HashSet<String>();
+  res.addAll(machines);
+  return res;
+}

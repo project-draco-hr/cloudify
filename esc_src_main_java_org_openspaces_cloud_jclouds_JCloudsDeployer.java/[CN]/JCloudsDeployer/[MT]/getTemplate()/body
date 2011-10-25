@@ -1,0 +1,30 @@
+{
+  if (this.template == null) {
+    final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
+    if ((this.imageId != null) && (this.imageId.length() > 0)) {
+      builder.imageId(this.imageId);
+    }
+    if (this.minRamMegabytes > 0) {
+      builder.minRam(minRamMegabytes);
+    }
+    if ((this.hardwareId != null) && (hardwareId.length() > 0)) {
+      builder.hardwareId(hardwareId);
+    }
+    if (!"aws-ec2".equals(provider)) {
+      this.template=builder.build();
+    }
+ else {
+      builder.locationId("us-east-1d");
+      this.template=builder.build();
+      String group="default";
+      if ((this.securityGroup != null) && (this.securityGroup.length() > 0)) {
+        group=this.securityGroup;
+      }
+      template.getOptions().as(EC2TemplateOptions.class).securityGroups(group);
+      if ((this.keyPair != null) && (this.keyPair.length() > 0)) {
+        template.getOptions().as(EC2TemplateOptions.class).keyPair(this.keyPair);
+      }
+    }
+  }
+  return this.template;
+}

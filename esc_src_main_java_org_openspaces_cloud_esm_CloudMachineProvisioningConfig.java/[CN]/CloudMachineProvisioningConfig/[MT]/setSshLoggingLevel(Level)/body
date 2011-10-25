@@ -1,0 +1,3 @@
+{
+  properties.put(SSH_LOGGING_LEVEL_KEY,level.toString());
+}

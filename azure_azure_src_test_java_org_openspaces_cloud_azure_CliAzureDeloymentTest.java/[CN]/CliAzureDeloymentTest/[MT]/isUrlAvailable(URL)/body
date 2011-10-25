@@ -1,0 +1,15 @@
+{
+  HttpClient client=new DefaultHttpClient();
+  HttpGet httpGet=new HttpGet(url.toURI());
+  try {
+    client.execute(httpGet,new BasicResponseHandler());
+    return true;
+  }
+ catch (  Exception e) {
+    log("Failed connecting to " + url,e);
+    return false;
+  }
+ finally {
+    client.getConnectionManager().shutdown();
+  }
+}

@@ -1,0 +1,18 @@
+{
+  monitorMap.put("Process Cpu Usage",processCpuUsage);
+  monitorMap.put("Process Cpu Kernel Time",processCpuKernelTime);
+  monitorMap.put("Total Process Cpu Time",totalProcessCpuTime);
+  monitorMap.put("Process GroupId",processGroupId);
+  monitorMap.put("Process User Id",processUserId);
+  monitorMap.put("Total Num Of PageFaults",totalNumOfPageFaults);
+  monitorMap.put("Total Process Residental Memory",totalProcessResidentalMemory);
+  monitorMap.put("Total Process Shared Memory",totalProcessSharedMemory);
+  monitorMap.put("Total Process Virtual Memory",totalProcessVirtualMemory);
+  monitorMap.put("Kernel Scheduling Priority",kernelSchedulingPriority);
+  monitorMap.put("Num Of Active Threads",numOfActiveThreads);
+  monitorMap.put(KEY_AVAIL_PROCESSORS,availableProcessors);
+  monitorMap.put(KEY_COMMIT_VIRT_MEM_SIZE,committedVirtualMemorySize);
+  monitorMap.put(KEY_PROC_CPU_TIME,processCpuTime);
+  monitorMap.put(KEY_THREAD_COUNT,threadCount);
+  monitorMap.put(KEY_PEAK_THREAD_COUNT,peakThreadCount);
+}

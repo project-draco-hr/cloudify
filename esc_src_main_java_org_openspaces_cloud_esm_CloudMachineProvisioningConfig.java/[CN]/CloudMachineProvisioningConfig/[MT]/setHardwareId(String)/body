@@ -1,0 +1,3 @@
+{
+  properties.put(HARDWARE_ID_DIRECTORY_KEY,hardwareId);
+}

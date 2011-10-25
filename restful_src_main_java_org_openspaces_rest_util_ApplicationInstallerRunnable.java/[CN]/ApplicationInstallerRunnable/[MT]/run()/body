@@ -1,0 +1,37 @@
+{
+  File appDir=result.getApplicationDir();
+  logger.fine("Installing application " + applicationName + " with the following services: "+ services);
+  for (  final Service service : services) {
+    service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
+    final Properties contextProperties=createServiceContextProperties(service);
+    final String serviceName=service.getName();
+    boolean found=false;
+    try {
+      File packedFile=Packager.pack(new File(appDir,serviceName));
+      result.getApplicationFile().delete();
+      packedFile.deleteOnExit();
+      controller.deployElasticProcessingUnit(serviceName,applicationName,serviceName,packedFile,contextProperties);
+      FileUtils.deleteDirectory(packedFile.getParentFile());
+      boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
+      if (!instanceFound) {
+        throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
+      }
+      found=true;
+      logger.fine("service " + service + " deployed.");
+    }
+ catch (    Exception e) {
+      logger.log(Level.SEVERE,"Failed to install service: " + serviceName + " of application: "+ applicationName+ ". Application installation will halt. "+ "Some services may already have started, and should be shutdown manually. Error was: "+ e.getMessage(),e);
+      return;
+    }
+    if (!found) {
+      logger.severe("Failed to find an instance of service: " + serviceName + " while installing application "+ applicationName+ ". Application installation will stop. Some services may have been installed!");
+      return;
+    }
+  }
+  try {
+    FileUtils.deleteDirectory(appDir);
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

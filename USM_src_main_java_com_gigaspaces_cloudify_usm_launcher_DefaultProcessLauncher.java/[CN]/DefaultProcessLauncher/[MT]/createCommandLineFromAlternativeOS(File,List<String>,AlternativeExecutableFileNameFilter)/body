@@ -1,0 +1,24 @@
+{
+  if ((alternateCommandLine == null) || (alternateCommandLine.size() == 0)) {
+    return null;
+  }
+  final String executable=alternateCommandLine.get(0);
+  if (executable.endsWith(".groovy")) {
+    return alternateCommandLine;
+  }
+  final File executableFile=getFileFromRelativeOrAbsolutePath(puWorkDir,executable);
+  if (executableFile == null) {
+    logger.warning("Could not find an executable file: " + executable + "in working directory "+ puWorkDir+ " in command line: "+ alternateCommandLine+ ". Alternate command line can't be created.");
+    return null;
+  }
+  final String prefix=getFilePrefix(executableFile);
+  final File parentDir=executableFile.getParentFile();
+  fileNameFilter.setPrefix(prefix);
+  final File[] files=parentDir.listFiles(fileNameFilter);
+  if (files.length == 0) {
+    return null;
+  }
+  logger.info("Found candidates for command line to replace " + executable + ". Candidates are: "+ Arrays.toString(files));
+  final List<String> modifiedCommandLine=switchFirstPartOfCommandLine(alternateCommandLine,files[0].getName());
+  return modifiedCommandLine;
+}

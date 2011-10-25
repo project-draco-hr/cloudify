@@ -1,0 +1,16 @@
+{
+  final Properties contextProperties=new Properties();
+  if (service.getDependsOn() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,service.getDependsOn().toString());
+  }
+  if (service.getType() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE,service.getType());
+  }
+  if (service.getIcon() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,service.getIcon());
+  }
+  if (service.getNetwork() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
+  }
+  return contextProperties;
+}

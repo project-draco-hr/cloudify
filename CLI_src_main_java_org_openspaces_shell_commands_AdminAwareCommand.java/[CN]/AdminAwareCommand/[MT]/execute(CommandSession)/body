@@ -1,0 +1,4 @@
+{
+  adminAware=true;
+  return super.execute(session);
+}

@@ -1,0 +1,9 @@
+{
+  Map<?,?> map=(Map<?,?>)mapObject;
+  Object keyObject=key;
+  if (!map.containsKey(keyObject)) {
+    logger.fine("Map does not contain a value for the key: " + key);
+    return null;
+  }
+  return map.get(keyObject);
+}

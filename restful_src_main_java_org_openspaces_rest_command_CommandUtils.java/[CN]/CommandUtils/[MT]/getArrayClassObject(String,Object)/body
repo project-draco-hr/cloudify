@@ -1,0 +1,11 @@
+{
+  int arrayIndex=getIndexFromString(index);
+  if (arrayIndex == -1) {
+    throw new RuntimeException("unable to parse index " + index);
+  }
+  Object[] objectArray=OutputUtils.getArray(arrayObject);
+  if (arrayIndex >= objectArray.length) {
+    throw new RuntimeException("Index out of bounds: " + arrayIndex);
+  }
+  return objectArray[arrayIndex];
+}

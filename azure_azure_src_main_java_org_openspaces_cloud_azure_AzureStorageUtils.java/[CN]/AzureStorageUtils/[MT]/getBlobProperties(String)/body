@@ -1,0 +1,5 @@
+{
+  final IBlobProperties blobProperties=new BlobProperties(blobName);
+  blobProperties.setContentType(CONTENT_TYPE_FILE);
+  return blobProperties;
+}

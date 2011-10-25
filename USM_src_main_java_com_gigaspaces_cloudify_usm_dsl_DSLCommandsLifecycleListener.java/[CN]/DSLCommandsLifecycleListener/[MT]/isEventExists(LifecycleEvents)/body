@@ -1,0 +1,3 @@
+{
+  return this.getEntryForEvent(event) != null;
+}

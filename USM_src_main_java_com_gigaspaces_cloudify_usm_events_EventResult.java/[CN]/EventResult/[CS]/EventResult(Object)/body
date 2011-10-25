@@ -1,0 +1,5 @@
+{
+  this.success=true;
+  this.result=result;
+  this.exception=null;
+}

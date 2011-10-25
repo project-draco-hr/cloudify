@@ -1,0 +1,20 @@
+{
+  this.executorService.submit(new Runnable(){
+    public void run(){
+      try {
+        System.out.println("Opening port: " + port);
+        final ServerSocket ss=new ServerSocket(port);
+        while (true) {
+          final Socket sock=ss.accept();
+          System.out.println("Got an incoming request");
+          Thread.sleep(1000);
+          sock.close();
+        }
+      }
+ catch (      final Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+);
+}

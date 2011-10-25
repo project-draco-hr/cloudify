@@ -1,0 +1,24 @@
+{
+  cloud=new Cloud();
+  cloud.setApiKey("ApiKey");
+  cloud.setCloudifyUrl("CloudifyUrl");
+  cloud.setConnectedToPrivateIp(true);
+  cloud.setDedicatedManagementMachines(true);
+  cloud.setHardwareId("hardwareId");
+  cloud.setImageId("imageId");
+  cloud.setKeyFile("keyFile");
+  cloud.setKeyPair("keyPair");
+  cloud.setLocalDirectory("localDirectory");
+  cloud.setMachineMemoryMB(128);
+  cloud.setMachineNamePrefix("machineNamePrefix");
+  cloud.setManagementOnlyFiles(new ArrayList<String>());
+  cloud.setNumberOfManagementMachines(0);
+  cloud.setReservedMemoryCapacityPerMachineInMB(128);
+  cloud.setSecurityGroup("securityGroup");
+  cloud.setManagementGroup("managementGroup");
+  cloud.setProvider("provider");
+  cloud.setRemoteDirectory("remoteDirectory");
+  cloud.setSshLoggingLevel(Level.WARNING);
+  cloud.setUser("user");
+  cloud.setZones(new ArrayList<String>());
+}

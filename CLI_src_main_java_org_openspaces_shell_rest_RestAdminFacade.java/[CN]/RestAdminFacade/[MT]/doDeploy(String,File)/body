@@ -1,0 +1,3 @@
+{
+  return client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
+}

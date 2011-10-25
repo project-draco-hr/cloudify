@@ -1,0 +1,7 @@
+{
+  StatelessProcessingUnit service=null;
+  if (this.serviceProcessingUnit instanceof StatelessProcessingUnit) {
+    service=(StatelessProcessingUnit)serviceProcessingUnit;
+  }
+  return service;
+}

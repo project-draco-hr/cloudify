@@ -1,0 +1,19 @@
+{
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      List<String> applications=adminFacade.getApplicationsList();
+      boolean done=true;
+      for (      String application : applications) {
+        if (!MANAGEMENT_APPLICATION.equals(application)) {
+          done=false;
+          break;
+        }
+      }
+      if (!done) {
+        logger.info("Waiting for all applications to uninstall");
+      }
+      return done;
+    }
+  }
+);
+}

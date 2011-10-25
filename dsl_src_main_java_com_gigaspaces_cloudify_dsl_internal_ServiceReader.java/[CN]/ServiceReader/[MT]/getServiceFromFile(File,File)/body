@@ -1,0 +1,3 @@
+{
+  return ServiceReader.getServiceFromFile(dslFile,workDir,null,null,null,true);
+}

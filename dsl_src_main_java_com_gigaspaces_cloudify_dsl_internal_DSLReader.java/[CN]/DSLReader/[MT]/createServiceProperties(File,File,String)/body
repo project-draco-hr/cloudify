@@ -1,0 +1,39 @@
+{
+  Properties properties=new Properties();
+  if (propertiesFileName != null) {
+    File propertiesFile=new File(workDir,propertiesFileName);
+    if (!propertiesFile.exists()) {
+      throw new FileNotFoundException("Could not find file: " + propertiesFileName + " in directory: "+ workDir);
+    }
+    FileReader reader=null;
+    try {
+      reader=new FileReader(propertiesFile);
+      properties.load(reader);
+    }
+  finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        }
+ catch (        IOException e1) {
+          logger.log(Level.SEVERE,"Failed to close properties file reader",e1);
+        }
+      }
+    }
+  }
+ else {
+    String baseFileName=dslFile.getName();
+    String[] parts=baseFileName.split(Pattern.quote("."));
+    if (parts.length > 0) {
+      baseFileName=parts[0];
+    }
+    String defaultPropertiesFileName=baseFileName + ".properties";
+    String actualPropertiesFileName=defaultPropertiesFileName;
+    try {
+      return createServiceProperties(dslFile,workDir,actualPropertiesFileName);
+    }
+ catch (    FileNotFoundException e) {
+    }
+  }
+  return properties;
+}

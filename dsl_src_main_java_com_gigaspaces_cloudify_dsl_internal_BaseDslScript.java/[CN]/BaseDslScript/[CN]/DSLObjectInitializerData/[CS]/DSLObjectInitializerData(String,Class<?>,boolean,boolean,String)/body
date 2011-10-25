@@ -1,0 +1,8 @@
+{
+  super();
+  this.name=name;
+  this.clazz=clazz;
+  this.allowRootNode=allowRootNode;
+  this.allowInternalNode=allowInternalNode;
+  this.parentElement=parentElement;
+}

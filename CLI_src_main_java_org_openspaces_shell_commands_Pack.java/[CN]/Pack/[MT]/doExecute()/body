@@ -1,0 +1,4 @@
+{
+  File packedFile=doPack(recipeFolder);
+  return MessageFormat.format(messages.getString("packed_successfully"),packedFile.getAbsolutePath());
+}

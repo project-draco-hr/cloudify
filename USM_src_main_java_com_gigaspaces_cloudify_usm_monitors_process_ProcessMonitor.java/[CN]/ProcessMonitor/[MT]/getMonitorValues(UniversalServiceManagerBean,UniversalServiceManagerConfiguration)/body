@@ -1,0 +1,5 @@
+{
+  final MonitorData data=new MonitorData(sigar,usm.getActualProcessID());
+  final Map<String,Number> map=data.getDataMap();
+  return map;
+}

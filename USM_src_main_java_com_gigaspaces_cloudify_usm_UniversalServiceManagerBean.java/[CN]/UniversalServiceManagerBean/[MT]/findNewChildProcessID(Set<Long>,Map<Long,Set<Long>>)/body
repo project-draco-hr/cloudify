@@ -1,0 +1,15 @@
+{
+  final Set<Long> childrenAfter=procTree.get(this.myPid);
+  if (childrenAfter == null) {
+    throw new USMException("Could not find container process (" + this.myPid + ") in generated process tree");
+  }
+  childrenAfter.removeAll(childrenBefore);
+  if (childrenAfter.size() == 0) {
+    throw new USMException("New process could not be found!");
+  }
+  if (childrenAfter.size() > 1) {
+    logger.warning("Multiple new processes have been found: " + childrenAfter.toString() + ". Using the first as child process ID!");
+  }
+  final long newChildProcessID=childrenAfter.iterator().next();
+  return newChildProcessID;
+}

@@ -1,0 +1,7 @@
+{
+  StringHandler stringHandler=addHandlerToJavaUtilsLogger();
+  RollingFileAppenderTailer.start(logsDirectory,this.regex,RFAT_SAMPLING_RATE_MILLISECOND);
+  startLogging();
+  assertFileRolling();
+  assertJavaUtilsTailedLogging(stringHandler.getLoggedMessages());
+}

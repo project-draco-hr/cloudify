@@ -1,0 +1,10 @@
+{
+  if (admin != null) {
+    return admin;
+  }
+  final AdminFactory factory=new AdminFactory();
+  factory.useDaemonThreads(true);
+  admin=factory.createAdmin();
+  logger.info("Created new Admin Object with groups: " + Arrays.toString(admin.getGroups()) + " and Locators: "+ Arrays.toString(admin.getLocators()));
+  return admin;
+}

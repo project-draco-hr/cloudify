@@ -1,0 +1,16 @@
+{
+  final ArrayList<JmxAttribute> resArr=getData();
+  final Map<String,Object> results=new HashMap<String,Object>();
+  if (resArr == null) {
+    return results;
+  }
+  String name;
+  for (  final JmxAttribute t : resArr) {
+    name=t.getDisplayName();
+    if ((name == null) || (name.length() == 0)) {
+      name=t.getAttributeName();
+    }
+    results.put(name,t.getValue());
+  }
+  return results;
+}

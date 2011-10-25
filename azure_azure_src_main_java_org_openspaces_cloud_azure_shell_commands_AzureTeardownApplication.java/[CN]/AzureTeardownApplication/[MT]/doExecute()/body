@@ -1,0 +1,34 @@
+{
+  if (timeoutInMinutes < 0) {
+    throw new CLIException("-timeout cannot be negative");
+  }
+  if (progressInMinutes < 1) {
+    throw new CLIException("-progress must be positive");
+  }
+  if (timeoutInMinutes > 0 && timeoutInMinutes < progressInMinutes) {
+    throw new CLIException("-timeout must be bigger than -progress");
+  }
+  long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
+  if (end < 0) {
+    throw new CLIException("-timeout caused an overflow. please use a smaller value");
+  }
+  Properties properties=AzureUtils.getAzureProperties();
+  String subscriptionId=AzureUtils.getProperty(properties,"subscriptionId");
+  String certificateThumbprint=AzureUtils.getProperty(properties,"certificateThumbprint");
+  logger.info("Deleting deployment");
+  AzureDeploymentWrapper azureDeploymentWrapper=new AzureDeploymentWrapper();
+  azureDeploymentWrapper.setVerbose(verbose);
+  azureDeploymentWrapper.setProgressInMinutes(progressInMinutes);
+  azureDeploymentWrapper.setAzureHostedServiceName(azureHostedServiceName);
+  azureDeploymentWrapper.setAzureDeploymentSlotName(azureDeploymentSlotName);
+  azureDeploymentWrapper.setCertificateThumbprint(certificateThumbprint);
+  azureDeploymentWrapper.setSubscriptionId(subscriptionId);
+  azureDeploymentWrapper.stopDeployment();
+  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.Suspended,5000,millisUntil(end),TimeUnit.MILLISECONDS);
+  azureDeploymentWrapper.deleteDeployment();
+  if (timeoutInMinutes == 0) {
+    return "Started application teardown.";
+  }
+  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.NotFound,millisUntil(end),TimeUnit.MILLISECONDS);
+  return "Completed application teardown.";
+}

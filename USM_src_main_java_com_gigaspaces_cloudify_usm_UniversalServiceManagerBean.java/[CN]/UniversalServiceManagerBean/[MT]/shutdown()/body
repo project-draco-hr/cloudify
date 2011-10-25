@@ -1,0 +1,19 @@
+{
+  logger.info("USM is shutting down!");
+synchronized (this.stateMutex) {
+    this.state=USMState.SHUTTING_DOWN;
+    stop(StopReason.UNDEPLOY);
+    executors.shutdown();
+    removeShutdownHook();
+    if (this.runningInGSC) {
+      deleteExtDirContents();
+    }
+    try {
+      usmLifecycleBean.fireShutdown();
+    }
+ catch (    USMException e) {
+      logger.log(Level.SEVERE,"Failed to execute shutdown event: " + e.getMessage(),e);
+    }
+  }
+  logger.info("USM shut down completed!");
+}

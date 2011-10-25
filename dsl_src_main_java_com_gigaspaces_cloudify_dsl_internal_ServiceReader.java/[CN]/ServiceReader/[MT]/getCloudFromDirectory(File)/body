@@ -1,0 +1,8 @@
+{
+  File actualDslFile=getCloudDSLFileFromDirectory(serviceFolder);
+  if (actualDslFile == null) {
+    return null;
+  }
+  final Cloud cloud=ServiceReader.readCloudFromFile(actualDslFile);
+  return cloud;
+}

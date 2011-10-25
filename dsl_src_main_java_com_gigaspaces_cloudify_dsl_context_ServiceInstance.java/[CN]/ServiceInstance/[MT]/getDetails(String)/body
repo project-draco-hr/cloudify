@@ -1,0 +1,13 @@
+{
+  if (this.pui == null) {
+    return null;
+  }
+  Collection<ServiceDetails> allDetails=this.pui.getServiceDetailsByServiceId().values();
+  for (  ServiceDetails serviceDetails : allDetails) {
+    Object res=serviceDetails.getAttributes().get(serviceDetailsKey);
+    if (res != null) {
+      return res;
+    }
+  }
+  return null;
+}

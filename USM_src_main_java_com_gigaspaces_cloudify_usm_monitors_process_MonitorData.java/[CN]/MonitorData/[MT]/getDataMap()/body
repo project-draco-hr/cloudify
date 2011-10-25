@@ -1,0 +1,5 @@
+{
+  final Map<String,Number> map=new HashMap<String,Number>();
+  addDataToMonitor(map);
+  return map;
+}

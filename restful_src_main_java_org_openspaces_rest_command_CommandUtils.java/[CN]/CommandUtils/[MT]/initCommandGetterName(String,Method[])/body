@@ -1,0 +1,13 @@
+{
+  String getterMethodSignature="get" + Character.toUpperCase(rawCommand.charAt(0)) + rawCommand.substring(1);
+  String isMethodSignature="is" + Character.toUpperCase(rawCommand.charAt(0)) + rawCommand.substring(1);
+  for (  Method method : methods) {
+    if (method.getName().equals(getterMethodSignature)) {
+      return getterMethodSignature;
+    }
+    if (method.getName().equals(isMethodSignature)) {
+      return isMethodSignature;
+    }
+  }
+  throw new RuntimeException("No method signature found for command: " + rawCommand);
+}

@@ -1,0 +1,5 @@
+{
+  ResourceBundle messages=ShellUtils.getMessageBundle();
+  session.getConsole().println(messages.getString("on_exit"));
+  throw new CloseShellException();
+}

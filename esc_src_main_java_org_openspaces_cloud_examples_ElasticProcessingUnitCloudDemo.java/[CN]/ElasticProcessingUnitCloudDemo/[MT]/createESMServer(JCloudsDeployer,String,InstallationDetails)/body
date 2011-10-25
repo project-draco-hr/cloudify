@@ -1,0 +1,6 @@
+{
+  final AgentlessInstaller installer=new AgentlessInstaller();
+  final CloudScaleOutTask task=new CloudScaleOutTask(installer,details,name,deployer);
+  task.run(1,10,TimeUnit.MINUTES);
+  return task.getServers().iterator().next();
+}

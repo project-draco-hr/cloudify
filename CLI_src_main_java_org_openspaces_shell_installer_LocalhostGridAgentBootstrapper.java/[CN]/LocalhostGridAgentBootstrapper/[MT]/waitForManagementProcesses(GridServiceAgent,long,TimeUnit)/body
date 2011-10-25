@@ -1,0 +1,58 @@
+{
+  final Admin admin=agent.getAdmin();
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
+      boolean isDone=true;
+      if (!isDone(admin.getLookupServices(),"LUS")) {
+        if (verbose) {
+          logger.info("Waiting for Lookup Service");
+        }
+        isDone=false;
+      }
+      if (!isDone(admin.getGridServiceManagers(),"GSM")) {
+        if (verbose) {
+          logger.info("Waiting for Grid Service Manager");
+        }
+        isDone=false;
+      }
+      if (admin.getElasticServiceManagers().isEmpty()) {
+        if (verbose) {
+          logger.info("Waiting for Elastic Service Manager");
+        }
+        isDone=false;
+      }
+      if (!verbose) {
+        logger.info("Waiting for Management processes to start.");
+      }
+      return isDone;
+    }
+    @SuppressWarnings("rawtypes") private boolean isDone(    Iterable<? extends AgentGridComponent> components,    String serviceName){
+      boolean found=false;
+      for (      AgentGridComponent component : components) {
+        if (checkAgent(component)) {
+          found=true;
+          break;
+        }
+      }
+      if (verbose) {
+        for (        Object component : components) {
+          GridServiceAgent agentThatStartedComponent=((AgentGridComponent)component).getGridServiceAgent();
+          String agentUid=null;
+          if (agentThatStartedComponent != null) {
+            agentUid=agentThatStartedComponent.getUid();
+          }
+          String message="Detected " + serviceName + " management process "+ " started by agent "+ agentUid+ " ";
+          if (!checkAgent((AgentGridComponent)component)) {
+            message+=" expected agent " + agent.getUid();
+          }
+          logger.info(message);
+        }
+      }
+      return found;
+    }
+    private boolean checkAgent(    AgentGridComponent component){
+      return agent.equals(component.getGridServiceAgent());
+    }
+  }
+);
+}

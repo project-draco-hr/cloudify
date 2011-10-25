@@ -1,0 +1,4 @@
+{
+  String value=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(contextPropertyKey);
+  return value;
+}

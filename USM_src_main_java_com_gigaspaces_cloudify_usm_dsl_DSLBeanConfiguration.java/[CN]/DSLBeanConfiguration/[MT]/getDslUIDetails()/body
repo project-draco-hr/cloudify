@@ -1,0 +1,10 @@
+{
+  if (!active) {
+    return null;
+  }
+  if (this.service.getUserInterface() == null) {
+    return null;
+  }
+  final UserInterface ui=this.service.getUserInterface();
+  return new UIDetails(ui);
+}

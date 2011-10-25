@@ -1,0 +1,5 @@
+{
+  ScheduledExecutorService executor;
+  executor=Executors.newScheduledThreadPool(1);
+  executor.scheduleWithFixedDelay(new RollingFileAppenderTailer(directory,regex),0,samplingDelay,TimeUnit.MILLISECONDS);
+}

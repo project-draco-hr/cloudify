@@ -1,0 +1,3 @@
+{
+  properties.putBoolean(DEDICATED_MANAGEMENT_MACHINES_KEY,value);
+}

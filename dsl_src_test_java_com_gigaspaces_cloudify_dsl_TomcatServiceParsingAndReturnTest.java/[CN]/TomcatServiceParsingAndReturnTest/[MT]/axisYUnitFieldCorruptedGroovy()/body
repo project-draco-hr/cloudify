@@ -1,0 +1,10 @@
+{
+  File tomcatDslFile=new File(CORRUPTED_RESOURCES_PATH + "tomcat_axisYUnit_field_corrupted-service.groovy");
+  File tomcatWorkDir=new File(CORRUPTED_RESOURCES_PATH);
+  try {
+    Service service=ServiceReader.getServiceFromFile(tomcatDslFile,tomcatWorkDir).getService();
+  }
+ catch (  Throwable t) {
+    assertTrue("Throwable isn't informative enought",t.getMessage().toLowerCase().contains("axiszunit"));
+  }
+}

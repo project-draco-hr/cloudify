@@ -1,0 +1,4 @@
+{
+  this.attributes.add(att);
+  this.attributesByName.put(att.getAttributeName(),att);
+}

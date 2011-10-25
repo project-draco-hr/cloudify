@@ -1,0 +1,10 @@
+{
+  Method[] methods=aClass.getMethods();
+  String getterCommand=initCommandGetterName(rawCommand,methods);
+  for (  Method method : methods) {
+    if (getterCommand.equals(method.getName()) && OutputUtils.isValidObjectGetter(method)) {
+      return method;
+    }
+  }
+  throw new RuntimeException("No method signature found for method: " + getterCommand);
+}

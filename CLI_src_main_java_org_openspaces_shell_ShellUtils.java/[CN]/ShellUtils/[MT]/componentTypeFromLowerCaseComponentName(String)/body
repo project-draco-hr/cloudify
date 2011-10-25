@@ -1,0 +1,8 @@
+{
+  try {
+    return ComponentType.valueOf(lowerCaseComponentName.toUpperCase());
+  }
+ catch (  final IllegalArgumentException e) {
+    throw new ErrorStatusException("unknown_component_type",lowerCaseComponentName);
+  }
+}

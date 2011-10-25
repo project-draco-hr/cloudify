@@ -1,0 +1,6 @@
+String applicationName
+String serviceName
+String beanName
+int instanceId
+String commandName
+Map<String,String> paramsMap

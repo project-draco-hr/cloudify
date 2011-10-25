@@ -1,0 +1,5 @@
+{
+  String cleanEventText=(map.get(EventLogConstants.getEventTextKey())).toString().split(" - ")[1];
+  String outputMessage='[' + map.get(EventLogConstants.getMachineHostNameKey()).toString() + '/'+ map.get(EventLogConstants.getMachineHostAddressKey())+ "] "+ cleanEventText;
+  return outputMessage;
+}

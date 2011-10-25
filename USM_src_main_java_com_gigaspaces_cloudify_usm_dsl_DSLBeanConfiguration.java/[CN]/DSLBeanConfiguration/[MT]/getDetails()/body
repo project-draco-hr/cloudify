@@ -1,0 +1,28 @@
+{
+  final Map<String,Object> details=this.service.getLifecycle().getDetails();
+  if (details == null) {
+    return null;
+  }
+  return new Details(){
+    @Override public Map<String,Object> getDetails(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws DetailsException {
+      try {
+        Map<String,Object> returnMap=new HashMap<String,Object>();
+        for (        Map.Entry<String,Object> entryObject : details.entrySet()) {
+          Object object=entryObject.getValue();
+          EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+          if (!result.isSuccess()) {
+            logger.log(Level.WARNING,"DSL Entry failed to execute: ",result.getException().getStackTrace());
+          }
+ else {
+            returnMap.put(entryObject.getKey(),result.getResult());
+          }
+        }
+        return returnMap;
+      }
+ catch (      Exception e) {
+        return null;
+      }
+    }
+  }
+;
+}

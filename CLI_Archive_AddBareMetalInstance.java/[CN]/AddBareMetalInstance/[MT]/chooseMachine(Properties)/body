@@ -1,0 +1,13 @@
+{
+  final String nodesString=props.getProperty("nodes","");
+  final String[] nodes=nodesString.split(",");
+  final Set<String> activeNodes=getAllActiveNodes();
+  for (  final String node : nodes) {
+    if (node.trim().length() > 0) {
+      if (isMachineAvailable(node,activeNodes)) {
+        return node;
+      }
+    }
+  }
+  return null;
+}

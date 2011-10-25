@@ -1,0 +1,6 @@
+{
+  Matcher matcher=pattern.matcher(line);
+  if (matcher.find()) {
+    isProcessUp=true;
+  }
+}

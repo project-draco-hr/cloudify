@@ -1,0 +1,31 @@
+{
+  final Properties props=new Properties();
+  final File file=new File(PROPERTIES_FILE);
+  if (!file.exists()) {
+    props.put("user","MY_USERNAME");
+    props.put("apiKey","MY_ACCESS_KEY");
+    FileOutputStream out=null;
+    try {
+      out=new FileOutputStream(file);
+      props.store(out,"Generated properties file for ESM Demo EC2 properties");
+      throw new FileNotFoundException("Could not find properties file: " + file.getAbsolutePath() + ". A default one was created, "+ "please set the values according to your EC2 account");
+    }
+  finally {
+      if (out != null) {
+        try {
+          out.close();
+        }
+ catch (        final IOException ioe) {
+        }
+      }
+    }
+  }
+  final InputStream is=new BufferedInputStream(new FileInputStream(file));
+  try {
+    props.load(is);
+    return props;
+  }
+  finally {
+    is.close();
+  }
+}

@@ -1,0 +1,5 @@
+String serviceName
+String url
+String timeoutErrorMessage
+long timeout
+TimeUnit timeunit

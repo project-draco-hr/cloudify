@@ -1,0 +1,11 @@
+{
+  try {
+    return Packager.pack(recipeDirOrFile);
+  }
+ catch (  IOException e) {
+    throw new CLIException(e);
+  }
+catch (  PackagingException e) {
+    throw new CLIException(e);
+  }
+}

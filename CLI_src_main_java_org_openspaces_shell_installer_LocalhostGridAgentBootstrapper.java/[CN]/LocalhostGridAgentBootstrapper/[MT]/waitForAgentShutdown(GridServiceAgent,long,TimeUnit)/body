@@ -1,0 +1,15 @@
+{
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
+      logger.info("Waiting for agent to shutdown");
+      try {
+        ((InternalGridServiceAgent)agent).getGSA().ping();
+      }
+ catch (      RemoteException e) {
+        return true;
+      }
+      return false;
+    }
+  }
+);
+}

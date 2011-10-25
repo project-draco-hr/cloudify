@@ -1,0 +1,8 @@
+{
+  final CompilerConfiguration cc=new CompilerConfiguration();
+  final ImportCustomizer ic=new ImportCustomizer();
+  ic.addStarImports(com.gigaspaces.cloudify.dsl.Service.class.getPackage().getName(),UserInterface.class.getPackage().getName(),com.gigaspaces.cloudify.dsl.context.Service.class.getPackage().getName());
+  cc.addCompilationCustomizers(ic);
+  cc.setScriptBaseClass(BaseDslScript.class.getName());
+  return cc;
+}

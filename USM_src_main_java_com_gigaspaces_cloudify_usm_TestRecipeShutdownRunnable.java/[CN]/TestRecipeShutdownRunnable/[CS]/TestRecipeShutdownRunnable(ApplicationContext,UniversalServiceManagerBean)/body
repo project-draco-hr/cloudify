@@ -1,0 +1,4 @@
+{
+  this.usm=usm;
+  this.applicationContext=applicationContext;
+}

@@ -1,0 +1,10 @@
+{
+  if (logger.isLoggable(Level.INFO)) {
+    if (this.childProcessID != 0) {
+      logger.info("Process ID of Child Process is: " + this.childProcessID + ", Executable is: "+ this.sigar.getProcExe(this.childProcessID).getName());
+    }
+    if (this.actualProcessID != 0) {
+      logger.info("Actual Monitored Process ID is: " + this.actualProcessID + ", Executable is: "+ this.sigar.getProcExe(this.actualProcessID).getName());
+    }
+  }
+}

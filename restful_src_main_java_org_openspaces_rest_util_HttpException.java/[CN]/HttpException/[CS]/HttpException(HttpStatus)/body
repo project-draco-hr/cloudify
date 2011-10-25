@@ -1,0 +1,4 @@
+{
+  super("Http error code " + status.value());
+  this.status=status;
+}

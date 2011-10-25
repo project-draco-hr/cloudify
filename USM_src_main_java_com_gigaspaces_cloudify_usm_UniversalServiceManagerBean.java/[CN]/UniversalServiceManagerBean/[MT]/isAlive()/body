@@ -1,0 +1,9 @@
+{
+  if (shutdownUSMException == null) {
+    return true;
+  }
+ else {
+    logger.severe("USM is Alive() exiting with exception due to previous failure. Exception message was: " + shutdownUSMException.getMessage());
+    throw shutdownUSMException;
+  }
+}

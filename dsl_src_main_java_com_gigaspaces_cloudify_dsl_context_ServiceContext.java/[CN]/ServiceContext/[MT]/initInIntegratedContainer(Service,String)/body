@@ -1,0 +1,9 @@
+{
+  this.service=service;
+  this.serviceDirectory=dir;
+  this.clusterInfo=new ClusterInfo(null,1,0,1,0);
+  if (service != null) {
+    this.clusterInfo.setName(service.getName());
+  }
+  initialized=true;
+}

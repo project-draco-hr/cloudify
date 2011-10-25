@@ -1,0 +1,3 @@
+{
+  return properties.get(IMAGE_ID_KEY);
+}

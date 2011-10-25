@@ -1,0 +1,32 @@
+{
+  if (arg instanceof String) {
+    return convertCommandLineStringToParts((String)arg);
+  }
+  if (arg instanceof Map<?,?>) {
+    @SuppressWarnings("unchecked") final Map<String,Object> map=(Map<String,Object>)arg;
+    final String os=System.getProperty("os.name");
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Looking for command line for Operating System Name: " + os);
+    }
+    final List<String> cmdLineList=lookUpCommandLineForOS(map,os);
+    if (cmdLineList != null) {
+      return cmdLineList;
+    }
+    logger.severe("Could not find a matching operating system expression for Operating System: " + os);
+    logger.severe("Attempting alternative command line: " + os);
+    final List<String> alternativeCommandLine=createAlternativeCommandLine(map,workDir);
+    if (alternativeCommandLine != null) {
+      return alternativeCommandLine;
+    }
+    logger.severe("Could not create alternative command line: " + os);
+  }
+  if (arg instanceof List<?>) {
+    List<?> originalList=(List<?>)arg;
+    List<String> resultList=new ArrayList<String>(originalList.size());
+    for (    Object elem : originalList) {
+      resultList.add(elem.toString());
+    }
+    return resultList;
+  }
+  throw new IllegalArgumentException("Could not find command line for argument " + arg + "!");
+}

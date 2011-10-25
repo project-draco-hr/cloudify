@@ -1,0 +1,4 @@
+InputStream inputStream
+ProcessDeathNotifier notifier
+Level logLevel
+String loggerName

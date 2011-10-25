@@ -1,0 +1,5 @@
+{
+  setDefaultNicAddress();
+  setDefaultLocalcloudLookup();
+  startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_MANAGEMENT_ARGUMENTS,timeout,timeunit);
+}

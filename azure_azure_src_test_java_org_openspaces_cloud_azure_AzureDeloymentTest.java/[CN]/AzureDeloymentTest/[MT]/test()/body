@@ -1,0 +1,44 @@
+{
+  log("Getting deployment url");
+  final URL machinesRestAdminUrl=new URL(getMachinesUrl(deployment.getUrl()));
+  log("Waiting for WebUI to finish loading");
+  TestUtils.repetativeAssertTrue("Failed while waiting for WebUI to start",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      HttpURLConnection connection=null;
+      try {
+        connection=(HttpURLConnection)machinesRestAdminUrl.openConnection();
+        connection.getInputStream();
+        connection.disconnect();
+        return true;
+      }
+ catch (      IOException e) {
+        log("Not connected yet.. retrying");
+        return false;
+      }
+ finally {
+        if (connection != null) {
+          connection.disconnect();
+        }
+      }
+    }
+  }
+,POLLING_INTERVAL_IN_MILLIS,TIMEOUT_IN_MILLIS,TimeUnit.MILLISECONDS);
+  log("Waiting for expected number of machines");
+  TestUtils.repetativeAssertTrue("Failed while waiting for number of instances",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        int machinesSize=getNumberOfMachines(machinesRestAdminUrl);
+        boolean condition=machinesSize == EXPECTED_NUMBER_OF_MACHINES;
+        if (!condition) {
+          log("Number of machines is currently: " + machinesSize + ", waiting for it to become "+ EXPECTED_NUMBER_OF_MACHINES);
+        }
+        return condition;
+      }
+ catch (      IOException e) {
+        log("Caugt exeption: " + e.getMessage() + " while waiting for number of instances. retrying...");
+        return false;
+      }
+    }
+  }
+,POLLING_INTERVAL_IN_MILLIS,TIMEOUT_IN_MILLIS,TimeUnit.MILLISECONDS);
+}

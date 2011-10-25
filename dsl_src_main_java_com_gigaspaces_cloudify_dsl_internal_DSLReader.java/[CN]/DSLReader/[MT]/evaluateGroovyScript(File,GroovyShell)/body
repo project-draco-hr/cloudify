@@ -1,0 +1,24 @@
+{
+  Object result=null;
+  FileReader reader=null;
+  try {
+    reader=new FileReader(dslFile);
+    result=gs.evaluate(reader,"groovyScript" + System.currentTimeMillis());
+  }
+ catch (  final CompilationFailedException e) {
+    throw new IllegalArgumentException("The file " + dslFile + " could not be compiled",e);
+  }
+catch (  final IOException e) {
+    throw new IllegalStateException("The file " + dslFile + " could not be read",e);
+  }
+ finally {
+    if (reader != null) {
+      try {
+        reader.close();
+      }
+ catch (      IOException e) {
+      }
+    }
+  }
+  return result;
+}

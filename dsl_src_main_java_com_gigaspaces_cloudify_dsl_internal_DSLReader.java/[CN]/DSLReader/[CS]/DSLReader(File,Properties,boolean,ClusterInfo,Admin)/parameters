@@ -1,0 +1,5 @@
+File workFolder
+Properties properties
+boolean runningInGSC
+ClusterInfo clusterInfo
+Admin admin

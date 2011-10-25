@@ -1,0 +1,7 @@
+{
+  Iterator<GridServiceManager> it=admin.getGridServiceManagers().iterator();
+  if (it.hasNext()) {
+    return it.next();
+  }
+  throw new CLIException("No Grid Service Manager found to deploy " + serviceName);
+}

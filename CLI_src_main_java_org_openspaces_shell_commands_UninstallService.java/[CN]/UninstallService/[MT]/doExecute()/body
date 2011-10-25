@@ -1,0 +1,23 @@
+{
+  final Set<String> containerIdsOfService=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForService(getCurrentApplicationName(),serviceName);
+  if (verbose) {
+    logger.info("Found containers: " + containerIdsOfService);
+  }
+  adminFacade.undeploy(getCurrentApplicationName(),serviceName);
+  if (timeoutInMinutes > 0) {
+    createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
+      @Override public boolean isDone() throws CLIException {
+        Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
+        Set<String> remainingContainersForService=new HashSet<String>(containerIdsOfService);
+        remainingContainersForService.retainAll(allContainerIds);
+        boolean isDone=remainingContainersForService.isEmpty();
+        if (!isDone) {
+          logger.info("Waiting for all service instances to uninstall. " + "Currently " + remainingContainersForService.size() + " instances are still running."+ (verbose ? " " + remainingContainersForService : ""));
+        }
+        return isDone;
+      }
+    }
+);
+  }
+  return getFormattedMessage("undeployed_successfully",serviceName);
+}

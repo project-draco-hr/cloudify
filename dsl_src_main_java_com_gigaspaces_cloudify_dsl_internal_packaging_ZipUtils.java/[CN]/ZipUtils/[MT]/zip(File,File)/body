@@ -1,0 +1,32 @@
+{
+  URI base=directory.toURI();
+  File toZip=new File(zipfile,"");
+  toZip.setWritable(true);
+  Stack<File> stack=new Stack<File>();
+  stack.push(directory);
+  OutputStream out=new FileOutputStream(toZip);
+  Closeable res=out;
+  try {
+    ZipOutputStream zout=new ZipOutputStream(out);
+    res=zout;
+    while (!stack.isEmpty()) {
+      directory=stack.pop();
+      for (      File kid : directory.listFiles()) {
+        String name=base.relativize(kid.toURI()).getPath();
+        if (kid.isDirectory()) {
+          stack.push(kid);
+          name=name.endsWith("/") ? name : name + "/";
+          zout.putNextEntry(new ZipEntry(name));
+        }
+ else {
+          zout.putNextEntry(new ZipEntry(name));
+          copy(kid,zout);
+          zout.closeEntry();
+        }
+      }
+    }
+  }
+  finally {
+    res.close();
+  }
+}

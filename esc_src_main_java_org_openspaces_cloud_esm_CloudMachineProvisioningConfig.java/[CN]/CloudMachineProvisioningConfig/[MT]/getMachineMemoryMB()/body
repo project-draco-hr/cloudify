@@ -1,0 +1,3 @@
+{
+  return properties.getLong(MEMORY_MEGABYTES_PER_MACHINE_KEY,MIN_RAM_MEGABYTES_DEFAULT);
+}

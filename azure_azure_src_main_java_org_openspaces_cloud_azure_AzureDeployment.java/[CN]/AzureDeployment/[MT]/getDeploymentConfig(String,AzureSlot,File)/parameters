@@ -1,0 +1,3 @@
+String hostedService
+AzureSlot slot
+File outputCscfgFile

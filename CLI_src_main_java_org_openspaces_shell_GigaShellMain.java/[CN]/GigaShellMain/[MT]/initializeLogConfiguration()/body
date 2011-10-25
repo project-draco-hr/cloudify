@@ -1,0 +1,11 @@
+{
+  Handler[] handlers=Logger.getLogger("").getHandlers();
+  for (  Handler handler : handlers) {
+    if (handler.getClass().getName() == ConsoleHandler.class.getName()) {
+      handler.setFormatter(new ShellFormatter());
+      handler.setErrorManager(new ShellErrorManager());
+      handler.setLevel(Level.INFO);
+      break;
+    }
+  }
+}

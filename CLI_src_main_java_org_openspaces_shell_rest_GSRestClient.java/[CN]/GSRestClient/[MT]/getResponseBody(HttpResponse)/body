@@ -1,0 +1,22 @@
+{
+  InputStream instream=null;
+  try {
+    HttpEntity entity=response.getEntity();
+    if (entity == null) {
+      final ErrorStatusException e=new ErrorStatusException("comm_error");
+      logger.log(Level.FINE," response entity is null",e);
+      throw e;
+    }
+    instream=entity.getContent();
+    return StringUtils.getStringFromStream(instream);
+  }
+  finally {
+    if (instream != null) {
+      try {
+        instream.close();
+      }
+ catch (      final IOException e) {
+      }
+    }
+  }
+}

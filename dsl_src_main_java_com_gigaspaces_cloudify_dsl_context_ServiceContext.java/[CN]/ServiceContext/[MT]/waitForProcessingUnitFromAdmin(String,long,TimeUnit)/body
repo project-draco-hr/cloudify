@@ -1,0 +1,7 @@
+{
+  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(name,timeout,unit);
+  if (pu == null) {
+    logger.warning("Processing unit with name: " + name + " was not found in the cluster. Are you running in an IntegratedProcessingUnitContainer? If not, consider extending the timeout.");
+  }
+  return pu;
+}

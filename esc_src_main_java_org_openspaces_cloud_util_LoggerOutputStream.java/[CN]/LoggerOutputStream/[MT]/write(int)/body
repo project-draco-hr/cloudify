@@ -1,0 +1,9 @@
+{
+  char c=(char)b;
+  if (c == '\n') {
+    String s=sb.toString();
+    logger.info(prefix + s);
+    sb.setLength(0);
+  }
+ else   sb.append(c);
+}

@@ -1,0 +1,25 @@
+{
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      logger.info("Waiting for " + serviceName + " service.");
+      ProcessingUnit pu=getProcessingUnit();
+      boolean isDone=false;
+      if (pu != null) {
+        for (        ProcessingUnitInstance instance : pu) {
+          if (agent.equals(instance.getGridServiceContainer().getGridServiceAgent())) {
+            isDone=true;
+            break;
+          }
+        }
+      }
+      return isDone;
+    }
+  }
+);
+  URL url=getWebProcessingUnitURL(agent,getProcessingUnit());
+  if (logger.isLoggable(Level.INFO)) {
+    String serviceNameCapital=new StringBuilder(serviceName).replace(0,1,serviceName.substring(0,1).toUpperCase()).toString();
+    logger.info(serviceNameCapital + " service is available at: " + url);
+  }
+  return url;
+}

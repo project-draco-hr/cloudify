@@ -1,0 +1,4 @@
+{
+  adminFacade.removeInstance(getCurrentApplicationName(),serviceName,instanceId);
+  return MessageFormat.format(messages.getString("instance_removed_successfully"),instanceId);
+}

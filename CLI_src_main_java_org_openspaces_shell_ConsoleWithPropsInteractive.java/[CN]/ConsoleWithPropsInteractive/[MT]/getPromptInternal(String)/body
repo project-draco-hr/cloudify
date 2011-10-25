@@ -1,0 +1,3 @@
+{
+  return "\u001B[1mcloudify" + (currentAppName != null ? "@" + currentAppName : "") + "> \u001B[0m";
+}

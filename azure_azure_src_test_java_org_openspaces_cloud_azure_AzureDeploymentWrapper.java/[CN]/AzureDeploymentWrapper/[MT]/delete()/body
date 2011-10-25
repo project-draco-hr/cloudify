@@ -1,0 +1,10 @@
+{
+  try {
+    azureConfig.deleteDeployment(hostedService,slot);
+    return waitForStatus(AzureDeploymentStatus.NotFound,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
+  }
+ catch (  Exception e) {
+    Assert.fail("Failed deleting: " + e.getLocalizedMessage());
+  }
+  return false;
+}

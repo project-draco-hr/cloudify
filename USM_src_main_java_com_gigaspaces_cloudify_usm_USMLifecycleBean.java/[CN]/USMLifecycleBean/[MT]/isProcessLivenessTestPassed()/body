@@ -1,0 +1,44 @@
+{
+  if (this.livenessDetectors.length == 0) {
+    logger.warning("No Start Detectors have been set for this service. This may cause the USM to monitor the parent of the actual process. Consider adding a start detector before going to production");
+  }
+  final long startTime=System.currentTimeMillis();
+  final long endTime=startTime + configuration.getStartDetectionTimeoutMSecs();
+  int currentTestIndex=0;
+  this.livenessDetectorThread=Thread.currentThread();
+  try {
+    while (System.currentTimeMillis() < endTime && currentTestIndex < this.livenessDetectors.length) {
+      if (!this.processIsRunning) {
+        logger.warning("While executing the Process Start Detection, process failure was detected. Aborting start detection test.");
+        return false;
+      }
+      LivenessDetector detector=this.livenessDetectors[currentTestIndex];
+      boolean testResult=false;
+      try {
+        testResult=detector.isProcessAlive();
+      }
+ catch (      USMException e) {
+        if (e.getCause() instanceof InterruptedException) {
+          logger.info("A start detector failed due to an InterruptedException");
+        }
+ else {
+          throw e;
+        }
+      }
+      if (testResult) {
+        ++currentTestIndex;
+      }
+ else {
+        try {
+          Thread.sleep(configuration.getStartDetectionIntervalMSecs());
+        }
+ catch (        InterruptedException ie) {
+        }
+      }
+    }
+    return currentTestIndex == this.livenessDetectors.length;
+  }
+  finally {
+    this.livenessDetectorThread=null;
+  }
+}

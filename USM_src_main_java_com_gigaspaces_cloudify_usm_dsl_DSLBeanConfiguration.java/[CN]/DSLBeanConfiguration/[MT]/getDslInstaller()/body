@@ -1,0 +1,8 @@
+{
+  return createBeanIfNotExistsType(new USMInstaller(){
+    public void install(){
+      new DSLEntryExecutor(service.getLifecycle().getInstall(),launcher,puExtDir);
+    }
+  }
+,USMInstaller.class);
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    gatherData(sigar,pid);
+  }
+ catch (  final SigarException e) {
+    final String msg="Failed to read external process data via Sigar: " + e;
+    logger.severe(msg);
+    throw new MonitorException(msg,e);
+  }
+}

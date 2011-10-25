@@ -1,0 +1,6 @@
+{
+  super();
+  this.objectName=objectName;
+  this.attributeName=attributeName;
+  this.displayName=displayName;
+}

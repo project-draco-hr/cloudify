@@ -1,0 +1,3 @@
+{
+  return properties.get(HARDWARE_ID_DIRECTORY_KEY,HARDWARE_ID_DEFAULT);
+}

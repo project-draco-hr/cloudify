@@ -1,0 +1,9 @@
+{
+  final String[] arr=new String[this.attributes.size()];
+  int i=0;
+  for (  final JmxAttribute att : this.attributes) {
+    arr[i]=att.getAttributeName();
+    ++i;
+  }
+  return arr;
+}

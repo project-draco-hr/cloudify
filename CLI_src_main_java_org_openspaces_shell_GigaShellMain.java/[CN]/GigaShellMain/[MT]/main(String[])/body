@@ -1,0 +1,47 @@
+{
+  initializeLogConfiguration();
+  InputStream is=null;
+  SequenceInputStream sis=null;
+  InputStream exitInputStream=new ByteArrayInputStream(EXIT_COMMAND.getBytes());
+  boolean isInteractive=true;
+  try {
+    if (args.length > 0) {
+      isInteractive=false;
+      if (args[0].startsWith("-f=")) {
+        String filename=args[0].substring("-f=".length());
+        File file=new File(filename);
+        if (!file.exists()) {
+          throw new IllegalArgumentException(filename + " does not exist");
+        }
+        is=new FileInputStream(filename);
+      }
+ else {
+        String commandString="";
+        for (int i=0; i < args.length; i++) {
+          commandString=commandString.concat(args[i] + " ");
+        }
+        if (!commandString.endsWith(";")) {
+          commandString=commandString.concat(";");
+        }
+        commandString=commandString.replace(";",System.getProperty("line.separator"));
+        is=new ByteArrayInputStream(commandString.getBytes("UTF-8"));
+      }
+      sis=new SequenceInputStream(is,exitInputStream);
+      System.setIn(sis);
+      args=new String[0];
+    }
+    instance=new GigaShellMain(isInteractive);
+    instance.setApplication("cloudify");
+    Ansi.ansi();
+    instance.run(args);
+  }
+  finally {
+    if (is != null) {
+      is.close();
+    }
+    if (sis != null) {
+      sis.close();
+    }
+    exitInputStream.close();
+  }
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    processToCheck.exitValue();
+    return false;
+  }
+ catch (  final Exception e) {
+    return true;
+  }
+}

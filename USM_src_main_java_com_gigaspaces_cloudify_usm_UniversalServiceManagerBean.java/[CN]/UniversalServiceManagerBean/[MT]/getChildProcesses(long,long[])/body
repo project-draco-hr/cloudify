@@ -1,0 +1,14 @@
+{
+  final Set<Long> children=new HashSet<Long>();
+  for (  final long pid : pids) {
+    try {
+      if (ppid == this.sigar.getProcState(pid).getPpid()) {
+        children.add(pid);
+      }
+    }
+ catch (    final SigarException e) {
+      logger.log(Level.WARNING,"While scanning for child processes of process " + ppid + ", could not read process state of Process: "+ pid+ ". Ignoring.",e);
+    }
+  }
+  return children;
+}

@@ -1,0 +1,71 @@
+{
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  final AgentlessInstaller installer=new AgentlessInstaller();
+  Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(config.getSshLoggingLevel());
+  fixConfigRelativePaths(config);
+  final CloudScaleOutTask task=new CloudScaleOutTask(installer,config,machineTag,deployer,null);
+  InstallationDetails[] details=task.startServers(config.getNumberOfManagementMachines(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  for (int i=1; i < details.length; i++) {
+    details[i].setNoWebServices(true);
+  }
+  StringBuilder lookupSb=new StringBuilder();
+  for (  InstallationDetails detail : details) {
+    lookupSb.append(detail.getPrivateIp()).append(",");
+  }
+  lookupSb.setLength(lookupSb.length() - 1);
+  for (  InstallationDetails detail : details) {
+    detail.setLocator(lookupSb.toString());
+  }
+  ExecutorService exeService=Executors.newFixedThreadPool(config.getNumberOfManagementMachines());
+  BootstrapLogsFilters bootstrapLogs=new BootstrapLogsFilters(verbose);
+  try {
+    bootstrapLogs.applyLogFilters();
+    List<Future<Exception>> futures=new ArrayList<Future<Exception>>();
+    for (    final InstallationDetails detail : details) {
+      Future<Exception> future=exeService.submit(new Callable<Exception>(){
+        public Exception call(){
+          try {
+            installer.installOnMachineWithIP(detail,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+          }
+ catch (          TimeoutException e) {
+            return e;
+          }
+catch (          InterruptedException e) {
+            return e;
+          }
+catch (          InstallerException e) {
+            return e;
+          }
+          return null;
+        }
+      }
+);
+      futures.add(future);
+    }
+    for (    Future<Exception> future : futures) {
+      try {
+        Exception e=future.get();
+        if (e != null) {
+          if (e instanceof TimeoutException) {
+            throw (TimeoutException)e;
+          }
+          if (e instanceof InterruptedException) {
+            throw (InterruptedException)e;
+          }
+          if (e instanceof InstallerException) {
+            throw (InstallerException)e;
+          }
+          throw new InstallerException("Failed creating machines",e);
+        }
+      }
+ catch (      ExecutionException e) {
+        throw new InstallerException("Failed creating machines",e);
+      }
+    }
+  }
+  finally {
+    exeService.shutdown();
+    bootstrapLogs.restoreLogFilters();
+  }
+  return task.getServers();
+}

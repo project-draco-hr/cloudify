@@ -1,0 +1,13 @@
+{
+  this.url=url;
+  this.urlStr=createUrlStr();
+  if (isSSL()) {
+    httpClient=getSSLHttpClient();
+  }
+ else {
+    httpClient=new DefaultHttpClient();
+  }
+  if (StringUtils.notEmpty(username) && StringUtils.notEmpty(password)) {
+    httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY),new UsernamePasswordCredentials(username,password));
+  }
+}

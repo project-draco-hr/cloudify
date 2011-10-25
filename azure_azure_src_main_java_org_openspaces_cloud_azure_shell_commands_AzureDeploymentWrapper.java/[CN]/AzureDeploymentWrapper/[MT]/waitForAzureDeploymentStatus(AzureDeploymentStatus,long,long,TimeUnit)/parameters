@@ -1,0 +1,4 @@
+AzureDeploymentStatus status
+long pollingInterval
+long timeout
+TimeUnit timeunit

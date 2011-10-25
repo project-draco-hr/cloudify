@@ -1,0 +1,3 @@
+{
+  return properties.get(KEY_FILE_DIRECTORY_KEY,KEY_FILE_DEFAULT);
+}

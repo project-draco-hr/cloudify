@@ -1,0 +1,8 @@
+{
+  if (this.instanceId == 1) {
+    usmLifecycleBean.firePreServiceStart();
+  }
+  usmLifecycleBean.fireInit();
+  usmLifecycleBean.install();
+  launch();
+}

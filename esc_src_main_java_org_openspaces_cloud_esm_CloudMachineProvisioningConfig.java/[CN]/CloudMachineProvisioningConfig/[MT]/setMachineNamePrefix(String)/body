@@ -1,0 +1,3 @@
+{
+  properties.put(MACHINE_NAME_PREFIX_KEY,machineNamePrefix);
+}

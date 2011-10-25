@@ -1,0 +1,3 @@
+{
+  return (this.lastModified != file.lastModified() || this.fileLength != file.length());
+}

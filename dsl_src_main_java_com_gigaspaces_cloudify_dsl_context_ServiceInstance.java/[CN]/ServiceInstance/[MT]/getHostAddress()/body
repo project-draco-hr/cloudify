@@ -1,0 +1,14 @@
+{
+  if (pui != null) {
+    return pui.getMachine().getHostAddress();
+  }
+ else {
+    try {
+      return InetAddress.getLocalHost().getHostAddress();
+    }
+ catch (    UnknownHostException e) {
+      logger.log(Level.SEVERE,"Failed to read local host address",e);
+      return null;
+    }
+  }
+}

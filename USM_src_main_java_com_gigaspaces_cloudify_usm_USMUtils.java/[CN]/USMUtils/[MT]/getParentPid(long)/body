@@ -1,0 +1,8 @@
+{
+  ProcState procState=null;
+  procState=USMUtils.getProcState(pid);
+  if (procState == null) {
+    return 0;
+  }
+  return procState.getPpid();
+}

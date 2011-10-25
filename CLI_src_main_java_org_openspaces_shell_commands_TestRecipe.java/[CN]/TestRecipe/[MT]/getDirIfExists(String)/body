@@ -1,0 +1,10 @@
+{
+  File requiredDir=new File(Environment.getHomeDirectory() + File.separator + dirName);
+  if (!requiredDir.exists()) {
+    throw new IllegalStateException("Could not find directory: " + dirName);
+  }
+  if (!requiredDir.isDirectory()) {
+    throw new IllegalStateException(requiredDir + " is not a directory");
+  }
+  return requiredDir;
+}

@@ -1,0 +1,35 @@
+{
+  String localWorkingDir=System.getProperty("local.working.dir");
+  Assert.assertNotNull("local.working.dir must be passed",localWorkingDir);
+  File azureConfigExe=new File(localWorkingDir,"azureconfig.exe");
+  Assert.assertTrue("azureconfig.exe must exist",azureConfigExe.isFile());
+  File cscfgFile=new File(localWorkingDir,"travel.cscfg");
+  Assert.assertTrue(cscfgFile.getAbsolutePath() + " does not exist",cscfgFile.isFile());
+  String localPackagePath=new File(localWorkingDir,"travel.cspkg").getAbsolutePath();
+  Assert.assertTrue(localPackagePath + " must exist",new File(localPackagePath).isFile());
+  container=new AzureStorageContainer(AZURE_ACCOUNT_NAME,AZURE_ACCOUNT_KEY,AZURE_CONTAINER_NAME);
+  log("Connecting to Azure Blob Store");
+  container.connect();
+  log("Uploading new package to store");
+  container.putBlob(PACKAGE_BLOB_NAME,localPackagePath);
+  String gigaSpacesXAPLocalFilePath=System.getProperty("gigaspaces.xap.filepath");
+  if (gigaSpacesXAPLocalFilePath != null && new File(gigaSpacesXAPLocalFilePath).isFile()) {
+    if (container.isBlobExists(GIGASPACES_XAP_BLOB_NAME)) {
+      log("Deleting previous gigaspaces-latest blob");
+      container.deleteBlob(GIGASPACES_XAP_BLOB_NAME);
+    }
+    log("Uploading gigaspaces xap from " + gigaSpacesXAPLocalFilePath + " to blob store");
+    container.putBlob(GIGASPACES_XAP_BLOB_NAME,gigaSpacesXAPLocalFilePath);
+    log("Updating gigaspaces xap url in configuration file");
+    AzureDeploymentConfigurationFile configFile=new AzureDeploymentConfigurationFile(cscfgFile);
+    configFile.setGigaSpacesXAPDownloadUrl(container.getBlobUri(GIGASPACES_XAP_BLOB_NAME));
+    configFile.flush();
+  }
+  deployment=new AzureDeploymentWrapper(azureConfigExe,null,null,HOSTED_SERVICE,AZURE_SLOT,DEPLOYMENT_NAME,DEPLOYMENT_LABEL,cscfgFile,container.getBlobUri(PACKAGE_BLOB_NAME));
+  deployment.setStatusTimeoutInMillis(TIMEOUT_IN_MILLIS);
+  deployment.setStatusPollingIntervalInMillis(POLLING_INTERVAL_IN_MILLIS);
+  Assert.assertTrue("Application is already deployed",deployment.getStatus() == AzureDeploymentStatus.NotFound);
+  log("Deploying package to azure");
+  deployment.deploy();
+  Assert.assertTrue(deployment.getStatus() == AzureDeploymentStatus.Running);
+}

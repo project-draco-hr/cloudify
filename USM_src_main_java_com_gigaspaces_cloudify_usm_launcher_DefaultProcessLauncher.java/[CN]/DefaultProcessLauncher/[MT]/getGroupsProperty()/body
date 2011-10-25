@@ -1,0 +1,11 @@
+{
+  String groupsProperty=System.getProperty("com.gs.jini_lus.groups");
+  if (groupsProperty == null) {
+    groupsProperty=System.getenv("LOOKUPGROUPS");
+  }
+  if (groupsProperty == null) {
+    groupsProperty="gigaspaces-" + PlatformVersion.getVersionNumber();
+  }
+  groupsProperty=groupsProperty.replace("\"","");
+  return groupsProperty;
+}

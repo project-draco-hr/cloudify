@@ -1,0 +1,5 @@
+{
+  if (discoverUnmanagedSpace) {
+    adminFactory.discoverUnmanagedSpaces();
+  }
+}

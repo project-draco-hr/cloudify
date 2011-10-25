@@ -1,0 +1,15 @@
+{
+  List<String> args=new ArrayList<String>();
+  args.addAll(Arrays.asList(gsAgentArguments));
+  String[] command;
+  if (isWindows()) {
+    command=WINDOWS_COMMAND;
+    args.addAll(Arrays.asList(WINDOWS_ARGUMENTS_POSTFIX));
+  }
+ else {
+    command=LINUX_COMMAND;
+    args.addAll(Arrays.asList(LINUX_ARGUMENTS_POSTFIX));
+  }
+  logger.info("Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : ""));
+  runCommand(command,args.toArray(new String[args.size()]));
+}

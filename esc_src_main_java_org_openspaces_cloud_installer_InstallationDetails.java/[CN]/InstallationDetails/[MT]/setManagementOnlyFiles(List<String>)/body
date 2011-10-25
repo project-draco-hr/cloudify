@@ -1,0 +1,4 @@
+{
+  String[] managementOnlyFilesArray=(String[])managementOnlyFiles.toArray(new String[0]);
+  this.managementOnlyFiles=managementOnlyFilesArray;
+}

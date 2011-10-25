@@ -1,0 +1,6 @@
+{
+  int counter=0;
+  String seporatedLines[]=loggedMessages.split("[\\r\\n]+");
+  counter+=seporatedLines.length;
+  Assert.assertTrue(NUMBER_OF_LINES_TO_LOG - counter < EXPECTED_NUMBER_OF_FILE_PARTS);
+}

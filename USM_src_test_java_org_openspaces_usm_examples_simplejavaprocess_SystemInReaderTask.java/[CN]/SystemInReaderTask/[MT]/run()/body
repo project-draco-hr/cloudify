@@ -1,0 +1,13 @@
+{
+  BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+  try {
+    System.out.println("reading line...");
+    String readLine=reader.readLine();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+ finally {
+    latch.countDown();
+  }
+}

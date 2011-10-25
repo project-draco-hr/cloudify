@@ -1,0 +1,12 @@
+{
+  final File[] files=dir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return (name.endsWith("-application.groovy"));
+    }
+  }
+);
+  if (files.length != 1) {
+    throw new IllegalArgumentException("Expected to find one application file, found " + files.length);
+  }
+  return files[0];
+}

@@ -1,0 +1,8 @@
+{
+  if (this.pu != null) {
+    return pu.getNumberOfInstances();
+  }
+ else {
+    return planned;
+  }
+}

@@ -1,0 +1,4 @@
+{
+  this.logger=logger;
+  sb=new StringBuilder();
+}

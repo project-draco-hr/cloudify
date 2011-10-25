@@ -1,0 +1,3 @@
+{
+  properties.put(LOCATOR_KEY,locator);
+}

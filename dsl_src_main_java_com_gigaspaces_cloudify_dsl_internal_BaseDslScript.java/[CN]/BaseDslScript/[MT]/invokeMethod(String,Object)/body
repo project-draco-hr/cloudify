@@ -1,0 +1,23 @@
+{
+  Object[] arr=(Object[])arg;
+  Object param=arr[0];
+  if (param instanceof Closure<?>) {
+    @SuppressWarnings("unchecked") Closure<Object> closure=(Closure<Object>)param;
+    Object retval;
+    try {
+      retval=dslObject(name);
+    }
+ catch (    DSLException e) {
+      throw new IllegalArgumentException("Failed to set: " + name,e);
+    }
+    if (retval != null) {
+      if (this.rootObject == null) {
+        this.rootObject=retval;
+      }
+      swapActiveObject(closure,retval);
+      return retval;
+    }
+  }
+  setProperty(name,arg);
+  return null;
+}

@@ -1,0 +1,20 @@
+{
+  File binDir=new File(Environment.getHomeDirectory(),"bin");
+  DefaultExecutor executor=new DefaultExecutor();
+  executor.setWorkingDirectory(binDir);
+  CommandLine cmdLine=createCommandLine();
+  executor.setExitValue(0);
+  executor.execute(cmdLine,new ExecuteResultHandler(){
+    @Override public void onProcessFailed(    ExecuteException e){
+      logger.log(Level.SEVERE,"Local Cloud Agent terminated unexpectedly",e);
+    }
+    @Override public void onProcessComplete(    int arg0){
+      logger.fine("Local Cloud Agent terminated");
+    }
+  }
+);
+  boolean foundLus=admin.getLookupServices().waitFor(1,1,TimeUnit.MINUTES);
+  if (!foundLus) {
+    throw new java.lang.IllegalStateException("Local Cloud Lookup Service did not start!");
+  }
+}

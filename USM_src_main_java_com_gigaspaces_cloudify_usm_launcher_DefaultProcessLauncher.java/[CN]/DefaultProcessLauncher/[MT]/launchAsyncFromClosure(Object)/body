@@ -1,0 +1,18 @@
+{
+  final Callable<?> closure=(Callable<?>)arg;
+  Object retval=null;
+  try {
+    retval=closure.call();
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"A closure entry failed to execute: " + e,e);
+    throw new USMException("Launch of process from closure exited with an exception: " + e.getMessage(),e);
+  }
+  if (retval == null) {
+    throw new USMException("Launch of process from closure did not return a process handle!");
+  }
+  if (!(retval instanceof Process)) {
+    throw new USMException("Launch of process from closure returned a result that is not a process handle. Result was: " + retval);
+  }
+  return (Process)retval;
+}

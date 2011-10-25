@@ -1,0 +1,10 @@
+{
+  super(commandProcessor,input,output,err,terminal,callback);
+  consoleActions=isInteractive ? new ConsoleWithPropsInteractive() : new ConsoleWithPropsNonInteractive();
+  callback.setSession(session);
+  AdminFacade adminFacade=new RestAdminFacade();
+  session.put(Constants.ADMIN_FACADE,adminFacade);
+  session.put(Constants.RECIPES,new HashMap<String,File>());
+  session.put(Constants.ACTIVE_APP,DEFAULT_APP_NAME);
+  session.put(Constants.INTERACTIVE_MODE,isInteractive);
+}

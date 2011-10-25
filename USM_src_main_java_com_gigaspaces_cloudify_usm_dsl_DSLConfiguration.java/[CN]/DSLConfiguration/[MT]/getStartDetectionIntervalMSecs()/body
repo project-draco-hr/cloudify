@@ -1,0 +1,3 @@
+{
+  return this.service.getLifecycle().getStartDetectionIntervalSecs() * 1000;
+}

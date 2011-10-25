@@ -1,0 +1,11 @@
+{
+  int listIndex=getIndexFromString(index);
+  if (listIndex == -1) {
+    throw new RuntimeException("unable to parse index " + listIndex);
+  }
+  List<?> objectList=(List<?>)listObject;
+  if (listIndex >= objectList.size()) {
+    throw new RuntimeException("Index out of bounds: " + listIndex);
+  }
+  return objectList.get(listIndex);
+}

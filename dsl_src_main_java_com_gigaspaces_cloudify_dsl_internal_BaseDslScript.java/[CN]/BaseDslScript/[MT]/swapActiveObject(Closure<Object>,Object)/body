@@ -1,0 +1,8 @@
+{
+  final Object prevObject=this.activeObject;
+  this.activeObject=obj;
+  closure.setResolveStrategy(Closure.OWNER_FIRST);
+  closure.call();
+  activeObject=prevObject;
+  return;
+}

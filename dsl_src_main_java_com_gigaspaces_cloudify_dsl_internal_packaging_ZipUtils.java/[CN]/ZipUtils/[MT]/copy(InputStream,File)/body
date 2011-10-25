@@ -1,0 +1,9 @@
+{
+  OutputStream out=new FileOutputStream(file);
+  try {
+    copy(in,out);
+  }
+  finally {
+    out.close();
+  }
+}

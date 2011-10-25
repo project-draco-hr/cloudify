@@ -1,0 +1,3 @@
+{
+  return executeAzureConfig(argument(GET_DEPLOYMENT_URL_FLAG),argument(HOSTED_SERVICE_FLAG,hostedService),argument(SLOT_FLAG,slot.getSlot()));
+}

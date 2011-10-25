@@ -1,0 +1,7 @@
+{
+  long millisUntilEnd=end - System.currentTimeMillis();
+  if (millisUntilEnd < 0) {
+    throw new TimeoutException("Cloud operation timed out");
+  }
+  return millisUntilEnd;
+}

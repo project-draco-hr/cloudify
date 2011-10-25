@@ -1,0 +1,11 @@
+{
+  try {
+    initGroovyCommandLine(workingDir);
+  }
+ catch (  final FileNotFoundException e) {
+    throw new USMException("Failed to set up groovy command line",e);
+  }
+  for (int i=0; i < groovyCommandLinePrefixParams.size(); i++) {
+    commandLineParams.add(i,groovyCommandLinePrefixParams.get(i));
+  }
+}

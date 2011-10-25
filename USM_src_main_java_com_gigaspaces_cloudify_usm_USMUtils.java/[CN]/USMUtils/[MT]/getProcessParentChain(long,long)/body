@@ -1,0 +1,20 @@
+{
+  final LinkedList<Long> list=new LinkedList<Long>();
+  if (childPid == 0) {
+    logger.warning("The child PID is 0 - this usually means that this USM instance had a problem during startup. Please check the logs for more details.");
+    return list;
+  }
+  long currentPid=childPid;
+  while (currentPid != myPid) {
+    list.add(currentPid);
+    final long ppid=USMUtils.getParentPid(currentPid);
+    if (ppid == 0) {
+      logger.severe("Attempt to create a process chain from child process " + childPid + " this process("+ myPid+ "). Process "+ childPid+ " is not a descendant of this process. Only process "+ childPid+ " will be included in the chain");
+      list.clear();
+      list.add(childPid);
+      return list;
+    }
+    currentPid=ppid;
+  }
+  return list;
+}

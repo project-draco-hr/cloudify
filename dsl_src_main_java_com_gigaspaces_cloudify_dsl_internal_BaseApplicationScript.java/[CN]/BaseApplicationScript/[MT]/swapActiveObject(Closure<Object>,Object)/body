@@ -1,0 +1,14 @@
+{
+  final Object prevObject=this.activeObject;
+  this.activeObject=obj;
+  closure.setResolveStrategy(Closure.OWNER_ONLY);
+  try {
+    final Object res=closure.call();
+    activeObject=prevObject;
+    return res;
+  }
+ catch (  Exception e) {
+    System.out.println(e);
+  }
+  return null;
+}

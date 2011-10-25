@@ -1,0 +1,72 @@
+{
+  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  connectionLogs.supressConnectionErrors();
+  final Admin admin=createAdmin();
+  try {
+    setLookupDefaults(admin);
+    GridServiceAgent agent;
+    try {
+      try {
+        waitForExistingAgent(admin,progressInSeconds,TimeUnit.SECONDS);
+        throw new CLIException("Agent already running on local machine.");
+      }
+ catch (      TimeoutException e) {
+      }
+      runGsAgentOnLocalHost("agent and management processes",gsAgentArgs);
+      agent=waitForNewAgent(admin,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    }
+  finally {
+      connectionLogs.restoreConnectionErrors();
+    }
+    waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    if (!noWebServices) {
+      connectionLogs.supressConnectionErrors();
+      try {
+        ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
+        webuiInstaller.setAdmin(agent.getAdmin());
+        webuiInstaller.setVerbose(verbose);
+        webuiInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
+        webuiInstaller.setMemory(WEBUI_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
+        webuiInstaller.setPort(WEBUI_PORT);
+        webuiInstaller.setWarFile(new File(WEBUI_FILE));
+        webuiInstaller.setServiceName(WEBUI_NAME);
+        webuiInstaller.setManagementZone(MANAGEMENT_GSA_ZONE);
+        try {
+          webuiInstaller.install();
+        }
+ catch (        ProcessingUnitAlreadyDeployedException e) {
+          if (verbose) {
+            logger.info("Service " + WEBUI_NAME + " already installed");
+          }
+        }
+        ManagementWebServiceInstaller restInstaller=new ManagementWebServiceInstaller();
+        restInstaller.setAdmin(agent.getAdmin());
+        restInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
+        restInstaller.setVerbose(verbose);
+        restInstaller.setMemory(REST_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
+        restInstaller.setPort(REST_PORT);
+        restInstaller.setWarFile(new File(REST_FILE));
+        restInstaller.setServiceName(REST_NAME);
+        restInstaller.setManagementZone(MANAGEMENT_GSA_ZONE);
+        try {
+          restInstaller.install();
+        }
+ catch (        ProcessingUnitAlreadyDeployedException e) {
+          if (verbose) {
+            logger.info("Service " + REST_NAME + " already installed");
+          }
+        }
+        webuiInstaller.waitForProcessingUnitInstance(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+        URL restUrl=restInstaller.waitForProcessingUnitInstance(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+        waitForConnection(restUrl,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+      }
+  finally {
+        connectionLogs.restoreConnectionErrors();
+      }
+    }
+  }
+  finally {
+    admin.close();
+  }
+}

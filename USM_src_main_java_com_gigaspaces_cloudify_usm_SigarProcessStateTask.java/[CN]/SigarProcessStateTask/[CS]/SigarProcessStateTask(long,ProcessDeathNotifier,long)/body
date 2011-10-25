@@ -1,0 +1,6 @@
+{
+  super();
+  this.pid=pid;
+  this.notifier=notifier;
+  this.intervalMs=intervalMs;
+}

@@ -1,0 +1,27 @@
+{
+  final Set<Entry<String,Object>> entries=config.entrySet();
+  for (  final Entry<String,Object> entry : entries) {
+    try {
+      if (entry.getKey().equalsIgnoreCase("port")) {
+        this.setPort((Integer)entry.getValue());
+      }
+ else       if (entry.getKey().equalsIgnoreCase("host")) {
+        this.setHost((String)entry.getValue());
+      }
+ else       if (entry.getKey().equalsIgnoreCase("username")) {
+        this.username=(String)entry.getValue();
+      }
+ else       if (entry.getKey().equalsIgnoreCase("password")) {
+        this.password=(String)entry.getValue();
+      }
+ else {
+        List<String> list=(List<String>)entry.getValue();
+        JmxAttribute att=new JmxAttribute(list.get(0),list.get(1),entry.getKey());
+        this.targets.add(att);
+      }
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to process Jmx Configuration entry: " + entry.getKey() + "="+ entry.getValue());
+    }
+  }
+}

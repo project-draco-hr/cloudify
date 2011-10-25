@@ -1,0 +1,10 @@
+{
+  int arrayIndex;
+  try {
+    arrayIndex=Integer.parseInt(index);
+  }
+ catch (  NumberFormatException e) {
+    return -1;
+  }
+  return arrayIndex;
+}

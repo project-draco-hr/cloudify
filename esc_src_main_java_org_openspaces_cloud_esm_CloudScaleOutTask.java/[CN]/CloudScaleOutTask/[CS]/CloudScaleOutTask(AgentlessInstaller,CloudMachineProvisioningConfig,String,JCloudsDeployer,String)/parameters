@@ -1,0 +1,5 @@
+AgentlessInstaller installer
+CloudMachineProvisioningConfig config
+String machineGroup
+JCloudsDeployer deployer
+String lusIP

@@ -1,0 +1,13 @@
+{
+  final Predicate<ComputeMetadata> filter=new Predicate<ComputeMetadata>(){
+    public boolean apply(    final ComputeMetadata compute){
+      final NodeMetadata node=(NodeMetadata)compute;
+      if (node.getPrivateAddresses().contains(ip)) {
+        return true;
+      }
+      return node.getPublicAddresses().contains(ip);
+    }
+  }
+;
+  return getServer(filter);
+}

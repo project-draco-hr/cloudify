@@ -1,0 +1,6 @@
+{
+  if (dispName == null) {
+    return domain + ":" + type+ ":"+ attr;
+  }
+  return domain + ":" + type+ ":"+ attr+ ":"+ dispName;
+}

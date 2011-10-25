@@ -1,0 +1,4 @@
+{
+  final int responseCode=ServiceUtils.getHttpReturnCode(this.url);
+  return this.allowedResponseCodes.contains(responseCode);
+}

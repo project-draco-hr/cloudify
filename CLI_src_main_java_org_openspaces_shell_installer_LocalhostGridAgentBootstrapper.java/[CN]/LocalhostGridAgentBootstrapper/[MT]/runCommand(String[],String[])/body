@@ -1,0 +1,46 @@
+{
+  File directory=new File(Environment.getHomeDirectory(),"/bin").getAbsoluteFile();
+  command[command.length - 1]=new File(directory,command[command.length - 1]).getAbsolutePath();
+  List<String> commandLine=new ArrayList<String>();
+  commandLine.addAll(Arrays.asList(command));
+  commandLine.addAll(Arrays.asList(args));
+  File filename=createScript(StringUtils.collectionToDelimitedString(commandLine," "));
+  final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
+  String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
+  if (autoShutdown) {
+    gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
+  }
+  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort;
+  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m";
+  String esmJavaOptions="-Xmx" + ESM_MEMORY_IN_MB + "m";
+  String gscJavaOptions="";
+  if (lookupGroups != null) {
+    pb.environment().put("LOOKUPGROUPS",lookupGroups);
+  }
+  if (lookupLocators != null) {
+    pb.environment().put("LOOKUPLOCATORS",lookupLocators);
+    String disableMulticast="-Dcom.gs.multicast.enabled=false";
+    gsaJavaOptions+=" " + disableMulticast;
+    lusJavaOptions+=" " + disableMulticast;
+    gsmJavaOptions+=" " + disableMulticast;
+    esmJavaOptions+=" " + disableMulticast;
+    gscJavaOptions+=disableMulticast;
+  }
+  if (nicAddress != null) {
+    pb.environment().put("NIC_ADDR",nicAddress);
+  }
+  if (zone != null) {
+    gsaJavaOptions+=" -Dcom.gs.zones=" + zone;
+  }
+  pb.environment().put("GSA_JAVA_OPTIONS",gsaJavaOptions);
+  pb.environment().put("LUS_JAVA_OPTIONS",lusJavaOptions);
+  pb.environment().put("GSM_JAVA_OPTIONS",gsmJavaOptions);
+  pb.environment().put("ESM_JAVA_OPTIONS",esmJavaOptions);
+  pb.environment().put("GSC_JAVA_OPTIONS",gscJavaOptions);
+  try {
+    pb.start();
+  }
+ catch (  final IOException e) {
+    throw new CLIException("Error while starting agent",e);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  logger.finer("trying to zip " + puFolderToZip.getAbsolutePath());
+  String serviceName=(service.getName() != null ? service.getName() : srcFolder.getName());
+  File tmpFile=File.createTempFile("ServicePackage",null);
+  tmpFile.delete();
+  tmpFile.mkdir();
+  final File zipFile=new File(tmpFile,serviceName + ".zip");
+  tmpFile.deleteOnExit();
+  zipFile.deleteOnExit();
+  ServiceReader.validateFolderSize(puFolderToZip,service.getMaxJarSize());
+  ZipUtils.zip(puFolderToZip,zipFile);
+  logger.finer("zipped folder successfully to " + zipFile.getAbsolutePath());
+  return zipFile;
+}

@@ -1,0 +1,3 @@
+{
+  return "Application [name=" + name + ", services="+ services+ "]";
+}

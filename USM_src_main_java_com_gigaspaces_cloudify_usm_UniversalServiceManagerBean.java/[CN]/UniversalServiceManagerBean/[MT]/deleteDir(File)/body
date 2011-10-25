@@ -1,0 +1,16 @@
+{
+  logger.fine("Deleting contents of Directory: " + dir);
+  final File[] files=dir.listFiles();
+  if (files != null) {
+    for (    final File file : files) {
+      if (file.isDirectory()) {
+        deleteDir(file);
+      }
+      logger.finer("Deleting: " + file);
+      final boolean result=file.delete();
+      if (!result) {
+        logger.warning("Failed to delete file: " + file + ". This may indicate that another process is using this file, "+ "possibly because the USM managed process did not terminate correctly.");
+      }
+    }
+  }
+}

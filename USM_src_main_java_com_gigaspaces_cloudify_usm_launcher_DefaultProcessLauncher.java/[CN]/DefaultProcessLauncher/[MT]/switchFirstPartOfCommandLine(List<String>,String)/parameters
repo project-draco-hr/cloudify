@@ -1,0 +1,2 @@
+List<String> originalCommandLine
+String newPart

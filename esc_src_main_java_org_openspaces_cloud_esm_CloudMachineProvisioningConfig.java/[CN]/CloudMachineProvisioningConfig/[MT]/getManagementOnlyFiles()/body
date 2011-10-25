@@ -1,0 +1,8 @@
+{
+  String[] managmentFilesArray=properties.getArray(MANAGEMENT_ONLY_FILES_KEY,MANAGEMENT_ONLY_FILES_SEPARATOR,MANAGEMENT_ONLY_FILES_DEFAULT);
+  List<String> managmentFilesList=new ArrayList<String>();
+  for (  String str : managmentFilesArray) {
+    managmentFilesList.add(str);
+  }
+  return managmentFilesList;
+}

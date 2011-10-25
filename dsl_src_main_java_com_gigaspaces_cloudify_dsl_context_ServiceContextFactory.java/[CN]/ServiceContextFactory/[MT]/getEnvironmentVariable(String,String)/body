@@ -1,0 +1,8 @@
+{
+  final String var=System.getenv(name);
+  if (var == null) {
+    logger.warning("Could not find environment variable: " + name + ". Using default value: "+ defaultValue+ " instead.");
+    return defaultValue;
+  }
+  return var;
+}

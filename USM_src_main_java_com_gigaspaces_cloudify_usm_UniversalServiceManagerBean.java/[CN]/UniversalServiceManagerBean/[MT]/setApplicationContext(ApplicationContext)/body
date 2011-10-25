@@ -1,0 +1,44 @@
+{
+  this.applicationContext=arg0;
+  if (arg0.getClassLoader() instanceof ServiceClassLoader) {
+    this.runningInGSC=true;
+    final ServiceClassLoader scl=(ServiceClassLoader)arg0.getClassLoader();
+    final URL url=scl.getSlashPath();
+    logger.info("The slashpath URL is: " + url);
+    URI uri;
+    try {
+      uri=url.toURI();
+    }
+ catch (    final URISyntaxException e) {
+      e.printStackTrace();
+      throw new IllegalArgumentException(e);
+    }
+    logger.info("The slashpath URI is: " + uri);
+    this.puWorkDir=new File(uri);
+    this.puExtDir=new File(this.puWorkDir,"ext");
+    return;
+  }
+  final ResourceApplicationContext rac=(ResourceApplicationContext)arg0;
+  try {
+    this.runningInGSC=false;
+    final Field resourcesField=rac.getClass().getDeclaredField("resources");
+    final boolean accessibleBefore=resourcesField.isAccessible();
+    resourcesField.setAccessible(true);
+    final Resource[] resources=(Resource[])resourcesField.get(rac);
+    for (    final Resource resource : resources) {
+      final File file=resource.getFile();
+      if (file.getName().equals("pu.xml") && file.getParentFile().getName().equals("spring") && file.getParentFile().getParentFile().getName().equals("META-INF")) {
+        puWorkDir=resource.getFile().getParentFile().getParentFile().getParentFile();
+        puExtDir=new File(puWorkDir,"ext");
+        break;
+      }
+    }
+    resourcesField.setAccessible(accessibleBefore);
+  }
+ catch (  final Exception e) {
+    throw new IllegalArgumentException("Could not find pu.xml in the ResourceApplicationContext",e);
+  }
+  if (puWorkDir == null) {
+    throw new IllegalArgumentException("Could not find pu.xml in the ResourceApplicationContext");
+  }
+}

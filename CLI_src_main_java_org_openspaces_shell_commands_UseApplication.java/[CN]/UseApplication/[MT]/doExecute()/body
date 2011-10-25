@@ -1,0 +1,5 @@
+{
+  session.put(Constants.ACTIVE_APP,applicationName);
+  GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
+  return MessageFormat.format(messages.getString("using_application"),applicationName);
+}

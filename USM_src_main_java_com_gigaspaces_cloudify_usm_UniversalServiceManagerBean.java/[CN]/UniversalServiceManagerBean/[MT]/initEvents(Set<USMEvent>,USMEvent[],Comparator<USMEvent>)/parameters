@@ -1,0 +1,3 @@
+Set<USMEvent> allEvents
+USMEvent[] events
+Comparator<USMEvent> eventsComparator

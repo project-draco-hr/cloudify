@@ -1,0 +1,10 @@
+{
+  if (admin.getGroups().length == 0 || admin.getGroups() == null) {
+    throw new IllegalStateException("Admin lookup group must be set");
+  }
+  this.lookupGroups=StringUtils.arrayToDelimitedString(admin.getGroups(),",");
+  final LookupLocator[] locators=admin.getLocators();
+  if (locators != null && locators.length > 0) {
+    this.lookupLocators=convertLookupLocatorToString(locators);
+  }
+}

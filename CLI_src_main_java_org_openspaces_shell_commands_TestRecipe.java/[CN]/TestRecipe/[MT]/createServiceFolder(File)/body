@@ -1,0 +1,10 @@
+{
+  File serviceFolder=null;
+  try {
+    serviceFolder=unzipFile(packagedRecipe);
+  }
+ catch (  IOException e) {
+    throw new IllegalStateException("Failed to unzip recipe: " + e.getMessage(),e);
+  }
+  return serviceFolder;
+}

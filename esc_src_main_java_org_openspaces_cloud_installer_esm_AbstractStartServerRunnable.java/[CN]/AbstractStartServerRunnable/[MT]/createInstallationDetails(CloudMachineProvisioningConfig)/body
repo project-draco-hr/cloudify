@@ -1,0 +1,22 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setLocalDir(config.getLocalDirectory());
+  details.setZones(StringUtils.join(config.getGridServiceAgentZones(),",",0,config.getGridServiceAgentZones().length));
+  details.setRemoteDir(config.getRemoteDirectory());
+  details.setLocator(null);
+  details.setPrivateIp(null);
+  details.setLus(true);
+  details.setCloudifyUrl(config.getCloudifyUrl());
+  details.setConnectedToPrivateIp(config.isConnectedToPrivateIp());
+  if ((config.getKeyPair() != null) && (config.getKeyPair().length() > 0)) {
+    File keyFile=new File(config.getKeyFile());
+    if (!keyFile.isAbsolute()) {
+      keyFile=new File(details.getLocalDir(),config.getKeyFile());
+    }
+    if (!keyFile.isFile()) {
+      throw new FileNotFoundException("keyfile : " + keyFile.getAbsolutePath() + " not found");
+    }
+    details.setKeyFile(keyFile.getAbsolutePath());
+  }
+  return details;
+}

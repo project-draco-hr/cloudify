@@ -1,0 +1,5 @@
+{
+  super(installer,details);
+  this.machineGroup=serverName;
+  this.deployer=deployer;
+}

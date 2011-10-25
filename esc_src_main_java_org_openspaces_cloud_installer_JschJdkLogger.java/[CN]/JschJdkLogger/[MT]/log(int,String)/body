@@ -1,0 +1,19 @@
+{
+switch (level) {
+case DEBUG:
+    logger.fine(message);
+  break;
+case INFO:
+logger.info(message);
+break;
+case WARN:
+logger.warning(message);
+break;
+case ERROR:
+logger.severe(message);
+break;
+case FATAL:
+logger.severe(message);
+break;
+}
+}

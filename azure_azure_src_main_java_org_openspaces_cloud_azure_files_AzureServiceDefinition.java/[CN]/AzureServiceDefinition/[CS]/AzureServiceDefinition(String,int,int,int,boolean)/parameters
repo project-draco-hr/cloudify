@@ -1,0 +1,5 @@
+String serviceName
+int numberOfInstances
+int externalPort
+int internalPort
+boolean inputEndpointDefined

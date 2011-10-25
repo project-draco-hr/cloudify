@@ -1,0 +1,8 @@
+{
+  final Map<String,Object> env=new HashMap<String,Object>();
+  if (this.hasCredentials()) {
+    final String[] credentials=new String[]{username,password};
+    env.put("jmx.remote.credentials",credentials);
+  }
+  return env;
+}

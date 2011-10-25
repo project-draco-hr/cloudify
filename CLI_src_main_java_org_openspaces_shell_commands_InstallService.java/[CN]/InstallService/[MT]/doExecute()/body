@@ -1,0 +1,58 @@
+{
+  if (!serviceFile.exists()) {
+    throw new ErrorStatusException("service_file_doesnt_exist",serviceFile.getPath());
+  }
+  File packedFile;
+  int plannedNumberOfInstances=1;
+  Service service=null;
+  try {
+    if (serviceFile.getName().endsWith(".jar") || serviceFile.getName().endsWith(".war")) {
+      packedFile=serviceFile;
+    }
+ else     if (serviceFile.isDirectory()) {
+      packedFile=Packager.pack(serviceFile);
+      packedFile.deleteOnExit();
+      service=ServiceReader.readService(serviceFile);
+    }
+ else {
+      packedFile=serviceFile;
+      service=ServiceReader.readServiceFromZip(packedFile);
+    }
+  }
+ catch (  IOException e) {
+    throw new CLIException(e);
+  }
+catch (  PackagingException e) {
+    throw new CLIException(e);
+  }
+  String currentApplicationName=getCurrentApplicationName();
+  Properties props=null;
+  if (service != null) {
+    props=createServiceContextProperties(service);
+    plannedNumberOfInstances=service.getNumInstances();
+    if (serviceName == null || serviceName.length() == 0) {
+      serviceName=service.getName();
+    }
+  }
+  if (serviceName == null || serviceName.length() == 0) {
+    serviceName=serviceFile.getName();
+    int endIndex=serviceName.lastIndexOf('.');
+    if (endIndex > 0) {
+      serviceName=serviceName.substring(0,endIndex);
+    }
+  }
+  if (zone == null || zone.length() == 0) {
+    zone=serviceName;
+  }
+  adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props);
+  if (serviceFile.isDirectory()) {
+    FileUtils.deleteDirectory(packedFile.getParentFile());
+  }
+  try {
+    plannedNumberOfInstances=adminFacade.waitForServiceInstances(serviceName,currentApplicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
+    return MessageFormat.format(messages.getString("service_install_ended"),serviceName);
+  }
+ catch (  CLIException ex) {
+    return MessageFormat.format(messages.getString("service_install_failed"),serviceName);
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return ServiceReader.createGroovyShell(BaseApplicationScript.class.getName(),null,null);
+}
