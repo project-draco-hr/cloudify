@@ -5,6 +5,9 @@
   long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
   logger.info("Evaluating groovy application file");
   final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+  if (adminFacade.getApplicationsList().contains(application.getName())) {
+    throw new ErrorStatusException("application_already_deployed",application.getName());
+  }
   normalizeApplicationName(application);
   File zipFile=null;
   if (!applicationFile.isFile()) {
