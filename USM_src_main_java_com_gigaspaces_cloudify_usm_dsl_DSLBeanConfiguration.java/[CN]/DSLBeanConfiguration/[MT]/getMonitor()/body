@@ -1,5 +1,5 @@
 {
-  final Map<String,Object> monitor=this.service.getLifecycle().getMonitor();
+  final Map<String,Object> monitor=this.service.getLifecycle().getMonitors();
   if (monitor == null) {
     return null;
   }
