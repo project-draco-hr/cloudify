@@ -3,7 +3,6 @@
     return getRestAdminFacade().getServicesList(DEFAULT_APPLICATION_NAME);
   }
  catch (  Exception e) {
-    logger.warning("Could not get list of services: " + e.getMessage());
-    return null;
+    return new ArrayList<String>();
   }
 }
