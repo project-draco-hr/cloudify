@@ -1,6 +1,6 @@
 {
   try {
-    return this.adminFacade.getApplicationsList();
+    return getRestAdminFacade().getApplicationsList();
   }
  catch (  CLIException e) {
     return new ArrayList<String>();
