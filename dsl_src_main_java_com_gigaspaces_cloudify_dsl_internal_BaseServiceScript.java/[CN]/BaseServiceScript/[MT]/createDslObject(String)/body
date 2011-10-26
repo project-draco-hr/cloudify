@@ -26,6 +26,9 @@
  else   if (name.equals("statefulProcessingUnit")) {
     return new StatefulProcessingUnit();
   }
+ else   if (name.equalsIgnoreCase("mirrorProcessingUnit")) {
+    return new MirrorProcessingUnit();
+  }
  else   if (name.equals("memcached")) {
     return new Memcached();
   }

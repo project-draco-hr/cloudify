@@ -1,0 +1,8 @@
+{
+  if (this.serviceProcessingUnit == null) {
+    this.serviceProcessingUnit=mirrorProcessingUnit;
+  }
+ else {
+    throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit state");
+  }
+}

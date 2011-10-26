@@ -1,0 +1,7 @@
+{
+  StatelessProcessingUnit service=null;
+  if (this.serviceProcessingUnit instanceof MirrorProcessingUnit) {
+    service=(MirrorProcessingUnit)serviceProcessingUnit;
+  }
+  return service;
+}
