@@ -1,3 +1,2 @@
 List<Integer> portList
 String hostName
-int timeoutInSeconds

@@ -4,14 +4,18 @@
   for (  int port : portList) {
     try {
       sock=new Socket();
+      logger.info("Checking port " + port);
       sock.connect(new InetSocketAddress(hostName,port));
+      logger.info("Connected to port " + port);
       sock.close();
       portCounter++;
+      logger.info("Port list size is " + portList.size() + " Port counter is "+ portCounter);
       if (portCounter == portList.size()) {
-        return false;
+        return true;
       }
     }
  catch (    IOException e) {
+      return false;
     }
  finally {
       try {
@@ -21,5 +25,5 @@
       }
     }
   }
-  return true;
+  return false;
 }
