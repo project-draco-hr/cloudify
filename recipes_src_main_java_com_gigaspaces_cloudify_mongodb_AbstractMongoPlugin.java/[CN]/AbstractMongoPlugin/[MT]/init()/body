@@ -1,0 +1,24 @@
+{
+  try {
+    host=(String)config.get("host");
+    if (host == null)     host=DEFAULT_HOST;
+    port=(Integer)config.get("port");
+    if (port == null) {
+      String portFile=(String)config.get("portFile");
+      if (portFile != null) {
+        port=getPortFromFile(portFile);
+      }
+      if (port == null) {
+        port=DEFAULT_PORT;
+      }
+    }
+    dbName=(String)config.get("dbName");
+    if (dbName == null)     dbName=DEFAULT_DB_NAME;
+    Mongo mongo=new Mongo(host,port);
+    db=mongo.getDB(dbName);
+    initialized=true;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

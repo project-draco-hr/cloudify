@@ -1,0 +1,25 @@
+{
+  BufferedReader reader=null;
+  try {
+    File portFile=new File(serviceContext.getServiceDirectory() + "/" + portFilePath);
+    log.info("Port file path: " + portFile.getAbsolutePath());
+    if (portFile.exists()) {
+      reader=new BufferedReader(new FileReader(portFile));
+      String portAsString=reader.readLine();
+      return Integer.parseInt(portAsString);
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+ finally {
+    if (reader != null) {
+      try {
+        reader.close();
+      }
+ catch (      IOException e) {
+      }
+    }
+  }
+  return null;
+}
