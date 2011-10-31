@@ -1,0 +1,27 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("Invocation results: \n");
+  String applicationName=this.getCurrentApplicationName();
+  if (applicationName == null) {
+    applicationName="na";
+  }
+  Map<String,String> paramsMap=new HashMap<String,String>();
+  if (params != null) {
+    paramsMap=getParamsMap(params);
+  }
+  if (instanceId == null) {
+    Map<String,com.gigaspaces.cloudify.shell.rest.InvocationResult> result=adminFacade.invokeServiceCommand(applicationName,serviceName,beanName,commandName,paramsMap);
+    Collection<InvocationResult> values=result.values();
+    List<InvocationResult> valuesList=new ArrayList<InvocationResult>(values);
+    Collections.sort(valuesList);
+    for (    InvocationResult invocationResult : valuesList) {
+      sb.append(createInvocationMessage(invocationResult));
+      sb.append("\n");
+    }
+  }
+ else {
+    InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,beanName,instanceId,commandName,paramsMap);
+    sb.append(createInvocationMessage(invocationResult));
+  }
+  return sb;
+}
