@@ -1,0 +1,3 @@
+{
+  return properties.get(LOCATION_ID_KEY,LOCATION_ID_DEFAULT);
+}

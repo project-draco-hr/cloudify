@@ -14,7 +14,7 @@
       this.template=builder.build();
     }
  else {
-      builder.locationId("us-east-1d");
+      builder.locationId(getLocationId());
       this.template=builder.build();
       String group="default";
       if ((this.securityGroup != null) && (this.securityGroup.length() > 0)) {
