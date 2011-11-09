@@ -11,5 +11,5 @@
  else   if (serviceFileOrDir.isFile()) {
     return serviceFileOrDir;
   }
-  throw new FileNotFoundException("The service deployment file was not found in " + serviceFileOrDir);
+  throw new FileNotFoundException("The file " + serviceFileOrDir + " was not found in the service folder");
 }

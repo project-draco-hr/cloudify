@@ -1,9 +1,10 @@
 {
   long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   while (System.currentTimeMillis() < end) {
     try {
       Map<String,Object> pu=client.getAdminData(url);
-      if (serviceName.equals(pu.get("Name"))) {
+      if (absolutePuName.equals(pu.get("Name"))) {
         return;
       }
     }

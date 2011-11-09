@@ -1,8 +1,9 @@
 {
   Set<String> containerUids=new HashSet<String>();
   int numberOfInstances=this.getInstanceList(applicationName,serviceName).size();
+  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   for (int i=0; i < numberOfInstances; i++) {
-    String containerUrl="applications/Names/" + applicationName + "/ProcessingUnits/Names/"+ serviceName+ "/Instances/"+ i+ "/GridServiceContainer/Uid";
+    String containerUrl="applications/Names/" + applicationName + "/ProcessingUnits/Names/"+ absolutePUName+ "/Instances/"+ i+ "/GridServiceContainer/Uid";
     try {
       Map<String,Object> container=(Map<String,Object>)client.getAdmin(containerUrl);
       if (container == null) {

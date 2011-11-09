@@ -1,8 +1,9 @@
 {
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   int timeout=Integer.valueOf(params.get("timeout"));
-  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (processingUnit == null) {
-    return unavailableServiceError(serviceName);
+    return unavailableServiceError(absolutePuName);
   }
   int before=processingUnit.getNumberOfInstances();
   processingUnit.incrementInstance();

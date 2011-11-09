@@ -3,7 +3,7 @@
   returnMap.put(EventLogConstants.getTimeStampKey(),Long.toString(logEntry.getTimestamp()));
   returnMap.put(EventLogConstants.getMachineHostNameKey(),container.getMachine().getHostName());
   returnMap.put(EventLogConstants.getMachineHostAddressKey(),container.getMachine().getHostAddress());
-  returnMap.put(EventLogConstants.getServiceNameKey(),serviceName);
-  returnMap.put(EventLogConstants.getEventTextKey(),logEntry.getText());
+  returnMap.put(EventLogConstants.getServiceNameKey(),ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
+  returnMap.put(EventLogConstants.getEventTextKey(),logEntry.getText().replaceFirst(absolutePuName + "-",returnMap.get(EventLogConstants.getServiceNameKey()) + "-"));
   return returnMap;
 }

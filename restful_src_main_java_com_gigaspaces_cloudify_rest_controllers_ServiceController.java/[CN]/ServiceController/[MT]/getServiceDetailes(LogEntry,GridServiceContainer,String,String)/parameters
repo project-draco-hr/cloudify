@@ -1,3 +1,4 @@
 LogEntry logEntry
 GridServiceContainer container
-String serviceName
+String absolutePuName
+String applicationName

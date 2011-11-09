@@ -1,7 +1,8 @@
 {
-  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (processingUnit == null) {
-    return unavailableServiceError(serviceName);
+    return unavailableServiceError(absolutePuName);
   }
   processingUnit.undeploy();
   return successStatus();

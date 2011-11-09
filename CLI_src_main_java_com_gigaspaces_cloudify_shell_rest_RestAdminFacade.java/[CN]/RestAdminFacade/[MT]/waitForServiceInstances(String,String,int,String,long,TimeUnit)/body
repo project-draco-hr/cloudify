@@ -1,8 +1,8 @@
 {
   long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
   int serviceShutDownEvents=0;
-  String pollingURL="processingUnits/Names/" + serviceName;
-  waitForService(serviceName,pollingURL,timeoutErrorMessage,timeout,timeunit);
+  String pollingURL="processingUnits/Names/" + ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  waitForService(applicationName,serviceName,pollingURL,timeoutErrorMessage,timeout,timeunit);
   logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
   Integer currentNumberOfInstances=0;
   while (System.currentTimeMillis() < end) {

@@ -11,8 +11,9 @@
       packedFile=Packager.pack(new File(appDir,serviceName));
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
-      controller.deployElasticProcessingUnit(serviceName,applicationName,serviceName,packedFile,contextProperties);
-      boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
+      String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,absolutePUName,packedFile,contextProperties);
+      boolean instanceFound=controller.waitForServiceInstance(applicationName,absolutePUName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
       if (!instanceFound) {
         throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
       }

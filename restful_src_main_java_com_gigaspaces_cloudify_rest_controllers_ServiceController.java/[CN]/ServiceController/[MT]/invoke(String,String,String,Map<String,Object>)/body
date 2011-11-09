@@ -1,11 +1,12 @@
 {
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   if (logger.isLoggable(Level.FINER)) {
-    logger.finer("received request to invoke bean " + beanName + " of service "+ serviceName+ " of application "+ applicationName);
+    logger.finer("received request to invoke bean " + beanName + " of service "+ absolutePuName+ " of application "+ applicationName);
   }
-  ProcessingUnit pu=admin.getProcessingUnits().waitFor(serviceName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (pu == null) {
-    logger.severe("Could not find service " + serviceName);
-    return unavailableServiceError(serviceName);
+    logger.severe("Could not find service " + absolutePuName);
+    return unavailableServiceError(absolutePuName);
   }
   Map<String,Object> invocationResult=new HashMap<String,Object>();
   ProcessingUnitInstance[] instances=pu.getInstances();
