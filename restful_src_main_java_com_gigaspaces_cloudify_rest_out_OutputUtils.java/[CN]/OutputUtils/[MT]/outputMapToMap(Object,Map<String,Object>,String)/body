@@ -11,5 +11,5 @@
     i++;
   }
   String[] commands=completeURL.split("/");
-  outputMap.put(commands[commands.length - 1].concat("-Elements"),getRelativePathURLS(uriPathArray));
+  outputMap.put(commands[commands.length - 1].concat("-Elements"),uriPathArray);
 }
