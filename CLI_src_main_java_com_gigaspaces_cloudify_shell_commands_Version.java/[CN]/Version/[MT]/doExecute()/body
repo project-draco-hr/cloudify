@@ -1,6 +1,5 @@
 {
-  PlatformVersion pv=new PlatformVersion();
-  String platformInfo=pv.getOfficialVersion();
+  String platformInfo=PlatformVersion.getOfficialVersion();
   String cloudifyInfo="Cloudify version 2.0";
   String info=platformInfo + System.getProperty("line.separator") + cloudifyInfo;
   return info;
