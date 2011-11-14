@@ -23,7 +23,7 @@
         if (!commandString.endsWith(";")) {
           commandString=commandString.concat(";");
         }
-        commandString=commandString.replace(";",System.getProperty("line.separator"));
+        commandString=commandString.replace(Pattern.quote(";"),System.getProperty("line.separator"));
         is=new ByteArrayInputStream(commandString.getBytes("UTF-8"));
       }
       sis=new SequenceInputStream(is,exitInputStream);
