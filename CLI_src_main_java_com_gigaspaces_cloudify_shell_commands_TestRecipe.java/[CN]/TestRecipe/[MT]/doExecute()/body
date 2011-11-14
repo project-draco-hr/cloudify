@@ -4,6 +4,7 @@
     File packagedRecipe=packageRecipe();
     serviceFolder=createServiceFolder(packagedRecipe);
     logger.info("Executing service in temporary folder: " + serviceFolder);
+    isServiceLifecycleNotNull(serviceFolder);
     final String classpath=createClasspathString(serviceFolder);
     logger.fine("Setting Test Processing Unit's Classpath to: " + classpath);
     CommandLine cmdLine=createCommandLine();

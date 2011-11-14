@@ -1,0 +1,19 @@
+{
+  Service service;
+  try {
+    File serviceFileDir=new File(serviceFolder,"ext");
+    service=ServiceReader.getServiceFromDirectory(serviceFileDir).getService();
+    if (service.getLifecycle() == null) {
+      throw new CLIException(getFormattedMessage("test_recipe_service_lifecycle_missing"));
+    }
+  }
+ catch (  FileNotFoundException e) {
+    logger.log(Level.SEVERE,"Service configuration file not found " + e.getMessage(),e);
+    throw new CLIException("Failed to locate service configuration file. " + e.getMessage(),e);
+  }
+catch (  PackagingException e) {
+    logger.log(Level.SEVERE,"Packaging failed: " + e.getMessage(),e);
+    e.printStackTrace();
+    throw new CLIException("Packaging failed: " + e.getMessage(),e);
+  }
+}
