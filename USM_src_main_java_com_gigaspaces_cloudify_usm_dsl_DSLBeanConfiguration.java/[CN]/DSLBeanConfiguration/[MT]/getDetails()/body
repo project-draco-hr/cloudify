@@ -1,5 +1,5 @@
 {
-  final Map<String,Object> details=this.service.getLifecycle().getDetails();
+  final Object details=this.service.getLifecycle().getDetails();
   if (details == null) {
     return null;
   }
@@ -7,7 +7,8 @@
     @Override public Map<String,Object> getDetails(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws DetailsException {
       try {
         Map<String,Object> returnMap=new HashMap<String,Object>();
-        for (        Map.Entry<String,Object> entryObject : details.entrySet()) {
+        final Map<String,Object> detailsMap=getMapFromClosureObject(details);
+        for (        Map.Entry<String,Object> entryObject : detailsMap.entrySet()) {
           Object object=entryObject.getValue();
           EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
           if (!result.isSuccess()) {

@@ -1,5 +1,5 @@
 {
-  final Map<String,Object> monitor=this.service.getLifecycle().getMonitors();
+  final Object monitor=this.service.getLifecycle().getMonitors();
   if (monitor == null) {
     return null;
   }
@@ -7,9 +7,12 @@
     @Override public Map<String,Number> getMonitorValues(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws MonitorException {
       try {
         Map<String,Number> returnMap=new HashMap<String,Number>();
-        for (        Map.Entry<String,Object> entryObject : monitor.entrySet()) {
+        final Map<String,Object> monitorsMap=getMapFromClosureObject(monitor);
+        logger.log(Level.WARNING,"1");
+        for (        Map.Entry<String,Object> entryObject : monitorsMap.entrySet()) {
           Object object=entryObject.getValue();
           EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+          logger.log(Level.WARNING,"2");
           if (!result.isSuccess()) {
             logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
           }
