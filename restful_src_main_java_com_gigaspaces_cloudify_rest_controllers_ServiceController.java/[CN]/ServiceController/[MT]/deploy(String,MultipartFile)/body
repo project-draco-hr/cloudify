@@ -1,5 +1,5 @@
 {
-  logger.finer("received request to deploy");
+  logger.finer("Deploying a service");
   File tmpfile=File.createTempFile("gs___",null);
   File dest=new File(tmpfile.getParent(),srcFile.getOriginalFilename());
   tmpfile.delete();
