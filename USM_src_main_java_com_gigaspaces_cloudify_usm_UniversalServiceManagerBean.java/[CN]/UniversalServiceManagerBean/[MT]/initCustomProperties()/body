@@ -1,0 +1,6 @@
+{
+  Map<String,String> props=usmLifecycleBean.getCustomProperties();
+  if (props.containsKey(CloudifyConstants.USM_PARAMETERS_TAILER_INTERVAL)) {
+    this.fileTailerIntervalSecs=Integer.parseInt(props.get(CloudifyConstants.USM_PARAMETERS_TAILER_INTERVAL));
+  }
+}

@@ -1,0 +1,37 @@
+{
+  File file=getPidFile();
+  if (file.exists()) {
+    String pidString;
+    try {
+      pidString=FileUtils.readFileToString(file);
+    }
+ catch (    IOException e) {
+      throw new USMException("Failed to read pid file contents from file: " + file,e);
+    }
+    long pid=0;
+    try {
+      pid=Long.parseLong(pidString);
+    }
+ catch (    NumberFormatException nfe) {
+      throw new USMException("The contents of the PID file: " + file + " cannot be parsed to a long value: "+ pidString+ ". Check the file contents and delete the file before retrying.",nfe);
+    }
+    if (USMUtils.isProcessAlive(pid)) {
+      logger.info("Found Active Process with PID: " + pid + " from file: "+ file);
+      this.actualProcessID=pid;
+      this.childProcessID=0;
+      try {
+        logProcessDetails();
+      }
+ catch (      final SigarException e) {
+        logger.log(Level.SEVERE,"Failed to log process details",e);
+      }
+      return true;
+    }
+ else {
+      logger.warning("PID file: " + file + " was found with PID: "+ pid+ " but this process does not exist. PID Fi.");
+      deleteProcessFiles(file);
+    }
+  }
+  deleteProcessFiles(file);
+  return false;
+}

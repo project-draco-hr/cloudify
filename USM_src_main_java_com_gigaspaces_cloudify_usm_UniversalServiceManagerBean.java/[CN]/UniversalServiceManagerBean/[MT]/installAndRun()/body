@@ -1,0 +1,7 @@
+{
+  usmLifecycleBean.install();
+  if (this.asyncInstall) {
+    waitForDependencies();
+  }
+  launch();
+}

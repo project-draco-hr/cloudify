@@ -1,8 +1,0 @@
-{
-  try {
-    this.uniqueFileNamePrefix=this.clusterName + "_" + this.instanceId+ "@"+ InetAddress.getLocalHost().getHostName();
-  }
- catch (  UnknownHostException e) {
-    throw new IllegalStateException("Failed to get host name of local host: " + e.getMessage(),e);
-  }
-}

@@ -1,0 +1,13 @@
+{
+  logger.info("Waiting for dependencies");
+  final long startTime=System.currentTimeMillis();
+  final long endTime=startTime + WAIT_FOR_DEPENDENCIES_TIMEOUT_MILLIS;
+  Admin admin=USMUtils.getAdmin();
+  for (  String dependantService : this.dependencies) {
+    logger.info("Waiting for dependency: " + dependantService);
+    final ProcessingUnit pu=waitForPU(endTime,admin,dependantService);
+    waitForPUI(endTime,dependantService,pu);
+    logger.info("Dependency " + dependantService + " is available");
+  }
+  logger.info("All dependencies are available");
+}

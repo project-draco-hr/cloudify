@@ -1,0 +1,14 @@
+{
+  this.executors.schedule(new Runnable(){
+    @Override public void run(){
+      try {
+        installAndRun();
+      }
+ catch (      Exception e) {
+        logger.log(Level.SEVERE,"Asynchronous install failed with message: " + e.getMessage() + ". Instance will shut down",e);
+        shutdownUSMException=e;
+      }
+    }
+  }
+,5,TimeUnit.SECONDS);
+}

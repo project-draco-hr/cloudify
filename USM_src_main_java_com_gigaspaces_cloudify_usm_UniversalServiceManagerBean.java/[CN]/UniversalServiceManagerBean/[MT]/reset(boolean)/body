@@ -1,0 +1,27 @@
+{
+synchronized (this.stateMutex) {
+    this.state=USMState.INITIALIZING;
+    logger.info("USM Started. Configuration is: " + usmLifecycleBean.getConfiguration());
+    this.executors=Executors.newScheduledThreadPool(5);
+    if (existingProcessFound) {
+      startAsyncTasks();
+      this.state=USMState.RUNNING;
+      return;
+    }
+ else {
+      try {
+        startProcessLifecycle();
+      }
+ catch (      final USMException usme) {
+        logger.severe("Process lifecycle failed to start. Shutting down the USM instance");
+        try {
+          this.shutdown();
+        }
+ catch (        final Exception e) {
+          logger.log(Level.SEVERE,"While shutting down the USM due to a failure in initialization, the following exception occured: " + e.getMessage(),e);
+        }
+        throw usme;
+      }
+    }
+  }
+}

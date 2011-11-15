@@ -1,7 +1,7 @@
 {
   usmLifecycleBean.externalProcessDied();
 synchronized (this.stateMutex) {
-    if (this.state == USMState.SHUTTING_DOWN) {
+    if (this.state != USMState.RUNNING) {
       return;
     }
     try {
@@ -10,6 +10,9 @@ synchronized (this.stateMutex) {
  catch (    Exception e) {
       logger.log(Level.SEVERE,"The Post Stop event failed to execute after an anexpected failure of the process: " + e.getMessage(),e);
     }
+    this.executors.shutdownNow();
+    this.state=USMState.LAUNCHING;
+    this.executors=Executors.newScheduledThreadPool(5);
     new Thread(new Runnable(){
       @Override public void run(){
         try {

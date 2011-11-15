@@ -1,0 +1,32 @@
+{
+  if (((outputFile == null) && (errorFile != null)) || ((outputFile != null) && (errorFile == null))) {
+    throw new IllegalArgumentException("Both output and error files must be set, or none of them");
+  }
+  if (redirectErrorStream && ((outputFile != null) || (errorFile != null))) {
+    throw new IllegalArgumentException("If redirectError option is chosen, neither output file or error file can be set");
+  }
+  modifyCommandLine(commandLineParams,workingDir,outputFile,errorFile);
+  final String modifiedCommandLine=StringUtils.collectionToDelimitedString(commandLineParams," ");
+  this.commandLine=commandLineParams;
+  int attempt=1;
+  USMException ex=null;
+  while (attempt <= (retries + 1)) {
+    final ProcessBuilder pb=new ProcessBuilder(commandLineParams);
+    pb.directory(workingDir);
+    pb.redirectErrorStream(redirectErrorStream);
+    final Map<String,String> env=createEnvironment();
+    pb.environment().putAll(env);
+    Process proc;
+    try {
+      logger.info("Executing command line: " + modifiedCommandLine);
+      proc=pb.start();
+      return proc;
+    }
+ catch (    final IOException e) {
+      ex=new USMException("Failed to start process with command line: " + modifiedCommandLine,e);
+      logger.log(Level.SEVERE,"Process start attempt number " + attempt + " failed",ex);
+    }
+    ++attempt;
+  }
+  throw ex;
+}

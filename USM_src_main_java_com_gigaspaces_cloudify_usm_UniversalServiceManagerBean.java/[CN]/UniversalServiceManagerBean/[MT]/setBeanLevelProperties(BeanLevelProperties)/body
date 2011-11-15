@@ -1,0 +1,8 @@
+{
+  final String value=beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,ASYNC_INSTALL_DEFAULT_VALUE);
+  logger.info("Async Install Setting: " + value);
+  this.asyncInstall=Boolean.parseBoolean(value);
+  final String dependenciesString=beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
+  this.dependencies=parseDependenciesString(dependenciesString);
+  logger.info("Dependencies for this service: " + Arrays.toString(this.dependencies));
+}

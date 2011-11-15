@@ -5,8 +5,7 @@ synchronized (this.stateMutex) {
     final Set<Long> childrenBefore=getChildProcesses(this.myPid);
     usmLifecycleBean.logProcessStartEvent();
     usmLifecycleBean.externalProcessStarted();
-    this.process=usmLifecycleBean.getLauncher().launchProcessAsync(usmLifecycleBean.getConfiguration().getStartCommand(),this.puExtDir);
-    startStreamReaders(true);
+    this.process=usmLifecycleBean.getLauncher().launchProcessAsync(usmLifecycleBean.getConfiguration().getStartCommand(),this.puExtDir,getOutputFile(),getErrorFile());
     try {
       Thread.sleep(this.postLaunchWaitPeriodMillis);
     }
@@ -24,6 +23,8 @@ synchronized (this.stateMutex) {
   finally {
       findProcessIDs(childrenBefore,null);
     }
+    startAsyncTasks();
     this.state=USMState.RUNNING;
+    this.stateMutex.notifyAll();
   }
 }

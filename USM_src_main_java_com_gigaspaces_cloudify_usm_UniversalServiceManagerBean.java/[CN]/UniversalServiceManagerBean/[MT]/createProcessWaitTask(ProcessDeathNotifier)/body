@@ -1,0 +1,14 @@
+{
+  return new Runnable(){
+    @Override public void run(){
+      try {
+        process.waitFor();
+        notifier.processDeathDetected();
+      }
+ catch (      InterruptedException e) {
+        logger.warning("The thread waiting for the underlying process to end has been interruped!");
+      }
+    }
+  }
+;
+}

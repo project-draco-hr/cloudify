@@ -1,0 +1,6 @@
+{
+  if (outputFile == null) {
+    return;
+  }
+  commandLineParams.addAll(createRedirectionParametersForOS(outputFile,errorFile));
+}

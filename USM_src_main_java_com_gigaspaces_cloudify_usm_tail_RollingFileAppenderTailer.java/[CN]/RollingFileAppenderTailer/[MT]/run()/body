@@ -6,7 +6,7 @@
         String lines=logFileMap.get(key).readLines();
         String seporatedLines[]=lineSplitPattern.split(lines);
         for (        String line : seporatedLines) {
-          logger.info(line);
+          handler.handleLine(key,line);
         }
       }
     }

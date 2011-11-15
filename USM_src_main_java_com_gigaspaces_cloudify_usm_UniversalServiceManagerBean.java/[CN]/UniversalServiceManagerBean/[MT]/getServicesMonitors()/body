@@ -1,14 +1,13 @@
 {
-  logger.fine("Executing getServiceMonitors()");
+  logger.info("Executing getServiceMonitors()");
+  waitForServiceToStart();
   final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
-  csm.getMonitors().put(CloudifyConstants.USM_MONITORS_STATE_ID,getState());
   final ServiceMonitors[] res=new ServiceMonitors[]{csm};
   if (!getState().equals(USMState.RUNNING)) {
     return res;
   }
   final Map<String,Object> map=csm.getMonitors();
-  map.put(CloudifyConstants.USM_MONITORS_CHILD_PROCESS_ID,this.childProcessID);
-  map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,this.actualProcessID);
+  putDefaultMonitorsInMap(map);
   for (  final Monitor monitor : usmLifecycleBean.getMonitors()) {
     try {
       logger.fine("Executing monitor: " + monitor);

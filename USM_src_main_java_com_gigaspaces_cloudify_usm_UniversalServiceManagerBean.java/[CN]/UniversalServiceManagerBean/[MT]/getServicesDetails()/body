@@ -1,10 +1,7 @@
 {
-  logger.fine("Executing getServiceDetails()");
+  logger.info("Executing getServiceDetails()");
   final CustomServiceDetails csd=new CustomServiceDetails(CloudifyConstants.USM_DETAILS_SERVICE_ID,this.serviceType,this.serviceSubType,this.serviceDescription,this.serviceLongDescription);
   final ServiceDetails[] res=new ServiceDetails[]{csd};
-  if (!this.getState().equals(USMState.RUNNING)) {
-    return res;
-  }
   final Details[] alldetails=usmLifecycleBean.getDetails();
   final Map<String,Object> result=csd.getAttributes();
   for (  final Details details : alldetails) {

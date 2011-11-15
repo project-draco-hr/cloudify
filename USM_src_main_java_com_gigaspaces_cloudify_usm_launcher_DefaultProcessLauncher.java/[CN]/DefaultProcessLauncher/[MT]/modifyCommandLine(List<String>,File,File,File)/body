@@ -1,0 +1,7 @@
+{
+  modifyOSCommandLine(commandLineParams,workingDir);
+  if (commandLineParams.get(0).endsWith(".groovy")) {
+    modifyGroovyCommandLine(commandLineParams,workingDir);
+  }
+  modifyRedirectionCommandLine(commandLineParams,outputFile,errorFile);
+}

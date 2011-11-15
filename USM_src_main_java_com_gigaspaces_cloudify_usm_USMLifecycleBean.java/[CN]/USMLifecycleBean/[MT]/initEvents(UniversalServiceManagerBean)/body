@@ -1,0 +1,24 @@
+{
+  final Comparator<USMEvent> comp=new Comparator<USMEvent>(){
+    @Override public int compare(    final USMEvent arg0,    final USMEvent arg1){
+      return arg0.getOrder() - arg1.getOrder();
+    }
+  }
+;
+  final Set<USMEvent> allEvents=new HashSet<USMEvent>();
+  initEvents(allEvents,getInitListeners(),comp);
+  initEvents(allEvents,getPreInstallListeners(),comp);
+  initEvents(allEvents,getPostInstallListeners(),comp);
+  initEvents(allEvents,getPreStartListeners(),comp);
+  initEvents(allEvents,getPostStartListeners(),comp);
+  initEvents(allEvents,getPreStopListeners(),comp);
+  initEvents(allEvents,getPostStopListeners(),comp);
+  initEvents(allEvents,getShutdownListeners(),comp);
+  initEvents(allEvents,getPreServiceStartListeners(),comp);
+  initEvents(allEvents,getPreServiceStopListeners(),comp);
+  initEvents(allEvents,getLivenessDetectors(),comp);
+  initEvents(allEvents,getStopDetectors(),comp);
+  for (  final USMEvent usmEvent : allEvents) {
+    usmEvent.init(usm);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  this.logsDirectory=dir;
+  this.regex=regex;
+  this.handler=handler;
+}

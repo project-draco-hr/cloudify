@@ -1,0 +1,12 @@
+{
+  final long waitForPUPeriod=endTime - System.currentTimeMillis();
+  if (waitForPUPeriod <= 0) {
+    throw new IllegalStateException("Could not find dependency " + dependantService + " required for this service");
+  }
+  logger.info("Waiting for PU: " + dependantService);
+  ProcessingUnit pu=admin.getProcessingUnits().waitFor(dependantService,waitForPUPeriod,TimeUnit.MILLISECONDS);
+  if (pu == null) {
+    throw new IllegalStateException("Could not find dependency " + dependantService + " required for this service");
+  }
+  return pu;
+}

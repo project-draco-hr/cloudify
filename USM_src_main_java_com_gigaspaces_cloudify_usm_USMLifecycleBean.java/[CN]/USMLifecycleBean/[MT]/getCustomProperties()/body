@@ -1,0 +1,3 @@
+{
+  return ((DSLConfiguration)this.configuration).getService().getCustomProperties();
+}

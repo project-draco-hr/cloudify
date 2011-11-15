@@ -9,6 +9,12 @@
   this.actualProcessID=findLeafProcessID(this.childProcessID,procTree);
   checkForConsoleProcess(this.actualProcessID);
   try {
+    writePidToFile(this.actualProcessID);
+  }
+ catch (  IOException e) {
+    throw new USMException("Failed to write Process ID: " + this.actualProcessID + " to file: "+ getPidFile(),e);
+  }
+  try {
     logProcessDetails();
   }
  catch (  final SigarException e) {

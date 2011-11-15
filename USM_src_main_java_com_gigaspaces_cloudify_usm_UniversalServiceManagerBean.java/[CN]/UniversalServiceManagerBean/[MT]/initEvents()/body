@@ -1,22 +1,3 @@
 {
-  final Comparator<USMEvent> comp=new Comparator<USMEvent>(){
-    @Override public int compare(    final USMEvent arg0,    final USMEvent arg1){
-      return arg0.getOrder() - arg1.getOrder();
-    }
-  }
-;
-  final Set<USMEvent> allEvents=new HashSet<USMEvent>();
-  initEvents(allEvents,usmLifecycleBean.getInitListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPreInstallListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPostInstallListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPreStartListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPostStartListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPreStopListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPostStopListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getShutdownListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPreServiceStartListeners(),comp);
-  initEvents(allEvents,usmLifecycleBean.getPreServiceStopListeners(),comp);
-  for (  final USMEvent usmEvent : allEvents) {
-    usmEvent.init(this);
-  }
+  usmLifecycleBean.initEvents(this);
 }

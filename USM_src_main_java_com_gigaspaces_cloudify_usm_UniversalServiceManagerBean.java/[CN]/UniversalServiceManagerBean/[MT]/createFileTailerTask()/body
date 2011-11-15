@@ -1,0 +1,17 @@
+{
+  final String filePrefix=getOutputFile().getName().split(Pattern.quote("."))[0] + "." + "(out|err)";
+  final Logger outputLogger=Logger.getLogger(usmLifecycleBean.getOutputReaderLoggerName());
+  final Logger errorLogger=Logger.getLogger(usmLifecycleBean.getErrorReaderLoggerName());
+  RollingFileAppenderTailer tailer=new RollingFileAppenderTailer(getLogsDir(),filePrefix,new LineHandler(){
+    @Override public void handleLine(    final String fileName,    final String line){
+      if (fileName.endsWith(".out")) {
+        outputLogger.info(line);
+      }
+ else {
+        errorLogger.info(line);
+      }
+    }
+  }
+);
+  return tailer;
+}

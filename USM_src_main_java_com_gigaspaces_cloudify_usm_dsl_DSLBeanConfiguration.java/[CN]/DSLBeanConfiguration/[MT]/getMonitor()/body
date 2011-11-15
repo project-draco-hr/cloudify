@@ -3,6 +3,20 @@
   if (monitor == null) {
     return null;
   }
+  if (monitor instanceof Closure) {
+    return new Monitor(){
+      @Override public Map<String,Number> getMonitorValues(      UniversalServiceManagerBean usm,      UniversalServiceManagerConfiguration config) throws MonitorException {
+        Object obj=((Closure)monitor).call();
+        if (obj instanceof Map<?,?>) {
+          return (Map<String,Number>)obj;
+        }
+ else {
+          throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! Received object was of type: " + obj.getClass().getName());
+        }
+      }
+    }
+;
+  }
   return new Monitor(){
     @Override public Map<String,Number> getMonitorValues(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws MonitorException {
       try {

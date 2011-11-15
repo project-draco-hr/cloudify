@@ -4,16 +4,15 @@
     this.runningInGSC=true;
     final ServiceClassLoader scl=(ServiceClassLoader)arg0.getClassLoader();
     final URL url=scl.getSlashPath();
-    logger.info("The slashpath URL is: " + url);
+    logger.fine("The slashpath URL is: " + url);
     URI uri;
     try {
       uri=url.toURI();
     }
  catch (    final URISyntaxException e) {
-      e.printStackTrace();
       throw new IllegalArgumentException(e);
     }
-    logger.info("The slashpath URI is: " + uri);
+    logger.fine("The slashpath URI is: " + uri);
     this.puWorkDir=new File(uri);
     this.puExtDir=new File(this.puWorkDir,"ext");
     return;

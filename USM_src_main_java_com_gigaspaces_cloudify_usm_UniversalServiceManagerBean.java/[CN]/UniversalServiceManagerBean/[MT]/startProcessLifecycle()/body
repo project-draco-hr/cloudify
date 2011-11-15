@@ -3,6 +3,18 @@
     usmLifecycleBean.firePreServiceStart();
   }
   usmLifecycleBean.fireInit();
-  usmLifecycleBean.install();
-  launch();
+  logger.info("start lifecycle. async = " + this.asyncInstall);
+  if (this.asyncInstall) {
+    if (USMUtils.isRunningInGSC(this.applicationContext)) {
+      logger.info("async install running in GSC");
+      registerPostPUILifecycleTask();
+    }
+ else {
+      logger.info("async install running in integrated container");
+      registerAsynchLifecycleTask();
+    }
+  }
+ else {
+    installAndRun();
+  }
 }

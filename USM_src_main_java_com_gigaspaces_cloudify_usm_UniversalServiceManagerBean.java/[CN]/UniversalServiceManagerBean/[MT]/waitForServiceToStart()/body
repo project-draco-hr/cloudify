@@ -1,0 +1,27 @@
+{
+  boolean firstTime=true;
+synchronized (this.stateMutex) {
+switch (this.state) {
+case INITIALIZING:
+case LAUNCHING:
+      if (!firstTime) {
+        throw new IllegalStateException("The Service failed to start. The current service state is: " + this.state);
+      }
+    try {
+      logger.info("Waiting for service to start. Current service state: " + this.state);
+      this.stateMutex.wait(WAIT_FOR_DEPENDENCIES_TIMEOUT_MILLIS);
+    }
+ catch (    InterruptedException e) {
+    }
+  firstTime=false;
+break;
+case SHUTTING_DOWN:
+logger.warning("While waiting for service to start, the USM changed its state to: " + USMState.SHUTTING_DOWN);
+case RUNNING:
+return;
+default :
+logger.warning("Unexpected service state: " + this.state);
+break;
+}
+}
+}

@@ -1,0 +1,13 @@
+{
+  for (  StopDetector detector : this.stopDetectors) {
+    try {
+      if (detector.isServiceStopped()) {
+        return true;
+      }
+    }
+ catch (    USMException e) {
+      logger.log(Level.SEVERE,"A Stop detector failed to execute. The detector was: " + detector,e);
+    }
+  }
+  return false;
+}

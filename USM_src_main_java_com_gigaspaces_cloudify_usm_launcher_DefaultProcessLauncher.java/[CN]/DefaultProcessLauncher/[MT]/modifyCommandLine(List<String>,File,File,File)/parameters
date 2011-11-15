@@ -1,0 +1,4 @@
+List<String> commandLineParams
+File workingDir
+File outputFile
+File errorFile

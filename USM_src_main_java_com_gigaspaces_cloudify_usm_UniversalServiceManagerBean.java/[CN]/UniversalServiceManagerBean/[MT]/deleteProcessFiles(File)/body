@@ -1,0 +1,5 @@
+{
+  FileUtils.deleteQuietly(file);
+  FileUtils.deleteQuietly(getErrorFile());
+  FileUtils.deleteQuietly(getOutputFile());
+}

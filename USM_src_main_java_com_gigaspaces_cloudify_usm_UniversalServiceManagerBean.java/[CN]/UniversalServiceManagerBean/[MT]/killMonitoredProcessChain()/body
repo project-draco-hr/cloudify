@@ -1,5 +1,11 @@
 {
-  final List<Long> list=USMUtils.getProcessParentChain(this.actualProcessID,this.myPid);
+  List<Long> list=null;
+  if (this.childProcessID == 0) {
+    list=Arrays.asList(this.actualProcessID);
+  }
+ else {
+    list=USMUtils.getProcessParentChain(this.actualProcessID,this.myPid);
+  }
   logger.info("Killing child processes in chain: " + list);
   for (  final Long pid : list) {
     if (USMUtils.isProcessAlive(pid)) {
