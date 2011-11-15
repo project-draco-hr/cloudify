@@ -1,0 +1,10 @@
+{
+  final String username=System.getProperty("user.name");
+  final String clusterName=(this.clusterName == null ? "USM" : this.clusterName);
+  try {
+    return clusterName + "_" + this.instanceId+ "_"+ username+ "@"+ InetAddress.getLocalHost().getHostName();
+  }
+ catch (  UnknownHostException e) {
+    throw new IllegalStateException("Failed to get localhost name",e);
+  }
+}

@@ -1,5 +1,5 @@
 {
-  Admin admin=USMUtils.getAdmin();
+  final Admin admin=USMUtils.getAdmin();
   ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(this.clusterName);
   final int instanceIdToMatch=this.instanceId;
   pu.getProcessingUnitInstanceAdded().add(new ProcessingUnitInstanceAddedEventListener(){
@@ -7,6 +7,7 @@
       if (processingUnitInstance.getInstanceId() == instanceIdToMatch) {
         try {
           installAndRun();
+          admin.removeEventListener(this);
         }
  catch (        Exception e) {
           logger.log(Level.SEVERE,"Asynchronous install failed with message: " + e.getMessage() + ". Instance will shut down",e);
