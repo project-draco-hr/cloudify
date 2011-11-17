@@ -1,0 +1,23 @@
+{
+  final String workDirectory=(String)this.getProperty(DSLUtils.APPLICATION_DIR);
+  if (workDirectory == null) {
+    throw new IllegalArgumentException("Work directory was not set while parsing application file");
+  }
+  final String serviceDirName=workDirectory + File.separator + serviceName;
+  File serviceDir=new File(serviceDirName);
+  if (!serviceDir.exists() || !serviceDir.isDirectory()) {
+    throw new java.lang.IllegalStateException("Could not find service directory: " + serviceDir + " while loading application");
+  }
+  DSLServiceCompilationResult result;
+  try {
+    result=ServiceReader.getServiceFromDirectory(serviceDir,((Application)this.rootObject).getName());
+  }
+ catch (  FileNotFoundException e) {
+    throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
+  }
+catch (  PackagingException e) {
+    throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
+  }
+  Service service=result.getService();
+  return service;
+}

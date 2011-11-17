@@ -2,6 +2,7 @@
   try {
     BeanUtils.getProperty(object,name);
     BeanUtils.setProperty(object,name,value);
+    checkForApplicationServiceBlockNameParameter(name,value);
   }
  catch (  final IllegalAccessException e) {
     throw new IllegalArgumentException("Failed to set property " + name + " to "+ value,e);

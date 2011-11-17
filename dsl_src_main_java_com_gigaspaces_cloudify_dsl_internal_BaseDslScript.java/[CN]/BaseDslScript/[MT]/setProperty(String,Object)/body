@@ -4,9 +4,6 @@
     super.setProperty(name,value);
     return;
   }
-  if (this.activeObject == null) {
-    super.setProperty(name,value);
-  }
   if (value.getClass().isArray()) {
     Object[] arr=(Object[])value;
     if (arr.length > 1) {
