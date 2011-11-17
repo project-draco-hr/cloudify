@@ -1,7 +1,21 @@
 {
   if (dslObjectInitializersByName == null) {
     dslObjectInitializersByName=new HashMap<String,BaseDslScript.DSLObjectInitializerData>();
-    dslObjectInitializersByName.put("cloud",new DSLObjectInitializerData("cloud",Cloud.class,true,false,null));
+    addObjectInitializerForClass(dslObjectInitializersByName,Application.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,DataGrid.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Memcached.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,PluginDescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Service.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ServiceLifecycle.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ServiceNetwork.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Cloud.class);
+    dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,false,true,"service"));
+    dslObjectInitializersByName.put("metricGroup",new DSLObjectInitializerData("metricGroup",MetricGroup.class,false,true,"userInterface"));
+    dslObjectInitializersByName.put("widgetGroup",new DSLObjectInitializerData("widgetGroup",WidgetGroup.class,false,true,"userInterface"));
+    dslObjectInitializersByName.put("balanceGauge",new DSLObjectInitializerData("balanceGauge",BalanceGauge.class,false,true,"widgetGroup"));
+    dslObjectInitializersByName.put("barLineChart",new DSLObjectInitializerData("barLineChart",BarLineChart.class,false,true,"widgetGroup"));
   }
   return dslObjectInitializersByName;
 }

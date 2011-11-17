@@ -1,0 +1,8 @@
+{
+  try {
+    return ServiceReader.getServiceFromFile(dslFile,dslFile.getParentFile(),applicationName).getService();
+  }
+ catch (  final Exception e) {
+    throw new PackagingException("Failed to read service from file " + dslFile + ": "+ e.getMessage(),e);
+  }
+}

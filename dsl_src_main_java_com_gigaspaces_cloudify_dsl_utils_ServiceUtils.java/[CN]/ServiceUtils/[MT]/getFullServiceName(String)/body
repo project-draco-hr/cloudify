@@ -1,0 +1,9 @@
+{
+  final int index=puName.lastIndexOf(".");
+  if (index < 0) {
+    throw new IllegalArgumentException("Could not parse PU name: " + puName + " to read service and application names.");
+  }
+  final String applicationName=puName.substring(0,index);
+  final String serviceName=puName.substring(index + 1);
+  return new FullServiceName(applicationName,serviceName);
+}

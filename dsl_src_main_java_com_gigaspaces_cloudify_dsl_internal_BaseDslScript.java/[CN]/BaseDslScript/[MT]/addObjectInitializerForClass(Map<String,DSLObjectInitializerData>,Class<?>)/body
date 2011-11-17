@@ -1,0 +1,7 @@
+{
+  CloudifyDSLEntity entityDetails=clazz.getAnnotation(CloudifyDSLEntity.class);
+  if (entityDetails == null) {
+    throw new IllegalStateException("Incorrect configuration - class " + clazz.getName() + " is not a DSL entity");
+  }
+  map.put(entityDetails.name(),new DSLObjectInitializerData(entityDetails.name(),entityDetails.clazz(),entityDetails.allowRootNode(),entityDetails.allowInternalNode(),entityDetails.parent()));
+}

@@ -1,4 +1,20 @@
 {
-  Object[] arr=(Object[])value;
-  applyPropertyToObject(this.activeObject,name,arr[0]);
+  logger.info("Setting Propery: name = " + name + ", value = "+ value+ ", ActiveObject = "+ this.activeObject);
+  if (this.activeObject == null) {
+    super.setProperty(name,value);
+    return;
+  }
+  if (this.activeObject == null) {
+    super.setProperty(name,value);
+  }
+  if (value.getClass().isArray()) {
+    Object[] arr=(Object[])value;
+    if (arr.length > 1) {
+      throw new IllegalArgumentException("Property assignment of field: " + name + " received an array with more then one item: "+ arr);
+    }
+    applyPropertyToObject(this.activeObject,name,arr[0]);
+  }
+ else {
+    applyPropertyToObject(this.activeObject,name,value);
+  }
 }

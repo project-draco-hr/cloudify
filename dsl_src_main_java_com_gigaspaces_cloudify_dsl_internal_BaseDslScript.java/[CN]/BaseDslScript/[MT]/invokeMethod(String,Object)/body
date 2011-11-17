@@ -15,6 +15,13 @@
         this.rootObject=retval;
       }
       swapActiveObject(closure,retval);
+      if (this.activeObject != null) {
+        try {
+          setProperty(name,retval);
+        }
+ catch (        IllegalArgumentException e) {
+        }
+      }
       return retval;
     }
   }

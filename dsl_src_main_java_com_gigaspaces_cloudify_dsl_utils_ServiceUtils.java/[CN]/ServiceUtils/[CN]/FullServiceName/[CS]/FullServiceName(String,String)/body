@@ -1,0 +1,5 @@
+{
+  super();
+  this.serviceName=serviceName;
+  this.applicationName=applicationName;
+}

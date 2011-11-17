@@ -1,7 +1,8 @@
 {
   checkInitialized();
   if (this.admin != null) {
-    ProcessingUnit pu=waitForProcessingUnitFromAdmin(name,timeout,unit);
+    final String puName=ServiceUtils.getAbsolutePUName(this.applicationName,name);
+    ProcessingUnit pu=waitForProcessingUnitFromAdmin(puName,timeout,unit);
     if (pu == null) {
       return null;
     }

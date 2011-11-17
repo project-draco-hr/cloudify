@@ -1,0 +1,3 @@
+{
+  return getServiceFromFile(findServiceFile(dir),dir,applicationName);
+}

@@ -3,6 +3,17 @@
   this.admin=admin;
   this.serviceDirectory=dir;
   this.clusterInfo=clusterInfo;
+  if (clusterInfo == null) {
+    this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
+    this.serviceName=service.getName();
+  }
+ else {
+    logger.info("Parsing full service name from PU name: " + clusterInfo.getName());
+    FullServiceName fullServiceName=ServiceUtils.getFullServiceName(clusterInfo.getName());
+    logger.info("Got full service name: " + fullServiceName);
+    this.serviceName=fullServiceName.getServiceName();
+    this.applicationName=fullServiceName.getApplicationName();
+  }
   if (admin != null) {
     boolean found=this.admin.getLookupServices().waitFor(1,5,TimeUnit.SECONDS);
     if (!found) {
