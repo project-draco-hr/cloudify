@@ -7,7 +7,7 @@
   GridServiceManager gsm=getGsm();
   ProcessingUnit pu;
   if (gsm != null) {
-    pu=gsm.deploy(new ProcessingUnitDeployment(dest).setContextProperty("com.gs.application",applicationName));
+    pu=gsm.deploy(new ProcessingUnitDeployment(dest).setContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName));
     dest.delete();
   }
  else {

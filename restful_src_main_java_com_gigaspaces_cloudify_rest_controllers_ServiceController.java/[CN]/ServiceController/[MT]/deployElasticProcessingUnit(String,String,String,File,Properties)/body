@@ -4,7 +4,7 @@
   Cloud cloud=null;
   if (srcFile.getName().endsWith(".zip")) {
     projectDir=ServiceReader.extractProjectFile(srcFile);
-    DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(new File(projectDir,"ext"));
+    DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(new File(projectDir,"ext"),applicationName);
     service=result.getService();
     cloud=ServiceReader.getCloudFromDirectory(new File(projectDir,"ext"));
   }

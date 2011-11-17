@@ -4,7 +4,7 @@
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int maxMemoryCapacityInMB=puConfig.getSla().getMaxMemoryCapacity();
   final int reservedMemoryCapacityPerMachineInMB=256;
-  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty("com.gs.application",applicationName).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);

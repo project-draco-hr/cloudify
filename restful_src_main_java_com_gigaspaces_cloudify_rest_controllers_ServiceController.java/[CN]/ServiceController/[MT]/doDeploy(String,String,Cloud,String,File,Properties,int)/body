@@ -2,7 +2,7 @@
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
   final int reservedMemoryCapacityPerMachineInMB=256;
-  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty("com.gs.application",applicationName).name(serviceName).sharedMachineProvisioning(SHARED_ISOLATION_ID,new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(zone).reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create());
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName).sharedMachineProvisioning(SHARED_ISOLATION_ID,new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(zone).reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create());
   if (cloud == null) {
     if (isLocalCloud()) {
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(externalProcessMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).create());

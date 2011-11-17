@@ -3,7 +3,7 @@
   File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
-  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty("com.gs.application",applicationName).name(serviceName);
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
