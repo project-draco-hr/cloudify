@@ -10,13 +10,13 @@
       packedFile=serviceFile;
     }
  else     if (serviceFile.isDirectory()) {
-      packedFile=Packager.pack(serviceFile);
+      packedFile=Packager.pack(serviceFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
       packedFile.deleteOnExit();
-      service=ServiceReader.readService(serviceFile);
+      service=ServiceReader.readService(serviceFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
     }
  else {
       packedFile=serviceFile;
-      service=ServiceReader.readServiceFromZip(packedFile);
+      service=ServiceReader.readServiceFromZip(packedFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
     }
   }
  catch (  IOException e) {

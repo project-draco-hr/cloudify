@@ -1,6 +1,6 @@
 {
   try {
-    return Packager.pack(recipeDirOrFile);
+    return Packager.pack(recipeDirOrFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
   }
  catch (  IOException e) {
     throw new CLIException(e);
