@@ -1,0 +1,8 @@
+{
+  Application app=ServiceReader.getApplicationFromFile(new File(SIMPLE_APP_PATH)).getApplication();
+  assertNotNull(app);
+  assertEquals(2,app.getServices().size());
+  assertNotNull(app.getServices().get(0).getLifecycle());
+  assertNotNull(app.getServices().get(1).getLifecycle());
+  assertEquals("icon2.jpg",app.getServices().get(1).getIcon());
+}
