@@ -15,7 +15,7 @@
     if (this.clusterInfo == null) {
       throw new IllegalStateException("The cluster information is missing. " + "If running in the integrated container, use the -cluster option to set the cluster info manually");
     }
-    compilationResult=ServiceReader.getServiceFromFile(dslFile,this.puExtDir,USMUtils.getAdmin(),this.clusterInfo,this.propertiesFileName,this.isRunningInGSC);
+    compilationResult=ServiceReader.getServiceFromFile(dslFile,this.puExtDir,USMUtils.getAdmin(),this.clusterInfo,this.propertiesFileName,this.isRunningInGSC,this.applicationName);
   }
  catch (  final Exception e) {
     throw new USMException("Failed to read service from file: " + dslFile,e);

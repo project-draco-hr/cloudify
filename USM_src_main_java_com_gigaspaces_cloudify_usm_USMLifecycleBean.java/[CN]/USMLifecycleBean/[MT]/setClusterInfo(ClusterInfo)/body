@@ -2,7 +2,8 @@
   this.puName=clusterInfo.getName();
   this.instanceId=clusterInfo.getInstanceId();
   if (puName != null) {
-    this.eventLogger=java.util.logging.Logger.getLogger(USMLifecycleBean.class.getPackage().getName() + ".USMEventLogger." + puName);
+    final String serviceName=ServiceUtils.getFullServiceName(puName).getServiceName();
+    this.eventLogger=java.util.logging.Logger.getLogger(USMLifecycleBean.class.getPackage().getName() + ".USMEventLogger." + serviceName);
   }
  else {
     this.eventLogger=java.util.logging.Logger.getLogger(USMLifecycleBean.class.getPackage().getName() + ".USMEventLogger.USM");
