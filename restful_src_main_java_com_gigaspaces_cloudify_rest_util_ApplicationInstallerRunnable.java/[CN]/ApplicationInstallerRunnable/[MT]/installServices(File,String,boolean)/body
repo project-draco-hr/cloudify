@@ -8,7 +8,8 @@
       File packedFile=Packager.pack(new File(appDir,serviceName));
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
-      controller.deployElasticProcessingUnit(serviceName,applicationName,serviceName,packedFile,contextProperties);
+      String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }
