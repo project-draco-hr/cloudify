@@ -1,6 +1,0 @@
-{
-  File applicationDslFile=getApplicationFile();
-  if (applicationDslFile == null) {
-  }
-  return null;
-}

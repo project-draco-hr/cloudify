@@ -1,0 +1,10 @@
+{
+  final LinkedHashMap<Object,Object> properties=createServiceProperties(propertiesFile);
+  Object result=evaluateGroovyScript(dslFile,gs);
+  if (result == null) {
+    throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a service object");
+  }
+  if (!(result instanceof Service)) {
+    throw new IllegalStateException("The file: " + dslFile + " did not evaluate to the required object type");
+  }
+}

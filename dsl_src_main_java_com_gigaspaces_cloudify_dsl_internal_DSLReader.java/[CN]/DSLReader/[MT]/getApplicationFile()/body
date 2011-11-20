@@ -1,3 +1,0 @@
-{
-  return getDSLFile("-application.groovy",CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_FILE_NAME);
-}

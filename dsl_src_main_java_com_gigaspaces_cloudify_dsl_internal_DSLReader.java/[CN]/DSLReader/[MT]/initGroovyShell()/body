@@ -1,0 +1,5 @@
+{
+  final CompilerConfiguration cc=createCompilerConfiguration();
+  final GroovyShell gs=new GroovyShell(ServiceReader.class.getClassLoader(),null,cc);
+  return gs;
+}

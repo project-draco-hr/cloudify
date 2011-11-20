@@ -1,7 +1,0 @@
-{
-  Object result=evaluateGroovyScript(dslFile,gs);
-  if (result == null) {
-    throw new IllegalStateException("The file " + dslFile + " evaluates to null, not a DSL object");
-  }
-  return result;
-}
