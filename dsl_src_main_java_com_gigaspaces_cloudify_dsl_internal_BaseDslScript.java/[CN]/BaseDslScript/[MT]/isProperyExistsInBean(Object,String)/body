@@ -1,0 +1,12 @@
+{
+  if (bean == null) {
+    throw new NullPointerException("Got a null reference to a bean while checking if a bean has the property: " + propertyName);
+  }
+  try {
+    BeanUtils.getProperty(bean,propertyName);
+    return true;
+  }
+ catch (  Exception e) {
+    return false;
+  }
+}
