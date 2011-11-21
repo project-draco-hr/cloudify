@@ -16,6 +16,10 @@
     addObjectInitializerForClass(dslObjectInitializersByName,CloudUser.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplate.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Sla.class);
     dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,false,true,"service"));
     dslObjectInitializersByName.put("metricGroup",new DSLObjectInitializerData("metricGroup",MetricGroup.class,false,true,"userInterface"));
     dslObjectInitializersByName.put("widgetGroup",new DSLObjectInitializerData("widgetGroup",WidgetGroup.class,false,true,"userInterface"));

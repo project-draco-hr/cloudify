@@ -8,7 +8,7 @@
       retval=dslObject(name);
     }
  catch (    DSLException e) {
-      throw new IllegalArgumentException("Failed to set: " + name,e);
+      throw new IllegalArgumentException("Failed to  set: " + name,e);
     }
     if (retval != null) {
       if (this.rootObject == null) {

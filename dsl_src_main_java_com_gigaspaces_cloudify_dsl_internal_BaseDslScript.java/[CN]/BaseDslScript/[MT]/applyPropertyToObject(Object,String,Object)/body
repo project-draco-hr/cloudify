@@ -6,7 +6,7 @@
     BeanUtils.setProperty(object,name,value);
   }
  catch (  final Exception e) {
-    throw new IllegalArgumentException("Failed to set property " + name + " of Object "+ object+ " to value: "+ value,e);
+    throw new IllegalArgumentException("Failed   to set property " + name + " of Object "+ object+ " to value: "+ value,e);
   }
   checkForApplicationServiceBlockNameParameter(name,value);
 }
