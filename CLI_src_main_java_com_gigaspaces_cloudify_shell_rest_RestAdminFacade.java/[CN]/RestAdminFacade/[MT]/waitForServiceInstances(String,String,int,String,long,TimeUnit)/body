@@ -1,8 +1,8 @@
 {
   long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
-  int serviceShutDownEvents=0;
+  int serviceShutDownEventsCount=0;
   String pollingURL="processingUnits/Names/" + ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  waitForService(applicationName,serviceName,pollingURL,timeoutErrorMessage,timeout,timeunit);
+  waitForServicePU(applicationName,serviceName,pollingURL,timeoutErrorMessage,timeout,timeunit);
   logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
   Integer currentNumberOfInstances=0;
   while (System.currentTimeMillis() < end) {
@@ -11,22 +11,28 @@
     if ("partitioned-sync2backup".equals(map.get("ClusterSchema"))) {
       plannedNumberOfInstances=Integer.valueOf((String)map.get("TotalNumberOfInstances"));
     }
-    logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,currentNumberOfInstances));
-    if (currentNumberOfInstances != null && plannedNumberOfInstances == currentNumberOfInstances) {
-      return plannedNumberOfInstances;
+    serviceShutDownEventsCount=handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount);
+    if (currentNumberOfInstances == 0) {
+      logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,currentNumberOfInstances));
     }
-    List<String> eventLogs=getUnreadEventLogs(applicationName,serviceName);
-    if (eventLogs != null) {
-      printEventLogs(eventLogs);
-      if (isEventLogContainsShutdown(eventLogs,serviceName)) {
-        serviceShutDownEvents++;
-        if (serviceShutDownEvents == plannedNumberOfInstances) {
-          throw new CLIException("Service " + serviceName + " Failed to instantiate");
+ else     if (plannedNumberOfInstances < currentNumberOfInstances) {
+      throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_exceeded_planned"),plannedNumberOfInstances,currentNumberOfInstances));
+    }
+ else     if (currentNumberOfInstances > 0) {
+      if (isUSMService(applicationName,serviceName)) {
+        int usmServicesStateRunningInstances=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,currentNumberOfInstances);
+        serviceShutDownEventsCount=handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount);
+        logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,usmServicesStateRunningInstances));
+        if (usmServicesStateRunningInstances == plannedNumberOfInstances) {
+          return true;
         }
       }
-    }
-    if (plannedNumberOfInstances < currentNumberOfInstances) {
-      throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_exceeded_planned"),plannedNumberOfInstances,currentNumberOfInstances));
+ else {
+        logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,currentNumberOfInstances));
+        if (plannedNumberOfInstances == currentNumberOfInstances) {
+          return true;
+        }
+      }
     }
     Thread.sleep(POLLING_INTERVAL);
   }

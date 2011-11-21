@@ -49,7 +49,7 @@ catch (  PackagingException e) {
     FileUtils.deleteDirectory(packedFile.getParentFile());
   }
   try {
-    plannedNumberOfInstances=adminFacade.waitForServiceInstances(serviceName,currentApplicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
+    adminFacade.waitForServiceInstances(serviceName,currentApplicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
     return MessageFormat.format(messages.getString("service_install_ended"),serviceName);
   }
  catch (  CLIException ex) {

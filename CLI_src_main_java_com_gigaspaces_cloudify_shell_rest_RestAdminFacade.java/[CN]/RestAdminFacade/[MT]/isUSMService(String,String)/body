@@ -1,0 +1,13 @@
+{
+  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  String usmUrl="ProcessingUnits/Names/" + absolutePUName + "/Instances/0/Statistics/"+ "Monitors/"+ CloudifyConstants.USM_MONITORS_SERVICE_ID;
+  try {
+    Map<String,Object> adminData=client.getAdminData(usmUrl);
+    if (adminData != null) {
+      return true;
+    }
+  }
+ catch (  CLIException e) {
+  }
+  return false;
+}
