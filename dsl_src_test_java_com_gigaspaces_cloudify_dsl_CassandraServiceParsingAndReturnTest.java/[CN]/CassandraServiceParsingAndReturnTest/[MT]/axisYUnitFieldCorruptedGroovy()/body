@@ -2,7 +2,7 @@
   File cassandraDslFile=new File(CORRUPTED_RESOURCES_PATH + "cassandra_axisYUnit_field_corrupted-service.groovy");
   File cassandraWorkDir=new File(CORRUPTED_RESOURCES_PATH);
   try {
-    Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir,CloudifyConstants.DEFAULT_APPLICATION_NAME).getService();
+    Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir).getService();
     assertTrue("No exception was thrown due to AxisYUnit field corruption",false);
   }
  catch (  Throwable t) {

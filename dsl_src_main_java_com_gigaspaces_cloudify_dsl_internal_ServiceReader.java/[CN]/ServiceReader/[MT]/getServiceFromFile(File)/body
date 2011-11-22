@@ -1,6 +1,6 @@
 {
   try {
-    return ServiceReader.getServiceFromFile(dslFile,dslFile.getParentFile(),applicationName).getService();
+    return ServiceReader.getServiceFromFile(dslFile,dslFile.getParentFile()).getService();
   }
  catch (  CompilationFailedException e) {
     throw new PackagingException("The file " + dslFile + " could not be compiled: "+ e.getMessage(),e);

@@ -1,0 +1,11 @@
+{
+  File testParsingBaseDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_parsing_base-service.groovy");
+  File testParsingBaseWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
+  Service service=ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
+  Assert.assertEquals("test parsing base",service.getName());
+  ServiceLifecycle lifecycle=service.getLifecycle();
+  Assert.assertEquals("test_parsing_base_install.groovy",lifecycle.getInit());
+  Assert.assertNotNull(lifecycle.getStart());
+  Assert.assertNotNull(lifecycle.getPostStart());
+  Assert.assertNotNull(lifecycle.getPreStop());
+}

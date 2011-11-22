@@ -3,7 +3,7 @@
   if (!dslFile.isFile()) {
     dslFile=ServiceReader.findServiceFile(serviceDirOrFile);
   }
-  Service service=getServiceFromFile(dslFile,applicationName);
+  Service service=getServiceFromFile(dslFile);
   validateFolderSize(serviceDirOrFile,service.getMaxJarSize());
   return service;
 }

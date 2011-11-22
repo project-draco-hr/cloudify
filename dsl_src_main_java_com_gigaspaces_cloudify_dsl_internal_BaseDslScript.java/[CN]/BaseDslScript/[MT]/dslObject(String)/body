@@ -25,6 +25,8 @@
     }
   }
   try {
+    Object existingProperty=this.activeObject != null ? PropertyUtils.getProperty(this.activeObject,name) : null;
+    if (existingProperty != null)     return BeanUtils.cloneBean(existingProperty);
     return data.clazz.newInstance();
   }
  catch (  InstantiationException e) {
@@ -32,5 +34,11 @@
   }
 catch (  IllegalAccessException e) {
     throw new DSLException("Failed to create new element of type " + data.getName() + " with class: "+ data.clazz,e);
+  }
+catch (  InvocationTargetException e) {
+    throw new DSLException("Failed to copy existing element of type " + data.getName() + " with class: "+ data.clazz,e);
+  }
+catch (  NoSuchMethodException e) {
+    throw new DSLException("Failed to copy existing element of type " + data.getName() + " with class: "+ data.clazz,e);
   }
 }

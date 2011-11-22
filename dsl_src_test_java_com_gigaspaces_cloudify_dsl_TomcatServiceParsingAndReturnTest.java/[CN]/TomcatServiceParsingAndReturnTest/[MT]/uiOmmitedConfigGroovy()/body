@@ -1,7 +1,7 @@
 {
   File tomcatDslFile=new File(CORRUPTED_RESOURCES_PATH + "tomcat_UI_ommited-service.groovy");
   File tomcatWorkDir=new File(CORRUPTED_RESOURCES_PATH);
-  Service service=ServiceReader.getServiceFromFile(tomcatDslFile,tomcatWorkDir,CloudifyConstants.DEFAULT_APPLICATION_NAME).getService();
+  Service service=ServiceReader.getServiceFromFile(tomcatDslFile,tomcatWorkDir).getService();
   assertNotNull(service);
   assertNull(service.getUserInterface());
   ServiceTestUtil.validateName(service,nameInGroovy);

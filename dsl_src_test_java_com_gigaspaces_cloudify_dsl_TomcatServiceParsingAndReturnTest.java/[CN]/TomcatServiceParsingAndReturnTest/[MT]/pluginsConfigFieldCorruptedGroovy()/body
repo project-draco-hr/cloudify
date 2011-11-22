@@ -2,7 +2,7 @@
   File tomcatDslFile=new File(CORRUPTED_RESOURCES_PATH + "tomcat_plugins_config_field_corrupted-service.groovy");
   File tomcatWorkDir=new File(CORRUPTED_RESOURCES_PATH);
   try {
-    Service service=ServiceReader.getServiceFromFile(tomcatDslFile,tomcatWorkDir,CloudifyConstants.DEFAULT_APPLICATION_NAME).getService();
+    Service service=ServiceReader.getServiceFromFile(tomcatDslFile,tomcatWorkDir).getService();
     assertTrue("No exception was thrown due to Config field corruption",false);
   }
  catch (  Throwable t) {

@@ -1,7 +1,7 @@
 {
   File cassandraDslFile=new File(CORRUPTED_RESOURCES_PATH + "cassandra_bare_essentials-service.groovy");
   File cassandraWorkDir=new File(CORRUPTED_RESOURCES_PATH);
-  Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir,CloudifyConstants.DEFAULT_APPLICATION_NAME).getService();
+  Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir).getService();
   assertNotNull(service);
   ServiceTestUtil.validateName(service,nameInGroovy);
 }

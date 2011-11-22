@@ -1,5 +1,5 @@
 {
-  Service service=ServiceReader.readService(recipeDirOrFile,applicationName);
+  Service service=ServiceReader.readService(recipeDirOrFile);
   File recipeDir=recipeDirOrFile;
   if (recipeDir.isFile()) {
     recipeDir=recipeDir.getParentFile();
