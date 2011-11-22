@@ -25,8 +25,10 @@
     }
   }
   try {
-    Object existingProperty=this.activeObject != null ? PropertyUtils.getProperty(this.activeObject,name) : null;
-    if (existingProperty != null)     return BeanUtils.cloneBean(existingProperty);
+    if (this.activeObject != null && isProperyExistsInBean(this.activeObject,name)) {
+      Object existingPropertyValue=PropertyUtils.getProperty(this.activeObject,name);
+      if (existingPropertyValue != null)       return BeanUtils.cloneBean(existingPropertyValue);
+    }
     return data.clazz.newInstance();
   }
  catch (  InstantiationException e) {

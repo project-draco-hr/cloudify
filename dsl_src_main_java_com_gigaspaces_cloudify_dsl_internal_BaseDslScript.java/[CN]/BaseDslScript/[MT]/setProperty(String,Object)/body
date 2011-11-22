@@ -1,5 +1,4 @@
 {
-  logger.info("Setting Propery: name = " + name + ", value = "+ value+ ", ActiveObject = "+ this.activeObject);
   if (this.activeObject == null) {
     super.setProperty(name,value);
     return;
