@@ -10,7 +10,7 @@
       final Map<String,Object> temp=details.getDetails(this,usmLifecycleBean.getConfiguration());
       result.putAll(temp);
     }
- catch (    final DetailsException e) {
+ catch (    final Exception e) {
       logger.log(Level.SEVERE,"Failed to execute service details",e);
     }
   }

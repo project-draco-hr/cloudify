@@ -13,7 +13,7 @@
       logger.fine("Executing monitor: " + monitor);
       map.putAll(monitor.getMonitorValues(this,usmLifecycleBean.getConfiguration()));
     }
- catch (    final MonitorException e) {
+ catch (    final Exception e) {
       logger.log(Level.SEVERE,"Failed to execute a USM service monitor",e);
     }
   }
