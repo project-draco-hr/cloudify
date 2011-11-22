@@ -11,7 +11,9 @@
   for (  final Monitor monitor : usmLifecycleBean.getMonitors()) {
     try {
       logger.fine("Executing monitor: " + monitor);
-      map.putAll(monitor.getMonitorValues(this,usmLifecycleBean.getConfiguration()));
+      Map<String,Number> monitorValues=monitor.getMonitorValues(this,usmLifecycleBean.getConfiguration());
+      removeNonSerializableObjectsFromMap(monitorValues);
+      map.putAll(monitorValues);
     }
  catch (    final Exception e) {
       logger.log(Level.SEVERE,"Failed to execute a USM service monitor",e);

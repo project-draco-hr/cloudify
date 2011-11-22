@@ -1,0 +1,12 @@
+{
+  Iterator<?> entries=monitorValues.entrySet().iterator();
+  while (entries.hasNext()) {
+    Entry<?,?> entry=(Entry<?,?>)entries.next();
+    if (!(entry.getValue() instanceof java.io.Serializable)) {
+      monitorValues.remove(entry.getKey());
+    }
+    if (entry.getValue() instanceof Closure<?>) {
+      monitorValues.remove(entry.getKey());
+    }
+  }
+}
