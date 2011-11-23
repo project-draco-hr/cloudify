@@ -5,7 +5,7 @@
     final String serviceName=service.getName();
     boolean found=false;
     try {
-      File packedFile=Packager.pack(new File(appDir,serviceName),applicationName);
+      File packedFile=Packager.pack(new File(appDir,serviceName));
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);

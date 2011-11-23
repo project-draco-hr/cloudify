@@ -10,7 +10,7 @@
       packedFile=serviceFile;
     }
  else     if (serviceFile.isDirectory()) {
-      packedFile=Packager.pack(serviceFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
+      packedFile=Packager.pack(serviceFile);
       packedFile.deleteOnExit();
       service=ServiceReader.readService(serviceFile);
     }
