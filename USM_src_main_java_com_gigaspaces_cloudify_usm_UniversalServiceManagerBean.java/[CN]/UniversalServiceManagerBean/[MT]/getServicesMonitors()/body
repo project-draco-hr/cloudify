@@ -1,9 +1,10 @@
 {
   logger.info("Executing getServiceMonitors()");
-  waitForServiceToStart();
   final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   final ServiceMonitors[] res=new ServiceMonitors[]{csm};
-  if (!getState().equals(USMState.RUNNING)) {
+  USMState currentState=getState();
+  if (!currentState.equals(USMState.RUNNING)) {
+    csm.getMonitors().put(CloudifyConstants.USM_MONITORS_STATE_ID,currentState.ordinal());
     return res;
   }
   final Map<String,Object> map=csm.getMonitors();
