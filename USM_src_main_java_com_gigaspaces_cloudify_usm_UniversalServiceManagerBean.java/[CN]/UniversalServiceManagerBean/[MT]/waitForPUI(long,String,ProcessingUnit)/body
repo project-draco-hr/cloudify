@@ -5,37 +5,36 @@
       throw new IllegalStateException("Could not find dependency " + dependantService + " required for this service");
     }
     logger.info("Waiting for PUI of service: " + dependantService + " for "+ waitForPUIPeriod+ " Milliseconds");
-    final boolean found=pu.waitFor(1,waitForPUIPeriod,TimeUnit.MILLISECONDS);
+    final boolean found=pu.waitFor(1,2,TimeUnit.MILLISECONDS);
     logger.info("Timeout ended. processing unit " + dependantService + " found result is "+ found);
-    if (!found) {
-      throw new IllegalStateException("Could not find instance of dependency " + dependantService + " required for this service");
-    }
-    ProcessingUnitInstance[] puis=pu.getInstances();
-    logger.info("Found " + puis.length + " instances");
-    for (    ProcessingUnitInstance pui : puis) {
-      ServiceMonitors sm=pui.getStatistics().getMonitors().get(CloudifyConstants.USM_MONITORS_SERVICE_ID);
-      if (sm != null) {
-        Object stateObject=sm.getMonitors().get(CloudifyConstants.USM_MONITORS_STATE_ID);
-        logger.info("USM state is: " + stateObject);
-        if (stateObject == null) {
-          logger.warning("Could not find the instance state in the PUI monitors");
-        }
+    if (found) {
+      ProcessingUnitInstance[] puis=pu.getInstances();
+      logger.info("Found " + puis.length + " instances");
+      for (      ProcessingUnitInstance pui : puis) {
+        ServiceMonitors sm=pui.getStatistics().getMonitors().get(CloudifyConstants.USM_MONITORS_SERVICE_ID);
+        if (sm != null) {
+          Object stateObject=sm.getMonitors().get(CloudifyConstants.USM_MONITORS_STATE_ID);
+          logger.info("USM state is: " + stateObject);
+          if (stateObject == null) {
+            logger.warning("Could not find the instance state in the PUI monitors");
+          }
  else {
-          int stateIndex=(Integer)stateObject;
-          USMState usmState=USMState.values()[stateIndex];
-          logger.info("PUI is in state: " + usmState);
-          if (usmState.equals(USMState.RUNNING)) {
-            logger.info("Found a running instance of dependant service: " + dependantService);
-            return;
+            int stateIndex=(Integer)stateObject;
+            USMState usmState=USMState.values()[stateIndex];
+            logger.info("PUI is in state: " + usmState);
+            if (usmState.equals(USMState.RUNNING)) {
+              logger.info("Found a running instance of dependant service: " + dependantService);
+              return;
+            }
           }
         }
       }
-    }
-    logger.info("Could not find a running instance of service: " + dependantService + ". Sleeping before trying again");
-    try {
-      Thread.sleep(WAIT_FOR_DEPENDENCIES_INTERVAL_MILLIS);
-    }
- catch (    InterruptedException e) {
+      logger.info("Could not find a running instance of service: " + dependantService + ". Sleeping before trying again");
+      try {
+        Thread.sleep(WAIT_FOR_DEPENDENCIES_INTERVAL_MILLIS);
+      }
+ catch (      InterruptedException e) {
+      }
     }
   }
 }
