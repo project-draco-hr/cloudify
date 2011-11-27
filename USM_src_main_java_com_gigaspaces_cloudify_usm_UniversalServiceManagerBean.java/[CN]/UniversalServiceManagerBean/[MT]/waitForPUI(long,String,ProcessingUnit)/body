@@ -4,8 +4,9 @@
     if (waitForPUIPeriod <= 0) {
       throw new IllegalStateException("Could not find dependency " + dependantService + " required for this service");
     }
-    logger.info("Waiting for PUI of service: " + dependantService);
+    logger.info("Waiting for PUI of service: " + dependantService + " for "+ waitForPUIPeriod+ " Milliseconds");
     final boolean found=pu.waitFor(1,waitForPUIPeriod,TimeUnit.MILLISECONDS);
+    logger.info("Timeout ended. processing unit " + dependantService + " found result is "+ found);
     if (!found) {
       throw new IllegalStateException("Could not find instance of dependency " + dependantService + " required for this service");
     }

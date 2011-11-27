@@ -3,6 +3,6 @@
   logger.info("Async Install Setting: " + value);
   this.asyncInstall=Boolean.parseBoolean(value);
   final String dependenciesString=beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
-  this.dependencies=parseDependenciesString(dependenciesString,beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME));
+  this.dependencies=parseDependenciesString(dependenciesString);
   logger.info("Dependencies for this service: " + Arrays.toString(this.dependencies));
 }
