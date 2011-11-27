@@ -1,7 +1,7 @@
 {
   for (  final Service service : services) {
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
-    final Properties contextProperties=createServiceContextProperties(service,async);
+    final Properties contextProperties=createServiceContextProperties(service,applicationName,async);
     final String serviceName=service.getName();
     boolean found=false;
     try {

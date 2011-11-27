@@ -1,7 +1,14 @@
 {
   final Properties contextProperties=new Properties();
   if (service.getDependsOn() != null) {
-    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,service.getDependsOn().toString());
+    String serviceName=service.getDependsOn().toString();
+    serviceName=serviceName.substring(1,serviceName.length() - 1);
+    if (serviceName.equals("")) {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
+    }
+ else {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[" + ServiceUtils.getAbsolutePUName(applicationName,serviceName) + "]");
+    }
   }
   if (service.getType() != null) {
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE,service.getType());
