@@ -1,5 +1,5 @@
 {
-  String url=SERVICE_CONTROLLER_URL + "applications/na/services/" + serviceName+ "/instances/"+ instanceId+ "/beans/"+ beanName+ "/invoke";
+  String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances/"+ instanceId+ "/beans/"+ beanName+ "/invoke";
   @SuppressWarnings("unchecked") Map<String,String> resultMap=(Map<String,String>)client.post(url,buildCustomCommandParams(commandName,paramsMap));
   InvocationResult invocationResult=InvocationResult.createInvocationResult(resultMap);
   return invocationResult;
