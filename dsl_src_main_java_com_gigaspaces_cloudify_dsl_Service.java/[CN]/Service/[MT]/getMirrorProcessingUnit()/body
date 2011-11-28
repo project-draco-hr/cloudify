@@ -1,5 +1,5 @@
 {
-  StatelessProcessingUnit service=null;
+  MirrorProcessingUnit service=null;
   if (this.serviceProcessingUnit instanceof MirrorProcessingUnit) {
     service=(MirrorProcessingUnit)serviceProcessingUnit;
   }
