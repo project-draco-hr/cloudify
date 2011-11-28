@@ -3,6 +3,6 @@
     this.serviceProcessingUnit=mirrorProcessingUnit;
   }
  else   if (mirrorProcessingUnit != null) {
-    throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit state");
+    throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit type");
   }
 }
