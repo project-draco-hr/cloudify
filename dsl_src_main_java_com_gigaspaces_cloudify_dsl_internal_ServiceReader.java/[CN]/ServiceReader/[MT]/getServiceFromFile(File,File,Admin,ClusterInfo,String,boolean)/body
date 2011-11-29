@@ -11,7 +11,7 @@
     throw new IllegalArgumentException("Failed to load properties file " + fileName,e);
   }
   final ServiceContext ctx=new ServiceContext();
-  final GroovyShell gs=ServiceReader.createGroovyShellForService(properties,ctx);
+  final GroovyShell gs=ServiceReader.createGroovyShellForService(properties,ctx,dslFile);
   Object result=evaluateGroovyScript(dslFile,gs);
   if (result == null) {
     throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a service object");

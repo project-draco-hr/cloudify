@@ -2,7 +2,7 @@
   if (!dslFile.exists()) {
     throw new FileNotFoundException(dslFile.getAbsolutePath());
   }
-  final GroovyShell gs=ServiceReader.createGroovyShellForApplication();
+  final GroovyShell gs=ServiceReader.createGroovyShellForApplication(dslFile);
   gs.getContext().setProperty(DSLUtils.APPLICATION_DIR,dslFile.getParentFile().getAbsolutePath());
   Object result=null;
   FileReader reader=null;

@@ -1,0 +1,7 @@
+{
+  int index=1;
+  while (true) {
+    if (!(new File(extendedServiceFile.getPath() + "-" + index).exists()))     return index;
+    index++;
+  }
+}

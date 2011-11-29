@@ -1,8 +1,5 @@
 {
-  Service service=ServiceReader.readService(recipeDirOrFile);
-  File recipeDir=recipeDirOrFile;
-  if (recipeDir.isFile()) {
-    recipeDir=recipeDir.getParentFile();
-  }
-  return Packager.pack(recipeDir,service);
+  File recipeFile=recipeDirOrFile.isDirectory() ? ServiceReader.findServiceFile(recipeDirOrFile) : recipeDirOrFile;
+  Service service=ServiceReader.readService(recipeFile);
+  return Packager.pack(recipeFile,service);
 }

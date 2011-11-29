@@ -1,0 +1,25 @@
+{
+  BufferedReader bufferedReader=null;
+  BufferedWriter bufferedWriter=null;
+  File extendingScriptFileTmp=new File(extendingScriptFile.getPath().replace(".groovy","-tmp.groovy"));
+  try {
+    bufferedReader=new BufferedReader(new FileReader(extendingScriptFile));
+    FileWriter fileWriter=new FileWriter(extendingScriptFileTmp);
+    bufferedWriter=new BufferedWriter(fileWriter);
+    String line=bufferedReader.readLine();
+    while (line != null) {
+      if (line.trim().startsWith(ServiceDslScript.EXTEND_PROPERTY_NAME + " ")) {
+        line=line.substring(0,line.indexOf(ServiceDslScript.EXTEND_PROPERTY_NAME) + 6);
+        line+=" \"" + localExtendedServiceFile.getName() + "\"";
+      }
+      bufferedWriter.write(line + StringUtils.NEW_LINE);
+      line=bufferedReader.readLine();
+    }
+  }
+  finally {
+    if (bufferedReader != null)     bufferedReader.close();
+    if (bufferedWriter != null)     bufferedWriter.close();
+  }
+  FileUtils.forceDelete(extendingScriptFile);
+  if (!extendingScriptFileTmp.renameTo(extendingScriptFile))   throw new IOException("Failed renaming tmp script [" + extendingScriptFileTmp + "] to ["+ extendingScriptFile+ "]");
+}

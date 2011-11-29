@@ -1,4 +1,5 @@
 {
+  final File srcFolder=recipeFile.getParentFile();
   File destPuFolder=File.createTempFile("gs_usm_","");
   FileUtils.forceDelete(destPuFolder);
   FileUtils.forceMkdir(destPuFolder);
@@ -42,7 +43,27 @@
     puXmlStream.close();
   }
  catch (  IOException e) {
-    logger.log(Level.SEVERE,"failed to close defaul_usm_pu.xml stream",e);
+    logger.log(Level.SEVERE,"failed to close default_usm_pu.xml stream",e);
+  }
+  LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
+  File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
+  for (  String extendedServicePath : extendedServicesPaths) {
+    File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
+    File localExtendedServiceFile=copyServiceFileAndRenameIfNeeded(extendedServiceFile,extFolder);
+    logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
+    updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
+    final File rootScriptDir=extendedServiceFile.getParentFile();
+    FileUtils.copyDirectory(rootScriptDir,extFolder,new FileFilter(){
+      @Override public boolean accept(      File pathname){
+        if (pathname.isDirectory())         return true;
+        String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
+        boolean accept=!(new File(extFolder.getPath() + "/" + relativePath).exists());
+        if (accept && logger.isLoggable(Level.FINEST))         logger.finest("copying extended script resource [" + pathname + "] locally");
+        return accept;
+      }
+    }
+);
+    extendingScriptFile=localExtendedServiceFile;
   }
   logger.finer("created pu folder " + destPuFolder.getAbsolutePath());
   return destPuFolder;

@@ -1,10 +1,8 @@
 {
-  if (!srcFolder.isDirectory()) {
-    throw new IllegalArgumentException(srcFolder + " is not a directory");
-  }
-  logger.info("packing folder " + srcFolder);
-  final File createdPuFolder=buildPuFolder(service,srcFolder);
-  File puZipFile=createZippedPu(service,createdPuFolder,srcFolder);
+  if (!recipeFile.isFile())   throw new IllegalArgumentException(recipeFile + " is not a file");
+  logger.info("packing folder " + recipeFile.getParent());
+  final File createdPuFolder=buildPuFolder(service,recipeFile);
+  File puZipFile=createZippedPu(service,createdPuFolder,recipeFile);
   logger.info("created " + puZipFile.getCanonicalFile());
   if (FileUtils.deleteQuietly(createdPuFolder)) {
     logger.finer("deleted temp pu folder " + createdPuFolder.getAbsolutePath());

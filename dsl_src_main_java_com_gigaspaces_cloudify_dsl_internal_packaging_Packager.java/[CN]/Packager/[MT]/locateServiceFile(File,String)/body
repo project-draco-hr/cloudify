@@ -1,0 +1,5 @@
+{
+  File extendedServiceFile=new File(recipeFile.getParent() + "/" + extendedServicePath);
+  if (extendedServiceFile.isDirectory())   extendedServiceFile=ServiceReader.findServiceFile(extendedServiceFile);
+  return extendedServiceFile;
+}

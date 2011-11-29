@@ -1,2 +1,4 @@
+String baseClassName
 LinkedHashMap<Object,Object> properties
 ServiceContext context
+File dslFile

@@ -2,7 +2,7 @@
   if (!dslFile.exists()) {
     throw new FileNotFoundException(dslFile.getAbsolutePath());
   }
-  final GroovyShell gs=ServiceReader.createGroovyShellForCloud();
+  final GroovyShell gs=ServiceReader.createGroovyShellForCloud(dslFile);
   Object result=null;
   FileReader reader=null;
   try {
