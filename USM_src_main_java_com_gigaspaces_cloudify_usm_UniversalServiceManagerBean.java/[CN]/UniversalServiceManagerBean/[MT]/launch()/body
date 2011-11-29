@@ -12,9 +12,12 @@ synchronized (this.stateMutex) {
  catch (    final InterruptedException e) {
     }
     if (!isProcessAlive(this.process)) {
+      logger.severe("Attempt to launch underlying process has failed!");
+      this.tailer.run();
       throw new USMException("Process has shut down or failed to start. Check logs for errors");
     }
     try {
+      logger.info("Executing process liveness test");
       if (!usmLifecycleBean.isProcessLivenessTestPassed()) {
         throw new USMException("The Start Detection test failed! Shutting down this instance.");
       }

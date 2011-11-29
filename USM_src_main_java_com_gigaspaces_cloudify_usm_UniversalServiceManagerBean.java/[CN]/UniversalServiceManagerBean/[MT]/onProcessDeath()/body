@@ -1,4 +1,5 @@
 {
+  logger.info("Detected death of underlying process");
   usmLifecycleBean.externalProcessDied();
 synchronized (this.stateMutex) {
     if (this.state != USMState.RUNNING) {
@@ -21,7 +22,9 @@ synchronized (this.stateMutex) {
  catch (        final InterruptedException e) {
         }
         try {
+          logger.info("Relaunching process");
           launch();
+          logger.info("Finished Relaunching process after unexpected process death");
         }
  catch (        final USMException e) {
           logger.log(Level.SEVERE,"Failed to re-launch the external process after a previous failure: " + e.getMessage(),e);

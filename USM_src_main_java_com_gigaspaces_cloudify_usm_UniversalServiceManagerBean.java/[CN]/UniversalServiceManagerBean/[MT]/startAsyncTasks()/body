@@ -8,6 +8,7 @@
   logger.info("Launching tailer task");
   executors.scheduleWithFixedDelay(tailer,1,fileTailerIntervalSecs,TimeUnit.SECONDS);
   if (this.process != null) {
+    logger.info("Starting Synchronous Process Death Detection");
     executors.submit(createProcessWaitTask(notifier));
   }
   Runnable task=new Runnable(){

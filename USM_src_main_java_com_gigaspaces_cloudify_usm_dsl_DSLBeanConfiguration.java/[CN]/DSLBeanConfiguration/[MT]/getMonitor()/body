@@ -21,24 +21,25 @@
     @Override public Map<String,Number> getMonitorValues(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws MonitorException {
       try {
         Map<String,Number> returnMap=new HashMap<String,Number>();
-        final Map<String,Object> monitorsMap=getMapFromClosureObject(monitor);
-        for (        Map.Entry<String,Object> entryObject : monitorsMap.entrySet()) {
-          Object object=entryObject.getValue();
-          EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
-          if (!result.isSuccess()) {
-            logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
-          }
- else           if (result.getResult() instanceof Number) {
-            returnMap.put(entryObject.getKey(),(Number)result.getResult());
-          }
- else           if (result.getResult() instanceof String) {
-            if (NumberUtils.isNumber((String)result.getResult())) {
-              Number number=NumberUtils.createNumber((String)result.getResult());
-              returnMap.put(entryObject.getKey(),number);
+        if (monitor instanceof Map<?,?>) {
+          for (          Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
+            Object object=entryObject.getValue();
+            EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+            if (!result.isSuccess()) {
+              logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
             }
-          }
+ else             if (result.getResult() instanceof Number) {
+              returnMap.put(entryObject.getKey(),(Number)result.getResult());
+            }
+ else             if (result.getResult() instanceof String) {
+              if (NumberUtils.isNumber((String)result.getResult())) {
+                Number number=NumberUtils.createNumber((String)result.getResult());
+                returnMap.put(entryObject.getKey(),number);
+              }
+            }
  else {
-            logger.log(Level.WARNING,"Expected DSL result to be numeric but received a non-numeric value",result.getException().getStackTrace());
+              logger.log(Level.WARNING,"Expected DSL result to be numeric but received a non-numeric value",result.getException().getStackTrace());
+            }
           }
         }
         return returnMap;

@@ -7,15 +7,27 @@
     @Override public Map<String,Object> getDetails(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws DetailsException {
       try {
         Map<String,Object> returnMap=new HashMap<String,Object>();
-        final Map<String,Object> detailsMap=getMapFromClosureObject(details);
-        for (        Map.Entry<String,Object> entryObject : detailsMap.entrySet()) {
-          Object object=entryObject.getValue();
-          EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
-          if (!result.isSuccess()) {
-            logger.log(Level.WARNING,"DSL Entry failed to execute: ",result.getException().getStackTrace());
-          }
+        logger.info("getting Details map from details closure");
+        if (details instanceof Map<?,?>) {
+          for (          Map.Entry<String,Object> entry : ((Map<String,Object>)(details)).entrySet()) {
+            if (entry.getValue() instanceof Closure) {
+              EventResult value=new DSLEntryExecutor(entry.getValue(),launcher,puExtDir).run();
+              if (value.isSuccess()) {
+                returnMap.put(entry.getKey(),value.getResult());
+              }
  else {
-            returnMap.put(entryObject.getKey(),result.getResult());
+                logger.warning("Failed to execute closure with key value of " + entry.getKey());
+              }
+            }
+ else {
+              returnMap.put(entry.getKey(),entry.getValue());
+            }
+          }
+        }
+ else         if (details instanceof Closure) {
+          EventResult result=new DSLEntryExecutor(details,launcher,puExtDir).run();
+          if (result.isSuccess()) {
+            returnMap.putAll((Map<String,Object>)result.getResult());
           }
         }
         return returnMap;
