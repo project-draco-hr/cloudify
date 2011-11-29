@@ -1,5 +1,5 @@
 {
-  logger.info("Executing getServiceMonitors()");
+  logger.fine("Executing getServiceMonitors()");
   final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   final ServiceMonitors[] res=new ServiceMonitors[]{csm};
   USMState currentState=getState();

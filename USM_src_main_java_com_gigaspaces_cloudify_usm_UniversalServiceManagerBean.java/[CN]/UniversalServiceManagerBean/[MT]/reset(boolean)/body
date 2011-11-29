@@ -3,6 +3,7 @@ synchronized (this.stateMutex) {
     this.state=USMState.INITIALIZING;
     logger.info("USM Started. Configuration is: " + usmLifecycleBean.getConfiguration());
     this.executors=Executors.newScheduledThreadPool(5);
+    checkForRecipeTestEnvironment();
     if (existingProcessFound) {
       startAsyncTasks();
       this.state=USMState.RUNNING;

@@ -5,6 +5,5 @@
   boolean existingProcessFound=checkForPIDFile();
   initEvents();
   reset(existingProcessFound);
-  checkForRecipeTestEnvironment();
   initShutdownHook();
 }
