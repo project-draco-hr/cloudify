@@ -12,8 +12,7 @@
       for (      String name : splitServiceNames) {
         absoluteServiceNames.add(ServiceUtils.getAbsolutePUName(applicationName,name.trim()));
       }
-      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,absoluteServiceNames.toArray().toString());
-      System.out.println(Arrays.toString(absoluteServiceNames.toArray()));
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,Arrays.toString(absoluteServiceNames.toArray()));
     }
   }
   if (service.getType() != null) {
