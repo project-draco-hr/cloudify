@@ -1,8 +1,8 @@
 {
-  if (this.serviceProcessingUnit == null) {
-    this.serviceProcessingUnit=dataGrid;
+  if (this.datagrid == null) {
+    this.datagrid=dataGrid;
   }
- else   if (dataGrid != null) {
+ else   if (this.datagrid != null) {
     throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit type");
   }
 }

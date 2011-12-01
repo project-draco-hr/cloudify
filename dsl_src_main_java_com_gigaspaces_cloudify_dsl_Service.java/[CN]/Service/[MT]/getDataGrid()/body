@@ -1,7 +1,3 @@
 {
-  DataGrid service=null;
-  if (this.serviceProcessingUnit instanceof DataGrid) {
-    service=(DataGrid)serviceProcessingUnit;
-  }
-  return service;
+  return this.datagrid;
 }

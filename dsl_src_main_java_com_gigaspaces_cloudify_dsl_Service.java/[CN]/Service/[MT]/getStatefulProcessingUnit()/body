@@ -1,7 +1,3 @@
 {
-  StatefulProcessingUnit service=null;
-  if (this.serviceProcessingUnit instanceof StatefulProcessingUnit) {
-    service=(StatefulProcessingUnit)serviceProcessingUnit;
-  }
-  return service;
+  return this.statefulProcessingUnit;
 }

@@ -1,7 +1,3 @@
 {
-  MirrorProcessingUnit service=null;
-  if (this.serviceProcessingUnit instanceof MirrorProcessingUnit) {
-    service=(MirrorProcessingUnit)serviceProcessingUnit;
-  }
-  return service;
+  return this.mirrorProcessingUnit;
 }

@@ -1,8 +1,8 @@
 {
-  if (this.serviceProcessingUnit == null) {
-    this.serviceProcessingUnit=statelessProcessingUnit;
+  if (this.statelessProcessingUnit == null) {
+    this.statelessProcessingUnit=statelessProcessingUnit;
   }
- else   if (statelessProcessingUnit != null) {
+ else   if (this.statelessProcessingUnit != null) {
     throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit type");
   }
 }
