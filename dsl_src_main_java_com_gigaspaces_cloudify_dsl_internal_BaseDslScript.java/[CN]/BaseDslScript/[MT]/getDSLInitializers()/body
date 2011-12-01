@@ -10,6 +10,7 @@
     addObjectInitializerForClass(dslObjectInitializersByName,ServiceNetwork.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,MirrorProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Cloud.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Cloud2.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudProvider.class);
