@@ -1,5 +1,7 @@
 {
+  logger.info("Installing service for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
   for (  final Service service : services) {
+    logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
     final Properties contextProperties=createServiceContextProperties(service,applicationName,async);
     final String serviceName=service.getName();
@@ -9,6 +11,7 @@
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+      logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
       controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
@@ -17,10 +20,12 @@
         logger.warning("Failed to delete temporary directory: " + packedFile.getParentFile());
       }
       if (!async) {
+        logger.info("Waiting for instance of service: " + serviceName + " of application: "+ applicationName);
         boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
         if (!instanceFound) {
           throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
         }
+        logger.info("Found instance of: " + serviceName);
       }
       found=true;
       logger.fine("service " + service + " deployed.");
