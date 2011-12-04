@@ -1,5 +1,6 @@
 {
-  ProcessingUnit pu=this.admin.getProcessingUnits().waitFor(serviceName,timeout,timeUnit);
+  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  ProcessingUnit pu=this.admin.getProcessingUnits().waitFor(absolutePUName,timeout,timeUnit);
   if (pu == null) {
     return false;
   }
