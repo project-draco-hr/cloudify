@@ -19,6 +19,7 @@
     Process proc;
     try {
       logger.info("Executing command line: " + modifiedCommandLine);
+      logger.info("Parsed command line: " + commandLineParams);
       proc=pb.start();
       return proc;
     }

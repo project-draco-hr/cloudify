@@ -4,4 +4,14 @@
     modifyGroovyCommandLine(commandLineParams,workingDir);
   }
   modifyRedirectionCommandLine(commandLineParams,outputFile,errorFile);
+  if (USMUtils.isLinuxOrUnix()) {
+    logger.info("Command before shell modification: " + commandLineParams);
+    StringBuilder sb=new StringBuilder();
+    for (    String param : commandLineParams) {
+      sb.append(param).append(" ");
+    }
+    commandLineParams.clear();
+    commandLineParams.addAll(Arrays.asList("sh","-c",sb.toString()));
+    logger.info("Command after shell modification: " + commandLineParams);
+  }
 }
