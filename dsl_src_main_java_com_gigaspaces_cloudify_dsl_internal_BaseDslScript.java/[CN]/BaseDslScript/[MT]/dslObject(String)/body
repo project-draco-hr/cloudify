@@ -25,7 +25,7 @@
     }
   }
   try {
-    if (this.activeObject != null && isProperyExistsInBean(this.activeObject,name)) {
+    if (this.activeObject != null && (!(this.activeObject instanceof Application)) && isProperyExistsInBean(this.activeObject,name)) {
       Object existingPropertyValue=PropertyUtils.getProperty(this.activeObject,name);
       if (existingPropertyValue != null)       return BeanUtils.cloneBean(existingPropertyValue);
     }
