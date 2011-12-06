@@ -1,0 +1,10 @@
+{
+  try {
+    String serviceNameCapital=StringUtils.capitalize(serviceName);
+    String localhost=Constants.getHostAddress();
+    logger.info(serviceNameCapital + " service will be available at: http://" + localhost+ ":"+ port);
+  }
+ catch (  UnknownHostException e) {
+    throw new CLIException("Failed getting host address",e);
+  }
+}
