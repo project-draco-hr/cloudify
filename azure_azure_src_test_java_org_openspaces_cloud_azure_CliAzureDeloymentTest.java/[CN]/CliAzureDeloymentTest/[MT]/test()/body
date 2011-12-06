@@ -11,9 +11,12 @@
   repetativeAssert("Number of machines",new RepetativeConditionProvider(){
     public boolean getCondition(){
       try {
-        return EXPECTED_NUMBER_OF_MACHINES == getNumberOfMachines(restAdminMachinesUrl);
+        int numberOfMachines=getNumberOfMachines(restAdminMachinesUrl);
+        logger.info("Actual numberOfMachines=" + numberOfMachines + ". Expected numberOfMachins="+ EXPECTED_NUMBER_OF_MACHINES);
+        return EXPECTED_NUMBER_OF_MACHINES == numberOfMachines;
       }
  catch (      Exception e) {
+        logger.log(Level.WARNING,"Exception while calculating numberOfMachines",e);
         return false;
       }
     }
@@ -29,21 +32,61 @@
   RepetativeConditionProvider applicationInstalledCondition=new RepetativeConditionProvider(){
     public boolean getCondition(){
       try {
-        return isUrlAvailable(travelApplicationUrl.toURL());
+        URL url=travelApplicationUrl.toURL();
+        return isUrlAvailable(url);
       }
  catch (      Exception e) {
+        logger.log(Level.WARNING,"Exception while checking if " + travelApplicationUrl.toString() + " is available",e);
         return false;
       }
     }
   }
 ;
   repetativeAssert("Failed waiting for travel application",applicationInstalledCondition);
+  List<String> setInstancesScaleOutCommand=Arrays.asList("azure:set-instances","--verbose","-azure-svc",AZURE_HOSTED_SERVICE,TOMCAT_SERVICE,NUMBER_OF_INSTANCES_FOR_TOMCAT_SERVICE);
+  commands.add(connectCommand);
+  commands.add(setInstancesScaleOutCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  repetativeAssert("Failed waiting for scale out",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        int numberOfMachines=getNumberOfMachines(restAdminMachinesUrl);
+        logger.info("Actual numberOfMachines=" + numberOfMachines + ". Expected numberOfMachins="+ (EXPECTED_NUMBER_OF_MACHINES + 1));
+        return numberOfMachines == EXPECTED_NUMBER_OF_MACHINES + 1;
+      }
+ catch (      Exception e) {
+        logger.log(Level.WARNING,"Exception while calculating numberOfMachines",e);
+        return false;
+      }
+    }
+  }
+);
   List<String> uninstallApplicationCommand=Arrays.asList("uninstall-application","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),APPLICATION_NAME);
   commands.add(connectCommand);
   commands.add(uninstallApplicationCommand);
   runCliCommands(cliExecutablePath,commands,isDebugMode);
   commands.clear();
   Assert.assertFalse("Travel application should not be running",isUrlAvailable(travelApplicationUrl.toURL()));
+  List<String> setInstancesScaleInCommand=Arrays.asList("azure:set-instances","--verbose","-azure-svc",AZURE_HOSTED_SERVICE,TOMCAT_SERVICE,INITIAL_NUMBER_OF_INSTANCES_FOR_TOMCAT_SERVICE);
+  commands.add(connectCommand);
+  commands.add(setInstancesScaleInCommand);
+  runCliCommands(cliExecutablePath,commands,isDebugMode);
+  commands.clear();
+  repetativeAssert("Failed waiting for scale in",new RepetativeConditionProvider(){
+    public boolean getCondition(){
+      try {
+        int numberOfMachines=getNumberOfMachines(restAdminMachinesUrl);
+        logger.info("Actual numberOfMachines=" + numberOfMachines + ". Expected numberOfMachins="+ EXPECTED_NUMBER_OF_MACHINES);
+        return EXPECTED_NUMBER_OF_MACHINES == numberOfMachines;
+      }
+ catch (      Exception e) {
+        logger.log(Level.WARNING,"Exception while calculating numberOfMachines",e);
+        return false;
+      }
+    }
+  }
+);
   commands.add(connectCommand);
   commands.add(installApplicationCommand);
   runCliCommands(cliExecutablePath,commands,isDebugMode);
