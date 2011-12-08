@@ -1,7 +1,7 @@
 {
   final Set<String> containerIdsOfApplication=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForApplication(applicationName);
   if (verbose) {
-    logger.info("Found containers: " + containerIdsOfApplication);
+    logger.info("Containers running PUs of application " + applicationName + ":"+ containerIdsOfApplication);
   }
   this.adminFacade.uninstallApplication(this.applicationName);
   if (timeoutInMinutes > 0) {
