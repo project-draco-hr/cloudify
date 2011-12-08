@@ -1,3 +1,0 @@
-{
-  return getRestAdminUrl(url) + "admin/machines";
-}
