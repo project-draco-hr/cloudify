@@ -1,8 +1,13 @@
 {
   HttpClient client=new DefaultHttpClient();
   HttpGet httpGet=new HttpGet(url.toURI());
+  httpGet.addHeader("Cache-Control","no-cache");
   try {
-    client.execute(httpGet,new BasicResponseHandler());
+    HttpResponse response=client.execute(httpGet);
+    response.getEntity().writeTo(System.out);
+    if (response.getStatusLine().getStatusCode() == 404) {
+      return false;
+    }
     return true;
   }
  catch (  Exception e) {
