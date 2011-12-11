@@ -1,0 +1,5 @@
+{
+  GigaSpace managementSpace=serviceContext.getManagementSpace();
+  AbstractCloudifyProperty propertyEntry=preparePropertyTemplate(key);
+  return managementSpace.count(propertyEntry) > 0;
+}

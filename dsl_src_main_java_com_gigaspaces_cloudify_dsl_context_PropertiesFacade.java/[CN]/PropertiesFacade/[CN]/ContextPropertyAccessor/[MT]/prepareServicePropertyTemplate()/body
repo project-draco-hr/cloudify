@@ -1,0 +1,5 @@
+{
+  CloudifyServiceProperty serviceProperty=new CloudifyServiceProperty();
+  serviceProperty.setServiceName(serviceContext.getServiceName());
+  return serviceProperty;
+}

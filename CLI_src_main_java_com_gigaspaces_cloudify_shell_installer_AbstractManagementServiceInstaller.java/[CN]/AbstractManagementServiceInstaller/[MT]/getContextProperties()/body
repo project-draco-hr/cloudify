@@ -1,0 +1,5 @@
+{
+  Properties props=new Properties();
+  props.put("com.gs.application",MANAGEMENT_APPLICATION_NAME);
+  return props;
+}

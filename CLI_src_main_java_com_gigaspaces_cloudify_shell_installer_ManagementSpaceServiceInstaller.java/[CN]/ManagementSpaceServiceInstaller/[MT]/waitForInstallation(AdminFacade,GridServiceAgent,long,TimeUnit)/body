@@ -1,0 +1,15 @@
+{
+  createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      Space space=admin.getSpaces().getSpaceByName(serviceName);
+      if (space != null) {
+        SpacePartition partition=space.getPartition(1);
+        if (partition != null && partition.getPrimary() != null)         return true;
+      }
+      logger.log(Level.INFO,"Connecting to management space.");
+      return false;
+    }
+  }
+);
+  logger.info("management space is available at");
+}

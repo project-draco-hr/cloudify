@@ -1,3 +1,0 @@
-String[] gsAgentArgs
-int timeout
-TimeUnit timeunit
