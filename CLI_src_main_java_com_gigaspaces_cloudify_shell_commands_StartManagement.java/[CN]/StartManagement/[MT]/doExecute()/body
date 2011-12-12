@@ -10,7 +10,6 @@
   installer.setProgressInSeconds(10);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setNoWebServices(noWebServices);
-  installer.setNoManagementSpace(noManagementSpace);
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.startManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
