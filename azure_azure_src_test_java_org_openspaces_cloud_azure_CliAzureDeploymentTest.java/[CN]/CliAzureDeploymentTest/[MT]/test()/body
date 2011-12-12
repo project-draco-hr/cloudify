@@ -1,7 +1,7 @@
 {
   List<List<String>> commands=new ArrayList<List<String>>();
   String applicationAbsolutePath=applicationFile.getAbsolutePath().replaceAll(Pattern.quote("\\"),"/");
-  List<String> boostrapApplicationCommand=Arrays.asList("azure:bootstrap-app","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),"-azure-svc",AZURE_HOSTED_SERVICE,"-azure-pwd",RDP_PFX_FILE_PASSWORD,applicationAbsolutePath);
+  List<String> boostrapApplicationCommand=Arrays.asList("azure:bootstrap-app","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),"-azure-svc",AZURE_HOSTED_SERVICE,"-azure-pwd",RDP_PFX_FILE_PASSWORD,"-azure-location","'North Central US'",applicationAbsolutePath);
   commands.add(boostrapApplicationCommand);
   runCliCommands(cliExecutablePath,commands,isDebugMode);
   commands.clear();
