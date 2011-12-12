@@ -1,8 +1,0 @@
-{
-  GigaSpace managementSpace=serviceContext.getManagementSpace();
-  AbstractCloudifyProperty propertyEntry=preparePropertyTemplate(key);
-  AbstractCloudifyProperty previousValue=managementSpace.take(propertyEntry);
-  propertyEntry.setValue(value);
-  managementSpace.write(propertyEntry);
-  return previousValue;
-}

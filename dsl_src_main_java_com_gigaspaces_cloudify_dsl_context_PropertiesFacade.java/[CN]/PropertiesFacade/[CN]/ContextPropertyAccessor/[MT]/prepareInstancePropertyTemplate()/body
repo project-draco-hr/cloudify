@@ -1,7 +1,0 @@
-{
-  CloudifyInstanceProperty instanceProperty=new CloudifyInstanceProperty();
-  Integer instanceId=serviceContext.getClusterInfo() != null ? serviceContext.getClusterInfo().getInstanceId() : null;
-  instanceProperty.setInstanceId(instanceId);
-  instanceProperty.setServiceName(serviceContext.getServiceName());
-  return instanceProperty;
-}
