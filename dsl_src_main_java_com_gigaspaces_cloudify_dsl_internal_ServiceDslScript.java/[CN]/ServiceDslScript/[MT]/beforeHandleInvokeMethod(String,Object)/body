@@ -1,5 +1,0 @@
-{
-  super.beforeHandleInvokeMethod(name,arg);
-  if (name.equals("service"))   propertyCounter=0;
- else   propertyCounter++;
-}
