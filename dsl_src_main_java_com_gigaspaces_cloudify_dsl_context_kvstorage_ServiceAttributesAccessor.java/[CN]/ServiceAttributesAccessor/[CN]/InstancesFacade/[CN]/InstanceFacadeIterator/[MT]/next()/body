@@ -1,0 +1,5 @@
+{
+  int instanceId=currentInstanceIndex + 1;
+  currentInstanceIndex++;
+  return new InstanceAttributesAccessor(attributesFacade,applicationName,serviceName,instanceId);
+}

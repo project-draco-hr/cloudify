@@ -1,0 +1,6 @@
+{
+  if (instanceAttributesAccessor == null) {
+    this.instanceAttributesAccessor=new InstanceAttributesAccessor(this,serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext.getInstanceId());
+  }
+  return instanceAttributesAccessor;
+}

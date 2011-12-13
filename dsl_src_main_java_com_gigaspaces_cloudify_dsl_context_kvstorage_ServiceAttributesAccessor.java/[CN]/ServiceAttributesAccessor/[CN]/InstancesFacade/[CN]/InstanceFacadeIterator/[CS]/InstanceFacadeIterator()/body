@@ -1,0 +1,4 @@
+{
+  final Service service=serviceContext.waitForService(serviceContext.getServiceName(),WAIT_FOR_SERVICE_TIMEOUT,TimeUnit.SECONDS);
+  instancesCount=service != null ? service.getNumberOfPlannedInstances() : 0;
+}

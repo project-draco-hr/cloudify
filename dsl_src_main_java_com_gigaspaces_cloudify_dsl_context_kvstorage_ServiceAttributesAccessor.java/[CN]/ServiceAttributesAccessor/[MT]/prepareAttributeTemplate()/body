@@ -1,0 +1,5 @@
+{
+  ServiceCloudifyAttribute attribute=new ServiceCloudifyAttribute();
+  attribute.setServiceName(serviceName);
+  return attribute;
+}

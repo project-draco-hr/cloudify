@@ -1,6 +1,5 @@
 {
-  Properties props=new Properties();
-  props.put("com.gs.application",MANAGEMENT_APPLICATION_NAME);
+  Properties props=super.getContextProperties();
   props.put("web.port",String.valueOf(port));
   props.put("web.context","/");
   props.put("web.context.unique","true");

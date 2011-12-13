@@ -7,5 +7,6 @@
   }
   this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
   this.serviceName=service.getName();
+  this.attributesFacade=new AttributesFacade(this,admin);
   initialized=true;
 }
