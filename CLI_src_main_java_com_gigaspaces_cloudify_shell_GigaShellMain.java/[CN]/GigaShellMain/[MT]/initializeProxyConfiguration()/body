@@ -1,0 +1,9 @@
+{
+  if (!ShellUtils.isWindows()) {
+    return;
+  }
+  if (Boolean.getBoolean(Constants.DISABLE_PROXY_CONFIGURATION_PROPERTY)) {
+    return;
+  }
+  SystemDefaultProxySelector.setup();
+}

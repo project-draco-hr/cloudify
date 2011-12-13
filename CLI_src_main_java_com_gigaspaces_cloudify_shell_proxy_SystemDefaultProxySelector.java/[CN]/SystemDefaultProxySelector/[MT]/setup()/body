@@ -1,0 +1,5 @@
+{
+  ServiceManager.setService(PlatformType.STANDALONE_TIGER_WIN32);
+  DynamicProxyManager.reset();
+  ProxySelector.setDefault(new SystemDefaultProxySelector());
+}
