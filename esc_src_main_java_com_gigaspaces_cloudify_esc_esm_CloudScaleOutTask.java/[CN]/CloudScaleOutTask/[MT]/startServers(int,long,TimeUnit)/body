@@ -6,38 +6,42 @@
   logger.info("Starting a new cloud machines with group: " + machineGroup);
   this.servers=deployer.createServers(machineGroup,numberOfMachines);
   NodeMetadata server=this.getServers().iterator().next();
-  this.getDetails().setUsername(server.getCredentials().identity);
-  final String credential=server.getCredentials().credential;
-  File tempFile=null;
-  if (credential == null) {
-    if ((this.getDetails().getKeyFile() == null) || (this.getDetails().getKeyFile().length() == 0)) {
-      throw new InstallerException("Expected to receive a key " + "file for authentication to new server");
-    }
-    tempFile=new File(this.getDetails().getKeyFile());
+  if (this.getDetails().getUsername() == null || this.getDetails().getUsername().isEmpty()) {
+    this.getDetails().setUsername(server.getCredentials().identity);
   }
- else   if (credential.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
-    FileWriter writer=null;
-    try {
-      tempFile=File.createTempFile("gs-esm-key",".pem");
-      writer=new FileWriter(tempFile);
-      writer.write(credential);
-      this.getDetails().setKeyFile(tempFile.getAbsolutePath());
+  File tempFile=null;
+  if (this.getDetails().getPassword() == null || this.getDetails().getPassword().isEmpty()) {
+    final String credential=server.getCredentials().credential;
+    if (credential == null) {
+      if ((this.getDetails().getKeyFile() == null) || (this.getDetails().getKeyFile().length() == 0)) {
+        throw new InstallerException("Expected to receive a key " + "file for authentication to new server");
+      }
+      tempFile=new File(this.getDetails().getKeyFile());
     }
- catch (    final IOException e) {
-      throw new InstallerException("Failed to create a temporary file for cloud server's key file",e);
-    }
+ else     if (credential.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
+      FileWriter writer=null;
+      try {
+        tempFile=File.createTempFile("gs-esm-key",".pem");
+        writer=new FileWriter(tempFile);
+        writer.write(credential);
+        this.getDetails().setKeyFile(tempFile.getAbsolutePath());
+      }
+ catch (      final IOException e) {
+        throw new InstallerException("Failed to create a temporary file for cloud server's key file",e);
+      }
  finally {
-      if (writer != null) {
-        try {
-          writer.close();
-        }
- catch (        final IOException e) {
+        if (writer != null) {
+          try {
+            writer.close();
+          }
+ catch (          final IOException e) {
+          }
         }
       }
     }
-  }
  else {
-    this.getDetails().setPassword(server.getCredentials().credential);
+      this.getDetails().setPassword(server.getCredentials().credential);
+    }
   }
   final File keyFile=tempFile;
   ExecutorService exeService=Executors.newFixedThreadPool(numberOfMachines);
