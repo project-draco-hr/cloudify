@@ -1,0 +1,15 @@
+{
+  logger.fine("checking port: " + port + "...");
+  try {
+    if (sigar.getNetListenAddress(port) != null) {
+      return true;
+    }
+  }
+ catch (  SigarFileNotFoundException e) {
+  }
+catch (  SigarException e) {
+    logger.warning("The port liveness detection failed due to a Sigar exception.");
+    e.printStackTrace();
+  }
+  return false;
+}
