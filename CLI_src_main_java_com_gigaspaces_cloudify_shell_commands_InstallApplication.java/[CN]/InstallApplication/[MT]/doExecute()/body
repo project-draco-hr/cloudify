@@ -47,5 +47,7 @@
       }
     }
   }
+  session.put(Constants.ACTIVE_APP,applicationName);
+  GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
   return this.getFormattedMessage("application_installed_succesfully",applicationName);
 }
