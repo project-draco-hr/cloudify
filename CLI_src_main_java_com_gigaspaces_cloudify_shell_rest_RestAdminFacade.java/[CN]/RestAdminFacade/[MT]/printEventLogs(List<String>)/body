@@ -1,4 +1,8 @@
 {
+  if (events.size() != 0) {
+    System.out.println('.');
+    System.out.flush();
+  }
   for (  String eventString : events) {
     logger.info(eventString);
   }

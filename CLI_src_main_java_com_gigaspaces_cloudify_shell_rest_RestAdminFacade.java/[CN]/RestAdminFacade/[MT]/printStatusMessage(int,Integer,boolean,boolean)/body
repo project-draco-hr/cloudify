@@ -1,0 +1,13 @@
+{
+  if (statusChanged) {
+    if ((!currentNumberOfInstances.equals(0) && !currentNumberOfInstances.equals(plannedNumberOfInstances)) || (currentNumberOfInstances.equals(plannedNumberOfInstances) && !isUSMService)) {
+      System.out.println('.');
+      System.out.flush();
+    }
+    logger.info(MessageFormat.format(messages.getString("deploying_service_updates"),plannedNumberOfInstances,currentNumberOfInstances));
+  }
+ else {
+    System.out.print('.');
+    System.out.flush();
+  }
+}

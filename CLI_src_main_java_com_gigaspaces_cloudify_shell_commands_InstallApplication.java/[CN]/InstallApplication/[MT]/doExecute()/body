@@ -34,6 +34,7 @@
   if (serviceOrder.length() > 2) {
     serviceOrder=serviceOrder.substring(1,serviceOrder.length() - 1);
     logger.fine("Services will be installed in the following order: " + serviceOrder);
+    printApplicationInfo(application);
     for (    String serviceName : serviceOrder.split(Pattern.quote(","))) {
       String trimmedServiceName=serviceName.trim();
       Service service=getServiceByName(application,trimmedServiceName);
