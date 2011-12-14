@@ -7,7 +7,7 @@
   File gigaSpacesCloudifyZip=new File(localWorkingDir,GIGASPACES_LATEST_ZIP);
   File gigaSpacesCloudifyDir=new File(localWorkingDir,GIGASPACES_LATEST_HOME);
   Assert.assertTrue(gigaSpacesCloudifyDir.getPath() + " does not exist",gigaSpacesCloudifyDir.isDirectory());
-  applicationFile=new File(localWorkingDir.getParentFile(),"travel-withproxy");
+  applicationFile=new File(gigaSpacesCloudifyDir,RELATIVE_APPLICATION_EXAMPLE_PATH);
   Assert.assertTrue(applicationFile.getPath() + " does not exist",applicationFile.isDirectory());
   cliExecutablePath=new File(gigaSpacesCloudifyDir,RELATIVE_CLI_PATH);
   File azureConfigExec=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_CONFIG_EXEC_PATH);
