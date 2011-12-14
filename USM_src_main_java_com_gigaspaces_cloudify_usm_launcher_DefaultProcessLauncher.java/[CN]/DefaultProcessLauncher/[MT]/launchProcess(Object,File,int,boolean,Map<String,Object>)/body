@@ -49,7 +49,15 @@
     logger.info("Command exited with value: " + exitValue);
     if (exitValue != 0) {
       logger.severe("Event lifecycle external process exited with abnormal status code: " + exitValue);
-      throw new USMException("Event lifecycle external process exited with abnormal status code: " + exitValue);
+      Pattern pattern=Pattern.compile(EXCEPTION_CAUGHT_REGEX);
+      Matcher matcher=pattern.matcher(sb.toString());
+      int beginIndex=0;
+      int endIndex=0;
+      if (matcher.find()) {
+        beginIndex=matcher.start(0);
+        endIndex=matcher.end(0);
+      }
+      throw new USMException("Event lifecycle external process exited with abnormal status code: " + exitValue + " "+ sb.toString().substring(beginIndex,endIndex));
     }
   }
  catch (  final InterruptedException e) {
