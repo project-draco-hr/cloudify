@@ -19,9 +19,6 @@
         throw new USMException("A Liveness Detector failed to execute. Exception was: " + result.getException(),result.getException());
       }
     }
-    @Override public String getName(){
-      return "LivenessDetector";
-    }
     @Override public void init(    UniversalServiceManagerBean usm){
     }
     @Override public int getOrder(){
