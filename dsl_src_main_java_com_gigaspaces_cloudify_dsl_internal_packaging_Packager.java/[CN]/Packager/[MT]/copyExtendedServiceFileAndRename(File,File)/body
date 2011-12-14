@@ -1,0 +1,9 @@
+{
+  File existingServiceFile=new File(extFolder + "/" + extendedServiceFile.getName());
+  final int index=locateNextAvailableScriptIndex(existingServiceFile);
+  final String existingServiceFilePath=existingServiceFile.getPath();
+  String nestedExtendedServiceFileName=existingServiceFilePath + "-" + index;
+  File destFile=new File(nestedExtendedServiceFileName);
+  FileUtils.copyFile(extendedServiceFile,destFile);
+  return destFile;
+}

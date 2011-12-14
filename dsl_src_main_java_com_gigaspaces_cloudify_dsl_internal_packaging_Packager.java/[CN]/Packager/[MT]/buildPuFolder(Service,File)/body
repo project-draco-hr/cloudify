@@ -49,12 +49,13 @@
   File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
   for (  String extendedServicePath : extendedServicesPaths) {
     File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
-    File localExtendedServiceFile=copyServiceFileAndRenameIfNeeded(extendedServiceFile,extFolder);
+    File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
     logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
     updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
     final File rootScriptDir=extendedServiceFile.getParentFile();
     FileUtils.copyDirectory(rootScriptDir,extFolder,new FileFilter(){
       @Override public boolean accept(      File pathname){
+        if (!svnFileFilter.accept(pathname))         return false;
         if (pathname.isDirectory())         return true;
         String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
         boolean accept=!(new File(extFolder.getPath() + "/" + relativePath).exists());
