@@ -8,7 +8,7 @@
       @Override public Map<String,Number> getMonitorValues(      UniversalServiceManagerBean usm,      UniversalServiceManagerConfiguration config) throws MonitorException {
         Object obj=((Closure)monitor).call();
         if (obj instanceof Map<?,?>) {
-          return (Map<String,Number>)obj;
+          return USMUtils.convertMapToNumericValues((Map<String,Object>)obj);
         }
  else {
           throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! Received object was of type: " + obj.getClass().getName());
@@ -19,34 +19,20 @@
   }
   return new Monitor(){
     @Override public Map<String,Number> getMonitorValues(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws MonitorException {
-      try {
-        Map<String,Number> returnMap=new HashMap<String,Number>();
-        if (monitor instanceof Map<?,?>) {
-          for (          Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
-            Object object=entryObject.getValue();
-            EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
-            if (!result.isSuccess()) {
-              logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
-            }
- else             if (result.getResult() instanceof Number) {
-              returnMap.put(entryObject.getKey(),(Number)result.getResult());
-            }
- else             if (result.getResult() instanceof String) {
-              if (NumberUtils.isNumber((String)result.getResult())) {
-                Number number=NumberUtils.createNumber((String)result.getResult());
-                returnMap.put(entryObject.getKey(),number);
-              }
-            }
+      Map<String,Object> returnMap=new HashMap<String,Object>();
+      if (monitor instanceof Map<?,?>) {
+        for (        Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
+          Object object=entryObject.getValue();
+          EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+          if (!result.isSuccess()) {
+            logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
+          }
  else {
-              logger.log(Level.WARNING,"Expected DSL result to be numeric but received a non-numeric value",result.getException().getStackTrace());
-            }
+            returnMap.put(entryObject.getKey(),result.getResult());
           }
         }
-        return returnMap;
       }
- catch (      Exception e) {
-        return null;
-      }
+      return USMUtils.convertMapToNumericValues(returnMap);
     }
   }
 ;
