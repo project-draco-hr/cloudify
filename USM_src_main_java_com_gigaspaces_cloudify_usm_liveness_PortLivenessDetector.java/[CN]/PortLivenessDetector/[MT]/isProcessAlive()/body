@@ -1,4 +1,4 @@
 {
   logger.info("Testing if the following ports are open: " + this.portList.toString());
-  return !ServiceUtils.isPortsFree(this.portList);
+  return ServiceUtils.isPortsOccupied(this.portList);
 }
