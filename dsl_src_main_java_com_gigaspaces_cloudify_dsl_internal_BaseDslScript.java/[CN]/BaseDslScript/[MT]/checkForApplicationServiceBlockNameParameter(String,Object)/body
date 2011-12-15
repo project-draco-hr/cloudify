@@ -2,6 +2,7 @@
   if (this.rootObject != null && this.rootObject.getClass().equals(Application.class) && this.activeObject != null && this.activeObject.getClass().equals(Service.class) && propertyName.equals("name")) {
     final String serviceName=(String)propertyValue;
     Service service=loadApplicationService(serviceName);
+    service.setName(serviceName);
     try {
       BeanUtils.copyProperties(this.activeObject,service);
     }

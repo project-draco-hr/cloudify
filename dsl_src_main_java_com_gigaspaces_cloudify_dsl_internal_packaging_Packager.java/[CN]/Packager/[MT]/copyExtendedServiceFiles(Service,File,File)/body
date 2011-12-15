@@ -1,0 +1,25 @@
+{
+  LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
+  File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
+  for (  String extendedServicePath : extendedServicesPaths) {
+    final File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
+    if (extendedServiceFile.getParentFile().equals(extFolder))     continue;
+    File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
+    logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
+    updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
+    final File rootScriptDir=extendedServiceFile.getParentFile();
+    FileUtils.copyDirectory(rootScriptDir,extFolder,new FileFilter(){
+      @Override public boolean accept(      File pathname){
+        if (!SVNFileFilter.getFilter().accept(pathname))         return false;
+        if (pathname.equals(extendedServiceFile))         return false;
+        if (pathname.isDirectory())         return true;
+        String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
+        boolean accept=!(new File(extFolder.getPath() + "/" + relativePath).exists());
+        if (accept && logger.isLoggable(Level.FINEST))         logger.finest("copying extended script resource [" + pathname + "] locally");
+        return accept;
+      }
+    }
+);
+    extendingScriptFile=localExtendedServiceFile;
+  }
+}

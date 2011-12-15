@@ -11,9 +11,7 @@
   }
   File zipFile=null;
   if (!applicationFile.isFile()) {
-    zipFile=File.createTempFile("application",".zip");
-    zipFile.deleteOnExit();
-    ZipUtils.zip(applicationFile,zipFile);
+    zipFile=Packager.packApplication(application,applicationFile);
   }
  else {
     if ((applicationFile.getName().endsWith(".zip")) || (applicationFile.getName().endsWith(".jar"))) {

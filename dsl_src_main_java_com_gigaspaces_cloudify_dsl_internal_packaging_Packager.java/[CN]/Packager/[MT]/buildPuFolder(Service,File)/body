@@ -11,10 +11,9 @@
   final File springFolder=new File(destPuFolder.getAbsolutePath(),"/META-INF/spring");
   FileUtils.forceMkdir(springFolder);
   logger.finer("created pu structure under " + destPuFolder);
-  final SVNFileFilter svnFileFilter=new SVNFileFilter();
   FileUtils.copyDirectory(srcFolder,extFolder,new FileFilter(){
     @Override public boolean accept(    File pathname){
-      boolean f1=svnFileFilter.accept(pathname);
+      boolean f1=SVNFileFilter.getFilter().accept(pathname);
       boolean f2=!(pathname.isDirectory() && pathname.getName().equals("usmlib"));
       return f1 && f2;
     }
@@ -23,14 +22,14 @@
   logger.finer("copied files from " + srcFolder.getAbsolutePath() + " to "+ extFolder.getAbsolutePath());
   File srcUsmLibDir=new File(srcFolder,"usmlib");
   if (srcUsmLibDir.exists()) {
-    FileUtils.copyDirectory(srcUsmLibDir,libFolder,svnFileFilter);
+    FileUtils.copyDirectory(srcUsmLibDir,libFolder,SVNFileFilter.getFilter());
   }
   final File usmLibDir=getUsmLibDir(service);
   final File srcUsmJar=new File(usmLibDir,"usm.jar");
   if (!srcUsmJar.exists()) {
     throw new PackagingException("could not find usm.jar");
   }
-  FileUtils.copyDirectory(usmLibDir,libFolder,svnFileFilter);
+  FileUtils.copyDirectory(usmLibDir,libFolder,SVNFileFilter.getFilter());
   logger.finer("copied " + srcUsmJar.getName());
   final InputStream puXmlStream=Packager.class.getClassLoader().getResourceAsStream("META-INF/spring/default_usm_pu.xml");
   if (puXmlStream == null) {
@@ -45,27 +44,7 @@
  catch (  IOException e) {
     logger.log(Level.SEVERE,"failed to close default_usm_pu.xml stream",e);
   }
-  LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
-  File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
-  for (  String extendedServicePath : extendedServicesPaths) {
-    File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
-    File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
-    logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
-    updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
-    final File rootScriptDir=extendedServiceFile.getParentFile();
-    FileUtils.copyDirectory(rootScriptDir,extFolder,new FileFilter(){
-      @Override public boolean accept(      File pathname){
-        if (!svnFileFilter.accept(pathname))         return false;
-        if (pathname.isDirectory())         return true;
-        String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
-        boolean accept=!(new File(extFolder.getPath() + "/" + relativePath).exists());
-        if (accept && logger.isLoggable(Level.FINEST))         logger.finest("copying extended script resource [" + pathname + "] locally");
-        return accept;
-      }
-    }
-);
-    extendingScriptFile=localExtendedServiceFile;
-  }
+  copyExtendedServiceFiles(service,recipeFile,extFolder);
   logger.finer("created pu folder " + destPuFolder.getAbsolutePath());
   return destPuFolder;
 }
