@@ -23,13 +23,14 @@
   azureDeploymentWrapper.setAzureDeploymentSlotName(azureDeploymentSlotName);
   azureDeploymentWrapper.setCertificateThumbprint(certificateThumbprint);
   azureDeploymentWrapper.setSubscriptionId(subscriptionId);
+  azureDeploymentWrapper.setTimeoutErrorMessage(TIMEOUT_ERROR_STRING);
   azureDeploymentWrapper.stopDeployment();
-  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.Suspended,5000,millisUntil(end),TimeUnit.MILLISECONDS);
+  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.Suspended,5000,ShellUtils.millisUntil(TIMEOUT_ERROR_STRING,end),TimeUnit.MILLISECONDS);
   azureDeploymentWrapper.deleteDeployment();
   if (timeoutInMinutes == 0) {
     return "Started application teardown.";
   }
-  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.NotFound,millisUntil(end),TimeUnit.MILLISECONDS);
+  azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.NotFound,ShellUtils.millisUntil(TIMEOUT_ERROR_STRING,end),TimeUnit.MILLISECONDS);
   disconnect();
   return "Completed application teardown.";
 }

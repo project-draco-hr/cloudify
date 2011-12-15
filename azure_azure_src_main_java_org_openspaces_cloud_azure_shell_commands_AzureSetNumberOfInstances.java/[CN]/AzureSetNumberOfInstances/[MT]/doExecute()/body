@@ -19,6 +19,7 @@
   azureDeploymentWrapper.setAzureDeploymentSlotName(azureDeploymentSlotName);
   azureDeploymentWrapper.setCertificateThumbprint(certificateThumbprint);
   azureDeploymentWrapper.setSubscriptionId(subscriptionId);
+  azureDeploymentWrapper.setTimeoutErrorMessage(TIMEOUT_ERROR_STRING);
   AzureDeploymentConfigurationFile configFile=azureDeploymentWrapper.getDeploymentConfig();
   configFile.setNumberOfInstances(roleName,instances);
   configFile.flush();

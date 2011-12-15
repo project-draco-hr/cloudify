@@ -1,7 +1,0 @@
-{
-  long millisUntilEnd=end - System.currentTimeMillis();
-  if (millisUntilEnd < 0) {
-    throw new TimeoutException("Azure application bootsrap timed-out");
-  }
-  return millisUntilEnd;
-}

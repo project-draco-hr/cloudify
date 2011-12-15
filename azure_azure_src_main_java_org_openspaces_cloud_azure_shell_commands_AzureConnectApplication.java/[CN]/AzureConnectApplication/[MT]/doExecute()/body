@@ -27,6 +27,7 @@
   azureDeploymentWrapper.setAzureDeploymentSlotName(azureDeploymentSlotName);
   azureDeploymentWrapper.setCertificateThumbprint(certificateThumbprint);
   azureDeploymentWrapper.setSubscriptionId(subscriptionId);
+  azureDeploymentWrapper.setTimeoutErrorMessage(TIMEOUT_ERROR_STRING);
   if (timeoutInMinutes == 0) {
     azureDeploymentWrapper.connect(adminFacade);
   }

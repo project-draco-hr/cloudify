@@ -96,6 +96,7 @@
   azureDeploymentWrapper.setStorageAccount(storageAccount);
   azureDeploymentWrapper.setStorageAccessKey(storageAccessKey);
   azureDeploymentWrapper.setStorageBlobContainerName(storageBlobContainerName);
+  azureDeploymentWrapper.setTimeoutErrorMessage(TIMEOUT_ERROR_STRING);
   azureDeploymentWrapper.createDeployment(azureDeploymentName,cscfgFile,cspkgFile);
   if (timeoutInMinutes > 0) {
     logger.info(ShellUtils.getExpectedExecutionTimeMessage());
@@ -109,7 +110,7 @@
         numberOfMachines+=cscfg.getNumberOfInstances(service);
       }
       logger.log(Level.INFO,"Waiting for " + numberOfMachines + " instances to start");
-      azureDeploymentWrapper.waitForNumberOfMachines(adminFacade,numberOfMachines,millisUntil(end),TimeUnit.MILLISECONDS);
+      azureDeploymentWrapper.waitForNumberOfMachines(adminFacade,numberOfMachines,ShellUtils.millisUntil(TIMEOUT_ERROR_STRING,end),TimeUnit.MILLISECONDS);
       logger.log(Level.INFO,"Azure travel application bootstrapping complete. Cloudify REST gateway URL is " + url);
     }
  catch (    TimeoutException e) {
