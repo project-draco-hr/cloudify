@@ -8,7 +8,7 @@
       }
  catch (      CLIException e) {
       }
-      logger.log(Level.INFO,"Waiting for role instances and REST Admin server.");
+      logger.log(Level.INFO,"Waiting for role instances and REST Admin server: " + restAdminUrl);
       return false;
     }
   }
