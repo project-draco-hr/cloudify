@@ -30,8 +30,6 @@
     return "Started application teardown.";
   }
   azureDeploymentWrapper.waitForAzureDeploymentStatus(AzureDeploymentStatus.NotFound,millisUntil(end),TimeUnit.MILLISECONDS);
-  if (adminFacade.isConnected()) {
-    adminFacade.disconnect();
-  }
+  disconnect();
   return "Completed application teardown.";
 }
