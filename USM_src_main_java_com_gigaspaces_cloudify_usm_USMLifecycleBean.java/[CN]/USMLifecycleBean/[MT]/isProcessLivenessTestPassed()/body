@@ -17,6 +17,7 @@
       boolean testResult=false;
       try {
         testResult=detector.isProcessAlive();
+        logger.info("Detection Test results are: " + testResult);
       }
  catch (      USMException e) {
         if (e.getCause() instanceof InterruptedException) {
