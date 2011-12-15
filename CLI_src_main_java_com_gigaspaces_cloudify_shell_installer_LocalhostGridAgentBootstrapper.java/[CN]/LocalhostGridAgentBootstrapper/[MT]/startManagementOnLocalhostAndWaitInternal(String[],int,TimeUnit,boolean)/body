@@ -8,8 +8,10 @@
     GridServiceAgent agent;
     try {
       try {
-        waitForExistingAgent(admin,progressInSeconds,TimeUnit.SECONDS);
-        throw new CLIException("Agent already running on local machine.");
+        if (!isLocalCloud || fastExistingAgentCheck()) {
+          waitForExistingAgent(admin,progressInSeconds,TimeUnit.SECONDS);
+          throw new CLIException("Agent already running on local machine.");
+        }
       }
  catch (      TimeoutException e) {
       }

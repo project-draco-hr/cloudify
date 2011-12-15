@@ -1,9 +1,18 @@
 {
+  final GSA gsa=((InternalGridServiceAgent)agent).getGSA();
+  try {
+    gsa.shutdown();
+  }
+ catch (  RemoteException e) {
+    if (!NetworkExceptionHelper.isConnectOrCloseException(e)) {
+      throw new AdminException("Failed to shutdown GSA",e);
+    }
+  }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
     @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
       logger.info("Waiting for agent to shutdown");
       try {
-        ((InternalGridServiceAgent)agent).getGSA().ping();
+        gsa.ping();
       }
  catch (      RemoteException e) {
         return true;
