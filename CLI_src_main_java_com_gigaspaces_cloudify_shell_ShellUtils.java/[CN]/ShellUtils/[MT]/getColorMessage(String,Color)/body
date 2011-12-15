@@ -1,0 +1,4 @@
+{
+  message=Ansi.ansi().fg(color).a(message).toString();
+  return message + FIRST_ESC_CHAR + SECOND_ESC_CHAR+ '0'+ COMMAND_CHAR;
+}

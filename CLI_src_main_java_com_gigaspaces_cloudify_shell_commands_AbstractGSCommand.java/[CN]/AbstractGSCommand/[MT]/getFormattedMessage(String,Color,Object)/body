@@ -1,0 +1,4 @@
+{
+  String outputMessage=getFormattedMessage(msgName,arguments);
+  return ShellUtils.getColorMessage(outputMessage,color);
+}

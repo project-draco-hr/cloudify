@@ -4,6 +4,12 @@
     System.out.flush();
   }
   for (  String eventString : events) {
-    logger.info(eventString);
+    if (eventString.contains("success")) {
+      System.out.println(ShellUtils.getColorMessage(eventString,Color.GREEN));
+    }
+ else     if (eventString.contains("failed")) {
+      System.out.println(ShellUtils.getColorMessage(eventString,Color.RED));
+    }
+ else     System.out.println(eventString);
   }
 }

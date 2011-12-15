@@ -1,4 +1,4 @@
 {
   adminFacade.disconnect();
-  return messages.getString("disconnected_successfully");
+  return getFormattedMessage("disconnected_successfully",Color.GREEN);
 }

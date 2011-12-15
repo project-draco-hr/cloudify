@@ -2,5 +2,5 @@
   AdminFacade adminFacade=(AbstractAdminFacade)session.get(Constants.ADMIN_FACADE);
   adminFacade.connect(user,password,url);
   setRestAdminFacade(adminFacade);
-  return messages.getString("connected_successfully");
+  return getFormattedMessage("connected_successfully",Color.GREEN);
 }
