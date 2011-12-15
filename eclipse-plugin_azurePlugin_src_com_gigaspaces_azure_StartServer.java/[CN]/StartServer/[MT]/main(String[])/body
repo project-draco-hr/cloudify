@@ -1,4 +1,0 @@
-{
-  final Logger logger=Logger.getLogger(StartServer.class.getPackage().getName());
-  logger.info("Windows Azure Server started");
-}
