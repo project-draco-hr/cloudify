@@ -13,10 +13,10 @@
   }
  catch (  ErrorStatusException e) {
     if (verbose) {
-      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e),e);
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e,Color.RED),e);
     }
  else {
-      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e));
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e,Color.RED));
     }
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }

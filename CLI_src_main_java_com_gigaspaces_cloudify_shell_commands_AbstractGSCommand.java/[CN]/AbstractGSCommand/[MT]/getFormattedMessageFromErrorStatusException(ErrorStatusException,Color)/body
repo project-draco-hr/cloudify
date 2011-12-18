@@ -1,0 +1,4 @@
+{
+  String message=getFormattedMessageFromErrorStatusException(e);
+  return ShellUtils.getColorMessage(message,color);
+}
