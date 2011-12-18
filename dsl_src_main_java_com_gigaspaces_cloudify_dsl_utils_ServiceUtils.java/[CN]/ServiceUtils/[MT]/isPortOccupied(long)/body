@@ -1,20 +1,20 @@
 {
-  boolean portIsFree=true;
-  ServerSocket server=null;
+  Sigar sigar=SigarHolder.getSigar();
   try {
-    server=new ServerSocket((int)port);
-  }
- catch (  IOException e) {
-    portIsFree=false;
-  }
- finally {
-    if (server != null) {
-      try {
-        server.close();
-      }
- catch (      IOException e) {
+    NetConnection[] list=sigar.getNetConnectionList(NetFlags.CONN_SERVER | NetFlags.CONN_PROTOCOLS);
+    for (    NetConnection netConnection : list) {
+      int localPort=(int)netConnection.getLocalPort();
+      int state=netConnection.getState();
+      if (state == NetFlags.TCP_LISTEN) {
+        if (localPort == port) {
+          return true;
+        }
       }
     }
   }
-  return portIsFree ? false : true;
+ catch (  SigarException e1) {
+    logger.warning("Port liveness test has failed on port: " + port);
+    e1.printStackTrace();
+  }
+  return false;
 }

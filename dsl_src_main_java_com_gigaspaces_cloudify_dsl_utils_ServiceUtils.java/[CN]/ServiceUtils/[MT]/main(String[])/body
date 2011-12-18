@@ -1,9 +1,0 @@
-{
-  List<Integer> list=new ArrayList<Integer>();
-  list.add(8009);
-  list.add(8080);
-  boolean test=!isPortsFree(list);
-  if (test) {
-    System.out.println("Let me know");
-  }
-}
