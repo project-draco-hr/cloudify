@@ -1,6 +1,6 @@
 {
   if (statusChanged) {
-    if ((!currentNumberOfInstances.equals(0) && !currentNumberOfInstances.equals(plannedNumberOfInstances)) || (currentNumberOfInstances.equals(plannedNumberOfInstances) && !isUSMService)) {
+    if ((!currentNumberOfInstances.equals(0))) {
       System.out.println('.');
       System.out.flush();
     }

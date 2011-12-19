@@ -35,7 +35,7 @@
     }
     serviceShutDownEventsCount=handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount);
     if ((Integer)serviceStatusMap.get("Instances-Size") == 0) {
-      printStatusMessage(plannedNumberOfInstances,(Integer)serviceStatusMap.get("Instances-Size"),statusChanged,isUSMService);
+      printStatusMessage(plannedNumberOfInstances,(Integer)serviceStatusMap.get("Instances-Size"),statusChanged);
     }
  else     if (plannedNumberOfInstances < currentNumberOfNonUSMInstances || plannedNumberOfInstances < currentNumberOfRunningUSMInstances) {
       throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_exceeded_planned"),plannedNumberOfInstances,Math.max(currentNumberOfNonUSMInstances,currentNumberOfRunningUSMInstances)));
@@ -43,13 +43,13 @@
  else     if ((Integer)serviceStatusMap.get("Instances-Size") > 0) {
       if (isUSMService(applicationName,serviceName)) {
         currentNumberOfRunningUSMInstances=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
-        printStatusMessage(plannedNumberOfInstances,currentNumberOfRunningUSMInstances,statusChanged,isUSMService);
+        printStatusMessage(plannedNumberOfInstances,currentNumberOfRunningUSMInstances,statusChanged);
         if (currentNumberOfRunningUSMInstances == plannedNumberOfInstances) {
           return true;
         }
       }
  else {
-        printStatusMessage(plannedNumberOfInstances,currentNumberOfNonUSMInstances,statusChanged,isUSMService);
+        printStatusMessage(plannedNumberOfInstances,currentNumberOfNonUSMInstances,statusChanged);
         if (plannedNumberOfInstances == currentNumberOfNonUSMInstances) {
           return true;
         }
