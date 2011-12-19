@@ -3,7 +3,7 @@
   File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
   for (  String extendedServicePath : extendedServicesPaths) {
     final File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
-    if (extendedServiceFile.getParentFile().equals(extFolder))     continue;
+    if (extendedServiceFile.getParentFile().equals(recipeFile.getParentFile()))     continue;
     File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
     logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
     updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
