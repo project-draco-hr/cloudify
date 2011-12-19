@@ -1,5 +1,5 @@
 {
   if (eventLogger.isLoggable(Level.INFO)) {
-    eventLogger.info(eventPrefix + event + " failed. Reason: "+ er.getException().getMessage());
+    eventLogger.info(eventPrefix + event + CloudifyConstants.USM_EVENT_EXEC_FAILED+ ". Reason: "+ er.getException().getMessage());
   }
 }
