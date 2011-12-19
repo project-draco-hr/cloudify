@@ -4,8 +4,8 @@
   String pollingURL="processingUnits/Names/" + ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   waitForServicePU(applicationName,serviceName,pollingURL,timeoutErrorMessage,PROCESSINGUNIT_LOOKUP_TIMEOUT,TimeUnit.SECONDS);
   logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
-  Integer currentNumberOfNonUSMInstances=-1;
-  Integer currentNumberOfRunningUSMInstances=-1;
+  int currentNumberOfNonUSMInstances=-1;
+  int currentNumberOfRunningUSMInstances=-1;
   boolean statusChanged=false;
   boolean isUSMService=false;
   while (System.currentTimeMillis() < end) {
@@ -13,10 +13,10 @@
     if ("partitioned-sync2backup".equals(serviceStatusMap.get("ClusterSchema"))) {
       plannedNumberOfInstances=Integer.valueOf((String)serviceStatusMap.get("TotalNumberOfInstances"));
     }
-    if (isUSMService) {
-      int numberOfUSMServicesWithRunningState=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
-      if (currentNumberOfRunningUSMInstances != numberOfUSMServicesWithRunningState) {
-        currentNumberOfRunningUSMInstances=numberOfUSMServicesWithRunningState;
+    if (isUSMService(applicationName,serviceName)) {
+      int actualNumberOfUSMServicesWithRunningState=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
+      if (currentNumberOfRunningUSMInstances != actualNumberOfUSMServicesWithRunningState && actualNumberOfUSMServicesWithRunningState != 0) {
+        currentNumberOfRunningUSMInstances=actualNumberOfUSMServicesWithRunningState;
         statusChanged=true;
       }
  else {
@@ -25,7 +25,7 @@
     }
  else {
       int actualNumberOfInstances=(Integer)serviceStatusMap.get("Instances-Size");
-      if (actualNumberOfInstances != currentNumberOfNonUSMInstances) {
+      if (actualNumberOfInstances != currentNumberOfNonUSMInstances && actualNumberOfInstances != 0) {
         currentNumberOfNonUSMInstances=actualNumberOfInstances;
         statusChanged=true;
       }
@@ -42,10 +42,7 @@
     }
  else     if ((Integer)serviceStatusMap.get("Instances-Size") > 0) {
       if (isUSMService(applicationName,serviceName)) {
-        if (!isUSMService) {
-          isUSMService=true;
-          currentNumberOfRunningUSMInstances=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
-        }
+        currentNumberOfRunningUSMInstances=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
         printStatusMessage(plannedNumberOfInstances,currentNumberOfRunningUSMInstances,statusChanged,isUSMService);
         if (currentNumberOfRunningUSMInstances == plannedNumberOfInstances) {
           return true;
