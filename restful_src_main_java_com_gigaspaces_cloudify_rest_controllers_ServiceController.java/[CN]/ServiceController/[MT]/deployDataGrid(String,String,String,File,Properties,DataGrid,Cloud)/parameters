@@ -1,7 +1,0 @@
-String applicationName
-String serviceName
-String zone
-File srcFile
-Properties contextProperties
-DataGrid dataGridConfig
-Cloud cloud

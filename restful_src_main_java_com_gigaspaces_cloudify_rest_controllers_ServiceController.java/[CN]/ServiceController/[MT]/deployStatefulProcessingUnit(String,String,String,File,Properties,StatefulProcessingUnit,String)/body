@@ -1,0 +1,30 @@
+{
+  Cloud2 cloud=getCloud();
+  CloudTemplate template=getComputeTemplate(cloud,templateName);
+  validateAndPrepareStatefulSla(serviceName,puConfig.getSla(),cloud,template);
+  File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder);
+  final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
+  final int maxMemoryCapacityInMB=puConfig.getSla().getMaxMemoryCapacity();
+  final int reservedMemoryCapacityPerMachineInMB=256;
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
+  setContextProperties(deployment,contextProperties);
+  if (cloud == null) {
+    setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
+    verifyEsmExistsInCluster();
+    if (isLocalCloud()) {
+      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(puConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
+    }
+ else {
+      deployment.scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create());
+    }
+  }
+ else {
+    CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    String locators=extractLocators(admin);
+    config.setLocator(locators);
+    setDedicatedMachineProvisioning(deployment,config);
+    deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity((int)puConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create());
+  }
+  deployAndWait(serviceName,deployment);
+  jarFile.delete();
+}

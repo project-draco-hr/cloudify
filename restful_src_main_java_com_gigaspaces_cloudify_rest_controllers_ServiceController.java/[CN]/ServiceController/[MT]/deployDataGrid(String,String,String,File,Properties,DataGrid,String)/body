@@ -1,0 +1,30 @@
+{
+  Cloud2 cloud=getCloud();
+  CloudTemplate template=getComputeTemplate(cloud,templateName);
+  validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
+  final int containerMemoryInMB=dataGridConfig.getSla().getMemoryCapacityPerContainer();
+  final int maxMemoryInMB=dataGridConfig.getSla().getMaxMemoryCapacity();
+  final int reservedMemoryCapacityPerMachineInMB=256;
+  logger.finer("received request to install datagrid");
+  ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(dataGridConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
+  setContextProperties(deployment,contextProperties);
+  if (cloud == null) {
+    setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
+    if (isLocalCloud()) {
+      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(dataGridConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
+    }
+ else {
+      deployment.scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create());
+    }
+  }
+ else {
+    long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    String locators=extractLocators(admin);
+    config.setLocator(locators);
+    setDedicatedMachineProvisioning(deployment,config);
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create());
+  }
+  deployAndWait(serviceName,deployment);
+}

@@ -1,5 +1,0 @@
-String serviceName
-String applicationName
-String zone
-File srcFile
-Properties propsFile

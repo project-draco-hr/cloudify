@@ -1,0 +1,22 @@
+{
+  logger.finer("received request to deploy");
+  logger.info("Deploying service with template: " + templateName);
+  String actualTemplateName=templateName;
+  if ((templateName == null) || templateName.length() == 0) {
+    Cloud2 cloud=getCloud();
+    if (cloud.getTemplates().size() == 0) {
+      throw new IllegalStateException("Cloud configuration has no compute template defined!");
+    }
+    actualTemplateName=cloud.getTemplates().keySet().iterator().next();
+    logger.warning("Compute Template name missing from service deployment request. Defaulting to first template: " + actualTemplateName);
+  }
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final byte[] propsBytes=propsFile.getBytes();
+  final Properties props=new Properties();
+  final InputStream is=new ByteArrayInputStream(propsBytes);
+  props.load(is);
+  File dest=copyMultipartFileToLocalFile(srcFile);
+  dest.deleteOnExit();
+  deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName);
+  return successStatus();
+}

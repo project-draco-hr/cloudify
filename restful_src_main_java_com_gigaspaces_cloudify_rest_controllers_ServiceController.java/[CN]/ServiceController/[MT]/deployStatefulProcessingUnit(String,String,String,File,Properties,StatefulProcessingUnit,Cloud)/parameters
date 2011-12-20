@@ -1,7 +1,0 @@
-String applicationName
-String serviceName
-String zone
-File extractedServiceFolder
-Properties contextProperties
-StatefulProcessingUnit puConfig
-Cloud cloud

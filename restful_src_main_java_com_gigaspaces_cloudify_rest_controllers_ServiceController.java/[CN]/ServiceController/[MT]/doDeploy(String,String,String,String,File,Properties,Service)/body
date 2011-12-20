@@ -1,0 +1,11 @@
+{
+  int numberOfInstances=service.getNumInstances();
+  if (numberOfInstances > 1) {
+    logger.info("Deploying service " + serviceName + " with "+ numberOfInstances+ " instances.");
+  }
+ else {
+    logger.info("Deploying service " + serviceName + " with a recipe that does not define number of instances. Assuming number of instances is 1");
+    numberOfInstances=1;
+  }
+  doDeploy(applicationName,serviceName,templateName,zone,serviceFile,contextProperties,numberOfInstances);
+}

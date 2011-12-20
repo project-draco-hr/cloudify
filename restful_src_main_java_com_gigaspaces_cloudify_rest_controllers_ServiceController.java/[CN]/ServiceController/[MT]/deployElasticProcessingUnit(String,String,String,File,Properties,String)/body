@@ -1,0 +1,34 @@
+{
+  Service service=null;
+  File projectDir=null;
+  if (srcFile.getName().endsWith(".zip")) {
+    projectDir=ServiceReader.extractProjectFile(srcFile);
+    DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(new File(projectDir,"ext"),applicationName);
+    service=result.getService();
+  }
+  if (service == null) {
+    doDeploy(applicationName,serviceName,templateName,zone,srcFile,propsFile);
+  }
+ else   if (service.getLifecycle() != null) {
+    doDeploy(applicationName,serviceName,templateName,zone,srcFile,propsFile,service);
+  }
+ else   if (service.getDataGrid() != null) {
+    deployDataGrid(applicationName,serviceName,zone,srcFile,propsFile,service.getDataGrid(),templateName);
+  }
+ else   if (service.getStatelessProcessingUnit() != null) {
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,zone,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances());
+  }
+ else   if (service.getMirrorProcessingUnit() != null) {
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,zone,new File(projectDir,"ext"),propsFile,service.getMirrorProcessingUnit(),templateName,service.getNumInstances());
+  }
+ else   if (service.getStatefulProcessingUnit() != null) {
+    deployStatefulProcessingUnit(applicationName,serviceName,zone,new File(projectDir,"ext"),propsFile,service.getStatefulProcessingUnit(),templateName);
+  }
+ else {
+    throw new IllegalStateException("Unsupported service type");
+  }
+  if (projectDir != null) {
+    FileUtils.deleteDirectory(projectDir);
+  }
+  srcFile.delete();
+}

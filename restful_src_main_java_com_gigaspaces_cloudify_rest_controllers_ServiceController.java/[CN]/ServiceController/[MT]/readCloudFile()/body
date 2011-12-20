@@ -1,0 +1,26 @@
+{
+  logger.info("Loading cloud configuration file");
+  String cloudFileLocation=System.getenv().get("CLOUD_FILE");
+  if (cloudFileLocation == null) {
+    throw new IllegalArgumentException("The CLOUD_FILE environment variable is missing!");
+  }
+  File cloudFile=new File(cloudFileLocation);
+  if (!cloudFile.exists()) {
+    throw new FileNotFoundException("Could not find cloud file: " + cloudFile);
+  }
+  if (!cloudFile.isFile()) {
+    throw new FileNotFoundException(cloudFile + " is not a file! Was expecting the cloud file");
+  }
+  this.cloudFileContents=FileUtils.readFileToString(cloudFile);
+  Cloud2 cloud=null;
+  try {
+    cloud=ServiceReader.readCloud(cloudFileContents);
+  }
+ catch (  DSLException e) {
+    throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudFile + ". Error was: "+ e.getMessage(),e);
+  }
+  logger.info("Successfully loaded cloud configuration file from: " + cloudFile);
+  logger.info("Setting cloud local directory to: " + cloud.getProvider().getRemoteDirectory());
+  cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
+  return cloud;
+}

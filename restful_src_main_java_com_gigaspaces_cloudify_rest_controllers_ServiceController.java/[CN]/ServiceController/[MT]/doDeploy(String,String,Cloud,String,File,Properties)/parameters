@@ -1,6 +1,0 @@
-String applicationName
-String serviceName
-Cloud cloud
-String zone
-File serviceFile
-Properties contextProperties
