@@ -1,13 +1,12 @@
 {
-  long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   try {
-    ShellUtils.checkNotNull("providerDirectory",providerDirecotry);
-    Cloud cloudDsl=ServiceReader.getCloudFromDirectory(providerDirecotry);
-    final CloudMachineProvisioningConfig config=CloudDSLToCloudMachineProvisioningConfig.convert(cloudDsl);
-    String managementGroup=config.getManagementGroup();
-    destroyManagementServers(managementGroup,config,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+    this.provisioning=(CloudifyProvisioning)Class.forName(cloud.getConfiguration().getClassName()).newInstance();
   }
- catch (  IOException e) {
-    throw new CLIException("bootstrap-cloud failed",e);
+ catch (  Exception e) {
+    throw new CLIException("Failed to load provisioning class from cloud: " + this.cloud);
   }
+  provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
+  long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  ShellUtils.checkNotNull("providerDirectory",providerDirecotry);
+  destroyManagementServers(Utils.millisUntil(end),TimeUnit.MILLISECONDS);
 }

@@ -1,5 +1,0 @@
-JCloudsDeployer deployer
-String machineTag
-CloudMachineProvisioningConfig config
-long timeout
-TimeUnit unit

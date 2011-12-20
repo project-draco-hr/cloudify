@@ -1,0 +1,24 @@
+{
+  @SuppressWarnings("unchecked") Future<MachineDetails>[] futures=(Future<MachineDetails>[])new Future<?>[numOfManagementMachines];
+  for (int i=0; i < cloud.getProvider().getNumberOfManagementMachines(); ++i) {
+    futures[i]=executors.submit(new Callable<MachineDetails>(){
+      @Override public MachineDetails call(){
+        MachineDetails machineDetails;
+        try {
+          machineDetails=provisioning.startMachine(timeout,unit);
+        }
+ catch (        Exception e) {
+          logger.log(Level.SEVERE,"Failed to provision machine from cloud: " + cloud.getName(),e);
+          return null;
+        }
+        return machineDetails;
+      }
+    }
+);
+  }
+  MachineDetails[] machineDetails=new MachineDetails[numOfManagementMachines];
+  for (int i=0; i < machineDetails.length; i++) {
+    machineDetails[i]=futures[i].get(timeout,unit);
+  }
+  return machineDetails;
+}

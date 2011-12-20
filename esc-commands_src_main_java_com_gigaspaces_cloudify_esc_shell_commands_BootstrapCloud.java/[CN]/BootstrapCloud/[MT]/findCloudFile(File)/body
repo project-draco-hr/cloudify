@@ -1,0 +1,19 @@
+{
+  if (!providerDirectory.exists() || !providerDirectory.isDirectory()) {
+    throw new FileNotFoundException("Could not find cloud provider directory: " + providerDirectory);
+  }
+  File[] cloudFiles=providerDirectory.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    File dir,    String name){
+      return name.endsWith("-cloud.groovy");
+    }
+  }
+);
+  if (cloudFiles.length == 0) {
+    throw new FileNotFoundException("Could not find a cloud definition file in: " + providerDirectory + ". Definitions file must end with the suffix '-cloud.groovy'");
+  }
+ else   if (cloudFiles.length > 1) {
+    throw new IllegalArgumentException("Found multiple cloud definition files in: " + providerDirectory + ". Only one file may end with the suffix '-cloud.groovy'");
+  }
+  File cloudFile=cloudFiles[0];
+  return cloudFile;
+}

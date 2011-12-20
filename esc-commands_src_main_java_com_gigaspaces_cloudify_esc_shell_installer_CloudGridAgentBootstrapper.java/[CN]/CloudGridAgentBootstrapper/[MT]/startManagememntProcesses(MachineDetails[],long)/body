@@ -1,0 +1,23 @@
+{
+  final AgentlessInstaller installer=new AgentlessInstaller();
+  Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
+  fixConfigRelativePaths(cloud);
+  final int numOfManagementMachines=machines.length;
+  InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines);
+  for (int i=1; i < installations.length; i++) {
+    installations[i].setNoWebServices(true);
+  }
+  String lookup=createLocatorsString(installations);
+  for (  InstallationDetails detail : installations) {
+    detail.setLocator(lookup);
+  }
+  File uploadDir=new File(cloud.getProvider().getLocalDirectory());
+  try {
+    FileUtils.copyFileToDirectory(this.cloudFile,uploadDir);
+    installOnMachines(endTime,installer,numOfManagementMachines,installations);
+  }
+  finally {
+    FileUtils.forceDelete(new File(uploadDir,this.cloudFile.getName()));
+  }
+  return machines;
+}

@@ -1,0 +1,53 @@
+{
+  ExecutorService executors=Executors.newFixedThreadPool(numOfManagementMachines);
+  BootstrapLogsFilters bootstrapLogs=new BootstrapLogsFilters(verbose);
+  try {
+    bootstrapLogs.applyLogFilters();
+    List<Future<Exception>> futures=new ArrayList<Future<Exception>>();
+    for (    final InstallationDetails detail : installations) {
+      Future<Exception> future=executors.submit(new Callable<Exception>(){
+        @Override public Exception call(){
+          try {
+            installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
+          }
+ catch (          TimeoutException e) {
+            return e;
+          }
+catch (          InterruptedException e) {
+            return e;
+          }
+catch (          InstallerException e) {
+            return e;
+          }
+          return null;
+        }
+      }
+);
+      futures.add(future);
+    }
+    for (    Future<Exception> future : futures) {
+      try {
+        Exception e=future.get();
+        if (e != null) {
+          if (e instanceof TimeoutException) {
+            throw (TimeoutException)e;
+          }
+          if (e instanceof InterruptedException) {
+            throw (InterruptedException)e;
+          }
+          if (e instanceof InstallerException) {
+            throw (InstallerException)e;
+          }
+          throw new InstallerException("Failed creating machines",e);
+        }
+      }
+ catch (      ExecutionException e) {
+        throw new InstallerException("Failed creating machines",e);
+      }
+    }
+  }
+  finally {
+    executors.shutdown();
+    bootstrapLogs.restoreLogFilters();
+  }
+}

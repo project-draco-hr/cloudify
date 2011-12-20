@@ -1,4 +1,0 @@
-String machineTag
-CloudMachineProvisioningConfig config
-long timeout
-TimeUnit timeoutUnit

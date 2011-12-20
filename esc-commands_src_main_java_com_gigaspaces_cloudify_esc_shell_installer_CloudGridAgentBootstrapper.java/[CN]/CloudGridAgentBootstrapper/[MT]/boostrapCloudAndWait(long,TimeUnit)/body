@@ -1,13 +1,31 @@
 {
+  try {
+    this.provisioning=(CloudifyProvisioning)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
+  }
+ catch (  Exception e) {
+    throw new CLIException("Failed to load provisioning class from cloud: " + this.cloud);
+  }
   long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   try {
-    ShellUtils.checkNotNull("providerDirectory",providerDirecotry);
-    Cloud cloudDsl=ServiceReader.getCloudFromDirectory(providerDirecotry);
-    final CloudMachineProvisioningConfig config=CloudDSLToCloudMachineProvisioningConfig.convert(cloudDsl);
-    String managementGroup=config.getManagementGroup();
-    Set<? extends NodeMetadata> servers=startManagementNodes(managementGroup,config,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
-    for (    NodeMetadata server : servers) {
-      String ipAddress=config.isConnectedToPrivateIp() ? server.getPrivateAddresses().iterator().next() : server.getPublicAddresses().iterator().next();
+    MachineDetails[] servers;
+    try {
+      servers=provisioning.startManagementMachines(timeout,timeoutUnit);
+    }
+ catch (    CloudProvisioningException e) {
+      throw new InstallerException("Failed to start managememnt servers",e);
+    }
+    if (servers.length == 0) {
+      throw new IllegalArgumentException("Received zero management servers from provisioning implementation");
+    }
+    if (servers[0].isAgentRunning()) {
+      logger.info("Using existing management servers");
+    }
+ else {
+      startManagememntProcesses(servers,end);
+    }
+    for (    MachineDetails server : servers) {
+      String ipAddress=server.getIp();
       URL restAdminUrl=new URI("http",null,ipAddress,REST_GATEWAY_PORT,null,null,null).toURL();
       URL webUIUrl=new URI("http",null,ipAddress,WEBUI_PORT,null,null,null).toURL();
       waitForConnection(restAdminUrl,Utils.millisUntil(end),TimeUnit.MILLISECONDS);

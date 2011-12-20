@@ -1,0 +1,21 @@
+{
+  long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  if (!adminFacade.isConnected()) {
+    throw new CLIException("Please connect to the cloud before tearing down");
+  }
+  if (!force) {
+    for (    String application : adminFacade.getApplicationsList()) {
+      if (!application.equals(MANAGEMENT_APPLICATION)) {
+        adminFacade.uninstallApplication(application);
+      }
+    }
+    waitForUninstallApplications(Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
+  logger.info("Terminating cloud machines");
+  try {
+    provisioning.stopManagementMachines();
+  }
+ catch (  CloudProvisioningException e) {
+    throw new CLIException("Failed to shut down management machine during tear down of cloud: " + e.getMessage(),e);
+  }
+}

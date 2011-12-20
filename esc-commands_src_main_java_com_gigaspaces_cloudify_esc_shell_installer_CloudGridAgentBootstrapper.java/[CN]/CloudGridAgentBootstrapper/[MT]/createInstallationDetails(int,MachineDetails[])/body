@@ -1,0 +1,15 @@
+{
+  InstallationDetails template=createInstallationDetails(cloud);
+  InstallationDetails[] details=new InstallationDetails[numOfManagementMachines];
+  for (int i=0; i < details.length; i++) {
+    MachineDetails machine=machineDetails[i];
+    InstallationDetails installationDetails=template.clone();
+    installationDetails.setUsername(machine.getRemoteUsername());
+    installationDetails.setPrivateIp(machine.getPrivateAddress());
+    installationDetails.setPublicIp(machine.getPublicAddress());
+    installationDetails.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
+    installationDetails.setCloudFile(this.cloudFile);
+    details[i]=installationDetails;
+  }
+  return details;
+}
