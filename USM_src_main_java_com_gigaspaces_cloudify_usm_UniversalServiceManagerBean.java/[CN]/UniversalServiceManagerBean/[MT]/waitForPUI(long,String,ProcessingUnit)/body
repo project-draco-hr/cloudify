@@ -29,12 +29,14 @@
           }
         }
       }
+    }
+ else {
       logger.info("Could not find a running instance of service: " + dependantService + ". Sleeping before trying again");
-      try {
-        Thread.sleep(WAIT_FOR_DEPENDENCIES_INTERVAL_MILLIS);
-      }
- catch (      InterruptedException e) {
-      }
+    }
+    try {
+      Thread.sleep(WAIT_FOR_DEPENDENCIES_INTERVAL_MILLIS);
+    }
+ catch (    InterruptedException e) {
     }
   }
 }
