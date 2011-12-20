@@ -1,4 +1,7 @@
 {
+  if (!askUninstallConfirmationQuestion()) {
+    return getFormattedMessage("uninstall_aborted");
+  }
   final Set<String> containerIdsOfService=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForService(getCurrentApplicationName(),serviceName);
   if (verbose) {
     logger.info("Found containers: " + containerIdsOfService);

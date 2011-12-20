@@ -1,4 +1,7 @@
 {
+  if (!askUninstallConfirmationQuestion()) {
+    return getFormattedMessage("uninstall_aborted");
+  }
   final Set<String> containerIdsOfApplication=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForApplication(applicationName);
   if (verbose) {
     logger.info("Containers running PUs of application " + applicationName + ":"+ containerIdsOfApplication);
@@ -19,5 +22,5 @@
     }
 );
   }
-  return getFormattedMessage("application_uninstalled_succesfully",applicationName);
+  return getFormattedMessage("application_uninstalled_succesfully",this.applicationName);
 }
