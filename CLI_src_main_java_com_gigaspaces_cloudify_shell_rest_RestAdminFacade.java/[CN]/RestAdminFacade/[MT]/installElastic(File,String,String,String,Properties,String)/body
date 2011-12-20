@@ -1,4 +1,4 @@
 {
   String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName;
-  client.postFile(url + "?zone=" + zone,packedFile,contextProperties);
+  client.postFile(url + "?zone=" + zone+ "&template="+ templateName,packedFile,contextProperties);
 }

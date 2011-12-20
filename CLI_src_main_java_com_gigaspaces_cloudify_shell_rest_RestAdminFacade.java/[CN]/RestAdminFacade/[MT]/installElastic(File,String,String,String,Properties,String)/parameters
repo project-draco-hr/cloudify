@@ -3,3 +3,4 @@ String applicationName
 String serviceName
 String zone
 Properties contextProperties
+String templateName
