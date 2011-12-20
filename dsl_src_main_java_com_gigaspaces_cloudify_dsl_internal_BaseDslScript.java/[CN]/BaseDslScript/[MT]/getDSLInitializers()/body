@@ -16,6 +16,7 @@
     addObjectInitializerForClass(dslObjectInitializersByName,CloudProvider.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudUser.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplate.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,CloudConfiguration.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);

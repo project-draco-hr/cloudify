@@ -1,0 +1,3 @@
+{
+  return "CloudUser [user=" + user + ", keyFile="+ keyFile+ "]";
+}

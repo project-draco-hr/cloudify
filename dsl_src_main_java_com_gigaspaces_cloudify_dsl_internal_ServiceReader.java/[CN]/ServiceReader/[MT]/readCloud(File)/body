@@ -2,30 +2,7 @@
   if (!dslFile.exists()) {
     throw new FileNotFoundException(dslFile.getAbsolutePath());
   }
-  final GroovyShell gs=ServiceReader.createGroovyShellForCloud(dslFile);
-  Object result=null;
-  FileReader reader=null;
-  try {
-    reader=new FileReader(dslFile);
-    result=gs.evaluate(reader,"cloud");
-  }
- catch (  final CompilationFailedException e) {
-    throw new IllegalArgumentException("The file " + dslFile + " could not be compiled",e);
-  }
-catch (  final IOException e) {
-    throw new IllegalStateException("The file " + dslFile + " could not be read",e);
-  }
- finally {
-    if (reader != null) {
-      reader.close();
-    }
-  }
-  if (result == null) {
-    throw new IllegalStateException("The file: " + dslFile + " evaluates to null, not to a DSL object");
-  }
-  if (!(result instanceof Cloud2)) {
-    throw new IllegalStateException("The file: " + dslFile + " did not evaluate to the required object type");
-  }
-  final Cloud2 cloud=(Cloud2)result;
+  final String dslContents=FileUtils.readFileToString(dslFile);
+  Cloud2 cloud=readCloud(dslContents,dslFile);
   return cloud;
 }
