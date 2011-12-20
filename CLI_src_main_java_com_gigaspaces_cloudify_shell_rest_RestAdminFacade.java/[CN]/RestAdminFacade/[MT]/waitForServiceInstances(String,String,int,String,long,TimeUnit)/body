@@ -7,13 +7,12 @@
   int currentNumberOfNonUSMInstances=-1;
   int currentNumberOfRunningUSMInstances=-1;
   boolean statusChanged=false;
-  boolean isUSMService=false;
   while (System.currentTimeMillis() < end) {
     Map<String,Object> serviceStatusMap=client.getAdminData(pollingURL);
     if ("partitioned-sync2backup".equals(serviceStatusMap.get("ClusterSchema"))) {
       plannedNumberOfInstances=Integer.valueOf((String)serviceStatusMap.get("TotalNumberOfInstances"));
     }
-    if (isUSMService(applicationName,serviceName)) {
+    if (!serviceStatusMap.get("Instances-Size").equals(0) && isUSMService(applicationName,serviceName)) {
       int actualNumberOfUSMServicesWithRunningState=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
       if (currentNumberOfRunningUSMInstances != actualNumberOfUSMServicesWithRunningState && actualNumberOfUSMServicesWithRunningState != 0) {
         currentNumberOfRunningUSMInstances=actualNumberOfUSMServicesWithRunningState;
