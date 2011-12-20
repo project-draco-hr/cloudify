@@ -1,5 +1,6 @@
 {
   if (this.template == null) {
+    logger.info("Creating Cloud Template. This may take a few seconds");
     final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
     if ((this.imageId != null) && (this.imageId.length() > 0)) {
       builder.imageId(this.imageId);
@@ -10,21 +11,9 @@
     if ((this.hardwareId != null) && (hardwareId.length() > 0)) {
       builder.hardwareId(hardwareId);
     }
-    if (!"aws-ec2".equals(provider)) {
-      this.template=builder.build();
-    }
- else {
-      builder.locationId(getLocationId());
-      this.template=builder.build();
-      String group="default";
-      if ((this.securityGroup != null) && (this.securityGroup.length() > 0)) {
-        group=this.securityGroup;
-      }
-      template.getOptions().as(EC2TemplateOptions.class).securityGroups(group);
-      if ((this.keyPair != null) && (this.keyPair.length() > 0)) {
-        template.getOptions().as(EC2TemplateOptions.class).keyPair(this.keyPair);
-      }
-    }
+    this.template=builder.build();
+    handleExtraOptions();
+    logger.info("Cloud Template is ready for use.");
   }
   return this.template;
 }

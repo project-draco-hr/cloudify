@@ -1,0 +1,5 @@
+Set<Entry<String,Object>> optionEntries
+TemplateOptions templateOptions
+Entry<String,Object> entry
+String entryKey
+Object entryValue

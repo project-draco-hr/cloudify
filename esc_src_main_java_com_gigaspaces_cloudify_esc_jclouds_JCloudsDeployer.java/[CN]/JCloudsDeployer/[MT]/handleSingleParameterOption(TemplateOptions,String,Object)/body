@@ -1,0 +1,20 @@
+{
+  Method m=null;
+  try {
+    m=templateOptions.getClass().getMethod(entryKey,entryValue.getClass());
+  }
+ catch (  SecurityException e) {
+    throw new IllegalArgumentException("Error while looking for method to match option: " + entryKey + " with option value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+  }
+catch (  NoSuchMethodException e) {
+  }
+  if (m == null) {
+    throw new IllegalArgumentException("Could not find a method matching option: " + entryKey + " with value: "+ entryValue);
+  }
+  try {
+    m.invoke(templateOptions,entryValue);
+  }
+ catch (  Exception e) {
+    throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+  }
+}

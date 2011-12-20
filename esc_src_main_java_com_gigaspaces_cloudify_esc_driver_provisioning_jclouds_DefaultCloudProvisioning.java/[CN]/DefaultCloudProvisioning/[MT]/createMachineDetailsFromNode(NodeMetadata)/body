@@ -1,0 +1,26 @@
+{
+  MachineDetails md=new MachineDetails();
+  md.setAgentRunning(false);
+  md.setCloudifyInstalled(false);
+  md.setInstallationDirectory(null);
+  md.setMachineId(node.getId());
+  if (node.getPrivateAddresses().size() > 0) {
+    md.setPrivateAddress(node.getPrivateAddresses().iterator().next());
+  }
+  if (node.getPublicAddresses().size() > 0) {
+    md.setPublicAddress(node.getPublicAddresses().iterator().next());
+  }
+  if (node.getCredentials() == null) {
+    md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
+  }
+ else {
+    final String serverIdentity=node.getCredentials().identity;
+    if (serverIdentity != null) {
+      md.setRemoteUsername(serverIdentity);
+    }
+ else {
+      md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
+    }
+  }
+  return md;
+}

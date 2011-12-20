@@ -1,0 +1,6 @@
+{
+  CloudTemplate template=cloud.getTemplates().get(this.cloudTemplate);
+  CapacityRequirements capacityRequirements=new CapacityRequirements(new MemoryCapacityRequirement((long)template.getMachineMemoryMB()),new CpuCapacityRequirement(template.getNumberOfCores()));
+  logger.info("Capacity requirements for a single machine are: " + capacityRequirements);
+  return capacityRequirements;
+}

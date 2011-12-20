@@ -1,0 +1,13 @@
+{
+  final String machineIp=agent.getMachine().getHostAddress();
+  try {
+    final boolean shutdownResult=this.cloudifyProvisioning.stopMachine(machineIp);
+    if (!shutdownResult) {
+      logger.severe("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed");
+    }
+    return shutdownResult;
+  }
+ catch (  CloudProvisioningException e) {
+    throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed with error: "+ e.getMessage(),e);
+  }
+}

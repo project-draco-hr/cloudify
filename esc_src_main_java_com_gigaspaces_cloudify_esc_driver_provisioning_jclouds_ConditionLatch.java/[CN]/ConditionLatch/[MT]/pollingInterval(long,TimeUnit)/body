@@ -1,0 +1,4 @@
+{
+  this.pollingIntervalMilliseconds=timeunit.toMillis(duration);
+  return this;
+}

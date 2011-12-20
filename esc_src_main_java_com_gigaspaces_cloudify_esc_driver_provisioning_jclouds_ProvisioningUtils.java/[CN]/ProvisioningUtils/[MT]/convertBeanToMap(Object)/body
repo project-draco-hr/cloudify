@@ -1,0 +1,10 @@
+{
+  final Map<String,String> result=new HashMap<String,String>();
+  try {
+    populateMapFromBean(result,bean,"");
+  }
+ catch (  Exception e) {
+    throw new IllegalArgumentException("Failed to convert Bean to Map: " + e.getMessage(),e);
+  }
+  return result;
+}

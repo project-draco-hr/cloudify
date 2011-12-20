@@ -1,0 +1,3 @@
+TemplateOptions templateOptions
+String entryKey
+Object entryValue

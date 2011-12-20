@@ -1,0 +1,21 @@
+{
+  final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
+  logger.info("Cloud contents passed in elastic properties: " + cloudContents);
+  try {
+    this.cloud=ServiceReader.readCloud(cloudContents);
+    this.cloudTemplate=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
+    try {
+      this.cloudifyProvisioning=(CloudifyProvisioning)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+      this.cloudifyProvisioning.setConfig(cloud,cloudTemplate,false);
+    }
+ catch (    Exception e) {
+      throw new IllegalArgumentException("Failed to load provisioning class from cloud: " + this.cloud);
+    }
+    this.lookupLocatorsString=createLocatorsString();
+    logger.info("Locators string used for new instances will be: " + this.lookupLocatorsString);
+  }
+ catch (  DSLException e) {
+    logger.severe("Could not parse the provided cloud configuration: " + cloudContents + ": "+ e.getMessage());
+    throw new IllegalArgumentException("Could not parse the prvided cloud configuration: " + cloudContents + ": "+ e.getMessage());
+  }
+}

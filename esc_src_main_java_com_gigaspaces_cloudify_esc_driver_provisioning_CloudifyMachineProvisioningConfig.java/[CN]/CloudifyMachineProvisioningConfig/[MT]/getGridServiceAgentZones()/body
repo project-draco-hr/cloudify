@@ -1,0 +1,3 @@
+{
+  return properties.getArray(ZONES_KEY,ZONES_SEPARATOR,ZONES_DEFAULT);
+}

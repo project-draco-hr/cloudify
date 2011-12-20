@@ -1,0 +1,9 @@
+{
+  if (timeout < 0) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  final String machineName=createNewMachineName();
+  logger.info("Starting a new cloud machines with group: " + machineName);
+  return createServer(end,machineName);
+}

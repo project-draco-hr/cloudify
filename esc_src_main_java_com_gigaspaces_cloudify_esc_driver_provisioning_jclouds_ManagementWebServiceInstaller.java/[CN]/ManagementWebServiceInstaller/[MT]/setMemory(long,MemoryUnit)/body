@@ -1,0 +1,3 @@
+{
+  this.memoryInMB=(int)unit.toMegaBytes(memory);
+}

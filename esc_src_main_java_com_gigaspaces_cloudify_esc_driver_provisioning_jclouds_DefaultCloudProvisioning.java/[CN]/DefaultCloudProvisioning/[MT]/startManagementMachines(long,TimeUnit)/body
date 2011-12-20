@@ -1,0 +1,18 @@
+{
+  if (duration < 0) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
+  initDeployer(cloud);
+  this.deployer.getTemplate();
+  final String managementMachinePrefix=this.machineNamePrefix;
+  MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
+  if (existingManagementServers.length > 0) {
+    logger.info("Found existing servers matching the name: " + managementMachinePrefix);
+    return existingManagementServers;
+  }
+  int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
+  return createdMachines;
+}

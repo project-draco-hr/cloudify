@@ -1,0 +1,18 @@
+{
+  if (this.deployer != null) {
+    return;
+  }
+  logger.info("Creating jclouds context deployer with user: " + cloud.getUser().getUser());
+  CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+  try {
+    this.deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey());
+    this.deployer.setImageId(cloudTemplate.getImageId());
+    this.deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
+    this.deployer.setHardwareId(cloudTemplate.getHardwareId());
+    this.deployer.setLocationId(cloudTemplate.getLocationId());
+    this.deployer.setExtraOptions(cloudTemplate.getOptions());
+  }
+ catch (  final IOException e) {
+    throw new IllegalStateException("Failed to create cloud Deployer",e);
+  }
+}

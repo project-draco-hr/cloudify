@@ -1,0 +1,48 @@
+{
+  Method m=null;
+  try {
+    m=templateOptions.getClass().getMethod(entryKey,entryValue.getClass());
+  }
+ catch (  SecurityException e) {
+    throw new IllegalArgumentException("Error while loo king for method to match option: " + entryKey + " with option value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+  }
+catch (  NoSuchMethodException e) {
+  }
+  if (m != null) {
+    handleSingleParameterOption(templateOptions,entryKey,entryValue);
+  }
+ else {
+    @SuppressWarnings("unchecked") List<Object> paramList=(List<Object>)entryValue;
+    Object[] paramArray=paramList.toArray();
+    Class<?>[] classArray=new Class<?>[paramArray.length];
+    for (int i=0; i < classArray.length; i++) {
+      classArray[i]=paramArray[i].getClass();
+    }
+    try {
+      Method[] ms=templateOptions.getClass().getMethods();
+      System.out.println(ms);
+    }
+ catch (    Exception e1) {
+      e1.printStackTrace();
+    }
+    try {
+      m=templateOptions.getClass().getMethod(entryKey,classArray);
+    }
+ catch (    SecurityException e) {
+      throw new IllegalArgumentException("Error while looking for method to match option: " + entryKey + " with option value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+    }
+catch (    NoSuchMethodException e) {
+    }
+    if (m == null) {
+      throw new IllegalArgumentException("Could not find a matching method to set template option: " + entryKey + " with the following values: "+ paramList);
+    }
+ else {
+      try {
+        m.invoke(templateOptions,paramArray);
+      }
+ catch (      Exception e) {
+        throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+      }
+    }
+  }
+}

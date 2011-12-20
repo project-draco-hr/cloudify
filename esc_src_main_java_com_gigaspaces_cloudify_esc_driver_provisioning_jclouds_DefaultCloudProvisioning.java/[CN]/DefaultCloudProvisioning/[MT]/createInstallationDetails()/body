@@ -1,0 +1,15 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setLocalDir(cloud.getProvider().getLocalDirectory());
+  details.setRemoteDir(cloud.getProvider().getRemoteDirectory());
+  details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
+  details.setZones(StringUtils.join(cloud.getProvider().getZones().toArray(new String[0]),",",0,cloud.getProvider().getZones().size()));
+  details.setKeyFile(cloud.getUser().getKeyFile());
+  details.setPrivateIp(null);
+  details.setLus(false);
+  details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  details.setConnectedToPrivateIp(true);
+  details.setAdmin(this.admin);
+  logger.info("Created new Installation Details: " + details);
+  return details;
+}

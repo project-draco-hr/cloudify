@@ -1,0 +1,4 @@
+Cloud2 cloud
+CloudTemplate template
+String cloudFileContents
+String cloudTemplateName

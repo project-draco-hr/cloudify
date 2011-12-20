@@ -5,8 +5,6 @@
     deployer.setMinRamMegabytes((int)config.getMachineMemoryMB());
     deployer.setImageId(config.getImageId());
     deployer.setHardwareId(config.getHardwareId());
-    deployer.setSecurityGroup(config.getSecurityGroup());
-    deployer.setKeyPair(config.getKeyPair());
     NodeMetadata server=null;
     System.out.println("Checking if server already exists.");
     server=deployer.getServerByTag(name);

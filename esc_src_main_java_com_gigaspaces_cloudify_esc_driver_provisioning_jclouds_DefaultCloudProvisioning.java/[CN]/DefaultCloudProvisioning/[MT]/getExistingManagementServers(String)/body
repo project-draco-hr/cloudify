@@ -1,0 +1,23 @@
+{
+  Set<? extends NodeMetadata> existingManagementServers=this.deployer.getServers(new Predicate<ComputeMetadata>(){
+    @Override public boolean apply(    ComputeMetadata input){
+      final NodeMetadata node=(NodeMetadata)input;
+      if (node.getGroup() == null) {
+        return false;
+      }
+      if (!(node.getState().equals(NodeState.RUNNING) || node.getState().equals(NodeState.PENDING))) {
+        return false;
+      }
+      return node.getGroup().startsWith(managementMachinePrefix);
+    }
+  }
+);
+  MachineDetails[] result=new MachineDetails[existingManagementServers.size()];
+  int i=0;
+  for (  NodeMetadata node : existingManagementServers) {
+    result[i]=createMachineDetailsFromNode(node);
+    result[i].setAgentRunning(true);
+    result[i].setCloudifyInstalled(true);
+  }
+  return result;
+}

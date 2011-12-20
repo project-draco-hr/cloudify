@@ -1,0 +1,12 @@
+{
+  final AgentlessInstaller installer=new AgentlessInstaller();
+  InstallationDetails installationDetails=createInstallationDetails(cloud,machineDetails);
+  logger.info("Starting agentless installation process on started machine with installation details: " + installationDetails);
+  Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
+  try {
+    installer.installOnMachineWithIP(installationDetails,remainingTimeTill(end),TimeUnit.MILLISECONDS);
+  }
+ catch (  InstallerException e) {
+    throw new ElasticMachineProvisioningException("Failed to install Cloudify Agent on newly provisioned machine: " + e.getMessage(),e);
+  }
+}

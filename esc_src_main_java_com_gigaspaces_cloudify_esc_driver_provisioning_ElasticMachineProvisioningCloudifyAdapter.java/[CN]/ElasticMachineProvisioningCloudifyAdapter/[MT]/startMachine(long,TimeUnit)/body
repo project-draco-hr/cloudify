@@ -1,0 +1,17 @@
+{
+  final long end=System.currentTimeMillis() + unit.toMillis(duration);
+  MachineDetails machineDetails=provisionMachine(duration,unit);
+  installAndStartAgent(machineDetails,end);
+  String machineIp=null;
+  if (machineDetails.isUsePrivateAddress()) {
+    machineIp=machineDetails.getPrivateAddress();
+  }
+ else {
+    machineIp=machineDetails.getPublicAddress();
+  }
+  GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
+  if (gsa == null) {
+    handleGSANotFound(machineIp);
+  }
+  return gsa;
+}

@@ -1,0 +1,40 @@
+{
+  Method m=null;
+  try {
+    m=optionEntries.getClass().getMethod(entryKey);
+  }
+ catch (  SecurityException e) {
+    throw new IllegalArgumentException("Error while looking for method to match template option: " + entryKey,e);
+  }
+catch (  NoSuchMethodException e) {
+  }
+  if (m != null) {
+    try {
+      m.invoke(templateOptions);
+    }
+ catch (    Exception e) {
+      throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: "+ entryValue,e);
+    }
+  }
+ else {
+    try {
+      m=optionEntries.getClass().getMethod(entryKey,Object.class);
+    }
+ catch (    SecurityException e) {
+      throw new IllegalArgumentException("Error while looking for method to match template option: " + entryKey,e);
+    }
+catch (    NoSuchMethodException e) {
+    }
+    if (m != null) {
+      try {
+        m.invoke(templateOptions,(Object)null);
+      }
+ catch (      Exception e) {
+        throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: "+ entryValue,e);
+      }
+    }
+ else {
+      throw new IllegalArgumentException("Could not find a method matching template option: " + entry.getKey());
+    }
+  }
+}

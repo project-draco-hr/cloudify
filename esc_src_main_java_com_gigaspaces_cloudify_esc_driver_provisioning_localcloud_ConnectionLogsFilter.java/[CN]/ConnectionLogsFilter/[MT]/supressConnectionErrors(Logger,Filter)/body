@@ -1,0 +1,26 @@
+{
+  Filter newFilter=new Filter(){
+    @Override public boolean isLoggable(    LogRecord record){
+      boolean isLoggable=true;
+      Throwable t=record.getThrown();
+      if ((filter != null && !filter.isLoggable(record)) || (t != null && isConnectExceptionOrCause(t) && record.getLevel().intValue() <= Level.WARNING.intValue())) {
+        isLoggable=false;
+      }
+      return isLoggable;
+    }
+    private boolean isConnectExceptionOrCause(    Throwable t){
+      while (t != null) {
+        if (isConnectException(t)) {
+          return true;
+        }
+        t=t.getCause();
+      }
+      return false;
+    }
+    private boolean isConnectException(    Throwable t){
+      return (t instanceof java.net.ConnectException) || (t instanceof java.rmi.ConnectException);
+    }
+  }
+;
+  logger.setFilter(newFilter);
+}

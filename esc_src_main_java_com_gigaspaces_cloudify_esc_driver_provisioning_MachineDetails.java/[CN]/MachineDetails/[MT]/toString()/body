@@ -1,0 +1,3 @@
+{
+  return "MachineDetails [machineId=" + machineId + ", privateAddress="+ privateAddress+ ", publicAddress="+ publicAddress+ ", clusterAddress="+ clusterAddress+ ", gigaspacesInstalled="+ cloudifyInstalled+ ", agentRunning="+ agentRunning+ ", installationDirectory="+ installationDirectory+ "]";
+}

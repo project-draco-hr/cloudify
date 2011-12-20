@@ -1,0 +1,4 @@
+{
+  this.properties=properties;
+  this.config=new CloudMachineProvisioningConfig(properties);
+}

@@ -1,11 +1,11 @@
 {
   Set<? extends NodeMetadata> nodes=null;
   try {
-    logger.info("JClouds Deployer is creating a new server with tag: " + serverName + ". This may take a few minutes");
+    logger.info("Cloudify Deployer is creating a new server with tag: " + serverName + ". This may take a few minutes");
     nodes=createServersWithRetry(serverName,1,getTemplate());
   }
  catch (  final RunNodesException e) {
-    throw new InstallerException("Failed to start Cloud server with JClouds",e);
+    throw new InstallerException("Failed to start Cloud server",e);
   }
   if (nodes.isEmpty()) {
     throw new IllegalStateException("Failed to create server");

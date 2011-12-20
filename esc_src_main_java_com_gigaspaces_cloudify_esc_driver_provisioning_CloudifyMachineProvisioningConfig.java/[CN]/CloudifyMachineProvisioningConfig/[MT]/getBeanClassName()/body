@@ -1,0 +1,3 @@
+{
+  return ElasticMachineProvisioningCloudifyAdapter.class.getName();
+}
