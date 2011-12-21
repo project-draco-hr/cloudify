@@ -45,7 +45,7 @@ catch (  PackagingException e) {
     zone=serviceName;
   }
   String templateName=null;
-  if (service.getCompute() != null) {
+  if (service != null && service.getCompute() != null) {
     templateName=service.getCompute().getTemplate();
     if (templateName == null) {
       templateName="";
