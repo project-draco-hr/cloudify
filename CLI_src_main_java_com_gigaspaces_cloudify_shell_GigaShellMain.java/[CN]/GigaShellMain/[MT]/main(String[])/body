@@ -1,5 +1,6 @@
 {
   initializeLogConfiguration();
+  initializeProxyConfiguration();
   InputStream is=null;
   SequenceInputStream sis=null;
   InputStream exitInputStream=new ByteArrayInputStream(EXIT_COMMAND.getBytes());
