@@ -5,5 +5,13 @@
   if (Boolean.getBoolean(Constants.DISABLE_PROXY_CONFIGURATION_PROPERTY)) {
     return;
   }
-  SystemDefaultProxySelector.setup();
+  if (isProxySettingsDefined()) {
+    return;
+  }
+  try {
+    SystemDefaultProxySelector.setup();
+  }
+ catch (  Exception e) {
+    Logger.getLogger(GigaShellMain.class.getName()).log(Level.WARNING,"Failed using system proxy configuration, falling back to no proxy.",new CLIException(e));
+  }
 }

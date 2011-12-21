@@ -1,0 +1,11 @@
+{
+  try {
+    final URI someURI=new URI("http://www.example.com");
+    ProxySelector defaultSelector=ProxySelector.getDefault();
+    List<Proxy> proxies=defaultSelector.select(someURI);
+    return !(proxies.size() == 0) && !proxies.get(0).equals(Proxy.NO_PROXY);
+  }
+ catch (  URISyntaxException e) {
+    return false;
+  }
+}
