@@ -1,9 +1,0 @@
-{
-  this.shutdownHookThread=new Thread(new Runnable(){
-    @Override public void run(){
-      shutdownHook();
-    }
-  }
-);
-  Runtime.getRuntime().addShutdownHook(this.shutdownHookThread);
-}

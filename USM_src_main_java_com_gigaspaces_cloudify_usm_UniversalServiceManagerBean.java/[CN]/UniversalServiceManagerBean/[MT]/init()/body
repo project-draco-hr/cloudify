@@ -5,5 +5,4 @@
   boolean existingProcessFound=checkForPIDFile();
   initEvents();
   reset(existingProcessFound);
-  initShutdownHook();
 }
