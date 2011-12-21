@@ -2,6 +2,24 @@
   if (timeoutInMinutes < 0) {
     throw new CLIException("-timeout cannot be negative");
   }
+  boolean notHighlyAvailableManagementSpace=false;
+  String cloudFilePath=System.getenv().get("CLOUD_FILE");
+  if (cloudFilePath != null) {
+    File cloudFile=new File(cloudFilePath);
+    if (cloudFile.isFile()) {
+      try {
+        Cloud2 cloud=ServiceReader.readCloud(cloudFile);
+        if (cloud.getProvider() != null) {
+          int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+          notHighlyAvailableManagementSpace=numberOfManagementMachines < 2;
+        }
+      }
+ catch (      IOException e) {
+      }
+catch (      DSLException e) {
+      }
+    }
+  }
   LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
@@ -11,6 +29,7 @@
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setNoWebServices(noWebServices);
   installer.setNoManagementSpace(noManagementSpace);
+  installer.setNotHighlyAvailableManagementSpace(notHighlyAvailableManagementSpace);
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.startManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);

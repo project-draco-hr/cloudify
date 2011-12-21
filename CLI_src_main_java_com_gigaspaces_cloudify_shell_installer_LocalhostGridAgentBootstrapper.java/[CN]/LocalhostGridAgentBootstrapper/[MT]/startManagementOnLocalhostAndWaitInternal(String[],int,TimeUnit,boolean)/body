@@ -66,7 +66,7 @@
         waitForManagementServices.add(restInstaller);
       }
       if (!noManagementSpace) {
-        final boolean highlyAvailable=!isLocalCloud;
+        final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
         ManagementSpaceServiceInstaller managementSpaceInstaller=new ManagementSpaceServiceInstaller();
         managementSpaceInstaller.setAdmin(agent.getAdmin());
         managementSpaceInstaller.setVerbose(verbose);
