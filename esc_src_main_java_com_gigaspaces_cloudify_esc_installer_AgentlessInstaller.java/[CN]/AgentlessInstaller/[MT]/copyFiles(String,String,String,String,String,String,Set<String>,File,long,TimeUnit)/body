@@ -28,7 +28,7 @@
   logger.info("Copying files to: " + scpTarget + " from local dir: "+ localDir.getName().getPath()+ " excluding "+ excludedFiles.toString());
   try {
     remoteDir.copyFrom(localDir,new FileSelector(){
-      public boolean includeFile(      final FileSelectInfo fileInfo) throws Exception {
+      @Override public boolean includeFile(      final FileSelectInfo fileInfo) throws Exception {
         if (excludedFiles.contains(fileInfo.getFile().getName().getBaseName())) {
           logger.fine(fileInfo.getFile().getName().getBaseName() + " excluded");
           return false;
@@ -49,7 +49,7 @@
         }
         return false;
       }
-      public boolean traverseDescendents(      final FileSelectInfo fileInfo) throws Exception {
+      @Override public boolean traverseDescendents(      final FileSelectInfo fileInfo) throws Exception {
         return true;
       }
     }

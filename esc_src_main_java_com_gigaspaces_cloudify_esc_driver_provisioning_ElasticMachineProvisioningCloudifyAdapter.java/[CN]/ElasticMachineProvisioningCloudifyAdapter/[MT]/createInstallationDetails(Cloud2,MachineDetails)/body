@@ -4,7 +4,17 @@
   details.setRemoteDir(cloud.getProvider().getRemoteDirectory());
   details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
   details.setZones(StringUtils.join(cloud.getProvider().getZones().toArray(new String[0]),",",0,cloud.getProvider().getZones().size()));
-  details.setKeyFile(cloud.getUser().getKeyFile());
+  if (cloud.getUser().getKeyFile() != null) {
+    logger.info("Key file has been specified in cloud configuration: " + cloud.getUser().getKeyFile());
+    File keyFile=new File(cloud.getProvider().getLocalDirectory(),cloud.getUser().getKeyFile());
+    if (keyFile.exists()) {
+      details.setKeyFile(keyFile.getAbsolutePath());
+      logger.info("Using key file: " + keyFile);
+    }
+ else {
+      throw new FileNotFoundException("Could not find key file matching specified cloud configuration key file: " + cloud.getUser().getKeyFile() + ". Tried: "+ keyFile+ " but file does not exist");
+    }
+  }
   details.setPrivateIp(md.getPrivateAddress());
   details.setPublicIp(md.getPublicAddress());
   details.setLocator(this.lookupLocatorsString);

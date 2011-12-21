@@ -1,6 +1,12 @@
 {
   final AgentlessInstaller installer=new AgentlessInstaller();
-  InstallationDetails installationDetails=createInstallationDetails(cloud,machineDetails);
+  InstallationDetails installationDetails;
+  try {
+    installationDetails=createInstallationDetails(cloud,machineDetails);
+  }
+ catch (  FileNotFoundException e) {
+    throw new ElasticMachineProvisioningException("Failed to create installation details for agent: " + e.getMessage(),e);
+  }
   logger.info("Starting agentless installation process on started machine with installation details: " + installationDetails);
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
   try {
