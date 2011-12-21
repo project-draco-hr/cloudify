@@ -3,7 +3,6 @@
   logger.info("Deploying service with template: " + templateName);
   String actualTemplateName=templateName;
   if ((templateName == null) || templateName.length() == 0) {
-    Cloud2 cloud=getCloud();
     if (cloud.getTemplates().size() == 0) {
       throw new IllegalStateException("Cloud configuration has no compute template defined!");
     }

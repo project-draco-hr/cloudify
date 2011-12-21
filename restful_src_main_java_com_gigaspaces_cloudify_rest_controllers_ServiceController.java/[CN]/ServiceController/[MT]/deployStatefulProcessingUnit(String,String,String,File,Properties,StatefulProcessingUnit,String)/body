@@ -1,7 +1,4 @@
 {
-  Cloud2 cloud=getCloud();
-  CloudTemplate template=getComputeTemplate(cloud,templateName);
-  validateAndPrepareStatefulSla(serviceName,puConfig.getSla(),cloud,template);
   File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int maxMemoryCapacityInMB=puConfig.getSla().getMaxMemoryCapacity();
@@ -19,6 +16,8 @@
     }
   }
  else {
+    CloudTemplate template=getComputeTemplate(cloud,templateName);
+    validateAndPrepareStatefulSla(serviceName,puConfig.getSla(),cloud,template);
     CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
     String locators=extractLocators(admin);
     config.setLocator(locators);

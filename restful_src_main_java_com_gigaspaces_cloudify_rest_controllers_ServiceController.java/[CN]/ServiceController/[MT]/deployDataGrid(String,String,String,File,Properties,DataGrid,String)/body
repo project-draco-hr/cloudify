@@ -1,7 +1,4 @@
 {
-  Cloud2 cloud=getCloud();
-  CloudTemplate template=getComputeTemplate(cloud,templateName);
-  validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
   final int containerMemoryInMB=dataGridConfig.getSla().getMemoryCapacityPerContainer();
   final int maxMemoryInMB=dataGridConfig.getSla().getMaxMemoryCapacity();
   final int reservedMemoryCapacityPerMachineInMB=256;
@@ -18,6 +15,8 @@
     }
   }
  else {
+    CloudTemplate template=getComputeTemplate(cloud,templateName);
+    validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
     long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
     CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
     String locators=extractLocators(admin);

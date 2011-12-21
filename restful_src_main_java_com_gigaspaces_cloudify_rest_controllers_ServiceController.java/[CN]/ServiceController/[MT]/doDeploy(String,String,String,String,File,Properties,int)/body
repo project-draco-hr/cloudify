@@ -1,5 +1,4 @@
 {
-  final Cloud2 cloud=getCloud();
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
   final int reservedMemoryCapacityPerMachineInMB=256;

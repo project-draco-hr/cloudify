@@ -1,7 +1,4 @@
 {
-  Cloud2 cloud=getCloud();
-  CloudTemplate template=getComputeTemplate(cloud,templateName);
-  validateAndPrepareStatelessSla(puConfig.getSla(),cloud,template);
   File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
@@ -18,6 +15,8 @@
     }
   }
  else {
+    CloudTemplate template=getComputeTemplate(cloud,templateName);
+    validateAndPrepareStatelessSla(puConfig.getSla(),cloud,template);
     long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
     CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
     String locators=extractLocators(admin);
