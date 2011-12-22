@@ -58,11 +58,6 @@ catch (  PackagingException e) {
   if (serviceFile.isDirectory()) {
     FileUtils.deleteQuietly(packedFile.getParentFile());
   }
-  try {
-    adminFacade.waitForServiceInstances(serviceName,currentApplicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
-    return getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
-  }
- catch (  CLIException ex) {
-    return getFormattedMessage("service_install_failed",Color.RED,serviceName);
-  }
+  adminFacade.waitForServiceInstances(serviceName,currentApplicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
+  return getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
 }
