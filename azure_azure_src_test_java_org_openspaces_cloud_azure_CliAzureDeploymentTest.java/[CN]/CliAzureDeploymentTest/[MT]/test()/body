@@ -22,7 +22,7 @@
     }
   }
 );
-  List<String> connectCommand=Arrays.asList("azure:connect-app","--verbose","-azure-svc",AZURE_HOSTED_SERVICE);
+  List<String> connectCommand=Arrays.asList("azure:connect-app","--verbose","-timeout 5","-azure-svc",AZURE_HOSTED_SERVICE);
   List<String> installApplicationCommand=Arrays.asList("install-application","--verbose",applicationAbsolutePath);
   commands.add(connectCommand);
   commands.add(installApplicationCommand);
