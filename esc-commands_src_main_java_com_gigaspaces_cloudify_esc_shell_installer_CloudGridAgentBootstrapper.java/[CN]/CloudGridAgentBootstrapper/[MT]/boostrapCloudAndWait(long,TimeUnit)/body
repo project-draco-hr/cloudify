@@ -18,14 +18,25 @@
     if (servers.length == 0) {
       throw new IllegalArgumentException("Received zero management servers from provisioning implementation");
     }
+    if (logger.isLoggable(Level.INFO)) {
+      for (      MachineDetails server : servers) {
+        logServerDetails(server);
+      }
+    }
     if (servers[0].isAgentRunning()) {
-      logger.info("Using existing management servers");
+      throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. Please shut them down before continuing");
     }
  else {
       startManagememntProcesses(servers,end);
     }
     for (    MachineDetails server : servers) {
-      String ipAddress=server.getIp();
+      String ipAddress=null;
+      if (cloud.getConfiguration().isBootstrapManagementOnPublicIp()) {
+        ipAddress=server.getPublicAddress();
+      }
+ else {
+        ipAddress=server.getPrivateAddress();
+      }
       URL restAdminUrl=new URI("http",null,ipAddress,REST_GATEWAY_PORT,null,null,null).toURL();
       URL webUIUrl=new URI("http",null,ipAddress,WEBUI_PORT,null,null,null).toURL();
       waitForConnection(restAdminUrl,Utils.millisUntil(end),TimeUnit.MILLISECONDS);

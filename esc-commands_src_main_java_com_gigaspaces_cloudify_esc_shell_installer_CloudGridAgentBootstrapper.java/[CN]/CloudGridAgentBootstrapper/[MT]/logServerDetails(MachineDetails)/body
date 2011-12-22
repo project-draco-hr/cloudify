@@ -1,0 +1,7 @@
+{
+  if (logger.isLoggable(Level.INFO)) {
+    logger.info(nodePrefix(server) + "Cloud Server was created.");
+    logger.info(nodePrefix(server) + "Public IP: " + (server.getPublicAddress() == null ? "" : server.getPublicAddress()));
+    logger.info(nodePrefix(server) + "Private IP: " + (server.getPrivateAddress() == null ? "" : server.getPrivateAddress()));
+  }
+}

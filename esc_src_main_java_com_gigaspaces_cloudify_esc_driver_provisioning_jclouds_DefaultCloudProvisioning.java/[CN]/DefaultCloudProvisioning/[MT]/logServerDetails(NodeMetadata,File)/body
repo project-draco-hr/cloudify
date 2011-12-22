@@ -11,11 +11,11 @@
     logger.info(nodePrefix(server) + "Private IP: " + Arrays.toString(server.getPrivateAddresses().toArray()));
     logger.info(nodePrefix(server) + "Target IP for connection: " + server.getPrivateAddresses().iterator().next());
     if (tempFile == null) {
-      logger.info(nodePrefix(server) + "Connect with putty using: putty -pw " + server.getCredentials().credential+ " root@"+ server.getPublicAddresses().toArray()[0]);
+      logger.info(nodePrefix(server) + "Connect with: ssh -pw " + server.getCredentials().credential+ " root@"+ server.getPublicAddresses().toArray()[0]);
     }
  else {
       if (server.getPublicAddresses().size() > 0) {
-        logger.info(nodePrefix(server) + "Connect with putty using: putty -i " + tempFile.getAbsolutePath()+ " "+ server.getCredentials().identity+ "@"+ server.getPublicAddresses().toArray()[0]);
+        logger.info(nodePrefix(server) + "Connect using: ssh -i " + tempFile.getAbsolutePath()+ " "+ server.getCredentials().identity+ "@"+ server.getPublicAddresses().toArray()[0]);
       }
  else {
         logger.info(nodePrefix(server) + "Server's is starting but its public address is not available.");

@@ -1,4 +1,11 @@
 {
+  String templateName;
+  if (originalTemplateName == null) {
+    templateName=this.defaultTemplateName;
+  }
+ else {
+    templateName=originalTemplateName;
+  }
   Service service=null;
   File projectDir=null;
   if (srcFile.getName().endsWith(".zip")) {

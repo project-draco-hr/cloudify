@@ -22,5 +22,6 @@
       md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
     }
   }
+  md.setUsePrivateAddress(true);
   return md;
 }

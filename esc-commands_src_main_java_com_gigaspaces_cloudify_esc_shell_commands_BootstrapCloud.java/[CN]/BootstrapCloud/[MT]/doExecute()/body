@@ -15,6 +15,13 @@
   installer.setVerbose(verbose);
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
-  installer.boostrapCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-  return getFormattedMessage("cloud_started_successfully",cloudProvider);
+  limitLoggingLevel();
+  logger.info(getFormattedMessage("bootstrapping_cloud"));
+  try {
+    installer.boostrapCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+    return getFormattedMessage("cloud_started_successfully",cloudProvider);
+  }
+  finally {
+    restoreLoggingLevel();
+  }
 }

@@ -1,0 +1,11 @@
+{
+  if (!this.verbose) {
+    loggerStates.clear();
+    for (    String loggerName : NON_VERBOSE_LOGGERS) {
+      Logger provisioningLogger=Logger.getLogger(loggerName);
+      Level logLevelBefore=provisioningLogger.getLevel();
+      provisioningLogger.setLevel(Level.WARNING);
+      loggerStates.put(loggerName,logLevelBefore);
+    }
+  }
+}

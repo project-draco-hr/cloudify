@@ -1,7 +1,7 @@
 {
   Set<? extends NodeMetadata> nodes=null;
   try {
-    logger.info("JClouds Deployer is creating new machines with group: " + groupName + ". This may take a few minutes");
+    logger.fine("JClouds Deployer is creating new machines with group: " + groupName + ". This may take a few minutes");
     nodes=createServersWithRetry(groupName,numberOfMachines,getTemplate());
   }
  catch (  final RunNodesException e) {

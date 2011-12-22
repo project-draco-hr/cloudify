@@ -15,6 +15,12 @@
   installer.setVerbose(verbose);
   installer.setForce(force);
   installer.setCloud(cloud);
-  installer.teardownCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-  return getFormattedMessage("cloud_terminated_successfully",cloudProvider);
+  limitLoggingLevel();
+  try {
+    installer.teardownCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+    return getFormattedMessage("cloud_terminated_successfully",cloudProvider);
+  }
+  finally {
+    restoreLoggingLevel();
+  }
 }

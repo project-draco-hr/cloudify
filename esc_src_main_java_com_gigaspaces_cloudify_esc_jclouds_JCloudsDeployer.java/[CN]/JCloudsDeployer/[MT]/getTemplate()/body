@@ -1,6 +1,6 @@
 {
   if (this.template == null) {
-    logger.info("Creating Cloud Template. This may take a few seconds");
+    logger.fine("Creating Cloud Template. This may take a few seconds");
     final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
     if ((this.imageId != null) && (this.imageId.length() > 0)) {
       builder.imageId(this.imageId);
@@ -13,7 +13,7 @@
     }
     this.template=builder.build();
     handleExtraOptions();
-    logger.info("Cloud Template is ready for use.");
+    logger.fine("Cloud Template is ready for use.");
   }
   return this.template;
 }

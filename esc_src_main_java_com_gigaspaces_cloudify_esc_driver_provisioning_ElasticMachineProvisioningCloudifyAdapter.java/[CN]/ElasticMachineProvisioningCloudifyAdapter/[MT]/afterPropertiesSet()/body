@@ -1,9 +1,16 @@
 {
   final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
+  if (cloudContents == null) {
+    throw new IllegalArgumentException("Cloud configuration was not set!");
+  }
   logger.info("Cloud contents passed in elastic properties: " + cloudContents);
   try {
     this.cloud=ServiceReader.readCloud(cloudContents);
     this.cloudTemplate=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
+    if (this.cloudTemplate == null) {
+      throw new IllegalArgumentException("Cloud template was not set!");
+    }
+    cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
     try {
       this.cloudifyProvisioning=(CloudifyProvisioning)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplate,false);

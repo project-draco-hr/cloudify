@@ -22,6 +22,7 @@
   details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
   details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   details.setAdmin(this.admin);
+  details.setUsername(md.getRemoteUsername());
   logger.info("Created new Installation Details: " + details);
   return details;
 }

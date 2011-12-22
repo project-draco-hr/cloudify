@@ -3,4 +3,4 @@ String applicationName
 String zone
 File srcFile
 Properties propsFile
-String templateName
+String originalTemplateName

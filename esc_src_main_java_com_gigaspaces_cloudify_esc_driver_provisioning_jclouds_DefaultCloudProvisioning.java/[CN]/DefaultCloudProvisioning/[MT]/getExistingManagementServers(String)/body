@@ -18,6 +18,7 @@
     result[i]=createMachineDetailsFromNode(node);
     result[i].setAgentRunning(true);
     result[i].setCloudifyInstalled(true);
+    i++;
   }
   return result;
 }
