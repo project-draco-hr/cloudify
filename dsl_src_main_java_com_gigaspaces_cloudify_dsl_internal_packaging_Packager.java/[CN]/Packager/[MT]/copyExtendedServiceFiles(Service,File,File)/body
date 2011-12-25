@@ -1,8 +1,9 @@
 {
   LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
   File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
+  File currentExtendedServiceContext=recipeFile;
   for (  String extendedServicePath : extendedServicesPaths) {
-    final File extendedServiceFile=locateServiceFile(recipeFile,extendedServicePath);
+    final File extendedServiceFile=locateServiceFile(currentExtendedServiceContext,extendedServicePath);
     if (extendedServiceFile.getParentFile().equals(recipeFile.getParentFile()))     continue;
     File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
     logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
@@ -21,5 +22,6 @@
     }
 );
     extendingScriptFile=localExtendedServiceFile;
+    currentExtendedServiceContext=extendedServiceFile;
   }
 }
