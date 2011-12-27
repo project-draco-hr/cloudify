@@ -1,0 +1,4 @@
+{
+  if (monitor == null)   return new NullProgressMonitor();
+  return monitor;
+}

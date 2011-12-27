@@ -1,0 +1,9 @@
+{
+  AzureConfiguration aConfig=configuration;
+  if (aConfig == null)   return;
+  IFolder serverConfiguration=getServer().getServerConfiguration();
+  aConfig.save(serverConfiguration,monitor);
+  AntRunner runner=new AntRunner();
+  runner.setBuildFileLocation(serverConfiguration.getLocation().toOSString() + "/package.xml");
+  runner.run(monitor);
+}

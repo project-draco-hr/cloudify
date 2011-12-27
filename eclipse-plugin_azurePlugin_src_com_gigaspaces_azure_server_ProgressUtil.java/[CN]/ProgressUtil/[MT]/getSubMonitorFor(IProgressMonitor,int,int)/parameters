@@ -1,0 +1,3 @@
+IProgressMonitor monitor
+int ticks
+int style
