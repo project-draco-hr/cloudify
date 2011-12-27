@@ -1,0 +1,3 @@
+{
+  super(azureConfigExeFile,null,subscriptionId,certificateThumbprint,verbose);
+}

@@ -1,0 +1,7 @@
+{
+  AzureDeployApplication deploy=new AzureDeployApplication();
+  deploy.setAzureDeploymentName("gs-hosted-service");
+  deploy.setAzureHostedServiceName("gs-deployment");
+  deploy.setAzureRemoteDesktopPfxFilePassword("123456");
+  deploy.deploy();
+}

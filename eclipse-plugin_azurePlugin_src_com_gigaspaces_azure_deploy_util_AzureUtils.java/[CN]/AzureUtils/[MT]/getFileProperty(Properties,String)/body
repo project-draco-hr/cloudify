@@ -1,0 +1,11 @@
+{
+  String pathname=getProperty(properties,name);
+  if (pathname == null || pathname.length() == 0) {
+    throw new AzureDeploymentException("Cannot find property " + name + " in file "+ AzureUtils.getAzurePropertiesFile().getAbsolutePath());
+  }
+  File file=toAbsoluteFile(pathname);
+  if (!file.exists()) {
+    throw new AzureDeploymentException(file.getAbsolutePath() + " does not exist.");
+  }
+  return file;
+}

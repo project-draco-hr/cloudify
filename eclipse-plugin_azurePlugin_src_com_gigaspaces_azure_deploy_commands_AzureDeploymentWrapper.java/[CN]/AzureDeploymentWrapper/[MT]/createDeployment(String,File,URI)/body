@@ -1,0 +1,3 @@
+{
+  getAzureDeployment().createDeployment(azureHostedServiceName,azureDeploymentName,azureDeploymentName,AzureSlot.fromString(azureDeploymentSlotName),cscfgFile,cspkgUri);
+}

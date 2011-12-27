@@ -1,0 +1,9 @@
+{
+  try {
+    Node node=(Node)xPath.evaluate(xPathExpression,item,XPathConstants.NODE);
+    node.setNodeValue(nodeValue);
+  }
+ catch (  XPathExpressionException e) {
+    throw new XMLXPathEditorException(e);
+  }
+}

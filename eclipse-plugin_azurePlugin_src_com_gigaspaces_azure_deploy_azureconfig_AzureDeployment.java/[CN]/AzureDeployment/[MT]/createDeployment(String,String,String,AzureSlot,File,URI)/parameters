@@ -1,0 +1,6 @@
+String hostedServiceName
+String deploymentName
+String deploymentLabel
+AzureSlot deploymentSlot
+File cscfgFile
+URI packageUrl

@@ -1,0 +1,15 @@
+{
+  Properties properties=AzureUtils.getAzureProperties();
+  String subscriptionId=AzureUtils.getProperty(properties,"subscriptionId");
+  String certificateThumbprint=AzureUtils.getProperty(properties,"certificateThumbprint");
+  AzureDeploymentWrapper azureDeploymentWrapper=new AzureDeploymentWrapper();
+  azureDeploymentWrapper.setVerbose(verbose);
+  azureDeploymentWrapper.setAzureHostedServiceName(azureHostedServiceName);
+  azureDeploymentWrapper.setAzureDeploymentSlotName(azureDeploymentSlotName);
+  azureDeploymentWrapper.setCertificateThumbprint(certificateThumbprint);
+  azureDeploymentWrapper.setSubscriptionId(subscriptionId);
+  AzureDeploymentConfigurationFile configFile=azureDeploymentWrapper.getDeploymentConfig();
+  configFile.setNumberOfInstances(roleName,instances);
+  configFile.flush();
+  azureDeploymentWrapper.updateDeploymentConfig(configFile);
+}

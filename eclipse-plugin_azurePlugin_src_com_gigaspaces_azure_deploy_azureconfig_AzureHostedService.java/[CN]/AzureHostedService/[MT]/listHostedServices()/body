@@ -1,0 +1,3 @@
+{
+  return executeAzureConfig(argument(LIST_HOSTED_SERVICES_FLAG)).split(Pattern.quote("\n"));
+}

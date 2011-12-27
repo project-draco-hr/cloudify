@@ -1,0 +1,4 @@
+{
+  File propertiesFile=getAzurePropertiesFile();
+  return loadProperties(propertiesFile);
+}
