@@ -1,3 +1,6 @@
 {
+  AzureServerWizardProperties.setJreLocation(composite.getJreLocation());
+  AzureServerWizardProperties.setWebServerLocation(composite.getWebServerLocation());
+  AzureServerWizardProperties.setWebServerPort(composite.getWebServerPort());
   super.performFinish(monitor);
 }

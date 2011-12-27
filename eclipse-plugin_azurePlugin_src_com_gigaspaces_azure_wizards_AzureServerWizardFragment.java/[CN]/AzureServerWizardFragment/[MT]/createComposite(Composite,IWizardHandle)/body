@@ -1,0 +1,4 @@
+{
+  composite=new AzureServerWizardComposite(parent,handle);
+  return composite;
+}
