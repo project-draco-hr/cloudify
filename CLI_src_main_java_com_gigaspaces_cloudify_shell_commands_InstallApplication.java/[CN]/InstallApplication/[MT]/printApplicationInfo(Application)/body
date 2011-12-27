@@ -5,7 +5,7 @@
       logger.info("Service [" + service.getName() + "] "+ service.getNumInstances()+ " planned instances");
     }
  else {
-      logger.info("Service [" + service.getName() + "] depends on "+ service.getDependsOn().toString()+ " planned "+ service.getNumInstances()+ " instances");
+      logger.info("Service [" + service.getName() + "] depends on "+ service.getDependsOn().toString()+ " "+ service.getNumInstances()+ " planned instances");
     }
   }
 }
