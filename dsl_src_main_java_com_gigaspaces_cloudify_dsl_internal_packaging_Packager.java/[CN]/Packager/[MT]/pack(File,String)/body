@@ -1,0 +1,10 @@
+{
+  File packed=pack(recipeDirOrFile);
+  File destFile=new File(packed.getParent(),fileName + ".zip");
+  if (destFile.exists()) {
+    destFile.delete();
+  }
+  packed.renameTo(destFile);
+  packed=destFile;
+  return packed;
+}
