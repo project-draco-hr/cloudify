@@ -29,6 +29,7 @@
   webServerPortText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       webServerPort=webServerPortText.getText();
+      validate();
     }
   }
 );
