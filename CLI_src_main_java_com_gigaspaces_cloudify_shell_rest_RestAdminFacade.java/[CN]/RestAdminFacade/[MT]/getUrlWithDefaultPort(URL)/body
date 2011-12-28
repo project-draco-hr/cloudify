@@ -1,0 +1,6 @@
+{
+  StringBuffer url=new StringBuffer(urlObj.toString());
+  int portIndex=url.indexOf("/","http://".length());
+  url=url.insert(portIndex,DEFAULT_PORT);
+  return new URL(url.toString());
+}

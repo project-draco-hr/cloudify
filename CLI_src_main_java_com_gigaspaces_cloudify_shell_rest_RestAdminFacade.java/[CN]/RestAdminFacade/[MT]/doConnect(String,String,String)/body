@@ -8,6 +8,9 @@
   URL urlObj;
   try {
     urlObj=new URL(url);
+    if (urlObj.getPort() == -1) {
+      urlObj=getUrlWithDefaultPort(urlObj);
+    }
   }
  catch (  MalformedURLException e) {
     throw new ErrorStatusException("could_not_parse_url",url);
