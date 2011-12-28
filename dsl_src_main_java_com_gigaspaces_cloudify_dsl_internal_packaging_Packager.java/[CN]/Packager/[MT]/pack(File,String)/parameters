@@ -1,2 +1,2 @@
 File recipeDirOrFile
-String fileName
+String destFileName

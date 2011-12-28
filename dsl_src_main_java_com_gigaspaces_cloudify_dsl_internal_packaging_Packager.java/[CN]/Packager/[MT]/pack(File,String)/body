@@ -1,10 +1,13 @@
 {
   File packed=pack(recipeDirOrFile);
-  File destFile=new File(packed.getParent(),fileName + ".zip");
+  File destFile=new File(packed.getParent(),destFileName + ".zip");
   if (destFile.exists()) {
-    destFile.delete();
+    FileUtils.deleteQuietly(destFile);
   }
-  packed.renameTo(destFile);
-  packed=destFile;
+  if (packed.renameTo(destFile)) {
+    FileUtils.deleteQuietly(packed);
+    return destFile;
+  }
+  logger.info("Failed to rename " + packed.getName() + " to "+ destFile.getName());
   return packed;
 }
