@@ -8,6 +8,7 @@
   final Set<USMEvent> allEvents=new HashSet<USMEvent>();
   initEvents(allEvents,getInitListeners(),comp);
   initEvents(allEvents,getPreInstallListeners(),comp);
+  initEvents(allEvents,getInstallListeners(),comp);
   initEvents(allEvents,getPostInstallListeners(),comp);
   initEvents(allEvents,getPreStartListeners(),comp);
   initEvents(allEvents,getPostStartListeners(),comp);

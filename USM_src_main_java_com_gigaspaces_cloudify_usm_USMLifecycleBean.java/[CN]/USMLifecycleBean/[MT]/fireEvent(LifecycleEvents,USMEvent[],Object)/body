@@ -13,6 +13,8 @@ case INIT:
 case PRE_INSTALL:
 er=((PreInstallListener)listener).onPreInstall();
 break;
+case INSTALL:
+er=((InstallListener)listener).onInstall();
 case POST_INSTALL:
 er=((PostInstallListener)listener).onPostInstall();
 break;
