@@ -4,7 +4,6 @@
   Assert.assertNotNull(LOCAL_WORKING_DIR_SYSTEM_PROPERTY_KEY + " system property has to exists",localWorkingDirPath);
   File localWorkingDir=new File(localWorkingDirPath);
   Assert.assertTrue(localWorkingDir.getPath() + " does not exist",localWorkingDir.isDirectory());
-  File gigaSpacesCloudifyZip=new File(localWorkingDir,GIGASPACES_LATEST_ZIP);
   File gigaSpacesCloudifyDir=new File(localWorkingDir,GIGASPACES_LATEST_HOME);
   Assert.assertTrue(gigaSpacesCloudifyDir.getPath() + " does not exist",gigaSpacesCloudifyDir.isDirectory());
   applicationFile=new File(gigaSpacesCloudifyDir,RELATIVE_APPLICATION_EXAMPLE_PATH);
@@ -12,13 +11,6 @@
   cliExecutablePath=new File(gigaSpacesCloudifyDir,RELATIVE_CLI_PATH);
   File azureConfigExec=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_CONFIG_EXEC_PATH);
   File azurePropertiesFile=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_PROPERTIES_PATH);
-  boolean runMe=false;
-  if (runMe && gigaSpacesCloudifyZip.isFile()) {
-    log("Uploading new vesrion of gigaspaces cloudify to blob store");
-    AzureStorageContainer container=new AzureStorageContainer(AZURE_ACCOUNT_NAME,AZURE_ACCOUNT_KEY,AZURE_CONTAINER_NAME);
-    container.connect();
-    container.putBlob(GIGASPACES_LATEST_ZIP,gigaSpacesCloudifyZip.getAbsolutePath());
-  }
   Properties newAzureProps=new Properties();
   newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_NAME_KEY,AZURE_ACCOUNT_NAME);
   newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_KEY_KEY,AZURE_ACCOUNT_KEY);
