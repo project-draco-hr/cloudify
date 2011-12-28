@@ -22,5 +22,7 @@
     }
 );
   }
+  session.put(Constants.ACTIVE_APP,"default");
+  GigaShellMain.getInstance().setCurrentApplicationName("default");
   return getFormattedMessage("application_uninstalled_succesfully",this.applicationName);
 }
