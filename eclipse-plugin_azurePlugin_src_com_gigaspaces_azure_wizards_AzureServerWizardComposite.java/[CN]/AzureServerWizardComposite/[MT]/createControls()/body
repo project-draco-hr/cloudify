@@ -8,21 +8,24 @@
   gridData.horizontalSpan=1;
   GridData fillData=new GridData(SWT.FILL,SWT.FILL,true,true);
   fillData.heightHint=100;
-  final Text jreLocationText=SWTUtil.createLabeledPath("JRE to use with Windows Azure location:","",parent);
+  final Composite topComposite=new Composite(parent,SWT.NONE);
+  topComposite.setLayout(new GridLayout(3,false));
+  topComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+  final Text jreLocationText=SWTUtil.createLabeledPath("JRE to use with Windows Azure location:","",topComposite);
   jreLocationText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       jreLocation=jreLocationText.getText();
     }
   }
 );
-  final Text webServerLocationText=SWTUtil.createLabeledPath("Web server zip location:","",parent);
+  final Text webServerLocationText=SWTUtil.createLabeledPath("Web server zip location:","",topComposite);
   webServerLocationText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       webServerLocation=webServerLocationText.getText();
     }
   }
 );
-  final Text webServerPortText=SWTUtil.createLabeledText("Web server port to use:","8080",parent);
+  final Text webServerPortText=SWTUtil.createLabeledText("Web server port to use:","8080",topComposite);
   webServerPortText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       webServerPort=webServerPortText.getText();
