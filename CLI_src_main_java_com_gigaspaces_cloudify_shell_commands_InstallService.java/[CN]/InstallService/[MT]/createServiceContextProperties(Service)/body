@@ -7,7 +7,7 @@
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE,service.getType());
   }
   if (service.getIcon() != null) {
-    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,service.getIcon());
+    contextProperties.setProperty(CloudifyConstants.SERVICE_EXTERNAL_FOLDER + CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,service.getIcon());
   }
   if (service.getNetwork() != null) {
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
