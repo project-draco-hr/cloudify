@@ -15,6 +15,7 @@ er=((PreInstallListener)listener).onPreInstall();
 break;
 case INSTALL:
 er=((InstallListener)listener).onInstall();
+break;
 case POST_INSTALL:
 er=((PostInstallListener)listener).onPostInstall();
 break;
