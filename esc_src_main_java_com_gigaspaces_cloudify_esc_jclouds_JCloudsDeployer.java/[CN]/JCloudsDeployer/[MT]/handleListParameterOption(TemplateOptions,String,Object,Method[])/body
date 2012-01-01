@@ -9,7 +9,7 @@
 catch (  NoSuchMethodException e) {
   }
   if (m != null) {
-    handleSingleParameterOption(templateOptions,entryKey,entryValue);
+    handleSingleParameterOption(templateOptions,entryKey,entryValue,templateOptionMethods);
   }
  else {
     @SuppressWarnings("unchecked") List<Object> paramList=(List<Object>)entryValue;

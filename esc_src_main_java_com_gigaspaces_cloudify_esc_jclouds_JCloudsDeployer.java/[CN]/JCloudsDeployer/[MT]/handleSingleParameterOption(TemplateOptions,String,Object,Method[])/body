@@ -1,0 +1,31 @@
+{
+  int numOfMethodsFound=0;
+  Exception invocationException=null;
+  for (  Method method : templateOptionsMethods) {
+    if (method.getName().equals(entryKey)) {
+      if (method.getParameterTypes().length == 1) {
+        try {
+          ++numOfMethodsFound;
+          logger.info("Invoking " + entryKey + ". Number of methods found so far: "+ numOfMethodsFound);
+          method.invoke(templateOptions,entryValue);
+          return;
+        }
+ catch (        IllegalArgumentException e) {
+          invocationException=e;
+        }
+catch (        IllegalAccessException e) {
+          invocationException=e;
+        }
+catch (        InvocationTargetException e) {
+          invocationException=e;
+        }
+      }
+    }
+  }
+  if (invocationException == null) {
+    throw new IllegalArgumentException("Failed to set template option: " + entryKey + " to value: "+ entryValue+ ". Could not find a matching method.");
+  }
+ else {
+    throw new IllegalArgumentException("Failed to set template option: " + entryKey + " to value: "+ entryValue+ ". An error was encountered while trying to set the option: "+ invocationException.getMessage(),invocationException);
+  }
+}

@@ -13,7 +13,7 @@ catch (  NoSuchMethodException e) {
       m.invoke(templateOptions);
     }
  catch (    Exception e) {
-      throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: "+ entryValue,e);
+      throw new IllegalArgumentException("Failed to set template option with name: " + entryKey,e);
     }
   }
  else {
@@ -30,7 +30,7 @@ catch (    NoSuchMethodException e) {
         m.invoke(templateOptions,(Object)null);
       }
  catch (      Exception e) {
-        throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: "+ entryValue,e);
+        throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: null",e);
       }
     }
  else {
