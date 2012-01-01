@@ -9,8 +9,11 @@
         logger.severe("No Password specified in cloud configuration - connection to the new machine is not possible.");
         throw new CloudProvisioningException("Cloud did not provider server credentials, and no credentials (password or key file) supplied with cloud configuration file");
       }
+      md.setRemotePassword(cloud.getConfiguration().getRemotePassword());
     }
-    tempFile=new File(cloud.getUser().getKeyFile());
+ else {
+      tempFile=new File(cloud.getUser().getKeyFile());
+    }
   }
  else   if (credential.startsWith("-----BEGIN RSA PRIVATE KEY-----")) {
     try {

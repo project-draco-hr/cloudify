@@ -9,7 +9,7 @@
   logger.info("New machine is starting");
   try {
     MachineDetails md=createMachineDetailsFromNode(node);
-    handleServerCredentials(node);
+    handleServerCredentials(node,md);
     waitUntilServerIsActive(node.getId(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
     return md;
   }
