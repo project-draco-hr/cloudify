@@ -16,4 +16,9 @@ catch (  PackagingException e) {
     e.printStackTrace();
     throw new CLIException("Packaging failed: " + e.getMessage(),e);
   }
+catch (  DSLException e) {
+    logger.log(Level.SEVERE,"DSL Parsing failed: " + e.getMessage(),e);
+    e.printStackTrace();
+    throw new CLIException("Packaging failed: " + e.getMessage(),e);
+  }
 }
