@@ -1,7 +1,7 @@
 {
   if (arg instanceof String) {
     List<String> commandLineStringInParts=convertCommandLineStringToParts((String)arg);
-    if (params != null) {
+    if (params != null && params.get(CloudifyConstants.INVOCATION_PARAMETERS_KEY) != null) {
       String customParams=params.get(CloudifyConstants.INVOCATION_PARAMETERS_KEY).toString();
       if (customParams != null) {
         List<String> paramsList=Arrays.asList(customParams.substring(1,customParams.length() - 1).split(", "));
