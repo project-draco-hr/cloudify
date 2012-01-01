@@ -4,3 +4,4 @@ int retries
 boolean redirectErrorStream
 File outputFile
 File errorFile
+Map<String,Object> params

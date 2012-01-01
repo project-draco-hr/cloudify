@@ -2,3 +2,4 @@ Object arg
 File workingDir
 int retries
 boolean redirectErrorStream
+Map<String,Object> params

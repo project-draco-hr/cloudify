@@ -2,13 +2,15 @@
   if (arg instanceof Closure<?>) {
     final Closure<?> closure=(Closure<?>)arg;
     try {
+      List<String> paramsList=new ArrayList<String>();
       for (      Map.Entry<String,Object> entry : params.entrySet()) {
-        if (entry.getKey() != CloudifyConstants.INVOCATION_PARAMETER_COMMAND_NAME) {
-          logger.fine("Adding parameter " + entry.getKey() + " having value of "+ entry.getValue());
-          closure.setProperty(entry.getKey(),entry.getValue());
+        if (entry.getKey().toString().equals(CloudifyConstants.INVOCATION_PARAMETERS_KEY)) {
+          logger.fine("Adding parameter " + entry.getKey() + " having value of "+ entry.getValue().toString());
+          paramsList=Arrays.asList(entry.getValue().toString().substring(1,entry.getValue().toString().length() - 1).split(", "));
+          logger.info("parameters have been added " + paramsList.toString());
         }
       }
-      Object result=closure.call();
+      Object result=closure.call(paramsList);
       return result;
     }
  catch (    final Exception e) {
@@ -16,7 +18,7 @@
       throw new USMException("Failed to execute closure " + e.getMessage(),e);
     }
   }
-  final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream);
+  final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,params);
   final BufferedReader reader=new BufferedReader(new InputStreamReader(proc.getInputStream()));
   String line=null;
   StringBuilder sb=new StringBuilder();

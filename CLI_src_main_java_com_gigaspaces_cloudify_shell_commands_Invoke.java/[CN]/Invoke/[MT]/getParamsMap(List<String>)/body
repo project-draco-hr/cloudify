@@ -1,11 +1,5 @@
 {
   Map<String,String> returnMap=new HashMap<String,String>();
-  for (  String customCommandString : parameters) {
-    String[] commandKeyValue=customCommandString.split("=");
-    if (commandKeyValue.length != 2) {
-      throw new CLIException("Parameter formatting mismatch.");
-    }
-    returnMap.put(commandKeyValue[0],commandKeyValue[1]);
-  }
+  returnMap.put(CloudifyConstants.INVOCATION_PARAMETERS_KEY,parameters.toString());
   return returnMap;
 }
