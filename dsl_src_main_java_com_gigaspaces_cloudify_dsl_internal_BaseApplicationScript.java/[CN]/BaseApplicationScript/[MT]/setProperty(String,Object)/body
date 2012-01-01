@@ -9,6 +9,9 @@
 catch (    PackagingException e) {
       throw new RuntimeException(e);
     }
+catch (    DSLException e) {
+      throw new RuntimeException(e);
+    }
   }
  else {
     applyPropertyToObject(this.activeObject,name,value);

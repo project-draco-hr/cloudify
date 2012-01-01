@@ -14,7 +14,7 @@
     FileUtils.copyDirectory(applicationDir,destApplicationFolder,SVNFileFilter.getFilter());
     for (    Service service : application.getServices()) {
       File extFolder=new File(destApplicationFolder + "/" + service.getName());
-      File recipeFile=ServiceReader.findServiceFile(new File(applicationDir + "/" + service.getName()));
+      File recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,new File(applicationDir + "/" + service.getName()));
       copyExtendedServiceFiles(service,recipeFile,extFolder);
     }
     applicationFolderToPack=destApplicationFolder;

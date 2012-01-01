@@ -18,6 +18,9 @@
 catch (  PackagingException e) {
     throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
   }
+catch (  DSLException e) {
+    throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
+  }
   Service service=result.getService();
   return service;
 }

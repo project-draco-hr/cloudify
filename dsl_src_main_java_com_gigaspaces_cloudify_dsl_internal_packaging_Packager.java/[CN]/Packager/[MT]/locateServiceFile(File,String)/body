@@ -1,6 +1,6 @@
 {
   File extendedServiceFile=new File(extendedServicePath);
   if (!extendedServiceFile.isAbsolute())   extendedServiceFile=new File(recipeFile.getParent() + "/" + extendedServicePath);
-  if (extendedServiceFile.isDirectory())   extendedServiceFile=ServiceReader.findServiceFile(extendedServiceFile);
+  if (extendedServiceFile.isDirectory())   extendedServiceFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,extendedServiceFile);
   return extendedServiceFile;
 }

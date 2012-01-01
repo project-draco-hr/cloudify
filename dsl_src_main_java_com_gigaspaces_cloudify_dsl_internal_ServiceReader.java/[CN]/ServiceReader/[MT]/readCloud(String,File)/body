@@ -1,21 +1,8 @@
 {
-  if (dslContents == null) {
-    throw new IllegalArgumentException("DSL contents cannot be null");
-  }
-  final GroovyShell gs=ServiceReader.createGroovyShellForCloud(dslFile);
-  Object result=null;
-  try {
-    result=gs.evaluate(dslContents,"cloud");
-  }
- catch (  final CompilationFailedException e) {
-    throw new IllegalArgumentException("The file " + dslFile + " could not be compiled",e);
-  }
-  if (result == null) {
-    throw new DSLException("The file: " + dslFile + " evaluates to null, not to a DSL object");
-  }
-  if (!(result instanceof Cloud2)) {
-    throw new DSLException("The file: " + dslFile + " did not evaluate to the required object type");
-  }
-  final Cloud2 cloud=(Cloud2)result;
+  DSLReader dslReader=new DSLReader();
+  dslReader.setCreateServiceContext(false);
+  dslReader.setDslContents(dslContents);
+  dslReader.setDslFile(dslFile);
+  final Cloud2 cloud=dslReader.readDslEntity(Cloud2.class);
   return cloud;
 }

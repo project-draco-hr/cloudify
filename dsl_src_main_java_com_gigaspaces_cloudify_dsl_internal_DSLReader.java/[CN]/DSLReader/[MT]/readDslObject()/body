@@ -1,0 +1,29 @@
+{
+  try {
+    init();
+  }
+ catch (  IOException e) {
+    throw new DSLException("Failed to initialize DSL Reader: " + e.getMessage(),e);
+  }
+  LinkedHashMap<Object,Object> properties=null;
+  try {
+    properties=createDSLProperties();
+  }
+ catch (  Exception e) {
+    throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
+  }
+  if (this.createServiceContext) {
+    this.context=new ServiceContext();
+  }
+  final GroovyShell gs=createGroovyShell(properties);
+  Object result=evaluateGroovyScript(gs);
+  if (this.createServiceContext) {
+    if (isRunningInGSC) {
+      this.context.init((Service)result,admin,workDir.getAbsolutePath(),clusterInfo);
+    }
+ else {
+      this.context.initInIntegratedContainer((Service)result,workDir.getAbsolutePath());
+    }
+  }
+  return result;
+}

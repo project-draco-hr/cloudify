@@ -1,0 +1,15 @@
+{
+  final File[] files=dir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.endsWith(fileNameSuffix);
+    }
+  }
+);
+  if (files.length > 1) {
+    throw new IllegalArgumentException("Found multiple configuration files: " + Arrays.toString(files) + ". "+ "Only one may be supplied in the folder.");
+  }
+  if (files.length == 0) {
+    throw new IllegalArgumentException("Cannot find configuration file in " + dir.getAbsolutePath());
+  }
+  return files[0];
+}

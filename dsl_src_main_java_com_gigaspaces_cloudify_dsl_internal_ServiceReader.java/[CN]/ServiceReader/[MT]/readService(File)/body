@@ -1,9 +1,11 @@
 {
-  File dslFile=serviceDirOrFile;
-  if (!dslFile.isFile()) {
-    dslFile=ServiceReader.findServiceFile(serviceDirOrFile);
+  if (dslFileOrDir.isFile()) {
+    return getServiceFromFile(dslFileOrDir);
   }
-  Service service=getServiceFromFile(dslFile);
-  validateFolderSize(serviceDirOrFile,service.getMaxJarSize());
-  return service;
+ else   if (dslFileOrDir.isDirectory()) {
+    return ServiceReader.getServiceFromFile(null,dslFileOrDir,null,null,null,true).getService();
+  }
+ else {
+    throw new IllegalArgumentException(dslFileOrDir + " is neither a file nor a directory");
+  }
 }

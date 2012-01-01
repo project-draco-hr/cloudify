@@ -1,0 +1,37 @@
+{
+  Object result=null;
+  if (this.dslContents == null) {
+    FileReader reader=null;
+    try {
+      reader=new FileReader(dslFile);
+      result=gs.evaluate(reader,"dslEntity");
+    }
+ catch (    final IOException e) {
+      throw new IllegalStateException("The file " + dslFile + " could not be read",e);
+    }
+catch (    MissingMethodException e) {
+      throw new IllegalArgumentException("Could not resolve DSL entry with name: " + e.getMethod(),e);
+    }
+catch (    MissingPropertyException e) {
+      throw new IllegalArgumentException("Could not resolve DSL entry with name: " + e.getProperty(),e);
+    }
+ finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        }
+ catch (        IOException e) {
+        }
+      }
+    }
+  }
+ else {
+    try {
+      result=gs.evaluate(this.dslContents,"dslEntity");
+    }
+ catch (    final CompilationFailedException e) {
+      throw new IllegalArgumentException("The file " + dslFile + " could not be compiled",e);
+    }
+  }
+  return result;
+}

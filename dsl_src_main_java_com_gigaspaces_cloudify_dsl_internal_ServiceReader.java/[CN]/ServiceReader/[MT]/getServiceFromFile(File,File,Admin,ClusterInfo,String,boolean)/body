@@ -1,30 +1,12 @@
 {
-  LinkedHashMap<Object,Object> properties=null;
-  try {
-    properties=createServiceProperties(dslFile,workDir,propertiesFileName);
-  }
- catch (  Exception e) {
-    String fileName=propertiesFileName;
-    if (fileName == null) {
-      fileName="<default properties file>";
-    }
-    throw new IllegalArgumentException("Failed to load properties file " + fileName,e);
-  }
-  final ServiceContext ctx=new ServiceContext();
-  final GroovyShell gs=ServiceReader.createGroovyShellForService(properties,ctx,dslFile);
-  Object result=evaluateGroovyScript(dslFile,gs);
-  if (result == null) {
-    throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a service object");
-  }
-  if (!(result instanceof Service)) {
-    throw new IllegalStateException("The file: " + dslFile + " did not evaluate to the required object type");
-  }
-  final Service service=(Service)result;
-  if (isRunningInGSC) {
-    ctx.init(service,admin,workDir.getAbsolutePath(),clusterInfo);
-  }
- else {
-    ctx.initInIntegratedContainer(service,workDir.getAbsolutePath());
-  }
-  return new DSLServiceCompilationResult(service,ctx,dslFile);
+  DSLReader dslReader=new DSLReader();
+  dslReader.setAdmin(admin);
+  dslReader.setClusterInfo(clusterInfo);
+  dslReader.setPropertiesFileName(propertiesFileName);
+  dslReader.setRunningInGSC(isRunningInGSC);
+  dslReader.setDslFile(dslFile);
+  dslReader.setWorkDir(workDir);
+  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  Service service=dslReader.readDslEntity(Service.class);
+  return new DSLServiceCompilationResult(service,dslReader.getContext(),dslFile);
 }

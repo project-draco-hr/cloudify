@@ -1,3 +1,0 @@
-{
-  return ServiceReader.createGroovyShell(BaseDslScript.class.getName(),properties,context,dslFile);
-}

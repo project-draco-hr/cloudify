@@ -1,0 +1,21 @@
+{
+  if (dslFile != null) {
+    return;
+  }
+  if (dslContents != null) {
+    return;
+  }
+  if (workDir == null) {
+    throw new IllegalArgumentException("both dslFile and workDir are null");
+  }
+  if (this.dslFileNameSuffix == null) {
+    throw new IllegalArgumentException("dslFileName suffix has not been set");
+  }
+  if (!workDir.exists()) {
+    throw new FileNotFoundException("Cannot find " + workDir.getAbsolutePath());
+  }
+  if (!workDir.isDirectory()) {
+    throw new IllegalArgumentException(workDir.getAbsolutePath() + " must be a directory");
+  }
+  this.dslFile=findDefaultDSLFile(dslFileNameSuffix,workDir);
+}

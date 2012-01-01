@@ -1,0 +1,30 @@
+{
+  if (this.propertiesFileName != null) {
+    this.propertiesFile=new File(workDir,this.propertiesFileName);
+    if (!propertiesFile.exists()) {
+      throw new FileNotFoundException("Could not find properties file: " + propertiesFileName);
+    }
+    if (!propertiesFile.isFile()) {
+      throw new FileNotFoundException(propertiesFileName + " is not a file!");
+    }
+    return;
+  }
+  if (this.dslFile == null) {
+    return;
+  }
+  final String baseFileName=dslFile.getName();
+  final int indexOfLastComma=baseFileName.lastIndexOf(".");
+  String fileNamePrefix=null;
+  if (indexOfLastComma < 0) {
+    fileNamePrefix=baseFileName;
+  }
+ else {
+    fileNamePrefix=baseFileName.substring(0,indexOfLastComma);
+  }
+  final String defaultPropertiesFileName=fileNamePrefix + ".properties";
+  File defaultPropertiesFile=new File(workDir,defaultPropertiesFileName);
+  if (defaultPropertiesFile.exists()) {
+    this.propertiesFileName=defaultPropertiesFileName;
+    this.propertiesFile=defaultPropertiesFile;
+  }
+}

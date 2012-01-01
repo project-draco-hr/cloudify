@@ -1,0 +1,12 @@
+{
+  if (this.propertiesFile == null) {
+    return new LinkedHashMap<Object,Object>();
+  }
+  try {
+    ConfigObject config=new ConfigSlurper().parse(propertiesFile.toURI().toURL());
+    return config;
+  }
+ catch (  Exception e) {
+    throw new IOException("Failed to read properties file: " + propertiesFile,e);
+  }
+}
