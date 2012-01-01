@@ -8,4 +8,7 @@
 catch (  PackagingException e) {
     throw new USMException(e);
   }
+catch (  DSLException e) {
+    throw new USMException(e);
+  }
 }

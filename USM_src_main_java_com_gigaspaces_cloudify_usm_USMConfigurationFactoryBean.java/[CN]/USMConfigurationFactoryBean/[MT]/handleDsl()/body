@@ -1,25 +1,17 @@
 {
-  File dslFile;
-  if (serviceFileName == null) {
-    dslFile=ServiceReader.findServiceFile(puExtDir);
+  File dslFile=null;
+  if (serviceFileName != null) {
+    dslFile=new File(this.puExtDir,this.serviceFileName);
   }
- else {
-    dslFile=new File(puExtDir,serviceFileName);
-    if (!dslFile.isFile()) {
-      throw new FileNotFoundException("Cannot find file " + dslFile.getAbsolutePath());
-    }
-  }
-  logger.info("Found service configuration file: " + dslFile.getAbsolutePath());
-  DSLServiceCompilationResult compilationResult;
-  try {
-    if (this.clusterInfo == null) {
-      throw new IllegalStateException("The cluster information is missing. " + "If running in the integrated container, use the -cluster option to set the cluster info manually");
-    }
-    compilationResult=ServiceReader.getServiceFromFile(dslFile,this.puExtDir,USMUtils.getAdmin(),this.clusterInfo,this.propertiesFileName,this.isRunningInGSC);
-  }
- catch (  final Exception e) {
-    throw new USMException("Failed to read service from file: " + dslFile,e);
-  }
-  final DSLConfiguration config=new DSLConfiguration(compilationResult.getService(),compilationResult.getContext(),this.puExtDir,dslFile);
+  DSLReader dslReader=new DSLReader();
+  dslReader.setAdmin(USMUtils.getAdmin());
+  dslReader.setClusterInfo(clusterInfo);
+  dslReader.setPropertiesFileName(propertiesFileName);
+  dslReader.setRunningInGSC(isRunningInGSC);
+  dslReader.setDslFile(dslFile);
+  dslReader.setWorkDir(this.puExtDir);
+  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  Service service=dslReader.readDslEntity(Service.class);
+  final DSLConfiguration config=new DSLConfiguration(service,dslReader.getContext(),this.puExtDir,dslFile);
   return config;
 }
