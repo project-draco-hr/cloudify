@@ -35,7 +35,12 @@
     throw new IllegalStateException("Unsupported service type");
   }
   if (projectDir != null) {
-    FileUtils.deleteDirectory(projectDir);
+    try {
+      FileUtils.deleteDirectory(projectDir);
+    }
+ catch (    IOException e) {
+      logger.log(Level.WARNING,"Failed to delete project files: " + e.getMessage(),e);
+    }
   }
   srcFile.delete();
 }
