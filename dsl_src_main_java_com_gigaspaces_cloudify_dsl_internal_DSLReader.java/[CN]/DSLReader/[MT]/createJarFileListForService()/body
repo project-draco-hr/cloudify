@@ -1,13 +1,13 @@
 {
   logger.fine("Adding jar files to service compile path");
-  if (!this.loadUsmLib) {
+  if (!this.isLoadUsmLib()) {
     logger.fine("Ignoring usmlib - external jar files will not be added to classpath!");
     return new ArrayList<String>(0);
   }
   final File serviceDir=dslFile.getParentFile();
   final File usmLibDir=new File(serviceDir,CloudifyConstants.USM_LIB_DIR);
   if (!usmLibDir.exists()) {
-    logger.info("No usmlib dir was found at: " + usmLibDir + " - no jars will be added to the classpath!");
+    logger.fine("No usmlib dir was found at: " + usmLibDir + " - no jars will be added to the classpath!");
     return new ArrayList<String>(0);
   }
   if (usmLibDir.isFile()) {
