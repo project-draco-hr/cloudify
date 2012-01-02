@@ -20,6 +20,6 @@
       result.add(file.getAbsolutePath());
     }
   }
-  logger.info("Extra jar files list: " + result);
+  logger.fine("Extra jar files list: " + result);
   return result;
 }
