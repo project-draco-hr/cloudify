@@ -14,7 +14,7 @@
   List<String> serviceNames=new ArrayList<String>(pus.getSize());
   ListIterator<String> listIterator=puNames.listIterator();
   while (listIterator.hasNext()) {
-    String absolutePuName=(String)listIterator.next();
+    String absolutePuName=listIterator.next();
     serviceNames.add(ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
   }
   return successStatus(serviceNames);
