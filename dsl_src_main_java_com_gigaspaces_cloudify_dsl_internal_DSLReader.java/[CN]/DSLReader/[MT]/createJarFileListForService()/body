@@ -4,6 +4,10 @@
     logger.fine("Ignoring usmlib - external jar files will not be added to classpath!");
     return new ArrayList<String>(0);
   }
+  if (dslFile == null) {
+    logger.fine("DSL file location not specified. Skipping usmlib jar loading!");
+    return new ArrayList<String>(0);
+  }
   final File serviceDir=dslFile.getParentFile();
   final File usmLibDir=new File(serviceDir,CloudifyConstants.USM_LIB_DIR);
   if (!usmLibDir.exists()) {
