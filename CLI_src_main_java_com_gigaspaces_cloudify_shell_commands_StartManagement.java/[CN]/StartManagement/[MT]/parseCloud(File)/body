@@ -1,0 +1,18 @@
+{
+  Cloud2 cloud=null;
+  if (cloudFile != null) {
+    if (cloudFile.isFile()) {
+      try {
+        cloud=ServiceReader.readCloud(cloudFile);
+      }
+ catch (      IOException e) {
+      }
+catch (      DSLException e) {
+      }
+    }
+ else {
+      throw new IllegalArgumentException(cloudFile + " is not a file");
+    }
+  }
+  return cloud;
+}

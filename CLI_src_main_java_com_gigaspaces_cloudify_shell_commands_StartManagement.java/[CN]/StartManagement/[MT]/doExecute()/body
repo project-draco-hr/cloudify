@@ -3,20 +3,16 @@
     throw new CLIException("-timeout cannot be negative");
   }
   boolean notHighlyAvailableManagementSpace=false;
-  String cloudFilePath=System.getenv().get("CLOUD_FILE");
-  if (cloudFilePath != null) {
-    File cloudFile=new File(cloudFilePath);
-    if (cloudFile.isFile()) {
-      try {
-        Cloud2 cloud=ServiceReader.readCloud(cloudFile);
-        if (cloud.getProvider() != null) {
-          int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
-          notHighlyAvailableManagementSpace=numberOfManagementMachines < 2;
-        }
-      }
- catch (      IOException e) {
-      }
-catch (      DSLException e) {
+  File cloudFile=null;
+  String cloudConfigurationContents=null;
+  if (cloudFileName != null && cloudFileName.trim().length() > 0) {
+    cloudFile=new File(cloudFileName);
+    cloudConfigurationContents=FileUtils.readFileToString(cloudFile);
+    Cloud2 cloud=parseCloud(cloudFile);
+    if (cloud != null) {
+      if (cloud.getProvider() != null) {
+        int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+        notHighlyAvailableManagementSpace=numberOfManagementMachines < 2;
       }
     }
   }
@@ -32,6 +28,7 @@ catch (      DSLException e) {
   installer.setNotHighlyAvailableManagementSpace(notHighlyAvailableManagementSpace);
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
+  installer.setCloudContents(cloudConfigurationContents);
   installer.startManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
   return "Management started succesfully. Use the shutdown-management command to shutdown management processes running on local machine.";
 }

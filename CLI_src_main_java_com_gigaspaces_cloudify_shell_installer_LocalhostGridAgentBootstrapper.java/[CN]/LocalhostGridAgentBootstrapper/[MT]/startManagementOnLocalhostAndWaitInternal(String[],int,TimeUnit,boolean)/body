@@ -65,9 +65,10 @@
         }
         waitForManagementServices.add(restInstaller);
       }
+      ManagementSpaceServiceInstaller managementSpaceInstaller=null;
       if (!noManagementSpace) {
         final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
-        ManagementSpaceServiceInstaller managementSpaceInstaller=new ManagementSpaceServiceInstaller();
+        managementSpaceInstaller=new ManagementSpaceServiceInstaller();
         managementSpaceInstaller.setAdmin(agent.getAdmin());
         managementSpaceInstaller.setVerbose(verbose);
         managementSpaceInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
@@ -87,6 +88,12 @@
       }
       for (      AbstractManagementServiceInstaller managementServiceInstaller : waitForManagementServices) {
         managementServiceInstaller.waitForInstallation(adminFacade,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+      }
+      if (!noManagementSpace && this.cloudContents != null) {
+        logger.info("Writing cloud configuration to space");
+        GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
+        CloudConfigurationHolder holder=new CloudConfigurationHolder(getCloudContents());
+        gigaspace.write(holder);
       }
     }
   finally {
