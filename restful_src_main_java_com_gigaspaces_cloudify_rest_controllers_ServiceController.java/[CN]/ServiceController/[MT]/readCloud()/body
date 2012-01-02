@@ -1,0 +1,19 @@
+{
+  logger.info("Loading cloud configuration");
+  this.cloudFileContents=getCloudConfigurationFromManagementSpace();
+  if (this.cloudFileContents == null) {
+    return null;
+  }
+  Cloud2 cloud=null;
+  try {
+    cloud=ServiceReader.readCloud(cloudFileContents);
+  }
+ catch (  DSLException e) {
+    throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudFileContents + ". Error was: "+ e.getMessage(),e);
+  }
+  logger.info("Successfully loaded cloud configuration file from management space");
+  logger.info("Setting cloud local directory to: " + cloud.getProvider().getRemoteDirectory());
+  cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
+  logger.info("Loaded cloud: " + cloud);
+  return cloud;
+}

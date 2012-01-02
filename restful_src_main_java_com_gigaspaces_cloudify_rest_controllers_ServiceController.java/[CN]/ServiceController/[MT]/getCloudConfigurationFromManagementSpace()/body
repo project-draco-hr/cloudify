@@ -1,0 +1,9 @@
+{
+  GigaSpace gigaSpace=getManagementSpace();
+  CloudConfigurationHolder config=gigaSpace.read(new CloudConfigurationHolder(),JavaSpace.NO_WAIT);
+  if (config == null) {
+    logger.info("Could not find Cloud Configuration Holder in Management space");
+    return null;
+  }
+  return config.getCloudConfiguration();
+}

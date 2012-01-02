@@ -3,7 +3,7 @@
   for (  final Service service : services) {
     logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
-    final Properties contextProperties=createServiceContextProperties(service,applicationName,async);
+    final Properties contextProperties=createServiceContextProperties(service,applicationName,async,cloud);
     final String serviceName=service.getName();
     boolean found=false;
     try {

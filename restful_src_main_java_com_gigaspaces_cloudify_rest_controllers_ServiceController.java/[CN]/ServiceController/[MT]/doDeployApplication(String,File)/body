@@ -1,7 +1,7 @@
 {
   DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
-  ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services);
+  ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
   this.executorService.execute(installer);
   String[] serviceOrder=new String[services.size()];
   for (int i=0; i < serviceOrder.length; i++) {

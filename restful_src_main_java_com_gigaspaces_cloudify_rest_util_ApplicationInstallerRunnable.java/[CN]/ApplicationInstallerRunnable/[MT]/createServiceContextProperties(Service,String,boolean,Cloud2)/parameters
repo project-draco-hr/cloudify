@@ -1,3 +1,4 @@
 Service service
 String applicationName
 boolean async
+Cloud2 cloud

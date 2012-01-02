@@ -3,7 +3,7 @@
   logger.fine("Installing application " + applicationName + " with the following services: "+ services);
   final boolean asyncInstallPossible=isAsyncInstallPossibleForApplication();
   logger.info("async install setting: " + asyncInstallPossible);
-  installServices(appDir,applicationName,asyncInstallPossible);
+  installServices(appDir,applicationName,asyncInstallPossible,cloud);
   try {
     FileUtils.deleteDirectory(appDir);
   }

@@ -25,5 +25,8 @@
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
   }
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,Boolean.toString(async));
+  if (cloud != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME,cloud.getName());
+  }
   return contextProperties;
 }
