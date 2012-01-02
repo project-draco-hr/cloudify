@@ -2,14 +2,18 @@
   if (!serviceFileOrDir.isAbsolute()) {
     serviceFileOrDir=new File(serviceDirectory,serviceFileOrDir.getPath());
   }
+  File destJar=new File(serviceDirectory.getParent(),jarName + ".jar");
+  FileUtils.deleteQuietly(destJar);
   if (serviceFileOrDir.isDirectory()) {
     File jarFile=File.createTempFile(serviceFileOrDir.getName(),".jar");
     ZipUtils.zip(serviceFileOrDir,jarFile);
+    jarFile.renameTo(destJar);
     jarFile.deleteOnExit();
-    return jarFile;
+    return destJar;
   }
  else   if (serviceFileOrDir.isFile()) {
-    return serviceFileOrDir;
+    serviceFileOrDir.renameTo(destJar);
+    return destJar;
   }
   throw new FileNotFoundException("The file " + serviceFileOrDir + " was not found in the service folder");
 }

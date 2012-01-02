@@ -1,5 +1,5 @@
 {
-  File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder);
+  File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder,serviceName);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
