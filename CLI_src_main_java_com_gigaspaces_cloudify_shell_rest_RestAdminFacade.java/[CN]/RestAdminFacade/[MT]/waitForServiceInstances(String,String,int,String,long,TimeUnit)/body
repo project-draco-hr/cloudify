@@ -2,7 +2,7 @@
   long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
   int serviceShutDownEventsCount=0;
   String pollingURL="processingUnits/Names/" + ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  waitForServicePU(applicationName,serviceName,pollingURL,timeoutErrorMessage,PROCESSINGUNIT_LOOKUP_TIMEOUT,TimeUnit.SECONDS);
+  waitForServicePU(applicationName,serviceName,pollingURL,timeoutErrorMessage,PROCESSINGUNIT_LOOKUP_TIMEOUT,timeunit);
   logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
   int currentNumberOfNonUSMInstances=-1;
   int currentNumberOfRunningUSMInstances=-1;
