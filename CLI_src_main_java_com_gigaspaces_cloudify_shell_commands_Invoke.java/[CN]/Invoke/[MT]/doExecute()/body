@@ -1,6 +1,7 @@
 {
-  StringBuilder sb=new StringBuilder();
-  sb.append("Invocation results: \n");
+  StringBuilder invocationSuccessStringBuilder=new StringBuilder();
+  StringBuilder invocationFailedStringBuilder=new StringBuilder();
+  invocationSuccessStringBuilder.append("Invocation results: " + System.getProperty("line.separator"));
   String applicationName=this.getCurrentApplicationName();
   if (applicationName == null) {
     applicationName="default";
@@ -15,13 +16,30 @@
     List<InvocationResult> valuesList=new ArrayList<InvocationResult>(values);
     Collections.sort(valuesList);
     for (    InvocationResult invocationResult : valuesList) {
-      sb.append(createInvocationMessage(invocationResult));
-      sb.append("\n");
+      if (invocationResult.isSuccess()) {
+        String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+        invocationSuccessStringBuilder.append(successMessage + System.getProperty("line.separator"));
+      }
+ else {
+        String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+        invocationFailedStringBuilder.append(failedMessage + System.getProperty("line.separator"));
+      }
     }
   }
  else {
     InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,beanName,instanceId,commandName,paramsMap);
-    sb.append(createInvocationMessage(invocationResult));
+    if (invocationResult.isSuccess()) {
+      String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+      invocationSuccessStringBuilder.append(successMessage + System.getProperty("line.separator"));
+    }
+ else {
+      String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+      invocationFailedStringBuilder.append(failedMessage + System.getProperty("line.separator"));
+    }
   }
-  return sb;
+  logger.info(invocationSuccessStringBuilder.toString());
+  if (invocationFailedStringBuilder.length() != 0) {
+    throw new ErrorStatusException("not_all_invocations_completed_successfully",this.serviceName,invocationFailedStringBuilder.toString());
+  }
+  return getFormattedMessage("all_invocations_completed_successfully");
 }
