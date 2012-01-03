@@ -1,0 +1,14 @@
+{
+  try {
+    Sigar sigar=SigarHolder.getSigar();
+    long thisProcessPid=sigar.getPid();
+    String javaFilePath=sigar.getProcExe(thisProcessPid).getName();
+    File javaFile=new File(javaFilePath);
+    File javaFolder=javaFile.getParentFile().getParentFile();
+    String javaFolderPath=javaFolder.getAbsolutePath();
+    return javaFolderPath;
+  }
+ catch (  SigarException e) {
+    throw new CLIException("Failed to set the 'JAVA_HOME' environment variable.",e);
+  }
+}

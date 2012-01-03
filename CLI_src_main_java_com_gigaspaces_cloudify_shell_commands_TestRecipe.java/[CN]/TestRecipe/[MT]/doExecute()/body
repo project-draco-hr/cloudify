@@ -12,6 +12,12 @@
     Map<Object,Object> env=new HashMap<Object,Object>();
     env.putAll(System.getenv());
     env.put("CLASSPATH",classpath);
+    if (!env.containsKey(JAVA_HOME_ENV_VAR_NAME)) {
+      String javaHomeDirectory=getJavaHomeDirectory();
+      logger.warning("JAVA_HOME system variables is not set. adding JAVA_HOME with value " + javaHomeDirectory);
+      env.put(JAVA_HOME_ENV_VAR_NAME,javaHomeDirectory);
+      logger.info("JAVA_HOME was successfully set. added JAVA_HOME=" + javaHomeDirectory);
+    }
     int result=executeRecipe(cmdLine,env);
     if (result != 0) {
       if (result == 1) {
