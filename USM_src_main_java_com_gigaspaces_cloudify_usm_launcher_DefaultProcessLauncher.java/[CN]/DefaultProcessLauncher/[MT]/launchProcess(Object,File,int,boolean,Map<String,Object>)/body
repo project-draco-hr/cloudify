@@ -1,19 +1,8 @@
 {
+  List<String> paramsList=getParamsListFromMap(params);
   if (arg instanceof Closure<?>) {
     final Closure<?> closure=(Closure<?>)arg;
     try {
-      List<String> paramsList=new ArrayList<String>();
-      int index=0;
-      while (true) {
-        String param=(String)params.get(CloudifyConstants.INVOCATION_PARAMETERS_KEY + index);
-        if (param != null) {
-          paramsList.add(param);
-        }
- else {
-          break;
-        }
-        index++;
-      }
       logger.info("Parameters userd to run the custom command is: " + paramsList.toString());
       Object result=closure.call(paramsList.toArray());
       return result;
@@ -23,7 +12,7 @@
       throw new USMException("Failed to execute closure " + e.getMessage(),e);
     }
   }
-  final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,params);
+  final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,paramsList);
   final BufferedReader reader=new BufferedReader(new InputStreamReader(proc.getInputStream()));
   String line=null;
   StringBuilder sb=new StringBuilder();
