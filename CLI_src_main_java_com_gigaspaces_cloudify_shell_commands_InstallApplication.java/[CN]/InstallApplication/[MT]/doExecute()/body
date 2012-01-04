@@ -1,13 +1,13 @@
 {
   if (!applicationFile.exists()) {
-    throw new ErrorStatusException("application_not_found",applicationFile.getAbsolutePath());
+    throw new CLIException("application_not_found",applicationFile.getAbsolutePath());
   }
   long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
   logger.info("Validating file " + applicationFile.getName());
   final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
   normalizeApplicationName(application);
   if (adminFacade.getApplicationsList().contains(applicationName)) {
-    throw new ErrorStatusException("application_already_deployed",application.getName());
+    throw new CLIException("application_already_deployed",application.getName());
   }
   File zipFile=null;
   if (!applicationFile.isFile()) {
@@ -18,7 +18,7 @@
       zipFile=applicationFile;
     }
  else {
-      throw new ErrorStatusException("application_file_format_mismatch",applicationFile.getPath());
+      throw new CLIException("application_file_format_mismatch",applicationFile.getPath());
     }
   }
   logger.info("Uploading application " + applicationName);

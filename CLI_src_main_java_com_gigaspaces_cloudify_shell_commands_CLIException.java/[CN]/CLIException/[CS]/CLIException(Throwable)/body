@@ -1,3 +1,7 @@
 {
   super(cause);
+  if (cause instanceof ErrorStatusException) {
+    this.args=((ErrorStatusException)cause).getArgs();
+    this.reasonCode=((ErrorStatusException)cause).getReasonCode();
+  }
 }

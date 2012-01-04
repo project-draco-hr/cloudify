@@ -6,7 +6,7 @@
         adminFacade.connect(null,null,url.toString());
         return true;
       }
- catch (      ErrorStatusException e) {
+ catch (      CLIException e) {
         if (verbose) {
           logger.log(Level.INFO,"Error connecting to web service [" + serviceName + "].",e);
         }

@@ -1,4 +1,11 @@
 {
-  String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances";
-  return (Map<String,Object>)client.get(url);
+  Map<String,Object> instanceList=null;
+  try {
+    String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances";
+    instanceList=(Map<String,Object>)client.get(url);
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
+  return instanceList;
 }

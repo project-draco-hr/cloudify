@@ -1,7 +1,7 @@
 {
   final Admin admin=agent.getAdmin();
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
+    @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=true;
       if (!isDone(admin.getLookupServices(),"LUS")) {
         if (verbose) {

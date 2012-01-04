@@ -1,0 +1,42 @@
+{
+  InputStream instream=null;
+  try {
+    final HttpResponse response=httpClient.execute(httpMethod);
+    if (response.getStatusLine().getStatusCode() != HTTP_STATUS_OK) {
+      String message=httpMethod.getURI() + " response (code " + response.getStatusLine().getStatusCode()+ ") "+ response.getStatusLine().toString();
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE,message);
+      }
+      throw new RestException(message);
+    }
+    final HttpEntity entity=response.getEntity();
+    if (entity == null) {
+      final ErrorStatusException e=new ErrorStatusException("comm_error");
+      logger.log(Level.FINE,httpMethod.getURI() + " response entity is null",e);
+      throw e;
+    }
+    instream=entity.getContent();
+    final String responseBody=StringUtils.getStringFromStream(instream);
+    logger.finer(httpMethod.getURI() + " http get response: " + responseBody);
+    final Map<String,Object> responseMap=GSRestClient.jsonToMap(responseBody);
+    return responseMap;
+  }
+ catch (  final ClientProtocolException e) {
+    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
+    throw new ErrorStatusException("comm_error",e,e.getMessage());
+  }
+catch (  final IOException e) {
+    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
+    throw new ErrorStatusException("comm_error",e,e.getMessage());
+  }
+ finally {
+    if (instream != null) {
+      try {
+        instream.close();
+      }
+ catch (      final IOException e) {
+      }
+    }
+    httpMethod.abort();
+  }
+}

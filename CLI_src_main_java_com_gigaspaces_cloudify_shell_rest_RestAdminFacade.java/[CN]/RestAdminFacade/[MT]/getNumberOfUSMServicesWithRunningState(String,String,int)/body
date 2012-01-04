@@ -2,13 +2,18 @@
   String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   String serviceMonitorsUrl="ProcessingUnits/Names/" + absolutePUName + "/ProcessingUnitInstances/%d/Statistics/Monitors/USM/Monitors/"+ CloudifyConstants.USM_MONITORS_STATE_ID;
   int runningServiceInstanceCounter=0;
-  for (int i=0; i < currentNumberOfInstances; i++) {
-    String instanceUrl=String.format(serviceMonitorsUrl,i);
-    Map<String,Object> map=client.getAdminData(instanceUrl);
-    int instanceState=Integer.valueOf((String)map.get(CloudifyConstants.USM_MONITORS_STATE_ID));
-    if (CloudifyConstants.USMState.values()[instanceState].equals(CloudifyConstants.USMState.RUNNING)) {
-      runningServiceInstanceCounter++;
+  try {
+    for (int i=0; i < currentNumberOfInstances; i++) {
+      String instanceUrl=String.format(serviceMonitorsUrl,i);
+      Map<String,Object> map=client.getAdminData(instanceUrl);
+      int instanceState=Integer.valueOf((String)map.get(CloudifyConstants.USM_MONITORS_STATE_ID));
+      if (CloudifyConstants.USMState.values()[instanceState].equals(CloudifyConstants.USMState.RUNNING)) {
+        runningServiceInstanceCounter++;
+      }
     }
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
   }
   return runningServiceInstanceCounter;
 }

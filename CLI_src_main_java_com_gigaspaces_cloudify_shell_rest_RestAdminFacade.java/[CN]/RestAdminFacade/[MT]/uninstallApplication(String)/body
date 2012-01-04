@@ -1,4 +1,9 @@
 {
-  String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName;
-  client.delete(url);
+  try {
+    String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName;
+    client.delete(url);
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
 }

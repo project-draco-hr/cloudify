@@ -1,5 +1,11 @@
 {
-  Map<String,Object> map=client.getAdminData("machines/HostsByAddress");
+  Map<String,Object> map=null;
+  try {
+    map=client.getAdminData("machines/HostsByAddress");
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
   @SuppressWarnings("unchecked") List<String> list=(List<String>)map.get("HostsByAddress-Elements");
   List<String> result=new ArrayList<String>(list.size());
   for (  String host : list) {

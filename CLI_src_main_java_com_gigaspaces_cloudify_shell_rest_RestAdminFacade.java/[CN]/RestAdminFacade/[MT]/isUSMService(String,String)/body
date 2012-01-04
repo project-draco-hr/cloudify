@@ -10,7 +10,7 @@
       return false;
     }
   }
- catch (  CLIException e) {
+ catch (  RestException e) {
   }
   return false;
 }

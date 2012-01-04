@@ -1,3 +1,10 @@
 {
-  return (List<String>)client.get("/service/applications/" + applicationName + "/services");
+  List<String> servicesList=null;
+  try {
+    servicesList=(List<String>)client.get("/service/applications/" + applicationName + "/services");
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
+  return servicesList;
 }

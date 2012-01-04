@@ -1,4 +1,10 @@
 {
-  List<Map<String,String>> allEventsExecutedList=(List<Map<String,String>>)client.get(SERVICE_CONTROLLER_URL + "/applications/" + applicationName+ "/services/"+ serviceName+ "/USMEventsLogs/");
+  List<Map<String,String>> allEventsExecutedList=null;
+  try {
+    allEventsExecutedList=(List<Map<String,String>>)client.get(SERVICE_CONTROLLER_URL + "/applications/" + applicationName+ "/services/"+ serviceName+ "/USMEventsLogs/");
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
   return eventLoggingTailer.getLinesToPrint(allEventsExecutedList);
 }

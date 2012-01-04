@@ -1,6 +1,12 @@
 {
   String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/beans/"+ beanName+ "/invoke";
-  Object result=client.post(url,buildCustomCommandParams(commandName,params));
+  Object result=null;
+  try {
+    result=client.post(url,buildCustomCommandParams(commandName,params));
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
   @SuppressWarnings("unchecked") Map<String,Object> restResult=(Map<String,Object>)result;
   Map<String,InvocationResult> invocationResultMap=new LinkedHashMap<String,InvocationResult>();
   for (  Map.Entry<String,Object> entry : restResult.entrySet()) {

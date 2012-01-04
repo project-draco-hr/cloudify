@@ -1,3 +1,10 @@
 {
-  return client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
+  String result=null;
+  try {
+    result=client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
+  return result;
 }

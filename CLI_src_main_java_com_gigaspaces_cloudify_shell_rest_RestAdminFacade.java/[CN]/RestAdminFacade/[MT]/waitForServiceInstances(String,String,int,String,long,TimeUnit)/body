@@ -8,7 +8,13 @@
   int currentNumberOfRunningUSMInstances=-1;
   boolean statusChanged=false;
   while (System.currentTimeMillis() < end) {
-    Map<String,Object> serviceStatusMap=client.getAdminData(pollingURL);
+    Map<String,Object> serviceStatusMap=null;
+    try {
+      serviceStatusMap=client.getAdminData(pollingURL);
+    }
+ catch (    RestException e) {
+      throw new CLIException(e);
+    }
     if ("partitioned-sync2backup".equals(serviceStatusMap.get("ClusterSchema"))) {
       plannedNumberOfInstances=Integer.valueOf((String)serviceStatusMap.get("TotalNumberOfInstances"));
     }

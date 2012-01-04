@@ -14,8 +14,8 @@
       }
       containerUids.add((String)container.get("Uid"));
     }
- catch (    CLIException e) {
-      throw new ErrorStatusException("cant_find_service_for_app",serviceName,applicationName);
+ catch (    RestException e) {
+      throw new CLIException("cant_find_service_for_app",serviceName,applicationName);
     }
   }
   return containerUids;

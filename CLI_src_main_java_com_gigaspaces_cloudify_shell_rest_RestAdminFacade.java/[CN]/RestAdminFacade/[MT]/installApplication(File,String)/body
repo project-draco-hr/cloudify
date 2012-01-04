@@ -1,4 +1,11 @@
 {
-  String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName;
-  return client.postFile(url,applicationFile);
+  String result=null;
+  try {
+    String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName;
+    result=client.postFile(url,applicationFile);
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
+  return result;
 }

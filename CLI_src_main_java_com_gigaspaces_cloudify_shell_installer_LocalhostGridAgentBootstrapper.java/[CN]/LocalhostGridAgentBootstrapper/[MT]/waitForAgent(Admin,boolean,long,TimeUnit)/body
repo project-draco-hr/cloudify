@@ -1,7 +1,7 @@
 {
   final AtomicReference<GridServiceAgent> agentOnLocalhost=new AtomicReference<GridServiceAgent>();
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
+    @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=false;
       for (      GridServiceAgent agent : admin.getGridServiceAgents()) {
         if (checkAgent(agent)) {

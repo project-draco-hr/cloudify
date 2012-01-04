@@ -9,7 +9,7 @@
     }
   }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    @Override public boolean isDone() throws CLIException, InterruptedException, ErrorStatusException {
+    @Override public boolean isDone() throws CLIException, InterruptedException {
       logger.info("Waiting for agent to shutdown");
       try {
         gsa.ping();

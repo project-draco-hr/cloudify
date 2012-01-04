@@ -8,7 +8,7 @@
         return;
       }
     }
- catch (    CLIException e) {
+ catch (    RestException e) {
       Thread.sleep(POLLING_INTERVAL);
     }
     Thread.sleep(POLLING_INTERVAL);

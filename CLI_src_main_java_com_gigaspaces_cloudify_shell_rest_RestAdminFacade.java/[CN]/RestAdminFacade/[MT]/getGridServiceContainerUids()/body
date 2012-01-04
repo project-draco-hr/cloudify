@@ -1,5 +1,11 @@
 {
-  Map<String,Object> container=(Map<String,Object>)client.getAdmin("GridServiceContainers");
+  Map<String,Object> container=null;
+  try {
+    container=(Map<String,Object>)client.getAdmin("GridServiceContainers");
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
   @SuppressWarnings("unchecked") List<String> containerUris=(List<String>)container.get("Uids-Elements");
   Set<String> containerUids=new HashSet<String>();
   for (  String containerUri : containerUris) {
