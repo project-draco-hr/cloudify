@@ -15,7 +15,7 @@
         index++;
       }
       logger.info("Parameters userd to run the custom command is: " + paramsList.toString());
-      Object result=closure.call(paramsList);
+      Object result=closure.call(paramsList.toArray());
       return result;
     }
  catch (    final Exception e) {
