@@ -1,3 +1,26 @@
 {
-  System.out.println("launch ");
+  IServer server=ServerUtil.getServer(configuration);
+  if (server == null) {
+    throw new CoreException(new Status(Status.ERROR,AzurePlugin.PLUGIN_ID,"Launch configuration could not find server"));
+  }
+  IFolder folder=server.getServerConfiguration();
+  System.out.println("running ant package.xml");
+  AntRunner runner=new AntRunner();
+  runner.setBuildFileLocation(folder.getLocation().toOSString() + "/package.xml");
+  runner.run(monitor);
+  AzureServerBehaviour srvDelegator=(AzureServerBehaviour)server.loadAdapter(ServerBehaviourDelegate.class,null);
+  System.out.println("launch '" + mode + "'");
+  srvDelegator.changeServerState(IServer.STATE_STARTING);
+  if (AzurePlugin.isTestMode) {
+    srvDelegator.changeServerState(IServer.STATE_STARTED);
+    return;
+  }
+  String startEmulatorScript="/emulatorTools/RunInEmulator.cmd";
+  try {
+    Runtime.getRuntime().exec(server.getServerConfiguration().getLocation().toOSString() + startEmulatorScript);
+  }
+ catch (  IOException e) {
+    throw new CoreException(new Status(Status.ERROR,AzurePlugin.PLUGIN_ID,"Failed to run the Azure Emulator - " + e.getMessage()));
+  }
+  srvDelegator.monitorServerStartup();
 }

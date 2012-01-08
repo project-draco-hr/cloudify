@@ -1,4 +1,8 @@
 {
+  if (composite == null) {
+    AzureServerWizardProperties.setDefaults();
+    return;
+  }
   AzureServerWizardProperties.setJreLocation(composite.getJreLocation());
   AzureServerWizardProperties.setWebServerLocation(composite.getWebServerLocation());
   AzureServerWizardProperties.setWebServerPort(composite.getWebServerPort());

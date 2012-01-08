@@ -1,9 +1,27 @@
 {
-  AzureConfiguration aConfig=configuration;
-  if (aConfig == null)   return;
-  IFolder serverConfiguration=getServer().getServerConfiguration();
-  aConfig.save(serverConfiguration,monitor);
-  AntRunner runner=new AntRunner();
-  runner.setBuildFileLocation(serverConfiguration.getLocation().toOSString() + "/package.xml");
-  runner.run(monitor);
+  IFolder folder=getServer().getServerConfiguration();
+  System.out.println("save config " + folder);
+  try {
+    if (!folder.exists()) {
+      folder.create(true,true,monitor);
+    }
+    if (AzurePlugin.isTestMode) {
+      IFolder testFolder=folder.getFolder("test");
+      if (!testFolder.exists())       testFolder.create(true,true,monitor);
+      testFolder.touch(monitor);
+      return;
+    }
+    if (folder.getFolder(AzureServerWizardProperties.getWorkerRoleName()).exists()) {
+      IFolder webappsFolder=folder.getFolder(AzureServerWizardProperties.getWebAppsFolder());
+      if (webappsFolder.exists())       FileUtils.copyDirectory(new File("c:\\webapps"),webappsFolder.getLocation().toFile());
+      return;
+    }
+    URL url=Activator.getDefault().getBundle().getResource("resources");
+    File resourcesDir=new File(FileLocator.resolve(url).toURI());
+    FileUtils.copyDirectory(resourcesDir,folder.getLocation().toFile());
+    folder.refreshLocal(IResource.DEPTH_INFINITE,monitor);
+  }
+ catch (  Exception e) {
+    throw new CoreException(new Status(IStatus.ERROR,AzurePlugin.PLUGIN_ID,0,NLS.bind("errorCouldNotSaveConfiguration",new String[]{e.getMessage()}),e));
+  }
 }

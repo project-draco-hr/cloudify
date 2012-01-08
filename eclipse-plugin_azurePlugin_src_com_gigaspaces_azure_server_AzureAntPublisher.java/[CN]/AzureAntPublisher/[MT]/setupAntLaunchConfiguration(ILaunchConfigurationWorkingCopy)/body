@@ -1,0 +1,18 @@
+{
+  try {
+    Map antProperties=(Map)wc.getAttributes().get("org.eclipse.ui.externaltools.ATTR_ANT_PROPERTIES");
+    IFolder serverConfiguration=getServer().getServer().getServerConfiguration();
+    if (antProperties != null) {
+      String webapps="c:\\webapps";
+      if (getServer().getServer().getServerState() == IServer.STATE_STARTED) {
+        IFolder webappsFolder=serverConfiguration.getFolder(AzureServerWizardProperties.getWebAppsFolder());
+        webapps=webappsFolder.getLocation().toOSString();
+      }
+      antProperties.put(AntPublisher.PROP_SERVER_PUBLISH_DIR,webapps);
+    }
+    System.out.println("publish " + antProperties);
+  }
+ catch (  CoreException e) {
+    e.printStackTrace();
+  }
+}

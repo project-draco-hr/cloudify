@@ -1,4 +1,4 @@
-ILaunchConfiguration arg0
-String arg1
-ILaunch arg2
-IProgressMonitor arg3
+ILaunchConfiguration configuration
+String mode
+ILaunch launch
+IProgressMonitor monitor

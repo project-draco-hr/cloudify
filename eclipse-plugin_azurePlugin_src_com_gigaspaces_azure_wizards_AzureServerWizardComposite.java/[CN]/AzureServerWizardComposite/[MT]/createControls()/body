@@ -11,21 +11,21 @@
   final Composite topComposite=new Composite(parent,SWT.NONE);
   topComposite.setLayout(new GridLayout(3,false));
   topComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-  final Text jreLocationText=SWTUtil.createLabeledPath("JRE to use with Windows Azure location:","",topComposite);
+  final Text jreLocationText=SWTUtil.createLabeledPath("JDK location:","<default>",topComposite);
   jreLocationText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       jreLocation=jreLocationText.getText();
     }
   }
 );
-  final Text webServerLocationText=SWTUtil.createLabeledPath("Web server zip location:","",topComposite);
+  final Text webServerLocationText=SWTUtil.createLabeledPath("Web server location:","<default>",topComposite);
   webServerLocationText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       webServerLocation=webServerLocationText.getText();
     }
   }
 );
-  final Text webServerPortText=SWTUtil.createLabeledText("Web server port to use:","8080",topComposite);
+  final Text webServerPortText=SWTUtil.createLabeledText("Web server port:","8080",topComposite);
   webServerPortText.addModifyListener(new ModifyListener(){
     @Override public void modifyText(    ModifyEvent event){
       webServerPort=webServerPortText.getText();
