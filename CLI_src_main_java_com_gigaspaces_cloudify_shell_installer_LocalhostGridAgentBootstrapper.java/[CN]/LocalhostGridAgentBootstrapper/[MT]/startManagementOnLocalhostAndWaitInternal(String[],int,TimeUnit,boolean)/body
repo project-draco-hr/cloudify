@@ -93,6 +93,7 @@
           GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
           CloudConfigurationHolder holder=new CloudConfigurationHolder(getCloudContents());
           gigaspace.write(holder);
+          ((ISpaceProxy)gigaspace.getSpace()).close();
         }
       }
     }
