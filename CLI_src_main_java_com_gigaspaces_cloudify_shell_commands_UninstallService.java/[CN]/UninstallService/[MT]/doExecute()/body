@@ -6,6 +6,9 @@
   if (verbose) {
     logger.info("Found containers: " + containerIdsOfService);
   }
+  if (timeoutInMinutes > 0) {
+    printStatusMessage(containerIdsOfService.size(),containerIdsOfService.size(),containerIdsOfService);
+  }
   adminFacade.undeploy(getCurrentApplicationName(),serviceName);
   if (timeoutInMinutes > 0) {
     createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
@@ -15,7 +18,7 @@
         remainingContainersForService.retainAll(allContainerIds);
         boolean isDone=remainingContainersForService.isEmpty();
         if (!isDone) {
-          logger.info("Waiting for all service instances to uninstall. " + "Currently " + remainingContainersForService.size() + " instances are still running."+ (verbose ? " " + remainingContainersForService : ""));
+          printStatusMessage(remainingContainersForService.size(),containerIdsOfService.size(),remainingContainersForService);
         }
         return isDone;
       }

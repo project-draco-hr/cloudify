@@ -6,6 +6,9 @@
   if (verbose) {
     logger.info("Containers running PUs of application " + applicationName + ":"+ containerIdsOfApplication);
   }
+  if (timeoutInMinutes > 0) {
+    printStatusMessage(containerIdsOfApplication.size(),containerIdsOfApplication.size(),containerIdsOfApplication);
+  }
   this.adminFacade.uninstallApplication(this.applicationName);
   if (timeoutInMinutes > 0) {
     createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
@@ -15,7 +18,7 @@
         remainingContainersForApplication.retainAll(allContainerIds);
         boolean isDone=remainingContainersForApplication.isEmpty();
         if (!isDone) {
-          logger.info("Waiting for all service instances to uninstall. " + "Currently " + remainingContainersForApplication.size() + " instances are still running."+ (verbose ? " " + remainingContainersForApplication : ""));
+          printStatusMessage(remainingContainersForApplication.size(),containerIdsOfApplication.size(),remainingContainersForApplication);
         }
         return isDone;
       }
