@@ -14,5 +14,5 @@
     }
   }
 );
-  logger.info("management space is available.");
+  logger.info("Management space is available.");
 }
