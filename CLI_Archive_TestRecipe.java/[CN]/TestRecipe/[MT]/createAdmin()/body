@@ -1,9 +1,0 @@
-{
-  AdminFactory adminFactory=new AdminFactory();
-  adminFactory.useDaemonThreads(true);
-  if (this.groups != null) {
-    adminFactory.addGroups(groups);
-  }
-  Admin admin=adminFactory.createAdmin();
-  return admin;
-}

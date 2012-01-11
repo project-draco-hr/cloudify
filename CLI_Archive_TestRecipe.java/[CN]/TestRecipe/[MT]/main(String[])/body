@@ -1,4 +1,0 @@
-{
-  TestRecipe cmd=new TestRecipe();
-  cmd.doExecute();
-}
