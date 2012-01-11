@@ -1,4 +1,0 @@
-{
-  final long pid=usm.getActualProcessID();
-  return !USMUtils.isProcessAlive(pid);
-}
