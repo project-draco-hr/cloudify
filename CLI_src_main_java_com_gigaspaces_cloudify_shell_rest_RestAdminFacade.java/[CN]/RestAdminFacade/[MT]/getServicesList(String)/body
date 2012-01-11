@@ -3,8 +3,8 @@
   try {
     servicesList=(List<String>)client.get("/service/applications/" + applicationName + "/services");
   }
- catch (  RestException e) {
-    throw new CLIException(e);
+ catch (  ErrorStatusException ese) {
+    throw new CLIStatusException(ese,ese.getReasonCode(),ese.getArgs());
   }
   return servicesList;
 }

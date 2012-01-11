@@ -1,7 +1,7 @@
 {
   String urlStr=url.toExternalForm();
-  if (!urlStr.endsWith("/")) {
-    urlStr+="/";
+  if (!urlStr.endsWith(FORWARD_SLASH)) {
+    urlStr+=FORWARD_SLASH;
   }
   return urlStr;
 }

@@ -3,7 +3,10 @@
   try {
     map=client.getAdminData("machines/HostsByAddress");
   }
- catch (  RestException e) {
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  RestException e) {
     throw new CLIException(e);
   }
   @SuppressWarnings("unchecked") List<String> list=(List<String>)map.get("HostsByAddress-Elements");

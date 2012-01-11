@@ -3,7 +3,10 @@
   try {
     container=(Map<String,Object>)client.getAdmin("GridServiceContainers");
   }
- catch (  RestException e) {
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  RestException e) {
     throw new CLIException(e);
   }
   @SuppressWarnings("unchecked") List<String> containerUris=(List<String>)container.get("Uids-Elements");

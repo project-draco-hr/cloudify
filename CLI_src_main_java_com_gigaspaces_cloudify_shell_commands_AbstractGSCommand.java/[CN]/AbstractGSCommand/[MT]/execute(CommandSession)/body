@@ -5,27 +5,26 @@
     if (adminAware) {
       adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
       if (!adminFacade.isConnected()) {
-        throw new CLIException("not_connected");
+        throw new CLIStatusException("not_connected");
       }
     }
     Object result=doExecute();
     return result;
   }
- catch (  CLIException e) {
-    if (e.getReasonCode() != null && e.getReasonCode().trim().length() > 0) {
-      if (verbose) {
-        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e),e);
-      }
- else {
-        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(e));
-      }
+ catch (  CLIStatusException cse) {
+    if (verbose) {
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse),cse);
     }
  else {
-      if (!verbose) {
-        e.setStackTrace(new StackTraceElement[]{});
-      }
-      logger.log(Level.WARNING,"",e);
+      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse));
     }
+    raiseCloseShellExceptionIfNonInteractive(session,cse);
+  }
+catch (  CLIException e) {
+    if (!verbose) {
+      e.setStackTrace(new StackTraceElement[]{});
+    }
+    logger.log(Level.WARNING,"",e);
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }
 catch (  Throwable e) {

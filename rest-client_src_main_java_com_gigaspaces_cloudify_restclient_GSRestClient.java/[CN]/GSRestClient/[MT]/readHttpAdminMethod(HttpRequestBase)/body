@@ -11,23 +11,23 @@
     }
     final HttpEntity entity=response.getEntity();
     if (entity == null) {
-      final ErrorStatusException e=new ErrorStatusException("comm_error");
-      logger.log(Level.FINE,httpMethod.getURI() + " response entity is null",e);
+      final ErrorStatusException e=new ErrorStatusException(REASON_CODE_COMM_ERR);
+      logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_ENTITY_NULL,e);
       throw e;
     }
     instream=entity.getContent();
     final String responseBody=StringUtils.getStringFromStream(instream);
-    logger.finer(httpMethod.getURI() + " http get response: " + responseBody);
+    logger.finer(httpMethod.getURI() + MSG_HTTP_GET_RESPONSE + responseBody);
     final Map<String,Object> responseMap=GSRestClient.jsonToMap(responseBody);
     return responseMap;
   }
  catch (  final ClientProtocolException e) {
-    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
-    throw new ErrorStatusException("comm_error",e,e.getMessage());
+    logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
 catch (  final IOException e) {
-    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
-    throw new ErrorStatusException("comm_error",e,e.getMessage());
+    logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
  finally {
     if (instream != null) {

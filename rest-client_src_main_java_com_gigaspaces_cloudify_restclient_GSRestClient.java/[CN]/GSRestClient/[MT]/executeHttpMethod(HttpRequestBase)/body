@@ -4,11 +4,11 @@
     final HttpResponse response=httpClient.execute(httpMethod);
     int statusCode=response.getStatusLine().getStatusCode();
     if (statusCode != HTTP_STATUS_OK) {
-      logger.log(Level.FINE,httpMethod.getURI() + " response code " + statusCode);
+      logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_CODE + statusCode);
       responseBody=getResponseBody(response);
       try {
         Map<String,Object> errorMap=GSRestClient.jsonToMap(responseBody);
-        throw new ErrorStatusException("Remote_rest_gateway_exception",errorMap.get("error"));
+        throw new ErrorStatusException("Remote_rest_gateway_exception",errorMap.get(ERROR));
       }
  catch (      IOException e) {
         if (statusCode == NOT_FOUND_404_ERROR_CODE) {
@@ -30,12 +30,12 @@
     return responseMap.get(RESPONSE_KEY);
   }
  catch (  final ClientProtocolException e) {
-    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
-    throw new ErrorStatusException("comm_error",e,e.getMessage());
+    logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
 catch (  final IOException e) {
-    logger.log(Level.FINE,httpMethod.getURI() + " Rest api error",e);
-    throw new ErrorStatusException("comm_error",e,e.getMessage());
+    logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
  finally {
     httpMethod.abort();

@@ -4,8 +4,8 @@
     String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances";
     instanceList=(Map<String,Object>)client.get(url);
   }
- catch (  RestException e) {
-    throw new CLIException(e);
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
   return instanceList;
 }

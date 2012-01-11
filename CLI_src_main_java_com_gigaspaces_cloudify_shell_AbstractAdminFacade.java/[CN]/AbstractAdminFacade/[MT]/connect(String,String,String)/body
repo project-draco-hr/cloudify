@@ -4,6 +4,6 @@
     this.connected=true;
   }
  else {
-    throw new CLIException("already_connected","");
+    throw new CLIStatusException("already_connected");
   }
 }

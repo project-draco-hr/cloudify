@@ -1,6 +1,7 @@
 {
-  if (relativeUrl.startsWith("/")) {
-    relativeUrl=relativeUrl.substring(1);
+  String safeRelativeURL=relativeUrl;
+  if (safeRelativeURL.startsWith(FORWARD_SLASH)) {
+    safeRelativeURL=safeRelativeURL.substring(1);
   }
-  return urlStr + relativeUrl;
+  return urlStr + safeRelativeURL;
 }

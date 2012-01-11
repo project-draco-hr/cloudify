@@ -13,14 +13,17 @@
     }
   }
  catch (  MalformedURLException e) {
-    throw new CLIException("could_not_parse_url",url);
+    throw new CLIStatusException("could_not_parse_url",url);
   }
   try {
     client=new GSRestClient(user,password,urlObj);
     eventLoggingTailer=new EventLoggingTailer();
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
- catch (  RestException e) {
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  RestException e) {
     throw new CLIException(e);
   }
 }

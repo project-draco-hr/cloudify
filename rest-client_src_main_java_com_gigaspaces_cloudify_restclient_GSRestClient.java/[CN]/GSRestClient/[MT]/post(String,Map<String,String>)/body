@@ -4,9 +4,9 @@
     HttpEntity entity;
     try {
       final String json=GSRestClient.mapToJson(params);
-      entity=new StringEntity(json,"application/json","UTF-8");
+      entity=new StringEntity(json,MIME_TYPE_APP_JSON,"UTF-8");
       httppost.setEntity(entity);
-      httppost.setHeader(HttpHeaders.CONTENT_TYPE,"application/json");
+      httppost.setHeader(HttpHeaders.CONTENT_TYPE,MIME_TYPE_APP_JSON);
     }
  catch (    final IOException e) {
       throw new RestException(e);

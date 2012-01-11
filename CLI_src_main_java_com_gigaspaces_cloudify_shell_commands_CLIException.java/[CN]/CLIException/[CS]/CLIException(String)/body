@@ -1,12 +1,3 @@
 {
   super(message);
-  try {
-    if (StringUtils.isNotBlank(message)) {
-      ResourceBundle messages=ShellUtils.getMessageBundle();
-      String messageFromBundle=messages.getString(message);
-      if (StringUtils.isNotBlank(messageFromBundle))       this.reasonCode=message;
-    }
-  }
- catch (  MissingResourceException mre) {
-  }
 }

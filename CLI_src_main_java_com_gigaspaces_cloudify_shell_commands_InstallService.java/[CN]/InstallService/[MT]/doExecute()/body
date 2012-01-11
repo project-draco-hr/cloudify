@@ -1,6 +1,6 @@
 {
   if (!serviceFile.exists()) {
-    throw new CLIException("service_file_doesnt_exist",serviceFile.getPath());
+    throw new CLIStatusException("service_file_doesnt_exist",serviceFile.getPath());
   }
   File packedFile;
   int plannedNumberOfInstances=1;

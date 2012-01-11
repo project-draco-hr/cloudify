@@ -8,7 +8,7 @@
     HttpProtocolParams.setVersion(params,HttpVersion.HTTP_1_1);
     HttpProtocolParams.setContentCharset(params,HTTP.UTF_8);
     final SchemeRegistry registry=new SchemeRegistry();
-    registry.register(new Scheme("https",sf,url.getPort()));
+    registry.register(new Scheme(HTTPS,sf,url.getPort()));
     final ClientConnectionManager ccm=new ThreadSafeClientConnManager(params,registry);
     return new DefaultHttpClient(ccm,params);
   }

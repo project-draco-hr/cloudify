@@ -1,5 +1,5 @@
 {
-  super("reasonCode: " + reasonCode);
+  super(REASON_CODE + reasonCode);
   this.reasonCode=reasonCode;
   this.args=args;
 }
