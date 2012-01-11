@@ -1,0 +1,8 @@
+{
+  try {
+    return (IServerWorkingCopy)getTaskModel().getObject(TaskModel.TASK_SERVER);
+  }
+ catch (  Exception e) {
+    return null;
+  }
+}

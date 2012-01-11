@@ -1,0 +1,11 @@
+{
+  try {
+    WizardFragment fragment=fragmentMap.get(typeId);
+    if (fragment != null)     return fragment;
+  }
+ catch (  Exception e) {
+  }
+  WizardFragment fragment=ServerUIPlugin.getWizardFragment(typeId);
+  if (fragment != null)   fragmentMap.put(typeId,fragment);
+  return fragment;
+}

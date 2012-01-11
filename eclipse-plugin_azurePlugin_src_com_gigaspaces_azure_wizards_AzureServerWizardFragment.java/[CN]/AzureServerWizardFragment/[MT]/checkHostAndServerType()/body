@@ -1,0 +1,24 @@
+{
+  boolean isComplete=false;
+  boolean supportsRemote=getServer().getServerType().supportsRemoteHosts();
+  if (comp != null) {
+    Composite composite=comp.getNewManualServerComposite();
+    if (composite != null && composite instanceof NewManualServerComposite) {
+      NewManualServerComposite manualComp=(NewManualServerComposite)composite;
+      if (manualComp.isTimerRunning() || manualComp.isTimerScheduled()) {
+        return false;
+      }
+      if (manualComp.getCurrentHostname().trim().length() == 0) {
+        isComplete=false;
+      }
+ else       if (!supportsRemote && !SocketUtil.isLocalhost(manualComp.getCurrentHostname())) {
+        isComplete=false;
+      }
+ else       if (!manualComp.canSupportModule()) {
+        isComplete=false;
+      }
+ else       isComplete=true;
+    }
+  }
+  return isComplete;
+}

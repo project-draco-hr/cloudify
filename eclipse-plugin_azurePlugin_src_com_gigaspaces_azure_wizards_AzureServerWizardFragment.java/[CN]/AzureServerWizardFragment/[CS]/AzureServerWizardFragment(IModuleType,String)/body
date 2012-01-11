@@ -1,0 +1,4 @@
+{
+  this.moduleType=moduleType;
+  this.serverTypeId=serverTypeId;
+}

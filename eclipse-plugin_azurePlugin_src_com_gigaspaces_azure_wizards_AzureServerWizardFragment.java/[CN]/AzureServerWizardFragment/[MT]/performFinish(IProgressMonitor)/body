@@ -1,3 +1,9 @@
 {
+  if (comp != null) {
+    comp.getNewManualServerComposite().dispose();
+  }
   super.performFinish(monitor);
+  IServerWorkingCopy s=getServer();
+  IVMInstall defaultVMInstall=JavaRuntime.getDefaultVMInstall();
+  System.out.println("created server (id=" + s.getId() + ",name="+ s.getName()+ ",installed="+ s.getServerConfiguration()+ ",location="+ s.getRuntime().getLocation()+ ",jre="+ defaultVMInstall.getInstallLocation());
 }
