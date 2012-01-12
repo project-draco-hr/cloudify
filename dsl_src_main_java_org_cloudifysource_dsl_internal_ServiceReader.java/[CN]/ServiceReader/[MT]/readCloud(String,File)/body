@@ -3,6 +3,6 @@
   dslReader.setCreateServiceContext(false);
   dslReader.setDslContents(dslContents);
   dslReader.setDslFile(dslFile);
-  final Cloud2 cloud=dslReader.readDslEntity(Cloud2.class);
+  final Cloud cloud=dslReader.readDslEntity(Cloud.class);
   return cloud;
 }

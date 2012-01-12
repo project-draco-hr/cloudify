@@ -2,7 +2,7 @@
   String pathSeparator=System.getProperty("file.separator");
   File providerDirectory=new File(ShellUtils.getCliDirectory(),"plugins" + pathSeparator + "esc"+ pathSeparator+ cloudProvider);
   File cloudFile=findCloudFile(providerDirectory);
-  Cloud2 cloud=ServiceReader.readCloud(cloudFile);
+  Cloud cloud=ServiceReader.readCloud(cloudFile);
   CloudGridAgentBootstrapper installer=new CloudGridAgentBootstrapper();
   installer.setProviderDirectory(providerDirectory);
   if (this.adminFacade != null) {

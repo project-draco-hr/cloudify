@@ -1,5 +1,5 @@
 {
-  logger.info("Stop Machine - machineIp: " + machineIp);
+  logger.fine("Stop Machine - machineIp: " + machineIp);
   final Long previousRequest=stoppingMachines.get(machineIp);
   if ((previousRequest != null) && (System.currentTimeMillis() - previousRequest < MULTIPLE_SHUTDOWN_REQUEST_IGNORE_TIMEOUT)) {
     return true;
