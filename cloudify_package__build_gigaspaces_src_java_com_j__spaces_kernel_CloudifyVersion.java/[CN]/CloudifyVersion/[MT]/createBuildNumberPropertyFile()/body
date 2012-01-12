@@ -1,0 +1,17 @@
+{
+  FileOutputStream fileOut=null;
+  PrintStream ps=null;
+  try {
+    fileOut=new FileOutputStream("build.properties",true);
+  }
+ catch (  FileNotFoundException e) {
+    e.printStackTrace();
+  }
+  ps=new PrintStream(fileOut);
+  ps.println("buildnumber=" + BUILD_NUM);
+  ps.println("tag=" + getTag());
+  ps.println("versionnumber=" + V_NUM);
+  ps.println("milestone=" + MILESTONE);
+  ps.println("productversion=" + VERSION);
+  ps.close();
+}
