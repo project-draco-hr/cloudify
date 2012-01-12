@@ -4,7 +4,7 @@
   if (this.cloudFileContents == null) {
     return null;
   }
-  Cloud2 cloud=null;
+  Cloud cloud=null;
   try {
     cloud=ServiceReader.readCloud(cloudFileContents);
   }

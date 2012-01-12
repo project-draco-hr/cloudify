@@ -1,4 +1,0 @@
-{
-  String methodName=method.getName();
-  return (methodName.startsWith("get") && method.getParameterTypes().length == 0 && !methodName.equals("getClass"));
-}

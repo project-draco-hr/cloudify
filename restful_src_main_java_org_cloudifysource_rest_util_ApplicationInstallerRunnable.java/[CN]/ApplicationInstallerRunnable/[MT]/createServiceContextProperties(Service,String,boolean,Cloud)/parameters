@@ -1,4 +1,4 @@
-File appDir
+Service service
 String applicationName
 boolean async
-Cloud2 cloud
+Cloud cloud

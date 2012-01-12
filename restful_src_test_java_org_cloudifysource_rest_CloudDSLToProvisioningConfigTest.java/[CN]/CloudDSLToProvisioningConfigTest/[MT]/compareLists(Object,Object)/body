@@ -1,7 +1,0 @@
-{
-  @SuppressWarnings("unchecked") List<String> firstList=(ArrayList<String>)cloudPropObject;
-  @SuppressWarnings("unchecked") List<String> secondList=(List<String>)machineProvisioningPropObject;
-  for (  String str : firstList) {
-    Assert.isTrue(secondList.contains(str));
-  }
-}
