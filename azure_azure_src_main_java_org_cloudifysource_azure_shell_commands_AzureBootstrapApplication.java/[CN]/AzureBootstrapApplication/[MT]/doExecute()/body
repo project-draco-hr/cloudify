@@ -1,7 +1,7 @@
 {
   AdminFacade adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
   if (adminFacade != null && adminFacade.isConnected()) {
-    throw new CLIException("already_connected");
+    throw new CLIStatusException("already_connected");
   }
   if (timeoutInMinutes < 0) {
     throw new CLIException("-timeout cannot be negative");
