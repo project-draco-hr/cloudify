@@ -3,7 +3,9 @@
   if (arg instanceof Closure<?>) {
     final Closure<?> closure=(Closure<?>)arg;
     try {
-      logger.info("Parameters userd to run the custom command is: " + paramsList.toString());
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Closure Parameters: " + paramsList.toString());
+      }
       Object result=closure.call(paramsList.toArray());
       return result;
     }

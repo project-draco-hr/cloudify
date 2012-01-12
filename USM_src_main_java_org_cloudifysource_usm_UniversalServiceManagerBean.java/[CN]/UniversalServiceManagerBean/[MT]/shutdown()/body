@@ -17,6 +17,7 @@ synchronized (this.stateMutex) {
  catch (    USMException e) {
       logger.log(Level.SEVERE,"Failed to execute shutdown event: " + e.getMessage(),e);
     }
+    USMUtils.shutdownAdmin();
   }
   logger.info("USM shut down completed!");
 }

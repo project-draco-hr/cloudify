@@ -2,11 +2,6 @@
   logger.info("Starting async tasks");
   this.processDeathNotifier=new ProcessDeathNotifier(this);
   final ProcessDeathNotifier notifier=this.processDeathNotifier;
-  if (this.tailer == null) {
-    this.tailer=createFileTailerTask();
-  }
-  logger.info("Launching tailer task");
-  executors.scheduleWithFixedDelay(tailer,1,fileTailerIntervalSecs,TimeUnit.SECONDS);
   if (this.process != null) {
     logger.info("Starting Synchronous Process Death Detection");
     executors.submit(createProcessWaitTask(notifier));

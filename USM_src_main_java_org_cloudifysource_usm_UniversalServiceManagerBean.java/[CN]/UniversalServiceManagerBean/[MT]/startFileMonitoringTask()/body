@@ -1,0 +1,7 @@
+{
+  if (this.tailer == null) {
+    this.tailer=createFileTailerTask();
+  }
+  logger.info("Launching tailer task");
+  executors.scheduleWithFixedDelay(tailer,1,fileTailerIntervalSecs,TimeUnit.SECONDS);
+}

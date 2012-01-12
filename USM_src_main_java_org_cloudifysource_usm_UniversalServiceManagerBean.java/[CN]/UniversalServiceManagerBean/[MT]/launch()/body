@@ -6,6 +6,7 @@ synchronized (this.stateMutex) {
     usmLifecycleBean.logProcessStartEvent();
     usmLifecycleBean.externalProcessStarted();
     this.process=usmLifecycleBean.getLauncher().launchProcessAsync(usmLifecycleBean.getConfiguration().getStartCommand(),this.puExtDir,getOutputFile(),getErrorFile());
+    startFileMonitoringTask();
     try {
       Thread.sleep(this.postLaunchWaitPeriodMillis);
     }

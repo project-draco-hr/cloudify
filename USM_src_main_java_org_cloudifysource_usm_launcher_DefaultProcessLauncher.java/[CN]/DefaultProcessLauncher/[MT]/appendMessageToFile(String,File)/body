@@ -1,0 +1,12 @@
+{
+  FileWriter writer=null;
+  try {
+    writer=new FileWriter(file,true);
+    writer.write(msg);
+  }
+  finally {
+    if (writer != null) {
+      writer.close();
+    }
+  }
+}

@@ -18,8 +18,10 @@
     pb.environment().putAll(env);
     Process proc;
     try {
-      logger.info("Executing command line: " + modifiedCommandLine);
       logger.info("Parsed command line: " + commandLineParams);
+      final String fileInitialMessage="Starting service process at: " + new Date() + " with command: "+ commandLineParams+ System.getProperty("line.separator");
+      appendMessageToFile(fileInitialMessage,outputFile);
+      appendMessageToFile(fileInitialMessage,errorFile);
       proc=pb.start();
       return proc;
     }

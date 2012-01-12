@@ -1,6 +1,6 @@
 {
   final Admin admin=USMUtils.getAdmin();
-  ProcessingUnit pu=admin.getProcessingUnits().waitFor(this.clusterName,30,TimeUnit.SECONDS);
+  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(this.clusterName,30,TimeUnit.SECONDS);
   final int instanceIdToMatch=this.instanceId;
   if (pu == null) {
     throw new IllegalStateException("Could not find Processing Unit with name: " + this.clusterName + " to register event listener. This may indicate a discovery problem with your network. Please contact the system administrator");
@@ -8,9 +8,9 @@
   pu.getProcessingUnitInstanceAdded().add(new ProcessingUnitInstanceAddedEventListener(){
     @Override public void processingUnitInstanceAdded(    ProcessingUnitInstance processingUnitInstance){
       if (processingUnitInstance.getInstanceId() == instanceIdToMatch) {
+        pu.getProcessingUnitInstanceAdded().remove(this);
         try {
           installAndRun();
-          admin.removeEventListener(this);
         }
  catch (        Exception e) {
           logger.log(Level.SEVERE,"Asynchronous install failed with message: " + e.getMessage() + ". Instance will shut down",e);
