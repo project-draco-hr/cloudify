@@ -8,7 +8,7 @@
   if (cloudFileName != null && cloudFileName.trim().length() > 0) {
     cloudFile=new File(cloudFileName);
     cloudConfigurationContents=FileUtils.readFileToString(cloudFile);
-    Cloud2 cloud=parseCloud(cloudFile);
+    Cloud cloud=parseCloud(cloudFile);
     if (cloud != null) {
       if (cloud.getProvider() != null) {
         int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();

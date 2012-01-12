@@ -1,5 +1,5 @@
 {
-  Cloud2 cloud=null;
+  Cloud cloud=null;
   if (cloudFile != null) {
     if (cloudFile.isFile()) {
       try {
