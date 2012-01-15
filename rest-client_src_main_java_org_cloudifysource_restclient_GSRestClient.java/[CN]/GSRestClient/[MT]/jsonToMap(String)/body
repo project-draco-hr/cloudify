@@ -1,4 +1,4 @@
 {
   final JavaType javaType=TypeFactory.type(Map.class);
-  return objectMapper.readValue(response,javaType);
+  return PROJECT_MAPPER.readValue(response,javaType);
 }
