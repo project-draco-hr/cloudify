@@ -7,7 +7,7 @@
     @SuppressWarnings("unchecked") @Override public Map<String,Object> getDetails(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws DetailsException {
       try {
         Map<String,Object> returnMap=new HashMap<String,Object>();
-        logger.info("getting Details map from details closure");
+        logger.fine("getting Details map from details closure");
         if (details instanceof Map<?,?>) {
           for (          Map.Entry<String,Object> entry : ((Map<String,Object>)(details)).entrySet()) {
             if (entry.getValue() instanceof Closure) {

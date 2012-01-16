@@ -6,6 +6,7 @@ synchronized (this.stateMutex) {
     checkForRecipeTestEnvironment();
     if (existingProcessFound) {
       startAsyncTasks();
+      startFileMonitoringTask();
       this.state=USMState.RUNNING;
       return;
     }
