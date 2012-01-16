@@ -47,7 +47,7 @@
     logger.info("Command exited with value: " + exitValue);
     if (exitValue != 0) {
       logger.severe("Event lifecycle external process exited with abnormal status code: " + exitValue);
-      Pattern pattern=Pattern.compile(EXCEPTION_CAUGHT_REGEX,Pattern.MULTILINE);
+      Pattern pattern=Pattern.compile(EXCEPTION_CAUGHT_REGEX,Pattern.MULTILINE + Pattern.DOTALL);
       Matcher matcher=pattern.matcher(sb.toString());
       int beginIndex=0;
       int endIndex=0;
