@@ -1,0 +1,11 @@
+{
+  if (position == ServerCreationWizardPageExtension.UI_POSITION.BOTTOM) {
+    final Text azureProjectLocation=SWTUtil.createLabeledPath("Azure Project:","",parent);
+    azureProjectLocation.addModifyListener(new ModifyListener(){
+      @Override public void modifyText(      ModifyEvent event){
+        System.out.println(azureProjectLocation.getText());
+      }
+    }
+);
+  }
+}
