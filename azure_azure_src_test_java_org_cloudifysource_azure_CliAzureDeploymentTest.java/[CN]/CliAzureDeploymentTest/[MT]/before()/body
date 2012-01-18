@@ -11,6 +11,11 @@
   cliExecutablePath=new File(gigaSpacesCloudifyDir,RELATIVE_CLI_PATH);
   File azureConfigExec=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_CONFIG_EXEC_PATH);
   File azurePropertiesFile=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_PROPERTIES_PATH);
+  File cscfgFile=new File(cliExecutablePath.getParent(),RELATIVE_CLI_PATH);
+  AzureDeploymentConfigurationFile cscfg=new AzureDeploymentConfigurationFile(cscfgFile);
+  cscfg.setUploadAgentLogs(true);
+  cscfg.setUploadAllLogs(true);
+  cscfg.flush();
   Properties newAzureProps=new Properties();
   newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_NAME_KEY,AZURE_ACCOUNT_NAME);
   newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_KEY_KEY,AZURE_ACCOUNT_KEY);

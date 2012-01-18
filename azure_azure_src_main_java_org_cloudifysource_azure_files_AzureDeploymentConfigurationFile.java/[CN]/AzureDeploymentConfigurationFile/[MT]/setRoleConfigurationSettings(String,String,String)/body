@@ -1,0 +1,4 @@
+{
+  String xpath=role != null ? "/ServiceConfiguration/Role[@name='" + role + "']/ConfigurationSettings[@name='"+ key+ "']" : "/ServiceConfiguration/Role/ConfigurationSettings[@name='" + key + "']";
+  getEditor().setNodeAttribute(xpath,"value",value);
+}

@@ -1,0 +1,3 @@
+{
+  setRoleConfigurationSettings(role,"GigaSpaces.XAP.UploadAgentLogs",String.valueOf(uploadAgentLogs));
+}
