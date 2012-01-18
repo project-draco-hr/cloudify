@@ -100,8 +100,9 @@
   azureDeploymentWrapper.createDeployment(azureDeploymentName,cscfgFile,cspkgFile);
   if (timeoutInMinutes > 0) {
     logger.info(ShellUtils.getExpectedExecutionTimeMessage());
+    waitForStatus(azureDeploymentWrapper,AzureDeploymentStatus.Running,ShellUtils.millisUntil(TIMEOUT_ERROR_STRING,end),TimeUnit.MILLISECONDS);
     try {
-      URI url=azureDeploymentWrapper.connectAndWait(adminFacade,timeoutInMinutes,TimeUnit.MINUTES);
+      URI url=azureDeploymentWrapper.connectAndWait(adminFacade,ShellUtils.millisUntil(TIMEOUT_ERROR_STRING,end),TimeUnit.MILLISECONDS);
       logger.log(Level.INFO,"Cloudify REST gateway URL is " + url);
       int numberOfMachines=0;
       numberOfMachines+=1;
