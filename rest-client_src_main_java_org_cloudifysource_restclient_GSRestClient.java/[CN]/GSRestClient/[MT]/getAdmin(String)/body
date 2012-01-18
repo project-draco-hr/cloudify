@@ -11,7 +11,7 @@
     }
     final HttpEntity entity=response.getEntity();
     if (entity == null) {
-      final ErrorStatusException e=new ErrorStatusException(REASON_CODE_COMM_ERR,httpMethod.getURI(),MSG_RESPONSE_ENTITY_NULL);
+      final ErrorStatusException e=new ErrorStatusException(REASON_CODE_COMM_ERR);
       logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_ENTITY_NULL,e);
       throw e;
     }
@@ -23,11 +23,11 @@
   }
  catch (  final ClientProtocolException e) {
     logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
-    throw new ErrorStatusException(e,REASON_CODE_COMM_ERR,httpMethod.getURI(),MSG_REST_API_ERR);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
 catch (  final IOException e) {
     logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
-    throw new ErrorStatusException(e,REASON_CODE_COMM_ERR,httpMethod.getURI(),MSG_REST_API_ERR);
+    throw new ErrorStatusException(REASON_CODE_COMM_ERR,e,e.getMessage());
   }
  finally {
     if (instream != null) {
