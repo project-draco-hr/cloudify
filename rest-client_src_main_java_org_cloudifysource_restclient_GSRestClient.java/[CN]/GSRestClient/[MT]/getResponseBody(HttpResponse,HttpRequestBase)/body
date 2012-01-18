@@ -3,7 +3,7 @@
   try {
     HttpEntity entity=response.getEntity();
     if (entity == null) {
-      final ErrorStatusException e=new ErrorStatusException(REASON_CODE_COMM_ERR);
+      final ErrorStatusException e=new ErrorStatusException(REASON_CODE_COMM_ERR,httpMethod.getURI(),MSG_RESPONSE_ENTITY_NULL);
       logger.log(Level.FINE,MSG_RESPONSE_ENTITY_NULL,e);
       throw e;
     }
