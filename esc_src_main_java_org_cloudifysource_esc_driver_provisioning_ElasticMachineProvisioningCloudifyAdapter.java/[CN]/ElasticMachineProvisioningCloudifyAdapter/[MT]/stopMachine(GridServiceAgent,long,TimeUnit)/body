@@ -1,10 +1,9 @@
 {
   final String machineIp=agent.getMachine().getHostAddress();
   try {
-    final boolean shutdownResult=this.cloudifyProvisioning.stopMachine(machineIp);
-    if (!shutdownResult) {
-      logger.severe("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed");
-    }
+    logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
+    final boolean shutdownResult=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
+    logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownResult);
     return shutdownResult;
   }
  catch (  CloudProvisioningException e) {

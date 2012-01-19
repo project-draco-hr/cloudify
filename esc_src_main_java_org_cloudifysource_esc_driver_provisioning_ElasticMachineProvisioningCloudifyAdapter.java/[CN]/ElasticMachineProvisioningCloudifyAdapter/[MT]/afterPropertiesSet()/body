@@ -7,7 +7,7 @@
     this.cloud=ServiceReader.readCloud(cloudContents);
     this.cloudTemplate=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
     if (this.cloudTemplate == null) {
-      throw new IllegalArgumentException("Cloud template was not set!");
+      throw new BeanConfigurationException("Cloud template was not set!");
     }
     cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
     try {
@@ -15,13 +15,13 @@
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplate,false);
     }
  catch (    Exception e) {
-      throw new IllegalArgumentException("Failed to load provisioning class from cloud: " + this.cloud);
+      throw new BeanConfigurationException("Failed to load provisioning class from cloud: " + this.cloud,e);
     }
     this.lookupLocatorsString=createLocatorsString();
     logger.info("Locators string used for new instances will be: " + this.lookupLocatorsString);
   }
  catch (  DSLException e) {
     logger.severe("Could not parse the provided cloud configuration: " + cloudContents + ": "+ e.getMessage());
-    throw new IllegalArgumentException("Could not parse the prvided cloud configuration: " + cloudContents + ": "+ e.getMessage());
+    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudContents + ": "+ e.getMessage());
   }
 }

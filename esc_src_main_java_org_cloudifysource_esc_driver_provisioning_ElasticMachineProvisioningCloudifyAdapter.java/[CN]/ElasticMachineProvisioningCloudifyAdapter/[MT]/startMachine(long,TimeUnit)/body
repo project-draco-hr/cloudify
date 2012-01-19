@@ -1,17 +1,38 @@
 {
+  logger.info("Cloudify Adapter is starting a new machine");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
+  logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails=provisionMachine(duration,unit);
-  installAndStartAgent(machineDetails,end);
-  String machineIp=null;
-  if (machineDetails.isUsePrivateAddress()) {
-    machineIp=machineDetails.getPrivateAddress();
-  }
+  logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
+  try {
+    checkForProvisioningTimeout(end,machineDetails);
+    logger.info("Cloudify Adapter is installing Cloudify on new machine");
+    installAndStartAgent(machineDetails,end);
+    checkForProvisioningTimeout(end,machineDetails);
+    String machineIp=null;
+    if (machineDetails.isUsePrivateAddress()) {
+      machineIp=machineDetails.getPrivateAddress();
+    }
  else {
-    machineIp=machineDetails.getPublicAddress();
+      machineIp=machineDetails.getPublicAddress();
+    }
+    logger.info("Cloudify adapter is waiting for GSA to become available");
+    GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
+    if (gsa == null) {
+      throw new TimeoutException("New machine was provisioned and Cloudify was installed, but a GSA was not discovered on the new machine: " + machineDetails);
+    }
+    return gsa;
   }
-  GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
-  if (gsa == null) {
-    handleGSANotFound(machineIp);
+ catch (  ElasticMachineProvisioningException e) {
+    handleExceptionAfterMachineCreated(machineDetails);
+    throw e;
   }
-  return gsa;
+catch (  TimeoutException e) {
+    handleExceptionAfterMachineCreated(machineDetails);
+    throw e;
+  }
+catch (  InterruptedException e) {
+    handleExceptionAfterMachineCreated(machineDetails);
+    throw e;
+  }
 }

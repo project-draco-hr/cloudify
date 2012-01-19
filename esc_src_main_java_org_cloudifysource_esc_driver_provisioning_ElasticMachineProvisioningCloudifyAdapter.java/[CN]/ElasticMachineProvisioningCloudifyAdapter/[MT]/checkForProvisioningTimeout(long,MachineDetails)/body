@@ -1,0 +1,6 @@
+{
+  if (System.currentTimeMillis() > end) {
+    logger.warning("Provisioning of new machine exceeded the required timeout. Shutting down the new machine (" + machineDetails.toString() + ")");
+    throw new TimeoutException("New machine provisioning exceeded the required timeout");
+  }
+}

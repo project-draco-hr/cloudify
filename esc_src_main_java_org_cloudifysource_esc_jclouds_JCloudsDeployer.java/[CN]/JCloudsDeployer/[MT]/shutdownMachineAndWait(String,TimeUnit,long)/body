@@ -1,0 +1,28 @@
+{
+  this.context.getComputeService().destroyNode(serverId);
+  logger.info("Machine: " + serverId + " shutdown has started. Waiting for process to complete");
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  NodeState state=null;
+  while (System.currentTimeMillis() < endTime) {
+    NodeMetadata node=this.context.getComputeService().getNodeMetadata(serverId);
+    if (node == null) {
+      return;
+    }
+    state=node.getState();
+    logger.info("Machine: " + serverId + " state is: "+ state);
+switch (state) {
+case TERMINATED:
+      return;
+case PENDING:
+case RUNNING:
+case SUSPENDED:
+    break;
+case ERROR:
+case UNRECOGNIZED:
+  logger.warning("While waiting for machine " + serverId + " to shut down, received unexpected node state: "+ state);
+break;
+}
+Thread.sleep(1000);
+}
+throw new TimeoutException("Termination of cloud node was requested, but machine did not shut down in the required time. Last state was: " + state);
+}

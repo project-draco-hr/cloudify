@@ -1,11 +1,12 @@
 {
-  if (timeout < 0) {
+  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  initDeployer(cloud);
+  if (System.currentTimeMillis() > end) {
     throw new TimeoutException("Starting a new machine timed out");
   }
-  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
-  initDeployer(cloud);
   try {
-    MachineDetails md=doStartMachine(timeout,unit);
+    MachineDetails md=doStartMachine(end);
     return md;
   }
  catch (  Exception e) {
