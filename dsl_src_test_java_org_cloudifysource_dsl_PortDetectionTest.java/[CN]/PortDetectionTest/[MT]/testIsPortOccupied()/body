@@ -1,0 +1,21 @@
+{
+  Assert.assertTrue("port 4443 was open before test started",!ServiceUtils.isPortOccupied(4443));
+  Assert.assertTrue("port 4445 was open before test started",!ServiceUtils.isPortOccupied(4445));
+  Assert.assertTrue("port 4446 was open before test started",!ServiceUtils.isPortOccupied(4446));
+  List<Integer> ports=new ArrayList<Integer>();
+  ports.add(4443);
+  ports.add(4445);
+  ports.add(4446);
+  openPorts(ports);
+  Assert.assertTrue("port 4443 is not open",ServiceUtils.isPortOccupied(4443));
+  Assert.assertTrue("port 4445 is not open",ServiceUtils.isPortOccupied(4445));
+  Assert.assertTrue("port 4446 is not open",ServiceUtils.isPortOccupied(4446));
+  Assert.assertTrue("isPortsOccupied failed to detect all ports are occupied.",ServiceUtils.isPortsOccupied(ports));
+  Assert.assertFalse("isPortsFree failed to detect all ports are open.",ServiceUtils.isPortsFree(ports));
+  closePort(4445);
+  Assert.assertFalse("isPortsOccupied found port 4445 is occupied.",ServiceUtils.isPortsOccupied(ports));
+  Assert.assertFalse("isPortsFree failed to detect all ports are open.",ServiceUtils.isPortsFree(ports));
+  closeAllPorts();
+  Assert.assertFalse("isPortsOccupied detected that some ports are still occupied.",ServiceUtils.isPortsOccupied(ports));
+  Assert.assertTrue("isPortsFree detected that some ports are still occupied.",ServiceUtils.isPortsFree(ports));
+}

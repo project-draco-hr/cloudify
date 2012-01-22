@@ -1,0 +1,13 @@
+{
+  serverSockets=new ArrayList<ServerSocket>();
+  for (  Integer port : ports) {
+    try {
+      ServerSocket serverSocket=new ServerSocket(port);
+      serverSockets.add(serverSocket);
+    }
+ catch (    IOException e) {
+      Assert.fail("Failed to open the following port:" + port);
+      e.printStackTrace();
+    }
+  }
+}

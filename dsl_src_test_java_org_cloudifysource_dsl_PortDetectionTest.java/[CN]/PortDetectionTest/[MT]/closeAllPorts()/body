@@ -1,0 +1,13 @@
+{
+  if (serverSockets != null) {
+    for (    ServerSocket serverSocket : serverSockets) {
+      try {
+        serverSocket.close();
+      }
+ catch (      IOException e) {
+        Assert.fail("Failed to close the following port:" + serverSocket.getLocalPort());
+        e.printStackTrace();
+      }
+    }
+  }
+}
