@@ -11,7 +11,7 @@
     }
     cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
     try {
-      this.cloudifyProvisioning=(CloudifyProvisioning)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+      this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplate,false);
     }
  catch (    Exception e) {
