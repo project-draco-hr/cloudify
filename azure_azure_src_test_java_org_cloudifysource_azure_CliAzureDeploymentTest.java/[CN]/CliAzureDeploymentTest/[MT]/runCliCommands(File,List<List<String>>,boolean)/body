@@ -10,7 +10,7 @@
   for (  List<String> command : commands) {
     argsCount+=command.size();
   }
-  String[] cmd=new String[argsCount + 4];
+  String[] cmd=new String[(argsCount == 0 ? 0 : 1) + 4];
   int i=0;
   cmd[i]="cmd";
   i++;
@@ -20,14 +20,20 @@
   i++;
   cmd[i]=cliExecutablePath.getAbsolutePath();
   i++;
-  for (  List<String> command : commands) {
-    if (command.size() > 0) {
-      for (      String arg : command) {
-        cmd[i]=arg;
-        i+=1;
+  if (argsCount > 0) {
+    cmd[i]="\"";
+    for (    List<String> command : commands) {
+      if (command.size() > 0) {
+        for (        String arg : command) {
+          if (cmd[i].length() > 0) {
+            cmd[i]+=" ";
+          }
+          cmd[i]+=arg;
+        }
+        cmd[i]+=";";
       }
-      cmd[i - 1]+=";";
     }
+    cmd[i]+="\"";
   }
   final ProcessBuilder pb=new ProcessBuilder(cmd);
   pb.directory(workingDirectory);
