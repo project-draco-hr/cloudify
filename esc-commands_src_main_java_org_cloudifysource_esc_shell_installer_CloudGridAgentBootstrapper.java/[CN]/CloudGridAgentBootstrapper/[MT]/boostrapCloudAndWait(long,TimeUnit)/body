@@ -1,6 +1,6 @@
 {
   try {
-    this.provisioning=(CloudifyProvisioning)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+    this.provisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
     provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
   }
  catch (  Exception e) {

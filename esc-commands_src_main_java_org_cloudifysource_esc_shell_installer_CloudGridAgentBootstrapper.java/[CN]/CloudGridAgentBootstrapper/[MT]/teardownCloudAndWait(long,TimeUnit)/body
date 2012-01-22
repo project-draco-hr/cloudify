@@ -1,6 +1,6 @@
 {
   try {
-    this.provisioning=(CloudifyProvisioning)Class.forName(cloud.getConfiguration().getClassName()).newInstance();
+    this.provisioning=(ProvisioningDriver)Class.forName(cloud.getConfiguration().getClassName()).newInstance();
   }
  catch (  Exception e) {
     throw new CLIException("Failed to load provisioning class from cloud: " + this.cloud);
