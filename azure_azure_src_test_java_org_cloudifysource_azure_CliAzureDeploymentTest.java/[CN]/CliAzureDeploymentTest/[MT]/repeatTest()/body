@@ -26,6 +26,7 @@
  catch (        Exception e) {
           logger.log(Level.SEVERE,"Failed to send email",e);
         }
+        after();
         break;
       }
  else {
