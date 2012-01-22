@@ -1,10 +1,10 @@
 {
-  File testParsingExtendDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_parsing_extend_illegal-service.groovy");
-  File testParsingExtendWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
+  final File testParsingExtendDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_parsing_extend_illegal-service.groovy");
+  final File testParsingExtendWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
   try {
     ServiceReader.getServiceFromFile(testParsingExtendDslFile,testParsingExtendWorkDir).getService();
     Assert.fail("No exception thrown while extend resides in illegal place");
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
   }
 }
