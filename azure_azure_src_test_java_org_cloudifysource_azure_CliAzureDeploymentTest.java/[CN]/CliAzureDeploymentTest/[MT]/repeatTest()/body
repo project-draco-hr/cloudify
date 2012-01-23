@@ -27,7 +27,6 @@
           logger.log(Level.SEVERE,"Failed to send email",e);
         }
         after();
-        break;
       }
  else {
         logger.info("Passed test iteration #" + i);
