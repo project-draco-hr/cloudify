@@ -1,0 +1,17 @@
+{
+  try {
+    File groovyFile=new File(System.getProperty("java.io.tmpdir"),"file.groovy");
+    FileWriter fstream=new FileWriter(groovyFile);
+    BufferedWriter out=new BufferedWriter(fstream);
+    out.write(groovyInput);
+    out.close();
+    new GroovyShell().run(groovyFile,new ArrayList<String>());
+    return "No groovy exception thrown";
+  }
+ catch (  MultipleCompilationErrorsException e) {
+    return e.toString();
+  }
+catch (  RuntimeException e) {
+    return e.toString();
+  }
+}

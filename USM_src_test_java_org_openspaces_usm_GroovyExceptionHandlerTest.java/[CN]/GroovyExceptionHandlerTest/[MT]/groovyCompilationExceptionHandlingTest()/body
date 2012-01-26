@@ -1,0 +1,15 @@
+{
+  String winCompilationExceptionString="SomeDrive:\\GigaSpaces\\gigaspaces-cloudify-2.0.0-m5\\" + "work\\processing-units\\petclinic-mongo_mongod_2\\ext\\mongod_install.groovy: 33:" + " unexpected token: } @ line 33, column 11";
+  String wrappedExceptionString=wrapperString + winCompilationExceptionString + wrapperString;
+  String exceptionString=GroovyExceptionHandler.getExceptionString(wrappedExceptionString);
+  Assert.assertTrue("Runtime exception " + winCompilationExceptionString + " was not properly extracted from the wrapped exception string "+ exceptionString,exceptionString.equals(winCompilationExceptionString));
+  String unixCompilationExceptionString="/export/users/adaml/gigaspaces-cloudify-2.0.0-ga/" + "tools/groovy/bin/a.groovy: 3: unexpected char: 0xFFFF @ line 3, column 26";
+  wrappedExceptionString=wrapperString + unixCompilationExceptionString + wrapperString;
+  exceptionString=GroovyExceptionHandler.getExceptionString(wrappedExceptionString);
+  Assert.assertTrue("Runtime exception " + winCompilationExceptionString + " was not properly extracted from the wrapped exception string "+ exceptionString,exceptionString.equals(unixCompilationExceptionString));
+  String groovyInputWithCompilationError="import java.lang.Exception throw new Exception(Go\");";
+  String groovyException=generateGroovyException(groovyInputWithCompilationError);
+  String strippedGroovyException=GroovyExceptionHandler.getExceptionString(groovyException);
+  String expectedResult="file.groovy: 1: unexpected token: throw @ line 1, column 28";
+  Assert.assertTrue("The exception string " + strippedGroovyException + " does not match the expected exception string "+ expectedResult,strippedGroovyException.contains(expectedResult));
+}

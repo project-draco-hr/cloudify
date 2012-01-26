@@ -1,0 +1,7 @@
+{
+  String exceptionReason=getRuntimeException(input);
+  if (exceptionReason.length() == 0) {
+    exceptionReason=getCompilationException(input);
+  }
+  return exceptionReason;
+}
