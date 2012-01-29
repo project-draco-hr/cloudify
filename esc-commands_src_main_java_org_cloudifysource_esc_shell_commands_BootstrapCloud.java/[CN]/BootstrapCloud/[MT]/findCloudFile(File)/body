@@ -14,6 +14,5 @@
  else   if (cloudFiles.length > 1) {
     throw new IllegalArgumentException("Found multiple cloud definition files in: " + providerDirectory + ". Only one file may end with the suffix '-cloud.groovy'");
   }
-  File cloudFile=cloudFiles[0];
-  return cloudFile;
+  return cloudFiles[0];
 }
