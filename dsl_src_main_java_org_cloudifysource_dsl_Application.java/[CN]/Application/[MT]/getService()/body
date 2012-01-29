@@ -1,8 +1,6 @@
 {
-  if (this.getServices().size() == 0) {
+  if (this.getServices().isEmpty()) {
     return null;
   }
- else {
-    return this.services.get(this.services.size() - 1);
-  }
+  return this.services.get(this.services.size() - 1);
 }
