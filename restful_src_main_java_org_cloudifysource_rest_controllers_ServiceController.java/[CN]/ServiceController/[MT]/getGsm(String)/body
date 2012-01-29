@@ -2,7 +2,5 @@
   if (id == null) {
     return admin.getGridServiceManagers().waitForAtLeastOne(5000,TimeUnit.MILLISECONDS);
   }
- else {
-    return admin.getGridServiceManagers().getManagerByUID(id);
-  }
+  return admin.getGridServiceManagers().getManagerByUID(id);
 }

@@ -31,7 +31,7 @@
   CycleDetector<ProcessingUnit,DefaultEdge> cycleDetector=new CycleDetector<ProcessingUnit,DefaultEdge>(graph);
   boolean containsCycle=cycleDetector.detectCycles();
   if (containsCycle) {
-    logger.warning("Detected a cycle in the dependencies of application: " + applicationName + " while preparing to uninstall. The service in this application will be uninstalled in a random order");
+    logger.warning("Detected a cycle in the dependencies of application: " + applicationName + " while preparing to uninstall."+ " The service in this application will be uninstalled in a random order");
     return Arrays.asList(pus);
   }
   TopologicalOrderIterator<ProcessingUnit,DefaultEdge> iterator=new TopologicalOrderIterator<ProcessingUnit,DefaultEdge>(graph);

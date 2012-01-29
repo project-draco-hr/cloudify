@@ -8,7 +8,7 @@
         throw new IllegalStateException("Cloud configuration has no compute template defined!");
       }
       actualTemplateName=cloud.getTemplates().keySet().iterator().next();
-      logger.warning("Compute Template name missing from service deployment request. Defaulting to first template: " + actualTemplateName);
+      logger.warning("Compute Template name missing from service deployment request." + " Defaulting to first template: " + actualTemplateName);
     }
   }
   String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
@@ -27,7 +27,7 @@
     destFile.deleteOnExit();
   }
  else {
-    logger.warning("Deployment file could not be renamed to the absolute pu name. Deploaying using the name " + dest.getName());
+    logger.warning("Deployment file could not be renamed to the absolute pu name." + " Deploaying using the name " + dest.getName());
     deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName);
     dest.deleteOnExit();
   }

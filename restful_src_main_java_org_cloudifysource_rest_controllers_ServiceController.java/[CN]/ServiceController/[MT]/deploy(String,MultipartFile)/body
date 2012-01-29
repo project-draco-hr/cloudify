@@ -16,7 +16,5 @@
   if (pu == null) {
     return errorStatus(FAILED_TO_LOCATE_SERVICE_AFTER_DEPLOYMENT,applicationName);
   }
- else {
-    return successStatus(pu.getName());
-  }
+  return successStatus(pu.getName());
 }
