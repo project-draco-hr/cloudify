@@ -1,27 +1,27 @@
 {
   File serviceFolder=null;
   try {
-    File packagedRecipe=packageRecipe();
+    final File packagedRecipe=packageRecipe();
     serviceFolder=createServiceFolder(packagedRecipe);
     logger.info("Executing service in temporary folder: " + serviceFolder);
     isServiceLifecycleNotNull(serviceFolder);
     final String classpath=createClasspathString(serviceFolder);
     logger.fine("Setting Test Processing Unit's Classpath to: " + classpath);
-    CommandLine cmdLine=createCommandLine();
+    final CommandLine cmdLine=createCommandLine();
     logger.fine("Setting Test Processing Unit's Command line to: " + cmdLine);
-    Map<Object,Object> env=new HashMap<Object,Object>();
+    final Map<Object,Object> env=new HashMap<Object,Object>();
     env.putAll(System.getenv());
     env.put("CLASSPATH",classpath);
     if (!env.containsKey(JAVA_HOME_ENV_VAR_NAME)) {
-      String javaHomeDirectory=getJavaHomeDirectory();
+      final String javaHomeDirectory=getJavaHomeDirectory();
       logger.warning("JAVA_HOME system variables is not set. adding JAVA_HOME with value " + javaHomeDirectory);
       env.put(JAVA_HOME_ENV_VAR_NAME,javaHomeDirectory);
       logger.info("JAVA_HOME was successfully set. added JAVA_HOME=" + javaHomeDirectory);
     }
-    int result=executeRecipe(cmdLine,env);
+    final int result=executeRecipe(cmdLine,env);
     if (result != 0) {
       if (result == 1) {
-        logger.warning("Recipe exited abnormally with exit value 1. " + "This may indicate that the external process did not shutdown on time and was forcibly shutdown by the execution watchdog.");
+        logger.warning("Recipe exited abnormally with exit value 1. " + "This may indicate that the external process did not shutdown on time and was" + " forcibly shutdown by the execution watchdog.");
       }
       throw new CLIException(getFormattedMessage("test_recipe_failure",result));
     }
@@ -31,7 +31,7 @@
       try {
         FileUtils.deleteDirectory(serviceFolder);
       }
- catch (      IOException e) {
+ catch (      final IOException e) {
         logger.log(Level.SEVERE,"Failed to delete temporary service folder: " + serviceFolder,e);
       }
     }

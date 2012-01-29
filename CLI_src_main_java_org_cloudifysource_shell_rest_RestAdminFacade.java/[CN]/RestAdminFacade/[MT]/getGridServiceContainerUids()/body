@@ -1,18 +1,18 @@
 {
   Map<String,Object> container=null;
   try {
-    container=(Map<String,Object>)client.getAdmin("GridServiceContainers");
+    container=client.getAdmin("GridServiceContainers");
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
-  @SuppressWarnings("unchecked") List<String> containerUris=(List<String>)container.get("Uids-Elements");
-  Set<String> containerUids=new HashSet<String>();
-  for (  String containerUri : containerUris) {
-    String uid=containerUri.substring(containerUri.lastIndexOf("/") + 1);
+  @SuppressWarnings("unchecked") final List<String> containerUris=(List<String>)container.get("Uids-Elements");
+  final Set<String> containerUids=new HashSet<String>();
+  for (  final String containerUri : containerUris) {
+    final String uid=containerUri.substring(containerUri.lastIndexOf("/") + 1);
     containerUids.add(uid);
   }
   return containerUids;

@@ -3,18 +3,21 @@
   try {
     gsa.shutdown();
   }
- catch (  RemoteException e) {
+ catch (  final RemoteException e) {
     if (!NetworkExceptionHelper.isConnectOrCloseException(e)) {
       throw new AdminException("Failed to shutdown GSA",e);
     }
   }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    /** 
+ * {@inheritDoc}
+ */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       logger.info("Waiting for agent to shutdown");
       try {
         gsa.ping();
       }
- catch (      RemoteException e) {
+ catch (      final RemoteException e) {
         return true;
       }
       return false;

@@ -1,6 +1,7 @@
 {
-  if (!warFile.isAbsolute()) {
-    warFile=new File(Environment.getHomeDirectory(),warFile.getPath());
+  File absWarFile=warFile;
+  if (!absWarFile.isAbsolute()) {
+    absWarFile=new File(Environment.getHomeDirectory(),warFile.getPath());
   }
-  return warFile;
+  return absWarFile;
 }

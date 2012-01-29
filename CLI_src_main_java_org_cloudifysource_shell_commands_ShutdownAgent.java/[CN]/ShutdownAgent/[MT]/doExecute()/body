@@ -1,5 +1,5 @@
 {
-  LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);
@@ -7,5 +7,5 @@
   installer.setProgressInSeconds(10);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.shutdownAgentOnLocalhostAndWait(force,timeoutInMinutes,TimeUnit.MINUTES);
-  return "Completed agen shutdown.";
+  return "Completed agent shutdown.";
 }

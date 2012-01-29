@@ -1,5 +1,5 @@
 {
-  Properties props=new Properties();
+  final Properties props=new Properties();
   loadProps(props,consoleActions.getBrandingPropertiesResourcePath());
   return props;
 }

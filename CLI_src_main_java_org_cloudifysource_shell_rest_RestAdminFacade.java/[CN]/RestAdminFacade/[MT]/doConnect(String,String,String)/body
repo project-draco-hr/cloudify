@@ -1,18 +1,19 @@
 {
-  if (!url.endsWith("/")) {
-    url=url + "/";
+  String formattedURL=url;
+  if (!formattedURL.endsWith("/")) {
+    formattedURL=formattedURL + "/";
   }
-  if (!url.startsWith("http://")) {
-    url="http://" + url;
+  if (!formattedURL.startsWith("http://")) {
+    formattedURL="http://" + formattedURL;
   }
   URL urlObj;
   try {
-    urlObj=new URL(url);
+    urlObj=new URL(formattedURL);
     if (urlObj.getPort() == -1) {
       urlObj=getUrlWithDefaultPort(urlObj);
     }
   }
- catch (  MalformedURLException e) {
+ catch (  final MalformedURLException e) {
     throw new CLIStatusException("could_not_parse_url",url);
   }
   try {
@@ -20,10 +21,10 @@
     eventLoggingTailer=new EventLoggingTailer();
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
 }

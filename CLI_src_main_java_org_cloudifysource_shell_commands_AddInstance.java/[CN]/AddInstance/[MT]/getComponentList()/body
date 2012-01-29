@@ -2,7 +2,7 @@
   try {
     return adminFacade.getServicesList(getCurrentApplicationName());
   }
- catch (  CLIException e) {
+ catch (  final CLIException e) {
     logger.warning("Could not get list of services: " + e.toString());
     return null;
   }

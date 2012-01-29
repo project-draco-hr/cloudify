@@ -12,11 +12,14 @@
   adminFacade.undeploy(getCurrentApplicationName(),serviceName);
   if (timeoutInMinutes > 0) {
     createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
+      /** 
+ * {@inheritDoc}
+ */
       @Override public boolean isDone() throws CLIException {
-        Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
-        Set<String> remainingContainersForService=new HashSet<String>(containerIdsOfService);
+        final Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
+        final Set<String> remainingContainersForService=new HashSet<String>(containerIdsOfService);
         remainingContainersForService.retainAll(allContainerIds);
-        boolean isDone=remainingContainersForService.isEmpty();
+        final boolean isDone=remainingContainersForService.isEmpty();
         if (!isDone) {
           printStatusMessage(remainingContainersForService.size(),containerIdsOfService.size(),remainingContainersForService);
         }

@@ -1,5 +1,5 @@
 {
-  LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);

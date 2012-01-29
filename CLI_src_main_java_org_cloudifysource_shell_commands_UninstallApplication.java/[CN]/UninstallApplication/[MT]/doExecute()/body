@@ -12,11 +12,14 @@
   this.adminFacade.uninstallApplication(this.applicationName);
   if (timeoutInMinutes > 0) {
     createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
+      /** 
+ * {@inheritDoc}
+ */
       @Override public boolean isDone() throws CLIException {
-        Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
-        Set<String> remainingContainersForApplication=new HashSet<String>(containerIdsOfApplication);
+        final Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
+        final Set<String> remainingContainersForApplication=new HashSet<String>(containerIdsOfApplication);
         remainingContainersForApplication.retainAll(allContainerIds);
-        boolean isDone=remainingContainersForApplication.isEmpty();
+        final boolean isDone=remainingContainersForApplication.isEmpty();
         if (!isDone) {
           printStatusMessage(remainingContainersForApplication.size(),containerIdsOfApplication.size(),remainingContainersForApplication);
         }

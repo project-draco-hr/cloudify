@@ -9,7 +9,7 @@
  else {
     packedFile=serviceFile;
   }
-  String currentApplicationName=getCurrentApplicationName();
-  String serviceName=adminFacade.install(currentApplicationName,packedFile);
+  final String currentApplicationName=getCurrentApplicationName();
+  final String serviceName=adminFacade.install(currentApplicationName,packedFile);
   return MessageFormat.format(messages.getString("installed_succesfully"),serviceName,currentApplicationName);
 }

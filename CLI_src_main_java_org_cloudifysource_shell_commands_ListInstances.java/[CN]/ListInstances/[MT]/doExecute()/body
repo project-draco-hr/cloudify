@@ -1,10 +1,10 @@
 {
-  Map<String,Object> instanceIdToHostMap=adminFacade.getInstanceList((String)session.get(Constants.ACTIVE_APP),serviceName);
+  final Map<String,Object> instanceIdToHostMap=adminFacade.getInstanceList((String)session.get(Constants.ACTIVE_APP),serviceName);
   if (instanceIdToHostMap.isEmpty()) {
     return MessageFormat.format(messages.getString("no_instances_found"),serviceName);
   }
-  StringBuilder builder=new StringBuilder("Instance\t\tHost\n");
-  for (  Map.Entry<String,Object> entry : instanceIdToHostMap.entrySet()) {
+  final StringBuilder builder=new StringBuilder("Instance\t\tHost\n");
+  for (  final Map.Entry<String,Object> entry : instanceIdToHostMap.entrySet()) {
     builder.append("instance #").append(entry.getKey()).append("\t\t").append(entry.getValue()).append('\n');
   }
   return builder.toString();

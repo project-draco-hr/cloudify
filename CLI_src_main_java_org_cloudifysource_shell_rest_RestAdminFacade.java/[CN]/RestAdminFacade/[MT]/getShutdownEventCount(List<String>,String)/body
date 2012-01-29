@@ -1,6 +1,6 @@
 {
   int shutdownEventCount=0;
-  for (  String eventString : events) {
+  for (  final String eventString : events) {
     if (eventString.contains(serviceName) && eventString.contains("SHUTDOWN invoked")) {
       shutdownEventCount++;
     }

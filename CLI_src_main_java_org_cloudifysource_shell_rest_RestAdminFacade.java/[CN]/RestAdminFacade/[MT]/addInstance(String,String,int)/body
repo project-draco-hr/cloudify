@@ -1,11 +1,11 @@
 {
   try {
-    String url=SERVICE_CONTROLLER_URL + "applications/na/services/" + serviceName+ "/addinstance";
-    Map<String,String> params=new HashMap<String,String>();
+    final String url=SERVICE_CONTROLLER_URL + "applications/na/services/" + serviceName+ "/addinstance";
+    final Map<String,String> params=new HashMap<String,String>();
     params.put("timeout",Integer.toString(timeout));
     client.post(url,params);
   }
- catch (  RestException e) {
+ catch (  final RestException e) {
     throw new CLIException(e);
   }
 }

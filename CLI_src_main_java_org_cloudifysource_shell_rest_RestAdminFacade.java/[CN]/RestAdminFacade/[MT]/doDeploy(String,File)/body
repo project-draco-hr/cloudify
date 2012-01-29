@@ -3,10 +3,10 @@
   try {
     result=client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
   return result;

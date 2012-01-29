@@ -1,6 +1,6 @@
 {
-  StringBuilder invocationSuccessStringBuilder=new StringBuilder();
-  StringBuilder invocationFailedStringBuilder=new StringBuilder();
+  final StringBuilder invocationSuccessStringBuilder=new StringBuilder();
+  final StringBuilder invocationFailedStringBuilder=new StringBuilder();
   invocationSuccessStringBuilder.append("Invocation results: " + System.getProperty("line.separator"));
   String applicationName=this.getCurrentApplicationName();
   if (applicationName == null) {
@@ -11,29 +11,29 @@
     paramsMap=getParamsMap(params);
   }
   if (instanceId == null) {
-    Map<String,InvocationResult> result=adminFacade.invokeServiceCommand(applicationName,serviceName,beanName,commandName,paramsMap);
-    Collection<InvocationResult> values=result.values();
-    List<InvocationResult> valuesList=new ArrayList<InvocationResult>(values);
+    final Map<String,InvocationResult> result=adminFacade.invokeServiceCommand(applicationName,serviceName,beanName,commandName,paramsMap);
+    final Collection<InvocationResult> values=result.values();
+    final List<InvocationResult> valuesList=new ArrayList<InvocationResult>(values);
     Collections.sort(valuesList);
-    for (    InvocationResult invocationResult : valuesList) {
+    for (    final InvocationResult invocationResult : valuesList) {
       if (invocationResult.isSuccess()) {
-        String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+        final String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
         invocationSuccessStringBuilder.append(successMessage + System.getProperty("line.separator"));
       }
  else {
-        String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+        final String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
         invocationFailedStringBuilder.append(failedMessage + System.getProperty("line.separator"));
       }
     }
   }
  else {
-    InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,beanName,instanceId,commandName,paramsMap);
+    final InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,beanName,instanceId,commandName,paramsMap);
     if (invocationResult.isSuccess()) {
-      String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+      final String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
       invocationSuccessStringBuilder.append(successMessage + System.getProperty("line.separator"));
     }
  else {
-      String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+      final String failedMessage=getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
       invocationFailedStringBuilder.append(failedMessage + System.getProperty("line.separator"));
     }
   }

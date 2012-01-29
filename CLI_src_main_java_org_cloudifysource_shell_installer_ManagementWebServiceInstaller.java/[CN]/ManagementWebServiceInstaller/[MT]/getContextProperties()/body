@@ -1,5 +1,5 @@
 {
-  Properties props=super.getContextProperties();
+  final Properties props=super.getContextProperties();
   props.put("web.port",String.valueOf(port));
   props.put("web.context","/");
   props.put("web.context.unique","true");

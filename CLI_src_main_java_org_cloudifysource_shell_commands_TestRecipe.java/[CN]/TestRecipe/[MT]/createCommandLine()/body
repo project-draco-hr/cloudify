@@ -1,9 +1,9 @@
 {
-  String javaPath=getJavaPath();
+  final String javaPath=getJavaPath();
   final String gsHome=Environment.getHomeDirectory();
-  final String[] COMMAND_LINE={"-Dcom.gs.home=" + gsHome,"-Dorg.hyperic.sigar.path=" + gsHome + "/lib/platform/sigar","-Dcom.gs.usm.RecipeShutdownTimeout=" + timeout,IntegratedProcessingUnitContainer.class.getName(),"-cluster","id=1","total_members=1"};
-  CommandLine cmdLine=new CommandLine(javaPath);
-  for (  String param : COMMAND_LINE) {
+  final String[] commandParams={"-Dcom.gs.home=" + gsHome,"-Dorg.hyperic.sigar.path=" + gsHome + "/lib/platform/sigar","-Dcom.gs.usm.RecipeShutdownTimeout=" + timeout,IntegratedProcessingUnitContainer.class.getName(),"-cluster","id=1","total_members=1"};
+  final CommandLine cmdLine=new CommandLine(javaPath);
+  for (  final String param : commandParams) {
     cmdLine.addArgument(param);
   }
   if (this.serviceFileName != null) {

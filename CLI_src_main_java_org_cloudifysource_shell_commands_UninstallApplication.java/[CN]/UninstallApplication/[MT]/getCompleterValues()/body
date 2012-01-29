@@ -2,7 +2,7 @@
   try {
     return getRestAdminFacade().getApplicationsList();
   }
- catch (  CLIException e) {
+ catch (  final CLIException e) {
     return new ArrayList<String>();
   }
 }

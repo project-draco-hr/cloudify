@@ -1,7 +1,7 @@
 {
   if (componentTypeStr != null) {
     try {
-      ComponentType componentType=componentTypeFromLowerCaseComponentName(componentTypeStr);
+      final ComponentType componentType=componentTypeFromLowerCaseComponentName(componentTypeStr);
 switch (componentType) {
 case SERVICE:
         return adminFacade.getServicesList(getCurrentApplicationName());
@@ -12,7 +12,7 @@ default :
   return null;
 }
 }
- catch (Exception e) {
+ catch (final Exception e) {
 logger.warning("Cloud not get list of component of type: " + componentTypeStr + ": "+ e.getMessage());
 return null;
 }

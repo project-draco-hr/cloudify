@@ -1,5 +1,5 @@
 {
-  Iterator<GridServiceManager> it=admin.getGridServiceManagers().iterator();
+  final Iterator<GridServiceManager> it=admin.getGridServiceManagers().iterator();
   if (it.hasNext()) {
     return it.next();
   }

@@ -1,10 +1,10 @@
 {
-  File directory=new File(Environment.getHomeDirectory(),"/bin").getAbsoluteFile();
+  final File directory=new File(Environment.getHomeDirectory(),"/bin").getAbsoluteFile();
   command[command.length - 1]=new File(directory,command[command.length - 1]).getAbsolutePath();
-  List<String> commandLine=new ArrayList<String>();
+  final List<String> commandLine=new ArrayList<String>();
   commandLine.addAll(Arrays.asList(command));
   commandLine.addAll(Arrays.asList(args));
-  File filename=createScript(StringUtils.collectionToDelimitedString(commandLine," "));
+  final File filename=createScript(StringUtils.collectionToDelimitedString(commandLine," "));
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
   String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
   if (autoShutdown) {
@@ -19,7 +19,7 @@
   }
   if (lookupLocators != null) {
     pb.environment().put("LOOKUPLOCATORS",lookupLocators);
-    String disableMulticast="-Dcom.gs.multicast.enabled=false";
+    final String disableMulticast="-Dcom.gs.multicast.enabled=false";
     gsaJavaOptions+=" " + disableMulticast;
     lusJavaOptions+=" " + disableMulticast;
     gsmJavaOptions+=" " + disableMulticast;

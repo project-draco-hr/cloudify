@@ -19,13 +19,13 @@
       service=ServiceReader.readServiceFromZip(packedFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
     }
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new CLIException(e);
   }
-catch (  PackagingException e) {
+catch (  final PackagingException e) {
     throw new CLIException(e);
   }
-  String currentApplicationName=getCurrentApplicationName();
+  final String currentApplicationName=getCurrentApplicationName();
   Properties props=null;
   if (service != null) {
     props=createServiceContextProperties(service);
@@ -36,7 +36,7 @@ catch (  PackagingException e) {
   }
   if (serviceName == null || serviceName.length() == 0) {
     serviceName=serviceFile.getName();
-    int endIndex=serviceName.lastIndexOf('.');
+    final int endIndex=serviceName.lastIndexOf('.');
     if (endIndex > 0) {
       serviceName=serviceName.substring(0,endIndex);
     }

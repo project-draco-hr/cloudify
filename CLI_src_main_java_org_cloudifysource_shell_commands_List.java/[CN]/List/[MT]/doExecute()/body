@@ -1,5 +1,5 @@
 {
-  ComponentType componentTypeEnum=componentTypeFromLowerCaseComponentName(componentType);
+  final ComponentType componentTypeEnum=componentTypeFromLowerCaseComponentName(componentType);
   if (componentType == null) {
     throw new IllegalArgumentException(MessageFormat.format(messages.getString("unknown_service_type"),componentType));
   }

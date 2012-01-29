@@ -13,7 +13,7 @@
     zipFile=Packager.packApplication(application,applicationFile);
   }
  else {
-    if ((applicationFile.getName().endsWith(".zip")) || (applicationFile.getName().endsWith(".jar"))) {
+    if (applicationFile.getName().endsWith(".zip") || applicationFile.getName().endsWith(".jar")) {
       zipFile=applicationFile;
     }
  else {
@@ -32,10 +32,10 @@
     serviceOrder=serviceOrder.substring(1,serviceOrder.length() - 1);
     logger.fine("Services will be installed in the following order: " + serviceOrder);
     printApplicationInfo(application);
-    for (    String serviceName : serviceOrder.split(Pattern.quote(","))) {
-      String trimmedServiceName=serviceName.trim();
-      Service service=getServiceByName(application,trimmedServiceName);
-      int plannedNumberOfInstances=service.getNumInstances();
+    for (    final String serviceName : serviceOrder.split(Pattern.quote(","))) {
+      final String trimmedServiceName=serviceName.trim();
+      final Service service=getServiceByName(application,trimmedServiceName);
+      final int plannedNumberOfInstances=service.getNumInstances();
       adminFacade.waitForServiceInstances(trimmedServiceName,applicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
       logger.info(MessageFormat.format(messages.getString("service_install_ended"),trimmedServiceName));
     }

@@ -1,14 +1,14 @@
 {
   try {
-    Sigar sigar=SigarHolder.getSigar();
-    long thisProcessPid=sigar.getPid();
-    String javaFilePath=sigar.getProcExe(thisProcessPid).getName();
-    File javaFile=new File(javaFilePath);
-    File javaFolder=javaFile.getParentFile().getParentFile();
-    String javaFolderPath=javaFolder.getAbsolutePath();
+    final Sigar sigar=SigarHolder.getSigar();
+    final long thisProcessPid=sigar.getPid();
+    final String javaFilePath=sigar.getProcExe(thisProcessPid).getName();
+    final File javaFile=new File(javaFilePath);
+    final File javaFolder=javaFile.getParentFile().getParentFile();
+    final String javaFolderPath=javaFolder.getAbsolutePath();
     return javaFolderPath;
   }
- catch (  SigarException e) {
-    throw new CLIException("Failed to set the 'JAVA_HOME' environment variable.",e);
+ catch (  final SigarException e) {
+    throw new CLIException("Failed to set the JAVA_HOME environment variable.",e);
   }
 }

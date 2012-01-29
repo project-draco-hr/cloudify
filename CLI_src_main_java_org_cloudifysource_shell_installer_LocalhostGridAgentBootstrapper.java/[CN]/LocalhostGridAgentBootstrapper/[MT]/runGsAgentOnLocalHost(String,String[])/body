@@ -1,5 +1,5 @@
 {
-  List<String> args=new ArrayList<String>();
+  final List<String> args=new ArrayList<String>();
   args.addAll(Arrays.asList(gsAgentArguments));
   String[] command;
   if (isWindows()) {

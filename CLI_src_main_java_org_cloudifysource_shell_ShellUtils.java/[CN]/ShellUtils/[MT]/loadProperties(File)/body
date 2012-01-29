@@ -1,6 +1,6 @@
 {
-  Properties properties=new Properties();
-  FileInputStream fis=new FileInputStream(propertiesFile);
+  final Properties properties=new Properties();
+  final FileInputStream fis=new FileInputStream(propertiesFile);
   try {
     properties.load(fis);
   }

@@ -1,10 +1,10 @@
 {
   if (componentName != null) {
     try {
-      Map<String,Object> instanceIdToHost=adminFacade.getInstanceList(getCurrentApplicationName(),componentName);
+      final Map<String,Object> instanceIdToHost=adminFacade.getInstanceList(getCurrentApplicationName(),componentName);
       return instanceIdToHost.keySet();
     }
- catch (    Exception e) {
+ catch (    final Exception e) {
       logger.warning("Could not fetch instance list for service " + componentName + ":"+ e.getMessage());
       return null;
     }

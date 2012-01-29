@@ -1,10 +1,10 @@
 {
-  long pid=SigarHolder.getSigar().getPid();
+  final long pid=SigarHolder.getSigar().getPid();
   try {
-    String javaName=SigarHolder.getSigar().getProcExe(pid).getName();
+    final String javaName=SigarHolder.getSigar().getProcExe(pid).getName();
     return javaName;
   }
- catch (  SigarException e) {
+ catch (  final SigarException e) {
     throw new IllegalStateException("Failed to read java path via sigar from current process (" + pid + ")");
   }
 }

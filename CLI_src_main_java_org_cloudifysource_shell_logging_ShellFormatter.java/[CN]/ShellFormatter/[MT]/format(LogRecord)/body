@@ -1,14 +1,14 @@
 {
   String outputMessage;
   if (record.getThrown() != null) {
-    Throwable t=record.getThrown();
+    final Throwable t=record.getThrown();
     String message;
     if (t.getStackTrace().length == 0) {
       message=t.getLocalizedMessage();
     }
  else {
       message=t.toString();
-      StringWriter sw=new StringWriter();
+      final StringWriter sw=new StringWriter();
       t.printStackTrace(new PrintWriter(sw));
       message=sw.toString();
     }

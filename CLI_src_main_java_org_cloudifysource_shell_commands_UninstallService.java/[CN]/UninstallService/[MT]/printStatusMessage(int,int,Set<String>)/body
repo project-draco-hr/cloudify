@@ -1,5 +1,5 @@
 {
-  String message="Waiting for all service instances to uninstall. " + "Currently " + remainingServiceContainers + " instances of "+ allServiceContainers+ " are still running.";
+  final String message="Waiting for all service instances to uninstall. " + "Currently " + remainingServiceContainers + " instances of "+ allServiceContainers+ " are still running.";
   if (!StringUtils.equals(message,lastMessage)) {
     logger.info(message + (verbose ? " " + remainingContainerIDs : ""));
     this.lastMessage=message;

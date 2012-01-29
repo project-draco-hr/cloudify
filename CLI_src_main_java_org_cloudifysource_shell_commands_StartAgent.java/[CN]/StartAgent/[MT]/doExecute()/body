@@ -2,7 +2,7 @@
   if (timeoutInMinutes < 0) {
     throw new CLIException("-timeout cannot be negative");
   }
-  LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);

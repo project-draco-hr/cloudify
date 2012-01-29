@@ -8,10 +8,10 @@
         throw new CLIStatusException("not_connected");
       }
     }
-    Object result=doExecute();
+    final Object result=doExecute();
     return result;
   }
- catch (  CLIStatusException cse) {
+ catch (  final CLIStatusException cse) {
     if (verbose) {
       logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse),cse);
     }
@@ -20,14 +20,14 @@
     }
     raiseCloseShellExceptionIfNonInteractive(session,cse);
   }
-catch (  CLIException e) {
+catch (  final CLIException e) {
     if (!verbose) {
       e.setStackTrace(new StackTraceElement[]{});
     }
     logger.log(Level.WARNING,"",e);
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }
-catch (  Throwable e) {
+catch (  final Throwable e) {
     logger.log(Level.SEVERE,"",e);
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }

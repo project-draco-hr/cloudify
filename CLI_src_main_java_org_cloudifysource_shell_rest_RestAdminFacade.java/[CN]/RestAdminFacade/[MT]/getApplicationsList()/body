@@ -3,7 +3,7 @@
   try {
     applicationsList=(List<String>)client.get("/service/applications");
   }
- catch (  RestException e) {
+ catch (  final RestException e) {
     throw new CLIException(e);
   }
   return applicationsList;

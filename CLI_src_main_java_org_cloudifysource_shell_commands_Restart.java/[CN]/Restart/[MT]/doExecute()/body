@@ -4,10 +4,10 @@
     try {
       componentInstances=delimitedStringToSet(componentInstanceIDs);
     }
- catch (    NumberFormatException e) {
+ catch (    final NumberFormatException e) {
       return MessageFormat.format(messages.getString("id_array_illegal_format"),componentInstanceIDs);
     }
   }
-  ComponentType componentType=componentTypeFromLowerCaseComponentName(componentTypeStr);
+  final ComponentType componentType=componentTypeFromLowerCaseComponentName(componentTypeStr);
   return MessageFormat.format(messages.getString("command_not_implemented"),"restart");
 }

@@ -1,5 +1,5 @@
 {
-  long end=System.currentTimeMillis() + timeoutMilliseconds;
+  final long end=System.currentTimeMillis() + timeoutMilliseconds;
   boolean isDone=predicate.isDone();
   while (!isDone && System.currentTimeMillis() < end) {
     if (verbose) {

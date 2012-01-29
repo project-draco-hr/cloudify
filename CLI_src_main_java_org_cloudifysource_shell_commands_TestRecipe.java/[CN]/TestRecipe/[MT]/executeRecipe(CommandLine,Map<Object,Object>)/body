@@ -1,7 +1,7 @@
 {
-  DefaultExecutor executor=new DefaultExecutor();
-  int externalProcessTimeout=(this.timeout + EXTERNAL_PROCESS_WATCHDOG_TIMEOUT) * 1000;
-  ExecuteWatchdog watchdog=new ExecuteWatchdog(externalProcessTimeout);
+  final DefaultExecutor executor=new DefaultExecutor();
+  final int externalProcessTimeout=(this.timeout + EXTERNAL_PROCESS_WATCHDOG_TIMEOUT) * 1000;
+  final ExecuteWatchdog watchdog=new ExecuteWatchdog(externalProcessTimeout);
   executor.setWatchdog(watchdog);
   executor.setExitValue(0);
   int result=-1;
@@ -12,17 +12,17 @@
     in=new PipedInputStream();
     out=new PipedOutputStream(in);
     reader=new BufferedReader(new InputStreamReader(in));
-    Thread thread=new Thread(new FilteredOutputHandler(reader,this.verbose));
+    final Thread thread=new Thread(new FilteredOutputHandler(reader,this.verbose));
     thread.setDaemon(true);
     thread.start();
-    PumpStreamHandler psh=new PumpStreamHandler(out,out);
+    final PumpStreamHandler psh=new PumpStreamHandler(out,out);
     executor.setStreamHandler(psh);
     result=executor.execute(cmdLine,env);
   }
- catch (  ExecuteException e) {
+ catch (  final ExecuteException e) {
     logger.log(Level.SEVERE,"A problem was encountered while executing the recipe: " + e.getMessage(),e);
   }
-catch (  IOException e) {
+catch (  final IOException e) {
     logger.log(Level.SEVERE,"An IO Exception was encountered while executing the recipe: " + e.getMessage(),e);
     result=-2;
   }

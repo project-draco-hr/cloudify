@@ -1,5 +1,8 @@
 {
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    /** 
+ * {@inheritDoc}
+ */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=true;
       if (0 == admin.getGridServiceManagers().getSize()) {

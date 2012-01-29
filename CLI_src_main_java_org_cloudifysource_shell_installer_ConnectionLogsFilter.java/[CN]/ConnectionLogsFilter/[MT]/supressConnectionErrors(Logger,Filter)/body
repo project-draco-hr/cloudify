@@ -1,6 +1,9 @@
 {
   Filter newFilter=new Filter(){
-    @Override public boolean isLoggable(    LogRecord record){
+    /** 
+ * {@inheritDoc}
+ */
+    @Override public boolean isLoggable(    final LogRecord record){
       boolean isLoggable=true;
       Throwable t=record.getThrown();
       if ((filter != null && !filter.isLoggable(record)) || (t != null && isConnectExceptionOrCause(t) && record.getLevel().intValue() <= Level.WARNING.intValue())) {
@@ -17,7 +20,7 @@
       }
       return false;
     }
-    private boolean isConnectException(    Throwable t){
+    private boolean isConnectException(    final Throwable t){
       return (t instanceof java.net.ConnectException) || (t instanceof java.rmi.ConnectException);
     }
   }

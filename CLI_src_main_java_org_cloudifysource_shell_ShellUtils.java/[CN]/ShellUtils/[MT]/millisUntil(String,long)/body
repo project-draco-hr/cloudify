@@ -1,5 +1,5 @@
 {
-  long millisUntilEnd=end - System.currentTimeMillis();
+  final long millisUntilEnd=end - System.currentTimeMillis();
   if (millisUntilEnd < 0) {
     throw new TimeoutException(errorMessage);
   }

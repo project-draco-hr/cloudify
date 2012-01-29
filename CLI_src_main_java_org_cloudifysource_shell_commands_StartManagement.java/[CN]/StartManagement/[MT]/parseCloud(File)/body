@@ -5,9 +5,9 @@
       try {
         cloud=ServiceReader.readCloud(cloudFile);
       }
- catch (      IOException e) {
+ catch (      final IOException e) {
       }
-catch (      DSLException e) {
+catch (      final DSLException e) {
       }
     }
  else {

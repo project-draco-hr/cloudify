@@ -3,7 +3,7 @@
   try {
     tempFile=File.createTempFile("run-gs-agent",isWindows() ? ".bat" : ".sh");
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new CLIException(e);
   }
   tempFile.deleteOnExit();

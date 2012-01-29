@@ -1,6 +1,6 @@
 {
-  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
-  ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
   connectionLogs.supressConnectionErrors();
   final Admin admin=createAdmin();
   try {
@@ -13,7 +13,7 @@
           throw new CLIException("Agent already running on local machine.");
         }
       }
- catch (      TimeoutException e) {
+ catch (      final TimeoutException e) {
       }
       runGsAgentOnLocalHost("agent and management processes",gsAgentArgs);
       agent=waitForNewAgent(admin,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
@@ -22,7 +22,7 @@
       connectionLogs.restoreConnectionErrors();
     }
     waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
-    List<AbstractManagementServiceInstaller> waitForManagementServices=new LinkedList<AbstractManagementServiceInstaller>();
+    final List<AbstractManagementServiceInstaller> waitForManagementServices=new LinkedList<AbstractManagementServiceInstaller>();
     connectionLogs.supressConnectionErrors();
     try {
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
@@ -40,14 +40,14 @@
           managementSpaceInstaller.install();
           waitForManagementServices.add(managementSpaceInstaller);
         }
- catch (        ProcessingUnitAlreadyDeployedException e) {
+ catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
             logger.info("Service " + MANAGEMENT_SPACE_NAME + " already installed");
           }
         }
       }
       if (!noWebServices) {
-        ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
+        final ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
         webuiInstaller.setAdmin(agent.getAdmin());
         webuiInstaller.setVerbose(verbose);
         webuiInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
@@ -59,14 +59,18 @@
         try {
           webuiInstaller.install();
         }
- catch (        ProcessingUnitAlreadyDeployedException e) {
+ catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
             logger.info("Service " + WEBUI_NAME + " already installed");
           }
         }
-        if (waitForWebUi)         waitForManagementServices.add(webuiInstaller);
- else         webuiInstaller.logServiceLocation();
-        ManagementWebServiceInstaller restInstaller=new ManagementWebServiceInstaller();
+        if (waitForWebUi) {
+          waitForManagementServices.add(webuiInstaller);
+        }
+ else {
+          webuiInstaller.logServiceLocation();
+        }
+        final ManagementWebServiceInstaller restInstaller=new ManagementWebServiceInstaller();
         restInstaller.setAdmin(agent.getAdmin());
         restInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
         restInstaller.setVerbose(verbose);
@@ -79,19 +83,19 @@
         try {
           restInstaller.install();
         }
- catch (        ProcessingUnitAlreadyDeployedException e) {
+ catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
             logger.info("Service " + REST_NAME + " already installed");
           }
         }
         waitForManagementServices.add(restInstaller);
       }
-      for (      AbstractManagementServiceInstaller managementServiceInstaller : waitForManagementServices) {
+      for (      final AbstractManagementServiceInstaller managementServiceInstaller : waitForManagementServices) {
         managementServiceInstaller.waitForInstallation(adminFacade,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
         if (managementServiceInstaller instanceof ManagementSpaceServiceInstaller) {
           logger.info("Writing cloud configuration to space.");
-          GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
-          CloudConfigurationHolder holder=new CloudConfigurationHolder(getCloudContents());
+          final GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
+          final CloudConfigurationHolder holder=new CloudConfigurationHolder(getCloudContents());
           gigaspace.write(holder);
           ((ISpaceProxy)gigaspace.getSpace()).close();
         }

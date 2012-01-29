@@ -1,6 +1,6 @@
 {
   System.setProperty(ConsoleReader.JLINE_NOBELL,Boolean.toString(true));
-  CloseCallback callback=new CloseCallback();
+  final CloseCallback callback=new CloseCallback();
   console=new ConsoleWithProps(commandProcessor,input,output,err,terminal,callback,isInteractive);
   return console;
 }

@@ -3,7 +3,7 @@
     try {
       nicAddress=Constants.getHostAddress();
     }
- catch (    UnknownHostException e) {
+ catch (    final UnknownHostException e) {
       throw new CLIException(e);
     }
   }

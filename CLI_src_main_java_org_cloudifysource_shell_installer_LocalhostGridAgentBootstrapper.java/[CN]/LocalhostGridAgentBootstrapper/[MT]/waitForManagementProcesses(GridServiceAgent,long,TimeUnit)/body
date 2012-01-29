@@ -1,6 +1,9 @@
 {
   final Admin admin=agent.getAdmin();
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    /** 
+ * {@inheritDoc}
+ */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=true;
       if (!isDone(admin.getLookupServices(),"LUS")) {
@@ -26,17 +29,17 @@
       }
       return isDone;
     }
-    @SuppressWarnings("rawtypes") private boolean isDone(    Iterable<? extends AgentGridComponent> components,    String serviceName){
+    private boolean isDone(    final Iterable<? extends AgentGridComponent> components,    final String serviceName){
       boolean found=false;
-      for (      AgentGridComponent component : components) {
+      for (      final AgentGridComponent component : components) {
         if (checkAgent(component)) {
           found=true;
           break;
         }
       }
       if (verbose) {
-        for (        Object component : components) {
-          GridServiceAgent agentThatStartedComponent=((AgentGridComponent)component).getGridServiceAgent();
+        for (        final Object component : components) {
+          final GridServiceAgent agentThatStartedComponent=((AgentGridComponent)component).getGridServiceAgent();
           String agentUid=null;
           if (agentThatStartedComponent != null) {
             agentUid=agentThatStartedComponent.getUid();
@@ -50,7 +53,7 @@
       }
       return found;
     }
-    private boolean checkAgent(    AgentGridComponent component){
+    private boolean checkAgent(    final AgentGridComponent component){
       return agent.equals(component.getGridServiceAgent());
     }
   }

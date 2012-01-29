@@ -8,15 +8,15 @@
   if (cloudFileName != null && cloudFileName.trim().length() > 0) {
     cloudFile=new File(cloudFileName);
     cloudConfigurationContents=FileUtils.readFileToString(cloudFile);
-    Cloud cloud=parseCloud(cloudFile);
+    final Cloud cloud=parseCloud(cloudFile);
     if (cloud != null) {
       if (cloud.getProvider() != null) {
-        int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+        final int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
         notHighlyAvailableManagementSpace=numberOfManagementMachines < 2;
       }
     }
   }
-  LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);
@@ -30,5 +30,5 @@
   installer.setWaitForWebui(true);
   installer.setCloudContents(cloudConfigurationContents);
   installer.startManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-  return "Management started succesfully. Use the shutdown-management command to shutdown management processes running on local machine.";
+  return "Management started succesfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }

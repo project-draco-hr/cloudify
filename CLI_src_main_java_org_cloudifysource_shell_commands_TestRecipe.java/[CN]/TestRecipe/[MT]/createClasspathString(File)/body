@@ -4,9 +4,9 @@
     currentClassPathEnv="";
   }
   currentClassPathEnv+=File.pathSeparator;
-  StringBuilder sb=new StringBuilder(currentClassPathEnv);
-  for (  String jarDir : JAR_DIRS) {
-    File dir=getDirIfExists(jarDir);
+  final StringBuilder sb=new StringBuilder(currentClassPathEnv);
+  for (  final String jarDir : JAR_DIRS) {
+    final File dir=getDirIfExists(jarDir);
     sb.append(dir.getAbsolutePath()).append(File.separator).append("*").append(File.pathSeparator);
   }
   sb.append(serviceFolder.getAbsolutePath()).append(File.separator).append(File.pathSeparator);

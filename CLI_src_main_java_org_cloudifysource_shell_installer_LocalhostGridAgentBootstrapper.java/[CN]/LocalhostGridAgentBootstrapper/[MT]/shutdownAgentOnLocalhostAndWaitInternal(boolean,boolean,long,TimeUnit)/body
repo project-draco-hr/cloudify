@@ -1,6 +1,6 @@
 {
-  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
-  ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
   connectionLogs.supressConnectionErrors();
   adminFacade.disconnect();
   final Admin admin=createAdmin();
@@ -10,15 +10,15 @@
     try {
       agent=waitForExistingAgent(admin,WAIT_EXISTING_AGENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
     }
- catch (    TimeoutException e) {
+ catch (    final TimeoutException e) {
     }
     if (agent == null) {
       logger.info("Agent not running on local machine");
     }
  else {
       if (!allowContainers) {
-        for (        ProcessingUnit pu : admin.getProcessingUnits()) {
-          for (          ProcessingUnitInstance instance : pu) {
+        for (        final ProcessingUnit pu : admin.getProcessingUnits()) {
+          for (          final ProcessingUnitInstance instance : pu) {
             if (agent.equals(instance.getGridServiceContainer().getGridServiceAgent())) {
               throw new CLIException("Cannot shutdown agent since " + pu.getName() + " service is still running on this machine. Use -force flag.");
             }
@@ -26,18 +26,18 @@
         }
       }
       if (!allowManagement) {
-        String message="Cannot shutdown agent since management processes running on this machine. Use the shutdown-management command instead.";
-        for (        GridServiceManager gsm : admin.getGridServiceManagers()) {
+        final String message="Cannot shutdown agent since management processes running on this machine. " + "Use the shutdown-management command instead.";
+        for (        final GridServiceManager gsm : admin.getGridServiceManagers()) {
           if (agent.equals(gsm.getGridServiceAgent())) {
             throw new CLIException(message);
           }
         }
-        for (        ElasticServiceManager esm : admin.getElasticServiceManagers()) {
+        for (        final ElasticServiceManager esm : admin.getElasticServiceManagers()) {
           if (agent.equals(esm.getGridServiceAgent())) {
             throw new CLIException(message);
           }
         }
-        for (        LookupService lus : admin.getLookupServices()) {
+        for (        final LookupService lus : admin.getLookupServices()) {
           if (agent.equals(lus.getGridServiceAgent())) {
             throw new CLIException(message);
           }

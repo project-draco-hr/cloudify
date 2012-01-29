@@ -11,7 +11,7 @@
   try {
     SystemDefaultProxySelector.setup();
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     Logger.getLogger(GigaShellMain.class.getName()).log(Level.WARNING,"Failed using system proxy configuration, falling back to no proxy.",new CLIException(e));
   }
 }

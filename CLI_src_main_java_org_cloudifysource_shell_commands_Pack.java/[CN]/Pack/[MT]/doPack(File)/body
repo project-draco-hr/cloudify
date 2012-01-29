@@ -2,13 +2,13 @@
   try {
     return Packager.pack(recipeDirOrFile);
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new CLIException(e);
   }
-catch (  PackagingException e) {
+catch (  final PackagingException e) {
     throw new CLIException(e);
   }
-catch (  DSLException e) {
+catch (  final DSLException e) {
     throw new CLIException(e);
   }
 }

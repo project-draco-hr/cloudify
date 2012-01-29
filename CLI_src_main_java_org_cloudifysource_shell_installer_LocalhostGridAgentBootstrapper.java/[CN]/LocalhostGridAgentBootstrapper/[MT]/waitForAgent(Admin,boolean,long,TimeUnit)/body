@@ -1,9 +1,12 @@
 {
   final AtomicReference<GridServiceAgent> agentOnLocalhost=new AtomicReference<GridServiceAgent>();
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    /** 
+ * {@inheritDoc}
+ */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=false;
-      for (      GridServiceAgent agent : admin.getGridServiceAgents()) {
+      for (      final GridServiceAgent agent : admin.getGridServiceAgents()) {
         if (checkAgent(agent)) {
           agentOnLocalhost.set(agent);
           isDone=true;
@@ -20,11 +23,11 @@
       }
       return isDone;
     }
-    private boolean checkAgent(    GridServiceAgent agent){
+    private boolean checkAgent(    final GridServiceAgent agent){
       final String agentNicAddress=agent.getMachine().getHostAddress();
       final String agentLookupGroups=getLookupGroups(agent);
-      boolean checkLookupGroups=lookupGroups != null && lookupGroups.equals(agentLookupGroups);
-      boolean checkNicAddress=(nicAddress != null && agentNicAddress.equals(nicAddress)) || isThisMyIpAddress(agentNicAddress);
+      final boolean checkLookupGroups=lookupGroups != null && lookupGroups.equals(agentLookupGroups);
+      final boolean checkNicAddress=nicAddress != null && agentNicAddress.equals(nicAddress) || isThisMyIpAddress(agentNicAddress);
       if (verbose) {
         String message="Discovered agent nic-address=" + agentNicAddress + " lookup-groups="+ agentLookupGroups+ ". ";
         if (!checkLookupGroups) {
@@ -38,30 +41,33 @@
       return checkLookupGroups && checkNicAddress;
     }
     /** 
- * @see http://stackoverflow.com/questions/2406341/how-to-check-if-an-ip-address-is-the-local-host-on-a-multi-homed-system
+ * @see http://stackoverflow.com/questions/2406341/how-to-check-if-an-ip-address-is-the-local-host-
+ * on-a-multi-homed-system
  */
-    public boolean isThisMyIpAddress(    String ip){
+    public boolean isThisMyIpAddress(    final String ip){
       InetAddress addr;
       try {
         addr=InetAddress.getByName(ip);
       }
- catch (      UnknownHostException e) {
+ catch (      final UnknownHostException e) {
         return false;
       }
-      if (addr.isAnyLocalAddress() || addr.isLoopbackAddress())       return true;
+      if (addr.isAnyLocalAddress() || addr.isLoopbackAddress()) {
+        return true;
+      }
       try {
         return NetworkInterface.getByInetAddress(addr) != null;
       }
- catch (      SocketException e) {
+ catch (      final SocketException e) {
         return false;
       }
     }
-    private String getLookupGroups(    VirtualMachineAware component){
-      String prefix="-Dcom.gs.jini_lus.groups=";
+    private String getLookupGroups(    final VirtualMachineAware component){
+      final String prefix="-Dcom.gs.jini_lus.groups=";
       return getCommandLineArgumentRemovePrefix(component,prefix);
     }
-    private String getCommandLineArgumentRemovePrefix(    VirtualMachineAware component,    String prefix){
-      String[] commandLineArguments=component.getVirtualMachine().getDetails().getInputArguments();
+    private String getCommandLineArgumentRemovePrefix(    final VirtualMachineAware component,    final String prefix){
+      final String[] commandLineArguments=component.getVirtualMachine().getDetails().getInputArguments();
       String requiredArg=null;
       for (      final String arg : commandLineArguments) {
         if (arg.startsWith(prefix)) {

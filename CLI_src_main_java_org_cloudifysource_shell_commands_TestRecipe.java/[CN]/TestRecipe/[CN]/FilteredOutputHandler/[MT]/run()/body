@@ -9,14 +9,14 @@
         System.out.println(line);
       }
  else {
-        for (        String filter : FILTERS) {
+        for (        final String filter : FILTERS) {
           if (line.indexOf(filter) >= 0) {
             System.out.println(line);
           }
         }
       }
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       return;
     }
   }

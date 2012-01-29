@@ -1,13 +1,13 @@
 {
   String result=null;
   try {
-    String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName;
+    final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName;
     result=client.postFile(url + "?zone=" + zone+ "&template="+ templateName,packedFile,contextProperties);
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
   return result;

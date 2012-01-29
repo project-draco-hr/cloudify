@@ -1,9 +1,9 @@
 {
-  AdminFacade adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
+  final AdminFacade adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
   try {
     adminFacade.disconnect();
     if (session.get(Constants.INTERACTIVE_MODE) != null) {
-      boolean isInteractive=(Boolean)session.get(Constants.INTERACTIVE_MODE);
+      final boolean isInteractive=(Boolean)session.get(Constants.INTERACTIVE_MODE);
       if (!isInteractive) {
         if (session.get(Constants.LAST_COMMAND_EXCEPTION) != null) {
           System.exit(1);
@@ -11,7 +11,7 @@
       }
     }
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     e.printStackTrace();
     System.exit(1);
   }

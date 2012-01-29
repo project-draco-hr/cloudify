@@ -1,12 +1,15 @@
 {
   adminFacade.disconnect();
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    /** 
+ * {@inheritDoc}
+ */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
         adminFacade.connect(null,null,url.toString());
         return true;
       }
- catch (      CLIException e) {
+ catch (      final CLIException e) {
         if (verbose) {
           logger.log(Level.INFO,"Error connecting to web service [" + serviceName + "].",e);
         }

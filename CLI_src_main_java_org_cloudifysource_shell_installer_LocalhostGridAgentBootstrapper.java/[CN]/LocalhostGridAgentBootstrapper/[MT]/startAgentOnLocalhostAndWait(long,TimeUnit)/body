@@ -3,7 +3,7 @@
     throw new CLIException("Agent must be started with a zone");
   }
   setDefaultNicAddress();
-  ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
   connectionLogs.supressConnectionErrors();
   final Admin admin=createAdmin();
   try {
@@ -12,7 +12,7 @@
       waitForExistingAgent(admin,WAIT_EXISTING_AGENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
       throw new CLIException("Agent already running on local machine. Use shutdown-agent first.");
     }
- catch (    TimeoutException e) {
+ catch (    final TimeoutException e) {
     }
     runGsAgentOnLocalHost("agent",AGENT_ARGUMENTS);
     waitForNewAgent(admin,timeout,timeunit);

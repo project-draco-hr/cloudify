@@ -3,17 +3,17 @@
   try {
     map=client.getAdminData("machines/HostsByAddress");
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
-  @SuppressWarnings("unchecked") List<String> list=(List<String>)map.get("HostsByAddress-Elements");
-  List<String> result=new ArrayList<String>(list.size());
-  for (  String host : list) {
-    String[] parts=host.split("/");
-    String ip=parts[parts.length - 1];
+  @SuppressWarnings("unchecked") final List<String> list=(List<String>)map.get("HostsByAddress-Elements");
+  final List<String> result=new ArrayList<String>(list.size());
+  for (  final String host : list) {
+    final String[] parts=host.split("/");
+    final String ip=parts[parts.length - 1];
     result.add(ip);
   }
   return result;

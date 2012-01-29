@@ -1,4 +1,4 @@
 {
-  System.err.println(MessageFormat.format("Error occurred: {0}. " + "For more details refer to the full logs.",exception.getCause()));
+  System.err.println(MessageFormat.format("Error occurred: {0}. For more details refer to the full logs.",exception.getCause()));
   exception.printStackTrace(System.err);
 }

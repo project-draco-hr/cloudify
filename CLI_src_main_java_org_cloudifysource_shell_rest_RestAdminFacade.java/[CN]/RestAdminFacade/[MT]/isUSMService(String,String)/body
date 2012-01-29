@@ -1,8 +1,8 @@
 {
-  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  String usmUrl="ProcessingUnits/Names/" + absolutePUName + "/Instances/0/Statistics/"+ "Monitors/"+ CloudifyConstants.USM_MONITORS_SERVICE_ID;
+  final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final String usmUrl="ProcessingUnits/Names/" + absolutePUName + "/Instances/0/Statistics/"+ "Monitors/"+ CloudifyConstants.USM_MONITORS_SERVICE_ID;
   try {
-    Map<String,Object> adminData=client.getAdminData(usmUrl);
+    final Map<String,Object> adminData=client.getAdminData(usmUrl);
     if (adminData.containsKey("Id") && adminData.get("Id").equals(CloudifyConstants.USM_MONITORS_SERVICE_ID)) {
       return true;
     }
@@ -10,7 +10,7 @@
       return false;
     }
   }
- catch (  RestException e) {
+ catch (  final RestException e) {
   }
   return false;
 }

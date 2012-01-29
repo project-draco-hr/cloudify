@@ -3,14 +3,14 @@
   initializeProxyConfiguration();
   InputStream is=null;
   SequenceInputStream sis=null;
-  InputStream exitInputStream=new ByteArrayInputStream(EXIT_COMMAND.getBytes());
+  final InputStream exitInputStream=new ByteArrayInputStream(EXIT_COMMAND.getBytes());
   boolean isInteractive=true;
   try {
     if (args.length > 0) {
       isInteractive=false;
       if (args[0].startsWith("-f=")) {
-        String filename=args[0].substring("-f=".length());
-        File file=new File(filename);
+        final String filename=args[0].substring("-f=".length());
+        final File file=new File(filename);
         if (!file.exists()) {
           throw new IllegalArgumentException(filename + " does not exist");
         }
