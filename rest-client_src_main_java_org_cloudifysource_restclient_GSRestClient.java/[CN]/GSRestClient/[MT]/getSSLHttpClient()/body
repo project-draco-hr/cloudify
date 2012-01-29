@@ -12,22 +12,22 @@
     final ClientConnectionManager ccm=new ThreadSafeClientConnManager(params,registry);
     return new DefaultHttpClient(ccm,params);
   }
- catch (  KeyStoreException e) {
+ catch (  final KeyStoreException e) {
     throw new RestException(e);
   }
-catch (  NoSuchAlgorithmException e) {
+catch (  final NoSuchAlgorithmException e) {
     throw new RestException(e);
   }
-catch (  CertificateException e) {
+catch (  final CertificateException e) {
     throw new RestException(e);
   }
-catch (  IOException e) {
+catch (  final IOException e) {
     throw new RestException(e);
   }
-catch (  KeyManagementException e) {
+catch (  final KeyManagementException e) {
     throw new RestException(e);
   }
-catch (  UnrecoverableKeyException e) {
+catch (  final UnrecoverableKeyException e) {
     throw new RestException(e);
   }
 }

@@ -2,15 +2,15 @@
   String responseBody;
   try {
     final HttpResponse response=httpClient.execute(httpMethod);
-    int statusCode=response.getStatusLine().getStatusCode();
+    final int statusCode=response.getStatusLine().getStatusCode();
     if (statusCode != HTTP_STATUS_OK) {
       logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_CODE + statusCode);
       responseBody=getResponseBody(response,httpMethod);
       try {
-        Map<String,Object> errorMap=GSRestClient.jsonToMap(responseBody);
+        final Map<String,Object> errorMap=GSRestClient.jsonToMap(responseBody);
         throw new ErrorStatusException("Remote_rest_gateway_exception",errorMap.get(ERROR));
       }
- catch (      IOException e) {
+ catch (      final IOException e) {
         if (statusCode == NOT_FOUND_404_ERROR_CODE) {
           throw new ErrorStatusException(e,"URL_not_found",httpMethod.getURI());
         }
