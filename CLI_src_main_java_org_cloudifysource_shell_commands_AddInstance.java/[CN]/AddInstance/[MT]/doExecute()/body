@@ -1,4 +1,0 @@
-{
-  adminFacade.addInstance(getCurrentApplicationName(),serviceName,timeout);
-  return getFormattedMessage("added_instance_successfully",Color.GREEN);
-}
