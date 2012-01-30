@@ -14,5 +14,5 @@
   if (serviceFileName != null) {
     dslDirOrFile=new File(dslDirOrFile,serviceFileName);
   }
-  return Pack.doPack(dslDirOrFile);
+  return doPack(dslDirOrFile);
 }
