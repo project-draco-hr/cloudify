@@ -1,7 +1,7 @@
 {
   long end=System.currentTimeMillis() + unit.toMillis(timeout);
   InetSocketAddress addr=new InetSocketAddress(ip,port);
-  logger.info("Checking connection to: " + addr);
+  logger.fine("Checking connection to: " + addr);
   while (System.currentTimeMillis() + CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS < end) {
     Thread.sleep(CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS);
     final Socket sock=new Socket();

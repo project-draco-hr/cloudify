@@ -2,7 +2,7 @@
   this.cloud=cloud;
   this.cloudTemplateName=cloudTemplateName;
   this.management=management;
-  logger.info("Initializing Cloud Provisioning - management mode: " + management + ". Using template: "+ cloudTemplateName+ " with cloud: "+ cloud);
+  logger.fine("Initializing Cloud Provisioning - management mode: " + management + ". Using template: "+ cloudTemplateName+ " with cloud: "+ cloud);
   this.cloudName=cloud.getName();
   String prefix=(management ? cloud.getProvider().getManagementGroup() : cloud.getProvider().getMachineNamePrefix());
   if ((prefix == null) || (prefix.length() == 0)) {

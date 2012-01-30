@@ -25,7 +25,7 @@
     scpTarget="sftp://" + username + "@"+ host+ toDir;
   }
   final FileObject remoteDir=mng.resolveFile(scpTarget,opts);
-  logger.info("Copying files to: " + scpTarget + " from local dir: "+ localDir.getName().getPath()+ " excluding "+ excludedFiles.toString());
+  logger.fine("Copying files to: " + scpTarget + " from local dir: "+ localDir.getName().getPath()+ " excluding "+ excludedFiles.toString());
   try {
     remoteDir.copyFrom(localDir,new FileSelector(){
       @Override public boolean includeFile(      final FileSelectInfo fileInfo) throws Exception {
@@ -67,7 +67,7 @@
       }
 );
     }
-    logger.info("Copying files to: " + scpTarget + " completed.");
+    logger.fine("Copying files to: " + scpTarget + " completed.");
   }
   finally {
     mng.closeFileSystem(remoteDir.getFileSystem());

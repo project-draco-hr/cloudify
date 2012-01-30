@@ -1,6 +1,7 @@
 {
   try {
     this.provisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+    this.provisioning.addListener(new CliProvisioningDriverListner());
     provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
   }
  catch (  Exception e) {
@@ -45,9 +46,12 @@
     }
   }
  catch (  IOException e) {
-    throw new CLIException("bootstrap-cloud failed",e);
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " failed.",e);
   }
 catch (  URISyntaxException e) {
     throw new CLIException("bootstrap-cloud failed",e);
+  }
+catch (  TimeoutException e) {
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option",e);
   }
 }

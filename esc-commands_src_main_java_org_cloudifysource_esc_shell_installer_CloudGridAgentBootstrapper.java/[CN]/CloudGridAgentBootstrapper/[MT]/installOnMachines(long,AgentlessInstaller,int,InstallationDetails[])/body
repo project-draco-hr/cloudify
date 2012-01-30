@@ -11,12 +11,15 @@
             installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
           }
  catch (          TimeoutException e) {
+            logger.info("Failed accessing management VM " + detail.getPublicIp());
             return e;
           }
 catch (          InterruptedException e) {
+            logger.info("Failed accessing management VM " + detail.getPublicIp());
             return e;
           }
 catch (          InstallerException e) {
+            logger.info("Failed accessing management VM " + detail.getPublicIp());
             return e;
           }
           return null;

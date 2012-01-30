@@ -3,16 +3,20 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
-  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
+  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
+  publishEvent("try_to_connect_to_cloud_api",cloud.getProvider().getProvider());
   initDeployer(cloud);
+  publishEvent("connection_to_cloud_api_succeeded",cloud.getProvider().getProvider());
   this.deployer.getTemplate();
   final String managementMachinePrefix=this.machineNamePrefix;
   MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
   if (existingManagementServers.length > 0) {
-    logger.info("Found existing servers matching the name: " + managementMachinePrefix);
+    logger.fine("Found existing servers matching the name: " + managementMachinePrefix);
     return existingManagementServers;
   }
+  publishEvent("attempting_to_create_management_vms");
   int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
   MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
+  publishEvent("management_started_successfully");
   return createdMachines;
 }

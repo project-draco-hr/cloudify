@@ -1,13 +1,13 @@
 {
   if (logger.isLoggable(Level.INFO)) {
-    logger.info(nodePrefix(server) + "Cloud Server was created.");
+    logger.fine(nodePrefix(server) + "Cloud Server was created.");
     if (tempFile == null) {
-      logger.info(nodePrefix(server) + "Password: ***");
+      logger.fine(nodePrefix(server) + "Password: ***");
     }
  else {
-      logger.info(nodePrefix(server) + "Key File: " + tempFile.getAbsolutePath());
+      logger.fine(nodePrefix(server) + "Key File: " + tempFile.getAbsolutePath());
     }
-    logger.info(nodePrefix(server) + "Public IP: " + Arrays.toString(server.getPublicAddresses().toArray()));
-    logger.info(nodePrefix(server) + "Private IP: " + Arrays.toString(server.getPrivateAddresses().toArray()));
+    logger.fine(nodePrefix(server) + "Public IP: " + Arrays.toString(server.getPublicAddresses().toArray()));
+    logger.fine(nodePrefix(server) + "Private IP: " + Arrays.toString(server.getPrivateAddresses().toArray()));
   }
 }

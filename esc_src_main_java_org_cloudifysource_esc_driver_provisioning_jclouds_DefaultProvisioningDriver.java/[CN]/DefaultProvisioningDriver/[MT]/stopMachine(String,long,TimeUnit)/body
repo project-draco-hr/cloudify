@@ -7,12 +7,12 @@
   }
   stoppingMachines.put(machineIp,System.currentTimeMillis());
   logger.fine("Scale IN -- " + machineIp + " --");
-  logger.info("Looking Up Cloud server with IP: " + machineIp);
+  logger.fine("Looking Up Cloud server with IP: " + machineIp);
   final NodeMetadata server=getServerWithIP(machineIp);
   if (server != null) {
-    logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to completes");
+    logger.fine("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to completes");
     deployer.shutdownMachineAndWait(server.getId(),unit,duration);
-    logger.info("Server: " + server.getId() + " shutdown has finished.");
+    logger.fine("Server: " + server.getId() + " shutdown has finished.");
     return true;
   }
  else {

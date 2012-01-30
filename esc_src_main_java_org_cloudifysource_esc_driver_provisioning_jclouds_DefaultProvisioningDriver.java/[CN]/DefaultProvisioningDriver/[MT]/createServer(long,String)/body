@@ -6,7 +6,7 @@
  catch (  InstallerException e) {
     throw new CloudProvisioningException("Failed to create cloud machine",e);
   }
-  logger.info("New machine is starting");
+  logger.fine("New machine is starting");
   try {
     MachineDetails md=createMachineDetailsFromNode(node);
     handleServerCredentials(node,md);

@@ -1,5 +1,5 @@
 {
-  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
+  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
   final long end=System.currentTimeMillis() + unit.toMillis(timeout);
   initDeployer(cloud);
   if (System.currentTimeMillis() > end) {

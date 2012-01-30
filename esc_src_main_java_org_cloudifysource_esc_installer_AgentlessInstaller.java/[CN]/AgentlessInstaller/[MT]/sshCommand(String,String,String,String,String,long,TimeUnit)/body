@@ -16,7 +16,7 @@
     task.setPassword(password);
   }
   try {
-    logger.info("Executing command: " + command + " on "+ host);
+    logger.fine("Executing command: " + command + " on "+ host);
     task.execute();
     loggerOutputStream.close();
   }

@@ -10,6 +10,6 @@
   details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
   details.setConnectedToPrivateIp(true);
   details.setAdmin(this.admin);
-  logger.info("Created new Installation Details: " + details);
+  logger.fine("Created new Installation Details: " + details);
   return details;
 }

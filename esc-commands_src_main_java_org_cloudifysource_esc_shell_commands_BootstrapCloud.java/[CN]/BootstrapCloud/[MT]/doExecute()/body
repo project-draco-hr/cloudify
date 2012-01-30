@@ -16,7 +16,7 @@
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
   limitLoggingLevel();
-  logger.info(getFormattedMessage("bootstrapping_cloud"));
+  logger.info(getFormattedMessage("bootstrapping_cloud",cloudProvider));
   try {
     installer.boostrapCloudAndWait(timeoutInMinutes,TimeUnit.MINUTES);
     return getFormattedMessage("cloud_started_successfully",cloudProvider);

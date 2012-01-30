@@ -3,8 +3,9 @@
   if (details.getLocator() == null) {
     details.setLocator(details.getPrivateIp());
   }
-  logger.info("Executing agentless installer with the following details:\n" + details.toString());
+  logger.fine("Executing agentless installer with the following details:\n" + details.toString());
   String sshIpAddress=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
+  publishEvent("attempting_to_access_vm_with_ssh",details.getPublicIp());
   checkConnection(sshIpAddress,SSH_PORT,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   try {
     Set<String> excludedFiles=new HashSet<String>();
@@ -30,6 +31,7 @@ catch (  final IOException e) {
   }
   scb.chmodExecutable(scriptPath).call(scriptPath);
   String command=scb.toString();
-  logger.info("Calling startup script on target: " + sshIpAddress + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
+  logger.fine("Calling startup script on target: " + sshIpAddress + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
   sshCommand(sshIpAddress,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  publishEvent("access_vm_with_ssh_success",details.getPublicIp());
 }

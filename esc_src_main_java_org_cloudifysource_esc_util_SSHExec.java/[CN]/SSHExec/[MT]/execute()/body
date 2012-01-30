@@ -22,7 +22,7 @@
   try {
     session=openSession();
     if (command != null) {
-      log("cmd : " + command,Project.MSG_INFO);
+      logger.fine("cmd : " + command + " "+ Project.MSG_INFO);
       executeCommand(session,command,output);
     }
  else {
@@ -30,7 +30,7 @@
         BufferedReader br=new BufferedReader(new InputStreamReader(commandResource.getInputStream()));
         String cmd;
         while ((cmd=br.readLine()) != null) {
-          log("cmd : " + cmd,Project.MSG_INFO);
+          logger.fine("cmd : " + cmd + " "+ Project.MSG_INFO);
           output.append(cmd).append(" : ");
           executeCommand(session,cmd,output);
           output.append("\n");
