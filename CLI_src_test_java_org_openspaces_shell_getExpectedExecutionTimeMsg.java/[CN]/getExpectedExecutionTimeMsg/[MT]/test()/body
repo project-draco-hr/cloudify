@@ -1,0 +1,3 @@
+{
+  Assert.assertTrue(ShellUtils.getExpectedExecutionTimeMessage().contains(new SimpleDateFormat("HH:mm").format(new Date())));
+}
