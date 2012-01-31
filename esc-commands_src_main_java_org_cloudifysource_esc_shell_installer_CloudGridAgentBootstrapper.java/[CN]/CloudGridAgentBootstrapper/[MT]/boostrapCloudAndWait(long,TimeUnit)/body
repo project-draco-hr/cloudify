@@ -1,7 +1,7 @@
 {
   try {
     this.provisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
-    this.provisioning.addListener(new CliProvisioningDriverListner());
+    this.provisioning.addListener(new CliProvisioningDriverListener());
     provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
   }
  catch (  Exception e) {
