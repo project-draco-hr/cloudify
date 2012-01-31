@@ -1,6 +1,0 @@
-{
-  if (config.get(TIMEOUT_KEY) != null) {
-    timeoutInSeconds=(Integer)config.get(TIMEOUT_KEY);
-  }
-  super.init();
-}
