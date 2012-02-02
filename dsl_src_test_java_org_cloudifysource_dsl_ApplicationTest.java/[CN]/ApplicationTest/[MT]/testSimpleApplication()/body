@@ -1,5 +1,5 @@
 {
-  Application app=ServiceReader.getApplicationFromFile(new File(SIMPLE_APP_PATH)).getApplication();
+  final Application app=ServiceReader.getApplicationFromFile(new File(SIMPLE_APP_PATH)).getApplication();
   assertNotNull(app);
   assertEquals(2,app.getServices().size());
   assertNotNull(app.getServices().get(0).getLifecycle());
