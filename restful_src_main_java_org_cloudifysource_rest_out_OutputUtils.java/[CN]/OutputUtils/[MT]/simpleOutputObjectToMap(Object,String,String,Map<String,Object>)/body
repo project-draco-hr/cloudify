@@ -42,6 +42,13 @@
     }
  else {
       outputMap.put(commandName,commandURL.concat("/" + commandName));
+      resultObject=safeInvoke(method,object);
+      if (resultObject.getClass().isEnum()) {
+        outputMap.put(commandName + "-Enumerator",resultObject.toString());
+      }
+      if (object.getClass().isEnum()) {
+        outputMap.put(commandName + "-Enumerator",object.toString());
+      }
     }
   }
 }
