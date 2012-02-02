@@ -11,11 +11,11 @@
   Assert.assertTrue("port 4445 is not open",ServiceUtils.isPortOccupied(4445));
   Assert.assertTrue("port 4446 is not open",ServiceUtils.isPortOccupied(4446));
   Assert.assertTrue("arePortsOccupied failed to detect all ports are occupied.",ServiceUtils.arePortsOccupied(ports));
-  Assert.assertFalse("isPortsFree failed to detect all ports are open.",ServiceUtils.isPortsFree(ports));
+  Assert.assertFalse("arePortsFree failed to detect all ports are open.",ServiceUtils.arePortsFree(ports));
   closePort(4445);
   Assert.assertFalse("arePortsOccupied found port 4445 is occupied.",ServiceUtils.arePortsOccupied(ports));
-  Assert.assertFalse("isPortsFree failed to detect all ports are open.",ServiceUtils.isPortsFree(ports));
+  Assert.assertFalse("arePortsFree failed to detect all ports are open.",ServiceUtils.arePortsFree(ports));
   closeAllPorts();
   Assert.assertFalse("arePortsOccupied detected that some ports are still occupied.",ServiceUtils.arePortsOccupied(ports));
-  Assert.assertTrue("isPortsFree detected that some ports are still occupied.",ServiceUtils.isPortsFree(ports));
+  Assert.assertTrue("arePortsFree detected that some ports are still occupied.",ServiceUtils.arePortsFree(ports));
 }
