@@ -7,7 +7,7 @@
     final String readLine=pr.readProperty();
     System.out.println();
     System.out.flush();
-    return "y".equalsIgnoreCase(readLine) ? true : false;
+    return "y".equalsIgnoreCase(readLine);
   }
   return true;
 }

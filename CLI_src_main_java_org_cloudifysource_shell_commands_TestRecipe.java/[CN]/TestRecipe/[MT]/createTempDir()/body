@@ -4,7 +4,7 @@
   if (tmpDir == null) {
     throw new IllegalStateException("The java.io.tmpdir property is null. Can't create a temporary directory for service unpacking");
   }
-  if (tmpDir.indexOf(" ") >= 0) {
+  if (tmpDir.indexOf(' ') >= 0) {
     targetDir=new File("Recipe_Test_Temp_Files" + File.separator + "Test_"+ System.currentTimeMillis());
     if (!targetDir.mkdirs()) {
       throw new IllegalStateException("Failed to create a directory where service will be unzipped. Target was: " + targetDir);
