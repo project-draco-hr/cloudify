@@ -22,7 +22,9 @@
   }
  catch (  final BuildException e) {
     if (e instanceof BuildTimeoutException) {
-      throw new TimeoutException("Command " + command + " failed to execute: "+ e.getMessage());
+      TimeoutException ex=new TimeoutException("Command " + command + " failed to execute: "+ e.getMessage());
+      ex.initCause(e);
+      throw ex;
     }
  else     if (e instanceof ExitStatusException) {
       ExitStatusException ex=(ExitStatusException)e;

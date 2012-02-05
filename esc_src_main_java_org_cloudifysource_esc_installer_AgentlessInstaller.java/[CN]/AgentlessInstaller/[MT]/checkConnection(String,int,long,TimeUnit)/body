@@ -10,7 +10,7 @@
       return;
     }
  catch (    final IOException e) {
-      logger.fine("Checking connection to: " + addr);
+      logger.log(Level.FINE,"Checking connection to: " + addr,e);
     }
  finally {
       if (sock != null) {

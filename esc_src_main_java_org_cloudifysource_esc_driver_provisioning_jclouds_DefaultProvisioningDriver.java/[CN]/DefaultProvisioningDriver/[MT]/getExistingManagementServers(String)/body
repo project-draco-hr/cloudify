@@ -5,7 +5,7 @@
       if (node.getGroup() == null) {
         return false;
       }
-      if (!(node.getState().equals(NodeState.RUNNING) || node.getState().equals(NodeState.PENDING))) {
+      if (!(node.getState() == NodeState.RUNNING || node.getState() == NodeState.PENDING)) {
         return false;
       }
       return node.getGroup().startsWith(managementMachinePrefix);

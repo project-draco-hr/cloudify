@@ -6,7 +6,7 @@
   if (value.getClass().isArray()) {
     Object[] arr=(Object[])value;
     if (arr.length > 1) {
-      throw new IllegalArgumentException("Property assignment of field: " + name + " received an array with more then one item: "+ arr);
+      throw new IllegalArgumentException("Property assignment of field: " + name + " received an array with more then one item: "+ Arrays.toString(arr));
     }
     applyPropertyToObject(this.activeObject,name,arr[0]);
   }
