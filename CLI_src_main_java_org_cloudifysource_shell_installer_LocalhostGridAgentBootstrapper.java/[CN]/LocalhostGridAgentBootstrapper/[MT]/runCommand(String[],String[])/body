@@ -4,7 +4,8 @@
   final List<String> commandLine=new ArrayList<String>();
   commandLine.addAll(Arrays.asList(command));
   commandLine.addAll(Arrays.asList(args));
-  final File filename=createScript(StringUtils.collectionToDelimitedString(commandLine," "));
+  final String commandString=StringUtils.collectionToDelimitedString(commandLine," ");
+  final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
   String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
   if (autoShutdown) {
@@ -39,7 +40,21 @@
   environment.put("ESM_JAVA_OPTIONS",esmJavaOptions);
   environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
   try {
-    pb.start();
+    logger.fine("Executing command: " + commandString);
+    Process proc=pb.start();
+    Thread.sleep(2000);
+    try {
+      if (proc.exitValue() != 0) {
+        String errorMessage="Error while starting agent. " + "Please make sure that another agent is not already running. ";
+        if (verbose) {
+          errorMessage=errorMessage.concat("Command executed: " + commandString);
+        }
+        throw new CLIException(errorMessage);
+      }
+    }
+ catch (    IllegalThreadStateException e) {
+      logger.fine("agent is starting...");
+    }
   }
  catch (  final IOException e) {
     throw new CLIException("Error while starting agent",e);
