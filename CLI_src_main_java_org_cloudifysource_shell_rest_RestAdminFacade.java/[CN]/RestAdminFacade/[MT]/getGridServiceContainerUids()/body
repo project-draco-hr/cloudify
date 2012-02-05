@@ -12,7 +12,7 @@ catch (  final RestException e) {
   @SuppressWarnings("unchecked") final List<String> containerUris=(List<String>)container.get("Uids-Elements");
   final Set<String> containerUids=new HashSet<String>();
   for (  final String containerUri : containerUris) {
-    final String uid=containerUri.substring(containerUri.lastIndexOf("/") + 1);
+    final String uid=containerUri.substring(containerUri.lastIndexOf('/') + 1);
     containerUids.add(uid);
   }
   return containerUids;

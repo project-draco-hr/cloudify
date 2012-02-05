@@ -14,7 +14,7 @@
     }
   }
  catch (  final MalformedURLException e) {
-    throw new CLIStatusException("could_not_parse_url",url);
+    throw new CLIStatusException("could_not_parse_url",url,e);
   }
   try {
     client=new GSRestClient(user,password,urlObj);

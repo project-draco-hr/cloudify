@@ -20,7 +20,7 @@ catch (    final RestException e) {
       throw new CLIException(e);
     }
     if (serviceStatusMap.containsKey("ClusterSchema") && "partitioned-sync2backup".equals(serviceStatusMap.get("ClusterSchema"))) {
-      calcedNumberOfInstances=Integer.valueOf((String)serviceStatusMap.get("TotalNumberOfInstances"));
+      calcedNumberOfInstances=Integer.parseInt((String)serviceStatusMap.get("TotalNumberOfInstances"));
     }
     boolean serviceInstanceExists=false;
     int serviceInstancesSize=0;

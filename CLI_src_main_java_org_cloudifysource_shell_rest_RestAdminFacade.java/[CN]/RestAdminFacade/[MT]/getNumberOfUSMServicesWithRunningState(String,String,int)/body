@@ -6,8 +6,8 @@
     for (int i=0; i < currentNumberOfInstances; i++) {
       final String instanceUrl=String.format(serviceMonitorsUrl,i);
       final Map<String,Object> map=client.getAdminData(instanceUrl);
-      final int instanceState=Integer.valueOf((String)map.get(CloudifyConstants.USM_MONITORS_STATE_ID));
-      if (CloudifyConstants.USMState.values()[instanceState].equals(CloudifyConstants.USMState.RUNNING)) {
+      final int instanceState=Integer.parseInt((String)map.get(CloudifyConstants.USM_MONITORS_STATE_ID));
+      if (CloudifyConstants.USMState.values()[instanceState] == CloudifyConstants.USMState.RUNNING) {
         runningServiceInstanceCounter++;
       }
     }
