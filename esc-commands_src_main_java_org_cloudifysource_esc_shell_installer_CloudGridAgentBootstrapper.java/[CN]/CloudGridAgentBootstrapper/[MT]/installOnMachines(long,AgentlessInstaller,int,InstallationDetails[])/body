@@ -11,15 +11,15 @@
             installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
           }
  catch (          TimeoutException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp());
+            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
             return e;
           }
 catch (          InterruptedException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp());
+            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
             return e;
           }
 catch (          InstallerException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp());
+            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
             return e;
           }
           return null;
@@ -41,11 +41,11 @@ catch (          InstallerException e) {
           if (e instanceof InstallerException) {
             throw (InstallerException)e;
           }
-          throw new InstallerException("Failed creating machines",e);
+          throw new InstallerException("Failed creating machines.",e);
         }
       }
  catch (      ExecutionException e) {
-        throw new InstallerException("Failed creating machines",e);
+        throw new InstallerException("Failed creating machines.",e);
       }
     }
   }

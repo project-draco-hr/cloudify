@@ -14,7 +14,7 @@
       servers=provisioning.startManagementMachines(timeout,timeoutUnit);
     }
  catch (    CloudProvisioningException e) {
-      throw new InstallerException("Failed to start managememnt servers",e);
+      throw new InstallerException("Failed to start managememnt servers. Reason: " + e.getMessage(),e);
     }
     if (servers.length == 0) {
       throw new IllegalArgumentException("Received zero management servers from provisioning implementation");
@@ -46,12 +46,12 @@
     }
   }
  catch (  IOException e) {
-    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " failed.",e);
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " failed. Reason: "+ e.getMessage(),e);
   }
 catch (  URISyntaxException e) {
-    throw new CLIException("bootstrap-cloud failed",e);
+    throw new CLIException("Bootstrap-cloud failed. Reason: " + e.getMessage(),e);
   }
 catch (  TimeoutException e) {
-    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option",e);
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
   }
 }
