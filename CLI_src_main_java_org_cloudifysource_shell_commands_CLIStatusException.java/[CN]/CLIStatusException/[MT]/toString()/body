@@ -1,0 +1,3 @@
+{
+  return "CLIStatusException, reason code: " + reasonCode + ", message arguments: "+ StringUtils.join(args,", ");
+}

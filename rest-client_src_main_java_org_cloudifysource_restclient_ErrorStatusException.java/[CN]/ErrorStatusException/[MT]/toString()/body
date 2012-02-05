@@ -1,0 +1,3 @@
+{
+  return "ErrorStatusException, reason code: " + reasonCode + ", message arguments: "+ StringUtils.join(args,", ");
+}
