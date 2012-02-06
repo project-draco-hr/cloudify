@@ -4,9 +4,9 @@
   this.clusterInfo=new ClusterInfo(null,1,0,1,0);
   if (service != null) {
     this.clusterInfo.setName(service.getName());
+    this.serviceName=service.getName();
   }
   this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
-  this.serviceName=service.getName();
   this.attributesFacade=new AttributesFacade(this,admin);
   initialized=true;
 }
