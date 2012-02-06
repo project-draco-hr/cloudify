@@ -1,4 +1,3 @@
 {
-  String[] managementOnlyFilesArray=(String[])managementOnlyFiles.toArray(new String[0]);
-  this.managementOnlyFiles=managementOnlyFilesArray;
+  this.managementOnlyFiles=managementOnlyFiles.toArray(new String[managementOnlyFiles.size()]);
 }
