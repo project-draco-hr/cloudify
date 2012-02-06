@@ -3,10 +3,8 @@
     if (!"name".equals(name)) {
       throw new IllegalArgumentException("The first declaraion in a service block that is part of an application MUST be its name");
     }
- else {
-      this.currentService=loadApplicationService(value.toString());
-      this.serviceBlockInitialized=true;
-    }
+    this.currentService=loadApplicationService(value.toString());
+    this.serviceBlockInitialized=true;
   }
  else {
     applyPropertyToObject(this.currentService,name,value);
