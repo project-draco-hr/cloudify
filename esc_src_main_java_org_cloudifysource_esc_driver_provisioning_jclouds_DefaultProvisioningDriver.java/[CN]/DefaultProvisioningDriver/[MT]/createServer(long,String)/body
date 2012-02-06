@@ -3,17 +3,17 @@
   try {
     node=deployer.createServer(machineName);
   }
- catch (  InstallerException e) {
+ catch (  final InstallerException e) {
     throw new CloudProvisioningException("Failed to create cloud machine",e);
   }
   logger.fine("New machine is starting");
   try {
-    MachineDetails md=createMachineDetailsFromNode(node);
+    final MachineDetails md=createMachineDetailsFromNode(node);
     handleServerCredentials(node,md);
     waitUntilServerIsActive(node.getId(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
     return md;
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
     this.deployer.shutdownMachine(node.getId());
     throw e;

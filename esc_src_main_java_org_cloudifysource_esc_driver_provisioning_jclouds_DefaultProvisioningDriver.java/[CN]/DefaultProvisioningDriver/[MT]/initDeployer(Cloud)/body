@@ -3,9 +3,9 @@
     return;
   }
   logger.fine("Creating jclouds context deployer with user: " + cloud.getUser().getUser());
-  CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+  final CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
   try {
-    Properties props=new Properties();
+    final Properties props=new Properties();
     props.putAll(cloudTemplate.getOverrides());
     this.deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
     this.deployer.setImageId(cloudTemplate.getImageId());

@@ -3,7 +3,7 @@
   File tempFile=null;
   if (credential == null) {
     logger.fine("Cloud did not provide server credentials, checking in cloud configuration file");
-    if ((cloud.getUser().getKeyFile() == null) || (cloud.getUser().getKeyFile().length() == 0)) {
+    if (cloud.getUser().getKeyFile() == null || cloud.getUser().getKeyFile().length() == 0) {
       logger.fine("No key file specified in cloud configuration");
       if (cloud.getConfiguration().getRemotePassword() == null) {
         logger.severe("No Password specified in cloud configuration - connection to the new machine is not possible.");

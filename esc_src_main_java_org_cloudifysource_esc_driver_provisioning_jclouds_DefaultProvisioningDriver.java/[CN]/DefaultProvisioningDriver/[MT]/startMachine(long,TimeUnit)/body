@@ -6,10 +6,10 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   try {
-    MachineDetails md=doStartMachine(end);
+    final MachineDetails md=doStartMachine(end);
     return md;
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     throw new CloudProvisioningException("Failed to start cloud machine",e);
   }
 }

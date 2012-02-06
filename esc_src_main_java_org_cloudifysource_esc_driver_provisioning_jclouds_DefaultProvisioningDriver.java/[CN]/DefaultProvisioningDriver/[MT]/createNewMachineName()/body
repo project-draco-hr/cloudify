@@ -4,7 +4,7 @@
     counter=(counter + 1) % MAX_MACHINE_LIMIT;
     ++attempts;
     final String machineName=this.machineNamePrefix + this.counter;
-    NodeMetadata existingNode=deployer.getServerByID(machineName);
+    final NodeMetadata existingNode=deployer.getServerByID(machineName);
     if (existingNode == null) {
       return machineName;
     }

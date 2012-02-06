@@ -9,14 +9,14 @@
   publishEvent("connection_to_cloud_api_succeeded",cloud.getProvider().getProvider());
   this.deployer.getTemplate();
   final String managementMachinePrefix=this.machineNamePrefix;
-  MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
+  final MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
   if (existingManagementServers.length > 0) {
     logger.fine("Found existing servers matching the name: " + managementMachinePrefix);
     return existingManagementServers;
   }
   publishEvent("attempting_to_create_management_vms");
-  int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
-  MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
+  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  final MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
   publishEvent("management_started_successfully");
   return createdMachines;
 }

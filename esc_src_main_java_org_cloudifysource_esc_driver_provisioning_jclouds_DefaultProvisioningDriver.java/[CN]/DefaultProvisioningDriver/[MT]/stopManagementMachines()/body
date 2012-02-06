@@ -1,11 +1,11 @@
 {
   initDeployer(this.cloud);
-  MachineDetails[] managementServers=getExistingManagementServers(this.machineNamePrefix);
+  final MachineDetails[] managementServers=getExistingManagementServers(this.machineNamePrefix);
   if (managementServers.length == 0) {
     throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.machineNamePrefix + ")");
   }
-  Set<String> machineIps=new HashSet<String>();
-  for (  MachineDetails machineDetails : managementServers) {
+  final Set<String> machineIps=new HashSet<String>();
+  for (  final MachineDetails machineDetails : managementServers) {
     machineIps.add(machineDetails.getPrivateAddress());
   }
   this.deployer.shutdownMachinesWithIPs(machineIps);

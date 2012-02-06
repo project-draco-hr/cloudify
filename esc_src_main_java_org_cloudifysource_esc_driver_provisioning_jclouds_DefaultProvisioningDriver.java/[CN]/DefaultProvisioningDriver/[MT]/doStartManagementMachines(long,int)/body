@@ -1,6 +1,6 @@
 {
-  ExecutorService executors=Executors.newFixedThreadPool(numberOfManagementMachines);
-  @SuppressWarnings("unchecked") Future<MachineDetails>[] futures=(Future<MachineDetails>[])new Future<?>[numberOfManagementMachines];
+  final ExecutorService executors=Executors.newFixedThreadPool(numberOfManagementMachines);
+  @SuppressWarnings("unchecked") final Future<MachineDetails>[] futures=(Future<MachineDetails>[])new Future<?>[numberOfManagementMachines];
   try {
     for (int i=0; i < numberOfManagementMachines; i++) {
       final int index=i + 1;
@@ -13,12 +13,12 @@
     }
     int numberOfErrors=0;
     Exception firstCreationException=null;
-    MachineDetails[] createdManagementMachines=new MachineDetails[numberOfManagementMachines];
+    final MachineDetails[] createdManagementMachines=new MachineDetails[numberOfManagementMachines];
     for (int i=0; i < createdManagementMachines.length; i++) {
       try {
         createdManagementMachines[i]=futures[i].get(endTime - System.currentTimeMillis(),TimeUnit.MILLISECONDS);
       }
- catch (      InterruptedException e) {
+ catch (      final InterruptedException e) {
         ++numberOfErrors;
         publishEvent("failed_to_create_management_vm",e.getMessage());
         logger.log(Level.SEVERE,"Failed to start a management machine",e);
@@ -26,7 +26,7 @@
           firstCreationException=e;
         }
       }
-catch (      ExecutionException e) {
+catch (      final ExecutionException e) {
         ++numberOfErrors;
         publishEvent("failed_to_create_management_vm",e.getMessage());
         logger.log(Level.SEVERE,"Failed to start a management machine",e);

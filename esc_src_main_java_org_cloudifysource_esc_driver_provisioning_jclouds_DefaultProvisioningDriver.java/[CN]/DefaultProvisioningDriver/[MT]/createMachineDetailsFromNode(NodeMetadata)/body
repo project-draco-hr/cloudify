@@ -1,5 +1,5 @@
 {
-  MachineDetails md=new MachineDetails();
+  final MachineDetails md=new MachineDetails();
   md.setAgentRunning(false);
   md.setCloudifyInstalled(false);
   md.setInstallationDirectory(null);

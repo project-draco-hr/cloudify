@@ -2,7 +2,7 @@
   logger.severe("Of the required " + numberOfManagementMachines + " management machines, "+ numberOfErrors+ " failed to start.");
   if (numberOfManagementMachines > numberOfErrors) {
     logger.severe("Shutting down the other managememnt machines");
-    for (    MachineDetails machineDetails : createdManagementMachines) {
+    for (    final MachineDetails machineDetails : createdManagementMachines) {
       if (machineDetails != null) {
         logger.severe("Shutting down machine: " + machineDetails);
         this.deployer.shutdownMachine(machineDetails.getMachineId());
