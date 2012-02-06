@@ -42,7 +42,7 @@
   try {
     logger.fine("Executing command: " + commandString);
     Process proc=pb.start();
-    Thread.sleep(2000);
+    Thread.sleep(MIN_PROC_ERROR_TIME);
     try {
       if (proc.exitValue() != 0) {
         String errorMessage="Error while starting agent. " + "Please make sure that another agent is not already running. ";
