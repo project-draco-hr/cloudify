@@ -11,15 +11,15 @@
             installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
           }
  catch (          TimeoutException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
+            logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
 catch (          InterruptedException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
+            logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
 catch (          InstallerException e) {
-            logger.info("Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage());
+            logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
           return null;
