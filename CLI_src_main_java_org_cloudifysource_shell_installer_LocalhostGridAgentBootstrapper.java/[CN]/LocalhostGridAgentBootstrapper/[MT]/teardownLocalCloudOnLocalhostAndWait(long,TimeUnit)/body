@@ -1,5 +1,5 @@
 {
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
-  shutdownAgentOnLocalhostAndWaitInternal(true,true,timeout,timeunit);
+  return shutdownAgentOnLocalhostAndWaitInternal(true,true,timeout,timeunit);
 }

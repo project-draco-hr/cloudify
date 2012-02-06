@@ -6,6 +6,6 @@
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(10);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-  installer.shutdownManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-  return "Completed management shutdown.";
+  TeardownCloudResults result=installer.shutdownManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  return result.getDescription();
 }

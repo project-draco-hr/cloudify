@@ -41,7 +41,7 @@
   environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
   try {
     logger.fine("Executing command: " + commandString);
-    Process proc=pb.start();
+    final Process proc=pb.start();
     Thread.sleep(MIN_PROC_ERROR_TIME);
     try {
       if (proc.exitValue() != 0) {
@@ -52,7 +52,7 @@
         throw new CLIException(errorMessage);
       }
     }
- catch (    IllegalThreadStateException e) {
+ catch (    final IllegalThreadStateException e) {
       logger.fine("agent is starting...");
     }
   }

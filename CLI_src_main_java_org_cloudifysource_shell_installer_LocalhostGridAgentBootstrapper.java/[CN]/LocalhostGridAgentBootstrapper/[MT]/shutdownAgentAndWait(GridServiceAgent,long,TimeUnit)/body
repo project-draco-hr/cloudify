@@ -10,7 +10,7 @@
   }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
     /** 
- * {@inheritDoc}
+ * Pings the agent to verify it's not available, indicating it was shut down.
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       logger.info("Waiting for agent to shutdown");

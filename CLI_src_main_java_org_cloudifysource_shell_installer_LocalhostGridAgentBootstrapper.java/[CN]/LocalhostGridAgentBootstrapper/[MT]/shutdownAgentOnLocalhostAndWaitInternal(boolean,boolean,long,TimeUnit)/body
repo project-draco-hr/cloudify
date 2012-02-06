@@ -1,4 +1,5 @@
 {
+  TeardownCloudResults teardownResult=null;
   final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
   final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
   connectionLogs.supressConnectionErrors();
@@ -14,6 +15,7 @@
     }
     if (agent == null) {
       logger.info("Agent not running on local machine");
+      teardownResult=TeardownCloudResults.AGENT_NOT_FOUND_ON_LOCAL_MACHINE;
     }
  else {
       if (!allowContainers) {
@@ -45,6 +47,7 @@
       }
       admin.close();
       shutdownAgentAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+      teardownResult=TeardownCloudResults.COMPLETED_SUCCESSFULLY;
     }
   }
   finally {
@@ -54,4 +57,5 @@
     }
     connectionLogs.restoreConnectionErrors();
   }
+  return teardownResult;
 }

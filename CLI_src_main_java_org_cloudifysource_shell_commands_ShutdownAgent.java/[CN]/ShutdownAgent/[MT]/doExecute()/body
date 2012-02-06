@@ -6,6 +6,6 @@
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(10);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-  installer.shutdownAgentOnLocalhostAndWait(force,timeoutInMinutes,TimeUnit.MINUTES);
-  return "Completed agent shutdown.";
+  TeardownCloudResults result=installer.shutdownAgentOnLocalhostAndWait(force,timeoutInMinutes,TimeUnit.MINUTES);
+  return result.getDescription();
 }
