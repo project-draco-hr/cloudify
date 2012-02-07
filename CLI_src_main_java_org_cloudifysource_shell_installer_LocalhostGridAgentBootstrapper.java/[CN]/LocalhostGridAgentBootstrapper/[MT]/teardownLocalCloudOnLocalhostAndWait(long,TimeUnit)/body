@@ -1,5 +1,6 @@
 {
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
+  uninstallApplications(timeout,timeunit);
   return shutdownAgentOnLocalhostAndWaitInternal(true,true,timeout,timeunit);
 }

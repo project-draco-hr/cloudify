@@ -1,0 +1,34 @@
+{
+  List<String> applicationsList=null;
+  try {
+    applicationsList=adminFacade.getApplicationsList();
+  }
+ catch (  CLIException e) {
+    logger.log(Level.WARNING,"Failed to fetch the currently deployed applications list." + " Continuing teardown-localcloud.",e);
+    if (!force) {
+      throw new CLIStatusException(e,"failed_to_access_rest_before_teardown");
+    }
+    return;
+  }
+  if (applicationsList.size() != 0 && !force) {
+    logger.log(Level.FINE,"Teardown failed. There are still applications deployed.");
+    throw new CLIStatusException("apps_deployed_before_teardown_localcloud",applicationsList.toString());
+  }
+  for (  String appName : applicationsList) {
+    try {
+      if (!appName.equals(MANAGEMENT_APPLICATION)) {
+        adminFacade.uninstallApplication(appName);
+      }
+    }
+ catch (    CLIException e) {
+      logger.log(Level.WARNING,"Application " + appName + " faild to uninstall."+ " Continuing teardown-localcloud.",e);
+      if (!force) {
+        throw new CLIStatusException(e,"failed_to_uninstall_app_before_teardown",appName);
+      }
+    }
+  }
+  waitForUninstallApplications(timeout,timeunit);
+  if (applicationsList.size() != 0) {
+    logger.info(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
+  }
+}
