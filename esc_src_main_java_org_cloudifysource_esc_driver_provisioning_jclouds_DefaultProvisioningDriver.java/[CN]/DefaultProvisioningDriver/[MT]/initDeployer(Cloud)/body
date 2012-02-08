@@ -1,24 +1,20 @@
 {
-  try {
-    String jcloudsUniqueId="UNIQUE_JCLOUDS_DEPLOYER_ID";
-    this.deployer=(JCloudsDeployer)context.getOrCreate(jcloudsUniqueId,new Callable<Object>(){
-      @Override public Object call() throws Exception {
-        logger.fine("Creating jclouds context deployer with user: " + cloud.getUser().getUser());
-        CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
-        Properties props=new Properties();
-        props.putAll(cloudTemplate.getOverrides());
-        deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
-        deployer.setImageId(cloudTemplate.getImageId());
-        deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
-        deployer.setHardwareId(cloudTemplate.getHardwareId());
-        deployer.setLocationId(cloudTemplate.getLocationId());
-        deployer.setExtraOptions(cloudTemplate.getOptions());
-        return deployer;
-      }
-    }
-);
+  if (this.deployer != null) {
+    return;
   }
- catch (  final Exception e) {
+  logger.fine("Creating jclouds context deployer with user: " + cloud.getUser().getUser());
+  final CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+  try {
+    final Properties props=new Properties();
+    props.putAll(cloudTemplate.getOverrides());
+    this.deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+    this.deployer.setImageId(cloudTemplate.getImageId());
+    this.deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
+    this.deployer.setHardwareId(cloudTemplate.getHardwareId());
+    this.deployer.setLocationId(cloudTemplate.getLocationId());
+    this.deployer.setExtraOptions(cloudTemplate.getOptions());
+  }
+ catch (  final IOException e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
     throw new IllegalStateException("Failed to create cloud Deployer",e);
   }
