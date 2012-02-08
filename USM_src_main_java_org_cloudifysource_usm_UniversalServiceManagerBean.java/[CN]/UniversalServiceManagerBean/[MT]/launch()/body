@@ -5,7 +5,13 @@ synchronized (this.stateMutex) {
     final Set<Long> childrenBefore=getChildProcesses(this.myPid);
     usmLifecycleBean.logProcessStartEvent();
     usmLifecycleBean.externalProcessStarted();
-    this.process=usmLifecycleBean.getLauncher().launchProcessAsync(usmLifecycleBean.getConfiguration().getStartCommand(),this.puExtDir,getOutputFile(),getErrorFile());
+    try {
+      this.process=usmLifecycleBean.getLauncher().launchProcessAsync(usmLifecycleBean.getConfiguration().getStartCommand(),this.puExtDir,getOutputFile(),getErrorFile());
+    }
+ catch (    USMException e) {
+      usmLifecycleBean.logProcessStartFailureEvent(e.getMessage());
+      throw e;
+    }
     startFileMonitoringTask();
     try {
       Thread.sleep(this.postLaunchWaitPeriodMillis);
@@ -14,6 +20,7 @@ synchronized (this.stateMutex) {
     }
     if (!isProcessAlive(this.process)) {
       logger.severe("Attempt to launch underlying process has failed!");
+      usmLifecycleBean.logProcessStartFailureEvent("Attempt to launch underlying process has failed.");
       if (tailer != null) {
         this.tailer.run();
       }
