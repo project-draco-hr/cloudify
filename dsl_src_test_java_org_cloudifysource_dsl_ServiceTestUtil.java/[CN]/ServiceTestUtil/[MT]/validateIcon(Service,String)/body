@@ -6,4 +6,8 @@
     Assert.assertEquals("The icon URL cannot establish a connection",HttpURLConnection.HTTP_OK,connection.getResponseCode());
     connection.disconnect();
   }
+ else {
+    File iconFile=new File(serviceFilePath,service.getIcon());
+    Assert.assertTrue("Icon file not found in location: " + iconFile.getAbsolutePath(),iconFile.exists());
+  }
 }
