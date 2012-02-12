@@ -13,9 +13,9 @@
   }
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
-    String locators=extractLocators(admin);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);

@@ -5,7 +5,7 @@
     }
   }
  else {
-    int availableMemoryOnMachine=(int)calculateExternalProcessMemory(cloud,template);
+    final int availableMemoryOnMachine=(int)calculateExternalProcessMemory(cloud,template);
     if (sla.getMemoryCapacityPerContainer() != null && sla.getMemoryCapacityPerContainer() > availableMemoryOnMachine) {
       throw new DSLException("memoryCapacityPerContainer SLA is larger than available memory on machine\n" + sla.getMemoryCapacityPerContainer() + " > "+ availableMemoryOnMachine);
     }

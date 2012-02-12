@@ -2,7 +2,7 @@
   if (admin.getLookupServices().getSize() > 0) {
     return successStatus();
   }
-  String groups=Arrays.toString((admin.getGroups()));
-  String locators=Arrays.toString((admin.getLocators()));
+  final String groups=Arrays.toString(admin.getGroups());
+  final String locators=Arrays.toString(admin.getLocators());
   return errorStatus(FAILED_TO_LOCATE_LUS,groups,locators);
 }

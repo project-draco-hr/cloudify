@@ -3,8 +3,8 @@
   if (sla.getMaxMemoryCapacity() != null && sla.getMemoryCapacity() != null && sla.getMaxMemoryCapacity() < sla.getMemoryCapacity()) {
     throw new DSLException("Max memory capacity is smaller than the memory capacity." + sla.getMaxMemoryCapacity() + " < "+ sla.getMemoryCapacity());
   }
-  int minimumNumberOfContainers=sla.getHighlyAvailable() ? 2 : 1;
-  int minMemoryInMB=minimumNumberOfContainers * sla.getMemoryCapacityPerContainer();
+  final int minimumNumberOfContainers=sla.getHighlyAvailable() ? 2 : 1;
+  final int minMemoryInMB=minimumNumberOfContainers * sla.getMemoryCapacityPerContainer();
   if (sla.getMemoryCapacity() == null || sla.getMemoryCapacity() < minMemoryInMB) {
     logger.info("Setting memoryCapacity for service " + serviceName + " to minimum "+ minMemoryInMB+ "MB");
     sla.setMemoryCapacity(minMemoryInMB);

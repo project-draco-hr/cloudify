@@ -1,5 +1,5 @@
 {
-  ProcessingUnit pu=getGridServiceManager().deploy(deployment,60,TimeUnit.SECONDS);
+  final ProcessingUnit pu=getGridServiceManager().deploy(deployment,60,TimeUnit.SECONDS);
   if (pu == null) {
     throw new TimeoutException("Timed out waiting for Service " + serviceName + " deployment.");
   }

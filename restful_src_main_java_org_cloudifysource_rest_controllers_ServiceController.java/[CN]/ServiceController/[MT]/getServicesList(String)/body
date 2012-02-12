@@ -2,19 +2,19 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to list applications");
   }
-  Application app=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
+  final Application app=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
   if (app == null) {
     return errorStatus(FAILED_TO_LOCATE_APP,applicationName);
   }
-  ProcessingUnits pus=app.getProcessingUnits();
-  List<String> puNames=new ArrayList<String>(pus.getSize());
-  for (  ProcessingUnit pu : pus) {
+  final ProcessingUnits pus=app.getProcessingUnits();
+  final List<String> puNames=new ArrayList<String>(pus.getSize());
+  for (  final ProcessingUnit pu : pus) {
     puNames.add(pu.getName());
   }
-  List<String> serviceNames=new ArrayList<String>(pus.getSize());
-  ListIterator<String> listIterator=puNames.listIterator();
+  final List<String> serviceNames=new ArrayList<String>(pus.getSize());
+  final ListIterator<String> listIterator=puNames.listIterator();
   while (listIterator.hasNext()) {
-    String absolutePuName=listIterator.next();
+    final String absolutePuName=listIterator.next();
     serviceNames.add(ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
   }
   return successStatus(serviceNames);

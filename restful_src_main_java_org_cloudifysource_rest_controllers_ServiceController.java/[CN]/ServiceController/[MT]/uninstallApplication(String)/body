@@ -1,16 +1,16 @@
 {
-  Application app=this.admin.getApplications().waitFor(applicationName,10,TimeUnit.SECONDS);
+  final Application app=this.admin.getApplications().waitFor(applicationName,10,TimeUnit.SECONDS);
   if (app == null) {
     logger.log(Level.INFO,"Cannot uninstall application " + applicationName + " since it has not been discovered yet.");
     return RestUtils.errorStatus(ResponseConstants.FAILED_TO_LOCATE_APP,applicationName);
   }
-  ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
-  StringBuilder sb=new StringBuilder();
+  final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
+  final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
   if (uninstallOrder.size() > 0) {
     ((InternalAdmin)admin).scheduleAdminOperation(new Runnable(){
       @Override public void run(){
-        for (        ProcessingUnit processingUnit : uninstallOrder) {
+        for (        final ProcessingUnit processingUnit : uninstallOrder) {
           try {
             if (processingUnit.waitForManaged(10,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
@@ -20,7 +20,7 @@
               processingUnit.undeploy();
             }
           }
- catch (          Exception e) {
+ catch (          final Exception e) {
             final String msg="Failed to undeploy processing unit: " + processingUnit.getName() + " while uninstalling application "+ applicationName+ ". Uninstall will continue, but service "+ processingUnit.getName()+ " may remain in an unstable state";
             logger.log(Level.SEVERE,msg,e);
           }

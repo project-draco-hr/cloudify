@@ -2,9 +2,9 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to list applications");
   }
-  Applications apps=admin.getApplications();
-  List<String> appNames=new ArrayList<String>(apps.getSize());
-  for (  Application app : apps) {
+  final Applications apps=admin.getApplications();
+  final List<String> appNames=new ArrayList<String>(apps.getSize());
+  for (  final Application app : apps) {
     appNames.add(app.getName());
   }
   return successStatus(appNames);

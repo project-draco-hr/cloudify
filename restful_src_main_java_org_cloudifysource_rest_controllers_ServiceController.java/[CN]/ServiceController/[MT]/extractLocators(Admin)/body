@@ -1,7 +1,7 @@
 {
-  LookupLocator[] locatorsArray=admin.getLocators();
-  StringBuilder locators=new StringBuilder();
-  for (  LookupLocator locator : locatorsArray) {
+  final LookupLocator[] locatorsArray=admin.getLocators();
+  final StringBuilder locators=new StringBuilder();
+  for (  final LookupLocator locator : locatorsArray) {
     locators.append(locator.getHost() + ":" + locator.getPort()+ ",");
   }
   if (locators.length() > 0) {

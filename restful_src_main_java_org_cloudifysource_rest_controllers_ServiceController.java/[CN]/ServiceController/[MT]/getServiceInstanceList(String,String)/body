@@ -1,16 +1,16 @@
 {
-  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to list instances for service " + absolutePuName + " of application "+ applicationName);
   }
-  ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (pu == null) {
     logger.severe("Could not find service " + absolutePuName);
     return unavailableServiceError(absolutePuName);
   }
-  Map<Integer,String> instanceMap=new HashMap<Integer,String>();
-  ProcessingUnitInstance[] instances=pu.getInstances();
-  for (  ProcessingUnitInstance instance : instances) {
+  final Map<Integer,String> instanceMap=new HashMap<Integer,String>();
+  final ProcessingUnitInstance[] instances=pu.getInstances();
+  for (  final ProcessingUnitInstance instance : instances) {
     instanceMap.put(instance.getInstanceId(),instance.getVirtualMachine().getMachine().getHostName());
   }
   return successStatus(instanceMap);

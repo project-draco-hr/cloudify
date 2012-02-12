@@ -1,5 +1,5 @@
 {
-  int numberOfInstances=1;
+  final int numberOfInstances=1;
   logger.info("Deploying service " + serviceName + " without a recipe. Assuming number of instances is 1");
   doDeploy(applicationName,serviceName,templateName,zone,serviceFile,contextProperties,numberOfInstances);
 }

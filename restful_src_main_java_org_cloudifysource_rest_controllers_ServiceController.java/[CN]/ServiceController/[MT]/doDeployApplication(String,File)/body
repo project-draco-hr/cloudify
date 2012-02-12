@@ -1,12 +1,12 @@
 {
-  DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
+  final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
-  ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
+  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
   this.executorService.execute(installer);
-  String[] serviceOrder=new String[services.size()];
+  final String[] serviceOrder=new String[services.size()];
   for (int i=0; i < serviceOrder.length; i++) {
     serviceOrder[i]=services.get(i).getName();
   }
-  Map<String,Object> retval=successStatus(Arrays.toString(serviceOrder));
+  final Map<String,Object> retval=successStatus(Arrays.toString(serviceOrder));
   return retval;
 }

@@ -10,7 +10,7 @@
   File projectDir=null;
   if (srcFile.getName().endsWith(".zip")) {
     projectDir=ServiceReader.extractProjectFile(srcFile);
-    DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(new File(projectDir,"ext"),applicationName);
+    final DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(new File(projectDir,"ext"),applicationName);
     service=result.getService();
   }
   if (service == null) {
@@ -38,7 +38,7 @@
     try {
       FileUtils.deleteDirectory(projectDir);
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       logger.log(Level.WARNING,"Failed to delete project files: " + e.getMessage(),e);
     }
   }

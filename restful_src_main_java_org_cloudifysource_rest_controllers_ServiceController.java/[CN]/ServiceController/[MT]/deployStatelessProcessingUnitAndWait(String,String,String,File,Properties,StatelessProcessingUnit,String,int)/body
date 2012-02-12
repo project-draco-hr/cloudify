@@ -1,5 +1,5 @@
 {
-  File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder,serviceName);
+  final File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder,serviceName);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
@@ -15,11 +15,11 @@
     }
   }
  else {
-    CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
     validateAndPrepareStatelessSla(puConfig.getSla(),cloud,template);
-    long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
-    String locators=extractLocators(admin);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);

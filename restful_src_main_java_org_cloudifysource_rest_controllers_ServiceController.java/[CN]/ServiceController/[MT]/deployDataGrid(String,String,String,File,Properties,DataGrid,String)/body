@@ -3,7 +3,7 @@
   final int maxMemoryInMB=dataGridConfig.getSla().getMaxMemoryCapacity();
   final int reservedMemoryCapacityPerMachineInMB=256;
   logger.finer("received request to install datagrid");
-  ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(dataGridConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
+  final ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(dataGridConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
@@ -15,11 +15,11 @@
     }
   }
  else {
-    CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
     validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
-    long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
-    String locators=extractLocators(admin);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);

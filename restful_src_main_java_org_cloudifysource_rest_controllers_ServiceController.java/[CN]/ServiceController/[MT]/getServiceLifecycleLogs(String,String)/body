@@ -1,20 +1,20 @@
 {
-  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  List<Map<String,String>> serviceEventDetailes=new ArrayList<Map<String,String>>();
-  String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,absolutePuName);
-  LogEntryMatcher matcher=regex(regex);
-  Zone zone=admin.getZones().getByName(absolutePuName);
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final List<Map<String,String>> serviceEventDetailes=new ArrayList<Map<String,String>>();
+  final String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,absolutePuName);
+  final LogEntryMatcher matcher=regex(regex);
+  final Zone zone=admin.getZones().getByName(absolutePuName);
   if (zone == null) {
     logger.info("Zone " + absolutePuName + " does not exist");
     return successStatus();
   }
-  for (  GridServiceContainer container : zone.getGridServiceContainers()) {
-    LogEntries logEntries=container.logEntries(matcher);
-    for (    LogEntry logEntry : logEntries) {
+  for (  final GridServiceContainer container : zone.getGridServiceContainers()) {
+    final LogEntries logEntries=container.logEntries(matcher);
+    for (    final LogEntry logEntry : logEntries) {
       if (logEntry.isLog()) {
-        Date tenMinutesAgoGscTime=new Date(new Date().getTime() + container.getOperatingSystem().getTimeDelta() - TEN_MINUTES_MILLISECONDS);
+        final Date tenMinutesAgoGscTime=new Date(new Date().getTime() + container.getOperatingSystem().getTimeDelta() - TEN_MINUTES_MILLISECONDS);
         if (tenMinutesAgoGscTime.before(new Date(logEntry.getTimestamp()))) {
-          Map<String,String> serviceEventsMap=getServiceDetailes(logEntry,container,absolutePuName,applicationName);
+          final Map<String,String> serviceEventsMap=getServiceDetailes(logEntry,container,absolutePuName,applicationName);
           serviceEventDetailes.add(serviceEventsMap);
         }
       }

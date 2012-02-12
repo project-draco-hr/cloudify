@@ -1,10 +1,10 @@
 {
   logger.finer("Deploying a service");
-  File tmpfile=File.createTempFile("gs___",null);
-  File dest=new File(tmpfile.getParent(),srcFile.getOriginalFilename());
+  final File tmpfile=File.createTempFile("gs___",null);
+  final File dest=new File(tmpfile.getParent(),srcFile.getOriginalFilename());
   tmpfile.delete();
   srcFile.transferTo(dest);
-  GridServiceManager gsm=getGsm();
+  final GridServiceManager gsm=getGsm();
   ProcessingUnit pu;
   if (gsm != null) {
     pu=gsm.deploy(new ProcessingUnitDeployment(dest).setContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName));

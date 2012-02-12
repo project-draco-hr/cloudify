@@ -1,13 +1,13 @@
 {
-  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  int timeout=Integer.parseInt(params.get("timeout"));
-  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final int timeout=Integer.parseInt(params.get("timeout"));
+  final ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (processingUnit == null) {
     return unavailableServiceError(absolutePuName);
   }
-  int before=processingUnit.getNumberOfInstances();
+  final int before=processingUnit.getNumberOfInstances();
   processingUnit.incrementInstance();
-  boolean result=processingUnit.waitFor(before + 1,timeout,TimeUnit.SECONDS);
+  final boolean result=processingUnit.waitFor(before + 1,timeout,TimeUnit.SECONDS);
   if (result) {
     return successStatus();
   }

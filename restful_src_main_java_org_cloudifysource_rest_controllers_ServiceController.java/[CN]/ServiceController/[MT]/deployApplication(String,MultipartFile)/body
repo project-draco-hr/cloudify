@@ -1,6 +1,6 @@
 {
   final File applicationFile=copyMultipartFileToLocalFile(srcFile);
-  Object returnObject=doDeployApplication(applicationName,applicationFile);
+  final Object returnObject=doDeployApplication(applicationName,applicationFile);
   applicationFile.delete();
   return returnObject;
 }

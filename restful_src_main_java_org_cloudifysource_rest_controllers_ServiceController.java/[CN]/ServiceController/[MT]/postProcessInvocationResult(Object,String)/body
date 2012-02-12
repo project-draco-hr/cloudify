@@ -1,9 +1,9 @@
 {
   if (result instanceof Map<?,?>) {
-    Map<String,String> modifiedMap=new HashMap<String,String>();
-    @SuppressWarnings("unchecked") Set<Entry<String,Object>> entries=((Map<String,Object>)result).entrySet();
-    for (    Entry<String,Object> subEntry : entries) {
-      modifiedMap.put(subEntry.getKey(),(subEntry.getValue() == null ? null : subEntry.getValue().toString()));
+    final Map<String,String> modifiedMap=new HashMap<String,String>();
+    @SuppressWarnings("unchecked") final Set<Entry<String,Object>> entries=((Map<String,Object>)result).entrySet();
+    for (    final Entry<String,Object> subEntry : entries) {
+      modifiedMap.put(subEntry.getKey(),subEntry.getValue() == null ? null : subEntry.getValue().toString());
     }
     modifiedMap.put(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_NAME,instanceName);
     result=modifiedMap;

@@ -2,10 +2,10 @@
   if (!serviceFileOrDir.isAbsolute()) {
     serviceFileOrDir=new File(serviceDirectory,serviceFileOrDir.getPath());
   }
-  File destJar=new File(serviceDirectory.getParent(),jarName + ".jar");
+  final File destJar=new File(serviceDirectory.getParent(),jarName + ".jar");
   FileUtils.deleteQuietly(destJar);
   if (serviceFileOrDir.isDirectory()) {
-    File jarFile=File.createTempFile(serviceFileOrDir.getName(),".jar");
+    final File jarFile=File.createTempFile(serviceFileOrDir.getName(),".jar");
     ZipUtils.zip(serviceFileOrDir,jarFile);
     jarFile.renameTo(destJar);
     jarFile.deleteOnExit();

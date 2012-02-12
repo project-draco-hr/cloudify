@@ -1,6 +1,6 @@
 {
   logger.info("Calculating external proc mem for template: " + template);
-  long cloudExternalProcessMemoryInMB=template.getMachineMemoryMB() - cloud.getProvider().getReservedMemoryCapacityPerMachineInMB() - 100;
+  final long cloudExternalProcessMemoryInMB=template.getMachineMemoryMB() - cloud.getProvider().getReservedMemoryCapacityPerMachineInMB() - 100;
   logger.fine("template.machineMemoryMB = " + template.getMachineMemoryMB() + "MB\n"+ "cloud.provider.reservedMemoryCapacityPerMachineInMB = "+ cloud.getProvider().getReservedMemoryCapacityPerMachineInMB()+ "MB\n"+ "cloudExternalProcessMemoryInMB = "+ cloudExternalProcessMemoryInMB+ "MB"+ "cloudExternalProcessMemoryInMB = cloud.machineMemoryMB - "+ "cloud.reservedMemoryCapacityPerMachineInMB"+ " = "+ cloudExternalProcessMemoryInMB);
   return cloudExternalProcessMemoryInMB;
 }
