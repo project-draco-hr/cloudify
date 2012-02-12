@@ -1,4 +1,5 @@
 {
+  Object formattedResult;
   if (result instanceof Map<?,?>) {
     final Map<String,String> modifiedMap=new HashMap<String,String>();
     @SuppressWarnings("unchecked") final Set<Entry<String,Object>> entries=((Map<String,Object>)result).entrySet();
@@ -6,10 +7,10 @@
       modifiedMap.put(subEntry.getKey(),subEntry.getValue() == null ? null : subEntry.getValue().toString());
     }
     modifiedMap.put(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_NAME,instanceName);
-    result=modifiedMap;
+    formattedResult=modifiedMap;
   }
  else {
-    result=result.toString();
+    formattedResult=result.toString();
   }
-  return result;
+  return formattedResult;
 }
