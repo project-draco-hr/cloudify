@@ -1,9 +1,9 @@
 {
-  if (comp != null) {
-    comp.getNewManualServerComposite().dispose();
+  if (composite == null) {
+    AzureServerWizardProperties.setDefaults();
+    return;
   }
+  AzureServerWizardProperties.setJreLocation(composite.getJreLocation());
+  AzureServerWizardProperties.setWebServerPort(composite.getWebServerPort());
   super.performFinish(monitor);
-  IServerWorkingCopy s=getServer();
-  IVMInstall defaultVMInstall=JavaRuntime.getDefaultVMInstall();
-  System.out.println("created server (id=" + s.getId() + ",name="+ s.getName()+ ",installed="+ s.getServerConfiguration()+ ",location="+ s.getRuntime().getLocation()+ ",jre="+ defaultVMInstall.getInstallLocation());
 }

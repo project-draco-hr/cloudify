@@ -1,0 +1,42 @@
+{
+  if (element instanceof ModuleServer) {
+    ModuleServer ms=(ModuleServer)element;
+    try {
+      IModule[] children=ms.server.getChildModules(ms.module,null);
+      int size=children.length;
+      ModuleServer[] ms2=new ModuleServer[size];
+      for (int i=0; i < size; i++) {
+        int size2=ms.module.length;
+        IModule[] module=new IModule[size2 + 1];
+        System.arraycopy(ms.module,0,module,0,size2);
+        module[size2]=children[i];
+        ms2[i]=new ModuleServer(ms.server,module);
+      }
+      return ms2;
+    }
+ catch (    Exception e) {
+      return null;
+    }
+  }
+  IServer server=(IServer)element;
+  Object adapter=((IServer)element).getAdapter(AzureServer.class);
+  if (adapter != null) {
+    IModule[] modules=server.getModules();
+    int size=modules.length;
+    Object[] ms=new Object[size + 1];
+    for (int i=0; i < size; i++) {
+      ms[i]=new ModuleServer(server,new IModule[]{modules[i]});
+    }
+    ms[size]=AzureServerWizardProperties.getServer();
+    return ms;
+  }
+ else {
+    IModule[] modules=server.getModules();
+    int size=modules.length;
+    ModuleServer[] ms=new ModuleServer[size];
+    for (int i=0; i < size; i++) {
+      ms[i]=new ModuleServer(server,new IModule[]{modules[i]});
+    }
+    return ms;
+  }
+}

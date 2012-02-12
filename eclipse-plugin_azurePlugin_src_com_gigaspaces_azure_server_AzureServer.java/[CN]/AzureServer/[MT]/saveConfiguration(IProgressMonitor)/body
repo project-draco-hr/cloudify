@@ -1,4 +1,5 @@
 {
+  webserver=AzureServerWizardProperties.getServer();
   IFolder folder=getServer().getServerConfiguration();
   System.out.println("save config " + folder);
   try {
@@ -11,14 +12,18 @@
       testFolder.touch(monitor);
       return;
     }
-    if (folder.getFolder(AzureServerWizardProperties.getWorkerRoleName()).exists()) {
-      IFolder webappsFolder=folder.getFolder(AzureServerWizardProperties.getWebAppsFolder());
-      if (webappsFolder.exists())       FileUtils.copyDirectory(new File("c:\\webapps"),webappsFolder.getLocation().toFile());
-      return;
+    AzureRole role=AzureServerWizardProperties.getRole();
+    IFolder roleFolder=folder.getFolder(role.getRole());
+    if (!roleFolder.exists()) {
+      roleFolder.createLink(role.getProject().getProject().getFolder(role.getRole()).getLocationURI(),IResource.ALLOW_MISSING_LOCAL,monitor);
     }
-    URL url=Activator.getDefault().getBundle().getResource("resources");
-    File resourcesDir=new File(FileLocator.resolve(url).toURI());
-    FileUtils.copyDirectory(resourcesDir,folder.getLocation().toFile());
+    IServer server=AzureServerWizardProperties.getServer();
+    IFile webserverConfigFile=folder.getFile(server.getName() + ".properties");
+    if (!webserverConfigFile.exists()) {
+      File f=webserverConfigFile.getLocation().toFile();
+      f.createNewFile();
+      FileUtils.writeStringToFile(f,"location=" + server.getRuntime().getLocation());
+    }
     folder.refreshLocal(IResource.DEPTH_INFINITE,monitor);
   }
  catch (  Exception e) {

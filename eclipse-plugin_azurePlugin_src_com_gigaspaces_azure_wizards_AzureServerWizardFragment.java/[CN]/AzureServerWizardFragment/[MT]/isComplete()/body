@@ -1,5 +1,0 @@
-{
-  if (getServer() == null)   return false;
-  if (getServer().getServerType() == null)   return false;
-  return checkHostAndServerType();
-}

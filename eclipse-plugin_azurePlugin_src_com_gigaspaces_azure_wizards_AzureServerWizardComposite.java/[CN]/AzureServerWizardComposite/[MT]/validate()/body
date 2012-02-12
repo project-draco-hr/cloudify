@@ -2,10 +2,10 @@
   if (webServerPort != null && webServerPort.length() > 0) {
     try {
       Integer.parseInt(webServerPort);
-      wizardHandle.setMessage("",IMessageProvider.NONE);
+      wizard.setMessage("",IMessageProvider.NONE);
     }
  catch (    NumberFormatException e) {
-      wizardHandle.setMessage("Web server port should be a numeric value",IMessageProvider.ERROR);
+      wizard.setMessage("Web server port should be a numeric value",IMessageProvider.ERROR);
     }
   }
 }

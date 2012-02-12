@@ -1,14 +1,34 @@
 {
-  IServer server=ServerUtil.getServer(configuration);
+  IServer server=AzureServerWizardProperties.getServer();
   if (server == null) {
     throw new CoreException(new Status(Status.ERROR,AzurePlugin.PLUGIN_ID,"Launch configuration could not find server"));
   }
-  IFolder folder=server.getServerConfiguration();
+  AzureRole role=AzureServerWizardProperties.getRole();
+  AzureProject project=role.getProject();
+  IFolder zipFile=project.getProject().getFolder(role.getRole() + "/approot/" + "tomcat7.zip");
+  String webserverLocation=server.getRuntime().getLocation().toOSString();
+  System.out.println("zipping the webserver: " + webserverLocation + " --> "+ zipFile);
+  AzureProjectTools.createZipFile(zipFile.getLocation().toOSString(),webserverLocation);
+  IFolder jdkZipFile=project.getProject().getFolder(role.getRole() + "/approot/" + "jdk.zip");
+  IVMInstall defaultVMInstall=JavaRuntime.getDefaultVMInstall();
+  File jdkLocation=defaultVMInstall.getInstallLocation();
+  System.out.println("zipping the zdk: " + jdkLocation + " --> "+ jdkZipFile);
+  AzureProjectTools.createZipFile(jdkZipFile.getLocation().toOSString(),jdkLocation.getPath());
+  System.out.println("updating the startup.cmd");
+  try {
+    File startupFile=new File(project.getProject().getFolder(role.getRole() + "/approot/startup.cmd").getLocation().toOSString());
+    FileUtils.copyFile(new File(project.getProject().getFile("samples/startupApacheTomcat7.txt").getLocation().toOSString()),startupFile);
+    replace(startupFile,"SET SERVER_DIR_NAME=(.*)","SET SERVER_DIR_NAME=" + new File(webserverLocation).getName());
+  }
+ catch (  IOException e1) {
+    throw new CoreException(new Status(Status.ERROR,AzurePlugin.PLUGIN_ID,e1.getMessage()));
+  }
   System.out.println("running ant package.xml");
   AntRunner runner=new AntRunner();
-  runner.setBuildFileLocation(folder.getLocation().toOSString() + "/package.xml");
+  runner.setBuildFileLocation(project.getProject().getLocation().toOSString() + "/package.xml");
   runner.run(monitor);
-  AzureServerBehaviour srvDelegator=(AzureServerBehaviour)server.loadAdapter(ServerBehaviourDelegate.class,null);
+  IServer azureServer=ServerUtil.getServer(configuration);
+  AzureServerBehaviour srvDelegator=(AzureServerBehaviour)azureServer.loadAdapter(ServerBehaviourDelegate.class,null);
   System.out.println("launch '" + mode + "'");
   srvDelegator.changeServerState(IServer.STATE_STARTING);
   if (AzurePlugin.isTestMode) {
@@ -17,7 +37,7 @@
   }
   String startEmulatorScript="/emulatorTools/RunInEmulator.cmd";
   try {
-    Runtime.getRuntime().exec(server.getServerConfiguration().getLocation().toOSString() + startEmulatorScript);
+    Runtime.getRuntime().exec(project.getProject().getLocation().toOSString() + startEmulatorScript);
   }
  catch (  IOException e) {
     throw new CoreException(new Status(Status.ERROR,AzurePlugin.PLUGIN_ID,"Failed to run the Azure Emulator - " + e.getMessage()));

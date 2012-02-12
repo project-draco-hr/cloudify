@@ -1,0 +1,3 @@
+String dir2zip
+ZipOutputStream zos
+int lastPathIndex

@@ -1,0 +1,7 @@
+{
+  URL url=Activator.getDefault().getBundle().getEntry(location);
+  URL fileURL=FileLocator.toFileURL(url);
+  URL resolve=FileLocator.resolve(fileURL);
+  ImageDescriptor descriptor=ImageDescriptor.createFromURL(resolve);
+  return descriptor.createImage();
+}

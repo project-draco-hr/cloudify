@@ -1,6 +1,0 @@
-{
-  if (comp != null) {
-    comp.getNewManualServerComposite().dispose();
-  }
-  super.performCancel(monitor);
-}

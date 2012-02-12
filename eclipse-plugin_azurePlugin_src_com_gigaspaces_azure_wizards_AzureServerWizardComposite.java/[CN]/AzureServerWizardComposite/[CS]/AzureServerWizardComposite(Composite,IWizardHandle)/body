@@ -1,6 +1,6 @@
 {
   super(parent,SWT.NONE);
-  this.wizardHandle=wizardHandle;
+  this.wizard=wizardHandle;
   wizardHandle.setTitle("Windows Azure Server");
   wizardHandle.setDescription("Windows Azure server configuration");
   createControls();

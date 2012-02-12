@@ -1,7 +1,3 @@
 {
-  String launchMode=(String)getTaskModel().getObject(TaskModel.TASK_LAUNCH_MODE);
-  if (moduleType != null || serverTypeId != null)   comp=new NewServerComposite(parent,wizard,moduleType,serverTypeId,launchMode);
- else   comp=new NewServerComposite(parent,wizard,module,launchMode);
-  if (getTaskModel() != null)   comp.setTaskModel(getTaskModel());
-  return comp;
+  return new AzureServerWizardComposite(parent,handle);
 }

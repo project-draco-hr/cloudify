@@ -1,0 +1,21 @@
+{
+  if (element instanceof ModuleServer) {
+    ModuleServer curModuleServer=(ModuleServer)element;
+    IServer curServer=curModuleServer.server;
+    IModule[] curModule=curModuleServer.module;
+    if (curServer != null && curModule != null) {
+      IModule[] curChildModule=curServer.getChildModules(curModule,null);
+      if (curChildModule != null && curChildModule.length > 0)       return true;
+      return false;
+    }
+    return false;
+  }
+  if (element instanceof IServer) {
+    Object adapter=((IServer)element).getAdapter(AzureServer.class);
+    if (adapter != null) {
+      return true;
+    }
+    return ((IServer)element).getModules().length > 0;
+  }
+  return false;
+}

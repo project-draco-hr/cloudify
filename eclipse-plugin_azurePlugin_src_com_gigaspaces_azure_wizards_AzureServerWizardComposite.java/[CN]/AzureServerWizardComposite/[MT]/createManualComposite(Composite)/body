@@ -1,0 +1,36 @@
+{
+  Composite manualComp2=new Composite(comp,SWT.NONE);
+  GridLayout layout=new GridLayout();
+  layout.horizontalSpacing=SWTUtil.convertHorizontalDLUsToPixels(this,4);
+  layout.verticalSpacing=SWTUtil.convertVerticalDLUsToPixels(this,4);
+  layout.marginWidth=0;
+  layout.marginHeight=0;
+  layout.numColumns=1;
+  manualComp2.setLayout(layout);
+  manualComp2.setLayoutData(new GridData(GridData.FILL_BOTH));
+  NewManualServerComposite manualComp=new NewManualServerComposite(manualComp2,new NewManualServerComposite.IWizardHandle2(){
+    public void run(    boolean fork,    boolean cancelable,    IRunnableWithProgress runnable) throws InterruptedException, InvocationTargetException {
+      wizard.run(fork,cancelable,runnable);
+    }
+    public void update(){
+      wizard.update();
+    }
+    public void setMessage(    String newMessage,    int newType){
+      wizard.setMessage(newMessage,newType);
+    }
+  }
+,null,module,null,true,new NewManualServerComposite.ServerSelectionListener(){
+    public void serverSelected(    IServerAttributes server){
+      updateTaskModel();
+    }
+    public void runtimeSelected(    IRuntime runtime){
+      updateTaskModel();
+    }
+  }
+);
+  manualComp.setHost("localhost");
+  GridData data=new GridData(GridData.FILL_BOTH);
+  data.horizontalSpan=3;
+  data.heightHint=360;
+  manualComp.setLayoutData(data);
+}
