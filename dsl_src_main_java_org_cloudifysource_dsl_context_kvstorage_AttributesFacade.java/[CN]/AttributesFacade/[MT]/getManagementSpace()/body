@@ -2,8 +2,19 @@
   if (managementSpace != null)   return managementSpace;
 synchronized (managementSpaceLock) {
     if (managementSpace != null)     return managementSpace;
-    Space space=admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,MANAGEMENT_SPACE_FIND_TIMEOUT,TimeUnit.SECONDS);
-    if (space == null)     throw new IllegalStateException("No management space located");
+    Space space=null;
+    for (int i=0; i < MANAGEMENT_SPACE_FIND_REPEAT; ++i) {
+      space=admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,MANAGEMENT_SPACE_FIND_TIMEOUT,TimeUnit.SECONDS);
+      if (space != null) {
+        break;
+      }
+    }
+    if (space == null) {
+      space=admin.getSpaces().getSpaceByName(CloudifyConstants.MANAGEMENT_SPACE_NAME);
+      if (space == null) {
+        throw new IllegalStateException("No management space located");
+      }
+    }
     managementSpace=space.getGigaSpace();
     return managementSpace;
   }
