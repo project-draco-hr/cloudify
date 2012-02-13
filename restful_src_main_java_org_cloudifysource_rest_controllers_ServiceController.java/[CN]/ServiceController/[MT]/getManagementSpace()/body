@@ -1,7 +1,0 @@
-{
-  final Space space=this.admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,1,TimeUnit.MINUTES);
-  if (space == null) {
-    throw new IllegalStateException("Could not find management space (" + CloudifyConstants.MANAGEMENT_SPACE_NAME + ")");
-  }
-  return space.getGigaSpace();
-}

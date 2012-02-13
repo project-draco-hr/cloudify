@@ -1,5 +1,4 @@
 {
-  final GigaSpace gigaSpace=getManagementSpace();
   logger.info("Waiting for cloud configuration to become available in management space");
   final CloudConfigurationHolder config=gigaSpace.read(new CloudConfigurationHolder(),1000 * 60);
   if (config == null) {
