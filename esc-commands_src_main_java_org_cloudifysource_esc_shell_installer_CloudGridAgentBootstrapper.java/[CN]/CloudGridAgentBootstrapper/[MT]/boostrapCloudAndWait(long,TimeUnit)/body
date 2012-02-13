@@ -1,16 +1,7 @@
 {
-  try {
-    this.provisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
-    this.provisioning.addListener(new CliProvisioningDriverListener());
-    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
-  }
- catch (  ClassNotFoundException e) {
-    throw new CLIException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
-  }
-catch (  Exception e) {
-    throw new CLIException("Failed to load provisioning class for cloud: " + this.cloud.getName(),e);
-  }
   long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  createProvisioningDriver();
+  this.provisioning.addListener(new CliProvisioningDriverListener());
   try {
     MachineDetails[] servers;
     try {
