@@ -1,8 +1,5 @@
 {
-  final File tempFolder=File.createTempFile("GS__",srcFile.getOriginalFilename());
-  tempFolder.delete();
-  tempFolder.mkdirs();
-  final File tempFile=new File(tempFolder.getAbsolutePath(),srcFile.getOriginalFilename());
+  final File tempFile=new File(temporaryFolder,srcFile.getOriginalFilename());
   srcFile.transferTo(tempFile);
   tempFile.deleteOnExit();
   return tempFile;
