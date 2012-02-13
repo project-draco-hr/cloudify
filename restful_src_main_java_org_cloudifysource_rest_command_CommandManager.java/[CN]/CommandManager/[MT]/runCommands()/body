@@ -1,5 +1,10 @@
 {
-  for (  CommandObject command : listOfCommands) {
-    command.runCommand();
+  try {
+    for (    CommandObject command : listOfCommands) {
+      command.runCommand();
+    }
+  }
+ catch (  RuntimeException e) {
+    throw new RuntimeException("Failed to access url: " + this.commandURL + ". Reason:"+ e.getMessage(),e);
   }
 }

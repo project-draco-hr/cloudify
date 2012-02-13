@@ -7,6 +7,9 @@
       return null;
     }
     if (!Map.class.isAssignableFrom(obj.getClass()) && !obj.getClass().isArray() && !List.class.isAssignableFrom(obj.getClass())) {
+      if (!method.isAccessible()) {
+        method.setAccessible(true);
+      }
       retval=method.invoke(obj,(Object[])null);
     }
  else {
@@ -14,7 +17,7 @@
     }
   }
  catch (  IllegalAccessException e) {
-    return null;
+    throw new RuntimeException("Cannot execute getter function " + method.getName() + ". Reason: "+ e.getMessage(),e);
   }
 catch (  Exception e) {
     throw new RuntimeException("Cannot execute getter function " + method.getName() + ". Reason: "+ e.getMessage(),e);
