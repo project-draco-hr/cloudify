@@ -1,5 +1,8 @@
 {
   Map<?,?> map=(Map<?,?>)mapObject;
+  if (map.containsKey(key)) {
+    return map.get(key);
+  }
   for (  Map.Entry<?,?> entry : map.entrySet()) {
     if (entry.getKey().toString().equals(key)) {
       return entry.getValue();
