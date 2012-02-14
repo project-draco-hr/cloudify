@@ -1,13 +1,11 @@
 {
   int arrayIndex=getIndexFromString(index);
   if (arrayIndex == -1) {
-    logger.severe("unable to parse index " + index);
-    throw new RuntimeException("unable to parse index " + index);
+    throw new RuntimeException("Error while accessing array of type " + arrayObject.getClass().getSimpleName().replace("]","") + ". Unable to parse index: "+ index);
   }
   Object[] objectArray=OutputUtils.getArray(arrayObject);
   if (arrayIndex >= objectArray.length) {
-    logger.severe("Index out of bounds: " + arrayIndex);
-    throw new RuntimeException("Index out of bounds: " + arrayIndex);
+    throw new RuntimeException("Error while accessing array of type " + arrayObject.getClass().getSimpleName().replace(']',' ') + ". Array size: "+ objectArray.length+ ", requested index: "+ arrayIndex);
   }
   return objectArray[arrayIndex];
 }

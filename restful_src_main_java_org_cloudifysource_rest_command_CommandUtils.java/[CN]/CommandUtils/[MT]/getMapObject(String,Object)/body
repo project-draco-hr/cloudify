@@ -5,6 +5,5 @@
       return entry.getValue();
     }
   }
-  logger.severe("Map does not contain a value for the key: " + key);
-  throw new RuntimeException("Map object does not contain key: " + key);
+  throw new RuntimeException("Error while accessing map of type " + map.getClass().getSimpleName() + ". Map does not contain a value for the key: "+ key);
 }

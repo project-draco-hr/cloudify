@@ -1,13 +1,11 @@
 {
   int listIndex=getIndexFromString(index);
   if (listIndex == -1) {
-    logger.severe("unable to parse index " + listIndex);
-    throw new RuntimeException("unable to parse index " + listIndex);
+    throw new RuntimeException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Unable to parse index: "+ index);
   }
   List<?> objectList=(List<?>)listObject;
   if (listIndex >= objectList.size()) {
-    logger.severe("Index out of bounds: " + listIndex);
-    throw new RuntimeException("Index out of bounds: " + listIndex);
+    throw new RuntimeException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Array size: "+ objectList.size()+ ", requested index: "+ listIndex);
   }
   return objectList.get(listIndex);
 }
