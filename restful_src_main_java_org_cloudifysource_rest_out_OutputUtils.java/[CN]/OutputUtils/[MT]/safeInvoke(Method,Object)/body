@@ -7,6 +7,9 @@
       return null;
     }
     if (!Map.class.isAssignableFrom(obj.getClass()) && !obj.getClass().isArray() && !List.class.isAssignableFrom(obj.getClass())) {
+      if (!method.isAccessible()) {
+        method.setAccessible(true);
+      }
       retval=method.invoke(obj,(Object[])null);
     }
  else {

@@ -1,6 +1,9 @@
 {
   String methodName=method.getName();
   Class<?> retType=method.getReturnType();
+  if (method.getModifiers() == Modifier.PRIVATE) {
+    return false;
+  }
   if (methodName.equals("getClass")) {
     return false;
   }
