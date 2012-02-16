@@ -1,6 +1,9 @@
 {
   String methodName=method.getName();
   Class<?> retType=method.getReturnType();
+  if (methodName.equals("getGigaSpace") || methodName.equals("getIJSpace")) {
+    return false;
+  }
   if (method.getModifiers() == Modifier.PRIVATE) {
     return false;
   }
