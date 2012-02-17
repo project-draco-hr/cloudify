@@ -1,7 +1,7 @@
 {
   Properties props=new Properties();
   props.setProperty("mail.transport.protocol","smtp");
-  props.put("mail.smtp.port","25");
+  props.setProperty("mail.smtp.port","25");
   props.setProperty("mail.host",mailHost);
   props.setProperty("mail.user",user);
   props.setProperty("mail.password",password);
