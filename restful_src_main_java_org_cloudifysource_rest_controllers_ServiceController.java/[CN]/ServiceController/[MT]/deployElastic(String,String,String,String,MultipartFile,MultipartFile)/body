@@ -4,7 +4,7 @@
   String actualTemplateName=templateName;
   if (cloud != null) {
     if (templateName == null || templateName.length() == 0) {
-      if (cloud.getTemplates().size() == 0) {
+      if (cloud.getTemplates().isEmpty()) {
         throw new IllegalStateException("Cloud configuration has no compute template defined!");
       }
       actualTemplateName=cloud.getTemplates().keySet().iterator().next();
