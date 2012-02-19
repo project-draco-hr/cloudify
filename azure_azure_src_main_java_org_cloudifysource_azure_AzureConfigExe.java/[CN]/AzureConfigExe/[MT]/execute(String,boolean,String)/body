@@ -13,7 +13,7 @@
   final ProcessBuilder pb=new ProcessBuilder(cmd);
   pb.redirectErrorStream(true);
   if (verbose) {
-    System.out.println("Executing command: " + Arrays.toString(cmd));
+    logger.info("Executing command: " + Arrays.toString(cmd));
   }
   Process p;
   try {
