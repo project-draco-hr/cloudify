@@ -18,6 +18,9 @@
   final GroovyShell gs=createGroovyShell(properties);
   Object result=evaluateGroovyScript(gs);
   if (this.createServiceContext) {
+    if (!(result instanceof Service)) {
+      throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Sevice. " + "Set the 'createServiceContext' option to false if you do not need a service conext");
+    }
     if (isRunningInGSC) {
       this.context.init((Service)result,admin,workDir.getAbsolutePath(),clusterInfo);
     }
