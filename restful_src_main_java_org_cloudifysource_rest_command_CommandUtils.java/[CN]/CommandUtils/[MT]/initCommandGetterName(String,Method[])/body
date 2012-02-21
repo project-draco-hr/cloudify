@@ -9,5 +9,5 @@
       return isMethodSignature;
     }
   }
-  throw new RuntimeException("No method signature found for command: " + rawCommand);
+  throw new NotFoundHttpException("No method signature found for command: " + rawCommand);
 }

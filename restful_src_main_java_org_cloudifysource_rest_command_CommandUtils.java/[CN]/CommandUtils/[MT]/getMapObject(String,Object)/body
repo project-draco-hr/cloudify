@@ -8,5 +8,5 @@
       return entry.getValue();
     }
   }
-  throw new RuntimeException("Error while accessing map of type " + map.getClass().getSimpleName() + ". Map does not contain a value for the key: "+ key);
+  throw new NotFoundHttpException("Error while accessing map of type " + map.getClass().getSimpleName() + ". Map does not contain a value for the key: "+ key);
 }

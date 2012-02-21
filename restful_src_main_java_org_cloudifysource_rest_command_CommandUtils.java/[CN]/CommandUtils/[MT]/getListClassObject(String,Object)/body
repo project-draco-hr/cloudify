@@ -1,11 +1,11 @@
 {
   int listIndex=getIndexFromString(index);
   if (listIndex == -1) {
-    throw new RuntimeException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Unable to parse index: "+ index);
+    throw new NotFoundHttpException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Unable to parse index: "+ index);
   }
   List<?> objectList=(List<?>)listObject;
   if (listIndex >= objectList.size()) {
-    throw new RuntimeException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Array size: "+ objectList.size()+ ", requested index: "+ listIndex);
+    throw new NotFoundHttpException("Error while accessing list of type " + listObject.getClass().getSimpleName() + ". Array size: "+ objectList.size()+ ", requested index: "+ listIndex);
   }
   return objectList.get(listIndex);
 }
