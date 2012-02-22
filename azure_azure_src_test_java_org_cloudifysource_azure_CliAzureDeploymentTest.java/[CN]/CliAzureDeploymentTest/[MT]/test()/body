@@ -62,7 +62,7 @@
     }
   }
 );
-  List<String> uninstallApplicationCommand=Arrays.asList("uninstall-application","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),"-progress",String.valueOf(POLLING_INTERVAL_IN_MINUTES),APPLICATION_NAME);
+  List<String> uninstallApplicationCommand=Arrays.asList("uninstall-application","--verbose","-timeout",String.valueOf(TIMEOUT_IN_MINUTES),APPLICATION_NAME);
   commands.add(connectCommand);
   commands.add(uninstallApplicationCommand);
   runCliCommands(cliExecutablePath,commands,isDebugMode);
