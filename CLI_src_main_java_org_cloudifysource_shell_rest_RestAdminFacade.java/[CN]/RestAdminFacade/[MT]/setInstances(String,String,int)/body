@@ -1,12 +1,12 @@
 {
   try {
-    String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/set-instances?count="+ count;
+    final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/set-instances?count="+ count;
     client.post(url);
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
 }
