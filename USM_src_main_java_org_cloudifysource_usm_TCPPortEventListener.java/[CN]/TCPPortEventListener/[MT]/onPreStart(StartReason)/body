@@ -1,0 +1,3 @@
+{
+  return (ServiceUtils.isPortFree(port) ? EventResult.SUCCESS : new EventResult(new IOException("Port " + port + " which is required for this service is already in use!")));
+}

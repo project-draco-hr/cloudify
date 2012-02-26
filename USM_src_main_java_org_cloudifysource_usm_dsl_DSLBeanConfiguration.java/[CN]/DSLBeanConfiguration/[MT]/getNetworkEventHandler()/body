@@ -1,0 +1,20 @@
+{
+  if (this.service.getNetwork() == null) {
+    return null;
+  }
+  final String override=this.service.getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_ENABLE_TCP_PORT_MONITOR);
+  if (override != null && override.equalsIgnoreCase("false")) {
+    return null;
+  }
+  final String protocol=this.service.getNetwork().getProtocolDescription();
+  if (protocol.equalsIgnoreCase("tcp") || protocol.equalsIgnoreCase("http")) {
+    int port=this.service.getNetwork().getPort();
+    if (port <= 0) {
+      return null;
+    }
+    return new TCPPortEventListener(port);
+  }
+ else {
+    return null;
+  }
+}
