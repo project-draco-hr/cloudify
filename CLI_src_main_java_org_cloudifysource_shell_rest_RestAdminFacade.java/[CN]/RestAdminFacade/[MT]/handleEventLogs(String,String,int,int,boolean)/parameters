@@ -1,0 +1,5 @@
+String serviceName
+String applicationName
+int plannedNumberOfInstances
+int serviceShutDownEventsCount
+boolean firstTime

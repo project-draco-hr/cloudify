@@ -1,0 +1,75 @@
+{
+  long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  final boolean ascending=plannedNumberOfInstances > initialNumberOfInstances;
+  int serviceShutDownEventsCount=0;
+  String pollingURL="processingUnits/Names/" + ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  waitForServicePU(applicationName,serviceName,pollingURL,timeoutErrorMessage,PROCESSINGUNIT_LOOKUP_TIMEOUT,timeunit);
+  if (ascending) {
+    logger.info(MessageFormat.format(messages.getString("deploying_service"),serviceName));
+  }
+ else {
+    logger.info(MessageFormat.format(messages.getString("removing_service_instances"),serviceName));
+  }
+  int currentNumberOfRunningUSMInstances=(ascending ? -1 : Integer.MAX_VALUE);
+  boolean statusChanged=false;
+  boolean firstTime=true;
+  while (System.currentTimeMillis() < end) {
+    Map<String,Object> serviceStatusMap=null;
+    try {
+      serviceStatusMap=client.getAdminData(pollingURL);
+    }
+ catch (    ErrorStatusException e) {
+      throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+    }
+catch (    RestException e) {
+      throw new CLIException(e);
+    }
+    if ("partitioned-sync2backup".equals(serviceStatusMap.get("ClusterSchema"))) {
+      plannedNumberOfInstances=Integer.valueOf((String)serviceStatusMap.get("TotalNumberOfInstances"));
+    }
+    if (ascending) {
+      if (!serviceStatusMap.get("Instances-Size").equals(0) && isUSMService(applicationName,serviceName)) {
+        int actualNumberOfUSMServicesWithRunningState=getNumberOfUSMServicesWithRunningState(serviceName,applicationName,(Integer)serviceStatusMap.get("Instances-Size"));
+        if (currentNumberOfRunningUSMInstances != actualNumberOfUSMServicesWithRunningState && actualNumberOfUSMServicesWithRunningState != 0) {
+          currentNumberOfRunningUSMInstances=actualNumberOfUSMServicesWithRunningState;
+          statusChanged=true;
+        }
+ else {
+          statusChanged=false;
+        }
+      }
+    }
+ else {
+      final int actualNumberOfUSMServicesWithRunningState=(Integer)serviceStatusMap.get("Instances-Size");
+      if (currentNumberOfRunningUSMInstances != actualNumberOfUSMServicesWithRunningState && actualNumberOfUSMServicesWithRunningState != 0) {
+        currentNumberOfRunningUSMInstances=actualNumberOfUSMServicesWithRunningState;
+        statusChanged=true;
+      }
+ else {
+        statusChanged=false;
+      }
+    }
+    serviceShutDownEventsCount=handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount,firstTime);
+    firstTime=false;
+    if ((Integer)serviceStatusMap.get("Instances-Size") == 0) {
+      printStatusMessage(plannedNumberOfInstances,(Integer)serviceStatusMap.get("Instances-Size"),statusChanged);
+    }
+ else     if (ascending && (plannedNumberOfInstances < currentNumberOfRunningUSMInstances)) {
+      throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_exceeded_planned"),plannedNumberOfInstances,currentNumberOfRunningUSMInstances));
+    }
+ else     if (!ascending && (plannedNumberOfInstances > currentNumberOfRunningUSMInstances)) {
+      throw new CLIException(MessageFormat.format(messages.getString("number_of_instances_removed_exceeded_planned"),plannedNumberOfInstances,currentNumberOfRunningUSMInstances));
+    }
+ else     if ((Integer)serviceStatusMap.get("Instances-Size") > 0) {
+      if (isUSMService(applicationName,serviceName)) {
+        printStatusMessage(plannedNumberOfInstances,currentNumberOfRunningUSMInstances,statusChanged);
+        if (currentNumberOfRunningUSMInstances == plannedNumberOfInstances) {
+          handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount,firstTime);
+          return true;
+        }
+      }
+    }
+    Thread.sleep(POLLING_INTERVAL);
+  }
+  throw new TimeoutException(timeoutErrorMessage);
+}

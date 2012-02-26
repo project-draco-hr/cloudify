@@ -1,12 +1,3 @@
 {
-  final List<String> eventLogs=getUnreadEventLogs(applicationName,serviceName);
-  int totalServiceShutDownEvents=serviceShutDownEventsCount;
-  if (eventLogs != null) {
-    printEventLogs(eventLogs);
-    totalServiceShutDownEvents+=getShutdownEventCount(eventLogs,serviceName);
-    if (totalServiceShutDownEvents == plannedNumberOfInstances) {
-      throw new CLIException("Service " + serviceName + " Failed to instantiate");
-    }
-  }
-  return totalServiceShutDownEvents;
+  return handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount,false);
 }
