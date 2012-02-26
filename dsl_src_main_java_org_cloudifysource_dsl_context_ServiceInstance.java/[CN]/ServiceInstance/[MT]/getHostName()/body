@@ -6,7 +6,7 @@
     try {
       return InetAddress.getLocalHost().getHostName();
     }
- catch (    UnknownHostException e) {
+ catch (    final UnknownHostException e) {
       logger.log(Level.SEVERE,"Failed to read local host address",e);
       return null;
     }

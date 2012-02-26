@@ -1,6 +1,6 @@
 {
   if (this.pu != null) {
-    boolean result=pu.waitFor(howmany,timeout,timeUnit);
+    final boolean result=pu.waitFor(howmany,timeout,timeUnit);
     if (result) {
       return getInstances();
     }

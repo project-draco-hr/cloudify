@@ -2,9 +2,9 @@
   if (this.pui == null) {
     return null;
   }
-  Collection<ServiceDetails> allDetails=this.pui.getServiceDetailsByServiceId().values();
-  for (  ServiceDetails serviceDetails : allDetails) {
-    Object res=serviceDetails.getAttributes().get(serviceDetailsKey);
+  final Collection<ServiceDetails> allDetails=this.pui.getServiceDetailsByServiceId().values();
+  for (  final ServiceDetails serviceDetails : allDetails) {
+    final Object res=serviceDetails.getAttributes().get(serviceDetailsKey);
     if (res != null) {
       return res;
     }

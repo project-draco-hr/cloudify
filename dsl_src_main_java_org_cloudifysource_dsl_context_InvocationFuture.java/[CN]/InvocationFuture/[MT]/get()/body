@@ -1,0 +1,4 @@
+{
+  final Object result=this.delegate.get();
+  return handleInvocationResponse(result);
+}

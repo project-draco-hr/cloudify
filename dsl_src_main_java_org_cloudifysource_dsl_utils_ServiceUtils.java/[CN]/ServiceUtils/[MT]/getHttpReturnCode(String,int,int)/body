@@ -4,13 +4,13 @@
     try {
       connection=(HttpURLConnection)new URL(url).openConnection();
     }
- catch (    MalformedURLException e) {
+ catch (    final MalformedURLException e) {
       throw new IllegalArgumentException("Failed to parse url: " + url,e);
     }
     try {
       connection.setRequestMethod("GET");
     }
- catch (    ProtocolException e) {
+ catch (    final ProtocolException e) {
       throw new IllegalArgumentException(e);
     }
     connection.setConnectTimeout(connectTimeout);
@@ -18,7 +18,7 @@
     final int responseCode=connection.getResponseCode();
     return responseCode;
   }
- catch (  IOException ioe) {
+ catch (  final IOException ioe) {
     return 500;
   }
  finally {

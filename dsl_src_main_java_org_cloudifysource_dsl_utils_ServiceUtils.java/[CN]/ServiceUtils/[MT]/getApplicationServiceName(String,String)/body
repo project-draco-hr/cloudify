@@ -2,7 +2,7 @@
   if (applicationName.equalsIgnoreCase(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
     return absolutePuName;
   }
-  boolean legitPuNamePrefix=absolutePuName.startsWith(applicationName + ".");
+  final boolean legitPuNamePrefix=absolutePuName.startsWith(applicationName + ".");
   if (legitPuNamePrefix) {
     return absolutePuName.substring(applicationName.length() + 1);
   }

@@ -1,0 +1,14 @@
+{
+  @SuppressWarnings("unchecked") final Map<String,Object> map=(Map<String,Object>)result;
+  final Boolean success=(Boolean)map.get(CloudifyConstants.INVOCATION_RESPONSE_STATUS);
+  if (success == null) {
+    throw new IllegalStateException("Was expecting: " + CloudifyConstants.INVOCATION_RESPONSE_STATUS + " field in invocation response");
+  }
+  if (success) {
+    return map.get(CloudifyConstants.INVOCATION_RESPONSE_RESULT);
+  }
+ else {
+    final Exception e=(Exception)map.get(CloudifyConstants.INVOCATION_RESPONSE_EXCEPTION);
+    throw new ExecutionException(e);
+  }
+}

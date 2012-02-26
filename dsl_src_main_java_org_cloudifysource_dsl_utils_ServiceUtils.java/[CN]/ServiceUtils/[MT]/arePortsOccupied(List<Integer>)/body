@@ -1,8 +1,7 @@
 {
   int portCounter=0;
-  for (  int port : portList) {
+  for (  final int port : portList) {
     if (isPortOccupied(port)) {
-      logger.info("port: " + port + " is Occupied.");
       portCounter++;
     }
     if (portCounter == portList.size()) {
