@@ -1,0 +1,13 @@
+{
+  LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
+  UUID lifecycleEventsContainerUUID=UUID.randomUUID();
+  lifecycleEventsContainer.setUUID(lifecycleEventsContainerUUID);
+  this.lifecyclePollingContainer.put(lifecycleEventsContainerUUID,lifecycleEventsContainer);
+  RestPollingCallable restPollingCallable=new RestPollingCallable(application,timeout,timeUnit);
+  restPollingCallable.setIsUninstall(false);
+  restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
+  restPollingCallable.setAdmin(admin);
+  Future<Boolean> future=executorService.submit(restPollingCallable);
+  lifecycleEventsContainer.setFutureTask(future);
+  return lifecycleEventsContainerUUID;
+}

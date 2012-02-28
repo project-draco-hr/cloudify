@@ -1,0 +1,41 @@
+{
+  Map<String,Object> resultsMap=new HashMap<String,Object>();
+  resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,false);
+  if (!lifecyclePollingContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
+    return errorStatus("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
+  }
+  LifecycleEventsContainer container=lifecyclePollingContainer.get(UUID.fromString(lifecycleEventContainerID));
+  Future<Boolean> futureTask=container.getFutureTask();
+  if (futureTask.isDone()) {
+    try {
+      futureTask.get(POLLING_TASK_TIMEOUT,TimeUnit.SECONDS);
+    }
+ catch (    ExecutionException e) {
+      if (e.getCause() instanceof TimeoutException) {
+        logger.log(Level.INFO,"LIFECYCLE_EVENT_TIMED_OUT",e.getCause());
+        resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,true);
+      }
+ else {
+        logger.log(Level.INFO,"an exception occurred during the" + " lifecycle events polling task.",e);
+      }
+    }
+catch (    InterruptedException e) {
+      logger.log(Level.INFO,"Could not retrieve polling task result",e);
+    }
+catch (    TimeoutException e) {
+      logger.log(Level.INFO,"Could not retrieve polling task result",e);
+      resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,false);
+    }
+  }
+  List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
+  if (lifecycleEvents != null) {
+    int newCursorPos=cursor + lifecycleEvents.size();
+    resultsMap.put(CloudifyConstants.CURSOR_POS,newCursorPos);
+    resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,lifecycleEvents);
+  }
+ else {
+    resultsMap.put(CloudifyConstants.CURSOR_POS,cursor);
+  }
+  resultsMap.put(CloudifyConstants.IS_TASK_DONE,futureTask.isDone());
+  return successStatus(resultsMap);
+}

@@ -1,0 +1,12 @@
+{
+  RestPollingCallable restPollingCallable;
+  restPollingCallable=new RestPollingCallable(serviceName,plannedNumberOfInstances,timeout,minutes);
+  LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
+  UUID lifecycleEventsContainerID=UUID.randomUUID();
+  this.lifecyclePollingContainer.put(lifecycleEventsContainerID,lifecycleEventsContainer);
+  restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
+  restPollingCallable.setAdmin(admin);
+  Future<Boolean> future=executorService.submit(restPollingCallable);
+  lifecycleEventsContainer.setFutureTask(future);
+  return lifecycleEventsContainerID;
+}

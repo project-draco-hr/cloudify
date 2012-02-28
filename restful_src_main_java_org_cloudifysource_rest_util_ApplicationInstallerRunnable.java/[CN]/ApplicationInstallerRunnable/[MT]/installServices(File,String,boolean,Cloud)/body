@@ -13,7 +13,7 @@
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
       final String templateName=(service.getCompute() == null ? null : service.getCompute().getTemplate());
-      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName);
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }

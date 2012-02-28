@@ -1,0 +1,6 @@
+{
+  if (!this.eventsSet.contains(event)) {
+    this.eventsSet.add(event);
+    this.eventsList.add(event);
+  }
+}

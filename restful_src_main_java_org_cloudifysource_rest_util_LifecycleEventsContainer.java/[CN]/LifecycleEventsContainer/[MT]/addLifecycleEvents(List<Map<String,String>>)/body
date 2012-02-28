@@ -1,0 +1,14 @@
+{
+  if (allLifecycleEvents == null || allLifecycleEvents.isEmpty()) {
+    return;
+  }
+  String outputMessage;
+  for (  Map<String,String> map : allLifecycleEvents) {
+    Map<String,Object> sortedMap=new TreeMap<String,Object>(map);
+    if (!this.eventsSet.contains(sortedMap.toString())) {
+      this.eventsSet.add(sortedMap.toString());
+      outputMessage=getParsedLifecyceEventMessageFromMap(sortedMap);
+      this.eventsList.add(outputMessage);
+    }
+  }
+}

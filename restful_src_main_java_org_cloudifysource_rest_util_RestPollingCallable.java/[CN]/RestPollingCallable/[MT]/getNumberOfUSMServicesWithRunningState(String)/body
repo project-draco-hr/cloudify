@@ -1,0 +1,11 @@
+{
+  int puiInstanceCounter=0;
+  ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePUName);
+  for (  ProcessingUnitInstance pui : processingUnit) {
+    int instanceState=(Integer)pui.getStatistics().getMonitors().get("USM").getMonitors().get(CloudifyConstants.USM_MONITORS_STATE_ID);
+    if (CloudifyConstants.USMState.values()[instanceState].equals(CloudifyConstants.USMState.RUNNING)) {
+      puiInstanceCounter++;
+    }
+  }
+  return puiInstanceCounter;
+}

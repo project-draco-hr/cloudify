@@ -1,0 +1,6 @@
+{
+  if (curser >= this.eventsList.size() || curser < 0) {
+    return null;
+  }
+  return eventsList.subList(curser,eventsList.size());
+}

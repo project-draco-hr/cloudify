@@ -1,0 +1,8 @@
+{
+  this.isServiceInstall=true;
+  this.serviceNames=new LinkedHashMap<String,Integer>();
+  this.serviceNames.put(serviceName,plannedNumberOfInstances);
+  this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
+  this.pollingInterval=DEFAULT_POLLING_INTERVAL;
+  this.endTime=System.currentTimeMillis() + timeunit.toMillis(timeout);
+}
