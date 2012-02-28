@@ -1,7 +1,7 @@
 {
   String result=null;
   try {
-    result=client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
+    result=(String)client.postFile(SERVICE_CONTROLLER_URL + CLOUD_CONTROLLER_URL + "deploy?"+ "applicationName="+ applicationName,packedFile);
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());

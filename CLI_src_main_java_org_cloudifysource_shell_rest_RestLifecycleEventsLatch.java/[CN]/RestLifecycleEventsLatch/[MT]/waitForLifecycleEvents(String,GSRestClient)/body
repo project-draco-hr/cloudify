@@ -1,0 +1,26 @@
+{
+  int cursor=0;
+  boolean isDone=false;
+  String url;
+  Boolean timedOut=false;
+  Map<String,Object> lifecycleEventLogs=null;
+  while (!isDone) {
+    url="/service/lifecycleEventContainerID/" + serviceLifecycleEventContainerID + "/cursor/"+ cursor;
+    try {
+      lifecycleEventLogs=(Map<String,Object>)client.get(url);
+    }
+ catch (    final ErrorStatusException e) {
+      throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+    }
+    List<String> events=(List<String>)lifecycleEventLogs.get(CloudifyConstants.LIFECYCLE_LOGS);
+    cursor=(Integer)lifecycleEventLogs.get(CloudifyConstants.CURSOR_POS);
+    isDone=(Boolean)lifecycleEventLogs.get(CloudifyConstants.IS_TASK_DONE);
+    timedOut=(Boolean)lifecycleEventLogs.get(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION);
+    printProgressEventMessages(events);
+    if (timedOut) {
+      throw new TimeoutException(this.timeoutMessage);
+    }
+    Thread.sleep(pollingInterval);
+  }
+  System.out.print(Ansi.ansi().cursorLeft(this.progressCounter).eraseLine());
+}

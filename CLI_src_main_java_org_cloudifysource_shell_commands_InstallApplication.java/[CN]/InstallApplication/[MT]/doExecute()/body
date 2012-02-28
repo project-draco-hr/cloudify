@@ -21,25 +21,17 @@
     }
   }
   logger.info("Uploading application " + applicationName);
-  String serviceOrder=adminFacade.installApplication(zipFile,applicationName);
+  Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,timeoutInMinutes);
+  String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
+  String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   if (!applicationFile.isFile()) {
     zipFile.delete();
   }
   if (serviceOrder.charAt(0) != '[' && serviceOrder.charAt(serviceOrder.length() - 1) != ']') {
     throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);
   }
-  if (serviceOrder.length() > 2) {
-    serviceOrder=serviceOrder.substring(1,serviceOrder.length() - 1);
-    logger.fine("Services will be installed in the following order: " + serviceOrder);
-    printApplicationInfo(application);
-    for (    final String serviceName : serviceOrder.split(Pattern.quote(","))) {
-      final String trimmedServiceName=serviceName.trim();
-      final Service service=getServiceByName(application,trimmedServiceName);
-      final int plannedNumberOfInstances=service.getNumInstances();
-      adminFacade.waitForServiceInstances(trimmedServiceName,applicationName,plannedNumberOfInstances,TIMEOUT_ERROR_MESSAGE,timeoutInMinutes,TimeUnit.MINUTES);
-      logger.info(MessageFormat.format(messages.getString("service_install_ended"),trimmedServiceName));
-    }
-  }
+  printApplicationInfo(application);
+  ((RestAdminFacade)adminFacade).waitForLifecycleEvents(pollingID,TIMEOUT_ERROR_MESSAGE);
   session.put(Constants.ACTIVE_APP,applicationName);
   GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
   return this.getFormattedMessage("application_installed_succesfully",Color.GREEN,applicationName);

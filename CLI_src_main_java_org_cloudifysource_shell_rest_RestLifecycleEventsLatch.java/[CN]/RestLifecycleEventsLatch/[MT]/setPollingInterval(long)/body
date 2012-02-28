@@ -1,0 +1,7 @@
+{
+  if (!(pollingIntervalInMillis < MIN_POLLING_INTERVAL)) {
+    this.pollingInterval=pollingIntervalInMillis;
+  }
+ else {
+  }
+}
