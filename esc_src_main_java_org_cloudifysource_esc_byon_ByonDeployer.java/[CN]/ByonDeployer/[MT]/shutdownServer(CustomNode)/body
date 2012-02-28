@@ -1,0 +1,5 @@
+{
+  ((CustomNodeImpl)node).setGroup(null);
+  allocatedNodesPool.remove(node);
+  freeNodesPool.add(node);
+}

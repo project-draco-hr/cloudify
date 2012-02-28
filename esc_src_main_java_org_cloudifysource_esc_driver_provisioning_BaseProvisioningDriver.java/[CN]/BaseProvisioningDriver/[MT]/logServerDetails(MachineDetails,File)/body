@@ -1,0 +1,13 @@
+{
+  if (logger.isLoggable(Level.INFO)) {
+    final String nodePrefix="[" + machineDetails.getMachineId() + "] ";
+    logger.fine(nodePrefix + "Cloud Server was allocated.");
+    if (tempFile == null) {
+      logger.fine(nodePrefix + "Password: ***");
+    }
+ else {
+      logger.fine(nodePrefix + "Key File: " + tempFile.getAbsolutePath());
+    }
+    logger.fine(nodePrefix + (machineDetails.isUsePrivateAddress() ? "Using Private IP: " : "Using Public IP: ") + machineDetails.getIp());
+  }
+}

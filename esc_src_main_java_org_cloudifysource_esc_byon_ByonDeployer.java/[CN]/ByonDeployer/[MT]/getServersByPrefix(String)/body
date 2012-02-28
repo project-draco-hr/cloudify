@@ -1,0 +1,13 @@
+{
+  java.util.logging.Logger logger=java.util.logging.Logger.getLogger(ByonDeployer.class.getName());
+  logger.info("ByonDeployer: in getServersByPrefix " + prefix);
+  logger.info("ByonDeployer: size of allocatedNodesPool: " + allocatedNodesPool.size());
+  final Set<CustomNode> matchingNodes=new HashSet<CustomNode>();
+  for (  final CustomNode node : allocatedNodesPool) {
+    logger.info("Found node named: " + node.getNodeName());
+    if (node.getNodeName().startsWith(prefix)) {
+      matchingNodes.add(node);
+    }
+  }
+  return matchingNodes;
+}

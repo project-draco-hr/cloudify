@@ -1,0 +1,3 @@
+{
+  freeNodesPool.addAll(parseCloudNodes(nodesList));
+}

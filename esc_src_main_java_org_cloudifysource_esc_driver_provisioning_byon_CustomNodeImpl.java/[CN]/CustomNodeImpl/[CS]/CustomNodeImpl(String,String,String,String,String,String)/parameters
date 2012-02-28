@@ -1,0 +1,6 @@
+String providerId
+String id
+String ipAddress
+String username
+String credential
+String nodeName

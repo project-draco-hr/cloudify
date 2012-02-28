@@ -1,0 +1,20 @@
+{
+  int intValue;
+  if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) {
+    if (roundIfNeeded) {
+      if (longValue < Integer.MIN_VALUE) {
+        intValue=Integer.MIN_VALUE;
+      }
+ else {
+        intValue=Integer.MAX_VALUE;
+      }
+    }
+ else {
+      throw new IllegalArgumentException(longValue + " cannot be cast to int without changing its value.");
+    }
+  }
+ else {
+    intValue=(int)longValue;
+  }
+  return intValue;
+}

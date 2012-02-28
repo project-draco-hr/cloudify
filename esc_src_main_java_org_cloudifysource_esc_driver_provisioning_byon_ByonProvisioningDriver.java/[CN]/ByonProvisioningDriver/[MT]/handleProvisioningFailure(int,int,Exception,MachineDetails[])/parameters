@@ -1,0 +1,4 @@
+int numberOfManagementMachines
+int numberOfErrors
+Exception firstCreationException
+MachineDetails[] createdManagementMachines

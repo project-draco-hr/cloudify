@@ -1,0 +1,6 @@
+{
+  this(nodeMetadata.getProviderId(),nodeMetadata.getId(),nodeMetadata.getPrivateAddresses().iterator().next(),nodeMetadata.getCredentials().identity,nodeMetadata.getCredentials().credential,nodeMetadata.getName());
+  if (StringUtils.isNotBlank(nodeMetadata.getGroup())) {
+    setGroup(nodeMetadata.getGroup());
+  }
+}

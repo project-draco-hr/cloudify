@@ -1,0 +1,19 @@
+{
+  final MachineDetails md=new MachineDetails();
+  md.setAgentRunning(false);
+  md.setCloudifyInstalled(false);
+  md.setInstallationDirectory(null);
+  md.setMachineId(node.getId());
+  md.setPrivateAddress(node.getPrivateIP());
+  md.setPublicAddress(node.getPublicIP());
+  md.setUsePrivateAddress(true);
+  if (!StringUtils.isBlank(node.getUsername()) && !StringUtils.isBlank(node.getCredential())) {
+    md.setRemoteUsername(node.getUsername());
+    md.setRemotePassword(node.getCredential());
+  }
+ else {
+    md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
+    md.setRemotePassword(cloud.getConfiguration().getRemotePassword());
+  }
+  return md;
+}

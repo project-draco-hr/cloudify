@@ -1,0 +1,7 @@
+{
+  final Set<CustomNode> cloudNodes=new HashSet<CustomNode>();
+  for (  Map<String,String> nodeMap : nodesMapList) {
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID),nodeMap.get(CLOUD_NODE_IP),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID)));
+  }
+  return cloudNodes;
+}

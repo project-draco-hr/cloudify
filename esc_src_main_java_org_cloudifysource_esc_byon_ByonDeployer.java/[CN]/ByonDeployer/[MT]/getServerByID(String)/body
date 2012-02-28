@@ -1,0 +1,10 @@
+{
+  CustomNode selectedNode=null;
+  for (  final CustomNode node : allocatedNodesPool) {
+    if (node.getId().equalsIgnoreCase(id)) {
+      selectedNode=node;
+      break;
+    }
+  }
+  return selectedNode;
+}

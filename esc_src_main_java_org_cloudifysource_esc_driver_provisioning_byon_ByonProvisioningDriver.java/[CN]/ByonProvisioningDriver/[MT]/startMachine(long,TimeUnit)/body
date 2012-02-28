@@ -1,0 +1,14 @@
+{
+  logger.info(this.getClass().getName() + ": startMachine, management mode: " + management);
+  try {
+    Set<String> ipAddresses=admin.getMachines().getHostsByAddress().keySet();
+    deployer.setAllocated(ipAddresses);
+    logger.info("Verifying the active machines are not in the free pool (active machines: " + Arrays.toString(ipAddresses.toArray()) + ")");
+    final String name=createNewServerName();
+    logger.info("Starting a new cloud machine with name: " + name);
+    return createServer(System.currentTimeMillis() + unit.toMillis(timeout),name);
+  }
+ catch (  final Exception e) {
+    throw new CloudProvisioningException("Failed to start cloud machine",e);
+  }
+}

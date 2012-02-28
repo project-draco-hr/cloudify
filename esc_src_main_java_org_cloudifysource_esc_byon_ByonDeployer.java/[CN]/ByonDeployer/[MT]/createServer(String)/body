@@ -1,0 +1,14 @@
+{
+  CustomNode node=null;
+  if (org.apache.commons.lang.StringUtils.isBlank(name)) {
+    throw new InstallerException("Failed to start cloud node, server name is missing");
+  }
+  if (freeNodesPool.size() == 0) {
+    throw new InstallerException("Failed to create new cloud node, all nodes are currently used");
+  }
+  node=freeNodesPool.iterator().next();
+  freeNodesPool.remove(node);
+  allocatedNodesPool.add(node);
+  ((CustomNodeImpl)node).setNodeName(name);
+  return node;
+}

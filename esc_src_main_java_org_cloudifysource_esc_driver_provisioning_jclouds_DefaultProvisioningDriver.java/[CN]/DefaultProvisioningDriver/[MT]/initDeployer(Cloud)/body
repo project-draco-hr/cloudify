@@ -1,11 +1,10 @@
 {
   try {
-    String jcloudsUniqueId="UNIQUE_JCLOUDS_DEPLOYER_ID";
-    this.deployer=(JCloudsDeployer)context.getOrCreate(jcloudsUniqueId,new Callable<Object>(){
+    this.deployer=(JCloudsDeployer)context.getOrCreate("UNIQUE_JCLOUDS_DEPLOYER_ID",new Callable<Object>(){
       @Override public Object call() throws Exception {
-        logger.fine("Creating jclouds context deployer with user: " + cloud.getUser().getUser());
-        CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
-        Properties props=new Properties();
+        logger.info("Creating JClouds context deployer with user: " + cloud.getUser().getUser());
+        final CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+        final Properties props=new Properties();
         props.putAll(cloudTemplate.getOverrides());
         deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
         deployer.setImageId(cloudTemplate.getImageId());

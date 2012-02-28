@@ -1,0 +1,19 @@
+{
+  String serverName=null;
+  int attempts=0;
+  boolean foundFreeName=false;
+  while (attempts < MAX_SERVERS_LIMIT) {
+    counter=(counter + 1) % MAX_SERVERS_LIMIT;
+    ++attempts;
+    serverName=serverNamePrefix + this.counter;
+    final CustomNode existingNode=deployer.getServerByID(serverName);
+    if (existingNode == null) {
+      foundFreeName=true;
+      break;
+    }
+  }
+  if (!foundFreeName) {
+    throw new CloudProvisioningException("Number of servers has exceeded allowed server limit (" + MAX_SERVERS_LIMIT + ")");
+  }
+  return serverName;
+}

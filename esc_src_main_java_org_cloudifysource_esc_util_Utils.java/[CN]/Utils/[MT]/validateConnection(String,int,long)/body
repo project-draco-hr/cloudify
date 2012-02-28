@@ -1,0 +1,21 @@
+{
+  final Socket socket=new Socket();
+  try {
+    final InetSocketAddress endPoint=new InetSocketAddress(ipAddress,port);
+    if (endPoint.isUnresolved()) {
+      throw new IllegalArgumentException("Failed to connect to: " + ipAddress + ":"+ port+ ", address could not be resolved.");
+    }
+ else {
+      socket.connect(endPoint,Utils.safeLongToInt(timeout,true));
+    }
+  }
+  finally {
+    if (socket != null) {
+      try {
+        socket.close();
+      }
+ catch (      final IOException ioe) {
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  final String machineName=createNewMachineName();
-  logger.fine("Starting a new cloud machines with group: " + machineName);
-  return createServer(end,machineName);
+  final String groupName=createNewServerName();
+  logger.info("Starting a new cloud server with group: " + groupName);
+  return createServer(end,groupName);
 }

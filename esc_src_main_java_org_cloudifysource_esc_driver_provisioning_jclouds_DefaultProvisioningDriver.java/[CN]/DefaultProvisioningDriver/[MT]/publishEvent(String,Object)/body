@@ -1,5 +1,0 @@
-{
-  for (  final ProvisioningDriverListener listner : this.eventsListenersList) {
-    listner.onProvisioningEvent(eventName,args);
-  }
-}

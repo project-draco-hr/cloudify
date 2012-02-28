@@ -1,0 +1,16 @@
+{
+  try {
+    deployer=(ByonDeployer)context.getOrCreate("UNIQUE_BYON_DEPLOYER_ID",new Callable<Object>(){
+      @Override public Object call() throws Exception {
+        logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
+        final List<Map<String,String>> nodesList=(List<Map<String,String>>)cloud.getCustom().get(CLOUD_NODES_POOL);
+        return new ByonDeployer(nodesList);
+      }
+    }
+);
+  }
+ catch (  final Exception e) {
+    publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
+    throw new IllegalStateException("Failed to create cloud Deployer",e);
+  }
+}

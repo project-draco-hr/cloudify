@@ -1,0 +1,5 @@
+{
+  freeNodesPool.remove(node);
+  allocatedNodesPool.remove(node);
+  invalidNodesPool.add(node);
+}

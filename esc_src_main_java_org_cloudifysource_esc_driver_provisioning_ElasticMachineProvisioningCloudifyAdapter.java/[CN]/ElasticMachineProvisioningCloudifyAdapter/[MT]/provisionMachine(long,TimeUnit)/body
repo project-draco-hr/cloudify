@@ -1,6 +1,7 @@
 {
   MachineDetails machineDetails;
   try {
+    cloudifyProvisioning.setAdmin(admin);
     machineDetails=cloudifyProvisioning.startMachine(duration,unit);
   }
  catch (  final CloudProvisioningException e) {

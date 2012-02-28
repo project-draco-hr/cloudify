@@ -1,0 +1,33 @@
+{
+  File tempFile=null;
+  if (org.apache.commons.lang.StringUtils.isBlank(machineDetails.getRemotePassword())) {
+    if (cloud.getUser().getKeyFile() == null || cloud.getUser().getKeyFile().length() == 0) {
+      logger.fine("No key file specified in cloud configuration");
+      if (cloud.getConfiguration().getRemotePassword() == null) {
+        logger.severe("No Password or key file specified in cloud configuration - connection to the new machine is not possible.");
+        throw new CloudProvisioningException("No credentials (password or key file) supplied with the cloud configuration file");
+      }
+      machineDetails.setRemotePassword(cloud.getConfiguration().getRemotePassword());
+    }
+ else {
+      tempFile=new File(cloud.getUser().getKeyFile());
+    }
+  }
+ else   if (CredentialUtils.isPrivateKeyCredential(machineDetails.getRemotePassword())) {
+    logger.fine("Cloud has provided a key file remote connections to new machine");
+    try {
+      tempFile=File.createTempFile("gs-esm-key",".pem");
+      FileUtils.write(tempFile,machineDetails.getRemotePassword());
+      cloud.getUser().setKeyFile(tempFile.getAbsolutePath());
+    }
+ catch (    final IOException e) {
+      throw new CloudProvisioningException("Failed to create a temporary file for cloud server's key file",e);
+    }
+  }
+ else {
+    logger.fine("Cloud has provided a password for remote connections to new machine");
+    cloud.getConfiguration().setRemotePassword(machineDetails.getRemotePassword());
+  }
+  final File keyFile=tempFile;
+  logServerDetails(machineDetails,keyFile);
+}

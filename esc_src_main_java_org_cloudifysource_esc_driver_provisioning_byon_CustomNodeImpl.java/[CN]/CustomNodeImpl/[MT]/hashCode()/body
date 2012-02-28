@@ -1,0 +1,12 @@
+{
+  final int prime=31;
+  int result=super.hashCode();
+  result=prime * result + getLoginPort();
+  result=prime * result + (getPrivateIP() == null ? 0 : getPrivateIP().hashCode());
+  result=prime * result + (getPublicIP() == null ? 0 : getPublicIP().hashCode());
+  result=prime * result + (providerId == null ? 0 : providerId.hashCode());
+  result=prime * result + (nodeName == null ? 0 : nodeName.hashCode());
+  result=prime * result + (group == null ? 0 : group.hashCode());
+  result=prime * result + (username == null ? 0 : username.hashCode());
+  return result;
+}
