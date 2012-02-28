@@ -13,5 +13,5 @@
   reqEntity.addPart("props",propsFile);
   final HttpPost httppost=new HttpPost(getFullUrl(relativeUrl));
   httppost.setEntity(reqEntity);
-  return (String)executeHttpMethod(httppost);
+  return executeHttpMethod(httppost);
 }
