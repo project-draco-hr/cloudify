@@ -1,4 +1,4 @@
 {
-  Logger sshLogger=Logger.getLogger(SSH_LOGGER_NAME);
+  final Logger sshLogger=Logger.getLogger(SSH_LOGGER_NAME);
   com.jcraft.jsch.JSch.setLogger(new JschJdkLogger(sshLogger));
 }

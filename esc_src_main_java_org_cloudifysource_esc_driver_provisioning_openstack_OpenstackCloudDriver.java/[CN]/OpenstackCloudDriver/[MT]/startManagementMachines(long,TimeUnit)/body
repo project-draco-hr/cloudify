@@ -1,0 +1,12 @@
+{
+  final String token=createAuthenticationToken();
+  final long endTime=calcEndTimeInMillis(duration,unit);
+  final int numOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+  final ExecutorService executor=Executors.newFixedThreadPool(cloud.getProvider().getNumberOfManagementMachines());
+  try {
+    return doStartManagement(endTime,token,numOfManagementMachines,executor);
+  }
+  finally {
+    executor.shutdown();
+  }
+}

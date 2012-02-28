@@ -2,7 +2,7 @@
   logger.info("Cloudify Adapter is starting a new machine");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
-  MachineDetails machineDetails=provisionMachine(duration,unit);
+  final MachineDetails machineDetails=provisionMachine(duration,unit);
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
   try {
     checkForProvisioningTimeout(end,machineDetails);
@@ -16,22 +16,25 @@
  else {
       machineIp=machineDetails.getPublicAddress();
     }
+    if (machineIp == null) {
+      throw new IllegalArgumentException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
+    }
     logger.info("Cloudify adapter is waiting for GSA to become available");
-    GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
+    final GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
     if (gsa == null) {
-      throw new TimeoutException("New machine was provisioned and Cloudify was installed, but a GSA was not discovered on the new machine: " + machineDetails);
+      throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
     return gsa;
   }
- catch (  ElasticMachineProvisioningException e) {
+ catch (  final ElasticMachineProvisioningException e) {
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
-catch (  TimeoutException e) {
+catch (  final TimeoutException e) {
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
-catch (  InterruptedException e) {
+catch (  final InterruptedException e) {
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }

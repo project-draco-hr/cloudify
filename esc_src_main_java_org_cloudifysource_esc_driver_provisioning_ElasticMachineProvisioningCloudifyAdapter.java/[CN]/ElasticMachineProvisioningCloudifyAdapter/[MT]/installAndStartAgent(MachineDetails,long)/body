@@ -4,7 +4,7 @@
   try {
     installationDetails=createInstallationDetails(cloud,machineDetails);
   }
- catch (  FileNotFoundException e) {
+ catch (  final FileNotFoundException e) {
     throw new ElasticMachineProvisioningException("Failed to create installation details for agent: " + e.getMessage(),e);
   }
   logger.info("Starting agentless installation process on started machine with installation details: " + installationDetails);
@@ -12,7 +12,7 @@
   try {
     installer.installOnMachineWithIP(installationDetails,remainingTimeTill(end),TimeUnit.MILLISECONDS);
   }
- catch (  InstallerException e) {
+ catch (  final InstallerException e) {
     throw new ElasticMachineProvisioningException("Failed to install Cloudify Agent on newly provisioned machine: " + e.getMessage(),e);
   }
 }

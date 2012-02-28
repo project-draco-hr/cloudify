@@ -1,0 +1,9 @@
+{
+  final List<Node> nodes=listServers(token);
+  for (  final Node node : nodes) {
+    if (node.getPrivateIp() != null && node.getPrivateIp().equals(serverIp) || node.getPublicIp() != null && node.getPublicIp().equals(serverIp)) {
+      return node;
+    }
+  }
+  return null;
+}

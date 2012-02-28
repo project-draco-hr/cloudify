@@ -3,7 +3,7 @@
   try {
     machineDetails=cloudifyProvisioning.startMachine(duration,unit);
   }
- catch (  CloudProvisioningException e) {
+ catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to start machine: " + e.getMessage());
   }
   if (machineDetails == null) {

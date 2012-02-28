@@ -1,0 +1,45 @@
+{
+  final MachineDetails md=new MachineDetails();
+  final String serverName=this.serverNamePrefix + System.currentTimeMillis();
+  final String securityGroup=getCustomTemplateValue(serverTemplate,HP_SECURITYGROUP,null,false);
+  final String keyPairName=getCustomTemplateValue(serverTemplate,HP_KEY_PAIR,null,false);
+  final String json="{\"server\":{ \"name\":\"" + serverName + "\",\"imageRef\":\""+ serverTemplate.getImageId()+ "\",\"flavorRef\":\""+ serverTemplate.getHardwareId()+ "\",\"key_name\":\""+ keyPairName+ "\",\"security_groups\":[{\"name\":\""+ securityGroup+ "\"}]}}";
+  String serverBootResponse=null;
+  try {
+    serverBootResponse=service.path(this.pathPrefix + "servers").header("Content-Type","application/json").header("X-Auth-Token",token).accept(MediaType.APPLICATION_XML).post(String.class,json);
+  }
+ catch (  final UniformInterfaceException e) {
+    throw new IllegalStateException(e);
+  }
+  final Document doc=documentBuilder.parse(new InputSource(new StringReader(serverBootResponse)));
+  final String status=xpath.evaluate("/server/@status",doc);
+  if (!status.startsWith("BUILD")) {
+    throw new IllegalStateException("Expected server status of BUILD(*), got: " + status);
+  }
+  final String serverId=xpath.evaluate("/server/@id",doc);
+  try {
+    waitForServerToReachStatus(md,endTime,serverId,token,"ACTIVE");
+    final String allocateIp=(String)serverTemplate.getOptions().get(HP_ALLOCATE_FLOATING_IP);
+    if (allocateIp == null || Boolean.parseBoolean(allocateIp)) {
+      final String floatingIp=allocateFloatingIP(token);
+      addFloatingIP(String.valueOf(serverId),floatingIp,token);
+      md.setPublicAddress(floatingIp);
+    }
+    md.setMachineId(serverId);
+    md.setAgentRunning(false);
+    md.setCloudifyInstalled(false);
+    md.setInstallationDirectory(cloud.getProvider().getRemoteDirectory());
+    md.setRemoteUsername("root");
+    return md;
+  }
+ catch (  final Exception e) {
+    logger.log(Level.WARNING,"server: " + serverId + " failed to start up correctly. "+ "Shutting it down. Error was: "+ e.getMessage(),e);
+    try {
+      terminateServer(serverId,token,endTime);
+    }
+ catch (    final Exception e2) {
+      logger.log(Level.WARNING,"Error while shutting down failed machine: " + serverId + ". Error was: "+ e.getMessage()+ ".It may be leaking.",e);
+    }
+    throw e;
+  }
+}

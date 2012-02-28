@@ -6,7 +6,7 @@
     logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownResult);
     return shutdownResult;
   }
- catch (  CloudProvisioningException e) {
+ catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed with error: "+ e.getMessage(),e);
   }
 }

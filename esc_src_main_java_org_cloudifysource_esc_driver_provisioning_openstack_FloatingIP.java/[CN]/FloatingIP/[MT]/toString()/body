@@ -1,0 +1,3 @@
+{
+  return "FloatingIP [id=" + getId() + ", ip="+ getIp()+ ", instanceId="+ getInstanceId()+ ", fixedIp="+ getFixedIp()+ "]";
+}

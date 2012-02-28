@@ -1,5 +1,5 @@
 {
-  for (  AgentlessInstallerListener listner : this.eventsListenersList) {
+  for (  final AgentlessInstallerListener listner : this.eventsListenersList) {
     listner.onInstallerEvent(eventName,args);
   }
 }

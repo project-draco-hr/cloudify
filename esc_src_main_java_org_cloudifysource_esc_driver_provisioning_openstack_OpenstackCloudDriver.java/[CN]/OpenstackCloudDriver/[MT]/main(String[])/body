@@ -1,0 +1,11 @@
+{
+  final OpenstackCloudDriver cd=new OpenstackCloudDriver();
+  final DSLReader reader=new DSLReader();
+  reader.setDslFile(new File("D:/Gigaspaces/gigaspaces-cloudify-2.0.1-m1/tools/cli/plugins/esc/hp/hp-cloud.groovy"));
+  reader.setCreateServiceContext(false);
+  final Cloud cloud=reader.readDslEntity(Cloud.class);
+  cd.setConfig(cloud,"SMALL_LINUX_32",true);
+  final String token=cd.createAuthenticationToken();
+  final List<FloatingIP> ips=cd.listFloatingIPs(token);
+  System.out.println(ips);
+}

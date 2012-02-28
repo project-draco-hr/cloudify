@@ -1,7 +1,7 @@
 {
-  LookupLocator[] locators=this.admin.getLocators();
-  StringBuilder sb=new StringBuilder();
-  for (  LookupLocator lookupLocator : locators) {
+  final LookupLocator[] locators=this.admin.getLocators();
+  final StringBuilder sb=new StringBuilder();
+  for (  final LookupLocator lookupLocator : locators) {
     sb.append(lookupLocator.getHost()).append(":").append(lookupLocator.getPort()).append(",");
   }
   if (sb.toString().length() > 0) {

@@ -14,21 +14,21 @@
       this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplate,false);
       if (cloudifyProvisioning instanceof ProvisioningDriverClassContextAware) {
-        ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
-        ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)cloudifyProvisioning;
+        final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
+        final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)cloudifyProvisioning;
         contextAware.setProvisioningDriverClassContext(provisioningDriverContext);
       }
     }
- catch (    ClassNotFoundException e) {
+ catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
     }
-catch (    Exception e) {
+catch (    final Exception e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName(),e);
     }
     this.lookupLocatorsString=createLocatorsString();
     logger.info("Locators string used for new instances will be: " + this.lookupLocatorsString);
   }
- catch (  DSLException e) {
+ catch (  final DSLException e) {
     logger.severe("Could not parse the provided cloud configuration: " + cloudContents + ": "+ e.getMessage());
     throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudContents + ": "+ e.getMessage());
   }

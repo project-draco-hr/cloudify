@@ -1,0 +1,14 @@
+{
+  final String respone=null;
+  while (true) {
+    if (System.currentTimeMillis() > endTime) {
+      throw new TimeoutException("timeout creating server. last status:" + respone);
+    }
+    Thread.sleep(SERVER_POLLING_INTERVAL_MILLIS);
+    final Node node=this.getNode(serverId,token);
+    if (node.getStatus().equalsIgnoreCase(status)) {
+      md.setPrivateAddress(node.getPrivateIp());
+      break;
+    }
+  }
+}

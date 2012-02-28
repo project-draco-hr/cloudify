@@ -1,0 +1,14 @@
+{
+  final String value=(String)serverTemplate.getOptions().get(key);
+  if (value == null) {
+    if (allowNull) {
+      return defaultValue;
+    }
+ else {
+      throw new IllegalArgumentException("Template option '" + key + "' must be set");
+    }
+  }
+ else {
+    return value;
+  }
+}

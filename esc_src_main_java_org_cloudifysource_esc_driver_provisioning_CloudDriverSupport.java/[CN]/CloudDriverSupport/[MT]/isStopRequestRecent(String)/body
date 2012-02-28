@@ -1,0 +1,9 @@
+{
+  final Long previousRequest=stoppingMachines.get(ip);
+  if (previousRequest != null && System.currentTimeMillis() - previousRequest < MULTIPLE_SHUTDOWN_REQUEST_IGNORE_TIMEOUT) {
+    logger.fine("Machine " + ip + " is already stopping. Ignoring this shutdown request");
+    return true;
+  }
+  stoppingMachines.put(ip,System.currentTimeMillis());
+  return false;
+}

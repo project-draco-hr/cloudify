@@ -1,14 +1,14 @@
 {
-  long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
   if (details.getLocator() == null) {
     details.setLocator(details.getPrivateIp());
   }
   logger.fine("Executing agentless installer with the following details:\n" + details.toString());
-  String sshIpAddress=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
+  final String sshIpAddress=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
   publishEvent("attempting_to_access_vm_with_ssh",details.getPublicIp());
   checkConnection(sshIpAddress,SSH_PORT,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   try {
-    Set<String> excludedFiles=new HashSet<String>();
+    final Set<String> excludedFiles=new HashSet<String>();
     if (!details.isLus() && details.getManagementOnlyFiles() != null) {
       excludedFiles.addAll(Arrays.asList(details.getManagementOnlyFiles()));
     }
@@ -24,13 +24,13 @@ catch (  final IOException e) {
   if (remoteDirectory.endsWith("/")) {
     remoteDirectory=remoteDirectory.substring(0,remoteDirectory.length() - 1);
   }
-  String scriptPath=remoteDirectory + "/" + STARTUP_SCRIPT_NAME;
-  ShellCommandBuilder scb=new ShellCommandBuilder().exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.getPrivateIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVar(CLOUDIFY_LINK_ENV,details.getCloudifyUrl() != null ? ("\"" + details.getCloudifyUrl() + "\"") : "").exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
+  final String scriptPath=remoteDirectory + "/" + STARTUP_SCRIPT_NAME;
+  final ShellCommandBuilder scb=new ShellCommandBuilder().exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.getPrivateIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVar(CLOUDIFY_LINK_ENV,details.getCloudifyUrl() != null ? "\"" + details.getCloudifyUrl() + "\"" : "").exportVar(CLOUDIFY_OVERRIDES_LINK_ENV,details.getOverridesUrl() != null ? "\"" + details.getOverridesUrl() + "\"" : "").exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
   if (details.isLus()) {
     scb.exportVar(CLOUD_FILE,details.getRemoteDir() + "/" + details.getCloudFile().getName());
   }
   scb.chmodExecutable(scriptPath).call(scriptPath);
-  String command=scb.toString();
+  final String command=scb.toString();
   logger.fine("Calling startup script on target: " + sshIpAddress + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
   sshCommand(sshIpAddress,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   publishEvent("access_vm_with_ssh_success",details.getPublicIp());

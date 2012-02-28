@@ -6,7 +6,7 @@
   details.setZones(StringUtils.join(cloud.getProvider().getZones().toArray(new String[0]),",",0,cloud.getProvider().getZones().size()));
   if (cloud.getUser().getKeyFile() != null) {
     logger.info("Key file has been specified in cloud configuration: " + cloud.getUser().getKeyFile());
-    File keyFile=new File(cloud.getProvider().getLocalDirectory(),cloud.getUser().getKeyFile());
+    final File keyFile=new File(cloud.getProvider().getLocalDirectory(),cloud.getUser().getKeyFile());
     if (keyFile.exists()) {
       details.setKeyFile(keyFile.getAbsolutePath());
       logger.info("Using key file: " + keyFile);
@@ -20,6 +20,7 @@
   details.setLocator(this.lookupLocatorsString);
   details.setLus(false);
   details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  details.setOverridesUrl(cloud.getProvider().getCloudifyOverridesUrl());
   details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   details.setAdmin(this.admin);
   details.setUsername(md.getRemoteUsername());
