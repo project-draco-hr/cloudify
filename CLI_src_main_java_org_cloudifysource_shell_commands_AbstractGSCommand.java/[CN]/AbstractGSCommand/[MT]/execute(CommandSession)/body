@@ -28,7 +28,12 @@ catch (  final CLIException e) {
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }
 catch (  final Throwable e) {
-    logger.log(Level.SEVERE,"",e);
+    if (verbose) {
+      logger.log(Level.SEVERE,"",e);
+    }
+ else {
+      logger.log(Level.SEVERE,e.getMessage());
+    }
     raiseCloseShellExceptionIfNonInteractive(session,e);
   }
   return getFormattedMessage("op_failed",Color.RED,"");
