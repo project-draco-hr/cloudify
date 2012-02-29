@@ -12,7 +12,7 @@
     if (!force) {
       throw new CLIStatusException(e,"failed_to_access_rest_before_teardown");
     }
-    String errorMessage="Failed to fetch the currently deployed applications list." + " Continuing teardown-localcloud.";
+    final String errorMessage="Failed to fetch the currently deployed applications list." + " Continuing teardown-localcloud.";
     if (verbose) {
       logger.log(Level.INFO,errorMessage,e);
     }
@@ -31,7 +31,7 @@
       }
     }
  catch (    final CLIException e) {
-      String errorMessage="Application " + appName + " faild to uninstall."+ " Continuing teardown-localcloud.";
+      final String errorMessage="Application " + appName + " faild to uninstall."+ " Continuing teardown-localcloud.";
       if (!force) {
         throw new CLIStatusException(e,"failed_to_uninstall_app_before_teardown",appName);
       }

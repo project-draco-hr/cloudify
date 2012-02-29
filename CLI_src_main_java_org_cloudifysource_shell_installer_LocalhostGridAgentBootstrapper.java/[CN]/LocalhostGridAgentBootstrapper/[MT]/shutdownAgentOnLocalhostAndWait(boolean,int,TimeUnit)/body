@@ -1,4 +1,4 @@
 {
   setDefaultNicAddress();
-  return shutdownAgentOnLocalhostAndWaitInternal(false,force,timeout,timeunit);
+  shutdownAgentOnLocalhostAndWaitInternal(false,force,timeout,timeunit);
 }

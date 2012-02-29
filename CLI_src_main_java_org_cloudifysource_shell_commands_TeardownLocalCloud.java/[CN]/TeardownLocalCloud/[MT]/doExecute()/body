@@ -6,6 +6,6 @@
   installer.setProgressInSeconds(10);
   installer.setForce(force);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-  TeardownCloudResults result=installer.teardownLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-  return result.getDescription();
+  installer.teardownLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  return getFormattedMessage("agent_terminated_successfully");
 }
