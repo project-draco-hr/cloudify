@@ -1,6 +1,6 @@
 {
   try {
-    this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),5,TimeUnit.MINUTES);
+    this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
   }
  catch (  final Exception e) {
     logger.log(Level.SEVERE,"Machine Provisioning failed. " + "An error was encountered while trying to shutdown the new machine ( " + machineDetails.toString() + "). Error was: "+ e.getMessage(),e);

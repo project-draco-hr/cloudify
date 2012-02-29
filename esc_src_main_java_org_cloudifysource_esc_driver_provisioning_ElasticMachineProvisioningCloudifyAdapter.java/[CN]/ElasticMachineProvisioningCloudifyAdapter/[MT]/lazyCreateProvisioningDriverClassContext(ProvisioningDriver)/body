@@ -1,10 +1,10 @@
 {
   final String cloudDriverUniqueId=cloudifyProvisioning.getClass().getName();
-synchronized (PROVISIONING_DRIVER_CONTEXT_PER_CLOUD_DRIVER_CLASSNAME) {
-    if (!PROVISIONING_DRIVER_CONTEXT_PER_CLOUD_DRIVER_CLASSNAME.containsKey(cloudDriverUniqueId)) {
-      PROVISIONING_DRIVER_CONTEXT_PER_CLOUD_DRIVER_CLASSNAME.put(cloudDriverUniqueId,new DefaultProvisioningDriverClassContext());
+synchronized (PROVISIONING_DRIVER_CONTEXT_PER_DRIVER_CLASSNAME) {
+    if (!PROVISIONING_DRIVER_CONTEXT_PER_DRIVER_CLASSNAME.containsKey(cloudDriverUniqueId)) {
+      PROVISIONING_DRIVER_CONTEXT_PER_DRIVER_CLASSNAME.put(cloudDriverUniqueId,new DefaultProvisioningDriverClassContext());
     }
   }
-  final ProvisioningDriverClassContext provisioningDriverContext=PROVISIONING_DRIVER_CONTEXT_PER_CLOUD_DRIVER_CLASSNAME.get(cloudDriverUniqueId);
+  final ProvisioningDriverClassContext provisioningDriverContext=PROVISIONING_DRIVER_CONTEXT_PER_DRIVER_CLASSNAME.get(cloudDriverUniqueId);
   return provisioningDriverContext;
 }
