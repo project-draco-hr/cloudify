@@ -1,5 +1,5 @@
 {
-  for (  String serverId : serverIds) {
+  for (  final String serverId : serverIds) {
     final Node node=getNode(serverId,token);
     if (node.getPublicIp() != null) {
       detachFloatingIP(serverId,node.getPublicIp(),token);
@@ -13,13 +13,13 @@
     }
   }
   int successCounter=0;
-  for (  String serverId : serverIds) {
+  for (  final String serverId : serverIds) {
     while (System.currentTimeMillis() < endTime) {
       try {
-        Node n=this.getNode(serverId,token);
+        this.getNode(serverId,token);
       }
- catch (      UniformInterfaceException e) {
-        if (e.getResponse().getStatus() == 404) {
+ catch (      final UniformInterfaceException e) {
+        if (e.getResponse().getStatus() == HTTP_NOT_FOUND) {
           ++successCounter;
           break;
         }

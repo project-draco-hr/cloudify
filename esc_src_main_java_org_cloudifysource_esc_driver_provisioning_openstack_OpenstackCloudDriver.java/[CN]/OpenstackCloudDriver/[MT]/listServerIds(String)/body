@@ -12,6 +12,15 @@
     return ids;
   }
  catch (  final UniformInterfaceException e) {
-    throw new IOException(e);
+    throw new OpenstackException(e);
+  }
+catch (  SAXException e) {
+    throw new OpenstackException("Failed to parse XML Response from server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
+  }
+catch (  XPathException e) {
+    throw new OpenstackException("Failed to parse XML Response from server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
+  }
+catch (  IOException e) {
+    throw new OpenstackException("Failed to send request to server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
   }
 }

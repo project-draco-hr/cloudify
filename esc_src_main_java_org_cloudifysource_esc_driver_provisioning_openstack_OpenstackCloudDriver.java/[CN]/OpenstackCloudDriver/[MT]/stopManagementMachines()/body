@@ -5,13 +5,7 @@
   try {
     nodes=listServers(token);
   }
- catch (  final XPathExpressionException e) {
-    throw new CloudProvisioningException(e);
-  }
-catch (  final SAXException e) {
-    throw new CloudProvisioningException(e);
-  }
-catch (  final IOException e) {
+ catch (  final OpenstackException e) {
     throw new CloudProvisioningException(e);
   }
   final List<String> ids=new LinkedList<String>();
@@ -28,10 +22,10 @@ catch (  final IOException e) {
   try {
     terminateServers(ids,token,endTime);
   }
- catch (  TimeoutException e) {
+ catch (  final TimeoutException e) {
     throw e;
   }
-catch (  Exception e) {
+catch (  final Exception e) {
     throw new CloudProvisioningException("Failed to shut down managememnt machines",e);
   }
 }
