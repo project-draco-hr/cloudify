@@ -10,6 +10,7 @@ case ERROR:
 return logger.isLoggable(Level.SEVERE);
 case FATAL:
 return logger.isLoggable(Level.SEVERE);
-}
+default :
 return false;
+}
 }

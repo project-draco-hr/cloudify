@@ -1,16 +1,23 @@
 {
   final long end=System.currentTimeMillis() + unit.toMillis(timeout);
-  final InetSocketAddress addr=new InetSocketAddress(ip,port);
-  logger.fine("Checking connection to: " + addr);
+  InetSocketAddress socketAddress=null;
+  try {
+    final InetAddress inetAddress=InetAddress.getByName(ip);
+    socketAddress=new InetSocketAddress(inetAddress,port);
+  }
+ catch (  final UnknownHostException e) {
+    throw new InstallerException("Failed to resolve installation target: " + ip,e);
+  }
+  logger.fine("Checking connection to: " + socketAddress);
   while (System.currentTimeMillis() + CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS < end) {
     Thread.sleep(CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS);
     final Socket sock=new Socket();
     try {
-      sock.connect(addr,CONNECTION_TEST_SOCKET_CONNECT_TIMEOUT_MILLIS);
+      sock.connect(socketAddress,CONNECTION_TEST_SOCKET_CONNECT_TIMEOUT_MILLIS);
       return;
     }
  catch (    final IOException e) {
-      logger.log(Level.FINE,"Checking connection to: " + addr,e);
+      logger.log(Level.FINE,"Checking connection to: " + socketAddress,e);
     }
  finally {
       if (sock != null) {

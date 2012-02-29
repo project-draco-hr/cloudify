@@ -1,5 +1,5 @@
 {
-  InstallationDetails result=new InstallationDetails();
+  final InstallationDetails result=new InstallationDetails();
   ReflectionUtils.shallowCopyFieldState(this,result);
   return result;
 }
