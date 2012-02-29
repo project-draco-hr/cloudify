@@ -1,5 +1,5 @@
 {
-  if (admin.getGridServiceManagers().getSize() == 0) {
+  if (admin.getGridServiceManagers().isEmpty()) {
     throw new AdminException("Cannot locate Grid Service Manager");
   }
   return admin.getGridServiceManagers().iterator().next();
