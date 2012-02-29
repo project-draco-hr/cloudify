@@ -5,6 +5,7 @@
     return clusterName + "_" + this.instanceId+ "_"+ username+ "@"+ InetAddress.getLocalHost().getHostName();
   }
  catch (  UnknownHostException e) {
-    throw new IllegalStateException("Failed to get localhost name",e);
+    logger.log(Level.WARNING,"Failed to resolve localhost name - this usually indicates a problem with the OS configuration",e);
+    return clusterName + "_" + this.instanceId+ "_"+ username+ "@127.0.0.1";
   }
 }
