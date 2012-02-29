@@ -1,3 +1,15 @@
 {
-  return adminFacade.getServicesList(getCurrentApplicationName());
+  List<String> services=null;
+  try {
+    services=adminFacade.getServicesList(getCurrentApplicationName());
+  }
+ catch (  final CLIStatusException e) {
+    if (getCurrentApplicationName().equalsIgnoreCase(CloudifyConstants.DEFAULT_APPLICATION_NAME) && CloudifyConstants.ERR_REASON_CODE_FAILED_TO_LOCATE_APP.equalsIgnoreCase(e.getReasonCode())) {
+      services=new ArrayList<String>();
+    }
+ else {
+      throw e;
+    }
+  }
+  return services;
 }
