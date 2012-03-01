@@ -1,13 +1,7 @@
 {
   final long end=System.currentTimeMillis() + unit.toMillis(timeout);
-  InetSocketAddress socketAddress=null;
-  try {
-    final InetAddress inetAddress=InetAddress.getByName(ip);
-    socketAddress=new InetSocketAddress(inetAddress,port);
-  }
- catch (  final UnknownHostException e) {
-    throw new InstallerException("Failed to resolve installation target: " + ip,e);
-  }
+  final InetAddress inetAddress=waitForRoute(ip,Math.min(end,System.currentTimeMillis() + DEFAULT_ROUTE_RESOLUTION_TIMEOUT));
+  final InetSocketAddress socketAddress=new InetSocketAddress(inetAddress,port);
   logger.fine("Checking connection to: " + socketAddress);
   while (System.currentTimeMillis() + CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS < end) {
     Thread.sleep(CONNECTION_TEST_SLEEP_BEFORE_RETRY_MILLIS);
