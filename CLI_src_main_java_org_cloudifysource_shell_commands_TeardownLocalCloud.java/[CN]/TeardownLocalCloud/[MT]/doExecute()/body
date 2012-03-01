@@ -3,7 +3,7 @@
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
   installer.setNicAddress(nicAddress);
-  installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
+  installer.setProgressInSeconds(10);
   installer.setForce(force);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.teardownLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
