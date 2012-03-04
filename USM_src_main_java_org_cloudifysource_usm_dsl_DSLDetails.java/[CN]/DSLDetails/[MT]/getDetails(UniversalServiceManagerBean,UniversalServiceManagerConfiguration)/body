@@ -1,6 +1,7 @@
 {
-  Service service=((DSLConfiguration)config).getService();
-  HashMap<String,Object> map=new HashMap<String,Object>();
-  map.put("icon",service.getIcon());
+  final Service service=((DSLConfiguration)config).getService();
+  final HashMap<String,Object> map=new HashMap<String,Object>();
+  map.put(CloudifyConstants.USM_DETAILS_ICON,service.getIcon());
+  map.put(CloudifyConstants.USM_DETAILS_URL,service.getUrl());
   return map;
 }
