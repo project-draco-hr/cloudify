@@ -12,6 +12,7 @@
         logger.finer("Zone " + absolutePuName + " does not exist");
         continue;
       }
+      int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
       final String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,absolutePuName);
       final LogEntryMatcher matcher=regex(regex);
       int numberOfServiceInstances=0;
@@ -29,13 +30,13 @@
         this.lifecycleEventsContainer.addLifecycleEvents(servicesLifecycleEventDetailes);
         numberOfServiceInstances=getNumberOfServiceInstances(absolutePuName);
         if (numberOfServiceInstances == 0) {
-          this.lifecycleEventsContainer.addInstanceCountEvent("Deploying " + serviceName + " with "+ this.serviceNames.get(serviceName)+ " planned instances.");
+          this.lifecycleEventsContainer.addInstanceCountEvent("Deploying " + serviceName + " with "+ plannedNumberOfInstances+ " planned instances.");
         }
  else {
-          this.lifecycleEventsContainer.addInstanceCountEvent("[" + ServiceUtils.getApplicationServiceName(absolutePuName,this.applicationName) + "] "+ "Deployed "+ numberOfServiceInstances+ " of "+ this.serviceNames.get(serviceName));
+          this.lifecycleEventsContainer.addInstanceCountEvent("[" + ServiceUtils.getApplicationServiceName(absolutePuName,this.applicationName) + "] "+ "Deployed "+ numberOfServiceInstances+ " of "+ plannedNumberOfInstances);
         }
       }
-      if (this.serviceNames.get(serviceName) == numberOfServiceInstances) {
+      if (plannedNumberOfInstances == numberOfServiceInstances) {
         if (!isServiceInstall) {
           this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" successfully installed ("+ numberOfServiceInstances+ " Instances)");
         }
