@@ -2,7 +2,7 @@
   initUniqueFileName();
   initCustomProperties();
   this.myPid=this.sigar.getPid();
-  boolean existingProcessFound=checkForPIDFile();
+  final boolean existingProcessFound=checkForPIDFile();
   initEvents();
   reset(existingProcessFound);
 }

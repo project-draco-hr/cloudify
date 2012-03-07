@@ -11,10 +11,10 @@
   try {
     writePidToFile(this.actualProcessID);
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new USMException("Failed to write Process ID: " + this.actualProcessID + " to file: "+ getPidFile(),e);
   }
-  ((DSLConfiguration)this.usmLifecycleBean.getConfiguration()).getServiceContext().setExternalProcessId(this.actualProcessID);
+  ((DSLConfiguration)this.getUsmLifecycleBean().getConfiguration()).getServiceContext().setExternalProcessId(this.actualProcessID);
   try {
     logProcessDetails();
   }

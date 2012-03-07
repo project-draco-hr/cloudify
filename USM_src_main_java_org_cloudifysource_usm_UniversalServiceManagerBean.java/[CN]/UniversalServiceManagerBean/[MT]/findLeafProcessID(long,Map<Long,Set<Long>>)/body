@@ -1,6 +1,6 @@
 {
   final Set<Long> pids=procTree.get(parentProcessID);
-  if ((pids == null) || pids.isEmpty()) {
+  if (pids == null || pids.isEmpty()) {
     return parentProcessID;
   }
   final long pid=pids.iterator().next();

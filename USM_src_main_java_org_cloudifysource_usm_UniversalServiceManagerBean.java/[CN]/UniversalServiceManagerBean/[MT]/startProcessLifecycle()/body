@@ -1,8 +1,8 @@
 {
   if (this.instanceId == 1) {
-    usmLifecycleBean.firePreServiceStart();
+    getUsmLifecycleBean().firePreServiceStart();
   }
-  usmLifecycleBean.fireInit();
+  getUsmLifecycleBean().fireInit();
   logger.info("start lifecycle. async = " + this.asyncInstall);
   if (this.asyncInstall) {
     if (USMUtils.isRunningInGSC(this.applicationContext)) {

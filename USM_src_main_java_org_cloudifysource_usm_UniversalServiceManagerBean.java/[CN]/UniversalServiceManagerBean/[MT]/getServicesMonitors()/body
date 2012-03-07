@@ -2,17 +2,17 @@
   logger.fine("Executing getServiceMonitors()");
   final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   final ServiceMonitors[] res=new ServiceMonitors[]{csm};
-  USMState currentState=getState();
+  final USMState currentState=getState();
   if (!currentState.equals(USMState.RUNNING)) {
     csm.getMonitors().put(CloudifyConstants.USM_MONITORS_STATE_ID,currentState.ordinal());
     return res;
   }
   final Map<String,Object> map=csm.getMonitors();
   putDefaultMonitorsInMap(map);
-  for (  final Monitor monitor : usmLifecycleBean.getMonitors()) {
+  for (  final Monitor monitor : getUsmLifecycleBean().getMonitors()) {
     try {
       logger.fine("Executing monitor: " + monitor);
-      Map<String,Number> monitorValues=monitor.getMonitorValues(this,usmLifecycleBean.getConfiguration());
+      final Map<String,Number> monitorValues=monitor.getMonitorValues(this,getUsmLifecycleBean().getConfiguration());
       removeNonSerializableObjectsFromMap(monitorValues);
       map.putAll(monitorValues);
     }

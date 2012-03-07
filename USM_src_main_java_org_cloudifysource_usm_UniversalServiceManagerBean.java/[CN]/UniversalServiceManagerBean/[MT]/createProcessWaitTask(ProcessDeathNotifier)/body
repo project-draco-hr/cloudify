@@ -7,7 +7,7 @@
         logger.info("Process death detected by Synchronous Death Detector");
         notifier.processDeathDetected();
       }
- catch (      InterruptedException e) {
+ catch (      final InterruptedException e) {
         logger.warning("The thread waiting for the underlying process to end has been interruped!");
       }
     }

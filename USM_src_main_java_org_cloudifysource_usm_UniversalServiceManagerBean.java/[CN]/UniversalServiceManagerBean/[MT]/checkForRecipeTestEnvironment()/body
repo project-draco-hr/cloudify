@@ -1,9 +1,9 @@
 {
-  String timeoutValue=System.getProperty("com.gs.usm.RecipeShutdownTimeout");
+  final String timeoutValue=System.getProperty("com.gs.usm.RecipeShutdownTimeout");
   if (timeoutValue == null) {
     return;
   }
-  int timeout=Integer.parseInt(timeoutValue);
+  final int timeout=Integer.parseInt(timeoutValue);
   logger.info("USM is running in Test mode. USM will shut down in: " + timeout + " seconds");
   this.executors.schedule(new TestRecipeShutdownRunnable(this.applicationContext,this),timeout,TimeUnit.SECONDS);
 }

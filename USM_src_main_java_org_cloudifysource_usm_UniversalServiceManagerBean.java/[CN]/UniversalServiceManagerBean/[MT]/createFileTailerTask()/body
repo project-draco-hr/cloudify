@@ -1,9 +1,9 @@
 {
   final String filePattern=createUniqueFileName() + "(" + OUTPUT_FILE_NAME_SUFFIX+ "|"+ ERROR_FILE_NAME_SUFFFIX+ ")";
-  final Logger outputLogger=Logger.getLogger(usmLifecycleBean.getOutputReaderLoggerName());
-  final Logger errorLogger=Logger.getLogger(usmLifecycleBean.getErrorReaderLoggerName());
+  final Logger outputLogger=Logger.getLogger(getUsmLifecycleBean().getOutputReaderLoggerName());
+  final Logger errorLogger=Logger.getLogger(getUsmLifecycleBean().getErrorReaderLoggerName());
   logger.info("Creating tailer for dir: " + getLogsDir() + ", with regex: "+ filePattern);
-  RollingFileAppenderTailer tailer=new RollingFileAppenderTailer(getLogsDir(),filePattern,new LineHandler(){
+  final RollingFileAppenderTailer tailer=new RollingFileAppenderTailer(getLogsDir(),filePattern,new LineHandler(){
     @Override public void handleLine(    final String fileName,    final String line){
       if (fileName.endsWith(".out")) {
         outputLogger.info(line);

@@ -6,9 +6,9 @@
     logger.info("Starting Synchronous Process Death Detection");
     executors.submit(createProcessWaitTask(notifier));
   }
-  Runnable task=new Runnable(){
+  final Runnable task=new Runnable(){
     @Override public void run(){
-      final boolean serviceIsStopped=usmLifecycleBean.runStopDetection();
+      final boolean serviceIsStopped=getUsmLifecycleBean().runStopDetection();
       if (serviceIsStopped) {
         notifier.processDeathDetected();
       }

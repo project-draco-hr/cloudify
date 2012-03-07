@@ -2,12 +2,12 @@
   if (map == null || map.keySet().isEmpty()) {
     return;
   }
-  Iterator<?> entries=map.entrySet().iterator();
+  final Iterator<?> entries=map.entrySet().iterator();
   while (entries.hasNext()) {
-    Entry<?,?> entry=(Entry<?,?>)entries.next();
+    final Entry<?,?> entry=(Entry<?,?>)entries.next();
     if (!(entry.getValue() instanceof java.io.Serializable) || entry.getValue() instanceof Closure<?>) {
-      logger.info("Entry " + entry.getKey() + " is not serializable and was not inserted to the monitors map");
-      map.remove(entry.getKey());
+      logger.info("Entry " + entry.getKey() + " is not serializable and was not inserted to "+ "the monitors map");
+      entries.remove();
     }
   }
 }

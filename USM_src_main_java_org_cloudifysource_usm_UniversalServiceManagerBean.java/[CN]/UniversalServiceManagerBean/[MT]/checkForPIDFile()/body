@@ -1,18 +1,18 @@
 {
-  File file=getPidFile();
+  final File file=getPidFile();
   if (file.exists()) {
     String pidString;
     try {
       pidString=FileUtils.readFileToString(file);
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       throw new USMException("Failed to read pid file contents from file: " + file,e);
     }
     long pid=0;
     try {
       pid=Long.parseLong(pidString);
     }
- catch (    NumberFormatException nfe) {
+ catch (    final NumberFormatException nfe) {
       throw new USMException("The contents of the PID file: " + file + " cannot be parsed to a long value: "+ pidString+ ". Check the file contents and delete the file before retrying.",nfe);
     }
     if (USMUtils.isProcessAlive(pid)) {

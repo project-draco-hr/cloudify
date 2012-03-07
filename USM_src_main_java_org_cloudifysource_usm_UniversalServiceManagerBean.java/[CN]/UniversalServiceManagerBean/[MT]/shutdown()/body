@@ -12,9 +12,9 @@ synchronized (this.stateMutex) {
       deleteExtDirContents();
     }
     try {
-      usmLifecycleBean.fireShutdown();
+      getUsmLifecycleBean().fireShutdown();
     }
- catch (    USMException e) {
+ catch (    final USMException e) {
       logger.log(Level.SEVERE,"Failed to execute shutdown event: " + e.getMessage(),e);
     }
     USMUtils.shutdownAdmin();

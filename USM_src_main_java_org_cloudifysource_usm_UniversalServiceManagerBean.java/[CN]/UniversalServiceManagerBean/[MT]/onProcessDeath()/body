@@ -1,14 +1,14 @@
 {
   logger.info("Detected death of underlying process");
-  usmLifecycleBean.externalProcessDied();
+  getUsmLifecycleBean().externalProcessDied();
 synchronized (this.stateMutex) {
     if (this.state != USMState.RUNNING) {
       return;
     }
     try {
-      usmLifecycleBean.firePostStop(StopReason.PROCESS_FAILURE);
+      getUsmLifecycleBean().firePostStop(StopReason.PROCESS_FAILURE);
     }
- catch (    Exception e) {
+ catch (    final Exception e) {
       logger.log(Level.SEVERE,"The Post Stop event failed to execute after an anexpected failure of the process: " + e.getMessage(),e);
     }
     this.executors.shutdownNow();
@@ -31,7 +31,7 @@ synchronized (this.stateMutex) {
           logger.severe("Marking this USM as failed so it will be recycled by GSM");
           markUSMAsFailed(e);
         }
-catch (        TimeoutException e) {
+catch (        final TimeoutException e) {
           e.printStackTrace();
         }
       }

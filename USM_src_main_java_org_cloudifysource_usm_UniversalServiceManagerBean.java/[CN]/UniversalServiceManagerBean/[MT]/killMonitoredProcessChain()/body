@@ -9,7 +9,7 @@
   logger.info("Killing child processes in chain: " + list);
   for (  final Long pid : list) {
     if (USMUtils.isProcessAlive(pid)) {
-      usmLifecycleBean.getProcessKiller().killProcess(pid);
+      getUsmLifecycleBean().getProcessKiller().killProcess(pid);
     }
  else {
       logger.info("Process: " + pid + " is dead.");
