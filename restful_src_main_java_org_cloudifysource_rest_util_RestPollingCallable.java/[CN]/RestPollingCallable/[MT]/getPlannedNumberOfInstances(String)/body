@@ -4,8 +4,8 @@
   if (processingUnit != null) {
     Map<String,String> elasticProperties=((DefaultProcessingUnit)processingUnit).getElasticProperties();
     if (elasticProperties.containsKey("schema")) {
-      String ClusterSchemaValue=elasticProperties.get("schema");
-      if ("partitioned-sync2backup".equals(ClusterSchemaValue)) {
+      String clusterSchemaValue=elasticProperties.get("schema");
+      if ("partitioned-sync2backup".equals(clusterSchemaValue)) {
         return processingUnit.getTotalNumberOfInstances();
       }
     }

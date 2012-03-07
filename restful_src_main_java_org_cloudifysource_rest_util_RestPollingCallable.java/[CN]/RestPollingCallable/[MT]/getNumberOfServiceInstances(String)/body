@@ -4,7 +4,7 @@
     if (processingUnit.getType().equals(ProcessingUnitType.UNIVERSAL)) {
       return getNumberOfUSMServicesWithRunningState(absolutePuName);
     }
-    return admin.getProcessingUnits().getProcessingUnit(absolutePuName).getNumberOfInstances();
+    return admin.getProcessingUnits().getProcessingUnit(absolutePuName).getInstances().length;
   }
   return 0;
 }
