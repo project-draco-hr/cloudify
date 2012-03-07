@@ -1,4 +1,4 @@
 {
-  String value=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(contextPropertyKey);
+  final String value=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(contextPropertyKey);
   return value;
 }

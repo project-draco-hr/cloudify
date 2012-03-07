@@ -1,0 +1,29 @@
+{
+  HttpURLConnection connection=null;
+  try {
+    try {
+      connection=(HttpURLConnection)new URL(url).openConnection();
+    }
+ catch (    final MalformedURLException e) {
+      throw new IllegalArgumentException("Failed to parse url: " + url,e);
+    }
+    try {
+      connection.setRequestMethod("GET");
+    }
+ catch (    final ProtocolException e) {
+      throw new IllegalArgumentException(e);
+    }
+    connection.setConnectTimeout(connectTimeout);
+    connection.setReadTimeout(readTimeout);
+    final int responseCode=connection.getResponseCode();
+    return responseCode;
+  }
+ catch (  final IOException ioe) {
+    return HTTP_ERROR;
+  }
+ finally {
+    if (connection != null) {
+      connection.disconnect();
+    }
+  }
+}

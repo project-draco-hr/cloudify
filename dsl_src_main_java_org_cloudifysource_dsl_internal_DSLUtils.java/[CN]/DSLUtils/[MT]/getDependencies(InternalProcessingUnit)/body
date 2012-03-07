@@ -1,5 +1,5 @@
 {
-  String dependencies=getContextPropertyValue(processingUnit,CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON);
+  final String dependencies=getContextPropertyValue(processingUnit,CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON);
   if (dependencies == null) {
     return "";
   }

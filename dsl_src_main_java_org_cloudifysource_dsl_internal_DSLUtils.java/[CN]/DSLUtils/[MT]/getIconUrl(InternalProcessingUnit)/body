@@ -1,5 +1,5 @@
 {
-  String iconUrlStr=getContextPropertyValue(processingUnit,CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON);
+  final String iconUrlStr=getContextPropertyValue(processingUnit,CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON);
   if (iconUrlStr == null) {
     return "";
   }
