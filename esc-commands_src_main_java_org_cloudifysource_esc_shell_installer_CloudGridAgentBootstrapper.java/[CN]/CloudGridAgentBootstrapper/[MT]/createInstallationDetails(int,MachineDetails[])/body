@@ -9,6 +9,7 @@
     installationDetails.setPrivateIp(machine.getPrivateAddress());
     installationDetails.setPublicIp(machine.getPublicAddress());
     installationDetails.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
+    installationDetails.setBindToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
     installationDetails.setCloudFile(this.cloudFile);
     details[i]=installationDetails;
   }
