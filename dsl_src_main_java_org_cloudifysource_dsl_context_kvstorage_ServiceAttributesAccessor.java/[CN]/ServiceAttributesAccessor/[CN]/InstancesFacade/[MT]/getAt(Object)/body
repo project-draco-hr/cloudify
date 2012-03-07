@@ -2,6 +2,6 @@
   if (!(key instanceof Integer)) {
     throw new IllegalArgumentException("key must be integer and represent service instance id");
   }
-  Integer instanceId=(Integer)key;
+  final Integer instanceId=(Integer)key;
   return new InstanceAttributesAccessor(attributesFacade,applicationName,serviceName,instanceId);
 }

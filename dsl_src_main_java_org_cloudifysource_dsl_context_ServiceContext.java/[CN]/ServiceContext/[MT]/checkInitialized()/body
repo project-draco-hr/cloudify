@@ -1,5 +1,5 @@
 {
   if (!this.initialized) {
-    throw new IllegalStateException("The Service Context has not been initialized yet. It can only be used after the Service file has been fully evaluated");
+    throw new IllegalStateException("The Service Context has not been initialized yet. " + "It can only be used after the Service file has been fully evaluated");
   }
 }
