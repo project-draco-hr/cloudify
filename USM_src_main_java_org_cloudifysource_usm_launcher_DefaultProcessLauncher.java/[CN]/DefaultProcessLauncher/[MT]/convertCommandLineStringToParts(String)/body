@@ -1,7 +1,7 @@
 {
-  List<String> list=new LinkedList<String>();
-  String[] parts=commandLine.split(" ");
-  for (  String part : parts) {
+  final List<String> list=new LinkedList<String>();
+  final String[] parts=commandLine.split(" ");
+  for (  final String part : parts) {
     list.add(part);
   }
   return list;

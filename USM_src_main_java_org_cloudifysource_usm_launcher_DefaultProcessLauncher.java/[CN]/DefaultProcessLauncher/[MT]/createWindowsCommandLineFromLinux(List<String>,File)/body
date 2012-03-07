@@ -1,6 +1,6 @@
 {
   final AlternativeExecutableFileNameFilter filter=new AlternativeExecutableFileNameFilter(){
-    String prefix;
+    private String prefix;
     @Override public boolean accept(    final File dir,    final String name){
       return name.startsWith(prefix) && (name.endsWith(".bat") || name.endsWith(".exe"));
     }

@@ -1,5 +1,5 @@
 {
-  for (  Integer port : this.portList) {
+  for (  final Integer port : this.portList) {
     if (ServiceUtils.isPortOccupied(port)) {
       throw new IllegalStateException("The Port Liveness Detector found that port " + port + " is IN USE before the process was launched!");
     }

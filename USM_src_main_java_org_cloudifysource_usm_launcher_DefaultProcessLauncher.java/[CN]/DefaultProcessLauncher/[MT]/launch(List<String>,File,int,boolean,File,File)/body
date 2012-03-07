@@ -1,8 +1,8 @@
 {
-  if (((outputFile == null) && (errorFile != null)) || ((outputFile != null) && (errorFile == null))) {
+  if (outputFile == null && errorFile != null || outputFile != null && errorFile == null) {
     throw new IllegalArgumentException("Both output and error files must be set, or none of them");
   }
-  if (redirectErrorStream && ((outputFile != null) || (errorFile != null))) {
+  if (redirectErrorStream && (outputFile != null || errorFile != null)) {
     throw new IllegalArgumentException("If redirectError option is chosen, neither output file or error file can be set");
   }
   modifyCommandLine(commandLineParams,workingDir,outputFile,errorFile);
@@ -10,7 +10,7 @@
   this.commandLine=commandLineParams;
   int attempt=1;
   USMException ex=null;
-  while (attempt <= (retries + 1)) {
+  while (attempt <= retries + 1) {
     final ProcessBuilder pb=new ProcessBuilder(commandLineParams);
     pb.directory(workingDir);
     pb.redirectErrorStream(redirectErrorStream);

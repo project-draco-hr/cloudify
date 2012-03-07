@@ -1,8 +1,8 @@
 {
-  List<String> paramsList=new ArrayList<String>();
+  final List<String> paramsList=new ArrayList<String>();
   int index=0;
   while (true) {
-    String param=(String)params.get(CloudifyConstants.INVOCATION_PARAMETERS_KEY + index);
+    final String param=(String)params.get(CloudifyConstants.INVOCATION_PARAMETERS_KEY + index);
     if (param != null) {
       paramsList.add(param);
     }

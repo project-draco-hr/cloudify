@@ -1,6 +1,6 @@
 {
   if (this.livenessDetectors.length == 0) {
-    logger.warning("No Start Detectors have been set for this service. This may cause the USM to monitor the parent of the actual process. Consider adding a start detector before going to production");
+    logger.warning("No Start Detectors have been set for this service. " + "This may cause the USM to monitor the parent of the actual process. " + "Consider adding a start detector before going to production");
   }
   final long startTime=System.currentTimeMillis();
   final long endTime=startTime + configuration.getStartDetectionTimeoutMSecs();
@@ -10,16 +10,16 @@
     while (System.currentTimeMillis() < endTime && currentTestIndex < this.livenessDetectors.length) {
       logger.info("Executing iteration of liveness detection test");
       if (!this.processIsRunning) {
-        logger.warning("While executing the Process Start Detection, process failure was detected. Aborting start detection test.");
+        logger.warning("While executing the Process Start Detection, process failure was detected. " + "Aborting start detection test.");
         return false;
       }
-      LivenessDetector detector=this.livenessDetectors[currentTestIndex];
+      final LivenessDetector detector=this.livenessDetectors[currentTestIndex];
       boolean testResult=false;
       try {
         testResult=detector.isProcessAlive();
         logger.info("Detection Test results are: " + testResult);
       }
- catch (      USMException e) {
+ catch (      final USMException e) {
         if (e.getCause() instanceof InterruptedException) {
           logger.info("A start detector failed due to an InterruptedException");
         }
@@ -34,7 +34,7 @@
         try {
           Thread.sleep(configuration.getStartDetectionIntervalMSecs());
         }
- catch (        InterruptedException ie) {
+ catch (        final InterruptedException ie) {
         }
       }
     }

@@ -1,8 +1,8 @@
 {
   final AlternativeExecutableFileNameFilter filter=new AlternativeExecutableFileNameFilter(){
-    String prefix;
+    private String prefix;
     @Override public boolean accept(    final File dir,    final String name){
-      return name.equals(prefix) || (name.startsWith(prefix) && name.endsWith(".sh"));
+      return name.equals(prefix) || name.startsWith(prefix) && name.endsWith(".sh");
     }
     @Override public void setPrefix(    final String prefix){
       this.prefix=prefix;

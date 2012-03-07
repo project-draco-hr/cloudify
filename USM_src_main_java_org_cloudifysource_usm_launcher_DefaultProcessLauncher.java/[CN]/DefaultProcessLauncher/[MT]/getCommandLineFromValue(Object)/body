@@ -3,7 +3,7 @@
     return convertCommandLineStringToParts((String)value);
   }
  else   if (value instanceof List<?>) {
-    @SuppressWarnings("unchecked") List<String> result=(List<String>)value;
+    @SuppressWarnings("unchecked") final List<String> result=(List<String>)value;
     return result;
   }
  else {

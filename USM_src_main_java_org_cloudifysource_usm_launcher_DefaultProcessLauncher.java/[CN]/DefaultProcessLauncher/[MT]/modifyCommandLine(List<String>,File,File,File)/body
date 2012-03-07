@@ -6,8 +6,8 @@
   modifyRedirectionCommandLine(commandLineParams,outputFile,errorFile);
   if (USMUtils.isLinuxOrUnix()) {
     logger.info("Command before shell modification: " + commandLineParams);
-    StringBuilder sb=new StringBuilder();
-    for (    String param : commandLineParams) {
+    final StringBuilder sb=new StringBuilder();
+    for (    final String param : commandLineParams) {
       sb.append(param).append(" ");
     }
     commandLineParams.clear();

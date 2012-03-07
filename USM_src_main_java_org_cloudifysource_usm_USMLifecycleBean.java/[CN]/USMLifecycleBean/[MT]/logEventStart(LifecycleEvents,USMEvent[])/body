@@ -1,5 +1,5 @@
 {
-  if ((event.equals(LifecycleEvents.SHUTDOWN)) || (isLoggableEvent(event,listeners))) {
+  if (event.equals(LifecycleEvents.SHUTDOWN) || isLoggableEvent(event,listeners)) {
     eventLogger.info(eventPrefix + event.toString() + " invoked");
   }
 }

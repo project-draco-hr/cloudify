@@ -7,12 +7,12 @@
     map.put("LOOKUPLOCATORS",locatorsProperty);
   }
   if (this.clusterInfo == null) {
-    logger.warning("ClusterInfo in Process Launcher is null. Child process will have missing environment variables");
+    logger.warning("ClusterInfo in Process Launcher is null. " + "Child process will have missing environment variables");
   }
  else {
     if (clusterInfo.getName() != null) {
       map.put(CloudifyConstants.USM_ENV_CLUSTER_NAME,clusterInfo.getName());
-      FullServiceName fullServiceName=ServiceUtils.getFullServiceName(clusterInfo.getName());
+      final FullServiceName fullServiceName=ServiceUtils.getFullServiceName(clusterInfo.getName());
       map.put(CloudifyConstants.USM_ENV_APPLICATION_NAME,fullServiceName.getApplicationName());
       map.put(CloudifyConstants.USM_ENV_SERVICE_NAME,fullServiceName.getServiceName());
     }

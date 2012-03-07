@@ -1,6 +1,6 @@
 {
   if (arg instanceof String) {
-    List<String> commandLineStringInParts=convertCommandLineStringToParts((String)arg);
+    final List<String> commandLineStringInParts=convertCommandLineStringToParts((String)arg);
     if (params != null) {
       commandLineStringInParts.addAll(params);
     }
@@ -25,9 +25,9 @@
     logger.severe("Could not create alternative command line: " + os);
   }
   if (arg instanceof List<?>) {
-    List<?> originalList=(List<?>)arg;
-    List<String> resultList=new ArrayList<String>(originalList.size());
-    for (    Object elem : originalList) {
+    final List<?> originalList=(List<?>)arg;
+    final List<String> resultList=new ArrayList<String>(originalList.size());
+    for (    final Object elem : originalList) {
       resultList.add(elem.toString());
     }
     return resultList;

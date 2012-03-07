@@ -1,12 +1,12 @@
 {
-  List<String> paramsList=getParamsListFromMap(params);
+  final List<String> paramsList=getParamsListFromMap(params);
   if (arg instanceof Closure<?>) {
     final Closure<?> closure=(Closure<?>)arg;
     try {
       if (logger.isLoggable(Level.FINE)) {
         logger.fine("Closure Parameters: " + paramsList.toString());
       }
-      Object result=closure.call(paramsList.toArray());
+      final Object result=closure.call(paramsList.toArray());
       return result;
     }
  catch (    final Exception e) {
@@ -17,7 +17,7 @@
   final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,paramsList);
   final BufferedReader reader=new BufferedReader(new InputStreamReader(proc.getInputStream()));
   String line=null;
-  StringBuilder sb=new StringBuilder();
+  final StringBuilder sb=new StringBuilder();
   final String newline=System.getProperty("line.separator");
   logger.info("Command Output:");
   try {
@@ -47,8 +47,8 @@
     logger.info("Command exited with value: " + exitValue);
     if (exitValue != 0) {
       logger.severe("Event lifecycle external process exited with abnormal status code: " + exitValue);
-      String result=sb.toString();
-      String exceptionReason=GroovyExceptionHandler.getExceptionString(result);
+      final String result=sb.toString();
+      final String exceptionReason=GroovyExceptionHandler.getExceptionString(result);
       logger.log(Level.SEVERE,"Event lifecycle external process failed: " + result);
       throw new USMException("Event lifecycle external process exited with abnormal status code: " + exitValue + " "+ exceptionReason);
     }

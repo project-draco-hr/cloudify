@@ -1,6 +1,6 @@
 {
   final String firstParam=commandLineParams.get(0);
-  if (firstParam.endsWith(".bat")) {
+  if (firstParam.endsWith(".bat") || firstParam.endsWith(".cmd")) {
     for (int i=0; i < WINDOWS_BATCH_FILE_PREFIX_PARAMS.length; i++) {
       commandLineParams.add(i,WINDOWS_BATCH_FILE_PREFIX_PARAMS[i]);
     }
