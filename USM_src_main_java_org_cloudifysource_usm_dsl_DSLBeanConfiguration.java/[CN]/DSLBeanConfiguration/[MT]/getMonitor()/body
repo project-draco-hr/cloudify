@@ -5,25 +5,25 @@
   }
   if (monitor instanceof Closure<?>) {
     return new Monitor(){
-      @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(      UniversalServiceManagerBean usm,      UniversalServiceManagerConfiguration config) throws MonitorException {
-        Object obj=((Closure<?>)monitor).call();
+      @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(      final UniversalServiceManagerBean usm,      final UniversalServiceManagerConfiguration config) throws MonitorException {
+        final Object obj=((Closure<?>)monitor).call();
         if (obj instanceof Map<?,?>) {
           return USMUtils.convertMapToNumericValues((Map<String,Object>)obj);
         }
  else {
-          throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! Received object was of type: " + obj.getClass().getName());
+          throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! " + "Received object was of type: " + obj.getClass().getName());
         }
       }
     }
 ;
   }
   return new Monitor(){
-    @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws MonitorException {
-      Map<String,Object> returnMap=new HashMap<String,Object>();
+    @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(    final UniversalServiceManagerBean usm,    final UniversalServiceManagerConfiguration config) throws MonitorException {
+      final Map<String,Object> returnMap=new HashMap<String,Object>();
       if (monitor instanceof Map<?,?>) {
-        for (        Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
-          Object object=entryObject.getValue();
-          EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+        for (        final Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
+          final Object object=entryObject.getValue();
+          final EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
           if (!result.isSuccess()) {
             logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
           }

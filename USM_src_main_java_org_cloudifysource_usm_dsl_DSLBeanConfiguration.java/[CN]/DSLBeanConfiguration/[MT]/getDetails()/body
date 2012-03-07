@@ -4,14 +4,14 @@
     return null;
   }
   return new Details(){
-    @SuppressWarnings("unchecked") @Override public Map<String,Object> getDetails(    UniversalServiceManagerBean usm,    UniversalServiceManagerConfiguration config) throws DetailsException {
+    @SuppressWarnings("unchecked") @Override public Map<String,Object> getDetails(    final UniversalServiceManagerBean usm,    final UniversalServiceManagerConfiguration config) throws DetailsException {
       try {
-        Map<String,Object> returnMap=new HashMap<String,Object>();
+        final Map<String,Object> returnMap=new HashMap<String,Object>();
         logger.fine("getting Details map from details closure");
         if (details instanceof Map<?,?>) {
-          for (          Map.Entry<String,Object> entry : ((Map<String,Object>)(details)).entrySet()) {
+          for (          final Map.Entry<String,Object> entry : ((Map<String,Object>)details).entrySet()) {
             if (entry.getValue() instanceof Closure) {
-              EventResult value=new DSLEntryExecutor(entry.getValue(),launcher,puExtDir).run();
+              final EventResult value=new DSLEntryExecutor(entry.getValue(),launcher,puExtDir).run();
               if (value.isSuccess()) {
                 returnMap.put(entry.getKey(),value.getResult());
               }
@@ -25,14 +25,14 @@
           }
         }
  else         if (details instanceof Closure) {
-          EventResult result=new DSLEntryExecutor(details,launcher,puExtDir).run();
+          final EventResult result=new DSLEntryExecutor(details,launcher,puExtDir).run();
           if (result.isSuccess()) {
             returnMap.putAll((Map<String,Object>)result.getResult());
           }
         }
         return returnMap;
       }
- catch (      Exception e) {
+ catch (      final Exception e) {
         return null;
       }
     }

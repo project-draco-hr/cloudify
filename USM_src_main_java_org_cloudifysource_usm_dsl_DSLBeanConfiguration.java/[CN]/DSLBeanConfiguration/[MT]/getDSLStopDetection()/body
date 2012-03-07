@@ -4,13 +4,13 @@
     return null;
   }
   return new StopDetector(){
-    @Override public void init(    UniversalServiceManagerBean usm){
+    @Override public void init(    final UniversalServiceManagerBean usm){
     }
     @Override public int getOrder(){
       return 5;
     }
     @Override public boolean isServiceStopped() throws USMException {
-      EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
+      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
       if (result.isSuccess()) {
         final Object retcode=result.getResult();
         if (retcode instanceof Boolean) {

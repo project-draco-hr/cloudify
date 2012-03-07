@@ -2,7 +2,7 @@
   if (!active) {
     return null;
   }
-  if ((typeToCheck == null) || (this.context.getBeanFactory().getBeansOfType(typeToCheck).size() == 0)) {
+  if (typeToCheck == null || this.context.getBeanFactory().getBeansOfType(typeToCheck).size() == 0) {
     return bean;
   }
   return null;

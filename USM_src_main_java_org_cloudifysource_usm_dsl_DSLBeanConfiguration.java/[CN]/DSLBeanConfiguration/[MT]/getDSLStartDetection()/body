@@ -5,7 +5,7 @@
   }
   return new LivenessDetector(){
     @Override public boolean isProcessAlive() throws USMException {
-      EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
+      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
       if (result.isSuccess()) {
         final Object retcode=result.getResult();
         if (retcode instanceof Boolean) {
@@ -19,7 +19,7 @@
         throw new USMException("A Liveness Detector failed to execute. Exception was: " + result.getException(),result.getException());
       }
     }
-    @Override public void init(    UniversalServiceManagerBean usm){
+    @Override public void init(    final UniversalServiceManagerBean usm){
     }
     @Override public int getOrder(){
       return 5;

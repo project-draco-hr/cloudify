@@ -3,10 +3,10 @@
     return EventResult.SUCCESS;
   }
   try {
-    Object result=launcher.launchProcess(entry,workDir,params);
+    final Object result=launcher.launchProcess(entry,workDir,params);
     return new EventResult(result);
   }
- catch (  USMException e) {
+ catch (  final USMException e) {
     logger.log(Level.SEVERE,"Failed to execute entry: " + entry,e);
     return new EventResult(e);
   }
