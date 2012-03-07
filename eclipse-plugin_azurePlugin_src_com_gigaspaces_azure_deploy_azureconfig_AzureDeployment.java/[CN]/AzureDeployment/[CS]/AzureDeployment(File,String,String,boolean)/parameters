@@ -1,4 +1,0 @@
-File azureConfigExeFile
-String subscriptionId
-String certificateThumbprint
-boolean verbose

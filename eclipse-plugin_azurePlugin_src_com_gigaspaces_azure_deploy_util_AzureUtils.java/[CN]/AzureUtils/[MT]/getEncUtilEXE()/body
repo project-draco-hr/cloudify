@@ -1,3 +1,0 @@
-{
-  return toAbsoluteFile(ENCUTIL_EXE);
-}

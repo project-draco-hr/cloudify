@@ -1,9 +1,0 @@
-{
-  if (composite == null) {
-    AzureServerWizardProperties.setDefaults();
-    return;
-  }
-  AzureServerWizardProperties.setJreLocation(composite.getJreLocation());
-  AzureServerWizardProperties.setWebServerPort(composite.getWebServerPort());
-  super.performFinish(monitor);
-}

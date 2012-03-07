@@ -1,6 +1,0 @@
-{
-  super.start(context);
-  plugin=this;
-  images.put(PROJECT_FOLDER_IMAGE,loadImage(ICONS_FOLDER + PROJECT_FOLDER_IMAGE));
-  images.put(ROLE_FOLDER_IMAGE,loadImage(ICONS_FOLDER + ROLE_FOLDER_IMAGE));
-}

@@ -1,3 +1,0 @@
-{
-  executeAzureConfig(argument(ADD_CERTIFICATE_FLAG),argument(HOSTED_SERVICE_FLAG,hostedServiceName),argument(CERTIFICATE_FILE_FLAG,certificateFile.getAbsolutePath()),argument(CERTIFICATE_FILE_PASSWORD_FLAG,certificateFilePassword));
-}

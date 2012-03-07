@@ -1,3 +1,0 @@
-{
-  super(azureConfigExeFile,encUtilExeFile,subscriptionId,certificateThumbprint,verbose);
-}

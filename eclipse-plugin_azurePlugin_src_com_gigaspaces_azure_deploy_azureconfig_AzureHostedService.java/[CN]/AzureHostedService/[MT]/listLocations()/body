@@ -1,3 +1,0 @@
-{
-  return executeAzureConfig(argument(LIST_LOCATIONS_FLAG)).split(Pattern.quote("\n"));
-}

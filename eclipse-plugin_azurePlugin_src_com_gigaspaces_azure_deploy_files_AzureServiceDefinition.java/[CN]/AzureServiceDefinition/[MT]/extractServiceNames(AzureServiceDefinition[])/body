@@ -1,7 +1,0 @@
-{
-  String[] serviceNames=new String[serviceDefinitions.length];
-  for (int i=0; i < serviceNames.length; i++) {
-    serviceNames[i]=serviceDefinitions[i].getServiceName();
-  }
-  return serviceNames;
-}

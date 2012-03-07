@@ -1,9 +1,0 @@
-{
-  String command="C:\\Program Files\\Windows Azure Emulator\\emulator\\dfui.exe";
-  try {
-    Runtime.getRuntime().exec(command);
-  }
- catch (  IOException e) {
-    e.printStackTrace();
-  }
-}

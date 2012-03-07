@@ -1,3 +1,0 @@
-{
-  createZipFile("webserver.zip","C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0");
-}

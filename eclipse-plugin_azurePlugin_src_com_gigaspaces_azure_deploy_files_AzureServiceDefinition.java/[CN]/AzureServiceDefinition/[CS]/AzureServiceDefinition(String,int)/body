@@ -1,3 +1,0 @@
-{
-  this(serviceName,numberOfInstances,0,0,false);
-}

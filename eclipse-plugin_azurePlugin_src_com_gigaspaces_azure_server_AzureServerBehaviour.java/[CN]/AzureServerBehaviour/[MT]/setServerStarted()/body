@@ -1,3 +1,0 @@
-{
-  setServerState(IServer.STATE_STARTED);
-}

@@ -1,5 +1,0 @@
-{
-  String output=executeAzureConfig(argument(GET_DEPLOYMENT_STATUS_FLAG),argument(HOSTED_SERVICE_FLAG,hostedService),argument(SLOT_FLAG,slot.getSlot()));
-  output=output.trim();
-  return AzureDeploymentStatus.fromString(output);
-}

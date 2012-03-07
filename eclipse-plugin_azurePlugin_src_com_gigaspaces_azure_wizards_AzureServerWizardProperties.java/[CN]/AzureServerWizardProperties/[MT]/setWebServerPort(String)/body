@@ -1,4 +1,0 @@
-{
-  if (webServerPort == null)   return;
-  AzureServerWizardProperties.webServerPort=Integer.parseInt(webServerPort);
-}

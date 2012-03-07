@@ -1,3 +1,0 @@
-{
-  return executeAzureConfig(argument(LIST_CERTIFICATES_FLAG),argument(HOSTED_SERVICE_FLAG,hostedServiceName)).split(Pattern.quote("\n"));
-}

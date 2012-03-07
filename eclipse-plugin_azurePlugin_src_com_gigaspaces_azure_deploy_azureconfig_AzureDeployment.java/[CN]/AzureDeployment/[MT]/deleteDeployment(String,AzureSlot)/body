@@ -1,3 +1,0 @@
-{
-  executeAzureConfig(argument(DELETE_DEPLOYMENT_FLAG),argument(HOSTED_SERVICE_FLAG,hostedServiceName),argument(SLOT_FLAG,deploymentSlot.getSlot()));
-}

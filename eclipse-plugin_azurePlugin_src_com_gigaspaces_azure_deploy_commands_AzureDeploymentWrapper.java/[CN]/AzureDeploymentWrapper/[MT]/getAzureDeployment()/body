@@ -1,3 +1,0 @@
-{
-  return new AzureDeployment(AzureUtils.getAzureConfigEXE(),subscriptionId,certificateThumbprint,verbose);
-}

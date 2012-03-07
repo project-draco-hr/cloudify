@@ -1,6 +1,0 @@
-{
-  IFile defFile=project.getFile("ServiceDefinition.csdef");
-  if (!defFile.exists())   return null;
-  File rolesDefFile=defFile.getLocation().toFile();
-  return parseServiceDefinitionFile(rolesDefFile);
-}

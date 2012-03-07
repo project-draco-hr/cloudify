@@ -1,3 +1,0 @@
-{
-  return "/ServiceConfiguration/Role[@name='" + roleName + "']/Instances/@count";
-}

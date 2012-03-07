@@ -1,3 +1,0 @@
-{
-  getAzureDeployment().deleteDeployment(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName));
-}

@@ -1,6 +1,0 @@
-{
-  System.out.println("replacing in " + startupFile + ","+ regex+ ","+ replacement);
-  String fileToString=FileUtils.readFileToString(startupFile);
-  String replacedString=fileToString.replaceFirst(regex,replacement);
-  FileUtils.writeStringToFile(startupFile,replacedString);
-}

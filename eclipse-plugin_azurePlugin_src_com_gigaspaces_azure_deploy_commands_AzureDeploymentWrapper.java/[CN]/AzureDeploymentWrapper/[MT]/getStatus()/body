@@ -1,3 +1,0 @@
-{
-  return getAzureDeployment().getDeploymentStatus(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName));
-}

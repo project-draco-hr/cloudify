@@ -1,3 +1,0 @@
-{
-  return "deploy/" + azurePackageName + "/roles/"+ workerRoleName+ "/approot/"+ webServerLocation+ "/webapps";
-}

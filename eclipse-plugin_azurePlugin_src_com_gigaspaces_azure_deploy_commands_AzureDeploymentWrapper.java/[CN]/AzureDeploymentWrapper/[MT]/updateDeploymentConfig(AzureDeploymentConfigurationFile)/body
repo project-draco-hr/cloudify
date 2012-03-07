@@ -1,3 +1,0 @@
-{
-  getAzureDeployment().updateDeploymentConfig(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName),configFile);
-}

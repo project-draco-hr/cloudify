@@ -1,3 +1,0 @@
-{
-  return "/ServiceDefinition/WorkerRole[@name='" + roleName + "']/Endpoints";
-}

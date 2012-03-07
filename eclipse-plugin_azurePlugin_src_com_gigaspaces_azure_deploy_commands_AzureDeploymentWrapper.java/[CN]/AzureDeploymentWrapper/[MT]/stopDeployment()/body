@@ -1,3 +1,0 @@
-{
-  getAzureDeployment().updateDeployment(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName),AzureDeploymentStatus.Suspended);
-}

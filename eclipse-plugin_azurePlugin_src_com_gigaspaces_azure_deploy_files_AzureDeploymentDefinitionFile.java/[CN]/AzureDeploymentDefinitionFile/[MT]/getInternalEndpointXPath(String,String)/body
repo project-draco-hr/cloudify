@@ -1,3 +1,0 @@
-{
-  return getEndpointsXPath(roleName) + "/InternalEndpoint[@name='" + internalEndpointName+ "']";
-}

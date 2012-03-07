@@ -1,5 +1,0 @@
-{
-  taskModel=model;
-  taskModel.putObject(WizardTaskUtil.TASK_MODE,new Byte(mode));
-  updateTaskModel();
-}

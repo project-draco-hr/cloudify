@@ -1,6 +1,0 @@
-{
-  String[] newArgs=Arrays.copyOf(args,args.length + 2);
-  newArgs[args.length]=argument(CERTIFICATE_THUMBPRINT_FLAG,certificateThumbprint);
-  newArgs[args.length + 1]=argument(SUBSCRIPTION_ID_FLAG,subscriptionId);
-  return execute(azureConfigExeFile.getAbsolutePath(),verbose,newArgs);
-}

@@ -1,4 +1,0 @@
-{
-  getEditor().setNodeAttribute("/ServiceConfiguration/Role/ConfigurationSettings/Setting[@name='Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername']","value",loginUsername);
-  getEditor().setNodeAttribute("/ServiceConfiguration/Role/ConfigurationSettings/Setting[@name='Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword']","value",loginEncryptedPassword);
-}

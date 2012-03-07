@@ -1,5 +1,0 @@
-{
-  AzureSlot azureSlot=AzureSlot.fromString(azureDeploymentSlotName);
-  File tempCscfgFile=AzureUtils.createTempCscfgFile(azureHostedServiceName,azureSlot);
-  return getAzureDeployment().getDeploymentConfig(azureHostedServiceName,azureSlot,tempCscfgFile);
-}
