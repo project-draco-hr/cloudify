@@ -2,4 +2,5 @@
   for (  String group : groups) {
     adminFactory.addGroup(group);
   }
+  logger.info("Using lookup groups=" + Arrays.toString(groups));
 }
