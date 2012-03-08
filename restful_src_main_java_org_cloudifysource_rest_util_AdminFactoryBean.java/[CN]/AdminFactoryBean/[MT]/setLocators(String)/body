@@ -2,5 +2,7 @@
   for (  String locator : locators) {
     adminFactory.addLocator(locator);
   }
-  logger.info("Using lookup locators=" + Arrays.toString(locators));
+  if (logger.isLoggable(Level.INFO)) {
+    logger.info("Configured lookup locators=" + Arrays.toString(locators));
+  }
 }
