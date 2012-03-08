@@ -10,7 +10,9 @@
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,CloudifyConstants.SERVICE_EXTERNAL_FOLDER + service.getIcon());
   }
   if (service.getNetwork() != null) {
-    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
+    if (service.getNetwork().getProtocolDescription() != null) {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
+    }
   }
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,Boolean.toString(service.isElastic()));
   return contextProperties;
