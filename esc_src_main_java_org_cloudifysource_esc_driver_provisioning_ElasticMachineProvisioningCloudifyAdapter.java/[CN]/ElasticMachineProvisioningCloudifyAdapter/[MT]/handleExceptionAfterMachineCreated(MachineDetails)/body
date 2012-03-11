@@ -1,5 +1,6 @@
 {
   try {
+    logger.info("--- DEBUG: Stopping machine " + machineDetails.getPrivateAddress() + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
     this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
   }
  catch (  final Exception e) {

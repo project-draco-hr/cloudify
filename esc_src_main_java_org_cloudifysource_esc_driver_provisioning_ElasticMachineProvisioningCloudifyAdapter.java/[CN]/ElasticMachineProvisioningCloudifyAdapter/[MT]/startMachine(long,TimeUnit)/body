@@ -27,14 +27,17 @@
     return gsa;
   }
  catch (  final ElasticMachineProvisioningException e) {
+    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
 catch (  final TimeoutException e) {
+    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
 catch (  final InterruptedException e) {
+    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
