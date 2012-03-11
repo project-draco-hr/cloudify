@@ -3,7 +3,7 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
-  logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
+  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
   final String managementMachinePrefix=this.serverNamePrefix;
   final MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
   if (existingManagementServers.length > 0) {

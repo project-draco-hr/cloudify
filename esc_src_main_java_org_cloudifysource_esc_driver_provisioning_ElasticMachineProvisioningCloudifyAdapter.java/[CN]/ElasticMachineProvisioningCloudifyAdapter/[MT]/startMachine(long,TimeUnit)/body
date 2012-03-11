@@ -1,8 +1,15 @@
 {
-  logger.info("Cloudify Adapter is starting a new machine");
+  logger.info("MODIFIED! Cloudify Adapter is starting a new machine");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
-  final MachineDetails machineDetails=provisionMachine(duration,unit);
+  MachineDetails machineDetails=null;
+  try {
+    machineDetails=provisionMachine(duration,unit);
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Failed to provisiong machine: " + e.getMessage(),e);
+    throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
+  }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
   try {
     checkForProvisioningTimeout(end,machineDetails);

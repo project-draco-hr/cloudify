@@ -2,13 +2,13 @@
   final NodeMetadata node;
   final MachineDetails machineDetails;
   try {
-    logger.info("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
+    logger.fine("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
     node=deployer.createServer(groupName);
   }
  catch (  final InstallerException e) {
     throw new CloudProvisioningException("Failed to create cloud server",e);
   }
-  logger.info("New node is allocated, group name: " + groupName);
+  logger.fine("New node is allocated, group name: " + groupName);
   machineDetails=createMachineDetailsFromNode(node);
   try {
     handleServerCredentials(machineDetails);

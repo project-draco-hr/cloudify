@@ -1,6 +1,6 @@
 {
   ProcessingUnitInstance pui=null;
-  for (  ProcessingUnitInstance instance : pu.getInstances()) {
+  for (  final ProcessingUnitInstance instance : pu.getInstances()) {
     if (instance.getGridServiceContainer() != null && instance.getGridServiceContainer().getGridServiceAgent() != null && instance.getGridServiceContainer().getGridServiceAgent().equals(agent)) {
       pui=instance;
     }
@@ -8,16 +8,16 @@
   if (pui == null) {
     throw new IllegalStateException("Failed finding " + pu.getName() + " on "+ agent.getMachine().getHostAddress());
   }
-  Map<String,ServiceDetails> alldetails=pui.getServiceDetailsByServiceId();
-  ServiceDetails details=alldetails.get("jee-container");
-  String host=details.getAttributes().get("host").toString();
-  String port=details.getAttributes().get("port").toString();
-  String ctx=details.getAttributes().get("context-path").toString();
-  String url="http://" + host + ":"+ port+ ctx;
+  final Map<String,ServiceDetails> alldetails=pui.getServiceDetailsByServiceId();
+  final ServiceDetails details=alldetails.get("jee-container");
+  final String host=details.getAttributes().get("host").toString();
+  final String port=details.getAttributes().get("port").toString();
+  final String ctx=details.getAttributes().get("context-path").toString();
+  final String url="http://" + host + ":"+ port+ ctx;
   try {
     return new URL(url);
   }
- catch (  MalformedURLException e) {
+ catch (  final MalformedURLException e) {
     throw new IllegalStateException(e);
   }
 }

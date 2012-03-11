@@ -1,5 +1,5 @@
 {
-  Properties props=new Properties();
+  final Properties props=new Properties();
   props.put("com.gs.application",MANAGEMENT_APPLICATION_NAME);
   props.put("web.port",String.valueOf(port));
   props.put("web.context","/");
