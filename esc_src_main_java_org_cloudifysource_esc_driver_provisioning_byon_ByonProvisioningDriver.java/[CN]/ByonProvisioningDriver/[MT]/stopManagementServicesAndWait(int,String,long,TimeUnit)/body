@@ -1,0 +1,37 @@
+{
+  if (admin == null) {
+    admin=Utils.getAdminObject(ipAddress,expectedGsmCount);
+  }
+  final Map<String,GridServiceAgent> agentsMap=admin.getGridServiceAgents().getHostAddress();
+  GSA agent=null;
+  final Set<String> keys=agentsMap.keySet();
+  for (  final String key : keys) {
+    System.out.println("key: " + key + ", value: "+ agentsMap.get(key));
+    if (key.equalsIgnoreCase(ipAddress)) {
+      agent=((InternalGridServiceAgent)agentsMap.get(key)).getGSA();
+    }
+  }
+  if (agent != null) {
+    logger.info("ByonProvisioningDriver: shutting down agent on management server: " + ipAddress);
+    try {
+      agent.shutdown();
+    }
+ catch (    final RemoteException e) {
+      if (!NetworkExceptionHelper.isConnectOrCloseException(e)) {
+        logger.finer("Exception caught on teardown. cause: " + e.getCause() + ", message: "+ e.getMessage()+ ", stacktrace:"+ e.getStackTrace());
+        throw new AdminException("Failed to shutdown GSA",e);
+      }
+    }
+    final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+    boolean agentUp=isAgentUp(agent);
+    while (agentUp && System.currentTimeMillis() < end) {
+      logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(10) + " seconds");
+      Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+      agentUp=isAgentUp(agent);
+    }
+    if (!agentUp && System.currentTimeMillis() >= end) {
+      throw new TimeoutException("Agent shutdown timed out (agent IP: " + ipAddress + ")");
+    }
+  }
+  admin.close();
+}

@@ -1,9 +1,15 @@
 {
-  final MachineDetails[] managementServers=getExistingManagementServers(this.serverNamePrefix);
-  if (managementServers.length == 0) {
-    throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.serverNamePrefix + ")");
+  try {
+    final Set<CustomNode> managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
+    if (managementServers == null || managementServers.isEmpty()) {
+      throw new CloudProvisioningException("Could not find any management machines for this cloud");
+    }
+    for (    final CustomNode customNode : managementServers) {
+      stopManagementServicesAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),2,TimeUnit.MINUTES);
+      deployer.shutdownServer(customNode);
+    }
   }
-  for (  final MachineDetails machineDetails : managementServers) {
-    deployer.shutdownServerById(machineDetails.getMachineId());
+ catch (  final InterruptedException e) {
+    throw new CloudProvisioningException("Failed to shutdown agent.",e);
   }
 }

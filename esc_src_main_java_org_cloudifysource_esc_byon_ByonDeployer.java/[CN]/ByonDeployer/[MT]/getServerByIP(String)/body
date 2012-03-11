@@ -1,6 +1,6 @@
 {
   CustomNode selectedNode=null;
-  for (  final CustomNode node : allocatedNodesPool) {
+  for (  final CustomNode node : getAllNodes()) {
     if ((StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress)) || (StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress))) {
       selectedNode=node;
       break;

@@ -5,7 +5,7 @@
     for (    final MachineDetails machineDetails : createdManagementMachines) {
       if (machineDetails != null) {
         logger.severe("Shutting down machine: " + machineDetails);
-        deployer.shutdownServerById(machineDetails.getMachineId());
+        deployer.shutdownServerByIp(machineDetails.getPrivateAddress());
       }
     }
   }

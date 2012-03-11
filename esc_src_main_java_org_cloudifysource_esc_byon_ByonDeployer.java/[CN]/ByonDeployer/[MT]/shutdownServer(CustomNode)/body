@@ -1,4 +1,7 @@
 {
+  if (node == null) {
+    return;
+  }
   ((CustomNodeImpl)node).setGroup(null);
   allocatedNodesPool.remove(node);
   freeNodesPool.add(node);

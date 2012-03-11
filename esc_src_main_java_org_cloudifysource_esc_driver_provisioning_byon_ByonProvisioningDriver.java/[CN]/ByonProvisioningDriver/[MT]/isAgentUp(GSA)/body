@@ -1,0 +1,11 @@
+{
+  boolean agentUp=false;
+  try {
+    agent.ping();
+    agentUp=true;
+  }
+ catch (  final RemoteException e) {
+    agentUp=false;
+  }
+  return agentUp;
+}

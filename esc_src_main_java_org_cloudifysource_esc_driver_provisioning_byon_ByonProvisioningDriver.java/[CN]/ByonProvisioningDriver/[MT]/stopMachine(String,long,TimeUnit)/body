@@ -10,10 +10,10 @@
     stoppingMachines.put(serverIp,System.currentTimeMillis());
     logger.info("Scale IN -- " + serverIp + " --");
     logger.info("Looking up cloud server with IP: " + serverIp);
-    final CustomNode cloudNode=deployer.getServerByIp(serverIp);
+    final CustomNode cloudNode=deployer.getServerByIP(serverIp);
     if (cloudNode != null) {
       logger.info("Found server: " + cloudNode.getId() + ". Shutting it down and waiting for shutdown to complete");
-      deployer.shutdownServerById(cloudNode.getId());
+      deployer.shutdownServerByIp(cloudNode.getPrivateIP());
       logger.info("Server: " + cloudNode.getId() + " shutdown has finished.");
       stopResult=true;
     }

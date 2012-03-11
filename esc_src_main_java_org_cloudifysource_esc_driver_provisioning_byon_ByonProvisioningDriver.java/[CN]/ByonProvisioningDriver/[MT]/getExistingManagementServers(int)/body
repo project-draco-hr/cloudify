@@ -1,0 +1,26 @@
+{
+  final Set<CustomNode> existingManagementServers=new HashSet<CustomNode>();
+  final Set<CustomNode> allNodes=deployer.getAllNodes();
+  String managementIP=null;
+  for (  final CustomNode server : allNodes) {
+    try {
+      final long endTime=System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(20);
+      Utils.validateConnection(server.getPrivateIP(),CloudifyConstants.REST_PORT,Utils.millisUntil(endTime));
+      managementIP=server.getPrivateIP();
+      break;
+    }
+ catch (    final Exception ex) {
+    }
+  }
+  if (StringUtils.isNotBlank(managementIP)) {
+    if (admin == null) {
+      admin=Utils.getAdminObject(managementIP,expectedGsmCount);
+    }
+    final GridServiceManagers gsms=admin.getGridServiceManagers();
+    for (    final GridServiceManager gsm : gsms) {
+      existingManagementServers.add(deployer.getServerByIP(gsm.getMachine().getHostAddress()));
+    }
+    admin.close();
+  }
+  return existingManagementServers;
+}
