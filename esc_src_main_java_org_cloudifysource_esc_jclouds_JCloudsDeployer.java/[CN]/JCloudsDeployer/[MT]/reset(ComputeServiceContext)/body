@@ -1,0 +1,9 @@
+{
+  if (this.context != currentContext) {
+    return;
+  }
+  logger.warning("Reseting JClouds Deployer");
+  final Set<Module> wiring=new HashSet<Module>();
+  this.context.close();
+  this.context=new ComputeServiceContextFactory().createContext(this.provider,this.account,this.key,wiring,this.overrides);
+}

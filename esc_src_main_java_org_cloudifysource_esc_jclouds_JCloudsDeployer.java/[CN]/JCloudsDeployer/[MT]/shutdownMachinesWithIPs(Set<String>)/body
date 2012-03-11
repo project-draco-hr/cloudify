@@ -1,8 +1,8 @@
 {
   this.context.getComputeService().destroyNodesMatching(new Predicate<NodeMetadata>(){
-    @Override public boolean apply(    NodeMetadata input){
+    @Override public boolean apply(    final NodeMetadata input){
       if (!input.getPrivateAddresses().isEmpty()) {
-        String ip=input.getPrivateAddresses().iterator().next();
+        final String ip=input.getPrivateAddresses().iterator().next();
         return IPs.contains(ip);
       }
       return false;

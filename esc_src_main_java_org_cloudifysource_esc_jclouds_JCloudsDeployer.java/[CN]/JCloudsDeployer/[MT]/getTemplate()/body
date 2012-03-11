@@ -2,16 +2,16 @@
   if (this.template == null) {
     logger.fine("Creating Cloud Template. This may take a few seconds");
     final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
-    if ((this.imageId != null) && (this.imageId.length() > 0)) {
+    if (this.imageId != null && this.imageId.length() > 0) {
       builder.imageId(this.imageId);
     }
     if (this.minRamMegabytes > 0) {
       builder.minRam(minRamMegabytes);
     }
-    if ((this.hardwareId != null) && (hardwareId.length() > 0)) {
+    if (this.hardwareId != null && hardwareId.length() > 0) {
       builder.hardwareId(hardwareId);
     }
-    if ((this.locationId != null) && (locationId.length() > 0)) {
+    if (this.locationId != null && locationId.length() > 0) {
       builder.locationId(this.locationId);
     }
     this.template=builder.build();

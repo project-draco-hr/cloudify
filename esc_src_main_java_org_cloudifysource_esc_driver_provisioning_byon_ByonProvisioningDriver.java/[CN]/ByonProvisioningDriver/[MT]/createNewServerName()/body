@@ -3,9 +3,8 @@
   int attempts=0;
   boolean foundFreeName=false;
   while (attempts < MAX_SERVERS_LIMIT) {
-    counter=(counter + 1) % MAX_SERVERS_LIMIT;
     ++attempts;
-    serverName=serverNamePrefix + this.counter;
+    serverName=serverNamePrefix + this.counter.incrementAndGet();
     final CustomNode existingNode=deployer.getServerByID(serverName);
     if (existingNode == null) {
       foundFreeName=true;

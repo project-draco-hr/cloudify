@@ -1,7 +1,7 @@
 {
   int numOfMethodsFound=0;
   Exception invocationException=null;
-  for (  Method method : templateOptionsMethods) {
+  for (  final Method method : templateOptionsMethods) {
     if (method.getName().equals(entryKey)) {
       if (method.getParameterTypes().length == 1) {
         try {
@@ -10,13 +10,13 @@
           method.invoke(templateOptions,entryValue);
           return;
         }
- catch (        IllegalArgumentException e) {
+ catch (        final IllegalArgumentException e) {
           invocationException=e;
         }
-catch (        IllegalAccessException e) {
+catch (        final IllegalAccessException e) {
           invocationException=e;
         }
-catch (        InvocationTargetException e) {
+catch (        final InvocationTargetException e) {
           invocationException=e;
         }
       }

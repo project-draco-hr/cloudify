@@ -1,4 +1,7 @@
 {
+  if (this.deployer != null) {
+    return;
+  }
   try {
     this.deployer=(JCloudsDeployer)context.getOrCreate("UNIQUE_JCLOUDS_DEPLOYER_ID_" + this.cloudTemplateName,new Callable<Object>(){
       @Override public Object call() throws Exception {

@@ -4,7 +4,7 @@
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   NodeState state=null;
   while (System.currentTimeMillis() < endTime) {
-    NodeMetadata node=this.context.getComputeService().getNodeMetadata(serverId);
+    final NodeMetadata node=this.context.getComputeService().getNodeMetadata(serverId);
     if (node == null) {
       return;
     }

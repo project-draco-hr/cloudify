@@ -1,6 +1,6 @@
 {
   this.context.getComputeService().destroyNodesMatching(new Predicate<NodeMetadata>(){
-    @Override public boolean apply(    NodeMetadata input){
+    @Override public boolean apply(    final NodeMetadata input){
       return input.getGroup() != null && input.getGroup().equals(group);
     }
   }

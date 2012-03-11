@@ -12,7 +12,7 @@
         try {
           Thread.sleep(RETRY_SLEEP_TIMEOUT_IN_MILLIS);
         }
- catch (        InterruptedException e1) {
+ catch (        final InterruptedException e1) {
         }
         retryAttempts+=1;
         retry=true;

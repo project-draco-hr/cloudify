@@ -1,9 +1,9 @@
 {
   if (this.extraOptions != null) {
-    Set<Entry<String,Object>> optionEntries=this.extraOptions.entrySet();
-    TemplateOptions templateOptions=template.getOptions();
-    Method[] templateOptionsMethods=templateOptions.getClass().getMethods();
-    for (    Entry<String,Object> entry : optionEntries) {
+    final Set<Entry<String,Object>> optionEntries=this.extraOptions.entrySet();
+    final TemplateOptions templateOptions=template.getOptions();
+    final Method[] templateOptionsMethods=templateOptions.getClass().getMethods();
+    for (    final Entry<String,Object> entry : optionEntries) {
       final String entryKey=entry.getKey();
       final Object entryValue=entry.getValue();
       if (entryValue == null) {

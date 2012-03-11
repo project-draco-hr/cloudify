@@ -1,9 +1,9 @@
 {
   final Set<? extends NodeMetadata> nodes=getServers(filter);
   final Set<NodeMetadata> runningNodes=new HashSet<NodeMetadata>();
-  Iterator<? extends NodeMetadata> nodesIterator=nodes.iterator();
+  final Iterator<? extends NodeMetadata> nodesIterator=nodes.iterator();
   while (nodesIterator.hasNext()) {
-    NodeMetadata node=nodesIterator.next();
+    final NodeMetadata node=nodesIterator.next();
     if (node.getState() != NodeState.TERMINATED) {
       runningNodes.add(node);
     }

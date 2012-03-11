@@ -3,16 +3,16 @@
   try {
     m=optionEntries.getClass().getMethod(entryKey);
   }
- catch (  SecurityException e) {
+ catch (  final SecurityException e) {
     throw new IllegalArgumentException("Error while looking for method to match template option: " + entryKey,e);
   }
-catch (  NoSuchMethodException e) {
+catch (  final NoSuchMethodException e) {
   }
   if (m != null) {
     try {
       m.invoke(templateOptions);
     }
- catch (    Exception e) {
+ catch (    final Exception e) {
       throw new IllegalArgumentException("Failed to set template option with name: " + entryKey,e);
     }
   }
@@ -20,16 +20,16 @@ catch (  NoSuchMethodException e) {
     try {
       m=optionEntries.getClass().getMethod(entryKey,Object.class);
     }
- catch (    SecurityException e) {
+ catch (    final SecurityException e) {
       throw new IllegalArgumentException("Error while looking for method to match template option: " + entryKey,e);
     }
-catch (    NoSuchMethodException e) {
+catch (    final NoSuchMethodException e) {
     }
     if (m != null) {
       try {
         m.invoke(templateOptions,(Object)null);
       }
- catch (      Exception e) {
+ catch (      final Exception e) {
         throw new IllegalArgumentException("Failed to set template option with name: " + entryKey + " to value: null",e);
       }
     }
