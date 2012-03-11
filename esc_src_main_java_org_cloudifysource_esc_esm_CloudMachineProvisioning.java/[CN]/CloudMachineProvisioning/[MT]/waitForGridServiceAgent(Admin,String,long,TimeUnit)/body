@@ -5,7 +5,7 @@
   final AtomicReference<GridServiceAgent> gsaRef=new AtomicReference<GridServiceAgent>(null);
   final CountDownLatch gridServiceAgentAddedLatch=new CountDownLatch(1);
   admin.getGridServiceAgents().getGridServiceAgentAdded().add(new GridServiceAgentAddedEventListener(){
-    public void gridServiceAgentAdded(    final GridServiceAgent gridServiceAgent){
+    @Override public void gridServiceAgentAdded(    final GridServiceAgent gridServiceAgent){
       if (gridServiceAgent.getMachine().getHostAddress().equals(hostAddress)) {
         gsaRef.set(gridServiceAgent);
         gridServiceAgentAddedLatch.countDown();

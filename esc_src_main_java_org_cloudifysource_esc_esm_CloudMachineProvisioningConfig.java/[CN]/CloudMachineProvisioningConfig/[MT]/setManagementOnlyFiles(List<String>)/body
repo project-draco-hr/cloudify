@@ -1,4 +1,4 @@
 {
-  String[] managmentOnlyFilesArray=(String[])managmentOnlyFiles.toArray(new String[0]);
+  String[] managmentOnlyFilesArray=managmentOnlyFiles.toArray(new String[managmentOnlyFiles.size()]);
   properties.putArray(MANAGEMENT_ONLY_FILES_KEY,managmentOnlyFilesArray,MANAGEMENT_ONLY_FILES_SEPARATOR);
 }
