@@ -2,13 +2,7 @@
   try {
     return handleDsl();
   }
- catch (  FileNotFoundException e) {
-    throw new USMException(e);
-  }
-catch (  PackagingException e) {
-    throw new USMException(e);
-  }
-catch (  DSLException e) {
+ catch (  DSLException e) {
     throw new USMException(e);
   }
 }

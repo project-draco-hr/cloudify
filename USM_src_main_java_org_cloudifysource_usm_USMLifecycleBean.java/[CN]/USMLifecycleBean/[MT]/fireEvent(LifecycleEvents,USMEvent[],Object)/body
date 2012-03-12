@@ -41,11 +41,9 @@ break;
 if (er == null) {
 throw new IllegalStateException("An event execution returned a null value!");
 }
- else {
 if (!er.isSuccess()) {
 logEventFailure(event,listeners,er);
 throw new USMException("Failed to execute event: " + event + ". Error was: "+ er.getException());
-}
 }
 }
 logEventSuccess(event,listeners);

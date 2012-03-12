@@ -10,9 +10,7 @@
         if (obj instanceof Map<?,?>) {
           return USMUtils.convertMapToNumericValues((Map<String,Object>)obj);
         }
- else {
-          throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! " + "Received object was of type: " + obj.getClass().getName());
-        }
+        throw new IllegalArgumentException("The Monitor closure defined in the DSL file does not evaluate to a Map! " + "Received object was of type: " + obj.getClass().getName());
       }
     }
 ;
