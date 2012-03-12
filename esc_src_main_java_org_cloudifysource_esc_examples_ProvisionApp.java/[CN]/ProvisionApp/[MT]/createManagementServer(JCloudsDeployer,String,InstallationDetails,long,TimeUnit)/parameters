@@ -1,5 +1,0 @@
-JCloudsDeployer deployer
-String name
-InstallationDetails details
-long timeout
-TimeUnit unit

@@ -1,7 +1,0 @@
-{
-  long remaining=end - System.currentTimeMillis();
-  if (remaining <= 0) {
-    throw new TimeoutException("Passed target end time " + new Date(end));
-  }
-  return remaining;
-}

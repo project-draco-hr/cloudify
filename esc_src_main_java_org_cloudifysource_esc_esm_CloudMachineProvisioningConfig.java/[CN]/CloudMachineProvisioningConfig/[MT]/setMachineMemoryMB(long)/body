@@ -1,3 +1,0 @@
-{
-  properties.putLong(MEMORY_MEGABYTES_PER_MACHINE_KEY,minRamMegabytes);
-}

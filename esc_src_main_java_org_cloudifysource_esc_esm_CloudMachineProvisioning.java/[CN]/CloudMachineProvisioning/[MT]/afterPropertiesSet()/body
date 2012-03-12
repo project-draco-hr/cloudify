@@ -1,6 +1,0 @@
-{
-  config.setKeyFile(getAbsolutePathValidateExists(config.getKeyFile(),new File(config.getLocalDirectory())));
-  this.myIp=getMyIP(admin);
-  this.installer=new AgentlessInstaller();
-  logger.info("Initialized CloudMachineProvisioning with config");
-}

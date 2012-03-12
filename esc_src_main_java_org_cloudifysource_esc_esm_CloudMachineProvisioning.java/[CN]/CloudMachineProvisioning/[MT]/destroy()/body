@@ -1,8 +1,0 @@
-{
-  logger.info("Cloud Machine Provisioning is shutting down");
-  if (this.deployer != null) {
-    logger.info("Shutting down JClouds Context");
-    this.deployer.close();
-    this.deployer=null;
-  }
-}

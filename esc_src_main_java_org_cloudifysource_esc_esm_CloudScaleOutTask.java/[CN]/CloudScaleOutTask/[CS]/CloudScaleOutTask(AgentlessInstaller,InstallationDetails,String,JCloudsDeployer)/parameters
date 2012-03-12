@@ -1,4 +1,0 @@
-AgentlessInstaller installer
-InstallationDetails details
-String serverName
-JCloudsDeployer deployer

@@ -1,4 +1,0 @@
-String ip
-String agentUid
-long duration
-TimeUnit unit

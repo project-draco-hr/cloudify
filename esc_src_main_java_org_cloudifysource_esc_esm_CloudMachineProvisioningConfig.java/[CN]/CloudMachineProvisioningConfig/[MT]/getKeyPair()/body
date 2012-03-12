@@ -1,3 +1,0 @@
-{
-  return properties.get(KEY_PAIR_DIRECTORY_KEY,KEY_PAIR_DEFAULT);
-}

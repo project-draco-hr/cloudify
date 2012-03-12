@@ -1,3 +1,0 @@
-{
-  properties.put(SSH_USERNAME_KEY,sshUsername);
-}

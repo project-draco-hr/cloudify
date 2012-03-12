@@ -1,3 +1,0 @@
-{
-  properties.put(IMAGE_ID_KEY,imageId);
-}

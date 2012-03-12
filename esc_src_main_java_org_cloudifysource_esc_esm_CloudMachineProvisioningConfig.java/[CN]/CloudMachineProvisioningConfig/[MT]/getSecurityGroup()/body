@@ -1,3 +1,0 @@
-{
-  return properties.get(SECURITY_GROUP_DIRECTORY_KEY,SECURITY_GROUP_DEFAULT);
-}

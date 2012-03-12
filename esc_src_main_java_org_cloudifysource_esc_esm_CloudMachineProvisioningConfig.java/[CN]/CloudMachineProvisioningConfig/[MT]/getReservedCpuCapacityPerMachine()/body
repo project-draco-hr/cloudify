@@ -1,3 +1,0 @@
-{
-  return this.properties.getDouble(RESERVED_CPU_PER_MACHINE_KEY,RESERVED_CPU_PER_MACHINE_DEFAULT);
-}

@@ -1,3 +1,0 @@
-{
-  return properties.getBoolean(CONNECTED_TO_PRIVATE_IP_KEY,CONNECTED_TO_PRIVATE_IP_DEFAULT);
-}

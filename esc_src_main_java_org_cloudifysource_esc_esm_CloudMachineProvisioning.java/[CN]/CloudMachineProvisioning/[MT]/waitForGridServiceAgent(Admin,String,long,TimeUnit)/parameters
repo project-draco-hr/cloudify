@@ -1,4 +1,0 @@
-Admin admin
-String hostAddress
-long timeout
-TimeUnit unit

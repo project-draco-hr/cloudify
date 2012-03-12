@@ -1,4 +1,0 @@
-{
-  final String ip=agent.getMachine().getHostAddress();
-  return stopMachine(ip,agent.getMachine().getUid(),duration,unit);
-}

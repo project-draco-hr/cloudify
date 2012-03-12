@@ -1,5 +1,0 @@
-{
-  super();
-  this.installer=installer;
-  this.details=details;
-}

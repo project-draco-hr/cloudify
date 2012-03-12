@@ -1,4 +1,0 @@
-{
-  String level=properties.get(SSH_LOGGING_LEVEL_KEY,SSH_LOGGING_LEVEL_DEFAULT);
-  return Level.parse(level);
-}

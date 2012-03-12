@@ -1,7 +1,0 @@
-{
-  final Map<String,Object> info=new HashMap<String,Object>();
-  info.put("address",i + " Broadway");
-  info.put("socialSecurity",1232287642L + i);
-  info.put("salary",10000 + i);
-  return info;
-}

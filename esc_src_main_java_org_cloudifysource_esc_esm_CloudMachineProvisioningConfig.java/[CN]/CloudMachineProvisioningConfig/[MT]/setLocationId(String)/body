@@ -1,3 +1,0 @@
-{
-  properties.put(LOCATION_ID_KEY,locationId);
-}

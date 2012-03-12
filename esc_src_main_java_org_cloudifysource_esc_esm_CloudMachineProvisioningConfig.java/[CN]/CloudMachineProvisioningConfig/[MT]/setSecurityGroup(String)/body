@@ -1,3 +1,0 @@
-{
-  properties.put(SECURITY_GROUP_DIRECTORY_KEY,securityGroup);
-}

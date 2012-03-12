@@ -1,3 +1,0 @@
-{
-  this.properties.putDouble(RESERVED_CPU_PER_MACHINE_KEY,reservedCpu);
-}

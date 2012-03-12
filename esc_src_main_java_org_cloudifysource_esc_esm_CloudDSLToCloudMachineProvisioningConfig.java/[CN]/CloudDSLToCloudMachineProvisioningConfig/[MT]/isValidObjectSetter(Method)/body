@@ -1,3 +1,0 @@
-{
-  return method.getParameterTypes().length == 1 && method.getName().startsWith("set");
-}

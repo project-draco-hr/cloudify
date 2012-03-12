@@ -1,3 +1,0 @@
-{
-  properties.putInteger(NUMBER_OF_MANAGEMENT_MACHINES_KEY,value);
-}

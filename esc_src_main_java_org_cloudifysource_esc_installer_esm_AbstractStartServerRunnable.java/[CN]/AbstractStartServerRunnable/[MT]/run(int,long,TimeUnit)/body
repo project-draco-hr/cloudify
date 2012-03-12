@@ -1,9 +1,0 @@
-{
-  if (timeout < 0) {
-    throw new TimeoutException("Starting a new machine timed out");
-  }
-  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
-  logger.fine("Start Server task has started executing!");
-  final InstallationDetails[] installationDetails=startServers(numberOfMachines,timeout,unit);
-  installer.installOnMachineWithIP(installationDetails[0],Utils.millisUntil(end),TimeUnit.MILLISECONDS);
-}

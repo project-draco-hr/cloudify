@@ -1,3 +1,0 @@
-{
-  properties.put(KEY_PAIR_DIRECTORY_KEY,keyPair);
-}

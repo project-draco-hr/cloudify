@@ -1,5 +1,0 @@
-{
-  super(installer,createInstallationDetails(config));
-  this.machineGroup=machineGroup;
-  this.deployer=deployer;
-}

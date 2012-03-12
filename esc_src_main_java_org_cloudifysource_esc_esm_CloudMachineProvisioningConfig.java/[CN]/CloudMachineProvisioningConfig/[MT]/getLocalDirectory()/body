@@ -1,3 +1,0 @@
-{
-  return properties.get(LOCAL_DIRECTORY_KEY,LOCAL_DIRECTORY_DEFAULT);
-}

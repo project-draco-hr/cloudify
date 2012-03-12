@@ -1,8 +1,0 @@
-{
-  String[] zonesArray=properties.getArray(ZONES_KEY,ZONES_SEPARATOR,ZONES_DEFAULT);
-  List<String> zonesList=new ArrayList<String>();
-  for (  String str : zonesArray) {
-    zonesList.add(str);
-  }
-  return zonesList;
-}

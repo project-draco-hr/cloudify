@@ -1,3 +1,0 @@
-{
-  return properties.get(SSH_PASSWORD_KEY,SSH_PASSWORD_DEFAULT);
-}

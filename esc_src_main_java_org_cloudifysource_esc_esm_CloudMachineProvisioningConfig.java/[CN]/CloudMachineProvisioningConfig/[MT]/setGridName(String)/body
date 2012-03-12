@@ -1,3 +1,0 @@
-{
-  properties.put(GRID_NAME_KEY,gridName);
-}

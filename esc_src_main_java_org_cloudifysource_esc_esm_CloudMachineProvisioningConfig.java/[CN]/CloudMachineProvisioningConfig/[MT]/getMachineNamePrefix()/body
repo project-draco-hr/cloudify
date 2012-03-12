@@ -1,3 +1,0 @@
-{
-  return properties.get(MACHINE_NAME_PREFIX_KEY);
-}

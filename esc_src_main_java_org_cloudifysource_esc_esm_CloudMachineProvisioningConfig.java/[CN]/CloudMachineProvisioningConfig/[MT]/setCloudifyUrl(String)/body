@@ -1,3 +1,0 @@
-{
-  properties.put(CLOUDIFY_URL_KEY,cloudifyUrl);
-}
