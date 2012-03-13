@@ -8,17 +8,20 @@
       if (0 == admin.getGridServiceManagers().getSize()) {
         isDone=false;
         if (verbose) {
-          logger.info("Waiting for Grid Service Manager");
+          logger.fine("Waiting for Grid Service Manager");
+          publishEvent("Waiting for Grid Service Manager");
         }
       }
       if (admin.getElasticServiceManagers().getSize() == 0) {
         isDone=false;
         if (verbose) {
-          logger.info("Waiting for Elastic Service Manager");
+          logger.fine("Waiting for Elastic Service Manager");
+          publishEvent("Waiting for Elastic Service Manager");
         }
       }
       if (!isDone && !verbose) {
-        logger.info("Waiting for Cloudify management processes");
+        logger.fine("Waiting for Cloudify management processes");
+        publishEvent("Waiting for Cloudify management processes");
       }
       return isDone;
     }

@@ -36,13 +36,15 @@
         managementSpaceInstaller.setServiceName(MANAGEMENT_SPACE_NAME);
         managementSpaceInstaller.setManagementZone(MANAGEMENT_GSA_ZONE);
         managementSpaceInstaller.setHighlyAvailable(highlyAvailable);
+        managementSpaceInstaller.addListeners(this.eventsListenersList);
         try {
           managementSpaceInstaller.install();
           waitForManagementServices.add(managementSpaceInstaller);
         }
  catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
-            logger.info("Service " + MANAGEMENT_SPACE_NAME + " already installed");
+            logger.fine("Service " + MANAGEMENT_SPACE_NAME + " already installed");
+            publishEvent("Service " + MANAGEMENT_SPACE_NAME + " already installed");
           }
         }
       }
@@ -56,12 +58,14 @@
         webuiInstaller.setWarFile(new File(WEBUI_FILE));
         webuiInstaller.setServiceName(WEBUI_NAME);
         webuiInstaller.setManagementZone(MANAGEMENT_GSA_ZONE);
+        webuiInstaller.addListeners(this.eventsListenersList);
         try {
           webuiInstaller.install();
         }
  catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
-            logger.info("Service " + WEBUI_NAME + " already installed");
+            logger.fine("Service " + WEBUI_NAME + " already installed");
+            publishEvent("Service " + WEBUI_NAME + " already installed");
           }
         }
         if (waitForWebUi) {
@@ -81,12 +85,14 @@
         restInstaller.setManagementZone(MANAGEMENT_GSA_ZONE);
         restInstaller.dependencies.add(CloudifyConstants.MANAGEMENT_SPACE_NAME);
         restInstaller.setWaitForConnection();
+        restInstaller.addListeners(this.eventsListenersList);
         try {
           restInstaller.install();
         }
  catch (        final ProcessingUnitAlreadyDeployedException e) {
           if (verbose) {
-            logger.info("Service " + REST_NAME + " already installed");
+            logger.fine("Service " + REST_NAME + " already installed");
+            publishEvent("Service " + REST_NAME + " already installed");
           }
         }
         waitForManagementServices.add(restInstaller);
@@ -94,7 +100,10 @@
       for (      final AbstractManagementServiceInstaller managementServiceInstaller : waitForManagementServices) {
         managementServiceInstaller.waitForInstallation(adminFacade,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
         if (managementServiceInstaller instanceof ManagementSpaceServiceInstaller) {
-          logger.info("Writing cloud configuration to space.");
+          logger.fine("Writing cloud configuration to space.");
+          if (verbose) {
+            publishEvent("Writing cloud configuration to space.");
+          }
           final GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
           final CloudConfigurationHolder holder=new CloudConfigurationHolder(getCloudContents());
           gigaspace.write(holder);

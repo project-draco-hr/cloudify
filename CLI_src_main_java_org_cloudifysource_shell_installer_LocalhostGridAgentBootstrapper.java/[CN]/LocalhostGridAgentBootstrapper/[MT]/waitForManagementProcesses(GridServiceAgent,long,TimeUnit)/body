@@ -8,24 +8,31 @@
       boolean isDone=true;
       if (!isDone(admin.getLookupServices(),"LUS")) {
         if (verbose) {
-          logger.info("Waiting for Lookup Service");
+          logger.fine("Waiting for Lookup Service");
+          publishEvent("Waiting for Lookup Service");
         }
         isDone=false;
       }
       if (!isDone(admin.getGridServiceManagers(),"GSM")) {
         if (verbose) {
-          logger.info("Waiting for Grid Service Manager");
+          logger.fine("Waiting for Grid Service Manager");
+          publishEvent("Waiting for Grid Service Manager");
         }
         isDone=false;
       }
       if (admin.getElasticServiceManagers().isEmpty()) {
         if (verbose) {
-          logger.info("Waiting for Elastic Service Manager");
+          logger.fine("Waiting for Elastic Service Manager");
+          publishEvent("Waiting for Elastic Service Manager");
         }
         isDone=false;
       }
-      if (!verbose) {
-        logger.info("Waiting for Management processes to start.");
+      if (verbose) {
+        logger.fine("Waiting for Management processes to start.");
+        publishEvent("Waiting for Management processes to start.");
+      }
+      if (!isDone) {
+        publishEvent(null);
       }
       return isDone;
     }
@@ -48,8 +55,12 @@
           if (!checkAgent((AgentGridComponent)component)) {
             message+=" expected agent " + agent.getUid();
           }
-          logger.info(message);
+          logger.fine(message);
+          publishEvent(message);
         }
+      }
+      if (!verbose) {
+        publishEvent(null);
       }
       return found;
     }

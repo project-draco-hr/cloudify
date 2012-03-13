@@ -1,10 +1,16 @@
 {
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    boolean messagePublished=false;
     /** 
  * {@inheritDoc}
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
-      logger.info("Waiting for " + serviceName + " service.");
+      logger.fine("Waiting for " + serviceName + " service.");
+      if (!messagePublished) {
+        String message=ShellUtils.getMessageBundle().getString("starting_management_web_service");
+        publishEvent(MessageFormat.format(message,serviceName.toUpperCase()));
+        messagePublished=true;
+      }
       final ProcessingUnit pu=getProcessingUnit();
       boolean isDone=false;
       if (pu != null) {
@@ -15,12 +21,17 @@
           }
         }
       }
+      if (!isDone) {
+        publishEvent(null);
+      }
       return isDone;
     }
   }
 );
   final URL url=getWebProcessingUnitURL(agent,getProcessingUnit());
   final String serviceNameCapital=StringUtils.capitalize(serviceName);
-  logger.info(serviceNameCapital + " service is available at: " + url);
+  String returnMessage=ShellUtils.getMessageBundle().getString("web_service_available_at");
+  logger.fine(returnMessage);
+  publishEvent(MessageFormat.format(returnMessage,serviceNameCapital,url));
   return url;
 }

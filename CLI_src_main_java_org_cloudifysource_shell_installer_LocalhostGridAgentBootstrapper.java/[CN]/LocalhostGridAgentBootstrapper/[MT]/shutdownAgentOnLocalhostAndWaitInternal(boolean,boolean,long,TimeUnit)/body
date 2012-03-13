@@ -13,7 +13,10 @@
  catch (    final TimeoutException e) {
     }
     if (agent == null) {
-      logger.info("Agent not running on local machine");
+      logger.fine("Agent not running on local machine");
+      if (verbose) {
+        publishEvent("Agent not running on local machine");
+      }
       throw new CLIStatusException("teardown_failed_agent_not_found");
     }
  else {

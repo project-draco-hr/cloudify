@@ -14,10 +14,10 @@
     }
     final String errorMessage="Failed to fetch the currently deployed applications list." + " Continuing teardown-localcloud.";
     if (verbose) {
-      logger.log(Level.INFO,errorMessage,e);
+      logger.log(Level.FINE,errorMessage,e);
     }
  else {
-      logger.log(Level.INFO,errorMessage);
+      logger.log(Level.FINE,errorMessage);
     }
     return;
   }
@@ -45,6 +45,7 @@
   }
   if (applicationsExist) {
     waitForUninstallApplications(timeout,timeunit);
-    logger.info(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
+    publishEvent(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
+    logger.fine(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
   }
 }

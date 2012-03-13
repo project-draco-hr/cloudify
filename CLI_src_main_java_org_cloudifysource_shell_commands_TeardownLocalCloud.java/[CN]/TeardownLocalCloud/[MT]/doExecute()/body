@@ -8,6 +8,7 @@
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
   installer.setForce(force);
+  installer.addListener(new CLILocalhostBootstrapperListener());
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.teardownLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
   return getFormattedMessage("agent_terminated_successfully");

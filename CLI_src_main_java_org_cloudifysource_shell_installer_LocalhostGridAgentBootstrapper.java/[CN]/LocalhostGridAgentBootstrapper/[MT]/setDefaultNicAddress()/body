@@ -8,6 +8,6 @@
     }
   }
   if (verbose) {
-    logger.info("NIC Address=" + nicAddress);
+    publishEvent("NIC Address=" + nicAddress);
   }
 }

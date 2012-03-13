@@ -10,6 +10,11 @@
     command=Arrays.copyOf(LINUX_COMMAND,LINUX_COMMAND.length);
     args.addAll(Arrays.asList(LINUX_ARGUMENTS_POSTFIX));
   }
-  logger.info("Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : ""));
+  if (verbose) {
+    String message="Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : "");
+    publishEvent(message);
+    logger.fine(message);
+  }
+  publishEvent(ShellUtils.getMessageBundle().getString("starting_cloudify_management"));
   runCommand(command,args.toArray(new String[args.size()]));
 }

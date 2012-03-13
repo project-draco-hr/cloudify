@@ -7,6 +7,8 @@
   installer.setLookupGroups(lookupGroups);
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
+  installer.setWaitForWebui(true);
+  installer.addListener(new CLILocalhostBootstrapperListener());
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.startLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
   return messages.getString("local_cloud_started");

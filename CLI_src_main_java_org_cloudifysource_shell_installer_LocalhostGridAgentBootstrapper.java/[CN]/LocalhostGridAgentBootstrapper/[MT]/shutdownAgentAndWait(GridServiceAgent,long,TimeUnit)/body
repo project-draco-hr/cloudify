@@ -10,17 +10,23 @@
     }
   }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
+    boolean messagePublished=false;
     /** 
  * Pings the agent to verify it's not available, indicating it was shut down.
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
-      logger.info("Waiting for agent to shutdown");
+      if (!messagePublished) {
+        publishEvent("Waiting for agent to shutdown");
+        messagePublished=true;
+      }
+      logger.fine("Waiting for agent to shutdown");
       try {
         gsa.ping();
       }
  catch (      final RemoteException e) {
         return true;
       }
+      publishEvent(null);
       return false;
     }
   }

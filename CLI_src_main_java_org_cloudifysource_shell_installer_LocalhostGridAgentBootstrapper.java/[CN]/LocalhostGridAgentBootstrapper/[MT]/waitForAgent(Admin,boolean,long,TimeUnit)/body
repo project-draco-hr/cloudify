@@ -15,11 +15,12 @@
       }
       if (!isDone) {
         if (existingAgent) {
-          logger.info("Looking for an existing agent running on local machine");
+          logger.fine("Looking for an existing agent running on local machine");
         }
  else {
-          logger.info("Waiting for the agent on the local machine to start.");
+          logger.fine("Waiting for the agent on the local machine to start.");
         }
+        publishEvent(null);
       }
       return isDone;
     }
@@ -36,7 +37,7 @@
         if (!checkNicAddress) {
           message+="Ignoring agent. Filter nicAddress='" + nicAddress + "' or local address, agent nicAddress='"+ agentNicAddress+ "'";
         }
-        logger.info(message);
+        publishEvent(message);
       }
       return checkLookupGroups && checkNicAddress;
     }

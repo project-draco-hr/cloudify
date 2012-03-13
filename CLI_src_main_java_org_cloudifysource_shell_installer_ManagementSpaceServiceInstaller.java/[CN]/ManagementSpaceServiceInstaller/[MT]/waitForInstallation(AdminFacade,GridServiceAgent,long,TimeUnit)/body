@@ -12,10 +12,16 @@
           return true;
         }
       }
-      logger.log(Level.INFO,"Connecting to management space.");
+      logger.fine("Connecting to management space.");
+      if (verbose) {
+        publishEvent("Connecting to management space.");
+      }
       return false;
     }
   }
 );
-  logger.info("Management space is available.");
+  logger.fine("Management space is available.");
+  if (verbose) {
+    logger.fine("Management space is available.");
+  }
 }

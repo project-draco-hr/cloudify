@@ -9,10 +9,12 @@
   final Admin admin=adminFactory.create();
   if (verbose) {
     if (admin.getLocators().length > 0) {
-      logger.info("Lookup Locators=" + convertLookupLocatorToString(admin.getLocators()));
+      logger.fine("Lookup Locators=" + convertLookupLocatorToString(admin.getLocators()));
+      publishEvent("Lookup Locators=" + convertLookupLocatorToString(admin.getLocators()));
     }
     if (admin.getGroups().length > 0) {
-      logger.info("Lookup Groups=" + StringUtils.arrayToDelimitedString(admin.getGroups(),","));
+      logger.fine("Lookup Groups=" + StringUtils.arrayToDelimitedString(admin.getGroups(),","));
+      publishEvent("Lookup Groups=" + StringUtils.arrayToDelimitedString(admin.getGroups(),","));
     }
   }
   return admin;
