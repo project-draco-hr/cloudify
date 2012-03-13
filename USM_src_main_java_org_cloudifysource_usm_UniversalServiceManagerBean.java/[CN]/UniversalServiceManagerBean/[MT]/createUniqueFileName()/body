@@ -1,6 +1,6 @@
 {
   final String username=System.getProperty("user.name");
-  final String clusterName=this.clusterName == null ? "USM" : this.clusterName;
+  final String clusterName=this.clusterName == null ? ServiceUtils.getAbsolutePUName(CloudifyConstants.DEFAULT_APPLICATION_NAME,"USM") : this.clusterName;
   try {
     return clusterName + "_" + this.instanceId+ "_"+ username+ "@"+ InetAddress.getLocalHost().getHostName();
   }
