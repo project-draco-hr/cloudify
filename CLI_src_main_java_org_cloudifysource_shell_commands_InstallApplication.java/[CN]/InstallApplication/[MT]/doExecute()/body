@@ -31,7 +31,7 @@
     throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);
   }
   printApplicationInfo(application);
-  ((RestAdminFacade)adminFacade).waitForLifecycleEvents(pollingID,TIMEOUT_ERROR_MESSAGE);
+  ((RestAdminFacade)adminFacade).waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
   session.put(Constants.ACTIVE_APP,applicationName);
   GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
   return this.getFormattedMessage("application_installed_succesfully",Color.GREEN,applicationName);

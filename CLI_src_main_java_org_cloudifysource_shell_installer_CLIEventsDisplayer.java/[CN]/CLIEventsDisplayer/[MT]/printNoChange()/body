@@ -1,0 +1,10 @@
+{
+  System.out.print('.');
+  System.out.flush();
+  this.progressCounter++;
+  if (progressCounter >= PROGRESS_BAR_MAX_LENGTH) {
+    System.out.print(Ansi.ansi().cursorLeft(PROGRESS_BAR_MAX_LENGTH - 1).eraseLine());
+    System.out.flush();
+    this.progressCounter=1;
+  }
+}

@@ -1,2 +1,3 @@
 String serviceLifecycleEventContainerID
 GSRestClient client
+int timeoutInMinutes
