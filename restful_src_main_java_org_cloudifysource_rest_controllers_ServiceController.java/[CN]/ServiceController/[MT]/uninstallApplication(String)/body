@@ -34,7 +34,5 @@
   if (errors.length() == 0) {
     return RestUtils.successStatus();
   }
- else {
-    return RestUtils.errorStatus(errors);
-  }
+  return RestUtils.errorStatus(errors);
 }
