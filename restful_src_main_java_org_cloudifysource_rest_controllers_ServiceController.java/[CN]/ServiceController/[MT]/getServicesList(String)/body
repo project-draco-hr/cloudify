@@ -7,15 +7,9 @@
     return errorStatus(FAILED_TO_LOCATE_APP,applicationName);
   }
   final ProcessingUnits pus=app.getProcessingUnits();
-  final List<String> puNames=new ArrayList<String>(pus.getSize());
-  for (  final ProcessingUnit pu : pus) {
-    puNames.add(pu.getName());
-  }
   final List<String> serviceNames=new ArrayList<String>(pus.getSize());
-  final ListIterator<String> listIterator=puNames.listIterator();
-  while (listIterator.hasNext()) {
-    final String absolutePuName=listIterator.next();
-    serviceNames.add(ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
+  for (  final ProcessingUnit pu : pus) {
+    serviceNames.add(ServiceUtils.getApplicationServiceName(pu.getName(),applicationName));
   }
   return successStatus(serviceNames);
 }

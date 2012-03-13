@@ -4,11 +4,9 @@
     logger.warning("Service does not specify template name! Defaulting to template: " + entry.getKey());
     return entry.getValue();
   }
- else {
-    final CloudTemplate template=cloud.getTemplates().get(templateName);
-    if (template == null) {
-      throw new IllegalArgumentException("Could not find compute template: " + templateName);
-    }
-    return template;
+  final CloudTemplate template=cloud.getTemplates().get(templateName);
+  if (template == null) {
+    throw new IllegalArgumentException("Could not find compute template: " + templateName);
   }
+  return template;
 }
