@@ -1,7 +1,18 @@
 {
-  final Set<CustomNode> cloudNodes=new HashSet<CustomNode>();
+  final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
   for (  Map<String,String> nodeMap : nodesMapList) {
-    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID),nodeMap.get(CLOUD_NODE_IP),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID)));
+    if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP))) {
+      cloudNodes.add(parseOneNode(nodeMap));
+    }
+ else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_RANGE))) {
+      cloudNodes.addAll(parseNodeRange(nodeMap));
+    }
+ else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_CIDR))) {
+      cloudNodes.addAll(parseNodeCIDR(nodeMap));
+    }
+ else {
+      throw new InstallerException("Failed to start cloud node, invalid IP/ID configuration.");
+    }
   }
   return cloudNodes;
 }

@@ -15,7 +15,7 @@
     Utils.validateConnection(machineDetails.getIp(),SSH_PORT,Utils.millisUntil(end));
   }
  catch (  final Exception e) {
-    logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
+    logger.log(Level.SEVERE,"Cloud server could not be started on " + machineDetails.getIp() + ", SSH connection failed.",e);
     deployer.shutdownServer(node);
     deployer.invalidateServer(node);
     throw new CloudProvisioningException(e);

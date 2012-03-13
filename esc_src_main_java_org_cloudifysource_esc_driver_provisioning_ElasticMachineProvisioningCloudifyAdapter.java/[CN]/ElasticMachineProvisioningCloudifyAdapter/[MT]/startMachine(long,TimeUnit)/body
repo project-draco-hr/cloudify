@@ -1,5 +1,5 @@
 {
-  logger.info("MODIFIED! Cloudify Adapter is starting a new machine");
+  logger.info("Cloudify Adapter is starting a new machine");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails=null;
@@ -34,17 +34,14 @@
     return gsa;
   }
  catch (  final ElasticMachineProvisioningException e) {
-    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
 catch (  final TimeoutException e) {
-    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }
 catch (  final InterruptedException e) {
-    logger.info("--- DEBUG: calling handleExceptionAfterMachineCreated after exception " + e.getMessage());
     handleExceptionAfterMachineCreated(machineDetails);
     throw e;
   }

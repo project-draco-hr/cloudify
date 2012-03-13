@@ -1,0 +1,3 @@
+{
+  return new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID),nodeMap.get(CLOUD_NODE_IP),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID));
+}

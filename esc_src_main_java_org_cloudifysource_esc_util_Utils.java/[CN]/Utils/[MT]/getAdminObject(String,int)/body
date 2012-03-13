@@ -1,6 +1,6 @@
 {
   final AdminFactory adminFactory=new AdminFactory();
-  adminFactory.addLocator(managementIP + ":" + CloudifyConstants.REST_PORT);
+  adminFactory.addLocator(managementIP + ":" + CloudifyConstants.DEFAULT_LUS_PORT);
   final Admin admin=adminFactory.createAdmin();
   GridServiceManagers gsms=admin.getGridServiceManagers();
   final long end=System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(ADMIN_API_TIMEOUT);

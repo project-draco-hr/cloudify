@@ -2,7 +2,7 @@
   if (zone != null) {
     throw new IllegalStateException("Local-cloud does not use zones");
   }
-  lusPort=LOCALCLOUD_LUS_PORT;
+  lusPort=CloudifyConstants.DEFAULT_LOCALCLOUD_LUS_PORT;
   if (lookupLocators == null) {
     setLookupLocators(getLocalcloudLookupLocators());
   }

@@ -11,9 +11,13 @@
     md.setRemoteUsername(node.getUsername());
     md.setRemotePassword(node.getCredential());
   }
- else {
+ else   if (!StringUtils.isBlank(cloud.getConfiguration().getRemoteUsername()) && !StringUtils.isBlank(cloud.getConfiguration().getRemotePassword())) {
     md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
     md.setRemotePassword(cloud.getConfiguration().getRemotePassword());
+  }
+ else {
+    logger.severe("Cloud node loading failed, missing credentials for server: " + node.toString());
+    throw new CloudProvisioningException("Cloud node loading failed, missing credentials for server: " + node.toString());
   }
   return md;
 }

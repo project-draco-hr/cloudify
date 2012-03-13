@@ -14,6 +14,7 @@
   if (agent != null) {
     logger.info("ByonProvisioningDriver: shutting down agent on management server: " + ipAddress);
     try {
+      admin.close();
       agent.shutdown();
     }
  catch (    final RemoteException e) {
@@ -33,5 +34,4 @@
       throw new TimeoutException("Agent shutdown timed out (agent IP: " + ipAddress + ")");
     }
   }
-  admin.close();
 }
