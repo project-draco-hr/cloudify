@@ -1,0 +1,13 @@
+{
+  if ((Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+    final String confirmationQuestion=getFormattedMessage("teardown_confirmation_question");
+    System.out.print(confirmationQuestion);
+    System.out.flush();
+    final PropertiesReader pr=new PropertiesReader(new InputStreamReader(System.in));
+    final String readLine=pr.readProperty();
+    System.out.println();
+    System.out.flush();
+    return "y".equalsIgnoreCase(readLine);
+  }
+  return true;
+}
