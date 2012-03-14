@@ -22,16 +22,14 @@
       this.exists=false;
       return "";
     }
- else {
-      try {
-        logger.warning("file not found: " + file.getName() + ". Retring attempt #"+ retryCounter);
-        Thread.sleep(TIMEOUT_BETWEEN_RETRIES);
-      }
- catch (      InterruptedException e1) {
-        e1.printStackTrace();
-      }
-      return readLines();
+    try {
+      logger.warning("file not found: " + file.getName() + ". Retring attempt #"+ retryCounter);
+      Thread.sleep(TIMEOUT_BETWEEN_RETRIES);
     }
+ catch (    InterruptedException e1) {
+      e1.printStackTrace();
+    }
+    return readLines();
   }
  finally {
     if (randomAccessFile != null) {
