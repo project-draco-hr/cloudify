@@ -5,9 +5,8 @@
       try {
         cloud=ServiceReader.readCloud(cloudFile);
       }
- catch (      final IOException e) {
-      }
-catch (      final DSLException e) {
+ catch (      final DSLException e) {
+        throw new IllegalArgumentException("Cloud configuration file: " + cloudFile + " could not be parsed: "+ e.getMessage(),e);
       }
     }
  else {
