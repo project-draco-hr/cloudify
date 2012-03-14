@@ -1,9 +1,9 @@
 {
-  String ipCIDR=nodeMap.get(CLOUD_NODE_IP_CIDR);
+  final String ipCIDR=nodeMap.get(CLOUD_NODE_IP_CIDR);
   try {
     nodeMap.put(CLOUD_NODE_IP_RANGE,ipCIDR2Range(ipCIDR));
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     throw new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_CIDR + " configuration: "+ ipCIDR);
   }
   return parseNodeRange(nodeMap);

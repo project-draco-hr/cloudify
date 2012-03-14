@@ -1,8 +1,8 @@
 {
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
-  String idPrefix=nodeMap.get(CLOUD_NODE_ID_PREFIX);
+  final String idPrefix=nodeMap.get(CLOUD_NODE_ID_PREFIX);
   String ipRange=nodeMap.get(CLOUD_NODE_IP_RANGE);
-  int ipDashIndex=ipRange.indexOf("-");
+  final int ipDashIndex=ipRange.indexOf("-");
   int ipLastDotIndex=StringUtils.lastIndexOf(ipRange,".");
   int ipDotsCount=StringUtils.countMatches(ipRange,".");
   if (ipLastDotIndex > ipDashIndex && ipDotsCount == 6) {
@@ -11,15 +11,15 @@
     ipDotsCount=StringUtils.countMatches(ipRange,".");
   }
   if (ipDashIndex < 0) {
-    new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + "configuration: "+ ipRange+ " is missing the token \"-\"");
+    throw new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + "configuration: "+ ipRange+ " is missing the token \"-\"");
   }
   if (ipDotsCount != 3 || ipDashIndex < ipLastDotIndex) {
-    new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + " configuration: "+ ipRange);
+    throw new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + " configuration: "+ ipRange);
   }
-  String ipPrefix=ipRange.substring(0,ipLastDotIndex + 1);
-  String ipSuffix=ipRange.substring(ipLastDotIndex + 1);
-  int ipRangeStart=Integer.parseInt((ipSuffix.substring(0,ipSuffix.indexOf("-"))));
-  int ipRangeEnd=Integer.parseInt((ipSuffix.substring(ipSuffix.indexOf("-") + 1)));
+  final String ipPrefix=ipRange.substring(0,ipLastDotIndex + 1);
+  final String ipSuffix=ipRange.substring(ipLastDotIndex + 1);
+  final int ipRangeStart=Integer.parseInt(ipSuffix.substring(0,ipSuffix.indexOf("-")));
+  final int ipRangeEnd=Integer.parseInt(ipSuffix.substring(ipSuffix.indexOf("-") + 1));
   for (int ip=ipRangeStart, index=1; ip <= ipRangeEnd; ip++, index++) {
     cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,idPrefix + index,ipPrefix + ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),idPrefix + index));
   }

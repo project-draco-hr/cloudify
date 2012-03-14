@@ -1,5 +1,5 @@
 {
-  StringBuilder str=new StringBuilder();
+  final StringBuilder str=new StringBuilder();
   for (int i=0; i < octets.length; ++i) {
     str.append(octets[i]);
     if (i != octets.length - 1) {

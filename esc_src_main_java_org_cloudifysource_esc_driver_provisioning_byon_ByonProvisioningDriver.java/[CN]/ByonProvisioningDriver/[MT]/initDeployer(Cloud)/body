@@ -4,11 +4,13 @@
       @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
         List<Map<String,String>> nodesList=null;
-        Map<String,Object> customSettings=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate()).getCustom();
+        final Map<String,Object> customSettings=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate()).getCustom();
         if (customSettings != null) {
           nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
         }
-        if (nodesList == null)         throw new InstallerException("Failed to create cloud deployer, invalid configuration");
+        if (nodesList == null) {
+          throw new InstallerException("Failed to create cloud deployer, invalid configuration");
+        }
         return new ByonDeployer(nodesList);
       }
     }

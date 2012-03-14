@@ -1,7 +1,7 @@
 {
-  for (  String ipAddress : IpAddresses) {
+  for (  final String ipAddress : IpAddresses) {
     for (    final CustomNode node : freeNodesPool) {
-      if ((StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress)) || (StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress))) {
+      if (StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress) || StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress)) {
         freeNodesPool.remove(node);
         allocatedNodesPool.add(node);
         break;
