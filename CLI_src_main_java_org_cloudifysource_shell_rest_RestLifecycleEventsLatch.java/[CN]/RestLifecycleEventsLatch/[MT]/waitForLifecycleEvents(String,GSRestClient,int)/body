@@ -1,10 +1,10 @@
 {
   createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
-    int cursor=0;
-    boolean isDone=false;
-    boolean timedOutOnServer=false;
-    String url;
-    Map<String,Object> lifecycleEventLogs=null;
+    private int cursor=0;
+    private boolean isDone=false;
+    private boolean timedOutOnServer=false;
+    private String url;
+    private Map<String,Object> lifecycleEventLogs=null;
     @Override public boolean isDone() throws CLIException, InterruptedException {
       url="/service/lifecycleEventContainerID/" + serviceLifecycleEventContainerID + "/cursor/"+ cursor;
       try {
