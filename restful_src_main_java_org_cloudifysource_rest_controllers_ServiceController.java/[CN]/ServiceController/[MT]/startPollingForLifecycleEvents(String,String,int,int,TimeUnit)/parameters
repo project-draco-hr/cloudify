@@ -1,4 +1,5 @@
 String serviceName
+String applicationName
 int plannedNumberOfInstances
 int timeout
 TimeUnit minutes

@@ -1,6 +1,6 @@
 {
   RestPollingCallable restPollingCallable;
-  restPollingCallable=new RestPollingCallable(serviceName,plannedNumberOfInstances,timeout,minutes);
+  restPollingCallable=new RestPollingCallable(serviceName,applicationName,plannedNumberOfInstances,timeout,minutes);
   LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
   UUID lifecycleEventsContainerID=UUID.randomUUID();
   this.lifecyclePollingContainer.put(lifecycleEventsContainerID,lifecycleEventsContainer);
