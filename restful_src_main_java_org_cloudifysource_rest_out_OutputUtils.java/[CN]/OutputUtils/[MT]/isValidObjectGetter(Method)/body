@@ -4,6 +4,9 @@
   if (methodName.equals("getGigaSpace") || methodName.equals("getIJSpace")) {
     return false;
   }
+  if (methodName.equals("getRegistrar")) {
+    return false;
+  }
   if (method.getModifiers() == Modifier.PRIVATE) {
     return false;
   }
