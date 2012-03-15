@@ -24,12 +24,10 @@
         displayer.printEvents(events);
       }
       if (isDone) {
-        if (!timedOutOnServer) {
-          displayer.eraseCurrentLine();
-        }
- else {
+        if (timedOutOnServer) {
           return false;
         }
+        displayer.eraseCurrentLine();
       }
       return isDone;
     }
