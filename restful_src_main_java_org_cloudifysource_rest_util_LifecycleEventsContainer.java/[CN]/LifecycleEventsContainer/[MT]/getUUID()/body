@@ -1,3 +1,3 @@
 {
-  return this.ContainerUUID;
+  return this.containerUUID;
 }
