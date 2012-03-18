@@ -1,6 +1,14 @@
 {
-  if (!this.eventsSet.contains(event)) {
+  if (this.eventsSet.contains(event)) {
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("Ignoring Instance Count Event: " + event);
+    }
+  }
+ else {
     this.eventsSet.add(event);
     this.eventsList.add(event);
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Instance Count Event: " + event);
+    }
   }
 }
