@@ -1,0 +1,8 @@
+{
+  for (  String application : adminFacade.getApplicationsList()) {
+    if (!application.equals(MANAGEMENT_APPLICATION)) {
+      adminFacade.uninstallApplication(application);
+    }
+  }
+  waitForUninstallApplications(Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+}

@@ -4,12 +4,23 @@
     if (!adminFacade.isConnected()) {
       throw new CLIException("Please connect to the cloud before tearing down");
     }
-    for (    String application : adminFacade.getApplicationsList()) {
-      if (!application.equals(MANAGEMENT_APPLICATION)) {
-        adminFacade.uninstallApplication(application);
+    uninstallApplications(end);
+  }
+ else {
+    if (adminFacade.isConnected()) {
+      try {
+        uninstallApplications(end);
+      }
+ catch (      InterruptedException e) {
+        throw e;
+      }
+catch (      TimeoutException e) {
+        logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
+      }
+catch (      CLIException e) {
+        logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
       }
     }
-    waitForUninstallApplications(Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   }
   logger.info("Terminating cloud machines");
   try {
