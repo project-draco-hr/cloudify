@@ -13,8 +13,6 @@
   File azurePropertiesFile=new File(gigaSpacesCloudifyDir,RELATIVE_AZURE_PROPERTIES_PATH);
   File cscfgFile=new File(cliExecutablePath.getParent(),RELATIVE_WORKER_ROLE_DIR + "\\ServiceConfiguration.Cloud.cscfg");
   AzureDeploymentConfigurationFile cscfg=new AzureDeploymentConfigurationFile(cscfgFile);
-  cscfg.setUploadAgentLogs(true);
-  cscfg.setUploadAllLogs(true);
   cscfg.flush();
   Properties newAzureProps=new Properties();
   newAzureProps.setProperty(AZURE_PROPERTIES_ACCOUNT_NAME_KEY,credentials.getBlobStorageAccountName());
