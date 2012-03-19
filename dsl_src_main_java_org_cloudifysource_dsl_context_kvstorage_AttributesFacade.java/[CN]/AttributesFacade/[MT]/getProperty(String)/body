@@ -2,7 +2,7 @@
   try {
     return super.getProperty(property);
   }
- catch (  MissingPropertyException e) {
+ catch (  final MissingPropertyException e) {
     return new ServiceAttributesAccessor(this,serviceContext.getApplicationName(),property,serviceContext);
   }
 }

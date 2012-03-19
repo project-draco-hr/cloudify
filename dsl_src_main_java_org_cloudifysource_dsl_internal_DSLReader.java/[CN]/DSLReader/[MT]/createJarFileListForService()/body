@@ -17,9 +17,9 @@
   if (usmLibDir.isFile()) {
     throw new IllegalArgumentException("The service includes a file called: " + CloudifyConstants.USM_LIB_DIR + ". This name may only be used for a directory containing service jar files");
   }
-  File[] libFiles=usmLibDir.listFiles();
-  List<String> result=new ArrayList<String>(libFiles.length);
-  for (  File file : libFiles) {
+  final File[] libFiles=usmLibDir.listFiles();
+  final List<String> result=new ArrayList<String>(libFiles.length);
+  for (  final File file : libFiles) {
     if (file.isFile() && file.getName().endsWith(".jar")) {
       result.add(file.getAbsolutePath());
     }

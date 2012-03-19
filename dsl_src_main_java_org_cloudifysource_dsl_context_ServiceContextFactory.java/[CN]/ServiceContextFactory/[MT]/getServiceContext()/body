@@ -13,7 +13,7 @@
 catch (    DSLException e) {
       throw new IllegalArgumentException("Failed to read service",e);
     }
-    ServiceContext newContext=new ServiceContext();
+    ServiceContextImpl newContext=new ServiceContextImpl();
     newContext.init(service,getAdmin(),new File(".").getAbsolutePath(),info);
     context=newContext;
   }

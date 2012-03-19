@@ -1,11 +1,11 @@
 {
-  Object result=readDslObject();
+  final Object result=readDslObject();
   if (result == null) {
     throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a DSL object");
   }
-  if (!(clazz.isAssignableFrom(result.getClass()))) {
+  if (!clazz.isAssignableFrom(result.getClass())) {
     throw new IllegalStateException("The file: " + dslFile + " did not evaluate to the required object type");
   }
-  @SuppressWarnings("unchecked") T resultObject=(T)result;
+  @SuppressWarnings("unchecked") final T resultObject=(T)result;
   return resultObject;
 }

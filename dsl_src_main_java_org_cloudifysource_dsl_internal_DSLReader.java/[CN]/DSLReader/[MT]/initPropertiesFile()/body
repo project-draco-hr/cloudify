@@ -22,7 +22,7 @@
     fileNamePrefix=baseFileName.substring(0,indexOfLastComma);
   }
   final String defaultPropertiesFileName=fileNamePrefix + ".properties";
-  File defaultPropertiesFile=new File(workDir,defaultPropertiesFileName);
+  final File defaultPropertiesFile=new File(workDir,defaultPropertiesFileName);
   if (defaultPropertiesFile.exists()) {
     this.propertiesFileName=defaultPropertiesFileName;
     this.propertiesFile=defaultPropertiesFile;

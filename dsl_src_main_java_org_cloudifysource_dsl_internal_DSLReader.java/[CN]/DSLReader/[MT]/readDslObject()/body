@@ -2,21 +2,21 @@
   try {
     init();
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new DSLException("Failed to initialize DSL Reader: " + e.getMessage(),e);
   }
   LinkedHashMap<Object,Object> properties=null;
   try {
     properties=createDSLProperties();
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
   }
   if (this.createServiceContext) {
-    this.context=new ServiceContext();
+    this.context=new ServiceContextImpl();
   }
   final GroovyShell gs=createGroovyShell(properties);
-  Object result=evaluateGroovyScript(gs);
+  final Object result=evaluateGroovyScript(gs);
   if (this.createServiceContext) {
     if (!(result instanceof Service)) {
       throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Sevice. " + "Set the 'createServiceContext' option to false if you do not need a service conext");

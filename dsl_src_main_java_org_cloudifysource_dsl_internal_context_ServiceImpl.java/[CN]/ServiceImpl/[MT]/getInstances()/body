@@ -1,0 +1,15 @@
+{
+  if (this.pu != null) {
+    final ProcessingUnitInstance[] puis=pu.getInstances();
+    final ServiceInstanceImpl[] sis=new ServiceInstanceImpl[puis.length];
+    for (int i=0; i < sis.length; i++) {
+      final ProcessingUnitInstance pui=puis[i];
+      final ServiceInstanceImpl serviceInstance=new ServiceInstanceImpl(pui);
+      sis[i]=serviceInstance;
+    }
+    return sis;
+  }
+ else {
+    return new ServiceInstanceImpl[]{new ServiceInstanceImpl(null)};
+  }
+}
