@@ -16,6 +16,9 @@
       istream=new ByteArrayInputStream(inputData.getBytes());
     }
   }
+  if (inputString != null) {
+    istream=new ByteArrayInputStream(inputString.getBytes());
+  }
   try {
     final ChannelExec channel;
     session.setTimeout((int)maxwait);
@@ -26,9 +29,10 @@
     if (istream != null) {
       channel.setInputStream(istream);
     }
+    channel.setPty(usePty);
     channel.connect();
     thread=new Thread(){
-      @Override public void run(){
+      public void run(){
         while (!channel.isClosed()) {
           if (thread == null) {
             return;
