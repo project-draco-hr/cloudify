@@ -1,9 +1,0 @@
-{
-  try {
-    final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/undeploy";
-    client.delete(url);
-  }
- catch (  final ErrorStatusException e) {
-    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
-  }
-}

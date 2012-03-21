@@ -6,27 +6,13 @@
   if (verbose) {
     logger.info("Found containers: " + containerIdsOfService);
   }
-  if (timeoutInMinutes > 0) {
-    printStatusMessage(containerIdsOfService.size(),containerIdsOfService.size(),containerIdsOfService);
+  Map<String,String> undeployServiceResponse=adminFacade.undeploy(getCurrentApplicationName(),serviceName,timeoutInMinutes);
+  if (undeployServiceResponse.containsKey(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID)) {
+    String pollingID=undeployServiceResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
+    ((RestAdminFacade)this.adminFacade).waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
   }
-  adminFacade.undeploy(getCurrentApplicationName(),serviceName);
-  if (timeoutInMinutes > 0) {
-    createConditionLatch(timeoutInMinutes,TimeUnit.MINUTES).waitFor(new Predicate(){
-      /** 
- * {@inheritDoc}
- */
-      @Override public boolean isDone() throws CLIException {
-        final Set<String> allContainerIds=((RestAdminFacade)adminFacade).getGridServiceContainerUids();
-        final Set<String> remainingContainersForService=new HashSet<String>(containerIdsOfService);
-        remainingContainersForService.retainAll(allContainerIds);
-        final boolean isDone=remainingContainersForService.isEmpty();
-        if (!isDone) {
-          printStatusMessage(remainingContainersForService.size(),containerIdsOfService.size(),remainingContainersForService);
-        }
-        return isDone;
-      }
-    }
-);
+ else {
+    logger.info("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");
   }
   return getFormattedMessage("undeployed_successfully",serviceName);
 }

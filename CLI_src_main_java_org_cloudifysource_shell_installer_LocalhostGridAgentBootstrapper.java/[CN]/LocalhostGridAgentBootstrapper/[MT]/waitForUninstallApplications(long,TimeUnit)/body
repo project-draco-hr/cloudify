@@ -1,6 +1,5 @@
 {
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    boolean messagePublished=false;
     @Override public boolean isDone() throws CLIException, InterruptedException {
       final List<String> applications=adminFacade.getApplicationsList();
       boolean done=true;
@@ -10,16 +9,8 @@
           break;
         }
       }
-      if (!done) {
-        if (!messagePublished) {
-          publishEvent("Waiting for all applications to uninstall");
-          messagePublished=true;
-        }
- else {
-          publishEvent(null);
-        }
-        logger.fine("Waiting for all applications to uninstall");
-      }
+      publishEvent(null);
+      logger.fine("Waiting for all applications to uninstall");
       return done;
     }
   }

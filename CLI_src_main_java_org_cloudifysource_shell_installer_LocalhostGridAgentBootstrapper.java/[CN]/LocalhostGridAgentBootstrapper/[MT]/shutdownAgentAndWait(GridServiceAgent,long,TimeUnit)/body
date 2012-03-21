@@ -16,7 +16,10 @@
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       if (!messagePublished) {
-        publishEvent("Waiting for agent to shutdown");
+        String shuttingDownAgentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_agent_teardown_localcloud");
+        publishEvent(shuttingDownAgentMessage);
+        String shuttingDownManagmentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_managment");
+        publishEvent(shuttingDownManagmentMessage);
         messagePublished=true;
       }
       logger.fine("Waiting for agent to shutdown");

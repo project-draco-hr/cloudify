@@ -1,3 +1,0 @@
-int remainingServiceContainers
-int allServiceContainers
-Set<String> remainingContainerIDs
