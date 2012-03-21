@@ -1,4 +1,6 @@
 {
   this.isUninstall=isUninstall;
-  this.pollingInterval=UNINSTALL_POLLING_INTERVAL;
+  if (isUninstall) {
+    this.pollingInterval=UNINSTALL_POLLING_INTERVAL;
+  }
 }

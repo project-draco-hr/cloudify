@@ -1,6 +1,7 @@
 {
   Map<String,Object> resultsMap=new HashMap<String,Object>();
   resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,false);
+  resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,false);
   if (!lifecyclePollingContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
     return errorStatus("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
   }
@@ -17,6 +18,7 @@
       }
  else {
         logger.log(Level.INFO,"an exception occurred during the" + " lifecycle events polling task.",e);
+        resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,true);
       }
     }
 catch (    InterruptedException e) {
@@ -25,6 +27,7 @@ catch (    InterruptedException e) {
 catch (    TimeoutException e) {
       logger.log(Level.INFO,"Could not retrieve polling task result",e);
       resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,false);
+      resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,false);
     }
   }
   List<String> lifecycleEvents=container.getLifecycleEvents(cursor);

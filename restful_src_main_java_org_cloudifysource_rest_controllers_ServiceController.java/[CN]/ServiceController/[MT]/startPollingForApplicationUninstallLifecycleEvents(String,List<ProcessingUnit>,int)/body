@@ -1,15 +1,19 @@
 {
   RestPollingCallable restPollingCallable;
-  logger.info("starting POLL on service : " + serviceName + " app: "+ applicationName);
   LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
   UUID lifecycleEventsContainerID=UUID.randomUUID();
   this.lifecyclePollingContainer.put(lifecycleEventsContainerID,lifecycleEventsContainer);
   lifecycleEventsContainer.setEventsSet(this.eventsSet);
-  restPollingCallable=new RestPollingCallable(applicationName,timeout,minutes);
-  restPollingCallable.addService(serviceName,plannedNumberOfInstances);
+  restPollingCallable=new RestPollingCallable(applicationName,timeoutInMinutes,TimeUnit.MINUTES);
+  for (  ProcessingUnit processingUnit : uninstallOrder) {
+    String processingUnitName=processingUnit.getName();
+    String serviceName=ServiceUtils.getApplicationServiceName(processingUnitName,applicationName);
+    restPollingCallable.addService(serviceName,0);
+  }
+  restPollingCallable.setIsServiceInstall(false);
   restPollingCallable.setAdmin(admin);
-  restPollingCallable.setIsServiceInstall(true);
   restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
+  restPollingCallable.setIsUninstall(true);
   Future<Boolean> future=executorService.submit(restPollingCallable);
   lifecycleEventsContainer.setFutureTask(future);
   return lifecycleEventsContainerID;

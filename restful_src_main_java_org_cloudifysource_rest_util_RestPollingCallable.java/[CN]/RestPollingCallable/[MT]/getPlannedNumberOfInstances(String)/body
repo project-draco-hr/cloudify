@@ -1,4 +1,7 @@
 {
+  if (isUninstall) {
+    return 0;
+  }
   String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   if (processingUnit != null) {
@@ -10,5 +13,8 @@
       }
     }
   }
-  return serviceNames.get(serviceName);
+  if (serviceName.contains(serviceName)) {
+    return serviceNames.get(serviceName);
+  }
+  throw new IllegalStateException("Service planned number of instances is undefined");
 }

@@ -3,8 +3,12 @@
   UUID lifecycleEventsContainerUUID=UUID.randomUUID();
   lifecycleEventsContainer.setUUID(lifecycleEventsContainerUUID);
   this.lifecyclePollingContainer.put(lifecycleEventsContainerUUID,lifecycleEventsContainer);
-  RestPollingCallable restPollingCallable=new RestPollingCallable(application,timeout,timeUnit);
-  restPollingCallable.setIsUninstall(false);
+  lifecycleEventsContainer.setEventsSet(this.eventsSet);
+  RestPollingCallable restPollingCallable=new RestPollingCallable(application.getName(),timeout,timeUnit);
+  for (  Service service : application.getServices()) {
+    restPollingCallable.addService(service.getName(),service.getNumInstances());
+  }
+  restPollingCallable.setIsServiceInstall(false);
   restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
   restPollingCallable.setAdmin(admin);
   Future<Boolean> future=executorService.submit(restPollingCallable);

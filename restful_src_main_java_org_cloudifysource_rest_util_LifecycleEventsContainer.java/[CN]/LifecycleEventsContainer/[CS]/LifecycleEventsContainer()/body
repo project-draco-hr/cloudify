@@ -1,4 +1,4 @@
 {
-  this.eventsSet=new HashSet<String>();
+  this.serviceInstanceCountEventsSet=new HashSet<String>();
   this.eventsList=new ArrayList<String>();
 }

@@ -7,6 +7,7 @@
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
+  UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes);
   if (uninstallOrder.size() > 0) {
     ((InternalAdmin)admin).scheduleAdminOperation(new Runnable(){
       @Override public void run(){
@@ -32,7 +33,9 @@
   }
   final String errors=sb.toString();
   if (errors.length() == 0) {
-    return RestUtils.successStatus();
+    Map<String,Object> returnMap=new HashMap<String,Object>();
+    returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
+    return RestUtils.successStatus(returnMap);
   }
   return RestUtils.errorStatus(errors);
 }
