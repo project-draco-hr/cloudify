@@ -4,5 +4,7 @@
   }
   ((CustomNodeImpl)node).setGroup(null);
   allocatedNodesPool.remove(node);
-  freeNodesPool.add(node);
+  if (!freeNodesPool.contains(node)) {
+    freeNodesPool.add(node);
+  }
 }

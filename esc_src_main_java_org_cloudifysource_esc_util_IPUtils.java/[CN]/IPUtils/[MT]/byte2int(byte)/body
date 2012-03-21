@@ -1,0 +1,7 @@
+{
+  int i=b;
+  if (b < 0) {
+    i=b & 0x7f + 128;
+  }
+  return i;
+}

@@ -1,27 +1,24 @@
 {
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
   final String idPrefix=nodeMap.get(CLOUD_NODE_ID_PREFIX);
-  String ipRange=nodeMap.get(CLOUD_NODE_IP_RANGE);
+  final String ipRange=nodeMap.get(CLOUD_NODE_IP_RANGE);
   final int ipDashIndex=ipRange.indexOf("-");
-  int ipLastDotIndex=StringUtils.lastIndexOf(ipRange,".");
-  int ipDotsCount=StringUtils.countMatches(ipRange,".");
-  if (ipLastDotIndex > ipDashIndex && ipDotsCount == 6) {
-    ipRange=ipRange.substring(0,ipDashIndex + 1) + ipRange.substring(ipLastDotIndex + 1);
-    ipLastDotIndex=StringUtils.lastIndexOf(ipRange,".");
-    ipDotsCount=StringUtils.countMatches(ipRange,".");
-  }
   if (ipDashIndex < 0) {
-    throw new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + "configuration: "+ ipRange+ " is missing the token \"-\"");
+    throw new InstallerException("Failed to start cloud node, invalid IP range configuration: " + ipRange + " is missing the token \"-\"");
   }
-  if (ipDotsCount != 3 || ipDashIndex < ipLastDotIndex) {
-    throw new InstallerException("Failed to start cloud node, invalid " + CLOUD_NODE_IP_RANGE + " configuration: "+ ipRange);
+  final String ipRangeStart=ipRange.substring(0,ipRange.indexOf("-"));
+  final String ipRangeEnd=ipRange.substring(ipRange.indexOf("-") + 1);
+  String ip=ipRangeStart;
+  int index=1;
+  try {
+    while (IPUtils.ip2Long(ip) <= IPUtils.ip2Long(ipRangeEnd)) {
+      cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,idPrefix + index,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),idPrefix + index));
+      index++;
+      ip=IPUtils.getNextIP(ip);
+    }
   }
-  final String ipPrefix=ipRange.substring(0,ipLastDotIndex + 1);
-  final String ipSuffix=ipRange.substring(ipLastDotIndex + 1);
-  final int ipRangeStart=Integer.parseInt(ipSuffix.substring(0,ipSuffix.indexOf("-")));
-  final int ipRangeEnd=Integer.parseInt(ipSuffix.substring(ipSuffix.indexOf("-") + 1));
-  for (int ip=ipRangeStart, index=1; ip <= ipRangeEnd; ip++, index++) {
-    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,idPrefix + index,ipPrefix + ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),idPrefix + index));
+ catch (  final Exception e) {
+    throw new InstallerException("Failed to start cloud machine.",e);
   }
   return cloudNodes;
 }

@@ -7,8 +7,10 @@
     throw new InstallerException("Failed to create new cloud node, all nodes are currently used");
   }
   node=freeNodesPool.iterator().next();
-  freeNodesPool.remove(node);
-  allocatedNodesPool.add(node);
   ((CustomNodeImpl)node).setNodeName(name);
+  freeNodesPool.remove(node);
+  if (!allocatedNodesPool.contains(node)) {
+    allocatedNodesPool.add(node);
+  }
   return node;
 }

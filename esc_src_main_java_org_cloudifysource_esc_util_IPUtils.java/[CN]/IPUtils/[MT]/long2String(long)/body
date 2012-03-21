@@ -1,0 +1,7 @@
+{
+  final long a=(ip & 0xff000000) >> 24;
+  final long b=(ip & 0x00ff0000) >> 16;
+  final long c=(ip & 0x0000ff00) >> 8;
+  final long d=ip & 0xff;
+  return a + "." + b+ "."+ c+ "."+ d;
+}

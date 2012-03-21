@@ -4,11 +4,14 @@
     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP))) {
       cloudNodes.add(parseOneNode(nodeMap));
     }
- else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_RANGE))) {
-      cloudNodes.addAll(parseNodeRange(nodeMap));
+ else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_LIST))) {
+      cloudNodes.addAll(parseNodeList(nodeMap));
     }
  else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_CIDR))) {
       cloudNodes.addAll(parseNodeCIDR(nodeMap));
+    }
+ else     if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_RANGE))) {
+      cloudNodes.addAll(parseNodeRange(nodeMap));
     }
  else {
       throw new InstallerException("Failed to start cloud node, invalid IP/ID configuration.");

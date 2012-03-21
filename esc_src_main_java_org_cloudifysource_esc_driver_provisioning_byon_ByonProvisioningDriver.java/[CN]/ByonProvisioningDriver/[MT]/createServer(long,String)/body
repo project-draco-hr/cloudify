@@ -16,7 +16,6 @@
   }
  catch (  final Exception e) {
     logger.log(Level.SEVERE,"Cloud server could not be started on " + machineDetails.getIp() + ", SSH connection failed.",e);
-    deployer.shutdownServer(node);
     deployer.invalidateServer(node);
     throw new CloudProvisioningException(e);
   }

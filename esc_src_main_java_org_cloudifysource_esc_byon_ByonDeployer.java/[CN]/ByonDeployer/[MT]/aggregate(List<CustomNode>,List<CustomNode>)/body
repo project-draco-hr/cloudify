@@ -1,0 +1,9 @@
+{
+  final List<CustomNode> totalList=new ArrayList<CustomNode>(basicList);
+  for (  final CustomNode node : newItems) {
+    if (!totalList.contains(node)) {
+      totalList.add(node);
+    }
+  }
+  return totalList;
+}

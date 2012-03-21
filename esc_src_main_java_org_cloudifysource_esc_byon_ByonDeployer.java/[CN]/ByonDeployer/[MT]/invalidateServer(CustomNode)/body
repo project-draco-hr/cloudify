@@ -1,5 +1,7 @@
 {
   freeNodesPool.remove(node);
   allocatedNodesPool.remove(node);
-  invalidNodesPool.add(node);
+  if (!invalidNodesPool.contains(node)) {
+    invalidNodesPool.add(node);
+  }
 }
