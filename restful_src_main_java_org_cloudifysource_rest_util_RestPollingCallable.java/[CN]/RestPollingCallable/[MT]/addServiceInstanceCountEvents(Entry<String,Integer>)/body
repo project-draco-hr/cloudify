@@ -4,10 +4,7 @@
   int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
   int numberOfServiceInstances=getNumberOfServiceInstances(absolutePuName);
   if (numberOfServiceInstances == 0) {
-    if (isUninstall) {
-      this.lifecycleEventsContainer.addInstanceCountEvent("Undeployed service " + serviceName + ".");
-    }
- else {
+    if (!isUninstall) {
       this.lifecycleEventsContainer.addInstanceCountEvent("Deploying " + serviceName + " with "+ plannedNumberOfInstances+ " planned instances.");
     }
   }
@@ -20,12 +17,17 @@
         this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" successfully installed ("+ numberOfServiceInstances+ " Instances)");
         this.serviceNames.remove(serviceName);
       }
- else {
-        this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" uninstalled successfully");
-      }
     }
  else {
       this.serviceNames.remove(serviceName);
+    }
+  }
+  final Zone zone=admin.getZones().getByName(absolutePuName);
+  if (zone == null) {
+    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist");
+    if (isUninstall) {
+      this.lifecycleEventsContainer.addInstanceCountEvent("Undeployed service " + serviceName + ".");
+      this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" uninstalled successfully");
     }
   }
 }

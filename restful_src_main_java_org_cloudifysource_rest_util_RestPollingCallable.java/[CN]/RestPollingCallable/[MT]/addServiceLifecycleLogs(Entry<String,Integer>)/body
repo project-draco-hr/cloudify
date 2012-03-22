@@ -8,7 +8,7 @@
   if (zone == null) {
     logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist");
     if (isUninstall) {
-      logger.log(Level.INFO,"Polling for service " + absolutePuName + " has ended");
+      logger.log(Level.INFO,"Polling for service " + absolutePuName + " has ended successfully");
       this.serviceNames.remove(serviceName);
     }
     return;
