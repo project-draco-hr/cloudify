@@ -13,5 +13,6 @@
   restPollingCallable.setAdmin(admin);
   Future<Boolean> future=executorService.submit(restPollingCallable);
   lifecycleEventsContainer.setFutureTask(future);
+  logger.log(Level.INFO,"polling container UUID is " + lifecycleEventsContainer.toString());
   return lifecycleEventsContainerUUID;
 }

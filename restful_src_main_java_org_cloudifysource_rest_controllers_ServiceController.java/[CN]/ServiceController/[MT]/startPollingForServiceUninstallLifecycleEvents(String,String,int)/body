@@ -12,5 +12,6 @@
   restPollingCallable.setIsUninstall(true);
   Future<Boolean> future=executorService.submit(restPollingCallable);
   lifecycleEventsContainer.setFutureTask(future);
+  logger.log(Level.INFO,"polling container UUID is " + lifecycleEventsContainerID.toString());
   return lifecycleEventsContainerID;
 }

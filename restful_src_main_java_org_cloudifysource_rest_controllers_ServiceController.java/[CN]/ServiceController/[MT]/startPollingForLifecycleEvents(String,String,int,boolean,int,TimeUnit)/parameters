@@ -1,5 +1,6 @@
 String serviceName
 String applicationName
 int plannedNumberOfInstances
+boolean isServiceInstall
 int timeout
 TimeUnit minutes

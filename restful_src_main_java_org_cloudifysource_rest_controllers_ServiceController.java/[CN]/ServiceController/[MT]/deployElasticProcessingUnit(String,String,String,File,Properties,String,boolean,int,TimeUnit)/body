@@ -49,10 +49,10 @@
   String lifecycleEventContainerID="";
   if (!isApplicationInstall) {
     if (service == null) {
-      lifecycleEventContainerID=startPollingForLifecycleEvents(ServiceUtils.getApplicationServiceName(serviceName,applicationName),applicationName,1,timeout,timeUnit).toString();
+      lifecycleEventContainerID=startPollingForLifecycleEvents(ServiceUtils.getApplicationServiceName(serviceName,applicationName),applicationName,1,true,timeout,timeUnit).toString();
     }
  else {
-      lifecycleEventContainerID=startPollingForLifecycleEvents(service.getName(),applicationName,service.getNumInstances(),timeout,timeUnit).toString();
+      lifecycleEventContainerID=startPollingForLifecycleEvents(service.getName(),applicationName,service.getNumInstances(),true,timeout,timeUnit).toString();
     }
   }
   return lifecycleEventContainerID;

@@ -8,9 +8,10 @@
   restPollingCallable=new RestPollingCallable(applicationName,timeout,minutes);
   restPollingCallable.addService(serviceName,plannedNumberOfInstances);
   restPollingCallable.setAdmin(admin);
-  restPollingCallable.setIsServiceInstall(true);
+  restPollingCallable.setIsServiceInstall(isServiceInstall);
   restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
   Future<Boolean> future=executorService.submit(restPollingCallable);
   lifecycleEventsContainer.setFutureTask(future);
+  logger.log(Level.INFO,"polling container UUID is " + lifecycleEventsContainerID.toString());
   return lifecycleEventsContainerID;
 }
