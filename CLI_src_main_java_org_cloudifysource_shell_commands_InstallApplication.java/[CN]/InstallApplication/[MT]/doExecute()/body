@@ -23,7 +23,6 @@
   logger.info("Uploading application " + applicationName);
   Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,timeoutInMinutes);
   String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
-  String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   if (!applicationFile.isFile()) {
     zipFile.delete();
   }
@@ -31,7 +30,13 @@
     throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);
   }
   printApplicationInfo(application);
-  ((RestAdminFacade)adminFacade).waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
+  if (result.containsKey(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID)) {
+    String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
+    this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
+  }
+ else {
+    throw new CLIException("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");
+  }
   session.put(Constants.ACTIVE_APP,applicationName);
   GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
   return this.getFormattedMessage("application_installed_succesfully",Color.GREEN,applicationName);
