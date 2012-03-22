@@ -30,8 +30,7 @@
           return false;
         }
         if (exceptionOnServer) {
-          displayer.printEvent("Event polling failed on remote server." + "For more information regarding the installation, please refer to logs");
-          return false;
+          throw new CLIException("Event polling failed on remote server." + "For more information regarding the installation, please refer to full logs");
         }
         displayer.eraseCurrentLine();
       }
