@@ -1,3 +1,0 @@
-int plannedNumberOfInstances
-Integer currentNumberOfInstances
-boolean statusChanged

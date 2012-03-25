@@ -1,3 +1,0 @@
-{
-  return handleEventLogs(serviceName,applicationName,plannedNumberOfInstances,serviceShutDownEventsCount,false);
-}

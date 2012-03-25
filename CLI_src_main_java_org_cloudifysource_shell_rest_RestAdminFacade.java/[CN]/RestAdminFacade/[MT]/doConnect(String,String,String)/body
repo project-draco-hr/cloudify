@@ -18,7 +18,6 @@
   }
   try {
     client=new GSRestClient(user,password,urlObj);
-    eventLoggingTailer=new EventLoggingTailer();
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
  catch (  final ErrorStatusException e) {

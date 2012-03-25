@@ -1,7 +1,0 @@
-String serviceName
-String applicationName
-int plannedNumberOfInstances
-int initialNumberOfInstances
-String timeoutErrorMessage
-long timeout
-TimeUnit timeunit

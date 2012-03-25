@@ -1,5 +1,0 @@
-String serviceName
-String applicationName
-int plannedNumberOfInstances
-int currentServiceShutDownEventsCount
-boolean firstTime
