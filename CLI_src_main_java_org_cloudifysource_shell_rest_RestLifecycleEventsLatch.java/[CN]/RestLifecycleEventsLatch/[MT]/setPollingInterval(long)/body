@@ -3,5 +3,6 @@
     this.pollingInterval=pollingIntervalInMillis;
   }
  else {
+    logger.log(Level.INFO,"Polling interveal was set to the minimum polling" + " interval allowed: " + MIN_POLLING_INTERVAL + "seconds");
   }
 }
