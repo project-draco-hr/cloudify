@@ -6,7 +6,7 @@
     }
     for (    final CustomNode customNode : managementServers) {
       stopManagementServicesAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),2,TimeUnit.MINUTES);
-      deployer.shutdownServer(customNode);
+      deployer.shutdownServer(cloudTemplateName,customNode);
     }
   }
  catch (  final InterruptedException e) {

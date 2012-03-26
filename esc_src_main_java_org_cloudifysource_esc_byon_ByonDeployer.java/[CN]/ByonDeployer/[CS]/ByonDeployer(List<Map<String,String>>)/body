@@ -1,5 +1,0 @@
-{
-  final List<CustomNode> parsedNodes=parseCloudNodes(nodesList);
-  freeNodesPool.clear();
-  freeNodesPool.addAll(aggregate(freeNodesPool,parsedNodes));
-}

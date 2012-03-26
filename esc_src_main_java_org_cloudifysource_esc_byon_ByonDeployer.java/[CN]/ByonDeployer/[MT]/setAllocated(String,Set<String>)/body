@@ -1,0 +1,16 @@
+{
+  final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
+  final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
+  final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
+  for (  final String ipAddress : ipAddresses) {
+    for (    final CustomNode node : freeNodesPool) {
+      if (StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress) || StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress)) {
+        freeNodesPool.remove(node);
+        if (!allocatedNodesPool.contains(node)) {
+          allocatedNodesPool.add(node);
+        }
+        break;
+      }
+    }
+  }
+}

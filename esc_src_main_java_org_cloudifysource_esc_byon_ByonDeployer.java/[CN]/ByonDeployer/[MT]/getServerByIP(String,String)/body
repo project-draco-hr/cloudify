@@ -1,0 +1,10 @@
+{
+  CustomNode selectedNode=null;
+  for (  final CustomNode node : getAllNodesByTemplateName(templateName)) {
+    if (StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress) || StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress)) {
+      selectedNode=node;
+      break;
+    }
+  }
+  return selectedNode;
+}

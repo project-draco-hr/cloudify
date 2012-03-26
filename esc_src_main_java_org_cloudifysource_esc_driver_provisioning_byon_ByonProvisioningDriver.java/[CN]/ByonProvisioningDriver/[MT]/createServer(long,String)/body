@@ -3,7 +3,7 @@
   final MachineDetails machineDetails;
   try {
     logger.info("Cloudify Deployer is creating a new server with name: " + name + ". This may take a few minutes");
-    node=deployer.createServer(name);
+    node=deployer.createServer(cloudTemplateName,name);
   }
  catch (  final InstallerException e) {
     throw new CloudProvisioningException("Failed to create cloud server",e);
@@ -16,7 +16,7 @@
   }
  catch (  final Exception e) {
     logger.log(Level.SEVERE,"Cloud server could not be started on " + machineDetails.getIp() + ", SSH connection failed.",e);
-    deployer.invalidateServer(node);
+    deployer.invalidateServer(cloudTemplateName,node);
     throw new CloudProvisioningException(e);
   }
   return machineDetails;

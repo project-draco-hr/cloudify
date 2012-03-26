@@ -1,7 +1,0 @@
-{
-  final Set<CustomNode> allNodes=new HashSet<CustomNode>();
-  allNodes.addAll(freeNodesPool);
-  allNodes.addAll(allocatedNodesPool);
-  allNodes.addAll(invalidNodesPool);
-  return allNodes;
-}

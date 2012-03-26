@@ -1,0 +1,3 @@
+{
+  shutdownServer(templateName,getServerByIP(templateName,serverIp));
+}

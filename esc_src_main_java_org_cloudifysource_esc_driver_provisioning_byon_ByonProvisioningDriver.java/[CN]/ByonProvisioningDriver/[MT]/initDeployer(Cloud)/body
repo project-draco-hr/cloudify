@@ -3,15 +3,21 @@
     deployer=(ByonDeployer)context.getOrCreate("UNIQUE_BYON_DEPLOYER_ID",new Callable<Object>(){
       @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
+        ByonDeployer deployer=new ByonDeployer();
         List<Map<String,String>> nodesList=null;
-        final Map<String,Object> customSettings=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate()).getCustom();
-        if (customSettings != null) {
-          nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
+        Map<String,CloudTemplate> templates=cloud.getTemplates();
+        Map<String,CloudTemplate> templatesMap=cloud.getTemplates();
+        for (        String templateName : templatesMap.keySet()) {
+          final Map<String,Object> customSettings=cloud.getTemplates().get(templateName).getCustom();
+          if (customSettings != null) {
+            nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
+          }
+          if (nodesList == null) {
+            throw new InstallerException("Failed to create cloud deployer, invalid configuration");
+          }
+          deployer.addNodesList(templateName,nodesList);
         }
-        if (nodesList == null) {
-          throw new InstallerException("Failed to create cloud deployer, invalid configuration");
-        }
-        return new ByonDeployer(nodesList);
+        return deployer;
       }
     }
 );

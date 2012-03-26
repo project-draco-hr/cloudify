@@ -1,0 +1,13 @@
+{
+  if (serverName == null) {
+    return;
+  }
+  final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
+  final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
+  final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
+  ((CustomNodeImpl)serverName).setGroup(null);
+  allocatedNodesPool.remove(serverName);
+  if (!freeNodesPool.contains(serverName)) {
+    freeNodesPool.add(serverName);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
+  final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
+  final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
+  final List<CustomNode> invalidNodesPool=templateLists.get(NODES_LIST_INVALID);
+  freeNodesPool.remove(serverName);
+  allocatedNodesPool.remove(serverName);
+  if (!invalidNodesPool.contains(serverName)) {
+    invalidNodesPool.add(serverName);
+  }
+}
