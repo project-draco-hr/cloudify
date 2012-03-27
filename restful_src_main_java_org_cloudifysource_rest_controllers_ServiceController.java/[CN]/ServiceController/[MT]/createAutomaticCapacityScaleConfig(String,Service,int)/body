@@ -1,34 +1,34 @@
 {
-  AutoScalingDetails autoScaling=service.getAutoScaling();
-  if (service.getMinNumInstances() <= 0) {
-    throw new DSLException("Minimum number of instances (" + service.getMinNumInstances() + ") must be 1 or higher.");
+  ScalingRulesDetails autoScaling=service.getScalingRules();
+  if (service.getMinAllowedInstances() <= 0) {
+    throw new DSLException("Minimum number of instances (" + service.getMinAllowedInstances() + ") must be 1 or higher.");
   }
-  if (service.getMinNumInstances() > service.getMaxNumInstances()) {
-    throw new DSLException("maximum number of instances (" + service.getMaxNumInstances() + ") must be equal or greater than the minimum number of instances ("+ service.getMinNumInstances()+ ")");
+  if (service.getMinAllowedInstances() > service.getMaxAllowedInstances()) {
+    throw new DSLException("maximum number of instances (" + service.getMaxAllowedInstances() + ") must be equal or greater than the minimum number of instances ("+ service.getMinAllowedInstances()+ ")");
   }
-  if (service.getMinNumInstances() > service.getNumInstances()) {
-    throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or greater than the minimum number of instances ("+ service.getMinNumInstances()+ ")");
+  if (service.getMinAllowedInstances() > service.getNumInstances()) {
+    throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or greater than the minimum number of instances ("+ service.getMinAllowedInstances()+ ")");
   }
-  if (service.getNumInstances() > service.getMaxNumInstances()) {
-    throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or less than the maximum number of instances ("+ service.getMaxNumInstances()+ ")");
+  if (service.getNumInstances() > service.getMaxAllowedInstances()) {
+    throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or less than the maximum number of instances ("+ service.getMaxAllowedInstances()+ ")");
   }
   ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
   statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   statisticsId.setMetric(autoScaling.getMetric());
   statisticsId.setInstancesStatistics(autoScaling.getInstancesStatistics().toInstancesStatistics());
-  if (autoScaling.getTimeWindowSeconds() <= autoScaling.getSamplingPeriodSeconds()) {
+  if (autoScaling.getMovingTimeRangeInSeconds() <= autoScaling.getSamplingPeriodInSeconds()) {
     if (logger.isLoggable(Level.FINE)) {
       logger.fine("Deploying service " + serviceName + " with auto scaling that monitors the last sample of "+ autoScaling.getMetric());
     }
     statisticsId.setTimeWindowStatistics(new LastSampleTimeWindowStatisticsConfig());
   }
  else {
-    statisticsId.setTimeWindowStatistics(autoScaling.getTimeStatistics().toTimeWindowStatistics(autoScaling.getTimeWindowSeconds(),TimeUnit.SECONDS));
+    statisticsId.setTimeWindowStatistics(autoScaling.getTimeStatistics().toTimeWindowStatistics(autoScaling.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
   }
   AutomaticCapacityScaleRuleConfig rule=new AutomaticCapacityScaleRuleConfigurer().lowThreshold(autoScaling.getLowThreshold()).highThreshold(autoScaling.getHighThreshold()).statistics(statisticsId).create();
-  CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity((int)(service.getMinNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
+  CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity((int)(service.getMinAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
   CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity((int)(service.getNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
-  CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity((int)(service.getMaxNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
-  AutomaticCapacityScaleConfig scaleConfig=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).statisticsPollingInterval(autoScaling.getSamplingPeriodSeconds(),TimeUnit.SECONDS).addRule(rule).create();
+  CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity((int)(service.getMaxAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
+  AutomaticCapacityScaleConfig scaleConfig=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).statisticsPollingInterval(autoScaling.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).addRule(rule).create();
   return scaleConfig;
 }
