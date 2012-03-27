@@ -12,6 +12,7 @@
     }
   }
   if (!foundFreeName) {
+    publishEvent("prov_servers_limit_reached",MAX_SERVERS_LIMIT);
     throw new CloudProvisioningException("Number of servers has exceeded allowed server limit (" + MAX_SERVERS_LIMIT + ")");
   }
   return serverName;

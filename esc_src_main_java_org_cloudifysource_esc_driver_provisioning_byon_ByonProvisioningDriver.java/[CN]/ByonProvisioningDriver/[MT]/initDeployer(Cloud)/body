@@ -12,6 +12,7 @@
             nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
           }
           if (nodesList == null) {
+            publishEvent("prov_invalid_configuration");
             throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration");
           }
           deployer.addNodesList(templateName,nodesList);

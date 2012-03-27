@@ -23,6 +23,7 @@
     }
   }
  catch (  final Exception e) {
+    publishEvent("prov_agent_shutdown_failed");
     throw new CloudProvisioningException("Failed to shutdown agent.",e);
   }
 }

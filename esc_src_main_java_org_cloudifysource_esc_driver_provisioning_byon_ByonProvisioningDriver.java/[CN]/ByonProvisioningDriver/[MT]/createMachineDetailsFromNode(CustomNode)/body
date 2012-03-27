@@ -17,6 +17,7 @@
   }
  else {
     logger.severe("Cloud node loading failed, missing credentials for server: " + node.toString());
+    publishEvent("prov_node_loading_failed",node.toString());
     throw new CloudProvisioningException("Cloud node loading failed, missing credentials for server: " + node.toString());
   }
   return md;

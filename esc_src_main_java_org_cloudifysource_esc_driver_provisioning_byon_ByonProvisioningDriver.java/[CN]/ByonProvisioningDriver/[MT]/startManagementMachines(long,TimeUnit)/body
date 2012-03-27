@@ -20,6 +20,7 @@
     }
   }
  catch (  final InterruptedException e) {
+    publishEvent("prov_management_lookup_failed");
     throw new CloudProvisioningException("Failed to lookup existing manahement servers.",e);
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
