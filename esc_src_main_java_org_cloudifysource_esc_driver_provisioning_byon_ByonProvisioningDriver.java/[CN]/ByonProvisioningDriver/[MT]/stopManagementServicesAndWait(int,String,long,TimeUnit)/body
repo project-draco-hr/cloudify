@@ -26,8 +26,8 @@
     final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
     boolean agentUp=isAgentUp(agent);
     while (agentUp && System.currentTimeMillis() < end) {
-      logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(10) + " seconds");
-      Thread.sleep(TimeUnit.SECONDS.toMillis(10));
+      logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(THREAD_WAITING_IDLE_TIME) + " seconds");
+      Thread.sleep(TimeUnit.SECONDS.toMillis(THREAD_WAITING_IDLE_TIME));
       agentUp=isAgentUp(agent);
     }
     if (!agentUp && System.currentTimeMillis() >= end) {

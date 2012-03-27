@@ -6,7 +6,7 @@
       final int index=i + 1;
       futures[i]=executors.submit(new Callable<MachineDetails>(){
         @Override public MachineDetails call() throws Exception {
-          return createServer(endTime,serverNamePrefix + index);
+          return createServer(serverNamePrefix + index,endTime);
         }
       }
 );

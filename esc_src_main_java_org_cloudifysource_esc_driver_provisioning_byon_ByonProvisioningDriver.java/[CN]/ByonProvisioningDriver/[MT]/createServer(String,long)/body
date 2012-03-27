@@ -1,0 +1,26 @@
+{
+  final CustomNode node;
+  final MachineDetails machineDetails;
+  logger.info("Cloudify Deployer is creating a new server with name: " + serverName + ". This may take a few minutes");
+  node=deployer.createServer(cloudTemplateName,serverName);
+  logger.info("New node is allocated, name: " + serverName);
+  machineDetails=createMachineDetailsFromNode(node);
+  try {
+    handleServerCredentials(machineDetails);
+    Utils.validateConnection(machineDetails.getIp(),SSH_PORT);
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Cloud server could not be started on " + machineDetails.getIp() + ", SSH connection failed.",e);
+    try {
+      deployer.invalidateServer(cloudTemplateName,node);
+    }
+ catch (    final CloudProvisioningException ie) {
+      logger.log(Level.SEVERE,"Failed to mark machine " + machineDetails.getIp() + "as Invalid.",ie);
+    }
+    throw new CloudProvisioningException(e);
+  }
+  if (System.currentTimeMillis() > endTime) {
+    throw new TimeoutException();
+  }
+  return machineDetails;
+}

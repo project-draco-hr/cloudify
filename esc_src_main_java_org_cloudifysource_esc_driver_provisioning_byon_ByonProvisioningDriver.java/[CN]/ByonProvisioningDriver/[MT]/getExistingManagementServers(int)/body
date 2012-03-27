@@ -4,8 +4,7 @@
   String managementIP=null;
   for (  final CustomNode server : allNodes) {
     try {
-      final long endTime=System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(20);
-      Utils.validateConnection(server.getPrivateIP(),CloudifyConstants.DEFAULT_REST_PORT,Utils.millisUntil(endTime));
+      Utils.validateConnection(server.getPrivateIP(),CloudifyConstants.DEFAULT_REST_PORT);
       managementIP=server.getPrivateIP();
       break;
     }
