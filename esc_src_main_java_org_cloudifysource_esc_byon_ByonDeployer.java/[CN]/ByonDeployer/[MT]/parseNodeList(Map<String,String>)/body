@@ -1,15 +1,23 @@
 {
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
+  final String id=nodeMap.get(CLOUD_NODE_ID);
   final String idPrefix=nodeMap.get(CLOUD_NODE_ID_PREFIX);
   final String ipList=nodeMap.get(CLOUD_NODE_IP_LIST);
   final String[] ipsArr=ipList.split(",");
   int index=1;
+  String currnentId;
   for (  String ip : ipsArr) {
     ip=ip.trim();
     if (!IPUtils.validateIPAddress(ip)) {
-      throw new InstallerException("Invalid IP address: " + ip);
+      throw new CloudProvisioningException("Invalid IP address: " + ip);
     }
-    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,idPrefix + index,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),idPrefix + index));
+    if (StringUtils.isNotBlank(id)) {
+      currnentId=MessageFormat.format(id,index);
+    }
+ else {
+      currnentId=idPrefix + index;
+    }
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),currnentId));
     index++;
   }
   return cloudNodes;

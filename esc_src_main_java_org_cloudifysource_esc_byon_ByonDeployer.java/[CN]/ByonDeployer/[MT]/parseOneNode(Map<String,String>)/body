@@ -1,7 +1,7 @@
 {
   final String ipAddress=nodeMap.get(CLOUD_NODE_IP);
   if (!IPUtils.validateIPAddress(ipAddress)) {
-    throw new InstallerException("Invalid IP address: " + ipAddress);
+    throw new CloudProvisioningException("Invalid IP address: " + ipAddress);
   }
   return new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID),ipAddress,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID));
 }

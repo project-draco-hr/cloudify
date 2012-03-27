@@ -1,24 +1,32 @@
 {
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
+  final String id=nodeMap.get(CLOUD_NODE_ID);
   final String idPrefix=nodeMap.get(CLOUD_NODE_ID_PREFIX);
   final String ipRange=nodeMap.get(CLOUD_NODE_IP_RANGE);
   final int ipDashIndex=ipRange.indexOf("-");
   if (ipDashIndex < 0) {
-    throw new InstallerException("Failed to start cloud node, invalid IP range configuration: " + ipRange + " is missing the token \"-\"");
+    throw new CloudProvisioningException("Failed to start cloud node, invalid IP range configuration: " + ipRange + " is missing the token \"-\"");
   }
   final String ipRangeStart=ipRange.substring(0,ipRange.indexOf("-"));
   final String ipRangeEnd=ipRange.substring(ipRange.indexOf("-") + 1);
   String ip=ipRangeStart;
   int index=1;
   try {
+    String currnentId;
     while (IPUtils.ip2Long(ip) <= IPUtils.ip2Long(ipRangeEnd)) {
-      cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,idPrefix + index,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),idPrefix + index));
+      if (StringUtils.isNotBlank(id)) {
+        currnentId=MessageFormat.format(id,index);
+      }
+ else {
+        currnentId=idPrefix + index;
+      }
+      cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),currnentId));
       index++;
       ip=IPUtils.getNextIP(ip);
     }
   }
  catch (  final Exception e) {
-    throw new InstallerException("Failed to start cloud machine.",e);
+    throw new CloudProvisioningException("Failed to start cloud machine.",e);
   }
   return cloudNodes;
 }

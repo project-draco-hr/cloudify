@@ -4,7 +4,7 @@
     nodeMap.put(CLOUD_NODE_IP_RANGE,IPUtils.ipCIDR2Range(ipCIDR));
   }
  catch (  final Exception e) {
-    throw new InstallerException("Failed to start cloud machine.",e);
+    throw new CloudProvisioningException("Failed to start cloud machine.",e);
   }
   return parseNodeRange(nodeMap);
 }
