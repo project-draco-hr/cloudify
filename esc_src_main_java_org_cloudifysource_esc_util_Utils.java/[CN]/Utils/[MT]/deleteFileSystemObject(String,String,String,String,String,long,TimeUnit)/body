@@ -1,0 +1,43 @@
+{
+  if (timeout < 0) {
+    throw new TimeoutException("Deleting \"" + fileSystemObject + "\" from server "+ host+ " timed out");
+  }
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  final FileSystemOptions opts=new FileSystemOptions();
+  SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts,"no");
+  SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts,false);
+  if (keyFile != null && keyFile.length() > 0) {
+    final File temp=new File(keyFile);
+    if (!temp.exists()) {
+      throw new FileNotFoundException("Could not find key file: " + temp + ". KeyFile "+ keyFile+ " that was passed in the installation Details does not exist");
+    }
+    SftpFileSystemConfigBuilder.getInstance().setIdentities(opts,new File[]{temp});
+  }
+  SftpFileSystemConfigBuilder.getInstance().setTimeout(opts,SFTP_DISCONNECT_DETECTION_TIMEOUT_MILLIS);
+  final FileSystemManager mng=VFS.getManager();
+  String scpTarget=null;
+  if (password != null && password.length() > 0) {
+    scpTarget="sftp://" + username + ":"+ password+ "@"+ host+ fileSystemObject;
+  }
+ else {
+    scpTarget="sftp://" + username + "@"+ host+ fileSystemObject;
+  }
+  final FileObject remoteDir=mng.resolveFile(scpTarget,opts);
+  try {
+    remoteDir.delete(new FileSelector(){
+      @Override public boolean includeFile(      final FileSelectInfo fileInfo) throws Exception {
+        return true;
+      }
+      @Override public boolean traverseDescendents(      final FileSelectInfo fileInfo) throws Exception {
+        return true;
+      }
+    }
+);
+  }
+  finally {
+    mng.closeFileSystem(remoteDir.getFileSystem());
+  }
+  if (end < System.currentTimeMillis()) {
+    throw new TimeoutException("Deleting \"" + fileSystemObject + "\" on server "+ host+ " timed out");
+  }
+}

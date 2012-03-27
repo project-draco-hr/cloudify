@@ -36,6 +36,23 @@ catch (  final IOException e) {
   scb.chmodExecutable(scriptPath).call(scriptPath);
   final String command=scb.toString();
   logger.fine("Calling startup script on target: " + sshIpAddress + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
-  sshCommand(sshIpAddress,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  try {
+    Utils.executeSSHCommand(sshIpAddress,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
+ catch (  final BuildException e) {
+    if (e instanceof BuildTimeoutException) {
+      final TimeoutException ex=new TimeoutException("Command " + command + " failed to execute: "+ e.getMessage());
+      ex.initCause(e);
+      throw ex;
+    }
+ else     if (e instanceof ExitStatusException) {
+      final ExitStatusException ex=(ExitStatusException)e;
+      final int ec=ex.getStatus();
+      throw new InstallerException("Command " + command + " failed with exit code: "+ ec,e);
+    }
+ else {
+      throw new InstallerException("Command " + command + " failed to execute.",e);
+    }
+  }
   publishEvent("access_vm_with_ssh_success",details.getPublicIp());
 }

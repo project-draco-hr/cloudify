@@ -9,14 +9,36 @@
   }
   final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
   final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
-  if (freeNodesPool.size() == 0) {
-    throw new CloudProvisioningException("Failed to create new cloud node, all nodes are currently used");
+  final List<CustomNode> invalidNodesPool=templateLists.get(NODES_LIST_INVALID);
+  if (freeNodesPool.size() == 0 && invalidNodesPool.size() == 0) {
+    throw new CloudProvisioningException("Failed to create new cloud node for template \" " + templateName + "\", all available nodes are currently used");
   }
-  node=freeNodesPool.iterator().next();
-  if (!allocatedNodesPool.contains(node)) {
-    allocatedNodesPool.add(node);
+  if (freeNodesPool.size() > 0) {
+    node=freeNodesPool.iterator().next();
+    if (!allocatedNodesPool.contains(node)) {
+      allocatedNodesPool.add(node);
+    }
+    freeNodesPool.remove(node);
   }
-  freeNodesPool.remove(node);
+ else {
+    if (invalidNodesPool.size() > 0) {
+      CustomNode currentNode=null;
+      final Iterator<CustomNode> nodesIterator=invalidNodesPool.iterator();
+      while (nodesIterator.hasNext()) {
+        currentNode=nodesIterator.next();
+        try {
+          Utils.validateConnection(currentNode.getPrivateIP(),CloudifyConstants.SSH_PORT);
+          if (!allocatedNodesPool.contains(node)) {
+            allocatedNodesPool.add(node);
+          }
+          invalidNodesPool.remove(node);
+          break;
+        }
+ catch (        final Exception ex) {
+        }
+      }
+    }
+  }
   ((CustomNodeImpl)node).setNodeName(serverName);
   return node;
 }

@@ -1,10 +1,10 @@
 {
   File tempFile=null;
-  if (org.apache.commons.lang.StringUtils.isBlank(machineDetails.getRemotePassword())) {
-    if (cloud.getUser().getKeyFile() == null || cloud.getUser().getKeyFile().length() == 0) {
-      logger.fine("No key file specified in cloud configuration");
-      if (cloud.getConfiguration().getRemotePassword() == null) {
-        logger.severe("No Password or key file specified in cloud configuration - connection to the new machine is not possible.");
+  if (StringUtils.isBlank(machineDetails.getRemotePassword())) {
+    if (org.apache.commons.lang.StringUtils.isBlank(cloud.getUser().getKeyFile())) {
+      logger.fine("No key file specified in the cloud configuration file");
+      if (StringUtils.isBlank(cloud.getConfiguration().getRemotePassword())) {
+        logger.severe("No Password or key file specified in the cloud configuration file - connection to" + " the new machine is not possible.");
         throw new CloudProvisioningException("No credentials (password or key file) supplied with the cloud configuration file");
       }
       machineDetails.setRemotePassword(cloud.getConfiguration().getRemotePassword());

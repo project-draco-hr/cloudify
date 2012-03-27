@@ -13,6 +13,19 @@
     final CustomNode cloudNode=deployer.getServerByIP(cloudTemplateName,serverIp);
     if (cloudNode != null) {
       logger.info("Found server: " + cloudNode.getId() + ". Shutting it down and waiting for shutdown to complete");
+      MachineDetails machineDetails=null;
+      try {
+        machineDetails=createMachineDetailsFromNode(cloudNode);
+        Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),"/tmp/gs-files",null,1,TimeUnit.MINUTES);
+      }
+ catch (      Exception e) {
+        if (machineDetails != null) {
+          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server: " + machineDetails.getPrivateAddress());
+        }
+ else {
+          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server.");
+        }
+      }
       deployer.shutdownServerByIp(cloudTemplateName,cloudNode.getPrivateIP());
       logger.info("Server: " + cloudNode.getId() + " shutdown has finished.");
       stopResult=true;

@@ -1,5 +1,5 @@
 {
-  final long endTime=System.currentTimeMillis() + timeoutInSeconds * MILLISECONDS_IN_SECOND;
+  final long endTime=Utils.millisUntil(end);
   while (System.currentTimeMillis() < endTime) {
     GridServiceAgent gsa=admin.getGridServiceAgents().getHostAddress().get(machineIp);
     if (gsa != null) {

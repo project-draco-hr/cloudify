@@ -6,10 +6,23 @@
     }
     for (    final CustomNode customNode : managementServers) {
       stopManagementServicesAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),2,TimeUnit.MINUTES);
+      MachineDetails machineDetails=null;
+      try {
+        machineDetails=createMachineDetailsFromNode(customNode);
+        Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),"/tmp/gs-files",null,1,TimeUnit.MINUTES);
+      }
+ catch (      Exception e) {
+        if (machineDetails != null) {
+          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server: " + machineDetails.getPrivateAddress());
+        }
+ else {
+          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server.");
+        }
+      }
       deployer.shutdownServer(cloudTemplateName,customNode);
     }
   }
- catch (  final InterruptedException e) {
+ catch (  final Exception e) {
     throw new CloudProvisioningException("Failed to shutdown agent.",e);
   }
 }

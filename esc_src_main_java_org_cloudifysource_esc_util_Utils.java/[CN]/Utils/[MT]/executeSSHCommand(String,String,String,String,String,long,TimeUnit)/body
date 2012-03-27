@@ -1,0 +1,21 @@
+{
+  final LoggerOutputStream loggerOutputStream=new LoggerOutputStream(Logger.getLogger(AgentlessInstaller.SSH_OUTPUT_LOGGER_NAME));
+  loggerOutputStream.setPrefix("[" + host + "] ");
+  final org.cloudifysource.esc.util.SSHExec task=new org.cloudifysource.esc.util.SSHExec();
+  task.setCommand(command);
+  task.setHost(host);
+  task.setTrust(true);
+  task.setUsername(username);
+  task.setTimeout(unit.toMillis(timeout));
+  task.setFailonerror(true);
+  task.setOutputStream(loggerOutputStream);
+  task.setUsePty(true);
+  if (keyFile != null) {
+    task.setKeyfile(keyFile);
+  }
+  if (password != null) {
+    task.setPassword(password);
+  }
+  task.execute();
+  loggerOutputStream.close();
+}

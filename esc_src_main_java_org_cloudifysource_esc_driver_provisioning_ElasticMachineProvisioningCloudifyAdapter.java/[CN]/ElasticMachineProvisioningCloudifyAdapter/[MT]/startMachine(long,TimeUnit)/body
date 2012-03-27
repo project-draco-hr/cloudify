@@ -27,22 +27,22 @@
       throw new IllegalArgumentException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
     }
     logger.info("Cloudify adapter is waiting for GSA to become available");
-    final GridServiceAgent gsa=waitForGsa(machineIp,DEFAULT_GSA_LOOKUP_TIMEOUT_SECONDS);
+    final GridServiceAgent gsa=waitForGsa(machineIp,end);
     if (gsa == null) {
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
     return gsa;
   }
  catch (  final ElasticMachineProvisioningException e) {
-    handleExceptionAfterMachineCreated(machineDetails);
+    handleExceptionAfterMachineCreated(machineDetails,end);
     throw e;
   }
 catch (  final TimeoutException e) {
-    handleExceptionAfterMachineCreated(machineDetails);
+    handleExceptionAfterMachineCreated(machineDetails,end);
     throw e;
   }
 catch (  final InterruptedException e) {
-    handleExceptionAfterMachineCreated(machineDetails);
+    handleExceptionAfterMachineCreated(machineDetails,end);
     throw e;
   }
 }

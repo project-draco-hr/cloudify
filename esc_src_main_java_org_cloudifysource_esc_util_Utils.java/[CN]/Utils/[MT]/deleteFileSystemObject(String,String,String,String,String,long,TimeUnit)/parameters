@@ -1,0 +1,7 @@
+String host
+String username
+String password
+String fileSystemObject
+String keyFile
+long timeout
+TimeUnit unit

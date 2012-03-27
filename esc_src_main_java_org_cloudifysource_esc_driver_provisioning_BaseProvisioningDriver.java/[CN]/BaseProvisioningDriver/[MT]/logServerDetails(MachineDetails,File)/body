@@ -1,7 +1,7 @@
 {
   if (logger.isLoggable(Level.FINE)) {
     final String nodePrefix="[" + machineDetails.getMachineId() + "] ";
-    logger.fine(nodePrefix + "Cloud Server was allocated.");
+    logger.fine(nodePrefix + "Cloud Server is allocated.");
     if (tempFile == null) {
       logger.fine(nodePrefix + "Password: ***");
     }
