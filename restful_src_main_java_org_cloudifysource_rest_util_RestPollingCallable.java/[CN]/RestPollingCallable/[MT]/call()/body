@@ -1,6 +1,0 @@
-{
-  logger.log(Level.INFO,"Starting poll for lifecycle events on services: " + this.serviceNames.toString());
-  waitForServiceInstanceAndLifecycleEvents();
-  logger.log(Level.INFO,"Polling for lifecycle events ended successfully");
-  return true;
-}

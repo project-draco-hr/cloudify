@@ -1,4 +1,5 @@
 {
   this.serviceInstanceCountEventsSet=new HashSet<String>();
   this.eventsList=new ArrayList<String>();
+  this.runnableState=PollingState.RUNNING;
 }

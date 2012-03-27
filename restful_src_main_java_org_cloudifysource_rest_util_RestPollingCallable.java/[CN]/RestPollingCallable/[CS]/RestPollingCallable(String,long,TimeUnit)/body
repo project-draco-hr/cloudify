@@ -1,6 +1,4 @@
 {
   this.serviceNames=new LinkedHashMap<String,Integer>();
   this.applicationName=applicationName;
-  this.pollingInterval=DEFAULT_POLLING_INTERVAL;
-  this.endTime=System.currentTimeMillis() + timeunit.toMillis(timeout);
 }

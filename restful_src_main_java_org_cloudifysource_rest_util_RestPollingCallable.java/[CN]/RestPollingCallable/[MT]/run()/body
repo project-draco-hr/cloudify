@@ -1,0 +1,16 @@
+{
+  if (this.serviceNames.isEmpty()) {
+    logger.log(Level.INFO,"Polling for lifecycle events has ended successfully.");
+    this.lifecycleEventsContainer.setPollingState(PollingState.ENDED);
+  }
+  try {
+    if (System.currentTimeMillis() < this.endTime) {
+      throw new TimeoutException();
+    }
+    pollForLogs();
+  }
+ catch (  Throwable e) {
+    this.lifecycleEventsContainer.setExecutionException(e);
+    throw new RuntimeException(e);
+  }
+}
