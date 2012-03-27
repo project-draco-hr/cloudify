@@ -1,3 +1,6 @@
 {
-  return (ExecutionException)this.runnableException;
+  if (this.runnableException == null) {
+    return null;
+  }
+  return new ExecutionException(runnableException);
 }
