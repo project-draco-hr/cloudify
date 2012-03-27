@@ -1,0 +1,4 @@
+{
+  this.executorService.shutdownNow();
+  this.scheduledExecutor.shutdownNow();
+}
