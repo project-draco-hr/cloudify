@@ -1,0 +1,18 @@
+{
+  final File testParsingBaseDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_parsing_autoscaling-service.groovy");
+  final File testParsingBaseWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
+  final Service service=ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
+  Assert.assertTrue(service.getMinNumInstances() > 1);
+  Assert.assertTrue(service.getNumInstances() >= service.getMinNumInstances());
+  Assert.assertTrue(service.getMaxNumInstances() >= service.getNumInstances());
+  Assert.assertEquals("autoscaling",service.getName());
+  AutoScalingDetails autoScaling=service.getAutoScaling();
+  Assert.assertNotNull(autoScaling);
+  Assert.assertNotNull(autoScaling.getHighThreshold());
+  Assert.assertNotNull(autoScaling.getLowThreshold());
+  Assert.assertNotNull(autoScaling.getMetric());
+  Assert.assertNotNull(autoScaling.getInstancesStatistics());
+  Assert.assertNotNull(autoScaling.getSamplingPeriodSeconds());
+  Assert.assertNotNull(autoScaling.getTimeStatistics());
+  Assert.assertNotNull(autoScaling.getTimeWindowSeconds());
+}
