@@ -1,0 +1,14 @@
+{
+  int numberOfInstances=1;
+  if (service == null) {
+    logger.info("Deploying service " + serviceName + " without a recipe. Assuming number of instances is 1");
+  }
+ else   if (service.getNumInstances() > 0) {
+    numberOfInstances=service.getNumInstances();
+    logger.info("Deploying service " + serviceName + " with "+ numberOfInstances+ " instances.");
+  }
+ else {
+    throw new DSLException("Number of instances must be at least 1");
+  }
+  return new ManualCapacityScaleConfigurer().memoryCapacity(externalProcessMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).create();
+}

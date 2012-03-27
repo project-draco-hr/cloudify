@@ -1,11 +1,44 @@
 {
-  int numberOfInstances=service.getNumInstances();
-  if (numberOfInstances > 1) {
-    logger.info("Deploying service " + serviceName + " with "+ numberOfInstances+ " instances.");
+  final int externalProcessMemoryInMB=512;
+  final int containerMemoryInMB=128;
+  final int reservedMemoryCapacityPerMachineInMB=256;
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName).sharedMachineProvisioning(SHARED_ISOLATION_ID,new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(zone).reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create());
+  if (cloud == null) {
+    if (!isLocalCloud()) {
+      EagerScaleConfig scaleConfig=new EagerScaleConfigurer().atMostOneContainerPerMachine().create();
+      deployment.scale(scaleConfig);
+    }
+ else {
+      if (service == null || service.getAutoScaling() == null) {
+        final ManualCapacityScaleConfig scaleConfig=createManualCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        deployment.scale(scaleConfig);
+      }
+ else {
+        final AutomaticCapacityScaleConfig scaleConfig=createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        deployment.scale(scaleConfig);
+      }
+    }
   }
  else {
-    logger.info("Deploying service " + serviceName + " with a recipe that does not define number of instances. Assuming number of instances is 1");
-    numberOfInstances=1;
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
+    final String locators=extractLocators(admin);
+    config.setLocator(locators);
+    setDedicatedMachineProvisioning(deployment,config);
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    if (service == null || service.getAutoScaling() == null) {
+      final ManualCapacityScaleConfig scaleConfig=createManualCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      scaleConfig.setAtMostOneContainerPerMachine(true);
+      deployment.scale(scaleConfig);
+    }
+ else {
+      final AutomaticCapacityScaleConfig scaleConfig=createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      scaleConfig.setAtMostOneContainerPerMachine(true);
+      deployment.scale(scaleConfig);
+    }
   }
-  doDeploy(applicationName,serviceName,templateName,zone,serviceFile,contextProperties,numberOfInstances);
+  setContextProperties(deployment,contextProperties);
+  verifyEsmExistsInCluster();
+  deployAndWait(serviceName,deployment);
 }

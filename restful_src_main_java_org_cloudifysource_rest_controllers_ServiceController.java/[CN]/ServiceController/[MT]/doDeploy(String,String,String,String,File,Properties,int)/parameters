@@ -1,7 +1,0 @@
-String applicationName
-String serviceName
-String templateName
-String zone
-File serviceFile
-Properties contextProperties
-int numberOfInstances

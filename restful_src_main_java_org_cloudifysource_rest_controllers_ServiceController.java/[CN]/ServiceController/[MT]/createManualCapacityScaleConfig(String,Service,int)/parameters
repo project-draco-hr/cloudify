@@ -1,0 +1,3 @@
+String serviceName
+Service service
+int externalProcessMemoryInMB
