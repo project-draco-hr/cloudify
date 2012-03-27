@@ -1,4 +1,4 @@
 {
-  final JavaType javaType=TypeFactory.type(Map.class);
+  @SuppressWarnings("deprecation") final JavaType javaType=TypeFactory.type(Map.class);
   return new ObjectMapper().readValue(response,javaType);
 }

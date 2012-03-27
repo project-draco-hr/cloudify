@@ -4,7 +4,7 @@
   final Admin admin=adminFactory.createAdmin();
   GridServiceManagers gsms=admin.getGridServiceManagers();
   final long end=System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(ADMIN_API_TIMEOUT);
-  while (admin.getLookupServices() == null || gsms == null || (expectedGsmCount > 0 && gsms.getSize() < expectedGsmCount)) {
+  while (admin.getLookupServices() == null || gsms == null || expectedGsmCount > 0 && gsms.getSize() < expectedGsmCount) {
     if (System.currentTimeMillis() > end) {
       throw new TimeoutException("Admin API timed out");
     }
