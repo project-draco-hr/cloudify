@@ -1,16 +1,16 @@
 {
-  RestPollingCallable restPollingCallable;
+  RestPollingRunnable restPollingRunnable;
   logger.info("starting POLL on service : " + serviceName + " app: "+ applicationName);
   LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
   UUID lifecycleEventsContainerID=UUID.randomUUID();
   this.lifecyclePollingContainer.put(lifecycleEventsContainerID,lifecycleEventsContainer);
   lifecycleEventsContainer.setEventsSet(this.eventsSet);
-  restPollingCallable=new RestPollingCallable(applicationName,timeout,minutes);
-  restPollingCallable.addService(serviceName,plannedNumberOfInstances);
-  restPollingCallable.setAdmin(admin);
-  restPollingCallable.setIsServiceInstall(isServiceInstall);
-  restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
-  ScheduledFuture<?> scheduleWithFixedDelay=scheduledExecutor.scheduleWithFixedDelay(restPollingCallable,0,LIFECYCLE_EVENT_POLLING_INTERVAL,TimeUnit.SECONDS);
+  restPollingRunnable=new RestPollingRunnable(applicationName,timeout,minutes);
+  restPollingRunnable.addService(serviceName,plannedNumberOfInstances);
+  restPollingRunnable.setAdmin(admin);
+  restPollingRunnable.setIsServiceInstall(isServiceInstall);
+  restPollingRunnable.setLifecycleEventsContainer(lifecycleEventsContainer);
+  ScheduledFuture<?> scheduleWithFixedDelay=scheduledExecutor.scheduleWithFixedDelay(restPollingRunnable,0,LIFECYCLE_EVENT_POLLING_INTERVAL,TimeUnit.SECONDS);
   lifecycleEventsContainer.setFutureTask(scheduleWithFixedDelay);
   logger.log(Level.INFO,"polling container UUID is " + lifecycleEventsContainerID.toString());
   return lifecycleEventsContainerID;

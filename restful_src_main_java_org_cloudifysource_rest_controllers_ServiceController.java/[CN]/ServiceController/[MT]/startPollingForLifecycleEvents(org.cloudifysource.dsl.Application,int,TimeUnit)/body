@@ -4,14 +4,14 @@
   lifecycleEventsContainer.setUUID(lifecycleEventsContainerUUID);
   this.lifecyclePollingContainer.put(lifecycleEventsContainerUUID,lifecycleEventsContainer);
   lifecycleEventsContainer.setEventsSet(this.eventsSet);
-  RestPollingCallable restPollingCallable=new RestPollingCallable(application.getName(),timeout,timeUnit);
+  RestPollingRunnable restPollingRunnable=new RestPollingRunnable(application.getName(),timeout,timeUnit);
   for (  Service service : application.getServices()) {
-    restPollingCallable.addService(service.getName(),service.getNumInstances());
+    restPollingRunnable.addService(service.getName(),service.getNumInstances());
   }
-  restPollingCallable.setIsServiceInstall(false);
-  restPollingCallable.setLifecycleEventsContainer(lifecycleEventsContainer);
-  restPollingCallable.setAdmin(admin);
-  ScheduledFuture<?> scheduleWithFixedDelay=scheduledExecutor.scheduleWithFixedDelay(restPollingCallable,0,LIFECYCLE_EVENT_POLLING_INTERVAL,TimeUnit.SECONDS);
+  restPollingRunnable.setIsServiceInstall(false);
+  restPollingRunnable.setLifecycleEventsContainer(lifecycleEventsContainer);
+  restPollingRunnable.setAdmin(admin);
+  ScheduledFuture<?> scheduleWithFixedDelay=scheduledExecutor.scheduleWithFixedDelay(restPollingRunnable,0,LIFECYCLE_EVENT_POLLING_INTERVAL,TimeUnit.SECONDS);
   lifecycleEventsContainer.setFutureTask(scheduleWithFixedDelay);
   logger.log(Level.INFO,"polling container UUID is " + lifecycleEventsContainer.toString());
   return lifecycleEventsContainerUUID;
