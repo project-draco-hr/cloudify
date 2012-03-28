@@ -1,3 +1,5 @@
 {
-  return this.runnableState;
+synchronized (this.lock) {
+    return this.runnableState;
+  }
 }

@@ -1,6 +1,8 @@
 {
-  if (this.runnableState.equals(PollingState.RUNNING)) {
-    this.executionException=e;
-    this.runnableState=PollingState.ENDED;
+synchronized (this.lock) {
+    if (this.runnableState.equals(PollingState.RUNNING)) {
+      this.executionException=e;
+      this.runnableState=PollingState.ENDED;
+    }
   }
 }
