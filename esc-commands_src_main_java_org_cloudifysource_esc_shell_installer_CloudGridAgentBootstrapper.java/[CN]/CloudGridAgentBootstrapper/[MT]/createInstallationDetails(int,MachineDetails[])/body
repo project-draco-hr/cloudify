@@ -11,6 +11,8 @@
     installationDetails.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
     installationDetails.setBindToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
     installationDetails.setCloudFile(this.cloudFile);
+    installationDetails.setRemoteExecutionMode(machine.getRemoteExecutionMode());
+    installationDetails.setFileTransferMode(machine.getFileTransferMode());
     details[i]=installationDetails;
   }
   return details;
