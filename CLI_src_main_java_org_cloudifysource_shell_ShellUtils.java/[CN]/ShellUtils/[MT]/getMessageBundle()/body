@@ -1,3 +1,6 @@
 {
-  return ResourceBundle.getBundle("MessagesBundle",Locale.getDefault());
+  if (defaultMessageBundle == null) {
+    defaultMessageBundle=ResourceBundle.getBundle("MessagesBundle",Locale.getDefault());
+  }
+  return defaultMessageBundle;
 }
