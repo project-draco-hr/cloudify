@@ -1,5 +1,5 @@
 {
-  final NodeMetadata node;
+  NodeMetadata node;
   final MachineDetails machineDetails;
   try {
     logger.fine("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
@@ -9,14 +9,22 @@
     throw new CloudProvisioningException("Failed to create cloud server",e);
   }
   logger.fine("New node is allocated, group name: " + groupName);
-  machineDetails=createMachineDetailsFromNode(node);
+  final String nodeId=node.getId();
   try {
-    handleServerCredentials(machineDetails);
-    waitUntilServerIsActive(machineDetails.getMachineId(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+    node=waitForNodeToBecomeReady(nodeId,end);
+    machineDetails=createMachineDetailsFromNode(node);
+    final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
+    final FileTransferModes fileTransfer=cloudTemplate.getFileTransfer();
+    if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer.equals(FileTransferModes.CIFS)) {
+      handleEC2WindowsCredentials(end,node,machineDetails,cloudTemplate);
+    }
+ else {
+      handleServerCredentials(machineDetails);
+    }
   }
  catch (  final Exception e) {
     logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
-    deployer.shutdownMachine(node.getId());
+    deployer.shutdownMachine(nodeId);
     throw new CloudProvisioningException(e);
   }
   return machineDetails;

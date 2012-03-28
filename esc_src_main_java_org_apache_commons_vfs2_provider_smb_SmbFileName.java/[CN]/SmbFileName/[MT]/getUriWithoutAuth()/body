@@ -1,0 +1,18 @@
+{
+  if (uriWithoutAuth != null) {
+    return uriWithoutAuth;
+  }
+  StringBuilder sb=new StringBuilder(120);
+  sb.append(getScheme());
+  sb.append("://");
+  sb.append(getHostName());
+  if (getPort() != DEFAULT_PORT) {
+    sb.append(":");
+    sb.append(getPort());
+  }
+  sb.append("/");
+  sb.append(getShare());
+  sb.append(getPathDecoded());
+  uriWithoutAuth=sb.toString();
+  return uriWithoutAuth;
+}

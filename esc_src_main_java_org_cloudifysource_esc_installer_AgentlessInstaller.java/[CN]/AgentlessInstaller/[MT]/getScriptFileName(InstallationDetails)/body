@@ -1,0 +1,14 @@
+{
+  final String scriptFileName;
+switch (details.getRemoteExecutionMode()) {
+case WINRM:
+    scriptFileName=POWERSHELL_STARTUP_SCRIPT_NAME;
+  break;
+case SSH:
+scriptFileName=LINUX_STARTUP_SCRIPT_NAME;
+break;
+default :
+throw new UnsupportedOperationException("Remote Execution Mode: " + details.getRemoteExecutionMode() + " not supported");
+}
+return scriptFileName;
+}

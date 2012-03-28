@@ -1,0 +1,14 @@
+{
+  try {
+    return new SmbFileInputStream(file);
+  }
+ catch (  SmbException e) {
+    if (e.getNtStatus() == SmbException.NT_STATUS_NO_SUCH_FILE) {
+      throw new org.apache.commons.vfs2.FileNotFoundException(getName());
+    }
+ else     if (file.isDirectory()) {
+      throw new FileTypeHasNoContentException(getName());
+    }
+    throw e;
+  }
+}

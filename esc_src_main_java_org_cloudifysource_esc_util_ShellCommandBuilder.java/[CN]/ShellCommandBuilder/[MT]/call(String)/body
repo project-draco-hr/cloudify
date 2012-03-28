@@ -1,4 +1,10 @@
 {
-  sb.append(str);
+  if (this.mode.equals(RemoteExecutionModes.SSH)) {
+    sb.append(str);
+  }
+ else {
+    final String normalizedPathCommand=normalizeCifsPath(str);
+    sb.append(normalizedPathCommand);
+  }
   return this;
 }

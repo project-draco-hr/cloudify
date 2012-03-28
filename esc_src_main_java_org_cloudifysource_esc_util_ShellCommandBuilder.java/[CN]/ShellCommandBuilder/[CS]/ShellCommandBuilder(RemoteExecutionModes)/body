@@ -1,0 +1,13 @@
+{
+  this.mode=mode;
+switch (mode) {
+case SSH:
+    this.separator=SSH_COMMAND_SEPARATOR;
+  break;
+case WINRM:
+this.separator=POWERSHELL_COMMAND_SEPARATOR;
+break;
+default :
+throw new UnsupportedOperationException("Unsupported execution mode: " + mode);
+}
+}

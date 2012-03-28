@@ -1,0 +1,13 @@
+{
+  if (family.equals(OsFamily.UNRECOGNIZED)) {
+    if (from.getName() == null) {
+      return;
+    }
+    if (from.getName().startsWith("Windows_Server-2008")) {
+      osBuilder.family(OsFamily.WINDOWS);
+      osBuilder.version("2008");
+      builder.version(from.getImageLocation().substring(from.getImageLocation().lastIndexOf('/') + 1));
+      builder.name("Windows_Server-2008");
+    }
+  }
+}

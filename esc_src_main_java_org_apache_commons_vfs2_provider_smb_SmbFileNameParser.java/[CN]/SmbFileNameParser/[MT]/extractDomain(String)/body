@@ -1,0 +1,11 @@
+{
+  if (username == null) {
+    return null;
+  }
+  for (int i=0; i < username.length(); i++) {
+    if (username.charAt(i) == '\\') {
+      return username.substring(0,i);
+    }
+  }
+  return null;
+}

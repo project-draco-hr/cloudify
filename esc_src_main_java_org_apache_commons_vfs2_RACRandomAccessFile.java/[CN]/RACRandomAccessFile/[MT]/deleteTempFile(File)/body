@@ -1,0 +1,11 @@
+{
+  try {
+    super.close();
+  }
+ catch (  IOException ex) {
+    throw new RuntimeException(ex);
+  }
+ finally {
+    tempFile.delete();
+  }
+}

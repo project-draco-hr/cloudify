@@ -1,0 +1,9 @@
+String scheme
+String hostName
+int port
+String userName
+String password
+String domain
+String share
+String path
+FileType type

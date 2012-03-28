@@ -1,0 +1,3 @@
+{
+  caps.addAll(SmbFileProvider.capabilities);
+}

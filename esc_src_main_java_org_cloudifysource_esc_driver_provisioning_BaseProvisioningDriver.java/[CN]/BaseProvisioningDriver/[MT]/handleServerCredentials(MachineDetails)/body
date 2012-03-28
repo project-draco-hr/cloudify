@@ -14,9 +14,10 @@
     }
   }
  else   if (CredentialUtils.isPrivateKeyCredential(machineDetails.getRemotePassword())) {
-    logger.fine("Cloud has provided a key file remote connections to new machine");
+    logger.fine("Cloud has provided a key file for connections to new machine");
     try {
       tempFile=File.createTempFile("gs-esm-key",".pem");
+      tempFile.deleteOnExit();
       FileUtils.write(tempFile,machineDetails.getRemotePassword());
       cloud.getUser().setKeyFile(tempFile.getAbsolutePath());
     }

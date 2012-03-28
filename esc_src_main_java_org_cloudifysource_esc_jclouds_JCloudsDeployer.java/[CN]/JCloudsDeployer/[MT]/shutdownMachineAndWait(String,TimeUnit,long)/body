@@ -19,10 +19,11 @@ case SUSPENDED:
     break;
 case ERROR:
 case UNRECOGNIZED:
+default :
   logger.warning("While waiting for machine " + serverId + " to shut down, received unexpected node state: "+ state);
 break;
 }
-Thread.sleep(1000);
+Thread.sleep(SHUTDOWN_WAIT_POLLING_INTERVAL_MILLIS);
 }
-throw new TimeoutException("Termination of cloud node was requested, but machine did not shut down in the required time. Last state was: " + state);
+throw new TimeoutException("Termination of cloud node was requested, " + "but machine did not shut down in the required time. Last state was: " + state);
 }

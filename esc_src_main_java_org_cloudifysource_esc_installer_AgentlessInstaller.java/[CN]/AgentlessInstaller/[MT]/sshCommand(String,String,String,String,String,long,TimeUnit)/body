@@ -1,0 +1,21 @@
+{
+  try {
+    Utils.executeSSHCommand(host,command,username,password,keyFile,timeout,unit);
+  }
+ catch (  final BuildException e) {
+    if (e instanceof BuildTimeoutException) {
+      final TimeoutException ex=new TimeoutException("Command " + command + " failed to execute: "+ e.getMessage());
+      ex.initCause(e);
+      throw ex;
+    }
+ else     if (e instanceof ExitStatusException) {
+      final ExitStatusException ex=(ExitStatusException)e;
+      final int ec=ex.getStatus();
+      throw new InstallerException("Command " + command + " failed with exit code: "+ ec,e);
+    }
+ else {
+      throw new InstallerException("Command " + command + " failed to execute.",e);
+    }
+  }
+  publishEvent("access_vm_with_ssh_success",host);
+}

@@ -1,5 +1,10 @@
 {
   for (  final AgentlessInstallerListener listner : this.eventsListenersList) {
-    listner.onInstallerEvent(eventName,args);
+    try {
+      listner.onInstallerEvent(eventName,args);
+    }
+ catch (    final Exception e) {
+      logger.log(Level.FINE,"Exception in listener while publishing event: " + eventName + " with arguments: "+ Arrays.toString(args),e);
+    }
   }
 }

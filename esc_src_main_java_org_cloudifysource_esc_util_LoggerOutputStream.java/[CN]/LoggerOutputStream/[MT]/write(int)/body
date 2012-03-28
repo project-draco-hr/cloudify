@@ -1,9 +1,11 @@
 {
-  char c=(char)b;
+  final char c=(char)b;
   if (c == '\n') {
-    String s=sb.toString();
+    final String s=sb.toString();
     logger.info(prefix + s);
     sb.setLength(0);
   }
- else   sb.append(c);
+ else {
+    sb.append(c);
+  }
 }

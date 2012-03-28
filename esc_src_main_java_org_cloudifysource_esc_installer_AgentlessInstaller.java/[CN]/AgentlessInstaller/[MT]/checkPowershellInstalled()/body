@@ -1,0 +1,10 @@
+{
+  final ProcessBuilder pb=new ProcessBuilder("powershell.exe","-?");
+  pb.redirectErrorStream(true);
+  final Process p=pb.start();
+  final String output=readProcessOutput(p);
+  final int retval=p.waitFor();
+  if (retval != 0) {
+    throw new InstallerException("powershell.exe is not on installed, or is not available on the system path. " + "Powershell is required on both client and server for Cloudify to work on Windows. " + "Execution result: "+ output);
+  }
+}

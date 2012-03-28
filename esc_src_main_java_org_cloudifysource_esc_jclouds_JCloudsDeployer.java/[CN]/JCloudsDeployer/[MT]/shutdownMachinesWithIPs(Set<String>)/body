@@ -3,7 +3,7 @@
     @Override public boolean apply(    final NodeMetadata input){
       if (!input.getPrivateAddresses().isEmpty()) {
         final String ip=input.getPrivateAddresses().iterator().next();
-        return IPs.contains(ip);
+        return ips.contains(ip);
       }
       return false;
     }

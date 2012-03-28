@@ -1,0 +1,3 @@
+{
+  super(ImmutableMap.<OsFamily,Map<String,String>>of());
+}

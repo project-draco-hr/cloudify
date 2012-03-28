@@ -1,0 +1,5 @@
+{
+  super(scheme,hostName,port,DEFAULT_PORT,userName,password,path,type);
+  this.share=share;
+  this.domain=domain;
+}

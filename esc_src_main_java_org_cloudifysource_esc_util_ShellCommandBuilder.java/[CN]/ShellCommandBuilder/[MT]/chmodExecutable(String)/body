@@ -1,5 +1,11 @@
 {
-  sb.append("chmod +x " + path);
+switch (this.mode) {
+case SSH:
+    sb.append("chmod +x " + path);
   separate();
-  return this;
+break;
+default :
+break;
+}
+return this;
 }

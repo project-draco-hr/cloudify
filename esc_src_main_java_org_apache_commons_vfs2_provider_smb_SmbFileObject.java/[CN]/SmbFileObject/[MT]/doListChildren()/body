@@ -1,0 +1,6 @@
+{
+  if (!file.isDirectory()) {
+    return null;
+  }
+  return UriParser.encode(file.list());
+}

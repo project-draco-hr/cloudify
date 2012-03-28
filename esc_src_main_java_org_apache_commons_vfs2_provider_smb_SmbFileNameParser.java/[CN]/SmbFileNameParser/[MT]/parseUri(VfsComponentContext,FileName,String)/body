@@ -1,0 +1,18 @@
+{
+  final StringBuilder name=new StringBuilder();
+  final Authority auth=extractToPath(filename,name);
+  String username=auth.getUserName();
+  String domain=extractDomain(username);
+  if (domain != null) {
+    username=username.substring(domain.length() + 1);
+  }
+  UriParser.canonicalizePath(name,0,name.length(),this);
+  UriParser.fixSeparators(name);
+  final String share=UriParser.extractFirstElement(name);
+  if (share == null || share.length() == 0) {
+    throw new FileSystemException("vfs.provider.smb/missing-share-name.error",filename);
+  }
+  FileType fileType=UriParser.normalisePath(name);
+  final String path=name.toString();
+  return new SmbFileName(auth.getScheme(),auth.getHostName(),auth.getPort(),username,auth.getPassword(),domain,share,path,fileType);
+}

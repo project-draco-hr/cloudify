@@ -21,6 +21,9 @@
  else {
       md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
     }
+    if (node.getCredentials().getOptionalPassword().isPresent()) {
+      md.setRemotePassword(node.getCredentials().getPassword());
+    }
   }
   md.setUsePrivateAddress(this.cloud.getConfiguration().isConnectToPrivateIp());
   return md;

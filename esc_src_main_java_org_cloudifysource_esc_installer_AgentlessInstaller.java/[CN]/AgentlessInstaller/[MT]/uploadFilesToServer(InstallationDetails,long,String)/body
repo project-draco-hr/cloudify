@@ -1,0 +1,18 @@
+{
+  try {
+    final Set<String> excludedFiles=new HashSet<String>();
+    if (!details.isLus() && details.getManagementOnlyFiles() != null) {
+      excludedFiles.addAll(Arrays.asList(details.getManagementOnlyFiles()));
+    }
+    copyFiles(targetHost,details.getUsername(),details.getPassword(),details.getLocalDir(),details.getRemoteDir(),details.getKeyFile(),excludedFiles,details.getCloudFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS,details.getFileTransferMode());
+  }
+ catch (  final FileSystemException e) {
+    throw new InstallerException("Uploading files to remote server failed.",e);
+  }
+catch (  final IOException e) {
+    throw new InstallerException("Uploading files to remote server failed.",e);
+  }
+catch (  final URISyntaxException e) {
+    throw new InstallerException("Uploading files to remote server failed.",e);
+  }
+}

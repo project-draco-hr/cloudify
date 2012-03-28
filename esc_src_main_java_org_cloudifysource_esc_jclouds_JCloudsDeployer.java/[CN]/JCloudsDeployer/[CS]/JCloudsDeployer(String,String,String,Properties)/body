@@ -4,5 +4,12 @@
   this.key=key;
   this.overrides=overrides;
   final Set<Module> wiring=new HashSet<Module>();
+  wiring.add(new AbstractModule(){
+    @Override protected void configure(){
+      bind(AWSEC2ReviseParsedImage.class).to(WindowsServerEC2ReviseParsedImage.class);
+    }
+  }
+);
+  wiring.add(new JDKLoggingModule());
   this.context=new ComputeServiceContextFactory().createContext(provider,account,key,wiring,overrides);
 }

@@ -1,4 +1,11 @@
 {
-  sb.append(" &");
-  return this;
+switch (this.mode) {
+case SSH:
+    sb.append(" &");
+  break;
+default :
+break;
+}
+this.runInBackground=true;
+return this;
 }

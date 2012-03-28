@@ -1,0 +1,7 @@
+{
+  if (getDomain() != null && getDomain().length() != 0 && getUserName() != null && getUserName().length() != 0) {
+    buffer.append(getDomain());
+    buffer.append("\\");
+  }
+  super.appendCredentials(buffer,addPassword);
+}

@@ -1,4 +1,4 @@
 {
-  sb.append(COMMAND_SEPARATOR);
+  sb.append(this.separator);
   return this;
 }

@@ -10,7 +10,7 @@
     return md;
   }
  catch (  final Exception e) {
-    if (e instanceof RejectedExecutionException) {
+    if (e instanceof RejectedExecutionException && this.cloud.getProvider().getProvider().equalsIgnoreCase("cloudstack")) {
       logger.warning("Detected Jclouds execution problem. Reseting Jclouds context");
       try {
         this.deployer.reset(currentContext);

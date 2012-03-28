@@ -1,8 +1,22 @@
 {
+  String actualValue=value;
   if (value == null) {
-    value="";
+    actualValue="";
   }
-  sb.append("export " + name + "="+ value);
-  separate();
-  return this;
+switch (this.mode) {
+case SSH:
+    sb.append("export ").append(name).append("=").append(actualValue);
+  break;
+case WINRM:
+String normalizedValue=normalizeCifsPath(value);
+if (!(value.startsWith("\"") && value.endsWith("\""))) {
+normalizedValue="\"" + normalizedValue + "\"";
+}
+sb.append("$ENV:").append(name).append("=").append(normalizedValue);
+break;
+default :
+break;
+}
+separate();
+return this;
 }
