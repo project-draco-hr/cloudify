@@ -27,6 +27,7 @@ if (t.getCause() instanceof TimeoutException) {
 }
 }
  else {
+logger.log(Level.INFO,"Lifecycle events polling ended successfully.",t);
 resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
 }
 futureTask.cancel(true);
