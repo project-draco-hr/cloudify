@@ -24,7 +24,7 @@
   }
 catch (  final IOException e) {
     logger.log(Level.SEVERE,"An IO Exception was encountered while executing the recipe: " + e.getMessage(),e);
-    result=-2;
+    result=UNEXPECTED_ERROR_EXIT_CODE;
   }
   return result;
 }
