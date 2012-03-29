@@ -22,6 +22,7 @@
     return getFormattedMessage("cloud_started_successfully",cloudProvider);
   }
   finally {
+    installer.close();
     restoreLoggingLevel();
   }
 }
