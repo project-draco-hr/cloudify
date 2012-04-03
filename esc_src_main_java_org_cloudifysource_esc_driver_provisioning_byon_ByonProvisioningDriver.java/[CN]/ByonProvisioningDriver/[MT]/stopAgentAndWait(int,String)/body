@@ -6,13 +6,12 @@
   GSA agent=null;
   final Set<String> keys=agentsMap.keySet();
   for (  final String key : keys) {
-    System.out.println("key: " + key + ", value: "+ agentsMap.get(key));
     if (key.equalsIgnoreCase(ipAddress)) {
       agent=((InternalGridServiceAgent)agentsMap.get(key)).getGSA();
     }
   }
   if (agent != null) {
-    logger.info("ByonProvisioningDriver: shutting down agent on management server: " + ipAddress);
+    logger.info("ByonProvisioningDriver: shutting down agent on server: " + ipAddress);
     try {
       admin.close();
       agent.shutdown();
@@ -23,11 +22,11 @@
         throw new AdminException("Failed to shutdown GSA",e);
       }
     }
-    final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+    final long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(AGENT_SHUTDOWN_TIMEOUT_IN_MINUTES);
     boolean agentUp=isAgentUp(agent);
     while (agentUp && System.currentTimeMillis() < end) {
-      logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(THREAD_WAITING_IDLE_TIME) + " seconds");
-      Thread.sleep(TimeUnit.SECONDS.toMillis(THREAD_WAITING_IDLE_TIME));
+      logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(THREAD_WAITING_IDLE_TIME_IN_SECS) + " seconds");
+      Thread.sleep(TimeUnit.SECONDS.toMillis(THREAD_WAITING_IDLE_TIME_IN_SECS));
       agentUp=isAgentUp(agent);
     }
     if (!agentUp && System.currentTimeMillis() >= end) {

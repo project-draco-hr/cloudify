@@ -1,0 +1,19 @@
+{
+  try {
+    stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),cloudNode.getPrivateIP());
+    if (cleanGsFilesOnShutdown) {
+      deleteGsFiles(cloudNode);
+    }
+    deployer.shutdownServer(cloudTemplateName,cloudNode);
+  }
+ catch (  final Exception e) {
+    if (isManagement) {
+      publishEvent("prov_failed_to_stop_management_machine");
+    }
+ else {
+      publishEvent("prov_failed_to_stop_machine");
+    }
+    throw new CloudProvisioningException(e);
+  }
+  logger.info("Server: " + cloudNode.getId() + " shutdown has finished.");
+}

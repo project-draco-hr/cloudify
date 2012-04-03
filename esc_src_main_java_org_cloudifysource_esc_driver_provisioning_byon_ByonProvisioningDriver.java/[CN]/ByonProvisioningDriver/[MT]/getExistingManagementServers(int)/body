@@ -17,7 +17,10 @@
     }
     final GridServiceManagers gsms=admin.getGridServiceManagers();
     for (    final GridServiceManager gsm : gsms) {
-      existingManagementServers.add(deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress()));
+      final CustomNode managementServer=deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
+      if (managementServer != null) {
+        existingManagementServers.add(managementServer);
+      }
     }
     admin.close();
   }

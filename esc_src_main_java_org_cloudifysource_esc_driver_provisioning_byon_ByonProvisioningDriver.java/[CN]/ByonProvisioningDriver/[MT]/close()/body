@@ -4,7 +4,7 @@
       admin.close();
     }
   }
- catch (  Exception ex) {
+ catch (  final Exception ex) {
     logger.info("ByonProvisioningDriver.close() failed to close agent");
   }
   if (deployer != null) {

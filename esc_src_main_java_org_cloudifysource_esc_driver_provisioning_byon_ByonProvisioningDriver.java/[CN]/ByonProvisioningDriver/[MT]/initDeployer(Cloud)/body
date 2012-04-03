@@ -17,6 +17,15 @@
           }
           deployer.addNodesList(templateName,nodesList);
         }
+        final Map<String,Object> customSettings=cloud.getCustom();
+        if (customSettings != null) {
+          if (customSettings.containsKey(CLEAN_GS_FILES_ON_SHUTDOWN)) {
+            final Object cleanOnShutdownStr=customSettings.get(CLEAN_GS_FILES_ON_SHUTDOWN);
+            if (cleanOnShutdownStr != null && StringUtils.isNotBlank((String)cleanOnShutdownStr)) {
+              cleanGsFilesOnShutdown=((String)cleanOnShutdownStr).equalsIgnoreCase("true");
+            }
+          }
+        }
         return deployer;
       }
     }

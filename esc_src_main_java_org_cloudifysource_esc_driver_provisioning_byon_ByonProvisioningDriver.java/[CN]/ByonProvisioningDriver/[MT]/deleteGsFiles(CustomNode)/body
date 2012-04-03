@@ -1,0 +1,15 @@
+{
+  MachineDetails machineDetails=null;
+  try {
+    machineDetails=createMachineDetailsFromNode(cloudNode);
+    Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),GS_FOLDER,null,FILE_DELETION_TIMEOUT_IN_MINUTES,TimeUnit.MINUTES);
+  }
+ catch (  final Exception e) {
+    if (machineDetails != null) {
+      logger.info("ByonProvisioningDriver: Failed to delete system files from server: " + machineDetails.getPrivateAddress());
+    }
+ else {
+      logger.info("ByonProvisioningDriver: Failed to delete system files from server.");
+    }
+  }
+}

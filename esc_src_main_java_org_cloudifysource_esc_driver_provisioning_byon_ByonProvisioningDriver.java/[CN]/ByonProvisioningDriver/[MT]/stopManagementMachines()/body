@@ -1,29 +1,17 @@
 {
+  Set<CustomNode> managementServers=null;
   try {
-    final Set<CustomNode> managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
+    managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
     if (managementServers == null || managementServers.isEmpty()) {
+      publishEvent("prov_management_server_not_found");
       throw new CloudProvisioningException("Could not find any management machines for this cloud");
-    }
-    for (    final CustomNode customNode : managementServers) {
-      stopManagementServicesAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),2,TimeUnit.MINUTES);
-      MachineDetails machineDetails=null;
-      try {
-        machineDetails=createMachineDetailsFromNode(customNode);
-        Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),"/tmp/gs-files",null,1,TimeUnit.MINUTES);
-      }
- catch (      Exception e) {
-        if (machineDetails != null) {
-          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server: " + machineDetails.getPrivateAddress());
-        }
- else {
-          logger.info("ByonProvisioningDriver: Failed to delete system files on teardown from server.");
-        }
-      }
-      deployer.shutdownServer(cloudTemplateName,customNode);
     }
   }
  catch (  final Exception e) {
-    publishEvent("prov_agent_shutdown_failed");
-    throw new CloudProvisioningException("Failed to shutdown agent.",e);
+    publishEvent("prov_management_lookup_failed");
+    throw new CloudProvisioningException("Failed to lookup existing management servers.");
+  }
+  for (  final CustomNode customNode : managementServers) {
+    shutdownServerGracefully(customNode,true);
   }
 }
