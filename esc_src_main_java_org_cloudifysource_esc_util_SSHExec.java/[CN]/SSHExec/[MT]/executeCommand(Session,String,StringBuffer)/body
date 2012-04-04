@@ -32,7 +32,7 @@
     channel.setPty(usePty);
     channel.connect();
     thread=new Thread(){
-      public void run(){
+      @Override public void run(){
         while (!channel.isClosed()) {
           if (thread == null) {
             return;
