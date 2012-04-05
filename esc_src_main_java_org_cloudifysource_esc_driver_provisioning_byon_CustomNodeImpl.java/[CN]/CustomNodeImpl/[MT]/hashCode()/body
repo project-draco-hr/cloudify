@@ -1,6 +1,6 @@
 {
   final int prime=31;
-  int result=super.hashCode();
+  int result=7;
   result=prime * result + getLoginPort();
   result=prime * result + (getPrivateIP() == null ? 0 : getPrivateIP().hashCode());
   result=prime * result + (getPublicIP() == null ? 0 : getPublicIP().hashCode());
