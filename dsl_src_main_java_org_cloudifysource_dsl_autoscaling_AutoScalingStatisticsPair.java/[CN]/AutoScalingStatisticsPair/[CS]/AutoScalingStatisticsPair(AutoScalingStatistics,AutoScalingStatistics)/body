@@ -1,0 +1,4 @@
+{
+  this.instancesStatistics=instancesStatistics;
+  this.timeStatistics=timeStatistics;
+}

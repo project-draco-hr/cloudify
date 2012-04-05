@@ -1,5 +1,0 @@
-{
-  this.statistics=statistics;
-  setTimeStatistics(statistics);
-  setInstancesStatistics(statistics);
-}
