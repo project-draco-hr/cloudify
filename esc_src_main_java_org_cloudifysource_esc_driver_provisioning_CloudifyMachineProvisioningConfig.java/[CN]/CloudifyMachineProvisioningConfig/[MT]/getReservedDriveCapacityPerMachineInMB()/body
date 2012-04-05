@@ -2,7 +2,7 @@
   final Map<String,String> reserved=this.properties.getKeyValuePairs(RESREVED_DRIVES_CAPACITY_MEGABYTES_PER_MACHINE_KEY,RESREVED_DRIVES_CAPACITY_MEGABYTES_PER_MACHINE_PAIR_SEPERATOR,RESREVED_DRIVES_CAPACITY_MEGABYTES_PER_MACHINE_KEY_VALUE_SEPERATOR,RESERVED_DRIVES_CAPACITY_PER_MACHINE_DEFAULT);
   final Map<String,Long> reservedInMB=new HashMap<String,Long>();
   for (  final Map.Entry<String,String> entry : reserved.entrySet()) {
-    String drive=entry.getKey();
+    final String drive=entry.getKey();
     reservedInMB.put(drive,Long.valueOf(entry.getValue()));
   }
   return reservedInMB;
