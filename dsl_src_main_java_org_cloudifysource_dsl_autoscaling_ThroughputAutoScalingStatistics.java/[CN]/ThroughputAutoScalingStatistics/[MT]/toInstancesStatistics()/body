@@ -1,3 +1,0 @@
-{
-  throw new UnsupportedOperationException("toInstancesStatistics is not supported for type ThroughputAutoScalingStatistics");
-}
