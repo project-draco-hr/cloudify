@@ -7,7 +7,7 @@
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);
   installer.setNicAddress(nicAddress);
-  installer.setProgressInSeconds(10);
+  installer.setProgressInSeconds(DEFAULT_POLLING_INTERVAL);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setZone(zone);
   installer.setAutoShutdown(autoShutdown);
