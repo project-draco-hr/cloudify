@@ -8,7 +8,7 @@
     try {
       logger.fine("Executing details: " + details);
       final Map<String,Object> detailsValues=details.getDetails(this,getUsmLifecycleBean().getConfiguration());
-      removeNonSerializableObjectsFromMap(detailsValues);
+      removeNonSerializableObjectsFromMap(detailsValues,"details");
       result.putAll(detailsValues);
     }
  catch (    final Exception e) {

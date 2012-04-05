@@ -3,7 +3,7 @@
   final USMState state=usm.getState();
   if (!state.equals(USMState.RUNNING)) {
     logger.warning("Test Recipe automatic shutdown has started, but the USM is in state: " + state.toString() + ". Is the test timeout too short? Process will be shut down forcefully, "+ "and the service stop lifecycle will not be executed.");
-    System.exit(1);
+    System.exit(EXIT_CODE_SHUTDOWN_WHILE_INITIALIZING);
   }
   boolean shutdownSuccess=true;
   try {
@@ -21,6 +21,7 @@
   }
   logger.info("Test-Recipe shutdown completing witn shutdownSuccess == " + shutdownSuccess);
   if (shutdownSuccess) {
+    logger.info("Exiting with status 0!");
     System.exit(0);
   }
  else {

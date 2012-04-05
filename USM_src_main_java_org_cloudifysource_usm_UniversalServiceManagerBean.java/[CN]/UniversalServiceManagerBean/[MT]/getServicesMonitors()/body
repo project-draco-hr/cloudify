@@ -13,7 +13,7 @@
     try {
       logger.fine("Executing monitor: " + monitor);
       final Map<String,Number> monitorValues=monitor.getMonitorValues(this,getUsmLifecycleBean().getConfiguration());
-      removeNonSerializableObjectsFromMap(monitorValues);
+      removeNonSerializableObjectsFromMap(monitorValues,"monitors");
       map.putAll(monitorValues);
     }
  catch (    final Exception e) {

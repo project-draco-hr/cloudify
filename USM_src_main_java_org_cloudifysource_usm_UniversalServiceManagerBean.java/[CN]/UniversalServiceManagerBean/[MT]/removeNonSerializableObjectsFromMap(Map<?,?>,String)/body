@@ -6,7 +6,7 @@
   while (entries.hasNext()) {
     final Entry<?,?> entry=(Entry<?,?>)entries.next();
     if (!(entry.getValue() instanceof java.io.Serializable) || entry.getValue() instanceof Closure<?>) {
-      logger.info("Entry " + entry.getKey() + " is not serializable and was not inserted to "+ "the monitors map");
+      logger.info("Entry " + entry.getKey() + " with value: "+ entry.getValue().toString()+ "  is not serializable and was not inserted to the "+ mapName+ " map");
       entries.remove();
     }
   }
