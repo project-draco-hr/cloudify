@@ -1,15 +1,17 @@
 {
-  if (this.serviceNames.isEmpty()) {
-    logger.log(Level.INFO,"Polling for lifecycle events has ended successfully.");
-    this.lifecycleEventsContainer.setPollingState(PollingState.ENDED);
-  }
   try {
+    if (this.serviceNames.isEmpty()) {
+      logger.log(Level.INFO,"Polling Polling for lifecycle events has ended successfully." + " Terminating the polling task");
+      this.lifecycleEventsContainer.setPollingState(PollingState.ENDED);
+      throw new RuntimeException("Polling has ended successfully");
+    }
     if (System.currentTimeMillis() > this.endTime) {
-      throw new TimeoutException();
+      throw new TimeoutException("Timed out");
     }
     pollForLogs();
   }
  catch (  Throwable e) {
+    logger.log(Level.INFO,"Polling task terminated. Reason: " + e.getMessage());
     this.lifecycleEventsContainer.setExecutionException(e);
     throw new RuntimeException(e);
   }
