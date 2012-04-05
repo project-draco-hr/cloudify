@@ -29,6 +29,6 @@
   CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getMinAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
   CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
   CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getMaxAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
-  AutomaticCapacityScaleConfig scaleConfig=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).statisticsPollingInterval(autoScaling.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).addRule(rule).create();
+  AutomaticCapacityScaleConfig scaleConfig=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).statisticsPollingInterval(autoScaling.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleOut(service.getScaleOutCooldownInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleIn(service.getScaleInCooldownInSeconds(),TimeUnit.SECONDS).addRule(rule).create();
   return scaleConfig;
 }
