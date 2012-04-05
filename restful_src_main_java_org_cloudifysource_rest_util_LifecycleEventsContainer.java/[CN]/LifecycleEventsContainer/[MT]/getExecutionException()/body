@@ -1,8 +1,8 @@
 {
 synchronized (this.lock) {
-    if (this.runnableException == null) {
+    if (this.executionException == null) {
       return null;
     }
-    return new ExecutionException(runnableException);
+    return new ExecutionException(this.executionException);
   }
 }

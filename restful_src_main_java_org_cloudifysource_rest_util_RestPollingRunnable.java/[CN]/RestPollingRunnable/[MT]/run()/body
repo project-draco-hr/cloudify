@@ -4,7 +4,7 @@
     this.lifecycleEventsContainer.setPollingState(PollingState.ENDED);
   }
   try {
-    if (System.currentTimeMillis() < this.endTime) {
+    if (System.currentTimeMillis() > this.endTime) {
       throw new TimeoutException();
     }
     pollForLogs();

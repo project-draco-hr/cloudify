@@ -7,6 +7,7 @@
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
+  logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
   UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes);
   if (uninstallOrder.size() > 0) {
     ((InternalAdmin)admin).scheduleAdminOperation(new Runnable(){

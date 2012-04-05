@@ -48,6 +48,7 @@
   srcFile.delete();
   String lifecycleEventContainerID="";
   if (!isApplicationInstall) {
+    logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
     if (service == null) {
       lifecycleEventContainerID=startPollingForLifecycleEvents(ServiceUtils.getApplicationServiceName(serviceName,applicationName),applicationName,1,true,timeout,timeUnit).toString();
     }

@@ -1,6 +1,7 @@
 {
   final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
+  logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
   UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),timeout,TimeUnit.MINUTES);
   final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
   this.executorService.execute(installer);
