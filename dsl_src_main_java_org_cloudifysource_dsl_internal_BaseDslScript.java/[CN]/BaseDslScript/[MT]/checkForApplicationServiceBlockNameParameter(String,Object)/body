@@ -1,15 +1,15 @@
 {
   if (this.rootObject != null && this.rootObject.getClass().equals(Application.class) && this.activeObject != null && this.activeObject.getClass().equals(Service.class) && propertyName.equals("name")) {
     final String serviceName=(String)propertyValue;
-    Service service=loadApplicationService(serviceName);
+    final Service service=loadApplicationService(serviceName);
     service.setName(serviceName);
     try {
       BeanUtils.copyProperties(this.activeObject,service);
     }
- catch (    IllegalAccessException e) {
+ catch (    final IllegalAccessException e) {
       throw new IllegalArgumentException("Failed to load service: " + serviceName,e);
     }
-catch (    InvocationTargetException e) {
+catch (    final InvocationTargetException e) {
       throw new IllegalArgumentException("Failed to load service: " + serviceName,e);
     }
   }

@@ -1,14 +1,14 @@
 {
   beforeHandleInvokeMethod(name,arg);
-  Object[] arr=(Object[])arg;
-  Object param=arr[0];
+  final Object[] arr=(Object[])arg;
+  final Object param=arr[0];
   if (param instanceof Closure<?>) {
-    @SuppressWarnings("unchecked") Closure<Object> closure=(Closure<Object>)param;
+    @SuppressWarnings("unchecked") final Closure<Object> closure=(Closure<Object>)param;
     Object retval;
     try {
       retval=dslObject(name);
     }
- catch (    DSLException e) {
+ catch (    final DSLException e) {
       throw new IllegalArgumentException("Failed to  set: " + name,e);
     }
     if (retval != null) {
@@ -16,20 +16,28 @@
         this.rootObject=retval;
       }
       swapActiveObject(closure,retval);
+      try {
+        validateObject(retval);
+      }
+ catch (      DSLValidationException e) {
+        throw new DSLValidationRuntimeException(e);
+      }
       if (this.activeObject != null) {
         try {
           setProperty(name,retval);
         }
- catch (        IllegalArgumentException e) {
+ catch (        final IllegalArgumentException e) {
         }
       }
       return retval;
     }
   }
   try {
-    if (handleSpecialProperty(name,arg))     return null;
+    if (handleSpecialProperty(name,arg)) {
+      return null;
+    }
   }
- catch (  DSLException e) {
+ catch (  final DSLException e) {
     throw new IllegalArgumentException("Failed to set: " + name,e);
   }
   setProperty(name,arg);

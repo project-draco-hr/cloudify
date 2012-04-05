@@ -15,6 +15,9 @@ catch (    final MissingMethodException e) {
 catch (    final MissingPropertyException e) {
       throw new IllegalArgumentException("Could not resolve DSL entry with name: " + e.getProperty(),e);
     }
+catch (    final DSLValidationRuntimeException e) {
+      throw e.getDSLValidationException();
+    }
  finally {
       if (reader != null) {
         try {

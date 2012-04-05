@@ -1,0 +1,21 @@
+{
+  final Method[] methods=obj.getClass().getDeclaredMethods();
+  for (  final Method method : methods) {
+    if (method.getAnnotation(DSLValidation.class) != null) {
+      final boolean accessible=method.isAccessible();
+      try {
+        method.setAccessible(true);
+        method.invoke(obj);
+      }
+ catch (      final InvocationTargetException e) {
+        throw new DSLValidationException(e.getTargetException().getMessage(),e.getTargetException());
+      }
+catch (      final Exception e) {
+        throw new DSLValidationException("Failed to execute DSL validation: " + e.getMessage(),e);
+      }
+ finally {
+        method.setAccessible(accessible);
+      }
+    }
+  }
+}

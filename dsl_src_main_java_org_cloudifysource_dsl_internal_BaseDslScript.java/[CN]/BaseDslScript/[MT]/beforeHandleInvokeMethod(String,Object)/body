@@ -1,4 +1,8 @@
 {
-  if (name.equals("service"))   propertyCounter=0;
- else   propertyCounter++;
+  if (name.equals("service")) {
+    propertyCounter=0;
+  }
+ else {
+    propertyCounter++;
+  }
 }

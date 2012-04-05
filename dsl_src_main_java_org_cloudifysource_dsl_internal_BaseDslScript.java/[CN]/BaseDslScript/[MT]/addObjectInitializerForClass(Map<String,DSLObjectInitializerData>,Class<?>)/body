@@ -1,5 +1,5 @@
 {
-  CloudifyDSLEntity entityDetails=clazz.getAnnotation(CloudifyDSLEntity.class);
+  final CloudifyDSLEntity entityDetails=clazz.getAnnotation(CloudifyDSLEntity.class);
   if (entityDetails == null) {
     throw new IllegalStateException("Incorrect configuration - class " + clazz.getName() + " is not a DSL entity");
   }

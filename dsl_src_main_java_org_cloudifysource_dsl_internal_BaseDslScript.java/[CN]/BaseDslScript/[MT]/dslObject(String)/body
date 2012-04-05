@@ -1,5 +1,5 @@
 {
-  DSLObjectInitializerData data=getDSLInitializers().get(name);
+  final DSLObjectInitializerData data=getDSLInitializers().get(name);
   if (data == null) {
     return null;
   }
@@ -11,7 +11,7 @@
  else {
     if (data.isAllowInternalNode()) {
       if (data.getParentElement() != null && data.getParentElement().length() > 0) {
-        DSLObjectInitializerData parentType=getDSLInitializers().get(data.getParentElement());
+        final DSLObjectInitializerData parentType=getDSLInitializers().get(data.getParentElement());
         if (parentType == null) {
           throw new IllegalStateException("The DSL type " + name + " has a declared parent type of "+ data.getParentElement()+ " which is not a known type. This should not happen.");
         }
@@ -25,22 +25,24 @@
     }
   }
   try {
-    if (this.activeObject != null && (!(this.activeObject instanceof Application)) && isProperyExistsInBean(this.activeObject,name)) {
-      Object existingPropertyValue=PropertyUtils.getProperty(this.activeObject,name);
-      if (existingPropertyValue != null)       return BeanUtils.cloneBean(existingPropertyValue);
+    if (this.activeObject != null && !(this.activeObject instanceof Application) && isProperyExistsInBean(this.activeObject,name)) {
+      final Object existingPropertyValue=PropertyUtils.getProperty(this.activeObject,name);
+      if (existingPropertyValue != null) {
+        return BeanUtils.cloneBean(existingPropertyValue);
+      }
     }
     return data.clazz.newInstance();
   }
- catch (  InstantiationException e) {
+ catch (  final InstantiationException e) {
     throw new DSLException("Failed to create new element of type " + data.getName() + " with class: "+ data.clazz,e);
   }
-catch (  IllegalAccessException e) {
+catch (  final IllegalAccessException e) {
     throw new DSLException("Failed to create new element of type " + data.getName() + " with class: "+ data.clazz,e);
   }
-catch (  InvocationTargetException e) {
+catch (  final InvocationTargetException e) {
     throw new DSLException("Failed to copy existing element of type " + data.getName() + " with class: "+ data.clazz,e);
   }
-catch (  NoSuchMethodException e) {
+catch (  final NoSuchMethodException e) {
     throw new DSLException("Failed to copy existing element of type " + data.getName() + " with class: "+ data.clazz,e);
   }
 }

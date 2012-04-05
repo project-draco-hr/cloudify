@@ -4,7 +4,7 @@
     throw new IllegalArgumentException("Work directory was not set while parsing application file");
   }
   final String serviceDirName=workDirectory + File.separator + serviceName;
-  File serviceDir=new File(serviceDirName);
+  final File serviceDir=new File(serviceDirName);
   if (!serviceDir.exists() || !serviceDir.isDirectory()) {
     throw new java.lang.IllegalStateException("Could not find service directory: " + serviceDir + " while loading application");
   }
@@ -12,15 +12,15 @@
   try {
     result=ServiceReader.getServiceFromDirectory(serviceDir,((Application)this.rootObject).getName());
   }
- catch (  FileNotFoundException e) {
+ catch (  final FileNotFoundException e) {
     throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
   }
-catch (  PackagingException e) {
+catch (  final PackagingException e) {
     throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
   }
-catch (  DSLException e) {
+catch (  final DSLException e) {
     throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application",e);
   }
-  Service service=result.getService();
+  final Service service=result.getService();
   return service;
 }

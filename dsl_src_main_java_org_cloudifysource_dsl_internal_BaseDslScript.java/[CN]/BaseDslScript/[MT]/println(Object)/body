@@ -1,4 +1,8 @@
 {
-  if (obj == null)   logger.info("null");
- else   logger.info(obj.toString());
+  if (obj == null) {
+    logger.info("null");
+  }
+ else {
+    logger.info(obj.toString());
+  }
 }
