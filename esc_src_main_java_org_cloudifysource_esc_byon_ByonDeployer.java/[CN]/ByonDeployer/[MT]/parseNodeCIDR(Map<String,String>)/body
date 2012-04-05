@@ -1,7 +1,6 @@
 {
-  final String ipCIDR=nodeMap.get(CLOUD_NODE_IP_CIDR);
   try {
-    nodeMap.put(CLOUD_NODE_IP_RANGE,IPUtils.ipCIDR2Range(ipCIDR));
+    nodeMap.put(CLOUD_NODE_IP,IPUtils.ipCIDR2Range(nodeMap.get(CLOUD_NODE_IP)));
   }
  catch (  final Exception e) {
     throw new CloudProvisioningException("Failed to start cloud machine.",e);

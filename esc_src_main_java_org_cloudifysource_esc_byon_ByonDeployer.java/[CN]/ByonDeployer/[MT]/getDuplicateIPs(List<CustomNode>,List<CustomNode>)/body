@@ -1,0 +1,12 @@
+{
+  Set<String> existingIPs=new HashSet<String>();
+  for (  final CustomNode newNode : newNodes) {
+    for (    final CustomNode oldNode : oldNodes) {
+      if (oldNode.getPrivateIP().equalsIgnoreCase(newNode.getPrivateIP())) {
+        existingIPs.add(oldNode.getPrivateIP());
+        break;
+      }
+    }
+  }
+  return existingIPs;
+}

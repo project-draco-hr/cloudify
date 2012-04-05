@@ -1,20 +1,20 @@
 {
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
   for (  final Map<String,String> nodeMap : nodesMapList) {
-    if (StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP))) {
-      cloudNodes.add(parseOneNode(nodeMap));
+    if (StringUtils.isBlank(nodeMap.get(CLOUD_NODE_ID)) || StringUtils.isBlank(nodeMap.get(CLOUD_NODE_IP))) {
+      throw new CloudProvisioningException("Failed to start cloud node, invalid IP/ID configuration.");
     }
- else     if ((StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) || StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX))) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_LIST))) {
+    if (isIPList(nodeMap)) {
       cloudNodes.addAll(parseNodeList(nodeMap));
     }
- else     if ((StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) || StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX))) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_CIDR))) {
-      cloudNodes.addAll(parseNodeCIDR(nodeMap));
-    }
- else     if ((StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID)) || StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_ID_PREFIX))) && StringUtils.isNotBlank(nodeMap.get(CLOUD_NODE_IP_RANGE))) {
+ else     if (isIPRange(nodeMap)) {
       cloudNodes.addAll(parseNodeRange(nodeMap));
     }
+ else     if (isIPCIDR(nodeMap)) {
+      cloudNodes.addAll(parseNodeCIDR(nodeMap));
+    }
  else {
-      throw new CloudProvisioningException("Failed to start cloud node, invalid IP/ID configuration.");
+      cloudNodes.add(parseOneNode(nodeMap));
     }
   }
   return cloudNodes;

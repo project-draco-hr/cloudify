@@ -1,0 +1,2 @@
+List<CustomNode> oldNodes
+List<CustomNode> newNodes

@@ -1,0 +1,7 @@
+{
+  boolean result=false;
+  if (nodeMap.get(CLOUD_NODE_ID).contains("{0}")) {
+    result=true;
+  }
+  return result;
+}

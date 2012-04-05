@@ -1,0 +1,7 @@
+{
+  boolean result=false;
+  if (nodeMap.get(CLOUD_NODE_IP).contains(",")) {
+    result=true;
+  }
+  return result;
+}

@@ -1,0 +1,16 @@
+{
+  final List<CustomNode> allNodes=new ArrayList<CustomNode>();
+  for (  String templateName : nodesListsByTemplates.keySet()) {
+    final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
+    if (templateLists == null || templateLists.size() == 0) {
+      throw new CloudProvisioningException("Failed to get servers list. \"" + templateName + "\" is not a known template.");
+    }
+    final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
+    final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
+    final List<CustomNode> invalidNodesPool=templateLists.get(NODES_LIST_INVALID);
+    allNodes.addAll(freeNodesPool);
+    allNodes.addAll(allocatedNodesPool);
+    allNodes.addAll(invalidNodesPool);
+  }
+  return allNodes;
+}
