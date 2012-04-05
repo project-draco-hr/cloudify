@@ -1,0 +1,7 @@
+{
+  final CloudUser fixture=new CloudUser();
+  fixture.setUser("");
+  fixture.setApiKey("");
+  fixture.setKeyFile("");
+  fixture.validateKeyFileDefaultValue();
+}
