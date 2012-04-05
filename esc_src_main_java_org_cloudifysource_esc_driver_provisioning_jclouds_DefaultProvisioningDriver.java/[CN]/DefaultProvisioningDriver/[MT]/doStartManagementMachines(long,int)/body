@@ -21,7 +21,7 @@
  catch (      final InterruptedException e) {
         ++numberOfErrors;
         publishEvent("failed_to_create_management_vm",e.getMessage());
-        logger.log(Level.SEVERE,"Failed to start a management machine",e);
+        logger.log(Level.FINE,"Failed to start a management machine",e);
         if (firstCreationException == null) {
           firstCreationException=e;
         }
@@ -29,7 +29,7 @@
 catch (      final ExecutionException e) {
         ++numberOfErrors;
         publishEvent("failed_to_create_management_vm",e.getMessage());
-        logger.log(Level.SEVERE,"Failed to start a management machine",e);
+        logger.log(Level.FINE,"Failed to start a management machine",e);
         if (firstCreationException == null) {
           firstCreationException=e;
         }

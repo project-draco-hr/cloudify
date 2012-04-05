@@ -2,7 +2,7 @@
   final String baseDirectory=this.management ? Environment.getHomeDirectory() : this.cloud.getProvider().getRemoteDirectory();
   final File localDirectory=new File(baseDirectory,this.cloud.getProvider().getLocalDirectory());
   final File pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());
-  logger.info("PEM file is located at: " + pemFile);
+  logger.fine("PEM file is located at: " + pemFile);
   if (!pemFile.exists()) {
     logger.severe("Could not find pem file: " + pemFile);
     throw new FileNotFoundException("Could not find key file: " + pemFile);
