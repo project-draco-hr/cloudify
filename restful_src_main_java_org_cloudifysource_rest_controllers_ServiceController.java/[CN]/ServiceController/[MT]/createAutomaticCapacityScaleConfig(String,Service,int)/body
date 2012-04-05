@@ -15,7 +15,7 @@
   ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
   statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   statisticsId.setMetric(autoScaling.getMetric());
-  statisticsId.setInstancesStatistics(autoScaling.getInstancesStatistics().toInstancesStatistics());
+  statisticsId.setInstancesStatistics(autoScaling.getInstancesStatistics().createInstancesStatistics());
   if (autoScaling.getMovingTimeRangeInSeconds() <= autoScaling.getSamplingPeriodInSeconds()) {
     if (logger.isLoggable(Level.FINE)) {
       logger.fine("Deploying service " + serviceName + " with auto scaling that monitors the last sample of "+ autoScaling.getMetric());
@@ -23,7 +23,7 @@
     statisticsId.setTimeWindowStatistics(new LastSampleTimeWindowStatisticsConfig());
   }
  else {
-    statisticsId.setTimeWindowStatistics(autoScaling.getTimeStatistics().toTimeWindowStatistics(autoScaling.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
+    statisticsId.setTimeWindowStatistics(autoScaling.getTimeStatistics().createTimeWindowStatistics(autoScaling.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
   }
   CapacityRequirementsConfig highThresholdIncreaseCapacity=new CapacityRequirementsConfigurer().memoryCapacity(autoScaling.getHighThreshold().getInstancesIncrease() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).create();
   CapacityRequirementsConfig lowThresholdDecreaseCapacity=new CapacityRequirementsConfigurer().memoryCapacity(autoScaling.getLowThreshold().getInstancesDecrease() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).create();
