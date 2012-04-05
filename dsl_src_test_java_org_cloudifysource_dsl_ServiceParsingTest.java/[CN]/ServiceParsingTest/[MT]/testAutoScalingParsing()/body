@@ -18,4 +18,10 @@
   Assert.assertNotNull(scalingRules.getSamplingPeriodInSeconds());
   Assert.assertNotNull(scalingRules.getTimeStatistics());
   Assert.assertNotNull(scalingRules.getMovingTimeRangeInSeconds());
+  HighThreshold highThreshold=scalingRules.getHighThreshold();
+  Assert.assertNotNull(highThreshold.getValue());
+  Assert.assertNotNull(highThreshold.getIncrease());
+  LowThreshold lowThreshold=scalingRules.getLowThreshold();
+  Assert.assertNotNull(lowThreshold.getValue());
+  Assert.assertNotNull(lowThreshold.getDecrease());
 }

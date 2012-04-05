@@ -27,6 +27,8 @@
     dslObjectInitializersByName.put("balanceGauge",new DSLObjectInitializerData("balanceGauge",BalanceGauge.class,false,true,"widgetGroup"));
     dslObjectInitializersByName.put("barLineChart",new DSLObjectInitializerData("barLineChart",BarLineChart.class,false,true,"widgetGroup"));
     addObjectInitializerForClass(dslObjectInitializersByName,ScalingRulesDetails.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,HighThreshold.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,LowThreshold.class);
   }
   return dslObjectInitializersByName;
 }
