@@ -12,7 +12,7 @@
           return (Boolean)retcode;
         }
  else {
-          throw new IllegalArgumentException("A liveness detector returned a result that is not a boolean. Result was: " + retcode);
+          throw new IllegalArgumentException("A liveness detector returned a result that is not a boolean. Result was of type: " + retcode.getClass().getName() + ".Result was: "+ retcode);
         }
       }
  else {
