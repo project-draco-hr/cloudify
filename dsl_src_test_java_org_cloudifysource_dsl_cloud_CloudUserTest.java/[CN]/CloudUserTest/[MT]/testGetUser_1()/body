@@ -1,8 +1,0 @@
-{
-  final CloudUser fixture=new CloudUser();
-  fixture.setUser("");
-  fixture.setApiKey("");
-  fixture.setKeyFile("");
-  final String result=fixture.getUser();
-  assertEquals("",result);
-}

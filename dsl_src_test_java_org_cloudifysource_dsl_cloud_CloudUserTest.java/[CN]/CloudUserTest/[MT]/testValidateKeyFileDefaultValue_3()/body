@@ -3,5 +3,5 @@
   fixture.setUser("");
   fixture.setApiKey("ENTER_KEY");
   fixture.setKeyFile("");
-  fixture.validateKeyFileDefaultValue();
+  fixture.validateDefaultValues();
 }

@@ -3,6 +3,5 @@
   fixture.setUser("");
   fixture.setApiKey("");
   fixture.setKeyFile("");
-  final String result=fixture.toString();
-  assertEquals("CloudUser [user=, keyFile=]",result);
+  fixture.validateDefaultValues();
 }
