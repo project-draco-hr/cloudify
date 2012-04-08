@@ -1,6 +1,6 @@
 {
   final List<CustomNode> parsedNodes=removeDuplicates(parseCloudNodes(nodesList));
-  Set<String> duplicateNodes=getDuplicateIPs(getAllNodes(),parsedNodes);
+  final Set<String> duplicateNodes=getDuplicateIPs(getAllNodes(),parsedNodes);
   if (duplicateNodes.size() > 0) {
     throw new CloudProvisioningException("Failed to add nodes for template \"" + templateName + "\","+ " some IP addresses were already defined by a different template: "+ Arrays.toString(duplicateNodes.toArray()));
   }

@@ -1,7 +1,20 @@
 {
   boolean result=false;
-  if (nodeMap.get(CLOUD_NODE_IP).contains("-")) {
-    result=true;
+  final String ip=nodeMap.get(CLOUD_NODE_IP);
+  if (ip.contains("-")) {
+    final String ipRangeStart=ip.substring(0,ip.indexOf("-"));
+    if (IPUtils.validateIPAddress(ipRangeStart)) {
+      result=true;
+    }
+ else {
+      try {
+        IPUtils.getIP(ip);
+      }
+ catch (      final Exception e) {
+        throw new CloudProvisioningException("Invalid IP address: " + ip);
+      }
+      result=false;
+    }
   }
   return result;
 }

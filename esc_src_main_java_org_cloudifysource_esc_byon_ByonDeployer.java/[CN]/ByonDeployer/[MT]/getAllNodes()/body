@@ -1,6 +1,6 @@
 {
   final List<CustomNode> allNodes=new ArrayList<CustomNode>();
-  for (  String templateName : nodesListsByTemplates.keySet()) {
+  for (  final String templateName : nodesListsByTemplates.keySet()) {
     final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
     if (templateLists == null || templateLists.size() == 0) {
       throw new CloudProvisioningException("Failed to get servers list. \"" + templateName + "\" is not a known template.");

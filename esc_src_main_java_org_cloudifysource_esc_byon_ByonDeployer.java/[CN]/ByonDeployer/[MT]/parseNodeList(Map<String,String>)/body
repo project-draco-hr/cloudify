@@ -18,7 +18,15 @@
   for (  String ip : ipsArr) {
     ip=ip.trim();
     if (!IPUtils.validateIPAddress(ip)) {
-      throw new CloudProvisioningException("Invalid IP address: " + ip);
+      try {
+        ip=IPUtils.getIP(ip);
+      }
+ catch (      final Exception e) {
+        throw new CloudProvisioningException("Invalid IP address: " + ip);
+      }
+      if (!IPUtils.validateIPAddress(ip)) {
+        throw new CloudProvisioningException("Invalid IP address: " + ip);
+      }
     }
     if (useIdAsTemplate) {
       currnentId=MessageFormat.format(id,index);
