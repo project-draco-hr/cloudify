@@ -1,3 +1,3 @@
 {
-  return new AutoScalingStatisticsPair(getInstancesStatistics(),getTimeStatistics());
+  return new ServiceStatisticsCalculation(getInstancesStatistics(),getTimeStatistics());
 }

@@ -1,4 +1,0 @@
-{
-  setInstancesStatistics(statistics.getInstancesStatistics());
-  setTimeStatistics(statistics.getTimeStatistics());
-}

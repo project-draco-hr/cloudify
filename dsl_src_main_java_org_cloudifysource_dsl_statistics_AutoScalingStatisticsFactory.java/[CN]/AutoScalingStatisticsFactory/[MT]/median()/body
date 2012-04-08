@@ -1,3 +1,0 @@
-{
-  return new PercentileAutoScalingStatistics(50.0);
-}
