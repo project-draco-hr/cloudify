@@ -1,5 +1,13 @@
 {
-  String executionPath=getExecutionPath(request);
-  this.commandURL=getRestUrl(request) + "/" + executionPath;
-  initilizeCommandList(executionPath,root);
+  final String prefix="/admin/";
+  String executionPath=(String)request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+  if (executionPath.endsWith("/")) {
+    executionPath=executionPath.substring(0,executionPath.length() - 1);
+  }
+  if (!executionPath.startsWith(prefix)) {
+    throw new IllegalArgumentException("Bad request URL " + request.getRequestURL());
+  }
+  String restUrl="http://" + request.getLocalAddr() + ":"+ request.getLocalPort()+ request.getContextPath();
+  this.commandURL=restUrl + executionPath;
+  initilizeCommandList(executionPath.substring(prefix.length()),root);
 }
