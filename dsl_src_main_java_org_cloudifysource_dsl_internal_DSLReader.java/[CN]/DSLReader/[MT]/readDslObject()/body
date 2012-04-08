@@ -12,8 +12,17 @@
  catch (  final Exception e) {
     throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
   }
+  ClusterInfo clusterInfoToUseInGsc=this.clusterInfo;
+  if (clusterInfoToUseInGsc == null) {
+    clusterInfoToUseInGsc=new ClusterInfo(null,1,0,1,0);
+  }
   if (this.createServiceContext) {
-    this.context=new ServiceContextImpl();
+    if (isRunningInGSC) {
+      this.context=new ServiceContextImpl(clusterInfoToUseInGsc);
+    }
+ else {
+      this.context=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0));
+    }
   }
   final GroovyShell gs=createGroovyShell(properties);
   final Object result=evaluateGroovyScript(gs);
@@ -22,7 +31,8 @@
       throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Sevice. " + "Set the 'createServiceContext' option to false if you do not need a service conext");
     }
     if (isRunningInGSC) {
-      this.context.init((Service)result,admin,workDir.getAbsolutePath(),clusterInfo);
+      clusterInfoToUseInGsc.setName(ServiceUtils.getAbsolutePUName(CloudifyConstants.DEFAULT_APPLICATION_NAME,((Service)result).getName()));
+      this.context.init((Service)result,admin,workDir.getAbsolutePath(),clusterInfoToUseInGsc);
     }
  else {
       this.context.initInIntegratedContainer((Service)result,workDir.getAbsolutePath());

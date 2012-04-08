@@ -2,15 +2,14 @@
   this.service=service;
   this.admin=admin;
   this.serviceDirectory=dir;
-  this.clusterInfo=clusterInfo;
   if (clusterInfo == null) {
     this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
     this.serviceName=service.getName();
   }
  else {
-    logger.info("Parsing full service name from PU name: " + clusterInfo.getName());
+    logger.fine("Parsing full service name from PU name: " + clusterInfo.getName());
     final FullServiceName fullServiceName=ServiceUtils.getFullServiceName(clusterInfo.getName());
-    logger.info("Got full service name: " + fullServiceName);
+    logger.fine("Got full service name: " + fullServiceName);
     this.serviceName=fullServiceName.getServiceName();
     this.applicationName=fullServiceName.getApplicationName();
   }

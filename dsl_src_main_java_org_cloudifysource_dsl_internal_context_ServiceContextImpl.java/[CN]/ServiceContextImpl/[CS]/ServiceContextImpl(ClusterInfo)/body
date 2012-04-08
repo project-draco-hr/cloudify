@@ -1,0 +1,6 @@
+{
+  if (clusterInfo == null) {
+    throw new NullPointerException("Cluster Info provided to service context cannot be null!");
+  }
+  this.clusterInfo=clusterInfo;
+}
