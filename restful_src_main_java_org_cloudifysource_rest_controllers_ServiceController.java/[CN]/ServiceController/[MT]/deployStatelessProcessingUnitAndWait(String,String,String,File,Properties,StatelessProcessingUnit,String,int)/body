@@ -11,7 +11,7 @@
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).create());
     }
  else {
-      deployment.scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create());
+      deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
   }
  else {

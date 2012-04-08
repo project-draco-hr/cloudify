@@ -12,7 +12,7 @@
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(puConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
     }
  else {
-      deployment.scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create());
+      deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
   }
  else {

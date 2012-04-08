@@ -5,16 +5,15 @@
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName).sharedMachineProvisioning(SHARED_ISOLATION_ID,new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(zone).reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create());
   if (cloud == null) {
     if (!isLocalCloud()) {
-      EagerScaleConfig scaleConfig=new EagerScaleConfigurer().atMostOneContainerPerMachine().create();
-      deployment.scale(scaleConfig);
+      deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
  else {
       if (service == null || service.getScalingRules() == null) {
-        final ManualCapacityScaleConfig scaleConfig=createManualCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
         deployment.scale(scaleConfig);
       }
  else {
-        final AutomaticCapacityScaleConfig scaleConfig=createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
         deployment.scale(scaleConfig);
       }
     }
@@ -30,12 +29,12 @@
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
-      final ManualCapacityScaleConfig scaleConfig=createManualCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
       scaleConfig.setAtMostOneContainerPerMachine(true);
       deployment.scale(scaleConfig);
     }
  else {
-      final AutomaticCapacityScaleConfig scaleConfig=createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
       scaleConfig.setAtMostOneContainerPerMachine(true);
       deployment.scale(scaleConfig);
     }
