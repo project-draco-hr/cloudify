@@ -1,3 +1,6 @@
 {
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine(this.getClass().getName() + "port= " + port);
+  }
   this.port=port;
 }
