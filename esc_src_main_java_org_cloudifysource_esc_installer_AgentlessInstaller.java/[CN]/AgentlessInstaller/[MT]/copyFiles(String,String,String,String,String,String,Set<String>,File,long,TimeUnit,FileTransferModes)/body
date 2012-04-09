@@ -19,6 +19,7 @@ if (password != null && password.length() > 0) {
 target=new java.net.URI("sftp",userDetails,host,SSH_PORT,toDir,null,null).toASCIIString();
 break;
 case CIFS:
+checkConnection(host,CIFS_PORT,timeout,unit);
 createdManager=VFS.getManager();
 target=new java.net.URI("smb",username + ":" + password,host,CIFS_PORT,toDir,null,null).toASCIIString();
 break;

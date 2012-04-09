@@ -16,6 +16,7 @@
   final List<String> fullCommand=new LinkedList<String>();
   fullCommand.addAll(Arrays.asList(POWER_SHELL_PREFIX));
   fullCommand.add(tempScriptFile.getAbsolutePath());
+  checkConnection(targetHost,POWERSHELL_PORT,millisUntil,milliseconds);
   final ProcessBuilder pb=new ProcessBuilder(fullCommand);
   pb.redirectErrorStream(true);
   try {
