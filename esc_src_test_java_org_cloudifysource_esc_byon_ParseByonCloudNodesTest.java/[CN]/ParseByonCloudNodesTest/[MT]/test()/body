@@ -1,6 +1,8 @@
 {
   try {
-    final File cloudFile=new File("testbyon-cloud.groovy");
+    String testClasses=this.getClass().getProtectionDomain().getCodeSource().getLocation().toString().substring(5);
+    String packageName=this.getClass().getPackage().getName().replace(".","/");
+    final File cloudFile=new File(testClasses + packageName + "/testbyon-cloud.groovy");
     System.out.println("Trying to read cloud file " + cloudFile.getAbsolutePath());
     final Cloud cloud=ServiceReader.readCloud(cloudFile);
     System.out.println("Creating BYON deployer");
