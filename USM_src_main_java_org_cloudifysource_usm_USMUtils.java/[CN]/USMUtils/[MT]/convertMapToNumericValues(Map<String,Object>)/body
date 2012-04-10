@@ -1,12 +1,12 @@
 {
-  Map<String,Number> returnMap=new HashMap<String,Number>();
-  for (  Map.Entry<String,Object> entryObject : map.entrySet()) {
+  final Map<String,Number> returnMap=new HashMap<String,Number>();
+  for (  final Map.Entry<String,Object> entryObject : map.entrySet()) {
     if (entryObject.getValue() instanceof Number) {
       returnMap.put(entryObject.getKey(),(Number)entryObject.getValue());
     }
  else     if (entryObject.getValue() instanceof String) {
       if (NumberUtils.isNumber((String)entryObject.getValue())) {
-        Number number=NumberUtils.createNumber((String)entryObject.getValue());
+        final Number number=NumberUtils.createNumber((String)entryObject.getValue());
         returnMap.put(entryObject.getKey(),number);
       }
     }

@@ -8,5 +8,5 @@
     throw new USMException("Failed to check if file " + file.getAbsolutePath() + " is executable",e);
   }
   final long executable=mode & FileInfo.MODE_UEXECUTE;
-  return (executable > 0);
+  return executable > 0;
 }

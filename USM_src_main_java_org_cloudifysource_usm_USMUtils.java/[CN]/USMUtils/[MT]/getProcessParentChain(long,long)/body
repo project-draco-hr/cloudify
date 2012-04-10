@@ -1,7 +1,7 @@
 {
   final LinkedList<Long> list=new LinkedList<Long>();
   if (childPid == 0) {
-    logger.warning("The child PID is 0 - this usually means that this USM instance had a problem during startup. Please check the logs for more details.");
+    logger.warning("The child PID is 0 - this usually means that this USM instance had a problem " + "during startup. Please check the logs for more details.");
     return list;
   }
   long currentPid=childPid;

@@ -10,7 +10,7 @@
 catch (  final NoSuchMethodException e) {
   }
   if (method == null) {
-    logger.warning("setExecutable not supported by JDK. GigaSpaces Cloudify should be executed on Java Version >= 1.6");
+    logger.warning("setExecutable not supported by JDK. " + "GigaSpaces Cloudify should be executed on Java Version >= 1.6");
     return false;
   }
   try {
