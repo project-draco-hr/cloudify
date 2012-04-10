@@ -19,7 +19,7 @@
     return responseCode;
   }
  catch (  final IOException ioe) {
-    return 500;
+    return HttpURLConnection.HTTP_INTERNAL_ERROR;
   }
  finally {
     if (connection != null) {

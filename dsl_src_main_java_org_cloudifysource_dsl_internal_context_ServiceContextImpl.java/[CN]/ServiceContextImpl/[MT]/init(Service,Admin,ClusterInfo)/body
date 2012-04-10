@@ -1,7 +1,6 @@
 {
   this.service=service;
   this.admin=admin;
-  this.serviceDirectory=dir;
   if (clusterInfo == null) {
     this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
     this.serviceName=service.getName();
