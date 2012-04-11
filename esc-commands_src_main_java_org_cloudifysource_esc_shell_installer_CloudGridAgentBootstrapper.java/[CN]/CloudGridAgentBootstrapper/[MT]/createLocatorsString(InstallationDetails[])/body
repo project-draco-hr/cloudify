@@ -1,7 +1,7 @@
 {
-  StringBuilder lookupSb=new StringBuilder();
-  for (  InstallationDetails detail : installations) {
-    final String ip=(cloud.getConfiguration().isConnectToPrivateIp() ? detail.getPrivateIp() : detail.getPublicIp());
+  final StringBuilder lookupSb=new StringBuilder();
+  for (  final InstallationDetails detail : installations) {
+    final String ip=cloud.getConfiguration().isConnectToPrivateIp() ? detail.getPrivateIp() : detail.getPublicIp();
     lookupSb.append(ip).append(",");
   }
   lookupSb.setLength(lookupSb.length() - 1);

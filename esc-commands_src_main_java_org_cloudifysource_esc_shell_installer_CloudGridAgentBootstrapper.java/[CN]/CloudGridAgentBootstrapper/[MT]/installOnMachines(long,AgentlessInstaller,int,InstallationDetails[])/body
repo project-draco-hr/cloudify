@@ -1,24 +1,24 @@
 {
-  ExecutorService executors=Executors.newFixedThreadPool(numOfManagementMachines);
-  BootstrapLogsFilters bootstrapLogs=new BootstrapLogsFilters(verbose);
+  final ExecutorService executors=Executors.newFixedThreadPool(numOfManagementMachines);
+  final BootstrapLogsFilters bootstrapLogs=new BootstrapLogsFilters(verbose);
   try {
     bootstrapLogs.applyLogFilters();
-    List<Future<Exception>> futures=new ArrayList<Future<Exception>>();
+    final List<Future<Exception>> futures=new ArrayList<Future<Exception>>();
     for (    final InstallationDetails detail : installations) {
-      Future<Exception> future=executors.submit(new Callable<Exception>(){
+      final Future<Exception> future=executors.submit(new Callable<Exception>(){
         @Override public Exception call(){
           try {
             installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
           }
- catch (          TimeoutException e) {
+ catch (          final TimeoutException e) {
             logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
-catch (          InterruptedException e) {
+catch (          final InterruptedException e) {
             logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
-catch (          InstallerException e) {
+catch (          final InstallerException e) {
             logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
             return e;
           }
@@ -28,9 +28,9 @@ catch (          InstallerException e) {
 );
       futures.add(future);
     }
-    for (    Future<Exception> future : futures) {
+    for (    final Future<Exception> future : futures) {
       try {
-        Exception e=future.get();
+        final Exception e=future.get();
         if (e != null) {
           if (e instanceof TimeoutException) {
             throw (TimeoutException)e;
@@ -44,7 +44,7 @@ catch (          InstallerException e) {
           throw new InstallerException("Failed creating machines.",e);
         }
       }
- catch (      ExecutionException e) {
+ catch (      final ExecutionException e) {
         throw new InstallerException("Failed creating machines.",e);
       }
     }

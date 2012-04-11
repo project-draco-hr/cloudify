@@ -2,14 +2,14 @@
   try {
     this.provisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
   }
- catch (  ClassNotFoundException e) {
+ catch (  final ClassNotFoundException e) {
     throw new CLIException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
   }
-catch (  Exception e) {
+catch (  final Exception e) {
     throw new CLIException("Failed to load provisioning class for cloud: " + this.cloud.getName(),e);
   }
   if (provisioning instanceof ProvisioningDriverClassContextAware) {
-    ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)provisioning;
+    final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)provisioning;
     contextAware.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
   }
   provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);

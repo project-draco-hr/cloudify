@@ -1,5 +1,5 @@
 {
-  long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   if (!force) {
     if (!adminFacade.isConnected()) {
       throw new CLIException("Please connect to the cloud before tearing down");
@@ -11,13 +11,13 @@
       try {
         uninstallApplications(end);
       }
- catch (      InterruptedException e) {
+ catch (      final InterruptedException e) {
         throw e;
       }
-catch (      TimeoutException e) {
+catch (      final TimeoutException e) {
         logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
       }
-catch (      CLIException e) {
+catch (      final CLIException e) {
         logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
       }
     }
@@ -26,7 +26,7 @@ catch (      CLIException e) {
   try {
     provisioning.stopManagementMachines();
   }
- catch (  CloudProvisioningException e) {
+ catch (  final CloudProvisioningException e) {
     throw new CLIException("Failed to shut down management machine during tear down of cloud: " + e.getMessage(),e);
   }
 }

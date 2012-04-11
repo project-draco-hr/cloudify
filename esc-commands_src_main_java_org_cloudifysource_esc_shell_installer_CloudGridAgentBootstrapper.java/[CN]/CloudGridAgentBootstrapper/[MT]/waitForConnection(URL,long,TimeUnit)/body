@@ -6,7 +6,7 @@
         adminFacade.connect(null,null,restAdminUrl.toString());
         return true;
       }
- catch (      CLIException e) {
+ catch (      final CLIException e) {
         if (verbose) {
           logger.log(Level.INFO,"Error connecting to rest service.",e);
         }
