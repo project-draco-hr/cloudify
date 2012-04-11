@@ -12,5 +12,6 @@ catch (  final Exception e) {
     final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)provisioning;
     contextAware.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
   }
+  this.provisioning.addListener(new CliProvisioningDriverListener());
   provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
 }

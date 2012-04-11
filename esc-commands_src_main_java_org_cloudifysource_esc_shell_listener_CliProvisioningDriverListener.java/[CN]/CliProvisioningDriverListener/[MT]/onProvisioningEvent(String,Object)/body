@@ -1,3 +1,6 @@
 {
-  logger.info(getFormattedMessage(eventName,args));
+  String formattedMessage=getFormattedMessage(eventName,args);
+  System.out.println(formattedMessage);
+  System.out.flush();
+  logger.log(Level.FINE,formattedMessage);
 }
