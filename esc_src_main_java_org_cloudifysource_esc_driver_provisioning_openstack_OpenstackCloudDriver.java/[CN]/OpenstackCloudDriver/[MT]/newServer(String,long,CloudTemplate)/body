@@ -12,7 +12,7 @@
     md.setMachineId(serverId);
     md.setAgentRunning(false);
     md.setCloudifyInstalled(false);
-    md.setInstallationDirectory(cloud.getProvider().getRemoteDirectory());
+    md.setInstallationDirectory(serverTemplate.getRemoteDirectory() != null ? serverTemplate.getRemoteDirectory() : cloud.getProvider().getRemoteDirectory());
     md.setRemoteUsername("root");
     return md;
   }

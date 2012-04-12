@@ -16,7 +16,9 @@
     final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
     final FileTransferModes fileTransfer=cloudTemplate.getFileTransfer();
     if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer.equals(FileTransferModes.CIFS)) {
-      handleEC2WindowsCredentials(end,node,machineDetails,cloudTemplate);
+      if (machineDetails.getRemotePassword() == null) {
+        handleEC2WindowsCredentials(end,node,machineDetails,cloudTemplate);
+      }
     }
  else {
       handleServerCredentials(machineDetails);

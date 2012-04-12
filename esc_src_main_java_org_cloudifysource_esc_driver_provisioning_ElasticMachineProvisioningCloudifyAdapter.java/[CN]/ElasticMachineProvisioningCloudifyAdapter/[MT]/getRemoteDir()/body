@@ -1,0 +1,7 @@
+{
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplate);
+  if (template.getRemoteDirectory() != null) {
+    return template.getRemoteDirectory();
+  }
+  return this.cloud.getProvider().getRemoteDirectory();
+}

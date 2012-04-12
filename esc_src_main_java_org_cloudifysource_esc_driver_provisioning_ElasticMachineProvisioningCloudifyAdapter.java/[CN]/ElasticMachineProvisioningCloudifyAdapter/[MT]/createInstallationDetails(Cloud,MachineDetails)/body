@@ -1,7 +1,8 @@
 {
   final InstallationDetails details=new InstallationDetails();
   details.setLocalDir(cloud.getProvider().getLocalDirectory());
-  details.setRemoteDir(cloud.getProvider().getRemoteDirectory());
+  final String remoteDir=getRemoteDir();
+  details.setRemoteDir(remoteDir);
   details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
   final String[] zones=this.config.getGridServiceAgentZones();
   details.setZones(StringUtils.join(zones,",",0,zones.length));

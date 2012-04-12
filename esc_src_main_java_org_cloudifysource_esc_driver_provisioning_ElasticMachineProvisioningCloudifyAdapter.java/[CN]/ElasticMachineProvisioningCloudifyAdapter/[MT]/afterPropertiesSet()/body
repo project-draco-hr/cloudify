@@ -9,7 +9,23 @@
     if (this.cloudTemplate == null) {
       throw new BeanConfigurationException("Cloud template was not set!");
     }
-    cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
+    logger.info("Remote Directory is: " + cloud.getProvider().getRemoteDirectory());
+    if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+      logger.info("Windows machine - modifying local directory location");
+      String localDirectoryName=cloud.getProvider().getRemoteDirectory();
+      localDirectoryName=localDirectoryName.replace("$","");
+      if (localDirectoryName.startsWith("/")) {
+        localDirectoryName=localDirectoryName.substring(1);
+      }
+      if (localDirectoryName.charAt(1) == '/') {
+        localDirectoryName=localDirectoryName.substring(0,1) + ":" + localDirectoryName.substring(1);
+      }
+      logger.info("Modified local dir name is: " + localDirectoryName);
+      cloud.getProvider().setLocalDirectory(localDirectoryName);
+    }
+ else {
+      cloud.getProvider().setLocalDirectory(cloud.getProvider().getRemoteDirectory());
+    }
     try {
       this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
       if (cloudifyProvisioning instanceof ProvisioningDriverClassContextAware) {

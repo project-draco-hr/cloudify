@@ -1,7 +1,7 @@
 {
   File tempFile=null;
   if (StringUtils.isBlank(machineDetails.getRemotePassword())) {
-    if (org.apache.commons.lang.StringUtils.isBlank(cloud.getUser().getKeyFile())) {
+    if (StringUtils.isBlank(cloud.getUser().getKeyFile())) {
       logger.fine("No key file specified in the cloud configuration file");
       if (StringUtils.isBlank(cloud.getConfiguration().getRemotePassword())) {
         logger.severe("No Password or key file specified in the cloud configuration file - connection to" + " the new machine is not possible.");
@@ -22,7 +22,7 @@
       cloud.getUser().setKeyFile(tempFile.getAbsolutePath());
     }
  catch (    final IOException e) {
-      throw new CloudProvisioningException("Failed to create a temporary file for cloud server's key file",e);
+      throw new CloudProvisioningException("Failed to create a temporary " + "file for cloud server's key file",e);
     }
   }
  else {

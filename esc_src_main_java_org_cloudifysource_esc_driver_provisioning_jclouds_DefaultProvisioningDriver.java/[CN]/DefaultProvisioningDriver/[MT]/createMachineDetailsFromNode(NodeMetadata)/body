@@ -10,21 +10,11 @@
   if (node.getPublicAddresses().size() > 0) {
     md.setPublicAddress(node.getPublicAddresses().iterator().next());
   }
-  if (node.getCredentials() == null) {
-    md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
-  }
- else {
-    final String serverIdentity=node.getCredentials().identity;
-    if (serverIdentity != null) {
-      md.setRemoteUsername(serverIdentity);
-    }
- else {
-      md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
-    }
-    if (node.getCredentials().getOptionalPassword().isPresent()) {
-      md.setRemotePassword(node.getCredentials().getPassword());
-    }
-  }
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final String username=createMachineUsername(node,template);
+  final String password=createMachinePassword(node,template);
+  md.setRemoteUsername(username);
+  md.setRemotePassword(password);
   md.setUsePrivateAddress(this.cloud.getConfiguration().isConnectToPrivateIp());
   return md;
 }

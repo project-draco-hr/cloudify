@@ -1,0 +1,15 @@
+{
+  if (template.getUsername() != null) {
+    return template.getUsername();
+  }
+  if (cloud.getConfiguration().getRemoteUsername() != null) {
+    return cloud.getConfiguration().getRemoteUsername();
+  }
+  if (node.getCredentials() != null) {
+    final String serverIdentity=node.getCredentials().identity;
+    if (serverIdentity != null) {
+      return serverIdentity;
+    }
+  }
+  return null;
+}
