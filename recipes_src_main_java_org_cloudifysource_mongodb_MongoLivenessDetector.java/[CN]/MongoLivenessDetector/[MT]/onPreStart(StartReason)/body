@@ -1,0 +1,20 @@
+{
+  if (!initialized)   init();
+  Socket sock=new Socket();
+  try {
+    sock.connect(new InetSocketAddress(host,port));
+    sock.close();
+    throw new IllegalStateException("The Port Liveness Detector found that port " + port + " is IN USE before the process was launched!");
+  }
+ catch (  IOException e) {
+    log.debug("The Port Liveness Detector found that the port " + port + " is FREE and can be used by the process");
+  }
+ finally {
+    try {
+      sock.close();
+    }
+ catch (    IOException e) {
+    }
+  }
+  return EventResult.SUCCESS;
+}
