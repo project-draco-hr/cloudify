@@ -1,0 +1,18 @@
+{
+  InetAddress addr;
+  try {
+    addr=InetAddress.getByName(ip);
+  }
+ catch (  final UnknownHostException e) {
+    return false;
+  }
+  if (addr.isAnyLocalAddress() || addr.isLoopbackAddress()) {
+    return true;
+  }
+  try {
+    return NetworkInterface.getByInetAddress(addr) != null;
+  }
+ catch (  final SocketException e) {
+    return false;
+  }
+}
