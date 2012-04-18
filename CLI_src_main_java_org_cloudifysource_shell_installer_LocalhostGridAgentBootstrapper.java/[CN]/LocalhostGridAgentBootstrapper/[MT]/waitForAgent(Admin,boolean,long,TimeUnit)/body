@@ -28,7 +28,7 @@
       final String agentNicAddress=agent.getMachine().getHostAddress();
       final String agentLookupGroups=getLookupGroups(agent);
       final boolean checkLookupGroups=lookupGroups != null && lookupGroups.equals(agentLookupGroups);
-      final boolean checkNicAddress=nicAddress != null && agentNicAddress.equals(nicAddress) || isThisMyIpAddress(agentNicAddress);
+      final boolean checkNicAddress=nicAddress != null && agentNicAddress.equals(nicAddress) || IsLocalCloudUtils.isThisMyIpAddress(agentNicAddress);
       if (verbose) {
         String message="Discovered agent nic-address=" + agentNicAddress + " lookup-groups="+ agentLookupGroups+ ". ";
         if (!checkLookupGroups) {
@@ -40,28 +40,6 @@
         publishEvent(message);
       }
       return checkLookupGroups && checkNicAddress;
-    }
-    /** 
- * @see http://stackoverflow.com/questions/2406341/how-to-check-if-an-ip-address-is-the-local-host-
- * on-a-multi-homed-system
- */
-    public boolean isThisMyIpAddress(    final String ip){
-      InetAddress addr;
-      try {
-        addr=InetAddress.getByName(ip);
-      }
- catch (      final UnknownHostException e) {
-        return false;
-      }
-      if (addr.isAnyLocalAddress() || addr.isLoopbackAddress()) {
-        return true;
-      }
-      try {
-        return NetworkInterface.getByInetAddress(addr) != null;
-      }
- catch (      final SocketException e) {
-        return false;
-      }
     }
     private String getLookupGroups(    final VirtualMachineAware component){
       final String prefix="-Dcom.gs.jini_lus.groups=";
