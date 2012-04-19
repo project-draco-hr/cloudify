@@ -3,7 +3,7 @@
     return null;
   }
   final List<PluginDescriptor> plugins=this.service.getPlugins();
-  if (plugins == null || plugins.size() == 0) {
+  if (plugins == null || plugins.isEmpty()) {
     return null;
   }
   for (  final PluginDescriptor descriptor : plugins) {

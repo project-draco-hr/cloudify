@@ -4,7 +4,7 @@
     throw new USMException("Could not find container process (" + this.myPid + ") in generated process tree");
   }
   childrenAfter.removeAll(childrenBefore);
-  if (childrenAfter.size() == 0) {
+  if (childrenAfter.isEmpty()) {
     throw new USMException("New process could not be found!");
   }
   if (childrenAfter.size() > 1) {

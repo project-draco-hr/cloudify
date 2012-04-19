@@ -1,5 +1,5 @@
 {
-  if (alternateCommandLine == null || alternateCommandLine.size() == 0) {
+  if (alternateCommandLine == null || alternateCommandLine.isEmpty()) {
     return null;
   }
   final String executable=alternateCommandLine.get(0);
