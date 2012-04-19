@@ -2,13 +2,9 @@
   final String serverId=createServer(token,serverTemplate);
   try {
     final MachineDetails md=new MachineDetails();
-    waitForServerToReachStatus(md,endTime,serverId,token,"ACTIVE");
-    final String allocateIp=(String)serverTemplate.getOptions().get(OPENSTACK_ALLOCATE_FLOATING_IP);
-    if (allocateIp == null || Boolean.parseBoolean(allocateIp)) {
-      final String floatingIp=allocateFloatingIP(token);
-      addFloatingIP(String.valueOf(serverId),floatingIp,token);
-      md.setPublicAddress(floatingIp);
-    }
+    waitForServerToReachStatus(md,endTime,serverId,token,MACHINE_STATUS_ACTIVE);
+    Node node=this.getNode(serverId,token);
+    md.setPublicAddress(node.getPublicIp());
     md.setMachineId(serverId);
     md.setAgentRunning(false);
     md.setCloudifyInstalled(false);
