@@ -1,7 +1,7 @@
 {
   final Set<CustomNode> allNodes=new HashSet<CustomNode>();
   final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
-  if (templateLists == null || templateLists.size() == 0) {
+  if (templateLists == null || templateLists.isEmpty()) {
     throw new CloudProvisioningException("Failed to get servers list. \"" + templateName + "\" is not a known template.");
   }
   final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);

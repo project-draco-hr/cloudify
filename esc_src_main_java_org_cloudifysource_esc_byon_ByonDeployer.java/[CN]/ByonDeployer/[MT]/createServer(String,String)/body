@@ -1,18 +1,18 @@
 {
-  CustomNode node=null;
   if (org.apache.commons.lang.StringUtils.isBlank(serverName)) {
     throw new CloudProvisioningException("Failed to create new cloud node, server name is missing");
   }
   final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
-  if (templateLists == null || templateLists.size() == 0) {
+  if (templateLists == null || templateLists.isEmpty()) {
     throw new CloudProvisioningException("Failed to create new cloud node. \"" + templateName + "\" is not a known template.");
   }
   final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
   final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
   final List<CustomNode> invalidNodesPool=templateLists.get(NODES_LIST_INVALID);
-  if (freeNodesPool.size() == 0 && invalidNodesPool.size() == 0) {
+  if (freeNodesPool.isEmpty() && invalidNodesPool.isEmpty()) {
     throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
   }
+  CustomNode node=null;
   if (freeNodesPool.size() > 0) {
     node=freeNodesPool.iterator().next();
     if (!allocatedNodesPool.contains(node)) {
