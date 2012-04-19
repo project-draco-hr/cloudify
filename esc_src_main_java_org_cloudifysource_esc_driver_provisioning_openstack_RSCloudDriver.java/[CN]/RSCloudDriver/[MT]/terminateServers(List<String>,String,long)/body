@@ -1,0 +1,29 @@
+{
+  for (  final String serverId : serverIds) {
+    try {
+      service.path(this.pathPrefix + "servers/" + serverId).header("X-Auth-Token",token).accept(MediaType.APPLICATION_XML).delete();
+    }
+ catch (    final UniformInterfaceException e) {
+      throw new IllegalArgumentException(e);
+    }
+  }
+  int successCounter=0;
+  for (  final String serverId : serverIds) {
+    while (System.currentTimeMillis() < endTime) {
+      try {
+        this.getNode(serverId,token);
+      }
+ catch (      final UniformInterfaceException e) {
+        if (e.getResponse().getStatus() == HTTP_NOT_FOUND) {
+          ++successCounter;
+          break;
+        }
+        throw e;
+      }
+    }
+  }
+  if (successCounter == serverIds.size()) {
+    return;
+  }
+  throw new TimeoutException("Nodes " + serverIds + " did not shut down in the required time");
+}

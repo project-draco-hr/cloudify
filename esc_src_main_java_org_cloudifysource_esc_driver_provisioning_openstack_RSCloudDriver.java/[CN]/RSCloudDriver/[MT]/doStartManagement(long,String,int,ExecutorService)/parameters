@@ -1,0 +1,4 @@
+long endTime
+String token
+int numOfManagementMachines
+ExecutorService executor

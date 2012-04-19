@@ -1,0 +1,3 @@
+{
+  terminateServers(Arrays.asList(serverId),token,endTime);
+}

@@ -1,0 +1,60 @@
+{
+  final String json="{\"auth\":{\"RAX-KSKEY:apiKeyCredentials\":{\"username\":\"" + this.cloud.getUser().getUser() + "\",\"apiKey\":\""+ this.cloud.getUser().getApiKey()+ "\"}}}";
+  final WebResource service=client.resource(this.identityEndpoint);
+  final String resp=service.path("/v2.0/tokens").header("Content-Type","application/json").post(String.class,json);
+  String[] parts=resp.split("\"endpoints\"");
+  String tenantIdValue=null;
+  String tokenIdValue=null;
+  String publicURLValue=null;
+  for (  String part : parts) {
+    String[] words=part.split("\"");
+    boolean token=false;
+    boolean compute=false;
+    String idValue=null;
+    String tenantValue=null;
+    String URLValue=null;
+    for (int i=0; i < words.length; i++) {
+      String word=words[i];
+      if (word.compareToIgnoreCase("token") == 0) {
+        token=true;
+      }
+      if (word.compareToIgnoreCase("compute") == 0) {
+        compute=true;
+      }
+      if (word.compareToIgnoreCase("id") == 0) {
+        idValue=i + 2 < words.length ? words[i + 2] : null;
+      }
+      if (word.compareToIgnoreCase("tenantId") == 0) {
+        tenantValue=i + 2 < words.length ? words[i + 2] : null;
+      }
+      if (word.compareToIgnoreCase("publicURL") == 0) {
+        URLValue=i + 2 < words.length ? words[i + 2] : null;
+        StringBuilder sb=new StringBuilder(URLValue.length());
+        for (        char c : URLValue.toCharArray())         if (c != '\\')         sb.append(c);
+        URLValue=sb.toString();
+      }
+      if (compute) {
+        tenantIdValue=tenantValue == null ? tenantIdValue : tenantValue;
+        publicURLValue=URLValue == null ? publicURLValue : URLValue;
+      }
+      if (token) {
+        tokenIdValue=idValue == null ? tokenIdValue : idValue;
+      }
+    }
+  }
+  int pos=0;
+  for (int j=0; j < 3; j++) {
+    pos=publicURLValue.indexOf('/',pos);
+    if (pos < 0)     break;
+    pos++;
+  }
+  if (pos > 0) {
+    pos--;
+    this.pathPrefix=publicURLValue.substring(pos);
+    if (this.pathPrefix.charAt(this.pathPrefix.length() - 1) != '/')     this.pathPrefix+='/';
+    this.endpoint=publicURLValue.substring(0,pos);
+    this.service=client.resource(this.endpoint);
+    return tokenIdValue;
+  }
+  throw new RuntimeException("error:" + resp);
+}

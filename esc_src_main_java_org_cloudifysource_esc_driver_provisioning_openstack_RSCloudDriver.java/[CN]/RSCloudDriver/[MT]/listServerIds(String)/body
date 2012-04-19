@@ -1,0 +1,26 @@
+{
+  String response=null;
+  try {
+    response=service.path(this.pathPrefix + "servers").header("X-Auth-Token",token).accept(MediaType.APPLICATION_XML).get(String.class);
+    final Document xmlDoc=this.documentBuilder.parse(new InputSource(new StringReader(response)));
+    final NodeList idNodes=(NodeList)xpath.evaluate("/servers/server/@id",xmlDoc,XPathConstants.NODESET);
+    final int howmany=idNodes.getLength();
+    final List<String> ids=new ArrayList<String>(howmany);
+    for (int i=0; i < howmany; i++) {
+      ids.add(idNodes.item(i).getTextContent());
+    }
+    return ids;
+  }
+ catch (  final UniformInterfaceException e) {
+    throw new OpenstackException(e);
+  }
+catch (  SAXException e) {
+    throw new OpenstackException("Failed to parse XML Response from server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
+  }
+catch (  XPathException e) {
+    throw new OpenstackException("Failed to parse XML Response from server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
+  }
+catch (  IOException e) {
+    throw new OpenstackException("Failed to send request to server. Response was: " + response + ", Error was: "+ e.getMessage(),e);
+  }
+}
