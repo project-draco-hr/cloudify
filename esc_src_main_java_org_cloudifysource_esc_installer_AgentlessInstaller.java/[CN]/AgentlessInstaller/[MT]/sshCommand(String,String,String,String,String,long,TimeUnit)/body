@@ -17,5 +17,4 @@
       throw new InstallerException("Command " + command + " failed to execute.",e);
     }
   }
-  publishEvent("access_vm_with_ssh_success",host);
 }

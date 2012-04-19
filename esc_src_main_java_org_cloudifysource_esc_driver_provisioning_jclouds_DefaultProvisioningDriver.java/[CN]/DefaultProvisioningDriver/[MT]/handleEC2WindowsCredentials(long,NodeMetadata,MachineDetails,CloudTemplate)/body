@@ -1,7 +1,5 @@
 {
   File pemFile=null;
-  logger.info("Gigaspaces base is: " + Environment.getHomeDirectory());
-  logger.info("Local directory is: " + this.cloud.getProvider().getLocalDirectory());
   if (this.management) {
     final String baseDirectory=Environment.getHomeDirectory();
     final File localDirectory=new File(baseDirectory,this.cloud.getProvider().getLocalDirectory());
@@ -9,11 +7,10 @@
   }
  else {
     String localDirectoryName=this.cloud.getProvider().getLocalDirectory();
-    logger.info("local dir name is: " + localDirectoryName);
+    logger.fine("local dir name is: " + localDirectoryName);
     final File localDirectory=new File(localDirectoryName);
     pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());
   }
-  logger.info("PEM file is located at: " + pemFile);
   if (!pemFile.exists()) {
     logger.severe("Could not find pem file: " + pemFile);
     throw new FileNotFoundException("Could not find key file: " + pemFile);
@@ -21,8 +18,10 @@
   logger.info("PEM file exists!");
   String password;
   if (cloudTemplate.getPassword() == null) {
+    logger.info("Waiting for Windows Password to become available");
     final LoginCredentials credentials=new EC2WindowsPasswordHandler().getPassword(node,this.deployer.getContext(),end,pemFile);
     password=credentials.getPassword();
+    logger.info("Windows Password retrieved");
   }
  else {
     password=cloudTemplate.getPassword();

@@ -13,6 +13,12 @@
     }
     scb.exportVar(CLOUD_FILE,remotePath + details.getCloudFile().getName());
   }
+  if (details.getUsername() != null) {
+    scb.exportVar("USERNAME",details.getUsername());
+  }
+  if (details.getPassword() != null) {
+    scb.exportVar("PASSWORD",details.getPassword());
+  }
   scb.chmodExecutable(scriptPath).call(scriptPath);
   final String command=scb.toString();
   logger.fine("Calling startup script on target: " + targetHost + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
@@ -21,7 +27,7 @@ case SSH:
     sshCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   break;
 case WINRM:
-powershellCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+powershellCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS,details.getLocalDir());
 break;
 default :
 throw new UnsupportedOperationException();

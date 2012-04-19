@@ -1,0 +1,14 @@
+{
+  logger.fine("Creating JClouds context deployer with user: " + cloud.getUser().getUser());
+  final CloudTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+  logger.fine("Cloud Template: " + cloudTemplateName + ". Details: "+ cloudTemplate);
+  final Properties props=new Properties();
+  props.putAll(cloudTemplate.getOverrides());
+  deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+  deployer.setImageId(cloudTemplate.getImageId());
+  deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
+  deployer.setHardwareId(cloudTemplate.getHardwareId());
+  deployer.setLocationId(cloudTemplate.getLocationId());
+  deployer.setExtraOptions(cloudTemplate.getOptions());
+  return deployer;
+}

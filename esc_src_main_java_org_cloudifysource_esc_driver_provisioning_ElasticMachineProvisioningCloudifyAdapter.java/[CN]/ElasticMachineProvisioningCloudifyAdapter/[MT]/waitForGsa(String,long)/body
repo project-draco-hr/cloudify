@@ -1,10 +1,6 @@
 {
   while (Utils.millisUntil(end) > 0) {
-    GridServiceAgent gsa=admin.getGridServiceAgents().getHostAddress().get(machineIp);
-    if (gsa != null) {
-      return gsa;
-    }
-    gsa=admin.getGridServiceAgents().getHostNames().get(machineIp);
+    GridServiceAgent gsa=getGSAByIpOrHost(machineIp);
     if (gsa != null) {
       return gsa;
     }

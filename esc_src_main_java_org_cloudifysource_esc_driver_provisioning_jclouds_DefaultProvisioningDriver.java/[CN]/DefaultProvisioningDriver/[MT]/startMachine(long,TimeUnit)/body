@@ -1,5 +1,5 @@
 {
-  logger.info(this.getClass().getName() + ": startMachine, management mode: " + management);
+  logger.fine(this.getClass().getName() + ": startMachine, management mode: " + management);
   final long end=System.currentTimeMillis() + unit.toMillis(timeout);
   if (System.currentTimeMillis() > end) {
     throw new TimeoutException("Starting a new machine timed out");

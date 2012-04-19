@@ -5,7 +5,6 @@
   }
   logger.fine("Executing agentless installer with the following details:\n" + details.toString());
   final String targetHost=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
-  publishEvent("attempting_to_access_vm_with_ssh",targetHost);
   int port=0;
 switch (details.getFileTransferMode()) {
 case CIFS:
@@ -17,8 +16,11 @@ break;
 default :
 throw new UnsupportedOperationException("File Transfer Mode: " + details.getFileTransferMode() + " not supported");
 }
+publishEvent("attempting_to_access_vm",targetHost);
 checkConnection(targetHost,port,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+publishEvent("uploading_files_to_node",targetHost);
 uploadFilesToServer(details,end,targetHost);
+publishEvent("launching_agent_on_node",targetHost);
 remoteExecuteAgentOnServer(details,end,targetHost);
-publishEvent("access_vm_with_ssh_success",details.getPublicIp());
+publishEvent("install_completed_on_node",targetHost);
 }

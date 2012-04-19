@@ -1,6 +1,0 @@
-{
-  final File tempFile=File.createTempFile("InstallationScript",".ps1");
-  tempFile.deleteOnExit();
-  FileUtils.writeStringToFile(tempFile,command);
-  return tempFile;
-}

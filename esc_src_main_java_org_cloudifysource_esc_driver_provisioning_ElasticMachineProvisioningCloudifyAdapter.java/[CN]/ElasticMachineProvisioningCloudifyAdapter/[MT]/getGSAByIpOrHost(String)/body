@@ -1,0 +1,11 @@
+{
+  GridServiceAgent gsa=admin.getGridServiceAgents().getHostAddress().get(machineIp);
+  if (gsa != null) {
+    return gsa;
+  }
+  gsa=admin.getGridServiceAgents().getHostNames().get(machineIp);
+  if (gsa != null) {
+    return gsa;
+  }
+  return null;
+}

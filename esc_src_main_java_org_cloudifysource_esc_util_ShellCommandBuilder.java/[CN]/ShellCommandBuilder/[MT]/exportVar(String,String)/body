@@ -9,8 +9,13 @@ case SSH:
   break;
 case WINRM:
 String normalizedValue=normalizeCifsPath(value);
+if (value.startsWith("\"") && value.endsWith("\"")) {
+normalizedValue=value.replace("\"","'");
+}
+ else {
 if (!(value.startsWith("\"") && value.endsWith("\""))) {
-normalizedValue="\"" + normalizedValue + "\"";
+  normalizedValue="'" + normalizedValue + "'";
+}
 }
 sb.append("$ENV:").append(name).append("=").append(normalizedValue);
 break;
