@@ -2,8 +2,7 @@
   Exception lastException=null;
   while (System.currentTimeMillis() < endTime) {
     try {
-      final InetAddress inetAddress=InetAddress.getByName(ip);
-      return inetAddress;
+      return InetAddress.getByName(ip);
     }
  catch (    final IOException e) {
       lastException=e;

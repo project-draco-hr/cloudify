@@ -9,6 +9,5 @@
     SftpFileSystemConfigBuilder.getInstance().setIdentities(opts,new File[]{temp});
   }
   SftpFileSystemConfigBuilder.getInstance().setTimeout(opts,SFTP_DISCONNECT_DETECTION_TIMEOUT_MILLIS);
-  final FileSystemManager mng=VFS.getManager();
-  return mng;
+  return VFS.getManager();
 }

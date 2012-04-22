@@ -15,9 +15,7 @@
   }
   finally {
     try {
-      if (reader != null) {
-        reader.close();
-      }
+      reader.close();
     }
  catch (    final IOException e) {
       logger.log(Level.SEVERE,"Error while closingprocess input stream: " + e.getMessage(),e);
