@@ -6,7 +6,7 @@
       this.filePointer=0;
     }
     randomAccessFile.seek(filePointer);
-    byte[] buffer=new byte[((int)randomAccessFile.length()) - (int)this.filePointer];
+    final byte[] buffer=new byte[(int)randomAccessFile.length() - (int)this.filePointer];
     randomAccessFile.read(buffer);
     this.filePointer=randomAccessFile.length();
     randomAccessFile.close();
@@ -15,7 +15,7 @@
     this.fileLength=file.length();
     return new String(buffer);
   }
- catch (  FileNotFoundException e) {
+ catch (  final FileNotFoundException e) {
     retryCounter++;
     if (retryCounter > DEFAULT_NUMBER_OF_RETRIES) {
       logger.warning("In RollingFileReader: file not found." + DEFAULT_NUMBER_OF_RETRIES + " Retries failed.");
@@ -26,7 +26,7 @@
       logger.warning("file not found: " + file.getName() + ". Retring attempt #"+ retryCounter);
       Thread.sleep(TIMEOUT_BETWEEN_RETRIES);
     }
- catch (    InterruptedException e1) {
+ catch (    final InterruptedException e1) {
       e1.printStackTrace();
     }
     return readLines();
