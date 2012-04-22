@@ -1,6 +1,6 @@
 {
   final AgentlessInstaller installer=new AgentlessInstaller();
-  installer.addListener(new CliAgentlessInstallerListener());
+  installer.addListener(new CliAgentlessInstallerListener(this.verbose));
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
   fixConfigRelativePaths(cloud);
   final int numOfManagementMachines=machines.length;
