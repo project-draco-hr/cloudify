@@ -39,6 +39,8 @@
       }
     }
   }
-  ((CustomNodeImpl)node).setNodeName(serverName);
+  if (node != null) {
+    ((CustomNodeImpl)node).setNodeName(serverName);
+  }
   return node;
 }
