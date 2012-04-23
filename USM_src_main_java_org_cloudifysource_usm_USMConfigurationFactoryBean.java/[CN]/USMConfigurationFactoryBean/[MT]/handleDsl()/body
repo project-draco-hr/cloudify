@@ -12,6 +12,7 @@
   dslReader.setWorkDir(this.puExtDir);
   dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
   dslReader.setLoadUsmLib(false);
+  logger.info("Calling DSL Reader from USM Config Factory");
   Service service=dslReader.readDslEntity(Service.class);
   return new DSLConfiguration(service,dslReader.getContext(),this.puExtDir,dslReader.getDslFile());
 }
