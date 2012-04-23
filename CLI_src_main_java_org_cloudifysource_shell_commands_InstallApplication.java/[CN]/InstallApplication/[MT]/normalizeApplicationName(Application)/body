@@ -1,8 +1,8 @@
 {
-  if (applicationName == null || applicationName.length() == 0) {
+  if (applicationName == null || applicationName.isEmpty()) {
     applicationName=application.getName();
   }
-  if (applicationName == null || applicationName.length() == 0) {
+  if (applicationName == null || applicationName.isEmpty()) {
     applicationName=applicationFile.getName();
     final int endIndex=applicationName.lastIndexOf('.');
     if (endIndex > 0) {
