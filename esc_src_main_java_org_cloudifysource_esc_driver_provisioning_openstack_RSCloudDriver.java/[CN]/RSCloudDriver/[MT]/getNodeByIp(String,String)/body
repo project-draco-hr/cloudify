@@ -1,7 +1,10 @@
 {
   final List<Node> nodes=listServers(token);
+  logger.log(Level.INFO,"Looking for node ip " + serverIp);
   for (  final Node node : nodes) {
-    if (node.getPrivateIp() != null && node.getPrivateIp().equals(serverIp) || node.getPublicIp() != null && node.getPublicIp().equals(serverIp)) {
+    logger.log(Level.INFO,"node private ip is " + node.getPrivateIp());
+    logger.log(Level.INFO,"node public ip is " + node.getPublicIp());
+    if ((node.getPrivateIp() != null && node.getPrivateIp().equalsIgnoreCase(serverIp)) || (node.getPublicIp() != null && node.getPublicIp().equalsIgnoreCase(serverIp))) {
       return node;
     }
   }
