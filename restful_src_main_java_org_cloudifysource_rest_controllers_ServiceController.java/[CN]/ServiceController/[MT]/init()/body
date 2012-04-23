@@ -11,9 +11,6 @@
  else {
     logger.info("Service Controller is running in local cloud mode");
   }
-  if (isLocalCloud()) {
-    useLocalCloud=true;
-  }
   try {
     if (StringUtils.isBlank(temporaryFolder)) {
       temporaryFolder=getTempFolderPath();
