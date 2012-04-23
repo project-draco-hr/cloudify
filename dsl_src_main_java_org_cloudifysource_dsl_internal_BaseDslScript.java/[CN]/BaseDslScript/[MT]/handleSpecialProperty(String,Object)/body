@@ -36,16 +36,13 @@
       if (logger.isLoggable(Level.FINER)) {
         logger.finer("reading extended service file [" + extendedServiceAbsPath + "]");
       }
-      final Service baseService=ServiceReader.readService(extendedServiceAbsPath);
+      final Service baseService=readServiceToExtend(extendedServiceAbsPath);
       BeanUtils.copyProperties(this.activeObject,baseService);
       final Service activeService=(Service)activeObject;
       activeService.getExtendedServicesPaths().addFirst(extendServicePath);
       return true;
     }
- catch (    final PackagingException e) {
-      throw new DSLException("Failed to parse extended service: " + extendServicePath,e);
-    }
-catch (    final IllegalAccessException e) {
+ catch (    final IllegalAccessException e) {
       throw new DSLException("Failed to parse extended service: " + extendServicePath,e);
     }
 catch (    final InvocationTargetException e) {

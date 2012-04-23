@@ -1,0 +1,19 @@
+{
+  @SuppressWarnings("unchecked") Map<Object,Object> currentVars=this.getBinding().getVariables();
+  DSLReader dslReader=new DSLReader();
+  dslReader.setBindingVariables(currentVars);
+  dslReader.setAdmin(null);
+  dslReader.setClusterInfo(null);
+  dslReader.setContext(null);
+  dslReader.setCreateServiceContext(false);
+  if (serviceFileToExtend.isDirectory()) {
+    dslReader.setWorkDir(serviceFileToExtend);
+  }
+ else {
+    dslReader.setDslFile(serviceFileToExtend);
+  }
+  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setPropertiesFileName(null);
+  final Service service=dslReader.readDslEntity(Service.class);
+  return service;
+}

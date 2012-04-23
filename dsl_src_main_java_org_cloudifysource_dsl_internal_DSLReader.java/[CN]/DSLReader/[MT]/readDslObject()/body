@@ -12,16 +12,21 @@
  catch (  final Exception e) {
     throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
   }
+  if (this.variables != null) {
+    properties.putAll(this.variables);
+  }
   ClusterInfo clusterInfoToUseInGsc=this.clusterInfo;
   if (clusterInfoToUseInGsc == null) {
     clusterInfoToUseInGsc=new ClusterInfo(null,1,0,1,0);
   }
   if (this.createServiceContext) {
-    if (isRunningInGSC) {
-      this.context=new ServiceContextImpl(clusterInfoToUseInGsc,workDir.getAbsolutePath());
-    }
+    if (this.context == null) {
+      if (isRunningInGSC) {
+        this.context=new ServiceContextImpl(clusterInfoToUseInGsc,workDir.getAbsolutePath());
+      }
  else {
-      this.context=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0),workDir.getAbsolutePath());
+        this.context=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0),workDir.getAbsolutePath());
+      }
     }
   }
   final GroovyShell gs=createGroovyShell(properties);
