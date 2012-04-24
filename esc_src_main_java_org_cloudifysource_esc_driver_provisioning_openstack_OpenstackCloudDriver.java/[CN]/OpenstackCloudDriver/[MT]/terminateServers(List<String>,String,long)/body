@@ -21,6 +21,7 @@
         }
         throw e;
       }
+      Thread.sleep(SERVER_POLLING_INTERVAL_MILLIS);
     }
   }
   if (successCounter == serverIds.size()) {
