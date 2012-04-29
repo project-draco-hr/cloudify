@@ -14,7 +14,7 @@
   logger.info("Scaling " + puName + " to "+ count+ " instances");
   UUID eventContainerID;
   if (cloud == null) {
-    if (useLocalCloud) {
+    if (isLocalCloud()) {
       pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(512 * count,MemoryUnit.MEGABYTES).create());
     }
  else {

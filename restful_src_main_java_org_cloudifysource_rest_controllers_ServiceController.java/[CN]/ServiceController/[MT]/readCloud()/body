@@ -2,7 +2,6 @@
   logger.info("Loading cloud configuration");
   this.cloudFileContents=getCloudConfigurationFromManagementSpace();
   if (this.cloudFileContents == null) {
-    useLocalCloud=true;
     return null;
   }
   Cloud cloudConfiguration=null;

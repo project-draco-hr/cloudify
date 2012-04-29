@@ -8,7 +8,7 @@
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
     verifyEsmExistsInCluster();
-    if (useLocalCloud) {
+    if (isLocalCloud()) {
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(puConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
     }
  else {

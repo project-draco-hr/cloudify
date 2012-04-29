@@ -7,7 +7,7 @@
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
-    if (useLocalCloud) {
+    if (isLocalCloud()) {
       deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(dataGridConfig));
     }
  else {
