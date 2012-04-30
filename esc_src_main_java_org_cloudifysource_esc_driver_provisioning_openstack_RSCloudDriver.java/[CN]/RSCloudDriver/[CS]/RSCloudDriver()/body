@@ -1,12 +1,6 @@
 {
-  final DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+  dbf=DocumentBuilderFactory.newInstance();
   dbf.setNamespaceAware(false);
-  try {
-    this.documentBuilder=dbf.newDocumentBuilder();
-  }
- catch (  final ParserConfigurationException e) {
-    throw new IllegalStateException("Failed to set up XML Parser",e);
-  }
   final ClientConfig config=new DefaultClientConfig();
   this.client=Client.create(config);
 }

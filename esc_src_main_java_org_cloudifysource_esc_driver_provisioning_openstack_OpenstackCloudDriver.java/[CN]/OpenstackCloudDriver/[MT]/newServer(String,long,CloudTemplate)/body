@@ -3,7 +3,7 @@
   try {
     final MachineDetails md=new MachineDetails();
     waitForServerToReachStatus(md,endTime,serverId,token,MACHINE_STATUS_ACTIVE);
-    Node node=this.getNode(serverId,token);
+    final Node node=this.getNode(serverId,token);
     md.setPublicAddress(node.getPublicIp());
     md.setMachineId(serverId);
     md.setAgentRunning(false);
