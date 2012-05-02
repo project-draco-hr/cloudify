@@ -2,7 +2,7 @@
   try {
     DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance();
     documentBuilderFactory.setNamespaceAware(false);
-    documentBuilder=documentBuilderFactory.newDocumentBuilder();
+    final DocumentBuilder documentBuilder=documentBuilderFactory.newDocumentBuilder();
     document=documentBuilder.parse(cscfgFile);
     XPathFactory xPathFactory=XPathFactory.newInstance();
     xPath=xPathFactory.newXPath();

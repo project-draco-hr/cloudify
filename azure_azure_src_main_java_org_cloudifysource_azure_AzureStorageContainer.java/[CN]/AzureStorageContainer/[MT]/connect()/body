@@ -1,5 +1,5 @@
 {
-  client=AzureStorageUtils.createStorageAccess(accountName,accountKey);
+  BlobStorageClient client=AzureStorageUtils.createStorageAccess(accountName,accountKey);
   boolean containerExist=client.isContainerExist(containerName);
   if (!containerExist) {
     boolean isPublicContainer=true;
