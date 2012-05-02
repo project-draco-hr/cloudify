@@ -10,5 +10,6 @@
     sb.append(dir.getAbsolutePath()).append(File.separator).append("*").append(File.pathSeparator);
   }
   sb.append(serviceFolder.getAbsolutePath()).append(File.separator).append(File.pathSeparator);
+  sb.append(serviceFolder.getAbsolutePath()).append(File.separator).append("lib").append(File.separator).append("*").append(File.pathSeparator);
   return sb.toString();
 }
