@@ -8,7 +8,7 @@
       if (!(node.getState() == NodeState.RUNNING || node.getState() == NodeState.PENDING)) {
         return false;
       }
-      return node.getGroup().startsWith(managementMachinePrefix);
+      return node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
     }
   }
 );
