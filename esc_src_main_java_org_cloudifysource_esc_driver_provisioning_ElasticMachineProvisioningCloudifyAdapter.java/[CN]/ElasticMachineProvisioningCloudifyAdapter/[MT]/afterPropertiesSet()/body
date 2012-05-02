@@ -1,4 +1,5 @@
 {
+  logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
   final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
   if (cloudContents == null) {
     throw new IllegalArgumentException("Cloud configuration was not set!");
