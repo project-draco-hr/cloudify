@@ -1,6 +1,6 @@
 {
   final String internalString=dependenciesString.replace("[","").replace("]","").trim();
-  if (internalString.length() == 0) {
+  if (internalString.isEmpty()) {
     return new String[0];
   }
   final String[] splitResult=internalString.split(Pattern.quote(","));
