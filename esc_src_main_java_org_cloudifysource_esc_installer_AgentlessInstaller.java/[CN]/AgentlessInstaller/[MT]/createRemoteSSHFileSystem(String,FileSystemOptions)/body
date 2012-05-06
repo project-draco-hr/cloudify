@@ -1,7 +1,7 @@
 {
   SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts,"no");
   SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts,false);
-  if (keyFile != null && keyFile.length() > 0) {
+  if (keyFile != null && !keyFile.isEmpty()) {
     final File temp=new File(keyFile);
     if (!temp.exists()) {
       throw new FileNotFoundException("Could not find key file: " + temp + ". KeyFile "+ keyFile+ " that was passed in the installation Details does not exist");

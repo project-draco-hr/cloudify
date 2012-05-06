@@ -2,9 +2,9 @@
   final LookupLocator[] locators=this.admin.getLocators();
   final StringBuilder sb=new StringBuilder();
   for (  final LookupLocator lookupLocator : locators) {
-    sb.append(lookupLocator.getHost()).append(":").append(lookupLocator.getPort()).append(",");
+    sb.append(lookupLocator.getHost()).append(':').append(lookupLocator.getPort()).append(',');
   }
-  if (sb.toString().length() > 0) {
+  if (!sb.toString().isEmpty()) {
     sb.setLength(sb.length() - 1);
   }
   return sb.toString();

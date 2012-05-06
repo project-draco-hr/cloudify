@@ -9,7 +9,7 @@
   UriParser.canonicalizePath(name,0,name.length(),this);
   UriParser.fixSeparators(name);
   final String share=UriParser.extractFirstElement(name);
-  if (share == null || share.length() == 0) {
+  if (share == null || share.isEmpty()) {
     throw new FileSystemException("vfs.provider.smb/missing-share-name.error",filename);
   }
   FileType fileType=UriParser.normalisePath(name);

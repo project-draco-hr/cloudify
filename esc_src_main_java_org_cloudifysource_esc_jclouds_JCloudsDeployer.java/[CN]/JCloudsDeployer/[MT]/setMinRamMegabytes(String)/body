@@ -1,5 +1,5 @@
 {
-  if (minRamMegabytes_str != null && minRamMegabytes_str.length() > 0) {
+  if (minRamMegabytes_str != null && !minRamMegabytes_str.isEmpty()) {
     setMinRamMegabytes(Integer.parseInt(minRamMegabytes_str));
   }
 }

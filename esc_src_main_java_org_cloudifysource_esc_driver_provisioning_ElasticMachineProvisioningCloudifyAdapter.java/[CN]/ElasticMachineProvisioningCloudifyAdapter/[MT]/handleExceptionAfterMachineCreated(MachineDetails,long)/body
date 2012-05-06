@@ -7,7 +7,7 @@
  else {
       machineIp=machineDetails.getPublicAddress();
     }
-    if (machineIp != null && machineIp.trim().length() > 0) {
+    if (machineIp != null && !machineIp.trim().isEmpty()) {
       try {
         final GridServiceAgent agent=getGSAByIpOrHost(machineIp);
         if (agent != null) {

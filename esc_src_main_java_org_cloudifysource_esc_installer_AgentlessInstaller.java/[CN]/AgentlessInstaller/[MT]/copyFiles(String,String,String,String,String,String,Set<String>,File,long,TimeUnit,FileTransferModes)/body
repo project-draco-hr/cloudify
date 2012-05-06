@@ -10,7 +10,7 @@ switch (fileTransferMode) {
 case SCP:
     createdManager=createRemoteSSHFileSystem(keyFile,opts);
   final String userDetails;
-if (password != null && password.length() > 0) {
+if (password != null && !password.isEmpty()) {
   userDetails=username + ":" + password;
 }
  else {
