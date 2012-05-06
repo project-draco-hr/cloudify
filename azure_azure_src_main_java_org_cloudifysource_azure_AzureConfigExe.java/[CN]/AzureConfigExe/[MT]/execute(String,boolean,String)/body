@@ -1,13 +1,10 @@
 {
   String[] cmd=new String[args.length + (verbose ? 2 : 1)];
   int targetIndex=0;
-  cmd[targetIndex]=exeFile;
-  targetIndex++;
-  cmd[targetIndex]=args[0];
-  targetIndex++;
+  cmd[targetIndex++]=exeFile;
+  cmd[targetIndex++]=args[0];
   if (verbose) {
-    cmd[targetIndex]=argument("verbose");
-    targetIndex++;
+    cmd[targetIndex++]=argument("verbose");
   }
   System.arraycopy(args,1,cmd,targetIndex,args.length - 1);
   final ProcessBuilder pb=new ProcessBuilder(cmd);
