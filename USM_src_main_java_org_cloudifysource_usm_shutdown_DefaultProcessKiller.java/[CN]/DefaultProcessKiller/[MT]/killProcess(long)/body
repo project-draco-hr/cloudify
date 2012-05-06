@@ -3,7 +3,7 @@
     return;
   }
   final Sigar sigar=SigarHolder.getSigar();
-  for (int retries=0; retries <= KILL_RETRIES; ++retries) {
+  for (int retries=0; retries <= killRetries; ++retries) {
     try {
       logger.info("Killing process: " + pid);
       sigar.kill(pid,"SIGTERM");
