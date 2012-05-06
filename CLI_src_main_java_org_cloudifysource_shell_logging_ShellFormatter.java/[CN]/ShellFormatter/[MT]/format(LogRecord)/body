@@ -7,18 +7,17 @@
       message=t.getLocalizedMessage();
     }
  else {
-      message=t.toString();
       final StringWriter sw=new StringWriter();
       t.printStackTrace(new PrintWriter(sw));
       message=sw.toString();
     }
     outputMessage=MessageFormat.format(messages.getString("op_failed"),message);
-    if (record.getMessage() != null && record.getMessage().length() > 0) {
+    if (record.getMessage() != null && !record.getMessage().isEmpty()) {
       outputMessage=super.formatMessage(record) + ": " + outputMessage;
     }
   }
  else {
     outputMessage=super.formatMessage(record);
   }
-  return outputMessage + newLineChar;
+  return outputMessage + NEW_LINE_CHAR;
 }

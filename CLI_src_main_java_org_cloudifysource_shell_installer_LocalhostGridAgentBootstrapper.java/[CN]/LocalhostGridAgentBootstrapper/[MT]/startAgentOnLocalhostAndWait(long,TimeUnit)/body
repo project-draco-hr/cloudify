@@ -1,5 +1,5 @@
 {
-  if (zone == null || zone.length() == 0) {
+  if (zone == null || zone.isEmpty()) {
     throw new CLIException("Agent must be started with a zone");
   }
   setDefaultNicAddress();
