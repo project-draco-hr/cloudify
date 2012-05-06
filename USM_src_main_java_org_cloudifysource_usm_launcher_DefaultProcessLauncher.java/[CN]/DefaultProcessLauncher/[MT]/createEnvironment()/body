@@ -28,7 +28,7 @@
     map.put(CloudifyConstants.USM_ENV_RUNNING_NUMBER,"" + clusterInfo.getRunningNumber());
     map.put(CloudifyConstants.USM_ENV_SERVICE_FILE_NAME,"" + ((DSLConfiguration)this.configutaion).getServiceFile().getName());
   }
-  if (this.groovyEnvironmentClassPath != null && this.groovyEnvironmentClassPath.length() > 0) {
+  if (groovyEnvironmentClassPath != null && !groovyEnvironmentClassPath.isEmpty()) {
     map.put("CLASSPATH",this.groovyEnvironmentClassPath);
   }
   if (logger.isLoggable(Level.FINE)) {
