@@ -3,8 +3,8 @@
   logger.info(this.getClass().getName() + ": startMachine, management mode: " + management);
   final Set<String> activeMachinesIPs=admin.getMachines().getHostsByAddress().keySet();
   deployer.setAllocated(cloudTemplateName,activeMachinesIPs);
-  logger.info("Verifying the active machines are not in the free pool (active machines: " + Arrays.toString(activeMachinesIPs.toArray()) + ", all machines in pool: "+ Arrays.toString(deployer.getAllNodesByTemplateName(cloudTemplateName).toArray())+ ")");
+  logger.info("Verifying the active machines are not in the free pool (currently used machines: " + Arrays.toString(activeMachinesIPs.toArray()) + ", free machines pool: "+ Arrays.toString(deployer.getFreeNodesByTemplateName(cloudTemplateName).toArray())+ ", allocated machines pool: "+ Arrays.toString(deployer.getAllocatedNodesByTemplateName(cloudTemplateName).toArray())+ ", invalid machines pool: "+ Arrays.toString(deployer.getInvalidNodesByTemplateName(cloudTemplateName).toArray())+ ")");
   final String newServerName=createNewServerName();
-  logger.info("Starting a new cloud machine with name: " + newServerName);
+  logger.info("Attempting to start a new cloud machine");
   return createServer(newServerName,endTime);
 }

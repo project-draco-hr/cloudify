@@ -9,7 +9,7 @@
   }
  catch (  final Exception e) {
     publishEvent("prov_management_lookup_failed");
-    throw new CloudProvisioningException("Failed to lookup existing management servers.");
+    throw new CloudProvisioningException("Failed to lookup existing management servers.",e);
   }
   for (  final CustomNode customNode : managementServers) {
     shutdownServerGracefully(customNode,true);

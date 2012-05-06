@@ -1,7 +1,8 @@
 String host
 String username
 String password
-String fileSystemObject
+List<String> fileSystemObjects
 String keyFile
 long timeout
 TimeUnit unit
+FileTransferModes fileTransferMode

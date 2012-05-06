@@ -2,14 +2,14 @@
   MachineDetails machineDetails=null;
   try {
     machineDetails=createMachineDetailsFromNode(cloudNode);
-    Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),GS_FOLDER,null,FILE_DELETION_TIMEOUT_IN_MINUTES,TimeUnit.MINUTES);
+    Utils.deleteFileSystemObject(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),cloudifyItems,null,FILE_DELETION_TIMEOUT_IN_MINUTES,TimeUnit.MINUTES,machineDetails.getFileTransferMode());
   }
  catch (  final Exception e) {
     if (machineDetails != null) {
-      logger.info("ByonProvisioningDriver: Failed to delete system files from server: " + machineDetails.getPrivateAddress());
+      logger.info("ByonProvisioningDriver: Failed to delete system files from server: " + machineDetails.getPrivateAddress() + ", error: "+ e.getMessage());
     }
  else {
-      logger.info("ByonProvisioningDriver: Failed to delete system files from server.");
+      logger.info("ByonProvisioningDriver: Failed to delete system files from server, error: " + e.getMessage());
     }
   }
 }
