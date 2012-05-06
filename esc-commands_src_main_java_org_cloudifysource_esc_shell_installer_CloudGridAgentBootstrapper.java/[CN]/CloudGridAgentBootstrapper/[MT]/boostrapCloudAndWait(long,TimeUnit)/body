@@ -20,11 +20,9 @@
     if (servers[0].isAgentRunning()) {
       throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. " + "Please shut them down before continuing");
     }
- else {
-      startManagememntProcesses(servers,end);
-    }
+    startManagememntProcesses(servers,end);
     for (    final MachineDetails server : servers) {
-      String ipAddress=null;
+      String ipAddress;
       if (cloud.getConfiguration().isBootstrapManagementOnPublicIp()) {
         ipAddress=server.getPublicAddress();
       }

@@ -11,10 +11,11 @@
   details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   details.setUsername(cloud.getUser().getUser());
   details.setBindToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
-  if (cloud.getUser().getKeyFile() != null && cloud.getUser().getKeyFile().length() > 0) {
-    File keyFile=new File(cloud.getUser().getKeyFile());
+  String keyFileName=cloud.getUser().getKeyFile();
+  if (keyFileName != null && !keyFileName.isEmpty()) {
+    File keyFile=new File(keyFileName);
     if (!keyFile.isAbsolute()) {
-      keyFile=new File(details.getLocalDir(),cloud.getUser().getKeyFile());
+      keyFile=new File(details.getLocalDir(),keyFileName);
     }
     if (!keyFile.isFile()) {
       throw new FileNotFoundException("keyfile : " + keyFile.getAbsolutePath() + " not found");
