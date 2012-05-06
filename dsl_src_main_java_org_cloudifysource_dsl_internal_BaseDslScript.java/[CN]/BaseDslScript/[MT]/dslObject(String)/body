@@ -10,7 +10,7 @@
   }
  else {
     if (data.isAllowInternalNode()) {
-      if (data.getParentElement() != null && data.getParentElement().length() > 0) {
+      if (data.getParentElement() != null && !data.getParentElement().isEmpty()) {
         final DSLObjectInitializerData parentType=getDSLInitializers().get(data.getParentElement());
         if (parentType == null) {
           throw new IllegalStateException("The DSL type " + name + " has a declared parent type of "+ data.getParentElement()+ " which is not a known type. This should not happen.");
