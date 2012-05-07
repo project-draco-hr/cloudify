@@ -6,7 +6,7 @@
     pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());
   }
  else {
-    String localDirectoryName=this.cloud.getProvider().getLocalDirectory();
+    final String localDirectoryName=this.cloud.getProvider().getLocalDirectory();
     logger.fine("local dir name is: " + localDirectoryName);
     final File localDirectory=new File(localDirectoryName);
     pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());

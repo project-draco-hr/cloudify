@@ -10,15 +10,6 @@
     return md;
   }
  catch (  final Exception e) {
-    if (e instanceof RejectedExecutionException && this.cloud.getProvider().getProvider().equalsIgnoreCase("cloudstack")) {
-      logger.warning("Detected Jclouds execution problem. Reseting Jclouds context");
-      try {
-        this.deployer.reset(currentContext);
-      }
- catch (      final Exception e2) {
-        logger.log(Level.WARNING,"Failed to reset jclouds context",e2);
-      }
-    }
     throw new CloudProvisioningException("Failed to start cloud machine",e);
   }
 }
