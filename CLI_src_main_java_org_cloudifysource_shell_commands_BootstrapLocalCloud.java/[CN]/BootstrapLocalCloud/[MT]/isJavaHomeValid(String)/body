@@ -1,0 +1,20 @@
+{
+  final File javaHomeDir=new File(javaHome);
+  if (!javaHomeDir.exists() || !javaHomeDir.isDirectory()) {
+    return false;
+  }
+  final File binDir=new File(javaHomeDir,"bin");
+  if (!binDir.exists() || !binDir.isDirectory()) {
+    return false;
+  }
+  final File[] javacCandidates=binDir.listFiles(new FileFilter(){
+    @Override public boolean accept(    final File pathname){
+      if (!pathname.isFile()) {
+        return false;
+      }
+      return pathname.getName().startsWith("javac");
+    }
+  }
+);
+  return javacCandidates.length > 0;
+}
