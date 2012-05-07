@@ -1,3 +1,0 @@
-int remainingApplicationContainers
-int allApplicationContainers
-Set<String> remainingContainerIDs

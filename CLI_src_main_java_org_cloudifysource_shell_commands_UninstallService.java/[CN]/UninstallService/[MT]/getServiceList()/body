@@ -1,6 +1,6 @@
 {
   try {
-    return getRestAdminFacade().getServicesList(DEFAULT_APPLICATION_NAME);
+    return getRestAdminFacade().getServicesList(CloudifyConstants.DEFAULT_APPLICATION_NAME);
   }
  catch (  final Exception e) {
     return new ArrayList<String>();
