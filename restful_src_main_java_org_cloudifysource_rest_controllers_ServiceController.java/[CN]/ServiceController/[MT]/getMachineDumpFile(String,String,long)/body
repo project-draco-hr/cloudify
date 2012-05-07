@@ -1,0 +1,34 @@
+{
+  final String[] actualProcessors=getProcessorsFromRequest(processors);
+  try {
+    if ((ip != null) && (ip.length() > 0)) {
+      Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
+      if (machine == null) {
+        machine=this.admin.getMachines().getHostsByName().get(ip);
+      }
+      if (machine == null) {
+        return errorStatus("machine_not_found",ip);
+      }
+      final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
+      return successStatus(dumpBytes);
+    }
+ else {
+      long totalSize=0;
+      Iterator<Machine> iterator=this.admin.getMachines().iterator();
+      Map<String,Object> map=successStatus();
+      while (iterator.hasNext()) {
+        Machine machine=iterator.next();
+        final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
+        totalSize+=dumpBytes.length;
+        if (totalSize > fileSizeLimit) {
+          throw new RestServiceException("dump_file_too_large",Long.toString(dumpBytes.length),Long.toString(totalSize));
+        }
+        map.put(machine.getHostAddress(),dumpBytes);
+      }
+      return map;
+    }
+  }
+ catch (  RestServiceException e) {
+    return errorStatus(e.getMessageName(),e.getParams());
+  }
+}

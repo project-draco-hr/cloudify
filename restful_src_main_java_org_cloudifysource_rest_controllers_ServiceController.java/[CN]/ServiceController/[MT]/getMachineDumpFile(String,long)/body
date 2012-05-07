@@ -1,0 +1,3 @@
+{
+  return getMachineDumpFile(null,processors,fileSizeLimit);
+}

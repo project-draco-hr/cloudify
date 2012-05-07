@@ -1,0 +1,23 @@
+{
+  final DumpResult dump=machine.generateDump("Rest_API",null,actualProcessors);
+  final File target=File.createTempFile("dump",".zip",new File(this.temporaryFolder));
+  target.deleteOnExit();
+  dump.download(target,null);
+  try {
+    long actualFileSizeLimit=DEFAULT_DUMP_FILE_SIZE_LIMIT;
+    if (fileSizeLimit != 0) {
+      actualFileSizeLimit=fileSizeLimit;
+    }
+    if (target.length() >= actualFileSizeLimit) {
+      throw new RestServiceException("dump_file_too_large",Long.toString(target.length()),Long.toString(actualFileSizeLimit));
+    }
+    final byte[] dumpBytes=FileUtils.readFileToByteArray(target);
+    return dumpBytes;
+  }
+  finally {
+    final boolean tempFileDeleteResult=target.delete();
+    if (!tempFileDeleteResult) {
+      logger.warning("Failed to download temporary dump file: " + target);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  this.messageName=messageName;
+  this.params=params;
+}
