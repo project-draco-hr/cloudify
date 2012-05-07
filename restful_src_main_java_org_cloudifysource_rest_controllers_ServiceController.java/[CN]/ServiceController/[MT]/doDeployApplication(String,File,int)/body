@@ -9,10 +9,15 @@
       }
     }
   }
+  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
+  if (installer.isAsyncInstallPossibleForApplication()) {
+    installer.run();
+  }
+ else {
+    this.executorService.execute(installer);
+  }
   logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
   UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),timeout,TimeUnit.MINUTES);
-  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud);
-  this.executorService.execute(installer);
   final String[] serviceOrder=new String[services.size()];
   for (int i=0; i < serviceOrder.length; i++) {
     serviceOrder[i]=services.get(i).getName();
