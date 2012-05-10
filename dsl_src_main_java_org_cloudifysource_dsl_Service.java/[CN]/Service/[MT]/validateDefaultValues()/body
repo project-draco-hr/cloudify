@@ -1,0 +1,5 @@
+{
+  if (this.numInstances > this.maxAllowedInstances) {
+    throw new DSLValidationException("The defined number of instances is bigger " + "than the maximum allowed number of instances: " + this.numInstances + ">"+ this.maxAllowedInstances);
+  }
+}
