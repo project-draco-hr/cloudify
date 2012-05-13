@@ -1,7 +1,7 @@
 {
   Object previousCommandObject=previousCommand.getCommandObject();
-  if (previousCommandObject == null) {
-    throw new NotFoundHttpException();
+  if (OutputUtils.isNull(previousCommandObject)) {
+    throw new NotFoundHttpException("Method invocation returned null value: " + previousCommand.commandName);
   }
   Class<?> previousCommandObjectClass=previousCommandObject.getClass();
   if (previousCommandObjectClass.isArray()) {
