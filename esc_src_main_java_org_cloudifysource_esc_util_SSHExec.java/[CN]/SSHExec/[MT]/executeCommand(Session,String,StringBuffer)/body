@@ -63,9 +63,9 @@
       }
       int ec=channel.getExitStatus();
       if (ec != 0) {
-        String msg="Remote command failed with exit status " + ec;
+        String msg="Remote command failed with exit status " + ec + "\noutput:\n"+ out.toString();
         if (getFailonerror()) {
-          throw new ExitStatusException(ec);
+          throw new ExitStatusException(msg,ec);
         }
  else {
           log(msg,Project.MSG_ERR);
