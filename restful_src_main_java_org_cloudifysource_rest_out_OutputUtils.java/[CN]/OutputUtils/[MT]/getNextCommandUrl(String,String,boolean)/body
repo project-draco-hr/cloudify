@@ -1,0 +1,7 @@
+{
+  String outputUrl=getRelativePathURLS(commandURI);
+  if (!isLastObjectAndCollection) {
+    outputUrl=outputUrl + "/" + commandName;
+  }
+  return outputUrl;
+}

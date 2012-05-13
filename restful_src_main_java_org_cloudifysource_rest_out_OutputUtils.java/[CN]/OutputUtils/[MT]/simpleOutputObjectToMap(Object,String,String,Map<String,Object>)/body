@@ -21,17 +21,17 @@
     }
  else     if (methodReturnType.isArray()) {
       resultObject=safeInvoke(method,object);
-      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      nextCommandURL=getNextCommandUrl(commandURL,commandName,false);
       OutputUtils.outputArrayToMap(resultObject,outputMap,nextCommandURL);
     }
  else     if (Map.class.isAssignableFrom(methodReturnType)) {
       resultObject=safeInvoke(method,object);
-      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      nextCommandURL=getNextCommandUrl(commandURL,commandName,false);
       OutputUtils.outputMapToMap(resultObject,outputMap,nextCommandURL);
     }
  else     if (List.class.isAssignableFrom(methodReturnType)) {
       resultObject=safeInvoke(method,object);
-      nextCommandURL=getNextCommandUrl(resultObject,commandURL,commandName);
+      nextCommandURL=getNextCommandUrl(commandURL,commandName,false);
       OutputUtils.outputListToMap(resultObject,outputMap,nextCommandURL);
     }
  else     if (PrimitiveWrapper.is(methodReturnType)) {
@@ -41,7 +41,8 @@
       }
     }
  else {
-      outputMap.put(commandName,commandURL.concat("/" + commandName));
+      nextCommandURL=getNextCommandUrl(commandURL,commandName,false);
+      outputMap.put(commandName,nextCommandURL);
       resultObject=safeInvoke(method,object);
       if (!isNull(resultObject)) {
         if (resultObject.getClass().isEnum()) {
