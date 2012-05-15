@@ -12,8 +12,5 @@
     throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudFileContents + ". Error was: "+ e.getMessage(),e);
   }
   logger.info("Successfully loaded cloud configuration file from management space");
-  logger.info("Setting cloud local directory to: " + cloudConfiguration.getProvider().getRemoteDirectory());
-  cloudConfiguration.getProvider().setLocalDirectory(cloudConfiguration.getProvider().getRemoteDirectory());
-  logger.info("Loaded cloud: " + cloudConfiguration);
   return cloudConfiguration;
 }

@@ -1,0 +1,11 @@
+{
+  final DumpResult dump=admin.generateDump("Rest Service user request",null,ProcessingUnitsDumpProcessor.NAME);
+  byte[] data;
+  try {
+    data=getDumpRawData(dump,fileSizeLimit);
+    return successStatus(data);
+  }
+ catch (  RestServiceException e) {
+    return errorStatus(e.getMessageName(),e.getParams());
+  }
+}
