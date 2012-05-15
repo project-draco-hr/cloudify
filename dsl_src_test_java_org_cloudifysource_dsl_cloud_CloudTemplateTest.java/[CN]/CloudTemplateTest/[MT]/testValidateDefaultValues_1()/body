@@ -1,0 +1,17 @@
+{
+  final CloudTemplate fixture=new CloudTemplate();
+  fixture.setRemoteExecution(RemoteExecutionModes.SSH);
+  fixture.setImageId("");
+  fixture.setOptions(new HashMap());
+  fixture.setHardwareId("");
+  fixture.setRemoteDirectory((String)null);
+  fixture.setNumberOfCores(1);
+  fixture.setFileTransfer(FileTransferModes.CIFS);
+  fixture.setCustom(new HashMap());
+  fixture.setUsername("");
+  fixture.setLocationId("");
+  fixture.setOverrides(new HashMap());
+  fixture.setPassword("");
+  fixture.setMachineMemoryMB(1);
+  fixture.validateDefaultValues();
+}
