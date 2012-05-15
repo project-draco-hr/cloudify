@@ -1,0 +1,8 @@
+{
+  String configLocalDir=cloud.getProvider().getLocalDirectory();
+  if (configLocalDir != null && !new File(configLocalDir).isAbsolute()) {
+    String envHomeDir=Environment.getHomeDirectory();
+    logger.fine("Assuming " + configLocalDir + " is in "+ envHomeDir);
+    cloud.getProvider().setLocalDirectory(new File(envHomeDir,configLocalDir).getAbsolutePath());
+  }
+}

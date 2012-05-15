@@ -1,0 +1,14 @@
+{
+  File keyFile=null;
+  String keyFileStr=cloud.getUser().getKeyFile();
+  if (StringUtils.isNotBlank(keyFileStr)) {
+    fixConfigRelativePaths(cloud);
+    keyFile=new File(keyFileStr);
+    if (!keyFile.isAbsolute()) {
+      keyFile=new File(cloud.getProvider().getLocalDirectory(),keyFileStr);
+    }
+    if (!keyFile.isFile()) {
+      throw new CloudProvisioningException("The specified key file is missing: " + keyFile.getAbsolutePath());
+    }
+  }
+}

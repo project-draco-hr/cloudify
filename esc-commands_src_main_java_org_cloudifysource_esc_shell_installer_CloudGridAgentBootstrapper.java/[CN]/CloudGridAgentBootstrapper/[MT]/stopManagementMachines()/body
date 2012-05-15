@@ -1,0 +1,11 @@
+{
+  try {
+    provisioning.stopManagementMachines();
+  }
+ catch (  CloudProvisioningException e) {
+    logger.warning("Failed to clean management machines after provisioning failure, reported error: " + e.getMessage());
+  }
+catch (  TimeoutException e) {
+    logger.warning("Failed to clean management machines after provisioning failure, the operation timed out (" + e.getMessage() + ")");
+  }
+}

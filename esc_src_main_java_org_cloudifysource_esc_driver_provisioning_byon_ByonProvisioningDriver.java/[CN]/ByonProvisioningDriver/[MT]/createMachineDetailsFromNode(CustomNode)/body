@@ -7,13 +7,14 @@
   md.setPrivateAddress(node.getPrivateIP());
   md.setPublicAddress(node.getPublicIP());
   md.setUsePrivateAddress(true);
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
   if (!StringUtils.isBlank(node.getUsername()) && !StringUtils.isBlank(node.getCredential())) {
     md.setRemoteUsername(node.getUsername());
     md.setRemotePassword(node.getCredential());
   }
- else   if (!StringUtils.isBlank(cloud.getConfiguration().getRemoteUsername()) && !StringUtils.isBlank(cloud.getConfiguration().getRemotePassword())) {
-    md.setRemoteUsername(cloud.getConfiguration().getRemoteUsername());
-    md.setRemotePassword(cloud.getConfiguration().getRemotePassword());
+ else   if (!StringUtils.isBlank(template.getUsername()) && !StringUtils.isBlank(template.getPassword())) {
+    md.setRemoteUsername(template.getUsername());
+    md.setRemotePassword(template.getPassword());
   }
  else {
     logger.severe("Cloud node loading failed, missing credentials for server: " + node.toString());

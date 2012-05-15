@@ -12,6 +12,7 @@
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
   final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  validateKeySettings();
   final MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
   publishEvent(EVENT_MGMT_VMS_STARTED);
   return createdMachines;
