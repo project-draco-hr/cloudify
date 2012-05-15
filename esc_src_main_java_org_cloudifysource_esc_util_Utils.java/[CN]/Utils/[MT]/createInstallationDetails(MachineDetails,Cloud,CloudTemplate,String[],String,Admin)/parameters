@@ -1,0 +1,6 @@
+MachineDetails md
+Cloud cloud
+CloudTemplate template
+String[] zones
+String lookupLocatorsString
+Admin admin

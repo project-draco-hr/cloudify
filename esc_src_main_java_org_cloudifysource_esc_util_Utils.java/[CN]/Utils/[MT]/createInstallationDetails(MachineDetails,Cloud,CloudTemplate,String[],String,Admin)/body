@@ -1,0 +1,36 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setLocalDir(cloud.getProvider().getLocalDirectory());
+  final String remoteDir=template.getRemoteDirectory();
+  details.setRemoteDir(remoteDir);
+  details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
+  details.setZones(StringUtils.join(zones,",",0,zones.length));
+  if (org.apache.commons.lang.StringUtils.isNotBlank(cloud.getUser().getKeyFile())) {
+    final File keyFile=new File(cloud.getProvider().getLocalDirectory(),cloud.getUser().getKeyFile());
+    if (keyFile.exists()) {
+      details.setKeyFile(keyFile.getAbsolutePath());
+    }
+ else {
+      throw new FileNotFoundException("Could not find key file matching specified cloud configuration key file: " + cloud.getUser().getKeyFile() + ". Tried: "+ keyFile+ " but file does not exist");
+    }
+  }
+  details.setPrivateIp(md.getPrivateAddress());
+  details.setPublicIp(md.getPublicAddress());
+  details.setLocator(lookupLocatorsString);
+  details.setLus(false);
+  details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  details.setOverridesUrl(cloud.getProvider().getCloudifyOverridesUrl());
+  details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
+  details.setAdmin(admin);
+  details.setUsername(md.getRemoteUsername());
+  details.setPassword(md.getRemotePassword());
+  details.setRemoteExecutionMode(md.getRemoteExecutionMode());
+  details.setFileTransferMode(md.getFileTransferMode());
+  Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
+  for (  Entry<String,Object> entry : customEntries) {
+    if (entry.getKey().startsWith("installer.")) {
+      details.getCustomData().put(entry.getKey(),entry.getValue());
+    }
+  }
+  return details;
+}
