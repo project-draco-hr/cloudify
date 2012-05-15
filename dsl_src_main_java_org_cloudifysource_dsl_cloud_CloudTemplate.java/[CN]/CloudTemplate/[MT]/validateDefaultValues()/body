@@ -1,0 +1,5 @@
+{
+  if (this.getRemoteDirectory() == null || this.getRemoteDirectory().trim().isEmpty()) {
+    throw new DSLValidationException("Remote directory for template is missing");
+  }
+}
