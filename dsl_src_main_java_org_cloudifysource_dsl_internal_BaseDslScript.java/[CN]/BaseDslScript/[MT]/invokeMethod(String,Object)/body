@@ -27,6 +27,7 @@
           setProperty(name,retval);
         }
  catch (        final IllegalArgumentException e) {
+          this.usedProperties.remove(name);
         }
       }
       return retval;

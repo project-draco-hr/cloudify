@@ -1,0 +1,10 @@
+{
+  final File testParsingBaseDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_parsing_on_duplicate_property_in_service_class-service.groovy");
+  final File testParsingBaseWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
+  try {
+    ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
+  }
+ catch (  IllegalArgumentException e) {
+    System.out.println("Test passed. found duplication: " + e.getMessage());
+  }
+}

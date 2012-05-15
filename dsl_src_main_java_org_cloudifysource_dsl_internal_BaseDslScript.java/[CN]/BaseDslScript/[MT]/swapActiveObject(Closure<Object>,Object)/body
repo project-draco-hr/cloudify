@@ -1,8 +1,11 @@
 {
   final Object prevObject=this.activeObject;
+  final Set<String> prevSet=this.usedProperties;
   this.activeObject=obj;
+  this.usedProperties=new HashSet<String>();
   closure.setResolveStrategy(Closure.OWNER_FIRST);
   closure.call();
   activeObject=prevObject;
+  this.usedProperties=prevSet;
   return;
 }

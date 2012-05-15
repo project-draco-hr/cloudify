@@ -1,0 +1,6 @@
+{
+  if (this.activeObject instanceof Application && value instanceof Service) {
+    return true;
+  }
+  return false;
+}

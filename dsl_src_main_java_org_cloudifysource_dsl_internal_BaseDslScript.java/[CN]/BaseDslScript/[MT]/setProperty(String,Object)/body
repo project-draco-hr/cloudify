@@ -1,4 +1,8 @@
 {
+  if (this.usedProperties.contains(name)) {
+    if (!isDuplicatePropertyAllowed(value))     throw new IllegalArgumentException("Property duplication was found: Property " + name + " is defined more than once.");
+  }
+  this.usedProperties.add(name);
   if (this.activeObject == null) {
     super.setProperty(name,value);
     return;
