@@ -2,10 +2,6 @@
   logger.info("Starting async tasks");
   this.processDeathNotifier=new ProcessDeathNotifier(this);
   final ProcessDeathNotifier notifier=this.processDeathNotifier;
-  if (this.process != null) {
-    logger.info("Starting Synchronous Process Death Detection");
-    executors.submit(createProcessWaitTask(notifier));
-  }
   final Runnable task=new Runnable(){
     @Override public void run(){
       final boolean serviceIsStopped=getUsmLifecycleBean().runStopDetection();
@@ -15,5 +11,5 @@
     }
   }
 ;
-  executors.scheduleWithFixedDelay(task,2,5,TimeUnit.SECONDS);
+  executors.scheduleWithFixedDelay(task,STOP_DETECTION_INITIAL_INTERVAL_SECS,STOP_DETECTION_INTERVAL_SECS,TimeUnit.SECONDS);
 }

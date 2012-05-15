@@ -5,20 +5,15 @@
  catch (  final USMException e) {
     logger.log(Level.SEVERE,"Failed to execute pre stop event: " + e.getMessage(),e);
   }
-  try {
-    killMonitoredProcessChain();
-  }
- catch (  final USMException e) {
-    logger.log(Level.SEVERE,"Failed to shut down actual process (" + this.actualProcessID + ")",e);
-  }
-  if (this.actualProcessID != this.childProcessID && this.childProcessID != 0) {
+  final List<Long> pids=this.serviceProcessPIDs;
+  for (  final Long pid : pids) {
     try {
-      if (USMUtils.isProcessAlive(this.childProcessID)) {
-        getUsmLifecycleBean().getProcessKiller().killProcess(this.childProcessID);
+      if (USMUtils.isProcessAlive(pid)) {
+        getUsmLifecycleBean().getProcessKiller().killProcess(pid);
       }
     }
  catch (    final USMException e) {
-      logger.log(Level.SEVERE,"Failed to shut down child process (" + this.childProcessID + ")",e);
+      logger.log(Level.SEVERE,"Failed to kill process with pid: " + pid,e);
     }
   }
   try {

@@ -1,0 +1,4 @@
+{
+  super.init(usm);
+  this.sigar=SigarHolder.getSigar();
+}

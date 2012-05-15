@@ -1,0 +1,16 @@
+{
+  final Integer exitCode=getProcessExitValue(launchedProcess);
+  if (exitCode == null) {
+    return true;
+  }
+ else {
+    if (exitCode != 0) {
+      final String msg="The launched process exited with the error exit code: " + exitCode + ". Consult the logs for more details.";
+      logProcessStartFailureEvent(msg);
+      throw new USMException(msg);
+    }
+ else {
+      return false;
+    }
+  }
+}

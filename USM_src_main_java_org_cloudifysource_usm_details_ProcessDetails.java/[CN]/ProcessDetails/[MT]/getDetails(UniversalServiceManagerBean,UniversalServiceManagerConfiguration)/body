@@ -4,7 +4,13 @@
   map.put("Working Directory",usm.getPuExtDir().getAbsolutePath());
   final String privateIp=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP);
   final String publicIp=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP);
-  final String bindHost=NIOInfoHelper.getDetails().getBindHost();
+  String bindHost=null;
+  if (usm.isRunningInGSC()) {
+    bindHost=NIOInfoHelper.getDetails().getBindHost();
+  }
+ else {
+    bindHost="127.0.0.1";
+  }
   if (privateIp != null) {
     map.put(CloudifyConstants.USM_DETAILS_PRIVATE_IP,privateIp);
   }
@@ -15,7 +21,7 @@
     map.put(CloudifyConstants.USM_DETAILS_PUBLIC_IP,publicIp);
   }
  else {
-    map.put(CloudifyConstants.USM_DETAILS_PRIVATE_IP,bindHost);
+    map.put(CloudifyConstants.USM_DETAILS_PUBLIC_IP,bindHost);
   }
   return map;
 }

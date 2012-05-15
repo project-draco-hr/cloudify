@@ -1,0 +1,16 @@
+{
+  if (process == null) {
+    this.processMode=USMProcessMode.NO_PROCESS;
+  }
+ else {
+    if (exitCode == null) {
+      this.processMode=USMProcessMode.FOREGROUND;
+    }
+ else {
+      this.processMode=USMProcessMode.BACKGROUND;
+      if (exitCode != 0) {
+        logger.warning("The service start detection test finished successfully, " + "but the start command exited with an error code of: " + exitCode + ". This may indicate a problem with the service.");
+      }
+    }
+  }
+}

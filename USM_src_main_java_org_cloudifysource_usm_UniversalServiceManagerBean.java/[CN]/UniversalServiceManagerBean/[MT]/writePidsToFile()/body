@@ -1,0 +1,11 @@
+{
+  if (this.serviceProcessPIDs.size() > 0) {
+    final String pidsString=StringUtils.join(this.serviceProcessPIDs,",");
+    try {
+      FileUtils.writeStringToFile(getPidFile(),pidsString);
+    }
+ catch (    final IOException e) {
+      throw new USMException("Failed to write PIDs list to file",e);
+    }
+  }
+}

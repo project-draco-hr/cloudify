@@ -20,9 +20,9 @@ synchronized (this.stateMutex) {
     USMUtils.shutdownAdmin();
   }
   try {
-    Thread.sleep(10000);
+    Thread.sleep(PRE_SHUTDOWN_TIMEOUT_MILLIS);
   }
- catch (  InterruptedException e) {
+ catch (  final InterruptedException e) {
     logger.log(Level.INFO,"Failed to stall GSC shutdown. Some lifecycle logs may not have been recorded.",e);
   }
   logger.info("USM shut down completed!");

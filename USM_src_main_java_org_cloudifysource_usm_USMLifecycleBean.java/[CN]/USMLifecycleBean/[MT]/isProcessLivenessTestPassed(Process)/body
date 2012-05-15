@@ -1,0 +1,56 @@
+{
+  if (this.livenessDetectors.length == 0) {
+    logger.warning("No Start Detectors have been set for this service. " + "This may cause the USM to monitor an irrelevant process.");
+    return true;
+  }
+  final long startTime=System.currentTimeMillis();
+  final long endTime=startTime + configuration.getStartDetectionTimeoutMSecs();
+  int currentTestIndex=0;
+  boolean processIsRunning=true;
+  while (System.currentTimeMillis() < endTime && currentTestIndex < this.livenessDetectors.length) {
+    if (processIsRunning) {
+      processIsRunning=checkProcessIsRunning(launchedProcess);
+    }
+    logger.info("Executing iteration of liveness detection test");
+    int index=currentTestIndex;
+    logger.info("Executing liveness detectors from index: " + index);
+    logger.info("Liveness detectors: " + Arrays.toString(this.livenessDetectors));
+    logger.info("detectors length: " + this.livenessDetectors.length);
+    while (index < this.livenessDetectors.length) {
+      logger.info("getting detector at index: " + index);
+      final LivenessDetector detector=this.livenessDetectors[index];
+      boolean testResult=false;
+      try {
+        testResult=detector.isProcessAlive();
+        logger.info("Detection Test results are: " + testResult);
+      }
+ catch (      final USMException e) {
+        if (e.getCause() instanceof InterruptedException) {
+          logger.info("A start detector failed due to an InterruptedException");
+        }
+ else {
+          throw e;
+        }
+      }
+      if (testResult) {
+        ++index;
+      }
+ else {
+        break;
+      }
+    }
+    if (index == this.livenessDetectors.length) {
+      return true;
+    }
+ else {
+      currentTestIndex=index;
+    }
+    try {
+      Thread.sleep(configuration.getStartDetectionIntervalMSecs());
+    }
+ catch (    final InterruptedException e) {
+      throw new USMException("Interruped while waiting for start detection",e);
+    }
+  }
+  return false;
+}

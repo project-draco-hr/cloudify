@@ -1,6 +1,5 @@
 {
   logger.info("Detected death of underlying process");
-  getUsmLifecycleBean().externalProcessDied();
 synchronized (this.stateMutex) {
     if (this.state != USMState.RUNNING) {
       return;
@@ -13,7 +12,7 @@ synchronized (this.stateMutex) {
     }
     this.executors.shutdownNow();
     this.state=USMState.LAUNCHING;
-    this.executors=Executors.newScheduledThreadPool(5);
+    this.executors=Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
     new Thread(new Runnable(){
       @Override public void run(){
         try {

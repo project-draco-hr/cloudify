@@ -1,0 +1,5 @@
+{
+  this.locator=locator;
+  this.launcher=launcher;
+  this.puExtDir=puExtDir;
+}

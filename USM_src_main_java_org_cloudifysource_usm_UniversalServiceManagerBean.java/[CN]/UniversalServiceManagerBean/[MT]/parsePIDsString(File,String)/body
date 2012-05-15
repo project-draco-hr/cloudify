@@ -1,0 +1,13 @@
+{
+  final String[] pidParts=pidString.split(",");
+  final List<Long> pidsFromFile=new ArrayList<Long>(pidParts.length);
+  for (  final String part : pidParts) {
+    try {
+      pidsFromFile.add(Long.parseLong(part));
+    }
+ catch (    final NumberFormatException nfe) {
+      throw new USMException("The contents of the PID file: " + file + " cannot be parsed to long values: "+ pidString+ ". Check the file contents and delete the file before retrying.",nfe);
+    }
+  }
+  return pidsFromFile;
+}

@@ -1,8 +1,12 @@
 {
-  final long pid=usm.getActualProcessID();
-  final boolean processStopped=!USMUtils.isProcessAlive(pid);
-  if (processStopped) {
-    logger.warning("Process Stop Detector execution has found that process: " + pid + " is not alive!");
+  final List<Long> pids=usm.getServiceProcessesList();
+  if (pids.size() == 0) {
+    return false;
   }
-  return processStopped;
+  if (stopOnAllProcessesDead) {
+    return checkForAllProcessesDead(pids);
+  }
+ else {
+    return checkForOneProcessDead(pids);
+  }
 }

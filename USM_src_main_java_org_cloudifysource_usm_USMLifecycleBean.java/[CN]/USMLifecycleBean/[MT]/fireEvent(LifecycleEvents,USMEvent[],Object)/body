@@ -37,6 +37,8 @@ break;
 case PRE_SERVICE_STOP:
 er=((PreServiceStopListener)listener).onPreServiceStop();
 break;
+default :
+break;
 }
 if (er == null) {
 throw new IllegalStateException("An event execution returned a null value!");

@@ -1,7 +1,0 @@
-{
-  this.processIsRunning=false;
-  final Thread thread=this.livenessDetectorThread;
-  if (thread != null) {
-    thread.interrupt();
-  }
-}

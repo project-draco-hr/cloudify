@@ -1,0 +1,9 @@
+{
+  final Set<Long> resultSet=new HashSet<Long>();
+  for (  ProcessLocator locator : this.processLocators) {
+    resultSet.addAll(locator.getProcessIDs());
+  }
+  final List<Long> list=new ArrayList<Long>(resultSet.size());
+  list.addAll(resultSet);
+  return list;
+}

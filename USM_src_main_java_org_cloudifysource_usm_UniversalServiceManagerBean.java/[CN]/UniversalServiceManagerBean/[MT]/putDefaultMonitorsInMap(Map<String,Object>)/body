@@ -1,5 +1,12 @@
 {
   map.put(CloudifyConstants.USM_MONITORS_CHILD_PROCESS_ID,this.childProcessID);
-  map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,this.actualProcessID);
+  if (this.serviceProcessPIDs.size() > 0) {
+    if (this.serviceProcessPIDs.size() == 1) {
+      map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,this.serviceProcessPIDs.get(0));
+    }
+ else {
+      map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,this.serviceProcessPIDs);
+    }
+  }
   map.put(CloudifyConstants.USM_MONITORS_STATE_ID,getState().ordinal());
 }

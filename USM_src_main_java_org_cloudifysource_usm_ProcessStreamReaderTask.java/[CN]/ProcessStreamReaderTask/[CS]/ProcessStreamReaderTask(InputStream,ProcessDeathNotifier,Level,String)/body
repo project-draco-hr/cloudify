@@ -1,8 +1,0 @@
-{
-  super();
-  this.inputStream=inputStream;
-  this.notifier=notifier;
-  this.logLevel=logLevel;
-  this.streamLogger=java.util.logging.Logger.getLogger(loggerName);
-  this.loggerName=loggerName;
-}

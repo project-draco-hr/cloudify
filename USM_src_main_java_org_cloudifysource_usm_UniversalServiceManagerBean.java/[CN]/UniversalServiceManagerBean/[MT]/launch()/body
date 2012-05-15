@@ -2,44 +2,44 @@
 synchronized (this.stateMutex) {
     this.state=USMState.LAUNCHING;
     getUsmLifecycleBean().firePreStart(StartReason.DEPLOY);
-    final Set<Long> childrenBefore=getChildProcesses(this.myPid);
     getUsmLifecycleBean().logProcessStartEvent();
-    getUsmLifecycleBean().externalProcessStarted();
     try {
-      this.process=getUsmLifecycleBean().getLauncher().launchProcessAsync(getUsmLifecycleBean().getConfiguration().getStartCommand(),this.puExtDir,getOutputFile(),getErrorFile());
-    }
- catch (    final USMException e) {
-      getUsmLifecycleBean().logProcessStartFailureEvent(e.getMessage());
-      throw e;
-    }
-    startFileMonitoringTask();
-    try {
-      Thread.sleep(this.postLaunchWaitPeriodMillis);
-    }
- catch (    final InterruptedException e) {
-    }
-    if (!isProcessAlive(this.process)) {
-      logger.severe("Attempt to launch underlying process has failed!");
-      getUsmLifecycleBean().logProcessStartFailureEvent("Attempt to launch underlying process has failed.");
-      if (tailer != null) {
-        this.tailer.run();
+      this.process=null;
+      this.serviceProcessPIDs=new ArrayList<Long>(0);
+      final Object startCommand=getUsmLifecycleBean().getConfiguration().getStartCommand();
+      if (startCommand == null) {
+        logger.info("No start command specified in recipe. No processes will be launched or monitored");
+        this.serviceProcessPIDs=new ArrayList<Long>(0);
       }
-      throw new USMException("Process has shut down or failed to start. Check logs for errors");
-    }
-    try {
+ else {
+        try {
+          this.process=getUsmLifecycleBean().getLauncher().launchProcessAsync(startCommand,this.puExtDir,getOutputFile(),getErrorFile());
+        }
+ catch (        final USMException e) {
+          getUsmLifecycleBean().logProcessStartFailureEvent(e.getMessage());
+          throw e;
+        }
+      }
+      startFileMonitoringTask();
       logger.info("Executing process liveness test");
-      if (!getUsmLifecycleBean().isProcessLivenessTestPassed()) {
-        UniversalServiceManagerConfiguration configuration=getUsmLifecycleBean().getConfiguration();
-        long startDetectionTimeoutMilliSecs=configuration.getStartDetectionTimeoutMSecs();
-        long startDetectionTimeoutSecs=TimeUnit.SECONDS.convert(startDetectionTimeoutMilliSecs,TimeUnit.MILLISECONDS);
+      if (!getUsmLifecycleBean().isProcessLivenessTestPassed(this.process)) {
+        final UniversalServiceManagerConfiguration configuration=getUsmLifecycleBean().getConfiguration();
+        final long startDetectionTimeoutMilliSecs=configuration.getStartDetectionTimeoutMSecs();
+        final long startDetectionTimeoutSecs=TimeUnit.SECONDS.convert(startDetectionTimeoutMilliSecs,TimeUnit.MILLISECONDS);
         throw new USMException("The Start Detection test failed in the defined time period: " + startDetectionTimeoutSecs + " seconds."+ " Shutting down this instance.");
       }
       logger.info("Process liveness test passed");
-      getUsmLifecycleBean().firePostStart(StartReason.DEPLOY);
+      final Integer exitCode=USMUtils.getProcessExitCode(this.process);
+      initServiceProcessMode(this.process,exitCode);
     }
   finally {
-      findProcessIDs(childrenBefore,null);
+      if (!this.processMode.equals(USMProcessMode.NO_PROCESS)) {
+        this.serviceProcessPIDs=getUsmLifecycleBean().getServiceProcesses();
+        logger.info("Monitored processes: " + this.serviceProcessPIDs);
+        writePidsToFile();
+      }
     }
+    getUsmLifecycleBean().firePostStart(StartReason.DEPLOY);
     startAsyncTasks();
     this.state=USMState.RUNNING;
     this.stateMutex.notifyAll();

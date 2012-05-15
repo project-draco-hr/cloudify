@@ -1,3 +1,0 @@
-{
-  FileUtils.writeStringToFile(getPidFile(),Long.toString(pid));
-}

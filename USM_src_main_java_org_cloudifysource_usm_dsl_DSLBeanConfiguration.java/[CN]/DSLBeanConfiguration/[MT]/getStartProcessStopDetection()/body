@@ -1,0 +1,32 @@
+{
+  boolean enabled=true;
+  final String enabledProperty=this.service.getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_ENABLE_START_PROCESS_MONITOR);
+  if (enabledProperty != null) {
+    enabled=Boolean.parseBoolean(enabledProperty);
+  }
+  if (!enabled) {
+    logger.warning("Monitoring of the start command process has been disabled due to custom property setting: " + CloudifyConstants.CUSTOM_PROPERTY_ENABLE_START_PROCESS_MONITOR);
+    return null;
+  }
+  return new StopDetector(){
+    private UniversalServiceManagerBean usm;
+    @Override public void init(    final UniversalServiceManagerBean usm){
+      this.usm=usm;
+    }
+    @Override public int getOrder(){
+      return 5;
+    }
+    @Override public boolean isServiceStopped() throws USMException {
+      final Integer exitCode=USMUtils.getProcessExitCode(usm.getStartProcess());
+      if (exitCode == null) {
+        return false;
+      }
+      if (exitCode == 0) {
+        return false;
+      }
+      logger.severe("The start command has exited with the abnormal exit code: " + exitCode + ". Service will now stop!");
+      return true;
+    }
+  }
+;
+}

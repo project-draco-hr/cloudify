@@ -9,23 +9,9 @@
     logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
   }
   try {
-    processArguments=sigar.getProcArgs(pid);
-  }
- catch (  final SigarException e) {
-    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
-  }
-  try {
     final ProcCred prcred=sigar.getProcCred(pid);
     processGroupId=prcred.getGid();
     processUserId=prcred.getUid();
-  }
- catch (  final SigarException e) {
-    logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);
-  }
-  try {
-    final ProcCredName prcredname=sigar.getProcCredName(pid);
-    processOwnerGroupName=prcredname.getGroup();
-    processOwnerUserName=prcredname.getUser();
   }
  catch (  final SigarException e) {
     logger.log(Level.FINE,"Failed to gather process info from Sigar: " + e.getMessage(),e);

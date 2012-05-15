@@ -1,0 +1,10 @@
+{
+  final Set<Long> pids=procTree.get(parentProcessID);
+  if (pids == null || pids.isEmpty()) {
+    leafPids.add(parentProcessID);
+    return;
+  }
+  for (  final Long pid : pids) {
+    findLeafProcessIDs(pid,procTree,leafPids);
+  }
+}

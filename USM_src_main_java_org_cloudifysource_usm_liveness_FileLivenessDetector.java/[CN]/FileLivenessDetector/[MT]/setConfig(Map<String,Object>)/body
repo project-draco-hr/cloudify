@@ -1,6 +1,6 @@
 {
   if (config.get(FILE_PATH_KEY) != null) {
-    this.filePath=((String)config.get(FILE_PATH_KEY));
+    this.filePath=(String)config.get(FILE_PATH_KEY);
   }
   if (config.get(TIMEOUT_IN_SECONDS_KEY) != null) {
     this.timeoutInSeconds=(Integer)config.get(TIMEOUT_IN_SECONDS_KEY);

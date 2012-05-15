@@ -1,0 +1,10 @@
+{
+  boolean atLeastOneProcessAlive=false;
+  for (  final Long pid : pidsFromFile) {
+    if (USMUtils.isProcessAlive(pid)) {
+      atLeastOneProcessAlive=true;
+      logger.info("Found Active Process with PID: " + pid + " from file: "+ file);
+    }
+  }
+  return atLeastOneProcessAlive;
+}

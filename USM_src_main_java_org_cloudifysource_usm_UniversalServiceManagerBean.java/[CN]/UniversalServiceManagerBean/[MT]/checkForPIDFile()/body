@@ -8,17 +8,11 @@
  catch (    final IOException e) {
       throw new USMException("Failed to read pid file contents from file: " + file,e);
     }
-    long pid=0;
-    try {
-      pid=Long.parseLong(pidString);
-    }
- catch (    final NumberFormatException nfe) {
-      throw new USMException("The contents of the PID file: " + file + " cannot be parsed to a long value: "+ pidString+ ". Check the file contents and delete the file before retrying.",nfe);
-    }
-    if (USMUtils.isProcessAlive(pid)) {
-      logger.info("Found Active Process with PID: " + pid + " from file: "+ file);
-      this.actualProcessID=pid;
-      this.childProcessID=0;
+    final List<Long> pidsFromFile=parsePIDsString(file,pidString);
+    this.childProcessID=0;
+    final boolean atLeastOneProcessAlive=isAnyProcessAlive(file,pidsFromFile);
+    if (atLeastOneProcessAlive) {
+      this.serviceProcessPIDs=pidsFromFile;
       try {
         logProcessDetails();
       }
@@ -28,8 +22,9 @@
       return true;
     }
  else {
-      logger.warning("PID file: " + file + " was found with PID: "+ pid+ " but this process does not exist. PID Fi.");
+      logger.warning("PID file: " + file + " was found with PIDs: "+ pidsFromFile+ " but these process do not exist. PID Files will be deleted.");
       deleteProcessFiles(file);
+      return false;
     }
   }
   deleteProcessFiles(file);

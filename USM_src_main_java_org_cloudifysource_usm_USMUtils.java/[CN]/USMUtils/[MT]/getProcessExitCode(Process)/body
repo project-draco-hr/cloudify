@@ -1,0 +1,12 @@
+{
+  if (processToCheck == null) {
+    return null;
+  }
+  try {
+    int val=processToCheck.exitValue();
+    return val;
+  }
+ catch (  final Exception e) {
+    return null;
+  }
+}

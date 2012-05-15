@@ -1,0 +1,55 @@
+{
+  final EventResult result=new DSLEntryExecutor(locator,launcher,puExtDir).run();
+  if (result.isSuccess()) {
+    final Object retval=result.getResult();
+    if (retval instanceof List<?>) {
+      @SuppressWarnings("unchecked") final List<Object> closureResultList=(List<Object>)retval;
+      final List<Long> targetList=new ArrayList<Long>(closureResultList.size());
+      for (      final Object listItem : closureResultList) {
+        if (Long.class.isInstance(listItem)) {
+          targetList.add((Long)listItem);
+        }
+ else         if (Integer.class.isInstance(listItem)) {
+          targetList.add(new Long((Integer)listItem));
+        }
+ else         if (String.class.isInstance(listItem)) {
+          try {
+            final Long temp=Long.parseLong((String)listItem);
+            targetList.add(temp);
+          }
+ catch (          final NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to parse a long value from locator result: " + listItem,e);
+          }
+        }
+ else {
+          throw new IllegalArgumentException("Values in process locator result must be integers, " + "longs or strings that can be parsed as longs");
+        }
+      }
+      return targetList;
+    }
+ else     if (retval instanceof String) {
+      String listToParse=(String)retval;
+      if (listToParse.startsWith("[") && listToParse.endsWith("]")) {
+        listToParse=listToParse.substring(1,listToParse.length() - 1);
+      }
+      final String[] parts=listToParse.split(",");
+      final List<Long> resultList=new ArrayList<Long>(parts.length);
+      for (      final String part : parts) {
+        try {
+          final Long pid=Long.parseLong(part);
+          resultList.add(pid);
+        }
+ catch (        final NumberFormatException e) {
+          throw new IllegalArgumentException("Failed to parse PID list from locator output. Output was: " + retval + ", failed to parse component: "+ part,e);
+        }
+      }
+      return resultList;
+    }
+ else {
+      throw new IllegalArgumentException("A process locator returned an unexpected result that is not a list of longs, " + " or a comma aeparated list of longs. Result was of type: " + retval.getClass().getName() + ".Result was: "+ retval);
+    }
+  }
+ else {
+    throw new USMException("A Process locator failed to execute. Exception was: " + result.getException(),result.getException());
+  }
+}

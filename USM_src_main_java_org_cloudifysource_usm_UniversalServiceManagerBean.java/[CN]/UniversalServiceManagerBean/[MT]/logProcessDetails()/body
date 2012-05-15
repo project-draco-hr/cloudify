@@ -1,10 +1,16 @@
 {
   if (logger.isLoggable(Level.INFO)) {
     if (this.childProcessID != 0) {
+      logger.info("Child PID: " + this.childProcessID);
       logger.info("Process ID of Child Process is: " + this.childProcessID + ", Executable is: "+ this.sigar.getProcExe(this.childProcessID).getName());
     }
-    if (this.actualProcessID != 0) {
-      logger.info("Actual Monitored Process ID is: " + this.actualProcessID + ", Executable is: "+ this.sigar.getProcExe(this.actualProcessID).getName());
+    if (this.serviceProcessPIDs.size() > 0) {
+      if (logger.isLoggable(Level.INFO)) {
+        logger.info("Actual Monitored Process IDs are: ");
+        for (        final Long pid : this.serviceProcessPIDs) {
+          logger.info(this.serviceProcessPIDs + ": " + this.sigar.getProcExe(pid).getName());
+        }
+      }
     }
   }
 }

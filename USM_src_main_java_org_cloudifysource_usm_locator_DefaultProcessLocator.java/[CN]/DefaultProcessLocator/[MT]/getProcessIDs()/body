@@ -1,0 +1,4 @@
+{
+  this.findProcessIDs();
+  return this.serviceProcesses;
+}

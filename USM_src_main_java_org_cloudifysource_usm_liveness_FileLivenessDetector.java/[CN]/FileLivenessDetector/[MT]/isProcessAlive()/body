@@ -6,10 +6,10 @@
   if (!file.isAbsolute()) {
     file=new File(serviceDirectory,this.filePath);
   }
-  FileTailerListener listener=new FileTailerListener(this.regex);
+  final FileTailerListener listener=new FileTailerListener(this.regex);
   Tailer tailer=null;
   try {
-    long startTime=System.currentTimeMillis();
+    final long startTime=System.currentTimeMillis();
     while (System.currentTimeMillis() < startTime + timeoutInSeconds * 1000) {
       if (file.exists()) {
         if (tailer == null) {
@@ -23,7 +23,7 @@
       try {
         Thread.sleep(TIMEOUT_BETWEEN_FILE_QUERYING);
       }
- catch (      InterruptedException e) {
+ catch (      final InterruptedException e) {
         e.printStackTrace();
       }
     }

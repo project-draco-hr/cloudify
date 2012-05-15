@@ -1,0 +1,10 @@
+{
+  this.myPid=this.sigar.getPid();
+  try {
+    this.childrenBeforeStart=getChildProcesses(this.myPid);
+  }
+ catch (  final USMException e) {
+    throw new IllegalStateException("Failed to read child processes",e);
+  }
+  return EventResult.SUCCESS;
+}
