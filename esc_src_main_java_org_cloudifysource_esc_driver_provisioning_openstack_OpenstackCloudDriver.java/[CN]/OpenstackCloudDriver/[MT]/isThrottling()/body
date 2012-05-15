@@ -1,0 +1,7 @@
+{
+  boolean throttling=false;
+  if (throttlingTimeout > 0 && throttlingTimeout - System.currentTimeMillis() > 0) {
+    throttling=true;
+  }
+  return throttling;
+}
