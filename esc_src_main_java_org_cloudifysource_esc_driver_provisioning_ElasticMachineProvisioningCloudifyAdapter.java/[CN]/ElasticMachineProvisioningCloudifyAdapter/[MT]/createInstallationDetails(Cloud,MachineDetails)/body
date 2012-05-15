@@ -1,34 +1,7 @@
 {
-  final InstallationDetails details=new InstallationDetails();
-  details.setLocalDir(cloud.getProvider().getLocalDirectory());
-  final String remoteDir=getRemoteDir();
-  details.setRemoteDir(remoteDir);
-  details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
   final String[] zones=this.config.getGridServiceAgentZones();
-  details.setZones(StringUtils.join(zones,",",0,zones.length));
-  if (org.apache.commons.lang.StringUtils.isNotBlank(cloud.getUser().getKeyFile())) {
-    logger.info("Key file has been specified in cloud configuration: " + cloud.getUser().getKeyFile());
-    final File keyFile=new File(cloud.getProvider().getLocalDirectory(),cloud.getUser().getKeyFile());
-    if (keyFile.exists()) {
-      details.setKeyFile(keyFile.getAbsolutePath());
-      logger.info("Using key file: " + keyFile);
-    }
- else {
-      throw new FileNotFoundException("Could not find key file matching specified cloud configuration key file: " + cloud.getUser().getKeyFile() + ". Tried: "+ keyFile+ " but file does not exist");
-    }
-  }
-  details.setPrivateIp(md.getPrivateAddress());
-  details.setPublicIp(md.getPublicAddress());
-  details.setLocator(this.lookupLocatorsString);
-  details.setLus(false);
-  details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
-  details.setOverridesUrl(cloud.getProvider().getCloudifyOverridesUrl());
-  details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
-  details.setAdmin(this.admin);
-  details.setUsername(md.getRemoteUsername());
-  details.setPassword(md.getRemotePassword());
-  details.setRemoteExecutionMode(md.getRemoteExecutionMode());
-  details.setFileTransferMode(md.getFileTransferMode());
+  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zones,lookupLocatorsString,this.admin);
   logger.info("Created new Installation Details: " + details);
   return details;
 }

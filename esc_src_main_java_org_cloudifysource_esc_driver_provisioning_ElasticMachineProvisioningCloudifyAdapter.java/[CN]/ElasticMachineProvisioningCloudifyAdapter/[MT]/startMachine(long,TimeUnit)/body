@@ -13,9 +13,14 @@
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
   try {
     checkForProvisioningTimeout(end,machineDetails);
-    logger.info("Cloudify Adapter is installing Cloudify on new machine");
-    installAndStartAgent(machineDetails,end);
-    checkForProvisioningTimeout(end,machineDetails);
+    if (machineDetails.isAgentRunning()) {
+      logger.info("Machine provisioning provided a machine and indicated that an agent is already running");
+    }
+ else {
+      logger.info("Cloudify Adapter is installing Cloudify on new machine");
+      installAndStartAgent(machineDetails,end);
+      checkForProvisioningTimeout(end,machineDetails);
+    }
     String machineIp=null;
     if (machineDetails.isUsePrivateAddress()) {
       machineIp=machineDetails.getPrivateAddress();
