@@ -1,6 +1,6 @@
 {
   boolean result=false;
-  if (nodeMap.get(CLOUD_NODE_ID).contains("{0}")) {
+  if (hostRange.contains("/")) {
     result=true;
   }
   return result;

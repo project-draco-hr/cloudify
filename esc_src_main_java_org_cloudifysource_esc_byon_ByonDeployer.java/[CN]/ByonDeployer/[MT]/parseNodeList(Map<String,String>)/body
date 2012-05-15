@@ -4,11 +4,11 @@
   boolean useIdAsPrefix=false;
   int index=1;
   String currnentId;
-  final String id=nodeMap.get(CLOUD_NODE_ID);
-  final String ipList=nodeMap.get(CLOUD_NODE_IP);
+  final String nodeId=nodeMap.get(CLOUD_NODE_ID).trim();
+  final String ipList=nodeMap.get(CLOUD_NODE_HOST_LIST).trim();
   final String[] ipsArr=ipList.split(",");
   if (ipsArr.length > 1) {
-    if (isIdTemplate(nodeMap)) {
+    if (isIdTemplate(nodeId)) {
       useIdAsTemplate=true;
     }
  else {
@@ -17,25 +17,14 @@
   }
   for (  String ip : ipsArr) {
     ip=ip.trim();
-    if (!IPUtils.validateIPAddress(ip)) {
-      try {
-        ip=IPUtils.getIP(ip);
-      }
- catch (      final Exception e) {
-        throw new CloudProvisioningException("Invalid IP address: " + ip);
-      }
-      if (!IPUtils.validateIPAddress(ip)) {
-        throw new CloudProvisioningException("Invalid IP address: " + ip);
-      }
-    }
     if (useIdAsTemplate) {
-      currnentId=MessageFormat.format(id,index);
+      currnentId=MessageFormat.format(nodeId,index);
     }
  else     if (useIdAsPrefix) {
-      currnentId=id + index;
+      currnentId=nodeId + index;
     }
  else {
-      currnentId=id;
+      currnentId=nodeId;
     }
     cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),currnentId));
     index++;

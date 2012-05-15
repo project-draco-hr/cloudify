@@ -4,45 +4,40 @@
   boolean useIdAsPrefix=false;
   int index=1;
   String currnentId;
-  final String id=nodeMap.get(CLOUD_NODE_ID);
-  final String ipRange=nodeMap.get(CLOUD_NODE_IP);
+  final String nodeId=nodeMap.get(CLOUD_NODE_ID).trim();
+  final String ipRange=nodeMap.get(CLOUD_NODE_HOST_RANGE).trim();
   final int ipDashIndex=ipRange.indexOf("-");
   if (ipDashIndex < 0) {
-    throw new CloudProvisioningException("Failed to start cloud node, invalid IP range configuration: " + "ip is missing the token \"-\"");
+    throw new CloudProvisioningException(EMPTY_IP_RANGE_ERR_MESSAGE);
   }
   final String ipRangeStart=ipRange.substring(0,ipRange.indexOf("-"));
   final String ipRangeEnd=ipRange.substring(ipRange.indexOf("-") + 1);
-  try {
-    if (IPUtils.ip2Long(ipRangeStart) < IPUtils.ip2Long(ipRangeEnd)) {
-      if (isIdTemplate(nodeMap)) {
-        useIdAsTemplate=true;
-      }
- else {
-        useIdAsPrefix=true;
-      }
+  if (IPUtils.ip2Long(ipRangeStart) < IPUtils.ip2Long(ipRangeEnd)) {
+    if (isIdTemplate(nodeId)) {
+      useIdAsTemplate=true;
     }
-    String ip=ipRangeStart;
-    while (IPUtils.ip2Long(ip) <= IPUtils.ip2Long(ipRangeEnd)) {
-      ip=ip.trim();
-      if (!IPUtils.validateIPAddress(ip)) {
-        throw new CloudProvisioningException("Invalid IP address: " + ip);
-      }
-      if (useIdAsTemplate) {
-        currnentId=MessageFormat.format(id,index);
-      }
- else       if (useIdAsPrefix) {
-        currnentId=id + index;
-      }
  else {
-        currnentId=id;
-      }
-      cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),currnentId));
-      index++;
-      ip=IPUtils.getNextIP(ip);
+      useIdAsPrefix=true;
     }
   }
- catch (  final Exception e) {
-    throw new CloudProvisioningException("Failed to start cloud machine.",e);
+  String ip=ipRangeStart;
+  while (IPUtils.ip2Long(ip) <= IPUtils.ip2Long(ipRangeEnd)) {
+    ip=ip.trim();
+    if (!IPUtils.validateIPAddress(ip)) {
+      throw new CloudProvisioningException("Invalid IP address: " + ip);
+    }
+    if (useIdAsTemplate) {
+      currnentId=MessageFormat.format(nodeId,index);
+    }
+ else     if (useIdAsPrefix) {
+      currnentId=nodeId + index;
+    }
+ else {
+      currnentId=nodeId;
+    }
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),currnentId));
+    index++;
+    ip=IPUtils.getNextIP(ip);
   }
   return cloudNodes;
 }

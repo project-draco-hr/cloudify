@@ -1,6 +1,6 @@
 {
   boolean result=false;
-  if (nodeMap.get(CLOUD_NODE_IP).contains(",")) {
+  if (nodeId.contains("{0}")) {
     result=true;
   }
   return result;

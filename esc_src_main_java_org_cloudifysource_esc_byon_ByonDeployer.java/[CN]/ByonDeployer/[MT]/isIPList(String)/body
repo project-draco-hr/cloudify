@@ -1,6 +1,6 @@
 {
   boolean result=false;
-  if (nodeMap.get(CLOUD_NODE_IP).contains("/")) {
+  if (hostList != null && hostList.contains(",")) {
     result=true;
   }
   return result;

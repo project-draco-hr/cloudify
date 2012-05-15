@@ -1,15 +1,3 @@
 {
-  String ip=nodeMap.get(CLOUD_NODE_IP);
-  if (!IPUtils.validateIPAddress(ip)) {
-    try {
-      ip=IPUtils.getIP(ip);
-    }
- catch (    final Exception e) {
-      throw new CloudProvisioningException("Invalid IP address: " + ip);
-    }
-    if (!IPUtils.validateIPAddress(ip)) {
-      throw new CloudProvisioningException("Invalid IP address: " + ip);
-    }
-  }
-  return new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID),ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID));
+  return new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID).trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID).trim());
 }
