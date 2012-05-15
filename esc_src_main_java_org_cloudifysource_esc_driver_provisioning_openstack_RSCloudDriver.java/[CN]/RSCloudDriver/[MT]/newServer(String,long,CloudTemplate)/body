@@ -4,7 +4,7 @@
     waitForServerToReachStatus(md,endTime,md.getMachineId(),token,"ACTIVE");
     md.setAgentRunning(false);
     md.setCloudifyInstalled(false);
-    md.setInstallationDirectory(cloud.getProvider().getRemoteDirectory());
+    md.setInstallationDirectory(serverTemplate.getRemoteDirectory());
     return md;
   }
  catch (  final Exception e) {
