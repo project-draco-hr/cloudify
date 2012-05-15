@@ -1,0 +1,29 @@
+{
+  try {
+    this.opts=new FileSystemOptions();
+    SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(opts,"no");
+    SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(opts,false);
+    final Object preferredAuthenticationMethods=details.getCustomData().get(CloudifyConstants.INSTALLER_CUSTOM_DATA_SFTP_PREFERRED_AUTHENTICATION_METHODS_KEY);
+    if (preferredAuthenticationMethods != null) {
+      if (String.class.isInstance(preferredAuthenticationMethods)) {
+        SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(opts,(String)preferredAuthenticationMethods);
+      }
+ else {
+        throw new IllegalArgumentException("Was expecting a string value for custom data field '" + CloudifyConstants.INSTALLER_CUSTOM_DATA_SFTP_PREFERRED_AUTHENTICATION_METHODS_KEY + "', got a; "+ preferredAuthenticationMethods.getClass().getName());
+      }
+    }
+    final String keyFile=details.getKeyFile();
+    if (keyFile != null && !keyFile.isEmpty()) {
+      final File temp=new File(keyFile);
+      if (!temp.exists()) {
+        throw new InstallerException("Could not find key file: " + temp + ". KeyFile "+ keyFile+ " that was passed in the installation Details does not exist");
+      }
+      SftpFileSystemConfigBuilder.getInstance().setIdentities(opts,new File[]{temp});
+    }
+    SftpFileSystemConfigBuilder.getInstance().setTimeout(opts,SFTP_DISCONNECT_DETECTION_TIMEOUT_MILLIS);
+    this.fileSystemManager=VFS.getManager();
+  }
+ catch (  final FileSystemException e) {
+    throw new InstallerException("Failed to set up file transfer: " + e.getMessage(),e);
+  }
+}

@@ -1,0 +1,5 @@
+InstallationDetails details
+String sourceFile
+String targetFile
+Set<String> excludedFiles
+long endTimeMillis

@@ -1,0 +1,9 @@
+{
+  try {
+    AgentlessInstaller.checkConnection(host,CIFS_PORT,endTimeMillis - System.currentTimeMillis(),TimeUnit.MILLISECONDS);
+    fileSystemManager=VFS.getManager();
+  }
+ catch (  final Exception e) {
+    throw new InstallerException("Failed to set up file transfer: " + e.getMessage(),e);
+  }
+}

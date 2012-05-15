@@ -1,0 +1,4 @@
+{
+  fileSystemManager.closeFileSystem(remoteDir.getFileSystem());
+  fileSystemManager.closeFileSystem(localDir.getFileSystem());
+}

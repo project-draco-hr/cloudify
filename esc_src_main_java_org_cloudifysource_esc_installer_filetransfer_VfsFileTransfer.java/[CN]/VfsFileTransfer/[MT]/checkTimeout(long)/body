@@ -1,0 +1,5 @@
+{
+  if (System.currentTimeMillis() > endTimeMillis) {
+    throw new TimeoutException("File transfer operation exceeded timeout");
+  }
+}

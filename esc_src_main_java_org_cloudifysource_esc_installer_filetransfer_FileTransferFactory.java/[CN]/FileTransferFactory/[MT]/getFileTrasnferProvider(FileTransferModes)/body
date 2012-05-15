@@ -1,0 +1,10 @@
+{
+switch (mode) {
+case CIFS:
+    return new CifsFileTransfer();
+case SCP:
+  return new SftpFileTransfer();
+default :
+throw new UnsupportedOperationException("Unsupported file transfer mode: " + mode);
+}
+}

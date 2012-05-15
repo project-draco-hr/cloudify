@@ -1,0 +1,15 @@
+{
+  final String userDetails;
+  if (details.getPassword() != null && !details.getPassword().isEmpty()) {
+    userDetails=details.getUsername() + ":" + details.getPassword();
+  }
+ else {
+    userDetails=details.getUsername();
+  }
+  try {
+    targetURI=new java.net.URI("sftp",userDetails,host,SSH_PORT,details.getRemoteDir(),null,null).toASCIIString();
+  }
+ catch (  final URISyntaxException e) {
+    throw new InstallerException("Failed to set up file transfer: " + e.getMessage(),e);
+  }
+}

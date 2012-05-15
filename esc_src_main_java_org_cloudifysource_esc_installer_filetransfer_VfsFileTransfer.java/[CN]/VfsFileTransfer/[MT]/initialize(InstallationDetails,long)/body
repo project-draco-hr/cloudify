@@ -1,0 +1,20 @@
+{
+  if (details.isConnectedToPrivateIp()) {
+    host=details.getPrivateIp();
+  }
+ else {
+    host=details.getPublicIp();
+  }
+  checkTimeout(endTimeMillis);
+  initVFSManager(details,endTimeMillis);
+  createTargetURI(details);
+  final FileSystemManager mng=fileSystemManager;
+  mng.setLogger(org.apache.commons.logging.LogFactory.getLog(logger.getName()));
+  try {
+    localDir=mng.resolveFile("file:" + details.getLocalDir());
+    remoteDir=mng.resolveFile(targetURI,opts);
+  }
+ catch (  final FileSystemException e) {
+    throw new InstallerException("Failed to set up file transfer: " + e.getMessage(),e);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  String actualValue=value;
+  if (value == null) {
+    actualValue="";
+  }
+  sb.append("export ").append(name).append("=").append(actualValue);
+  separate();
+  return this;
+}

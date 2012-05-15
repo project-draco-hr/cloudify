@@ -1,0 +1,5 @@
+{
+  final String normalizedPathCommand=normalizeCifsPath(str);
+  sb.append(normalizedPathCommand);
+  return this;
+}

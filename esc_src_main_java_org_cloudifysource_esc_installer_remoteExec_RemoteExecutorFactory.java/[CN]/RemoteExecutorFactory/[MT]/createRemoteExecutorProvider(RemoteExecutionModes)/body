@@ -1,0 +1,10 @@
+{
+switch (mode) {
+case SSH:
+    return new SshExecutor();
+case WINRM:
+  return new WinrmExecutor();
+default :
+throw new UnsupportedOperationException("Unsupported remote execution mode: " + mode);
+}
+}

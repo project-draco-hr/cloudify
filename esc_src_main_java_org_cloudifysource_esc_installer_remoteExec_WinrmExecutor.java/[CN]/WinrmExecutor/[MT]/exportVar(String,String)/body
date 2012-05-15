@@ -1,0 +1,18 @@
+{
+  String actualValue=value;
+  if (value == null) {
+    actualValue="";
+  }
+  String normalizedValue=normalizeCifsPath(actualValue);
+  if (actualValue.startsWith("\"") && actualValue.endsWith("\"")) {
+    normalizedValue=actualValue.replace("\"","'");
+  }
+ else {
+    if (!(actualValue.startsWith("\"") && actualValue.endsWith("\""))) {
+      normalizedValue="'" + normalizedValue + "'";
+    }
+  }
+  sb.append("$ENV:").append(name).append("=").append(normalizedValue);
+  separate();
+  return this;
+}
