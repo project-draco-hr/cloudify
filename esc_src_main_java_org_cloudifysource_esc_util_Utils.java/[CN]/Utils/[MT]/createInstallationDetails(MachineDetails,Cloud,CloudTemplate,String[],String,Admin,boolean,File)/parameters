@@ -4,3 +4,5 @@ CloudTemplate template
 String[] zones
 String lookupLocatorsString
 Admin admin
+boolean isManagement
+File cloudFile
