@@ -1,19 +1,9 @@
 {
-  final InstallationDetails template=createInstallationDetails(cloud);
   final InstallationDetails[] details=new InstallationDetails[numOfManagementMachines];
+  final String managementTemplateName=this.cloud.getConfiguration().getManagementMachineTemplate();
+  final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(managementTemplateName);
   for (int i=0; i < details.length; i++) {
-    final MachineDetails machine=machineDetails[i];
-    final InstallationDetails installationDetails=template.clone();
-    installationDetails.setUsername(machine.getRemoteUsername());
-    installationDetails.setPassword(machine.getRemotePassword());
-    installationDetails.setPrivateIp(machine.getPrivateAddress());
-    installationDetails.setPublicIp(machine.getPublicAddress());
-    installationDetails.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
-    installationDetails.setBindToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
-    installationDetails.setCloudFile(this.cloudFile);
-    installationDetails.setRemoteExecutionMode(machine.getRemoteExecutionMode());
-    installationDetails.setFileTransferMode(machine.getFileTransferMode());
-    details[i]=installationDetails;
+    details[i]=Utils.createInstallationDetails(machineDetails[i],cloud,cloudTemplate,cloud.getProvider().getZones().toArray(new String[0]),null,null);
   }
   return details;
 }
