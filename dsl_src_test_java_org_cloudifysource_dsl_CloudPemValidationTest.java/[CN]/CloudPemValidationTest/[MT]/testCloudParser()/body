@@ -1,0 +1,9 @@
+{
+  try {
+    org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(EC2_MISSING_PEM_PATH));
+    assertTrue("The key file is not found yet no error was thrown",false);
+  }
+ catch (  Throwable e) {
+    assertTrue("The key file is not found yet no error was thrown",e.getMessage().contains("The specified key file is missing"));
+  }
+}
