@@ -1,0 +1,14 @@
+{
+  File keyFile=null;
+  String keyFileStr=getUser().getKeyFile();
+  if (StringUtils.isNotBlank(keyFileStr)) {
+    keyFile=new File(keyFileStr);
+    if (!keyFile.isAbsolute()) {
+      fixConfigRelativePaths();
+      keyFile=new File(getProvider().getLocalDirectory(),keyFileStr);
+    }
+    if (!keyFile.isFile()) {
+      throw new DSLValidationException("The specified key file is missing: \"" + keyFile.getAbsolutePath() + "\"");
+    }
+  }
+}
