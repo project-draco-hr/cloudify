@@ -1,4 +1,7 @@
 {
+  if (this.usedProperties == null) {
+    throw new IllegalArgumentException("used properties can nut be null");
+  }
   if (this.usedProperties.contains(name)) {
     if (!isDuplicatePropertyAllowed(value))     throw new IllegalArgumentException("Property duplication was found: Property " + name + " is defined more than once.");
   }
