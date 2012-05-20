@@ -1,11 +1,4 @@
 {
-  if (this.usedProperties == null) {
-    throw new IllegalArgumentException("used properties can not be null. Property: " + name + ", Value: "+ value.toString()+ ", Active object: "+ this.activeObject);
-  }
-  if (this.usedProperties.contains(name)) {
-    if (!isDuplicatePropertyAllowed(value))     throw new IllegalArgumentException("Property duplication was found: Property " + name + " is defined more than once.");
-  }
-  this.usedProperties.add(name);
   if (this.activeObject == null) {
     super.setProperty(name,value);
     return;
