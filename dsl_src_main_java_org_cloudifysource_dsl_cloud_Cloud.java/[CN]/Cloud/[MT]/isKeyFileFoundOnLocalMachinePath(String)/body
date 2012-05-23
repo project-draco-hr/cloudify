@@ -1,0 +1,6 @@
+{
+  String envHomeDir=Environment.getHomeDirectory();
+  String localAbsolutePath=new File(envHomeDir,configLocalDir).getAbsolutePath();
+  File localKeyFile=new File(localAbsolutePath,getUser().getKeyFile());
+  return localKeyFile.isFile();
+}

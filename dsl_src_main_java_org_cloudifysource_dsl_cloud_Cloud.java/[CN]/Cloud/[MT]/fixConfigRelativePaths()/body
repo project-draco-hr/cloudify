@@ -1,7 +1,0 @@
-{
-  String configLocalDir=getProvider().getLocalDirectory();
-  if (configLocalDir != null && !new File(configLocalDir).isAbsolute()) {
-    String envHomeDir=Environment.getHomeDirectory();
-    getProvider().setLocalDirectory(new File(envHomeDir,configLocalDir).getAbsolutePath());
-  }
-}

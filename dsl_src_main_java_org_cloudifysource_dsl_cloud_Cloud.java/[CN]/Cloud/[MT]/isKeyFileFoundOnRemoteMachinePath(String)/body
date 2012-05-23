@@ -1,0 +1,8 @@
+{
+  String managementMachineTemplateName=getConfiguration().getManagementMachineTemplate();
+  CloudTemplate cloudTemplate=getTemplates().get(managementMachineTemplateName);
+  String remoteEnvDirectoryPath=cloudTemplate.getRemoteDirectory();
+  String remoteKeyFilePath=new File(remoteEnvDirectoryPath,configLocalDir).getAbsolutePath();
+  File remoteKeyFile=new File(remoteKeyFilePath,getUser().getKeyFile());
+  return remoteKeyFile.isFile();
+}
