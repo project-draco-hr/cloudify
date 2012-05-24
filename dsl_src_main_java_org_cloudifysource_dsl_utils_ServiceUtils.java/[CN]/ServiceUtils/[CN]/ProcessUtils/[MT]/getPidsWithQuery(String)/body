@@ -1,0 +1,10 @@
+{
+  final Sigar sigar=getSigar();
+  final ProcessFinder finder=new ProcessFinder(sigar);
+  final long[] results=finder.find(query);
+  final List<Long> list=new ArrayList<Long>(results.length);
+  for (  final long result : results) {
+    list.add(result);
+  }
+  return list;
+}

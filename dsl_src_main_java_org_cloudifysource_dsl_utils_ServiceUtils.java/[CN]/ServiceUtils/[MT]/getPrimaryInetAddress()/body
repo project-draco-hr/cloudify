@@ -1,0 +1,9 @@
+{
+  try {
+    return java.net.InetAddress.getLocalHost().toString();
+  }
+ catch (  UnknownHostException e) {
+    logger.severe(e.getMessage());
+    return "localhost";
+  }
+}

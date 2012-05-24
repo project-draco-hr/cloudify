@@ -1,17 +1,3 @@
 {
-  Sigar sigar=SigarHolder.getSigar();
-  final List<Long> result=new LinkedList<Long>();
-  final long[] pids=sigar.getProcList();
-  for (  long pid : pids) {
-    try {
-      final String procName=sigar.getProcExe(pid).getName();
-      if (procName.equals(name)) {
-        result.add(pid);
-      }
-    }
- catch (    SigarException e) {
-      logger.fine("Could not access process details for PID: " + pid);
-    }
-  }
-  return result;
+  return getPidsWithQuery("State.Name.eq=" + name);
 }

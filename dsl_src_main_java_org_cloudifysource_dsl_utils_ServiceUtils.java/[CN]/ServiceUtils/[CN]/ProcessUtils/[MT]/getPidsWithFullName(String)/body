@@ -1,0 +1,3 @@
+{
+  return getPidsWithQuery("Exe.Name.eq=" + name);
+}
