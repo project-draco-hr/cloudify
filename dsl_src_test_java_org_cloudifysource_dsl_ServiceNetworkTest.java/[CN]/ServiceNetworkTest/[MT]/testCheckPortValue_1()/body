@@ -1,0 +1,6 @@
+{
+  final ServiceNetwork fixture=new ServiceNetwork();
+  fixture.setPort(1);
+  fixture.setProtocolDescription("");
+  fixture.checkPortValue();
+}
