@@ -1,0 +1,3 @@
+String azureHostedService
+int timeoutInMinutes
+int pollingIntervalInMinutes

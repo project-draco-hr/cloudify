@@ -1,0 +1,3 @@
+String relativeApplicationExamplePath
+String azureHostedService
+AzureSlot azureSlot

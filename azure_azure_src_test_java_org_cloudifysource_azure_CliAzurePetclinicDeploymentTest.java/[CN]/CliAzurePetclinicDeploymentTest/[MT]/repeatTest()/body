@@ -1,0 +1,44 @@
+{
+  DateFormat df=new SimpleDateFormat("_yyyy-MM-dd_hh-mm");
+  int repeat=1;
+  for (int i=1; i <= repeat; i++) {
+    String filePattern="azuretest" + i + df.format(new Date())+ ".log";
+    FileHandler fileHandler=new FileHandler(filePattern);
+    fileHandler.setFormatter(new SimpleFormatter());
+    logger.addHandler(fileHandler);
+    logger.info("Starting test iteration #" + i);
+    boolean failed=false;
+    try {
+      before(RELATIVE_APPLICATION_EXAMPLE_PATH,AZURE_HOSTED_SERVICE,AZURE_SLOT);
+      test();
+    }
+ catch (    Throwable t) {
+      failed=true;
+      throw t;
+    }
+ finally {
+      if (failed) {
+        logger.info("Failed test iteration #" + i + ". Machines are left running for manual diagnostics");
+        logger.removeHandler(fileHandler);
+        try {
+          SimpleMail.send("Azure test failed\nSubscription ID=" + credentials.getHostedServicesSubscriptionId(),new File(filePattern));
+        }
+ catch (        Exception e) {
+          logger.log(Level.SEVERE,"Failed to send email",e);
+        }
+        after(AZURE_HOSTED_SERVICE,TIMEOUT_IN_MINUTES,POLLING_INTERVAL_IN_MINUTES);
+      }
+ else {
+        logger.info("Passed test iteration #" + i);
+        logger.removeHandler(fileHandler);
+        try {
+          SimpleMail.send("Azure test passed\nSubscription ID=" + credentials.getHostedServicesSubscriptionId(),new File(filePattern));
+        }
+ catch (        Exception e) {
+          logger.log(Level.SEVERE,"Failed to send email",e);
+        }
+        after(AZURE_HOSTED_SERVICE,TIMEOUT_IN_MINUTES,POLLING_INTERVAL_IN_MINUTES);
+      }
+    }
+  }
+}
