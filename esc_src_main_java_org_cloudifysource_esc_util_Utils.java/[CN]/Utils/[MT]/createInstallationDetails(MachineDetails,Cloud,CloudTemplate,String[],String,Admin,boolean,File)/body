@@ -3,6 +3,11 @@
   details.setLocalDir(cloud.getProvider().getLocalDirectory());
   final String remoteDir=template.getRemoteDirectory();
   details.setRemoteDir(remoteDir);
+  List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
+  if (cloud.getUser().getKeyFile() != null) {
+    managementOnlyFiles.add(cloud.getUser().getKeyFile());
+  }
+  details.setManagementOnlyFiles(managementOnlyFiles);
   details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
   details.setZones(StringUtils.join(zones,",",0,zones.length));
   details.setPrivateIp(md.getPrivateAddress());
