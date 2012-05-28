@@ -1,8 +1,7 @@
 String host
 String username
 String password
-List<String> fileSystemObjects
 String keyFile
-long timeout
-TimeUnit unit
+List<String> fileSystemObjects
 FileTransferModes fileTransferMode
+boolean allMustExist

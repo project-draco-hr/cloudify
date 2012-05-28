@@ -1,0 +1,6 @@
+String host
+String username
+String password
+String keyFile
+List<String> fileSystemObjects
+FileTransferModes fileTransferMode
