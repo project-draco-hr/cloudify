@@ -2,7 +2,7 @@
   String managementMachineTemplateName=getConfiguration().getManagementMachineTemplate();
   CloudTemplate cloudTemplate=getTemplates().get(managementMachineTemplateName);
   String remoteEnvDirectoryPath=cloudTemplate.getRemoteDirectory();
-  String remoteKeyFilePath=new File(remoteEnvDirectoryPath,configLocalDir).getAbsolutePath();
-  File remoteKeyFile=new File(remoteKeyFilePath,getUser().getKeyFile());
+  File remoteKeyFile=new File(remoteEnvDirectoryPath,getUser().getKeyFile());
+  logger.log(Level.INFO,"Looking for key file on remote machine: " + remoteKeyFile.getAbsolutePath());
   return remoteKeyFile.isFile();
 }
