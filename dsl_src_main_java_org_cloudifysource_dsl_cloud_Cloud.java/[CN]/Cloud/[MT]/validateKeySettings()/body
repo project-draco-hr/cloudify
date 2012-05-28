@@ -6,8 +6,8 @@
     if (!keyFile.isAbsolute()) {
       String configLocalDir=getProvider().getLocalDirectory();
       if (configLocalDir != null && !new File(configLocalDir).isAbsolute()) {
-        boolean keyFileFoundOnLocalMachinePath=isKeyFileFoundOnLocalMachinePath(configLocalDir);
-        boolean keyFileFoundOnRemoteMachinePath=isKeyFileFoundOnRemoteMachinePath(configLocalDir);
+        boolean keyFileFoundOnLocalMachinePath=isKeyFileFoundOnLocalMachinePath();
+        boolean keyFileFoundOnRemoteMachinePath=isKeyFileFoundOnRemoteMachinePath();
         if (!keyFileFoundOnRemoteMachinePath && !keyFileFoundOnLocalMachinePath) {
           throw new DSLValidationException("The specified key file is missing: \"" + keyFile.getAbsolutePath() + "\"");
         }
