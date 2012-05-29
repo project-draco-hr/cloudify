@@ -17,11 +17,14 @@
       return 5;
     }
     @Override public boolean isServiceStopped() throws USMException {
+      logger.fine("Start Process Fail Detection - Running");
       final Integer exitCode=USMUtils.getProcessExitCode(usm.getStartProcess());
       if (exitCode == null) {
+        logger.fine("Start Process Fail Detection - Process is still running");
         return false;
       }
       if (exitCode == 0) {
+        logger.fine("Start Process Fail Detection - Process has stopped successfully");
         return false;
       }
       logger.severe("The start command has exited with the abnormal exit code: " + exitCode + ". Service will now stop!");

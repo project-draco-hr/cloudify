@@ -13,15 +13,15 @@ synchronized (this.stateMutex) {
     try {
       startProcessLifecycle();
     }
- catch (    final USMException usme) {
-      logger.severe("Process lifecycle failed to start. Shutting down the USM instance");
+ catch (    final USMException e) {
+      logger.log(Level.SEVERE,"Process lifecycle failed to start. Shutting down the USM instance",e);
       try {
         this.shutdown();
       }
- catch (      final Exception e) {
+ catch (      final Exception e2) {
         logger.log(Level.SEVERE,"While shutting down the USM due to a failure in initialization, " + "the following exception occured: " + e.getMessage(),e);
       }
-      throw usme;
+      throw e;
     }
   }
 }

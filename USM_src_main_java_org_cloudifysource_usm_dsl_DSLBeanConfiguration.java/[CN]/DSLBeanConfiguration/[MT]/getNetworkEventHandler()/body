@@ -7,8 +7,11 @@
     return null;
   }
   final String protocol=this.service.getNetwork().getProtocolDescription();
-  if (protocol.equalsIgnoreCase("tcp") || protocol.equalsIgnoreCase("http")) {
-    final int port=this.service.getNetwork().getPort();
+  final int port=this.service.getNetwork().getPort();
+  if (protocol == null) {
+    return new TCPPortEventListener(port);
+  }
+ else   if (protocol.equalsIgnoreCase("tcp") || protocol.equalsIgnoreCase("http")) {
     if (port <= 0) {
       return null;
     }

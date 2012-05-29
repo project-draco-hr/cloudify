@@ -3,7 +3,7 @@
   if (file.exists()) {
     String pidString;
     try {
-      pidString=FileUtils.readFileToString(file);
+      pidString=FileUtils.readFileToString(file).trim();
     }
  catch (    final IOException e) {
       throw new USMException("Failed to read pid file contents from file: " + file,e);
