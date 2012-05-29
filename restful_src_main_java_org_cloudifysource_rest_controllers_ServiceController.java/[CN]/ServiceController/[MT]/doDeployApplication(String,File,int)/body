@@ -1,7 +1,7 @@
 {
   final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
-  if (!isLocalCloud()) {
+  if (!isLocalCloud() && cloud != null) {
     for (    Service service : services) {
       ComputeDetails compute=service.getCompute();
       if (compute != null && StringUtils.isNotBlank(compute.getTemplate())) {
