@@ -2,10 +2,6 @@
   Set<CustomNode> managementServers=null;
   try {
     managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
-    if (managementServers == null || managementServers.isEmpty()) {
-      publishEvent("prov_management_server_not_found");
-      throw new CloudProvisioningException("Could not find any management machines for this cloud");
-    }
   }
  catch (  final Exception e) {
     publishEvent("prov_management_lookup_failed");
