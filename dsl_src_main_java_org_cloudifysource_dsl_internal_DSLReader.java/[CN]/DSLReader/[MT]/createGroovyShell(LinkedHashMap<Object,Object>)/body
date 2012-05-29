@@ -1,6 +1,16 @@
 {
   final String baseClassName=BaseDslScript.class.getName();
   final List<String> serviceJarFiles=createJarFileListForService();
+  String classpathDir=null;
+  if (this.getWorkDir() != null) {
+    classpathDir=this.getWorkDir().getAbsolutePath();
+  }
+ else   if (this.getDslFile() != null) {
+    classpathDir=this.getDslFile().getParentFile().getAbsolutePath();
+  }
+  if (classpathDir != null) {
+    serviceJarFiles.add(classpathDir);
+  }
   final CompilerConfiguration cc=createCompilerConfiguration(baseClassName,serviceJarFiles);
   final Binding binding=createGroovyBinding(properties,context,dslFile);
   final GroovyShell gs=new GroovyShell(ServiceReader.class.getClassLoader(),binding,cc);

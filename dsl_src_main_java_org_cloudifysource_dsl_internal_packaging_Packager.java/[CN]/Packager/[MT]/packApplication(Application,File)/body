@@ -1,6 +1,6 @@
 {
   boolean hasExtendedServices=false;
-  for (  Service service : application.getServices()) {
+  for (  final Service service : application.getServices()) {
     if (!service.getExtendedServicesPaths().isEmpty()) {
       hasExtendedServices=true;
       break;
@@ -8,18 +8,18 @@
   }
   File applicationFolderToPack=applicationDir;
   if (hasExtendedServices) {
-    File destApplicationFolder=File.createTempFile("gs_application_","");
+    final File destApplicationFolder=File.createTempFile("gs_application_","");
     FileUtils.forceDelete(destApplicationFolder);
     FileUtils.forceMkdir(destApplicationFolder);
     FileUtils.copyDirectory(applicationDir,destApplicationFolder,SVNFileFilter.getFilter());
-    for (    Service service : application.getServices()) {
-      File extFolder=new File(destApplicationFolder + "/" + service.getName());
-      File recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,new File(applicationDir + "/" + service.getName()));
+    for (    final Service service : application.getServices()) {
+      final File extFolder=new File(destApplicationFolder + "/" + service.getName());
+      final File recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,new File(applicationDir + "/" + service.getName()));
       copyExtendedServiceFiles(service,recipeFile,extFolder);
     }
     applicationFolderToPack=destApplicationFolder;
   }
-  File zipFile=File.createTempFile("application",".zip");
+  final File zipFile=File.createTempFile("application",".zip");
   zipFile.deleteOnExit();
   ZipUtils.zip(applicationFolderToPack,zipFile);
   return zipFile;

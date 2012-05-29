@@ -1,6 +1,6 @@
 {
   final File srcFolder=recipeFile.getParentFile();
-  File destPuFolder=File.createTempFile("gs_usm_","");
+  final File destPuFolder=File.createTempFile("gs_usm_","");
   FileUtils.forceDelete(destPuFolder);
   FileUtils.forceMkdir(destPuFolder);
   logger.finer("created temp directory " + destPuFolder.getAbsolutePath());
@@ -13,7 +13,7 @@
   logger.finer("created pu structure under " + destPuFolder);
   FileUtils.copyDirectory(srcFolder,extFolder);
   logger.finer("copied files from " + srcFolder.getAbsolutePath() + " to "+ extFolder.getAbsolutePath());
-  File srcUsmLibDir=new File(srcFolder,"usmlib");
+  final File srcUsmLibDir=new File(srcFolder,"usmlib");
   if (srcUsmLibDir.exists()) {
     FileUtils.copyDirectory(srcUsmLibDir,libFolder,SVNFileFilter.getFilter());
   }
@@ -34,7 +34,7 @@
   try {
     puXmlStream.close();
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     logger.log(Level.SEVERE,"failed to close default_usm_pu.xml stream",e);
   }
   copyExtendedServiceFiles(service,recipeFile,extFolder);

@@ -1,6 +1,6 @@
 {
-  File packed=pack(recipeDirOrFile);
-  File destFile=new File(packed.getParent(),destFileName + ".zip");
+  final File packed=pack(recipeDirOrFile);
+  final File destFile=new File(packed.getParent(),destFileName + ".zip");
   if (destFile.exists()) {
     FileUtils.deleteQuietly(destFile);
   }

@@ -1,22 +1,32 @@
 {
-  LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
+  final LinkedList<String> extendedServicesPaths=service.getExtendedServicesPaths();
   File extendingScriptFile=new File(extFolder + "/" + recipeFile.getName());
   File currentExtendedServiceContext=recipeFile;
-  for (  String extendedServicePath : extendedServicesPaths) {
+  for (  final String extendedServicePath : extendedServicesPaths) {
     final File extendedServiceFile=locateServiceFile(currentExtendedServiceContext,extendedServicePath);
-    if (extendedServiceFile.getParentFile().equals(recipeFile.getParentFile()))     continue;
-    File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
+    if (extendedServiceFile.getParentFile().equals(recipeFile.getParentFile())) {
+      continue;
+    }
+    final File localExtendedServiceFile=copyExtendedServiceFileAndRename(extendedServiceFile,extFolder);
     logger.finer("copying locally extended script " + extendedServiceFile + " to "+ localExtendedServiceFile);
     updateExtendingScriptFileWithNewExtendedScriptLocation(extendingScriptFile,localExtendedServiceFile);
     final File rootScriptDir=extendedServiceFile.getParentFile();
     FileUtils.copyDirectory(rootScriptDir,extFolder,new FileFilter(){
-      @Override public boolean accept(      File pathname){
-        if (!SVNFileFilter.getFilter().accept(pathname))         return false;
-        if (pathname.equals(extendedServiceFile))         return false;
-        if (pathname.isDirectory())         return true;
-        String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
-        boolean accept=!(new File(extFolder.getPath() + "/" + relativePath).exists());
-        if (accept && logger.isLoggable(Level.FINEST))         logger.finest("copying extended script resource [" + pathname + "] locally");
+      @Override public boolean accept(      final File pathname){
+        if (!SVNFileFilter.getFilter().accept(pathname)) {
+          return false;
+        }
+        if (pathname.equals(extendedServiceFile)) {
+          return false;
+        }
+        if (pathname.isDirectory()) {
+          return true;
+        }
+        final String relativePath=pathname.getPath().replace(rootScriptDir.getPath(),"");
+        final boolean accept=!new File(extFolder.getPath() + "/" + relativePath).exists();
+        if (accept && logger.isLoggable(Level.FINEST)) {
+          logger.finest("copying extended script resource [" + pathname + "] locally");
+        }
         return accept;
       }
     }

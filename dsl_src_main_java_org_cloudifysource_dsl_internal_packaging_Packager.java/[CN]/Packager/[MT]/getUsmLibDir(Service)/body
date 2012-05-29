@@ -1,8 +1,8 @@
 {
-  Map<String,String> customProperties=service.getCustomProperties();
+  final Map<String,String> customProperties=service.getCustomProperties();
   File usmLibDir=null;
   if (customProperties != null) {
-    String usmJarPathProp=customProperties.get(USM_JAR_PATH_PROP);
+    final String usmJarPathProp=customProperties.get(USM_JAR_PATH_PROP);
     if (usmJarPathProp != null) {
       usmLibDir=new File(usmJarPathProp);
     }
