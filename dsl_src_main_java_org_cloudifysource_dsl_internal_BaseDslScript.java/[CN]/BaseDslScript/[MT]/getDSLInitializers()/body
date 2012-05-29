@@ -2,12 +2,12 @@
   if (dslObjectInitializersByName == null) {
     dslObjectInitializersByName=new HashMap<String,BaseDslScript.DSLObjectInitializerData>();
     addObjectInitializerForClass(dslObjectInitializersByName,Application.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Service.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,PluginDescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ServiceNetwork.class);
     addObjectInitializerForClass(dslObjectInitializersByName,DataGrid.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Memcached.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,PluginDescriptor.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,Service.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ServiceLifecycle.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,ServiceNetwork.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,MirrorProcessingUnit.class);
@@ -17,8 +17,6 @@
     addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplate.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudConfiguration.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,StatefulProcessingUnit.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,StatelessProcessingUnit.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Sla.class);
     dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,false,true,"service"));

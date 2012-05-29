@@ -3,6 +3,9 @@
   if (data == null) {
     return null;
   }
+  if (isDuplicateProcessingUnit(name)) {
+    throw new DSLException("There may only be one type of processing unit defined. Found more than one: " + "[" + name + ", "+ this.processingUnitType+ "]");
+  }
   if (this.activeObject == null) {
     if (!data.isAllowRootNode()) {
       throw new DSLException("Elements of  type " + name + " may not be used as the root node of a DSL");

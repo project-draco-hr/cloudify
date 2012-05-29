@@ -1,0 +1,11 @@
+{
+  if (this.processingUnitTypes == null) {
+    this.processingUnitTypes=new HashSet<String>();
+    this.processingUnitTypes.add("lifecycle");
+    this.processingUnitTypes.add("statefulProcessingUnit");
+    this.processingUnitTypes.add("statelessProcessingUnit");
+    this.processingUnitTypes.add("dataGrid");
+    this.processingUnitTypes.add("mirrorProcessingUnit");
+  }
+  return this.processingUnitTypes;
+}

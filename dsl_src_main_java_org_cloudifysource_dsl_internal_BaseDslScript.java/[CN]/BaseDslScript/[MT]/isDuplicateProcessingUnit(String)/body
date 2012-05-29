@@ -1,0 +1,12 @@
+{
+  Set<String> processingUnitTypes=getProcessingUnitTypes();
+  if (processingUnitTypes.contains(name)) {
+    if (StringUtils.isEmpty(this.processingUnitType)) {
+      this.processingUnitType=name;
+    }
+ else {
+      return true;
+    }
+  }
+  return false;
+}
