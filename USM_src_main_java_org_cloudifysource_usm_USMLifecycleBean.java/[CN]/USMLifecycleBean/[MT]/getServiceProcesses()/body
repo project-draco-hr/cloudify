@@ -2,7 +2,9 @@
   Set<Long> set=new HashSet<Long>();
   ProcessLocator[] locators=this.processLocators;
   for (  ProcessLocator processLocator : locators) {
-    set.addAll(processLocator.getProcessIDs());
+    if (processLocator != null) {
+      set.addAll(processLocator.getProcessIDs());
+    }
   }
   return new ArrayList<Long>(set);
 }
