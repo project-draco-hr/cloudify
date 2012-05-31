@@ -4,12 +4,6 @@
     return new ProcessLocatorExecutor(locator,launcher,puExtDir);
   }
  else {
-    if (this.service.getLifecycle().getStartDetection() != null) {
-      return null;
-    }
- else     if (this.service.getLifecycle().getStopDetection() != null) {
-      return null;
-    }
     return new DefaultProcessLocator();
   }
 }
