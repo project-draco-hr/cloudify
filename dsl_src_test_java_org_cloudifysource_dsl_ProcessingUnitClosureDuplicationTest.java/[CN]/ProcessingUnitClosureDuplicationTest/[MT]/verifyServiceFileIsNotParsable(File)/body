@@ -1,0 +1,18 @@
+{
+  try {
+    ServiceReader.readService(serviceFile);
+    Assert.assertFalse("Service file was parsed successfully when was suppose to fail. File content was: " + FileUtils.readFileToString(serviceFile),true);
+  }
+ catch (  PackagingException e) {
+    Throwable cause=e.getCause().getCause();
+    Assert.assertTrue("Exception was not caused by DSLException",cause instanceof DSLException);
+    Assert.assertTrue("the proper exception was not thrown. expecting parsing to fail due to multiple processingUnit closures in serviceFile",cause.getMessage().contains("There may only be one type of processing unit defined. Found more than one"));
+  }
+catch (  DSLException e) {
+    Assert.assertFalse("Failed on packaging. Exception was " + e.getStackTrace().toString(),true);
+  }
+catch (  IOException e) {
+    e.printStackTrace();
+    Assert.assertFalse("Failed to read file. Exception was " + e.getStackTrace().toString(),true);
+  }
+}

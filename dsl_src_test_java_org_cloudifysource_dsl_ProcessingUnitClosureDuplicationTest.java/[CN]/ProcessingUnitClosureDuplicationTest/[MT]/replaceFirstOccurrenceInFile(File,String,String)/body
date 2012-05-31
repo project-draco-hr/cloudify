@@ -1,0 +1,6 @@
+{
+  String originalFileContents=FileUtils.readFileToString(file);
+  String modified=originalFileContents;
+  modified=modified.replaceFirst(target,replacement);
+  FileUtils.write(file,modified);
+}
