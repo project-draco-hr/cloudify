@@ -35,9 +35,10 @@ break;
 }
 List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
 if (lifecycleEvents != null) {
+List<String> copy=new ArrayList<String>(lifecycleEvents);
 int newCursorPos=cursor + lifecycleEvents.size();
 resultsMap.put(CloudifyConstants.CURSOR_POS,newCursorPos);
-resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,lifecycleEvents);
+resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,copy);
 }
  else {
 resultsMap.put(CloudifyConstants.CURSOR_POS,cursor);
