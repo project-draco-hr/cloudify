@@ -42,7 +42,7 @@
     }
   }
 ;
-  repetativeAssert("Failed waiting for travel application",applicationInstalledCondition);
+  repetativeAssert("Failed waiting for travel application: " + travelApplicationUrl.toString(),applicationInstalledCondition);
   List<String> setInstancesScaleOutCommand=Arrays.asList("azure:set-instances","--verbose","-azure-svc",AZURE_HOSTED_SERVICE,TOMCAT_SERVICE,NUMBER_OF_INSTANCES_FOR_TOMCAT_SERVICE);
   commands.add(connectCommand);
   commands.add(setInstancesScaleOutCommand);
