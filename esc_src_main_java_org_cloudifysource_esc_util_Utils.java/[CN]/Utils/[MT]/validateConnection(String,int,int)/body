@@ -3,7 +3,7 @@
   try {
     final InetSocketAddress endPoint=new InetSocketAddress(ipAddress,port);
     if (endPoint.isUnresolved()) {
-      throw new IllegalArgumentException("Failed to connect to: " + ipAddress + ":"+ port+ ", address could not be resolved.");
+      throw new UnknownHostException(ipAddress);
     }
     socket.connect(endPoint,Utils.safeLongToInt(TimeUnit.SECONDS.toMillis(timeout),true));
   }

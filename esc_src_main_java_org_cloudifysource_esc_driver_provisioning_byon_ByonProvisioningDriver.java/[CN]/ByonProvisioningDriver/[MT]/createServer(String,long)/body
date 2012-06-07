@@ -8,16 +8,8 @@
     handleServerCredentials(machineDetails);
   }
  catch (  final CloudProvisioningException e) {
-    deployer.invalidateServer(cloudTemplateName,node,true);
-    throw e;
-  }
-  try {
-    Utils.validateConnection(machineDetails.getIp(),CloudifyConstants.SSH_PORT);
-  }
- catch (  final Exception e) {
-    logger.log(Level.SEVERE,"Cloud server could not be started on " + machineDetails.getIp() + ", SSH connection failed.",e);
     try {
-      deployer.invalidateServer(cloudTemplateName,node,false);
+      deployer.invalidateServer(cloudTemplateName,node);
     }
  catch (    final CloudProvisioningException ie) {
       logger.log(Level.SEVERE,"Failed to mark machine " + machineDetails.getIp() + " as Invalid.",ie);

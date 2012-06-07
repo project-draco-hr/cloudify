@@ -1,15 +1,21 @@
 {
-  final List<CustomNode> parsedNodes=removeDuplicates(parseCloudNodes(nodesList));
+  final List<CustomNode> resolvedNodes=new ArrayList<CustomNode>();
+  final List<CustomNode> unresolvedNodes=new ArrayList<CustomNode>();
+  List<CustomNode> parsedNodes=parseCloudNodes(nodesList);
+  parsedNodes=removeDuplicates(parsedNodes);
+  for (  CustomNode node : parsedNodes) {
+    try {
+      node.setResolvedIP(IPUtils.resolveHostName(node.getPrivateIP()));
+      Utils.validateConnection(node.getPrivateIP(),node.getLoginPort());
+      resolvedNodes.add(node);
+    }
+ catch (    final Exception ex) {
+      unresolvedNodes.add(node);
+    }
+  }
   final Set<String> duplicateNodes=getDuplicateIPs(getAllNodes(),parsedNodes);
   if (duplicateNodes.size() > 0) {
     throw new CloudProvisioningException("Failed to add nodes for template \"" + templateName + "\","+ " some IP addresses were already defined by a different template: "+ Arrays.toString(duplicateNodes.toArray()));
   }
-  final Map<String,List<CustomNode>> templateLists=new Hashtable<String,List<CustomNode>>();
-  final List<CustomNode> freeNodesPool=new ArrayList<CustomNode>();
-  freeNodesPool.addAll(aggregateWithoutDuplicates(freeNodesPool,parsedNodes));
-  templateLists.put(NODES_LIST_FREE,freeNodesPool);
-  templateLists.put(NODES_LIST_ALLOCATED,new ArrayList<CustomNode>());
-  templateLists.put(NODES_LIST_INVALID,new ArrayList<CustomNode>());
-  templateLists.put(NODES_LIST_TERMINATED,new ArrayList<CustomNode>());
-  nodesListsByTemplates.put(templateName,templateLists);
+  setInitialPoolsForTemplate(templateName,resolvedNodes,unresolvedNodes);
 }

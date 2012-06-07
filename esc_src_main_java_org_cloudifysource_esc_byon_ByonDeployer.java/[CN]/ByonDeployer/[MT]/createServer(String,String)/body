@@ -16,9 +16,24 @@
   if (freeNodesPool.size() > 0) {
     node=freeNodesPool.iterator().next();
     if (!allocatedNodesPool.contains(node)) {
-      allocatedNodesPool.add(node);
+      try {
+        String resolvedIP=IPUtils.resolveHostName(node.getPrivateIP());
+        node.setResolvedIP(resolvedIP);
+        Utils.validateConnection(node.getPrivateIP(),node.getLoginPort());
+        allocatedNodesPool.add(node);
+        freeNodesPool.remove(node);
+      }
+ catch (      final Exception e) {
+        logger.log(Level.INFO,"Failed to create server on " + node.getPrivateIP() + ", connection failed on port "+ node.getLoginPort(),e);
+        try {
+          invalidateServer(templateName,node);
+        }
+ catch (        final CloudProvisioningException ie) {
+          logger.log(Level.INFO,"Failed to mark machine " + node.getPrivateIP() + " as Invalid.",ie);
+        }
+        throw new CloudProvisioningException(e);
+      }
     }
-    freeNodesPool.remove(node);
   }
  else {
     if (invalidNodesPool.size() > 0) {
@@ -27,7 +42,9 @@
       while (nodesIterator.hasNext()) {
         currentNode=nodesIterator.next();
         try {
-          Utils.validateConnection(currentNode.getPrivateIP(),CloudifyConstants.SSH_PORT);
+          String resolvedIP=IPUtils.resolveHostName(node.getPrivateIP());
+          node.setResolvedIP(resolvedIP);
+          Utils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
           if (!allocatedNodesPool.contains(currentNode)) {
             allocatedNodesPool.add(currentNode);
           }

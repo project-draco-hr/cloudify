@@ -7,7 +7,7 @@
   final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
   for (  final String ipAddress : ipAddresses) {
     for (    final CustomNode node : freeNodesPool) {
-      if (StringUtils.isNotBlank(node.getPrivateIP()) && node.getPrivateIP().equalsIgnoreCase(ipAddress) || StringUtils.isNotBlank(node.getPublicIP()) && node.getPublicIP().equalsIgnoreCase(ipAddress)) {
+      if (StringUtils.isNotBlank(node.getResolvedIP()) && node.getResolvedIP().equalsIgnoreCase(ipAddress)) {
         freeNodesPool.remove(node);
         if (!allocatedNodesPool.contains(node)) {
           allocatedNodesPool.add(node);

@@ -1,0 +1,3 @@
+String templateName
+List<CustomNode> resolvedNodes
+List<CustomNode> unresolvedNodes
