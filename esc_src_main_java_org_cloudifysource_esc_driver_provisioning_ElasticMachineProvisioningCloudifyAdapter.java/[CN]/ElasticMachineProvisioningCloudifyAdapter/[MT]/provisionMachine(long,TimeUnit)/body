@@ -1,7 +1,16 @@
 {
   MachineDetails machineDetails;
   try {
-    cloudifyProvisioning.setAdmin(admin);
+    logger.fine("creating a new admin instance for provisioning");
+    AdminFactory factory=new AdminFactory();
+    for (    String group : admin.getGroups()) {
+      factory.addGroup(group);
+    }
+    for (    LookupLocator locator : admin.getLocators()) {
+      factory.addLocator(locator.getHost() + ":" + locator.getPort());
+    }
+    provisioningAdmin=factory.createAdmin();
+    cloudifyProvisioning.setAdmin(provisioningAdmin);
     machineDetails=cloudifyProvisioning.startMachine(duration,unit);
   }
  catch (  final CloudProvisioningException e) {
