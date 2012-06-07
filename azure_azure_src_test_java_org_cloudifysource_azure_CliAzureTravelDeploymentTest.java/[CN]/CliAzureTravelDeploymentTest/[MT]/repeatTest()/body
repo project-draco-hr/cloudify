@@ -33,7 +33,7 @@
         logger.info("Passed test iteration #" + i);
         logger.removeHandler(fileHandler);
         try {
-          SimpleMail.send("Azure test passed\nSubscription ID=" + credentials.getHostedServicesSubscriptionId(),new File(filePattern));
+          SimpleMail.send("Azure " + APPLICATION_NAME + " test passed\nSubscription ID="+ credentials.getHostedServicesSubscriptionId(),new File(filePattern));
         }
  catch (        Exception e) {
           logger.log(Level.SEVERE,"Failed to send email",e);
