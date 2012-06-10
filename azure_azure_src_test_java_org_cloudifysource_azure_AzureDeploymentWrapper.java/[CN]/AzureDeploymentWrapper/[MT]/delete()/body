@@ -1,7 +1,7 @@
 {
   try {
     azureConfig.deleteDeployment(hostedService,slot);
-    return waitForStatus(AzureDeploymentStatus.NotFound,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
+    return waitForStatus(AzureDeploymentStatus.NOT_FOUND,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
   }
  catch (  Exception e) {
     Assert.fail("Failed deleting: " + e.getLocalizedMessage());

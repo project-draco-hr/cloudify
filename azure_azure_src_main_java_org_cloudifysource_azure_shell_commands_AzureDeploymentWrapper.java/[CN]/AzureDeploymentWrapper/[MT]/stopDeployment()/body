@@ -1,6 +1,6 @@
 {
   try {
-    getAzureDeployment().updateDeployment(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName),AzureDeploymentStatus.Suspended);
+    getAzureDeployment().updateDeployment(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName),AzureDeploymentStatus.SUSPENDED);
   }
  catch (  AzureDeploymentException e) {
     throw new CLIException(e);

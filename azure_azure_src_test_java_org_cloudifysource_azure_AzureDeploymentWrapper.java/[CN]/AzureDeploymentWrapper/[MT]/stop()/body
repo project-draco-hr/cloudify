@@ -1,7 +1,7 @@
 {
   try {
-    azureConfig.updateDeployment(hostedService,slot,AzureDeploymentStatus.Suspended);
-    return waitForStatus(AzureDeploymentStatus.Suspended,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
+    azureConfig.updateDeployment(hostedService,slot,AzureDeploymentStatus.SUSPENDED);
+    return waitForStatus(AzureDeploymentStatus.SUSPENDED,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
   }
  catch (  Exception e) {
     Assert.fail("Failed stopping: " + e.getLocalizedMessage());

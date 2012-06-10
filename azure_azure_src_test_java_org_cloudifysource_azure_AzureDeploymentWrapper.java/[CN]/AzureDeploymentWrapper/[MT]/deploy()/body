@@ -1,7 +1,7 @@
 {
   try {
     azureConfig.createDeployment(hostedService,name,label,slot,cscfgFile,packageUri);
-    return waitForStatus(AzureDeploymentStatus.Running,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
+    return waitForStatus(AzureDeploymentStatus.RUNNING,statusTimeoutInMillis,TimeUnit.MILLISECONDS);
   }
  catch (  Exception e) {
     Assert.fail("Failed deploying: " + e.getLocalizedMessage());
