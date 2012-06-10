@@ -9,11 +9,9 @@
     Assert.assertTrue("the proper exception was not thrown. expecting parsing to fail due to multiple processingUnit closures in serviceFile",cause.getMessage().contains("There may only be one type of processing unit defined. Found more than one"));
   }
 catch (  DSLException e) {
-    e.printStackTrace();
-    Assert.assertFalse("Failed on packaging. Exception was " + e.getMessage(),true);
+    Assert.assertFalse("Failed on packaging. Exception was " + ExceptionUtils.getStackTrace(e),true);
   }
 catch (  IOException e) {
-    e.printStackTrace();
-    Assert.assertFalse("Failed to read file. Exception was " + e.getMessage(),true);
+    Assert.assertFalse("Failed to read file. Exception was " + ExceptionUtils.getStackTrace(e),true);
   }
 }
