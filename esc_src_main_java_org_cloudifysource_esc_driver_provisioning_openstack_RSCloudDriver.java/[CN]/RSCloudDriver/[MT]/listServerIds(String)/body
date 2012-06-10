@@ -13,7 +13,7 @@
     return ids;
   }
  catch (  final UniformInterfaceException e) {
-    final String responseEntity=e.getResponse().getEntity(String.class).toString();
+    final String responseEntity=e.getResponse().getEntity(String.class);
     throw new OpenstackException(e + " Response entity: " + responseEntity);
   }
 catch (  SAXException e) {

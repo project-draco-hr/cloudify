@@ -4,7 +4,7 @@
       service.path(this.pathPrefix + "servers/" + serverId).header("X-Auth-Token",token).accept(MediaType.APPLICATION_XML).delete();
     }
  catch (    final UniformInterfaceException e) {
-      final String responseEntity=e.getResponse().getEntity(String.class).toString();
+      final String responseEntity=e.getResponse().getEntity(String.class);
       throw new IllegalArgumentException(e + " Response entity: " + responseEntity);
     }
   }
