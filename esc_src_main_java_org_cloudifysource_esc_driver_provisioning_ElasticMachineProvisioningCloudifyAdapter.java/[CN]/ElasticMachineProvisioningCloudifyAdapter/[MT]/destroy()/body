@@ -1,11 +1,3 @@
 {
   this.cloudifyProvisioning.close();
-  try {
-    if (provisioningAdmin != null) {
-      provisioningAdmin.close();
-    }
-  }
- catch (  final Exception ex) {
-    logger.info("Failed to close provisioning admin");
-  }
 }

@@ -1,9 +1,9 @@
 {
-  GridServiceAgent gsa=admin.getGridServiceAgents().getHostAddress().get(machineIp);
+  GridServiceAgent gsa=originalESMAdmin.getGridServiceAgents().getHostAddress().get(machineIp);
   if (gsa != null) {
     return gsa;
   }
-  gsa=admin.getGridServiceAgents().getHostNames().get(machineIp);
+  gsa=originalESMAdmin.getGridServiceAgents().getHostNames().get(machineIp);
   if (gsa != null) {
     return gsa;
   }

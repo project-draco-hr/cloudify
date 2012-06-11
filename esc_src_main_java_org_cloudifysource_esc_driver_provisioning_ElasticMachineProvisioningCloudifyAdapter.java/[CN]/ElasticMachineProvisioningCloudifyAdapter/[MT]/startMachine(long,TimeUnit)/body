@@ -4,6 +4,7 @@
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails=null;
   try {
+    cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
     machineDetails=provisionMachine(duration,unit);
   }
  catch (  final Exception e) {
