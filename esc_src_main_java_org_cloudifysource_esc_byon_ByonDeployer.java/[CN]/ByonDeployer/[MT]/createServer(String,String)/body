@@ -19,7 +19,7 @@
       try {
         String resolvedIP=IPUtils.resolveHostName(node.getPrivateIP());
         node.setResolvedIP(resolvedIP);
-        Utils.validateConnection(node.getPrivateIP(),node.getLoginPort());
+        Utils.validateConnection(node.getResolvedIP(),node.getLoginPort());
         allocatedNodesPool.add(node);
         freeNodesPool.remove(node);
       }
