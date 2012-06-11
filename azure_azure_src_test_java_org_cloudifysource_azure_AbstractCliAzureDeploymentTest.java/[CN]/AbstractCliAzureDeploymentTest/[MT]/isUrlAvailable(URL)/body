@@ -4,9 +4,7 @@
   httpGet.addHeader("Cache-Control","no-cache");
   try {
     HttpResponse response=client.execute(httpGet);
-    System.out.print("HTTP GET " + url + "Response:");
-    response.getEntity().writeTo(System.out);
-    System.out.print("");
+    logger.info("HTTP GET " + url + " returned "+ response.getStatusLine().getReasonPhrase()+ " Response:"+ EntityUtils.toString(response.getEntity()));
     if (response.getStatusLine().getStatusCode() == 404) {
       return false;
     }
