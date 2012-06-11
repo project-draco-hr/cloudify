@@ -1,0 +1,27 @@
+{
+  if (sigarInstance == null) {
+    sigarInstance=new Sigar();
+    sigarCreationTime=System.currentTimeMillis();
+  }
+ else {
+    if (sigarCreationTime + SIGAR_RECREATION_INTERVAL < System.currentTimeMillis()) {
+      logger.log(Level.FINE,"recycling Sigar instance");
+      sigarInstance.close();
+      sigarInstance=null;
+      sigarInstance=new Sigar();
+      sigarCreationTime=System.currentTimeMillis();
+      logger.log(Level.FINE,"a new sigar instance was created successfully");
+    }
+  }
+  ProcState procState=null;
+  try {
+    procState=sigarInstance.getProcState(pid);
+  }
+ catch (  final SigarException e) {
+    if ("No such process".equals(e.getMessage())) {
+      return null;
+    }
+    throw new USMException("Failed to check if process with PID: " + pid + " is alive. Error was: "+ e.getMessage(),e);
+  }
+  return procState;
+}

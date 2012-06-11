@@ -1,6 +1,6 @@
 {
   for (  final Long pid : pids) {
-    final boolean processAlive=USMUtils.isProcessAlive(pid);
+    final boolean processAlive=isProcessAlive(pid);
     if (!processAlive) {
       return true;
     }
