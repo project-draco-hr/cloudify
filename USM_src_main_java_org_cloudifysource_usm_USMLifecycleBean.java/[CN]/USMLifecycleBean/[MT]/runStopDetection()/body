@@ -1,5 +1,5 @@
 {
-  logger.info("Running iteration of stop detection");
+  logger.fine("Running iteration of stop detection");
   for (  final StopDetector detector : this.stopDetectors) {
     try {
       if (detector.isServiceStopped()) {

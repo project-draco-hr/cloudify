@@ -11,18 +11,20 @@
     if (processIsRunning) {
       processIsRunning=checkProcessIsRunning(launchedProcess);
     }
-    logger.info("Executing iteration of liveness detection test");
     int index=currentTestIndex;
-    logger.info("Executing liveness detectors from index: " + index);
-    logger.info("Liveness detectors: " + Arrays.toString(this.livenessDetectors));
-    logger.info("detectors length: " + this.livenessDetectors.length);
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Executing iteration of liveness detection test");
+      logger.fine("Executing liveness detectors from index: " + index);
+      logger.fine("Liveness detectors: " + Arrays.toString(this.livenessDetectors));
+      logger.fine("detectors length: " + this.livenessDetectors.length);
+    }
     while (index < this.livenessDetectors.length) {
-      logger.info("getting detector at index: " + index);
+      logger.fine("getting detector at index: " + index);
       final LivenessDetector detector=this.livenessDetectors[index];
       boolean testResult=false;
       try {
         testResult=detector.isProcessAlive();
-        logger.info("Detection Test results are: " + testResult);
+        logger.fine("Detection Test results are: " + testResult);
       }
  catch (      final USMException e) {
         if (e.getCause() instanceof InterruptedException) {
