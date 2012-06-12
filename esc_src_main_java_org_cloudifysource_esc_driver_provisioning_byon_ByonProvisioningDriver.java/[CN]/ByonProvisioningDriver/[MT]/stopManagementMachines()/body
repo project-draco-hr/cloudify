@@ -8,6 +8,13 @@
     throw new CloudProvisioningException("Failed to lookup existing management servers.",e);
   }
   for (  final CustomNode customNode : managementServers) {
+    try {
+      stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getResolvedIP());
+    }
+ catch (    final Exception e) {
+      publishEvent("prov_failed_to_stop_management_machine");
+      throw new CloudProvisioningException(e);
+    }
     shutdownServerGracefully(customNode,true);
   }
 }

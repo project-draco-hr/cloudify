@@ -12,17 +12,19 @@
     }
   }
   if (StringUtils.isNotBlank(managementIP)) {
-    if (admin == null) {
-      admin=Utils.getAdminObject(managementIP,expectedGsmCount);
-    }
-    final GridServiceManagers gsms=admin.getGridServiceManagers();
-    for (    final GridServiceManager gsm : gsms) {
-      final CustomNode managementServer=deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
-      if (managementServer != null) {
-        existingManagementServers.add(managementServer);
+    Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount);
+    try {
+      final GridServiceManagers gsms=admin.getGridServiceManagers();
+      for (      final GridServiceManager gsm : gsms) {
+        final CustomNode managementServer=deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
+        if (managementServer != null) {
+          existingManagementServers.add(managementServer);
+        }
       }
     }
-    admin.close();
+  finally {
+      admin.close();
+    }
   }
   return existingManagementServers;
 }

@@ -1,6 +1,5 @@
 {
   try {
-    stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),cloudNode.getResolvedIP());
     if (cleanGsFilesOnShutdown) {
       deleteGsFiles(cloudNode);
     }
