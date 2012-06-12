@@ -1,4 +1,8 @@
 {
   final int responseCode=ServiceUtils.getHttpReturnCode(this.url);
-  return this.allowedResponseCodes.contains(responseCode);
+  boolean isProcessAlive=this.allowedResponseCodes.contains(responseCode);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine(this.url + " response code " + responseCode+ ". isProcessAlive="+ isProcessAlive);
+  }
+  return isProcessAlive;
 }
