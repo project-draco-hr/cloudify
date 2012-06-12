@@ -6,8 +6,9 @@
   childrenAfter.removeAll(childrenBefore);
   if (childrenAfter.isEmpty()) {
     logger.warning("Default process locator could not find a new process! " + "Are you running your service as a background process or a system service?");
+    return 0;
   }
-  if (childrenAfter.size() > 1) {
+ else   if (childrenAfter.size() > 1) {
     logger.warning("Multiple new processes have been found: " + childrenAfter.toString() + ". Using the first as child process ID!");
   }
   final long newChildProcessID=childrenAfter.iterator().next();
