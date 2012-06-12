@@ -1,5 +1,5 @@
 {
-  this.url=(String)config.get(URL_KEY);
+  this.url=config.get(URL_KEY).toString();
   if (this.url == null) {
     throw new IllegalArgumentException("Argument url in " + this.getClass().getName() + " is mandatory");
   }
