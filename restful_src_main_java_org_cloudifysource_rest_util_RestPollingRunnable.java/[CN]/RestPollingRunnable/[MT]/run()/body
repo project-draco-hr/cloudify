@@ -11,7 +11,7 @@
     pollForLogs();
   }
  catch (  Throwable e) {
-    logger.log(Level.INFO,"Polling task terminated. Reason: " + e.getMessage());
+    logger.log(Level.INFO,"Polling task terminated. Reason: " + e.getMessage(),e);
     this.lifecycleEventsContainer.setExecutionException(e);
     throw new RuntimeException(e);
   }
