@@ -3,4 +3,5 @@
   this.admin=admin;
   this.applicationAttributesAccessor=new ApplicationAttributesAccessor(this,serviceContext.getApplicationName());
   this.serviceAttributesAccessor=new ServiceAttributesAccessor(this,serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext);
+  this.globalAttributesAccessor=new GlobalAttributesAccessor(this);
 }
