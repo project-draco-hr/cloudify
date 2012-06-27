@@ -1,0 +1,22 @@
+{
+  logger.fine("Executing getServiceDetails()");
+  @SuppressWarnings("deprecation") final CustomServiceDetails csd=new CustomServiceDetails(CloudifyConstants.USM_DETAILS_SERVICE_ID,CustomServiceDetails.SERVICE_TYPE,this.serviceSubType,this.serviceDescription,this.serviceLongDescription);
+  final ServiceDetails[] res=new ServiceDetails[]{csd};
+  final Details[] alldetails=lifecycleBean.getDetails();
+  final Map<String,Object> result=csd.getAttributes();
+  for (  final Details details : alldetails) {
+    try {
+      logger.fine("Executing details: " + details);
+      final Map<String,Object> detailsValues=details.getDetails(usm,lifecycleBean.getConfiguration());
+      removeNonSerializableObjectsFromMap(detailsValues,"details");
+      result.putAll(detailsValues);
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to execute service details",e);
+    }
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Details are: " + Arrays.toString(res));
+  }
+  return res;
+}

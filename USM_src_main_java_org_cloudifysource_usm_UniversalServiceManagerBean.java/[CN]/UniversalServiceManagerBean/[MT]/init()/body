@@ -1,4 +1,5 @@
 {
+  initMonitorsCache();
   initUniqueFileName();
   initCustomProperties();
   this.myPid=this.sigar.getPid();

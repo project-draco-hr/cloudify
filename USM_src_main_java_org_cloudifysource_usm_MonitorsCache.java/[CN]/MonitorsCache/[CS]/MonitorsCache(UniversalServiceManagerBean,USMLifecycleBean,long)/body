@@ -1,0 +1,5 @@
+{
+  this.usm=usm;
+  this.cacheExpirationTimeout=cacheExpirationTimeout;
+  this.lifecycleBean=lifecycleBean;
+}
