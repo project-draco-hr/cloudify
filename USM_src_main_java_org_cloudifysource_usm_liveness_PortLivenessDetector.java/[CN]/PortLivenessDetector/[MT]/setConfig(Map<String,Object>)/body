@@ -3,7 +3,4 @@
   if (this.portList == null) {
     throw new IllegalArgumentException("Parameter portList of Plugin " + this.getClass().getName() + " is mandatory");
   }
-  if (config.get(HOST_KEY) != null) {
-    this.hostName=(String)config.get(HOST_KEY);
-  }
 }
