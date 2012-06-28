@@ -5,7 +5,7 @@
   node=deployer.createServer(cloudTemplateName,serverName);
   machineDetails=createMachineDetailsFromNode(node);
   try {
-    handleServerCredentials(machineDetails);
+    handleServerCredentials(machineDetails,template);
   }
  catch (  final CloudProvisioningException e) {
     try {

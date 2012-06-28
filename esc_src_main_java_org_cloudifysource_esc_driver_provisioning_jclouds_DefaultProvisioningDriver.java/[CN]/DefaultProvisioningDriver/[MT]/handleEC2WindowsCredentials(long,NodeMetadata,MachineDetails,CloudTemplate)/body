@@ -2,14 +2,14 @@
   File pemFile=null;
   if (this.management) {
     final String baseDirectory=Environment.getHomeDirectory();
-    final File localDirectory=new File(baseDirectory,this.cloud.getProvider().getLocalDirectory());
-    pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());
+    final File localDirectory=new File(baseDirectory,cloudTemplate.getLocalDirectory());
+    pemFile=new File(localDirectory,cloudTemplate.getKeyFile());
   }
  else {
-    final String localDirectoryName=this.cloud.getProvider().getLocalDirectory();
+    final String localDirectoryName=cloudTemplate.getLocalDirectory();
     logger.fine("local dir name is: " + localDirectoryName);
     final File localDirectory=new File(localDirectoryName);
-    pemFile=new File(localDirectory,this.cloud.getUser().getKeyFile());
+    pemFile=new File(localDirectory,cloudTemplate.getKeyFile());
   }
   if (!pemFile.exists()) {
     logger.severe("Could not find pem file: " + pemFile);

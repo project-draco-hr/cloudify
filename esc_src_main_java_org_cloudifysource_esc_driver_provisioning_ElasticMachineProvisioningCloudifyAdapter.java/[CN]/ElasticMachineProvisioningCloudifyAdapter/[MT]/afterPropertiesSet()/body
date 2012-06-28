@@ -1,5 +1,6 @@
 {
-  logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
+  final String[] zones=this.config.getGridServiceAgentZones();
+  logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName() + "-" + Arrays.toString(zones));
   final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
   if (cloudContents == null) {
     throw new IllegalArgumentException("Cloud configuration was not set!");
@@ -26,10 +27,10 @@
         localDirectoryName=localDirectoryName.substring(0,1) + ":" + localDirectoryName.substring(1);
       }
       logger.info("Modified local dir name is: " + localDirectoryName);
-      cloud.getProvider().setLocalDirectory(localDirectoryName);
+      cloudTemplate.setLocalDirectory(localDirectoryName);
     }
  else {
-      cloud.getProvider().setLocalDirectory(cloudTemplate.getRemoteDirectory());
+      cloudTemplate.setLocalDirectory(cloudTemplate.getRemoteDirectory());
     }
     try {
       this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();

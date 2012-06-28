@@ -1,11 +1,11 @@
 {
   File keyFile=null;
-  String keyFileStr=cloud.getUser().getKeyFile();
+  String keyFileStr=template.getKeyFile();
   if (StringUtils.isNotBlank(keyFileStr)) {
-    fixConfigRelativePaths(cloud);
+    fixConfigRelativePaths(cloud,template);
     keyFile=new File(keyFileStr);
     if (!keyFile.isAbsolute()) {
-      keyFile=new File(cloud.getProvider().getLocalDirectory(),keyFileStr);
+      keyFile=new File(template.getLocalDirectory(),keyFileStr);
     }
     if (keyFile != null && !keyFile.exists()) {
       throw new CloudProvisioningException("The specified key file could not be found: " + keyFile.getAbsolutePath());
@@ -20,7 +20,7 @@
           keyFile=File.createTempFile("gs-esm-key",".pem");
           keyFile.deleteOnExit();
           FileUtils.write(keyFile,remotePassword);
-          cloud.getUser().setKeyFile(keyFile.getAbsolutePath());
+          template.setKeyFile(keyFile.getAbsolutePath());
         }
  catch (        final IOException e) {
           throw new CloudProvisioningException("Failed to create a temporary " + "file for cloud server's key file",e);

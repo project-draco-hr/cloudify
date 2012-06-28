@@ -8,5 +8,6 @@
   }
   final String newServerName=createNewServerName();
   logger.info("Attempting to start a new cloud machine");
-  return createServer(newServerName,endTime);
+  final CloudTemplate template=this.cloud.getTemplates().get(cloudTemplateName);
+  return createServer(newServerName,endTime,template);
 }
