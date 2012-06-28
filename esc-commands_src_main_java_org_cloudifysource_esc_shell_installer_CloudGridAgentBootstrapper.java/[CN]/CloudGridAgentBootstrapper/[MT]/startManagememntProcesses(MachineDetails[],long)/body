@@ -2,9 +2,10 @@
   final AgentlessInstaller installer=new AgentlessInstaller();
   installer.addListener(new CliAgentlessInstallerListener(this.verbose));
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
-  fixConfigRelativePaths(cloud);
+  final CloudTemplate template=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
+  fixConfigRelativePaths(cloud,template);
   final int numOfManagementMachines=machines.length;
-  final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines);
+  final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines,template);
   for (int i=1; i < installations.length; i++) {
     installations[i].setNoWebServices(true);
   }
@@ -12,7 +13,7 @@
   for (  final InstallationDetails detail : installations) {
     detail.setLocator(lookup);
   }
-  final File uploadDir=new File(cloud.getProvider().getLocalDirectory());
+  final File uploadDir=new File(template.getLocalDirectory());
   try {
     FileUtils.copyFileToDirectory(this.cloudFile,uploadDir);
     installOnMachines(endTime,installer,numOfManagementMachines,installations);

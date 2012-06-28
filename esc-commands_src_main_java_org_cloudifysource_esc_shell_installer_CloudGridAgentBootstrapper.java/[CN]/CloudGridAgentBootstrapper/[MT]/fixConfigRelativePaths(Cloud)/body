@@ -1,6 +1,0 @@
-{
-  if (config.getProvider().getLocalDirectory() != null && !new File(config.getProvider().getLocalDirectory()).isAbsolute()) {
-    logger.fine("Assuming " + config.getProvider().getLocalDirectory() + " is in "+ Environment.getHomeDirectory());
-    config.getProvider().setLocalDirectory(new File(Environment.getHomeDirectory(),config.getProvider().getLocalDirectory()).getAbsolutePath());
-  }
-}
