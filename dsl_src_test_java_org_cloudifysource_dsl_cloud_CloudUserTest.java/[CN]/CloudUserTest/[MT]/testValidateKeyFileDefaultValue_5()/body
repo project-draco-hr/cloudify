@@ -1,7 +1,0 @@
-{
-  final CloudUser fixture=new CloudUser();
-  fixture.setUser(null);
-  fixture.setApiKey(null);
-  fixture.setKeyFile(null);
-  fixture.validateDefaultValues();
-}
