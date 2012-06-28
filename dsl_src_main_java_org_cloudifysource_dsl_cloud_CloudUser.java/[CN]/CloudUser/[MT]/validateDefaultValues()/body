@@ -5,7 +5,4 @@
   if ("ENTER_KEY".equals(this.getApiKey())) {
     throw new DSLValidationException("Key field still has default configuration value of ENTER_KEY");
   }
-  if ("ENTER_KEY_FILE_NAME".equals(this.getKeyFile())) {
-    throw new DSLValidationException("Key file name field still has default configuration value of ENTER_KEY_FILE_NAME");
-  }
 }

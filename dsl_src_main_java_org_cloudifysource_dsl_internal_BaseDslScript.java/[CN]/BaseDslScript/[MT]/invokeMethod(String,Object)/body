@@ -19,7 +19,7 @@
       try {
         validateObject(retval);
       }
- catch (      DSLValidationException e) {
+ catch (      final DSLValidationException e) {
         throw new DSLValidationRuntimeException(e);
       }
       if (this.activeObject != null) {
