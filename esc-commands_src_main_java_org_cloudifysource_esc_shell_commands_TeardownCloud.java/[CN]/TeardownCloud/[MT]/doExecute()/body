@@ -11,7 +11,7 @@
  else {
     installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   }
-  installer.setProgressInSeconds(10);
+  installer.setProgressInSeconds(POLLING_INTERVAT_SEC);
   installer.setVerbose(verbose);
   installer.setForce(force);
   installer.setCloud(cloud);
