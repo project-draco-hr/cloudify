@@ -11,5 +11,7 @@
   installer.addListener(new CLILocalhostBootstrapperListener());
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.teardownLocalCloudOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  session.put(Constants.ACTIVE_APP,"default");
+  GigaShellMain.getInstance().setCurrentApplicationName("default");
   return getFormattedMessage("teardown_localcloud_terminated_successfully");
 }
