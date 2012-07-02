@@ -31,6 +31,7 @@ logger.log(Level.INFO,"Lifecycle events polling ended successfully.");
 resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
 }
 futureTask.cancel(true);
+lifecyclePollingContainer.remove(UUID.fromString(lifecycleEventContainerID));
 break;
 }
 List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
