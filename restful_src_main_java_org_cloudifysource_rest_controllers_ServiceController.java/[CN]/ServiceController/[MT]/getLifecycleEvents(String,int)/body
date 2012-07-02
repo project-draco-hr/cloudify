@@ -31,7 +31,6 @@ logger.log(Level.INFO,"Lifecycle events polling ended successfully.");
 resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
 }
 futureTask.cancel(true);
-lifecyclePollingContainer.remove(UUID.fromString(lifecycleEventContainerID));
 break;
 }
 List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
@@ -43,6 +42,9 @@ resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,copy);
 }
  else {
 resultsMap.put(CloudifyConstants.CURSOR_POS,cursor);
+}
+if (runnableState.equals(PollingState.ENDED)) {
+lifecyclePollingContainer.remove(UUID.fromString(lifecycleEventContainerID));
 }
 return successStatus(resultsMap);
 }
