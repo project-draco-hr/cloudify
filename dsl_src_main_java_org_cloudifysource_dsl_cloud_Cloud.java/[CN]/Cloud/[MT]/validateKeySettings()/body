@@ -10,7 +10,7 @@
           boolean keyFileFoundOnLocalMachinePath=isKeyFileFoundOnLocalMachinePath(template);
           boolean keyFileFoundOnRemoteMachinePath=isKeyFileFoundOnRemoteMachinePath(template);
           if (!keyFileFoundOnRemoteMachinePath && !keyFileFoundOnLocalMachinePath) {
-            throw new DSLValidationException("The specified key file is missing: \"" + keyFile.getAbsolutePath() + "\"");
+            throw new DSLValidationException("The specified key file is not found on these locations: \"" + (new File(getLocalDirPath(),keyFileStr)).getAbsolutePath() + "\", \""+ (new File(getRemoteDirPath(),keyFileStr)).getAbsolutePath()+ "\"");
           }
         }
       }

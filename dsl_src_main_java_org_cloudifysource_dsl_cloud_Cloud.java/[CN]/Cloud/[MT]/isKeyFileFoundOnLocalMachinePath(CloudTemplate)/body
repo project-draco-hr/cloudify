@@ -1,7 +1,5 @@
 {
-  String configLocalDir=template.getLocalDirectory();
-  String envHomeDir=Environment.getHomeDirectory();
-  String localAbsolutePath=new File(envHomeDir,configLocalDir).getAbsolutePath();
+  String localAbsolutePath=getLocalDirPath();
   File localKeyFile=new File(localAbsolutePath,template.getKeyFile());
   logger.log(Level.FINE,"Looking for key file on local machine: " + localKeyFile.getAbsolutePath());
   return localKeyFile.isFile();

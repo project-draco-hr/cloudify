@@ -1,0 +1,5 @@
+{
+  String configLocalDir=getProvider().getLocalDirectory();
+  String envHomeDir=Environment.getHomeDirectory();
+  return new File(envHomeDir,configLocalDir).getAbsolutePath();
+}
