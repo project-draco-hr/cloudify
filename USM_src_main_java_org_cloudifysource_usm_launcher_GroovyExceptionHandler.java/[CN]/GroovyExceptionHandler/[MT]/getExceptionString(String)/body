@@ -3,5 +3,8 @@
   if (exceptionReason.isEmpty()) {
     exceptionReason=getCompilationException(input);
   }
+  if (exceptionReason.isEmpty()) {
+    exceptionReason=input;
+  }
   return exceptionReason;
 }
