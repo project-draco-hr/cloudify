@@ -3,7 +3,6 @@
     throw new CLIStatusException("service_file_doesnt_exist",recipe.getPath());
   }
   File packedFile;
-  int plannedNumberOfInstances=1;
   Service service=null;
   try {
     if (recipe.getName().endsWith(".jar") || recipe.getName().endsWith(".war")) {
@@ -42,7 +41,6 @@ catch (  final PackagingException e) {
     if (serviceFileName != null) {
       props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME,serviceFileName);
     }
-    plannedNumberOfInstances=service.getNumInstances();
     if (serviceName == null || serviceName.isEmpty()) {
       serviceName=service.getName();
     }
