@@ -1,11 +1,14 @@
 {
-  if (config.get(FILE_PATH_KEY) != null) {
-    this.filePath=(String)config.get(FILE_PATH_KEY);
+  final String filePath=(String)config.get(FILE_PATH_KEY);
+  if (filePath != null) {
+    this.filePath=filePath;
   }
-  if (config.get(TIMEOUT_IN_SECONDS_KEY) != null) {
-    this.timeoutInSeconds=(Integer)config.get(TIMEOUT_IN_SECONDS_KEY);
+  final Integer timeout=(Integer)config.get(TIMEOUT_IN_SECONDS_KEY);
+  if (timeout != null) {
+    this.timeoutInSeconds=timeout;
   }
-  if (config.get(REGULAR_EXPRESSION_KEY) != null) {
-    this.regex=(String)config.get(REGULAR_EXPRESSION_KEY);
+  final String regex=(String)config.get(REGULAR_EXPRESSION_KEY);
+  if (regex != null) {
+    this.regex=regex;
   }
 }

@@ -14,7 +14,7 @@
   }
   final ArrayList<String> groovyCommandParams=new ArrayList<String>();
   groovyCommandParams.add(groovyPath);
-  if (USMUtils.isWindows()) {
+  if (ServiceUtils.isWindows()) {
     modifyWindowsCommandLine(groovyCommandParams,workingDir);
   }
   String classPathEnv=System.getenv("CLASSPATH");

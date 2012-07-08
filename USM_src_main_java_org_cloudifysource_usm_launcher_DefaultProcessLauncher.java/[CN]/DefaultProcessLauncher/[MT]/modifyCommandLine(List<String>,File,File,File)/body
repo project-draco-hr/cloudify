@@ -4,7 +4,7 @@
     modifyGroovyCommandLine(commandLineParams,workingDir);
   }
   modifyRedirectionCommandLine(commandLineParams,outputFile,errorFile);
-  if (USMUtils.isLinuxOrUnix()) {
+  if (ServiceUtils.isLinuxOrUnix()) {
     logger.info("Command before shell modification: " + commandLineParams);
     final StringBuilder sb=new StringBuilder();
     for (    final String param : commandLineParams) {

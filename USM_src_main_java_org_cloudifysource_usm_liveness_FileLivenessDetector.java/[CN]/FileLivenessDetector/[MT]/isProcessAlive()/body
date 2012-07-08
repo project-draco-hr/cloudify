@@ -1,5 +1,5 @@
 {
-  if (this.regex == "" || this.filePath == "") {
+  if (this.regex.isEmpty() || this.filePath.isEmpty()) {
     throw new USMException("When using the FileLivnessDetector, both the file path and regex should be defined.");
   }
   File file=new File(this.filePath);
@@ -10,7 +10,7 @@
   Tailer tailer=null;
   try {
     final long startTime=System.currentTimeMillis();
-    while (System.currentTimeMillis() < startTime + timeoutInSeconds * 1000) {
+    while (System.currentTimeMillis() < startTime + timeoutInSeconds * 1000L) {
       if (file.exists()) {
         if (tailer == null) {
           tailer=Tailer.create(file,listener,TIMEOUT_BETWEEN_FILE_QUERYING,false);

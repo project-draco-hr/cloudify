@@ -1,6 +1,6 @@
 {
   final String runParam=commandLineParams.get(0);
-  if (USMUtils.isWindows()) {
+  if (ServiceUtils.isWindows()) {
     modifyWindowsCommandLine(commandLineParams,puWorkDir);
   }
  else {

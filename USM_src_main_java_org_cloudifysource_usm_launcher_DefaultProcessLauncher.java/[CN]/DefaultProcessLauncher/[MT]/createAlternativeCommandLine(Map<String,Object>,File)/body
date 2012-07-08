@@ -1,5 +1,5 @@
 {
-  if (USMUtils.isWindows()) {
+  if (ServiceUtils.isWindows()) {
     List<String> otherCommandLine=null;
     if (map.entrySet().size() > 1) {
       otherCommandLine=lookUpCommandLineForOS(map,"Linux");

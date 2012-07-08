@@ -3,7 +3,7 @@
   final File groovyDir=new File(toolsDir,"groovy");
   final File binDir=new File(groovyDir,"bin");
   File groovyFile=null;
-  if (USMUtils.isWindows()) {
+  if (ServiceUtils.isWindows()) {
     groovyFile=new File(binDir,"groovy.bat");
   }
  else {
@@ -12,7 +12,7 @@
   if (!groovyFile.exists()) {
     throw new FileNotFoundException("Could not find groovy executable: " + groovyFile.getAbsolutePath());
   }
-  if (USMUtils.isLinuxOrUnix()) {
+  if (ServiceUtils.isLinuxOrUnix()) {
     USMUtils.markFileAsExecutable(sigar,groovyFile);
   }
   return groovyFile.getAbsolutePath();
