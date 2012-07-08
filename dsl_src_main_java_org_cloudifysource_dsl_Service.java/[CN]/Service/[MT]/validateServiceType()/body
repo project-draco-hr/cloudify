@@ -1,0 +1,15 @@
+{
+  boolean typeExists=false;
+  String[] enumAsString=new String[ServiceTierType.values().length];
+  int counter=0;
+  for (  ServiceTierType tierType : ServiceTierType.values()) {
+    enumAsString[counter]=tierType.toString();
+    counter++;
+    if (this.type.equalsIgnoreCase(tierType.toString())) {
+      typeExists=true;
+    }
+  }
+  if (!typeExists) {
+    throw new DSLValidationException("The service type '" + this.type + "' is undefined."+ "The known service types include "+ Arrays.toString(enumAsString));
+  }
+}
