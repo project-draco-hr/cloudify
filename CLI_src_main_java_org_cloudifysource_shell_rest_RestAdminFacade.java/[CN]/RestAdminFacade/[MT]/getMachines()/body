@@ -1,5 +1,5 @@
 {
-  Map<String,Object> map=null;
+  Map<String,Object> map;
   try {
     map=client.getAdminData("machines/HostsByAddress");
   }

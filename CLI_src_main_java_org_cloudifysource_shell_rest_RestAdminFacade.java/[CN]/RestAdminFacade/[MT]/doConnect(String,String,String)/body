@@ -1,7 +1,7 @@
 {
   String formattedURL=url;
   if (!formattedURL.endsWith("/")) {
-    formattedURL=formattedURL + "/";
+    formattedURL=formattedURL + '/';
   }
   if (!formattedURL.startsWith("http://")) {
     formattedURL="http://" + formattedURL;

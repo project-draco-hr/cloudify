@@ -1,6 +1,6 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/beans/"+ beanName+ "/invoke";
-  Object result=null;
+  Object result;
   try {
     result=client.post(url,buildCustomCommandParams(commandName,params));
   }

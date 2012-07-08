@@ -1,8 +1,7 @@
 {
-  String result=null;
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout+ "?zone="+ zone+ "&template="+ templateName;
   try {
-    final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout;
-    result=(String)client.postFile(url + "?zone=" + zone+ "&template="+ templateName,packedFile,contextProperties);
+    return (String)client.postFile(url,packedFile,contextProperties);
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
@@ -10,5 +9,4 @@
 catch (  final RestException e) {
     throw new CLIException(e);
   }
-  return result;
 }

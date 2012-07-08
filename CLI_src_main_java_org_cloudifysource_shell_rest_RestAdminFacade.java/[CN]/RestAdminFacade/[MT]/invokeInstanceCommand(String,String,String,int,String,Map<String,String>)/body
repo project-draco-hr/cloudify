@@ -1,8 +1,9 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances/"+ instanceId+ "/beans/"+ beanName+ "/invoke";
-  @SuppressWarnings("unchecked") Map<String,String> resultMap;
+  Map<String,String> resultMap;
   try {
-    resultMap=(Map<String,String>)client.post(url,buildCustomCommandParams(commandName,paramsMap));
+    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.post(url,buildCustomCommandParams(commandName,paramsMap));
+    resultMap=response;
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
@@ -10,6 +11,5 @@
 catch (  final RestException e) {
     throw new CLIException(e);
   }
-  final InvocationResult invocationResult=InvocationResult.createInvocationResult(resultMap);
-  return invocationResult;
+  return InvocationResult.createInvocationResult(resultMap);
 }
