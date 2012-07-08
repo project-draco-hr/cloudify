@@ -5,10 +5,10 @@
       if (node.getGroup() == null) {
         return false;
       }
-      if (!(node.getState() == NodeState.RUNNING || node.getState() == NodeState.PENDING)) {
-        return false;
+      if (node.getState() == NodeState.RUNNING || node.getState() == NodeState.PENDING) {
+        return node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
       }
-      return node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
+      return false;
     }
   }
 );
