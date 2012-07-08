@@ -1,0 +1,9 @@
+{
+  try {
+    ServiceReader.readService(new File(RECIPE_PATH_MISSING_FILE));
+    Assert.fail("Service parsing succeeded but it should have failed");
+  }
+ catch (  Exception e) {
+    Assert.assertTrue("Incorrent error message in parse error of service with missing external file",e.getMessage().contains("ui_MISSING.groovy"));
+  }
+}
