@@ -1,8 +1,7 @@
 {
   try {
     Service service=new Service();
-    service.setNumInstances(2);
-    service.setMaxAllowedInstances(1);
+    service.setType("NonExistionType");
     service.validateDefaultValues();
     fail("an invalid service was successfully validated");
   }
@@ -10,16 +9,6 @@
   }
   try {
     Service service=new Service();
-    service.setType("WEB_SERVER");
-    service.validateDefaultValues();
-  }
- catch (  DSLValidationException e) {
-    fail("Validation of service failed");
-  }
-  try {
-    Service service=new Service();
-    service.setNumInstances(1);
-    service.setMaxAllowedInstances(1);
     service.setType("WEB_SERVER");
     service.validateDefaultValues();
   }
