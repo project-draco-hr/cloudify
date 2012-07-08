@@ -19,7 +19,7 @@
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Sla.class);
-    dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,false,true,"service"));
+    dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,true,true,"service"));
     dslObjectInitializersByName.put("metricGroup",new DSLObjectInitializerData("metricGroup",MetricGroup.class,false,true,"userInterface"));
     dslObjectInitializersByName.put("widgetGroup",new DSLObjectInitializerData("widgetGroup",WidgetGroup.class,false,true,"userInterface"));
     dslObjectInitializersByName.put("balanceGauge",new DSLObjectInitializerData("balanceGauge",BalanceGauge.class,false,true,"widgetGroup"));
