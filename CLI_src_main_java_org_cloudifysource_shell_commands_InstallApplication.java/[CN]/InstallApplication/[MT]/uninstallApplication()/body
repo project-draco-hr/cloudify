@@ -2,7 +2,7 @@
   Map<String,String> uninstallApplicationResponse=this.adminFacade.uninstallApplication(this.applicationName,timeoutInMinutes);
   if (uninstallApplicationResponse.containsKey(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID)) {
     String uninstallPollingID=uninstallApplicationResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
-    this.adminFacade.waitForLifecycleEvents(uninstallPollingID,timeoutInMinutes);
+    this.adminFacade.waitForLifecycleEvents(uninstallPollingID,timeoutInMinutes,UninstallApplication.TIMEOUT_ERROR_MESSAGE);
   }
  else {
     throw new CLIException("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");
