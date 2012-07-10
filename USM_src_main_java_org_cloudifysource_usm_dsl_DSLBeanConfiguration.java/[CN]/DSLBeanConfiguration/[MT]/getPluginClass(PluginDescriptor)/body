@@ -1,0 +1,18 @@
+{
+  Class<?> clazz=null;
+  try {
+    final String className=descriptor.getClassName();
+    if (className == null || className.length() == 0) {
+      throw new IllegalArgumentException("Plugin must have a class name");
+    }
+    clazz=Class.forName(className);
+  }
+ catch (  final ClassNotFoundException e) {
+    logger.log(Level.SEVERE,"Class " + descriptor.getClassName() + " for Plugin was not found",e);
+    throw new IllegalArgumentException("Could not find class: " + descriptor.getClassName() + " for plugin "+ descriptor.getName(),e);
+  }
+  if (!USMComponent.class.isAssignableFrom(clazz)) {
+    throw new IllegalArgumentException("Plugin of class: " + descriptor.getClassName() + " does not implement the USMComponent interface");
+  }
+  return clazz;
+}

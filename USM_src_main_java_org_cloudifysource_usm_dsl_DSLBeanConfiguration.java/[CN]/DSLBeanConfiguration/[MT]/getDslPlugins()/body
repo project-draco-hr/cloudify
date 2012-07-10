@@ -7,8 +7,8 @@
     return null;
   }
   for (  final PluginDescriptor descriptor : plugins) {
-    final Plugin plugin=createPlugin(descriptor);
-    if (plugin != null) {
+    final Class<?> pluginClass=getPluginClass(descriptor);
+    if (pluginClass != null) {
       final String name=descriptor.getName() == null ? descriptor.getClassName() : descriptor.getName();
       try {
         this.context.getBeanFactory().getBean(name);
@@ -16,8 +16,10 @@
       }
  catch (      final NoSuchBeanDefinitionException e) {
       }
-      this.context.getBeanFactory().registerSingleton(name,plugin);
-      this.context.getBeanFactory().autowireBean(plugin);
+      final Object createdBean=this.context.getBeanFactory().createBean(pluginClass);
+      final Plugin component=(Plugin)createdBean;
+      component.setServiceContext(this.serviceContext);
+      component.setConfig(descriptor.getConfig());
     }
   }
   return null;
