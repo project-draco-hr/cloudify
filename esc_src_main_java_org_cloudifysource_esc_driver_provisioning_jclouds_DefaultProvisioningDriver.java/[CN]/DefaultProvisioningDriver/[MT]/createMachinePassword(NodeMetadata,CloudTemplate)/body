@@ -2,9 +2,6 @@
   if (template.getPassword() != null) {
     return template.getPassword();
   }
-  if (cloud.getConfiguration().getRemotePassword() != null) {
-    return cloud.getConfiguration().getRemotePassword();
-  }
   if (node.getCredentials() != null) {
     if (node.getCredentials().getOptionalPassword().isPresent()) {
       return node.getCredentials().getPassword();

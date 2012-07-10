@@ -27,9 +27,6 @@
   }
   String username=cloudTemplate.getUsername();
   if (username == null) {
-    username=cloud.getConfiguration().getRemoteUsername();
-  }
-  if (username == null) {
     username=DEFAULT_EC2_WINDOWS_USERNAME;
   }
   machineDetails.setRemoteUsername(username);

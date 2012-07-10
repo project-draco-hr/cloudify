@@ -1,12 +1,5 @@
 {
   try {
-    String machineIp=null;
-    if (machineDetails.isUsePrivateAddress()) {
-      machineIp=machineDetails.getPrivateAddress();
-    }
- else {
-      machineIp=machineDetails.getPublicAddress();
-    }
     if (machineIp != null && !machineIp.trim().isEmpty()) {
       try {
         final GridServiceAgent agent=getGSAByIpOrHost(machineIp);

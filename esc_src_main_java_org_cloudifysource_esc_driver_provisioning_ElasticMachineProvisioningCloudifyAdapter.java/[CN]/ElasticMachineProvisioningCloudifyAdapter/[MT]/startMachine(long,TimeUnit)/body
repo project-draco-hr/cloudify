@@ -12,6 +12,13 @@
     throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
+  String machineIp=null;
+  if (cloud.getConfiguration().isConnectToPrivateIp()) {
+    machineIp=machineDetails.getPrivateAddress();
+  }
+ else {
+    machineIp=machineDetails.getPublicAddress();
+  }
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (machineDetails.isAgentRunning()) {
@@ -21,13 +28,6 @@
       logger.info("Cloudify Adapter is installing Cloudify on new machine");
       installAndStartAgent(machineDetails,end);
       checkForProvisioningTimeout(end,machineDetails);
-    }
-    String machineIp=null;
-    if (machineDetails.isUsePrivateAddress()) {
-      machineIp=machineDetails.getPrivateAddress();
-    }
- else {
-      machineIp=machineDetails.getPublicAddress();
     }
     if (machineIp == null) {
       throw new IllegalArgumentException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
@@ -42,19 +42,19 @@
  catch (  final ElasticMachineProvisioningException e) {
     logger.info("ElasticMachineProvisioningException occurred, " + e.getMessage());
     logger.info(Arrays.toString(e.getStackTrace()));
-    handleExceptionAfterMachineCreated(machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
     throw e;
   }
 catch (  final TimeoutException e) {
     logger.info("TimeoutException occurred, " + e.getMessage());
     logger.info(Arrays.toString(e.getStackTrace()));
-    handleExceptionAfterMachineCreated(machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
     throw e;
   }
 catch (  final InterruptedException e) {
     logger.info("InterruptedException occurred, " + e.getMessage());
     logger.info(Arrays.toString(e.getStackTrace()));
-    handleExceptionAfterMachineCreated(machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
     throw e;
   }
 }

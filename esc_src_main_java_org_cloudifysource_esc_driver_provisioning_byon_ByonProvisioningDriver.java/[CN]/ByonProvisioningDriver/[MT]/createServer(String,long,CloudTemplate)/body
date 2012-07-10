@@ -12,7 +12,7 @@
       deployer.invalidateServer(cloudTemplateName,node);
     }
  catch (    final CloudProvisioningException ie) {
-      logger.log(Level.SEVERE,"Failed to mark machine " + machineDetails.getIp() + " as Invalid.",ie);
+      logger.log(Level.SEVERE,"Failed to mark machine [" + machineDetails.getPublicAddress() + "/"+ machineDetails.getPrivateAddress()+ "] as Invalid.",ie);
     }
     throw new CloudProvisioningException(e);
   }

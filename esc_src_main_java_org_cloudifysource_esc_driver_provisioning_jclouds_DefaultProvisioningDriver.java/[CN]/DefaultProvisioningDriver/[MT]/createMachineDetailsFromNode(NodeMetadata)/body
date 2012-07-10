@@ -15,6 +15,5 @@
   final String password=createMachinePassword(node,template);
   md.setRemoteUsername(username);
   md.setRemotePassword(password);
-  md.setUsePrivateAddress(this.cloud.getConfiguration().isConnectToPrivateIp());
   return md;
 }

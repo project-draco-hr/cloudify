@@ -8,6 +8,9 @@
  else {
       logger.fine(nodePrefix + "Key File: " + tempFile.getAbsolutePath());
     }
-    logger.fine(nodePrefix + (machineDetails.isUsePrivateAddress() ? "Using Private IP: " : "Using Public IP: ") + machineDetails.getIp());
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Private IP: " + machineDetails.getPrivateAddress());
+      logger.fine("Public IP: " + machineDetails.getPublicAddress());
+    }
   }
 }

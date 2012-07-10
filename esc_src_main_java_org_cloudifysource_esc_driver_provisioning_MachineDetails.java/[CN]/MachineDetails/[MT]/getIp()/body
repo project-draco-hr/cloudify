@@ -1,8 +1,0 @@
-{
-  if (this.isUsePrivateAddress()) {
-    return this.getPrivateAddress();
-  }
- else {
-    return this.getPublicAddress();
-  }
-}

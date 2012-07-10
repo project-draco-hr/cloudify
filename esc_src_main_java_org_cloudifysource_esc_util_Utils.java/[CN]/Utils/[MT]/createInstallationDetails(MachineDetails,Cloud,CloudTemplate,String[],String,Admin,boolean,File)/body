@@ -3,7 +3,7 @@
   details.setLocalDir(template.getLocalDirectory());
   final String remoteDir=template.getRemoteDirectory();
   details.setRemoteDir(remoteDir);
-  List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
+  final List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
   if (template.getKeyFile() != null) {
     managementOnlyFiles.add(template.getKeyFile());
   }
@@ -29,13 +29,13 @@
  else {
     details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   }
-  Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
-  for (  Entry<String,Object> entry : customEntries) {
+  final Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
+  for (  final Entry<String,Object> entry : customEntries) {
     if (entry.getKey().startsWith("installer.")) {
       details.getCustomData().put(entry.getKey(),entry.getValue());
     }
   }
-  String keyFileName=template.getKeyFile();
+  final String keyFileName=template.getKeyFile();
   if (keyFileName != null && !keyFileName.isEmpty()) {
     File keyFile=new File(keyFileName);
     if (!keyFile.isAbsolute()) {
@@ -51,6 +51,14 @@
   }
   if (template.getImageId() != null) {
     details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.CLOUDIFY_CLOUD_IMAGE_ID,template.getImageId());
+  }
+  details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVILEGED,Boolean.toString(template.isPrivileged()));
+  if (!org.apache.commons.lang.StringUtils.isBlank(template.getInitializationCommand())) {
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.CLOUDIFY_AGENT_ENV_INIT_COMMAND,template.getInitializationCommand());
+  }
+  final Set<Entry<String,String>> entries=template.getEnv().entrySet();
+  for (  Entry<String,String> entry : entries) {
+    details.getExtraRemoteEnvironmentVariables().put(entry.getKey(),entry.getValue());
   }
   logger.fine("Created InstallationDetails: " + details);
   return details;
