@@ -66,7 +66,6 @@ catch (  final PackagingException e) {
     }
   }
   String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,timeoutInMinutes);
-  String returnMessage=getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
   if (lifecycleEventContainerPollingID != null) {
     RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
     boolean isDone=false;
@@ -101,5 +100,5 @@ catch (  final PackagingException e) {
   if (recipe.isDirectory()) {
     FileUtils.deleteQuietly(packedFile.getParentFile());
   }
-  return returnMessage;
+  return getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
 }
