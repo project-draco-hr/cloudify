@@ -8,14 +8,14 @@ synchronized (this.stateMutex) {
     stop(StopReason.UNDEPLOY);
     executors.shutdown();
     removeShutdownHook();
-    if (this.runningInGSC) {
-      deleteExtDirContents();
-    }
     try {
       getUsmLifecycleBean().fireShutdown();
     }
  catch (    final USMException e) {
       logger.log(Level.SEVERE,"Failed to execute shutdown event: " + e.getMessage(),e);
+    }
+    if (this.runningInGSC) {
+      deleteExtDirContents();
     }
     USMUtils.shutdownAdmin();
   }
