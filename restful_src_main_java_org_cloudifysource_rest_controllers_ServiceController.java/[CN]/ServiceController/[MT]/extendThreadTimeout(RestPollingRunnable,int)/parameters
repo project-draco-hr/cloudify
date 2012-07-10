@@ -1,0 +1,2 @@
+RestPollingRunnable pollingRunnable
+int timeoutInMinutes

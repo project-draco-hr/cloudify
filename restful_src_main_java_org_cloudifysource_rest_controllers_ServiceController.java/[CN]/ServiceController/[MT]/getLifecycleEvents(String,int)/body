@@ -1,50 +1,42 @@
 {
   Map<String,Object> resultsMap=new HashMap<String,Object>();
-  resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,false);
   resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,false);
-  if (!lifecyclePollingContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
+  if (!lifecyclePollingThreadContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
     return errorStatus("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
   }
-  LifecycleEventsContainer container=lifecyclePollingContainer.get(UUID.fromString(lifecycleEventContainerID));
-  Future<?> futureTask=container.getFutureTask();
-  PollingState runnableState=container.getPollingState();
+  RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(UUID.fromString(lifecycleEventContainerID));
+  LifecycleEventsContainer container=restPollingRunnable.getLifecycleEventsContainer();
+  PollingState runnableState=restPollingRunnable.getPollingState();
 switch (runnableState) {
 case RUNNING:
-    resultsMap.put(CloudifyConstants.IS_TASK_DONE,false);
-  break;
+    extendThreadTimeout(restPollingRunnable,DEFAULT_TIME_EXTENTION_POLLING_TASK);
+  resultsMap.put(CloudifyConstants.IS_TASK_DONE,false);
+break;
 case ENDED:
-Throwable t=container.getExecutionException();
+Throwable t=restPollingRunnable.getExecutionException();
 if (t != null) {
-if (t.getCause() instanceof TimeoutException) {
-  logger.log(Level.INFO,"Lifecycle events polling task timed out.");
-  resultsMap.put(CloudifyConstants.POLLING_TIMEOUT_EXCEPTION,true);
-  resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
-}
- else {
-  logger.log(Level.INFO,"Lifecycle events polling ended unexpectedly.",t);
-  resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,true);
-  resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
-}
+logger.log(Level.INFO,"Lifecycle events polling ended unexpectedly.",t);
+resultsMap.put(CloudifyConstants.POLLING_EXCEPTION,true);
+resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
 }
  else {
 logger.log(Level.INFO,"Lifecycle events polling ended successfully.");
 resultsMap.put(CloudifyConstants.IS_TASK_DONE,true);
 }
-futureTask.cancel(true);
 break;
+default :
+return errorStatus("an unexpected error occurred. Polling task status is null.");
 }
 List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
 if (lifecycleEvents != null) {
-List<String> copy=new ArrayList<String>(lifecycleEvents);
 int newCursorPos=cursor + lifecycleEvents.size();
 resultsMap.put(CloudifyConstants.CURSOR_POS,newCursorPos);
-resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,copy);
+resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,lifecycleEvents);
 }
  else {
 resultsMap.put(CloudifyConstants.CURSOR_POS,cursor);
 }
-if (runnableState.equals(PollingState.ENDED)) {
-lifecyclePollingContainer.remove(UUID.fromString(lifecycleEventContainerID));
-}
+long timeBeforeTaskTerminationMillis=restPollingRunnable.getEndTime() - System.currentTimeMillis();
+resultsMap.put(CloudifyConstants.SERVER_POLLING_TASK_EXPIRATION_MILLI,Long.toString(timeBeforeTaskTerminationMillis));
 return successStatus(resultsMap);
 }

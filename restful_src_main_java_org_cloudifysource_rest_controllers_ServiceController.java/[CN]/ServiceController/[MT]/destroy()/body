@@ -1,4 +1,5 @@
 {
   this.executorService.shutdownNow();
   this.scheduledExecutor.shutdownNow();
+  this.lifecycleEventsCleaner.shutdownNow();
 }

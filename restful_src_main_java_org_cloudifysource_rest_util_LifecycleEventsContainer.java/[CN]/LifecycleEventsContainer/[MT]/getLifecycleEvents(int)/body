@@ -2,5 +2,5 @@
   if (curser >= this.eventsList.size() || curser < 0) {
     return null;
   }
-  return eventsList.subList(curser,eventsList.size());
+  return new ArrayList<String>(eventsList.subList(curser,eventsList.size()));
 }

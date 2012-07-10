@@ -20,4 +20,5 @@
     logger.log(Level.SEVERE,"ServiceController failed to locate temp directory",e);
     throw new IllegalStateException("ServiceController failed to locate temp directory",e);
   }
+  startLifecycleLogsCleanupTask();
 }
