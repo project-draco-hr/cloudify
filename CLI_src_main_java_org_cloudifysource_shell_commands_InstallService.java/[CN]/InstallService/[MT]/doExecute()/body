@@ -87,9 +87,7 @@ catch (  final PackagingException e) {
         }
         boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
         if (!continueInstallation) {
-          uninstallService();
-          isDone=true;
-          returnMessage=getFormattedMessage("undeployed_successfully",serviceName);
+          throw new CLIStatusException(e,"service_installation_timed_out_on_client",serviceName);
         }
  else {
           continues=true;

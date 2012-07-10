@@ -52,9 +52,7 @@
         }
         boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
         if (!continueInstallation) {
-          uninstallApplication();
-          returnMessage=getFormattedMessage("application_uninstalled_succesfully",this.applicationName);
-          isDone=true;
+          throw new CLIStatusException(e,"application_installation_timed_out_on_client",applicationName);
         }
  else {
           continues=true;
