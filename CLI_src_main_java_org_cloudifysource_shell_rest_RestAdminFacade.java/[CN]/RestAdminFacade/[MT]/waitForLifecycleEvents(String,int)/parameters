@@ -1,3 +1,2 @@
 String pollingID
 int timeout
-String timeoutMessage

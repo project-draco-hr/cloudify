@@ -1,4 +1,5 @@
 {
+  long pollingIntervalInMillis=timeUnit.toMillis(pollingInterval);
   if (!(pollingIntervalInMillis < MIN_POLLING_INTERVAL)) {
     this.pollingInterval=pollingIntervalInMillis;
   }

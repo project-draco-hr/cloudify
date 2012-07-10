@@ -1,0 +1,32 @@
+{
+  this.endTime=System.currentTimeMillis() + timeUnit.toMillis(timeout);
+  while (System.currentTimeMillis() < this.endTime) {
+    url="/service/lifecycleEventContainerID/" + pollingID + "/cursor/"+ cursor;
+    try {
+      lifecycleEventLogs=(Map<String,Object>)client.get(url);
+    }
+ catch (    final ErrorStatusException e) {
+      throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+    }
+    List<String> events=(List<String>)lifecycleEventLogs.get(CloudifyConstants.LIFECYCLE_LOGS);
+    this.cursor=(Integer)lifecycleEventLogs.get(CloudifyConstants.CURSOR_POS);
+    this.isDone=(Boolean)lifecycleEventLogs.get(CloudifyConstants.IS_TASK_DONE);
+    this.exceptionOnServer=(Boolean)lifecycleEventLogs.get(CloudifyConstants.POLLING_EXCEPTION);
+    this.remoteTaskLeaseExpiration=Long.valueOf((String)lifecycleEventLogs.get(CloudifyConstants.SERVER_POLLING_TASK_EXPIRATION_MILLI)) + System.currentTimeMillis();
+    if (events == null) {
+      displayer.printNoChange();
+    }
+ else {
+      displayer.printEvents(events);
+    }
+    if (isDone) {
+      if (exceptionOnServer) {
+        throw new CLIException("Event polling task failed on remote server." + "For more information regarding the installation, please refer to full logs");
+      }
+      displayer.eraseCurrentLine();
+      return true;
+    }
+    Thread.sleep(pollingInterval);
+  }
+  return false;
+}

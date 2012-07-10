@@ -67,7 +67,17 @@ catch (  final PackagingException e) {
   }
   String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,timeoutInMinutes);
   if (lifecycleEventContainerPollingID != null) {
-    this.adminFacade.waitForLifecycleEvents(lifecycleEventContainerPollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
+    RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID);
+    boolean isDone=lifecycleEventsPollingLatch.waitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+    while (!isDone) {
+      boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      if (!continueInstallation) {
+        isDone=true;
+      }
+ else {
+        isDone=lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+      }
+    }
   }
  else {
     throw new CLIException("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");

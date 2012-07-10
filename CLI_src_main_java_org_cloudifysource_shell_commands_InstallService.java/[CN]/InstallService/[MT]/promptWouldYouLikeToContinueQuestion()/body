@@ -1,6 +1,6 @@
 {
   if ((Boolean)session.get(Constants.INTERACTIVE_MODE)) {
-    final String confirmationQuestion=getFormattedMessage("application_uninstall_confirmation",applicationName);
+    final String confirmationQuestion=getFormattedMessage("would_you_like_to_continue_service_installation",serviceName);
     System.out.print(confirmationQuestion);
     System.out.flush();
     final PropertiesReader pr=new PropertiesReader(new InputStreamReader(System.in));

@@ -32,7 +32,16 @@
   printApplicationInfo(application);
   if (result.containsKey(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID)) {
     String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
-    this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
+    RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID);
+    boolean isDone=lifecycleEventsPollingLatch.waitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+    while (!isDone) {
+      boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      if (!continueInstallation) {
+      }
+ else {
+        isDone=lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+      }
+    }
   }
  else {
     throw new CLIException("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");

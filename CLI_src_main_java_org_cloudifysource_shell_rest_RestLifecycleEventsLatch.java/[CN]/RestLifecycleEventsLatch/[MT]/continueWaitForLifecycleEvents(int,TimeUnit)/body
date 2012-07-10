@@ -1,0 +1,6 @@
+{
+  if (System.currentTimeMillis() > this.remoteTaskLeaseExpiration) {
+    throw new CLIException("Events polling task has expired on remote server side");
+  }
+  return waitForLifecycleEvents(timeout,timeUnit);
+}
