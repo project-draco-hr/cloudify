@@ -1,0 +1,15 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of instance number " + instanceId + " of service "+ ServiceUtils.getAbsolutePUName(applicationName,serviceName)+ " of application "+ applicationName);
+  }
+  InstanceCloudifyAttribute templateAttribute=new InstanceCloudifyAttribute();
+  templateAttribute.setInstanceId(instanceId);
+  templateAttribute.setServiceName(serviceName);
+  templateAttribute.setApplicationName(applicationName);
+  InstanceCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
+  final Map<String,Object> attributesMap=new HashMap<String,Object>();
+  for (  final InstanceCloudifyAttribute attribute : attributes) {
+    attributesMap.put(attribute.getKey(),attribute.getValue());
+  }
+  return attributesMap;
+}

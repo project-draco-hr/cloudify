@@ -1,0 +1,13 @@
+{
+  final Map<String,String> myInitialAttrMap=new HashMap<String,String>();
+  myInitialAttrMap.put("myInitialAttrMapKey1","myInitialAttrMapValue1");
+  myInitialAttrMap.put("myInitialAttrMapKey2","myInitialAttrMapValue2");
+  myInitialAttrMap.put("myInitialAttrMapKey3","myInitialAttrMapValue3");
+  final Map<String,String> myUpdatedAttrMap=new HashMap<String,String>();
+  myUpdatedAttrMap.put("myUpdatedAttrMapKey1","myUpdatedAttrMapValue1");
+  myUpdatedAttrMap.put("myUpdatedAttrMapKey2","myUpdatedAttrMapValue2");
+  myUpdatedAttrMap.put("myUpdatedAttrMapKey3","myUpdatedAttrMapValue3");
+  for (  final String requestUri : multipleAttributesUrisMapping.keySet()) {
+    testUriForMultipleAttributes(requestUri,myInitialAttrMap,myUpdatedAttrMap);
+  }
+}

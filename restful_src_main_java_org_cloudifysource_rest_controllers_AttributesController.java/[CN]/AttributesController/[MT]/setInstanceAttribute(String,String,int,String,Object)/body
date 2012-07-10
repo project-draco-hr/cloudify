@@ -1,0 +1,17 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to set attribute " + attributeName + " of instance number "+ instanceId+ " of service "+ ServiceUtils.getAbsolutePUName(applicationName,serviceName)+ " of application "+ applicationName+ " to: "+ attributeValue);
+  }
+  InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute();
+  attribute.setInstanceId(instanceId);
+  attribute.setServiceName(serviceName);
+  attribute.setApplicationName(applicationName);
+  attribute.setKey(attributeName);
+  InstanceCloudifyAttribute previousValue=gigaSpace.take(attribute);
+  attribute.setValue(attributeValue);
+  gigaSpace.write(attribute);
+  Object value=(previousValue != null) ? previousValue.getValue() : null;
+  Map<String,Object> mapResult=new HashMap<String,Object>();
+  mapResult.put(attributeName,value);
+  return mapResult;
+}

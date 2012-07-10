@@ -1,0 +1,7 @@
+{
+  final MockHttpServletRequest request=new MockHttpServletRequest();
+  request.setRequestURI(requestUri);
+  request.setMethod("GET");
+  request.setContentType("application/json");
+  return request;
+}

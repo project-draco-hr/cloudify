@@ -1,0 +1,3 @@
+{
+  return PROJECT_MAPPER.readValue(jsonStr,TypeFactory.type(Map.class));
+}

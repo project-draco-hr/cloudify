@@ -1,0 +1,14 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get attribute " + attributeName + " of service "+ ServiceUtils.getAbsolutePUName(applicationName,serviceName)+ " of application "+ applicationName);
+  }
+  ServiceCloudifyAttribute templateAttribute=new ServiceCloudifyAttribute();
+  templateAttribute.setApplicationName(applicationName);
+  templateAttribute.setServiceName(serviceName);
+  templateAttribute.setKey(attributeName);
+  ServiceCloudifyAttribute valueEntry=gigaSpace.read(templateAttribute);
+  Object value=(valueEntry != null) ? valueEntry.getValue() : null;
+  Map<String,Object> mapResult=new HashMap<String,Object>();
+  mapResult.put(attributeName,value);
+  return mapResult;
+}
