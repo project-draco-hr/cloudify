@@ -16,8 +16,9 @@
       }
  catch (      final NoSuchBeanDefinitionException e) {
       }
-      final Object createdBean=this.context.getBeanFactory().createBean(pluginClass);
-      final Plugin component=(Plugin)createdBean;
+      ((DefaultListableBeanFactory)this.context.getBeanFactory()).registerBeanDefinition(pluginClass.getSimpleName(),BeanDefinitionBuilder.rootBeanDefinition(pluginClass.getName()).getBeanDefinition());
+      final Object pluginObject=this.context.getBeanFactory().getBean(pluginClass);
+      final Plugin component=(Plugin)pluginObject;
       component.setServiceContext(this.serviceContext);
       component.setConfig(descriptor.getConfig());
     }
