@@ -1,15 +1,23 @@
 {
-  boolean typeExists=false;
-  String[] enumAsString=new String[ServiceTierType.values().length];
-  int counter=0;
-  for (  ServiceTierType tierType : ServiceTierType.values()) {
-    enumAsString[counter]=tierType.toString();
-    counter++;
-    if (tierType.toString().equalsIgnoreCase(this.type)) {
-      typeExists=true;
-    }
+  if (this.type == null) {
+    this.type=ServiceTierType.UNDEFINED.toString();
+    logger.log(Level.FINE,"The service type was not defined." + " Using the default service type.");
+    return;
   }
-  if (!typeExists) {
-    throw new DSLValidationException("The service type '" + this.type + "' is undefined."+ "The known service types include "+ Arrays.toString(enumAsString));
+ else {
+    boolean typeExists=false;
+    String[] enumAsString=new String[ServiceTierType.values().length];
+    int counter=0;
+    for (    ServiceTierType tierType : ServiceTierType.values()) {
+      enumAsString[counter]=tierType.toString();
+      counter++;
+      if (tierType.toString().equalsIgnoreCase(this.type)) {
+        typeExists=true;
+        break;
+      }
+    }
+    if (!typeExists) {
+      throw new DSLValidationException("The service type '" + this.type + "' is undefined."+ "The known service types include "+ Arrays.toString(enumAsString));
+    }
   }
 }
