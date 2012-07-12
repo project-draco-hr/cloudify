@@ -1,5 +1,0 @@
-{
-  if (!initialized)   init();
-  ServiceUtils.arePortsOccupied(Collections.singletonList(port));
-  return true;
-}
