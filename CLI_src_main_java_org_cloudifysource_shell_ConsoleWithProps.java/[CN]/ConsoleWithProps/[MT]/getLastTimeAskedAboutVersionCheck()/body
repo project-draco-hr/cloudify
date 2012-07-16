@@ -1,0 +1,41 @@
+{
+  long lastVersionCheckTS=System.currentTimeMillis();
+  File lastVersionCheckFile=new File(System.getProperty("user.home") + "/.karaf/lastVersionCheckTimestamp");
+  if (lastVersionCheckFile.exists()) {
+    DataInputStream dis=null;
+    try {
+      dis=new DataInputStream(new FileInputStream(lastVersionCheckFile));
+      lastVersionCheckTS=dis.readLong();
+    }
+ catch (    IOException e) {
+      logger.log(Level.INFO,"failed to read last checked version timestamp file",e);
+    }
+ finally {
+      if (dis != null) {
+        try {
+          dis.close();
+        }
+ catch (        IOException e) {
+        }
+      }
+    }
+  }
+  DataOutputStream dos=null;
+  try {
+    dos=new DataOutputStream(new FileOutputStream(lastVersionCheckFile));
+    dos.writeLong(lastVersionCheckTS);
+  }
+ catch (  IOException e) {
+    logger.log(Level.INFO,"failed to write last checked version timestamp file",e);
+  }
+ finally {
+    if (dos != null) {
+      try {
+        dos.close();
+      }
+ catch (      IOException e) {
+      }
+    }
+  }
+  return lastVersionCheckTS;
+}

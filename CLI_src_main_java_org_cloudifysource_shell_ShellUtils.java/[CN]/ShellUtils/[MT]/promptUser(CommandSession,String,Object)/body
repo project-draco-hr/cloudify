@@ -1,0 +1,22 @@
+{
+  if ((Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+    final String confirmationQuestion=ShellUtils.getFormattedMessage(messageKey,messageArgs);
+    session.getConsole().print(confirmationQuestion + " ");
+    session.getConsole().flush();
+    char responseChar='\0';
+    StringBuilder responseBuffer=new StringBuilder();
+    while (true) {
+      responseChar=(char)session.getKeyboard().read();
+      if (responseChar == '\n') {
+        session.getConsole().println();
+        break;
+      }
+      session.getConsole().print(responseChar);
+      responseBuffer.append(responseChar);
+      session.getConsole().flush();
+    }
+    String responseStr=responseBuffer.toString().trim();
+    return "y".equalsIgnoreCase(responseStr) || "yes".equalsIgnoreCase(responseStr);
+  }
+  return true;
+}

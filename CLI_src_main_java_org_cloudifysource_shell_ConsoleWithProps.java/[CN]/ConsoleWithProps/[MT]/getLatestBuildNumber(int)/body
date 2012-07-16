@@ -1,0 +1,18 @@
+{
+  try {
+    HttpComponentsClientHttpRequestFactory requestFactory=new HttpComponentsClientHttpRequestFactory();
+    requestFactory.setReadTimeout(3000);
+    RestTemplate template=new RestTemplate(requestFactory);
+    String versionStr=template.getForObject("http://www.gigaspaces.com/downloadgen/latest-cloudify-version?build=" + currentVersion,String.class);
+    logger.fine("Latest cloudify version is " + versionStr);
+    return Integer.parseInt(versionStr);
+  }
+ catch (  RestClientException e) {
+    logger.log(Level.FINE,"Could not get version from server",e);
+    return -1;
+  }
+catch (  NumberFormatException e) {
+    logger.fine("Get version response is not a number");
+    return -1;
+  }
+}

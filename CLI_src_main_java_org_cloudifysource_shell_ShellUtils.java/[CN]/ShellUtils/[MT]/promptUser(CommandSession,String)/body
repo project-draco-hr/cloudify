@@ -1,0 +1,3 @@
+{
+  return promptUser(session,messageKey,EMPTY_OBJECT_ARRAY);
+}

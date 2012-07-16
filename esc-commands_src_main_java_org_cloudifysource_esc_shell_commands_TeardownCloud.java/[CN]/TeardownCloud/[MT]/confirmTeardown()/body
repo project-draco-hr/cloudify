@@ -1,0 +1,3 @@
+{
+  return ShellUtils.promptUser(session,"teardown_cloud_confirmation_question");
+}

@@ -1,16 +1,3 @@
 {
-  if ((Boolean)session.get(Constants.INTERACTIVE_MODE)) {
-    final String confirmationQuestion=getFormattedMessage("application_uninstall_confirmation",applicationName);
-    System.out.print(confirmationQuestion);
-    System.out.flush();
-    final PropertiesReader pr=new PropertiesReader(new InputStreamReader(System.in));
-    String readLine="";
-    while (!readLine.equalsIgnoreCase("y") && !readLine.equalsIgnoreCase("n")) {
-      readLine=pr.readProperty();
-    }
-    System.out.println();
-    System.out.flush();
-    return "y".equalsIgnoreCase(readLine);
-  }
-  return true;
+  return ShellUtils.promptUser(session,"application_uninstall_confirmation",applicationName);
 }

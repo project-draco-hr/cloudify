@@ -1,0 +1,8 @@
+{
+  Properties props=loadBrandingProperties();
+  String welcome=props.getProperty("welcome");
+  if (welcome != null && welcome.length() > 0) {
+    session.getConsole().println(welcome);
+  }
+  doVersionCheckIfNeeded();
+}
