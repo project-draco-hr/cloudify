@@ -1,7 +1,7 @@
 {
   long lastAskedTS=getLastTimeAskedAboutVersionCheck();
   try {
-    if (lastAskedTS <= (System.currentTimeMillis() - ONE_MONTH_MILLIS) && ShellUtils.promptUser(session,"version_check_confirmation")) {
+    if (lastAskedTS <= (System.currentTimeMillis() - TWO_WEEKS_IN_MILLIS) && ShellUtils.promptUser(session,"version_check_confirmation")) {
       session.getConsole().println("Checking version...");
       String currentBuildStr=PlatformVersion.getBuildNumber();
       if (currentBuildStr.contains("-")) {

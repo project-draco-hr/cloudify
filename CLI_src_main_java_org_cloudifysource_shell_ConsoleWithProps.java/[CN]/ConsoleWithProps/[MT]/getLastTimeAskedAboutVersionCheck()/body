@@ -1,5 +1,5 @@
 {
-  long lastVersionCheckTS=System.currentTimeMillis();
+  long lastVersionCheckTS=0;
   File lastVersionCheckFile=new File(System.getProperty("user.home") + "/.karaf/lastVersionCheckTimestamp");
   if (lastVersionCheckFile.exists()) {
     DataInputStream dis=null;
@@ -23,7 +23,7 @@
   DataOutputStream dos=null;
   try {
     dos=new DataOutputStream(new FileOutputStream(lastVersionCheckFile));
-    dos.writeLong(lastVersionCheckTS);
+    dos.writeLong(System.currentTimeMillis());
   }
  catch (  IOException e) {
     logger.log(Level.INFO,"failed to write last checked version timestamp file",e);
