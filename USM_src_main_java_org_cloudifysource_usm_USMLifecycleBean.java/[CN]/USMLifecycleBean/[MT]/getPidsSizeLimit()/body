@@ -1,0 +1,16 @@
+{
+  final Service service=((DSLConfiguration)this.configuration).getService();
+  final String limitString=service.getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_PIDS_SIZE_LIMIT);
+  if (StringUtils.isBlank(limitString)) {
+    return DEFAULT_PIDS_SIZE_LIMIT;
+  }
+ else {
+    try {
+      final int limit=Integer.parseInt(limitString);
+      return limit;
+    }
+ catch (    final NumberFormatException e) {
+      throw new IllegalArgumentException("Failed to parse the pids size limit service custom property (" + CloudifyConstants.CUSTOM_PROPERTY_PIDS_SIZE_LIMIT + "). Error was: "+ e.getMessage(),e);
+    }
+  }
+}

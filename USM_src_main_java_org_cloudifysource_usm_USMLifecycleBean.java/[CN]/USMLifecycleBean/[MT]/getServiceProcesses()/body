@@ -1,10 +1,23 @@
 {
-  Set<Long> set=new HashSet<Long>();
-  ProcessLocator[] locators=this.processLocators;
-  for (  ProcessLocator processLocator : locators) {
+  final Set<Long> set=new HashSet<Long>();
+  final ProcessLocator[] locators=this.processLocators;
+  for (  final ProcessLocator processLocator : locators) {
     if (processLocator != null) {
-      set.addAll(processLocator.getProcessIDs());
+      final List<Long> processIDs=processLocator.getProcessIDs();
+      if (processIDs.isEmpty()) {
+        logger.warning("A process locator returned no process IDs. " + "If this is normal, you can ignote this warning. " + "Otherwise, check that your process locator is correctly configured");
+      }
+      set.addAll(processIDs);
     }
+  }
+  final long pidsLimit=getPidsSizeLimit();
+  if (set.isEmpty()) {
+    logger.warning("No process IDs were found. No process level metrics will be available.");
+  }
+ else   if (set.size() > pidsLimit) {
+    final String msg="Number of process IDs found for a service exceeded the limit of: " + pidsLimit;
+    logger.severe(msg);
+    throw new USMException(msg);
   }
   return new ArrayList<Long>(set);
 }
