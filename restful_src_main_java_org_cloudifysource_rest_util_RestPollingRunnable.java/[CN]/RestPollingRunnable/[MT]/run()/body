@@ -2,8 +2,7 @@
   try {
     if (this.serviceNames.isEmpty()) {
       logger.log(Level.INFO,"Polling for lifecycle events has ended successfully." + " Terminating the polling task");
-      setPollingState(PollingState.ENDED);
-      throw new RuntimeException("Polling has ended successfully");
+      throw new RestServiceException("Polling has ended successfully");
     }
     if (System.currentTimeMillis() > this.endTime) {
       throw new TimeoutException("Timed out");
@@ -11,8 +10,14 @@
     pollForLogs();
   }
  catch (  Throwable e) {
-    logger.log(Level.INFO,"Polling task terminated. Reason: " + e.getMessage(),e);
-    setExecutionException(e);
+    terminateTaskGracefully();
+    if (!(e instanceof RestServiceException)) {
+      logger.log(Level.INFO,"Polling task ended unexpectedly. Reason: " + e.getMessage(),e);
+      setExecutionException(e);
+    }
+ else {
+      logger.log(Level.INFO,"Polling task ended successfully.");
+    }
     throw new RuntimeException(e);
   }
 }

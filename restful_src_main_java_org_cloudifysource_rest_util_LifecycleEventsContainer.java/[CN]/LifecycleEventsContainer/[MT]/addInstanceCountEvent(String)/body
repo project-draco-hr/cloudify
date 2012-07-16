@@ -1,14 +1,16 @@
 {
-  if (this.serviceInstanceCountEventsSet.contains(event)) {
-    if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("Ignoring Instance Count Event: " + event);
+synchronized (this.lock) {
+    if (this.serviceInstanceCountEventsSet.contains(event)) {
+      if (logger.isLoggable(Level.FINEST)) {
+        logger.finest("Ignoring Instance Count Event: " + event);
+      }
     }
-  }
  else {
-    this.serviceInstanceCountEventsSet.add(event);
-    this.eventsList.add(event);
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("Instance Count Event: " + event);
+      this.serviceInstanceCountEventsSet.add(event);
+      this.eventsList.add(event);
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Instance Count Event: " + event);
+      }
     }
   }
 }

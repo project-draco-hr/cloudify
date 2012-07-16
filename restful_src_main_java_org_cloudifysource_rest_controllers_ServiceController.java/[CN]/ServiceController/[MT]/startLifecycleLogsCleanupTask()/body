@@ -6,9 +6,7 @@
         while (it.hasNext()) {
           Map.Entry<UUID,RestPollingRunnable> entry=it.next();
           RestPollingRunnable restPollingRunnable=entry.getValue();
-          if (System.currentTimeMillis() > restPollingRunnable.getEndTime()) {
-            Future<?> futureTask=restPollingRunnable.getFutureTask();
-            futureTask.cancel(true);
+          if (restPollingRunnable.isDone()) {
             logger.log(Level.INFO,"Polling Task with UUID " + entry.getKey().toString() + " has expired");
             it.remove();
           }

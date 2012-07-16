@@ -1,6 +1,8 @@
 {
-  if (curser >= this.eventsList.size() || curser < 0) {
-    return null;
+synchronized (this.lock) {
+    if (curser >= this.eventsList.size() || curser < 0) {
+      return null;
+    }
+    return new ArrayList<String>(eventsList.subList(curser,eventsList.size()));
   }
-  return new ArrayList<String>(eventsList.subList(curser,eventsList.size()));
 }

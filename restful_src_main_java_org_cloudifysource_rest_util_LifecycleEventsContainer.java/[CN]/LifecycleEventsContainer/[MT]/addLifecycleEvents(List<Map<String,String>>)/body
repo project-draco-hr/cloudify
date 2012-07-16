@@ -1,22 +1,24 @@
 {
-  if (allLifecycleEvents == null || allLifecycleEvents.isEmpty()) {
-    return;
-  }
-  String outputMessage;
-  for (  Map<String,String> map : allLifecycleEvents) {
-    Map<String,Object> sortedMap=new TreeMap<String,Object>(map);
-    if (this.lifecycleEventsSet.contains(sortedMap.toString())) {
-      if (logger.isLoggable(Level.FINEST)) {
-        outputMessage=getParsedLifecyceEventMessageFromMap(sortedMap);
-        logger.finest("Ignoring Lifecycle Event: " + outputMessage);
-      }
+synchronized (this.lock) {
+    if (allLifecycleEvents == null || allLifecycleEvents.isEmpty()) {
+      return;
     }
+    String outputMessage;
+    for (    Map<String,String> map : allLifecycleEvents) {
+      Map<String,Object> sortedMap=new TreeMap<String,Object>(map);
+      if (this.lifecycleEventsSet.contains(sortedMap.toString())) {
+        if (logger.isLoggable(Level.FINEST)) {
+          outputMessage=getParsedLifecyceEventMessageFromMap(sortedMap);
+          logger.finest("Ignoring Lifecycle Event: " + outputMessage);
+        }
+      }
  else {
-      this.lifecycleEventsSet.add(sortedMap.toString());
-      outputMessage=getParsedLifecyceEventMessageFromMap(sortedMap);
-      this.eventsList.add(outputMessage);
-      if (logger.isLoggable(Level.FINE)) {
-        logger.fine("Lifecycle Event: " + outputMessage);
+        this.lifecycleEventsSet.add(sortedMap.toString());
+        outputMessage=getParsedLifecyceEventMessageFromMap(sortedMap);
+        this.eventsList.add(outputMessage);
+        if (logger.isLoggable(Level.FINE)) {
+          logger.fine("Lifecycle Event: " + outputMessage);
+        }
       }
     }
   }
