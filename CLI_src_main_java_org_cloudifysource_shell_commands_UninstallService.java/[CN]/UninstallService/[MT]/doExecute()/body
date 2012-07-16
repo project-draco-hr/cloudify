@@ -9,5 +9,5 @@
   Map<String,String> undeployServiceResponse=adminFacade.undeploy(getCurrentApplicationName(),serviceName,timeoutInMinutes);
   String pollingID=undeployServiceResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
-  return getFormattedMessage("undeployed_successfully",serviceName);
+  return getFormattedMessage("undeployed_successfully",Color.GREEN,serviceName);
 }
