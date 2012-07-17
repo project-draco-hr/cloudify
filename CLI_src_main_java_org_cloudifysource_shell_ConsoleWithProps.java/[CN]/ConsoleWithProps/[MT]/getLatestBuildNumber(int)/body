@@ -1,7 +1,7 @@
 {
   try {
     HttpComponentsClientHttpRequestFactory requestFactory=new HttpComponentsClientHttpRequestFactory();
-    requestFactory.setReadTimeout(FIVE_SECONDS_IN_MILLI);
+    requestFactory.setReadTimeout(VERSION_CHECK_READ_TIMEOUT);
     RestTemplate template=new RestTemplate(requestFactory);
     String versionStr=template.getForObject("http://www.gigaspaces.com/downloadgen/latest-cloudify-version?build=" + currentVersion,String.class);
     logger.fine("Latest cloudify version is " + versionStr);

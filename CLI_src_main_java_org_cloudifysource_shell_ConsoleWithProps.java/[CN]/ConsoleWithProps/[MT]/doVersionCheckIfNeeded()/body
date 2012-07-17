@@ -19,11 +19,12 @@
  else {
         message=ShellUtils.getFormattedMessage("version_up_to_date");
       }
+      registerVersionCheck();
       session.getConsole().println(message);
       session.getConsole().println();
     }
   }
  catch (  IOException e) {
-    logger.log(Level.INFO,"Failed to prompt user",e);
+    logger.log(Level.FINE,"Failed to prompt user",e);
   }
 }
