@@ -1,0 +1,14 @@
+{
+  long lastAskedTS=getLastTimeAskedAboutVersionCheck();
+  try {
+    if (lastAskedTS <= (System.currentTimeMillis() - TWO_WEEKS_IN_MILLIS)) {
+      boolean userConfirms=ShellUtils.promptUser(session,"version_check_confirmation");
+      registerVersionCheck();
+      return userConfirms;
+    }
+  }
+ catch (  IOException e) {
+    logger.log(Level.FINE,"Failed to prompt user",e);
+  }
+  return false;
+}

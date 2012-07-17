@@ -4,5 +4,8 @@
   if (welcome != null && welcome.length() > 0) {
     session.getConsole().println(welcome);
   }
-  doVersionCheckIfNeeded();
+  if (ShellUtils.shouldDoVersionCheck(session)) {
+    session.getConsole().println("Checking version...");
+    ShellUtils.doVersionCheck(session);
+  }
 }
