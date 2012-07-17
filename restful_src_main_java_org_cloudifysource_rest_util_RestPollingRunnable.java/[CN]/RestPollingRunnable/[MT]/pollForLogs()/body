@@ -4,5 +4,6 @@
   for (  Map.Entry<String,Integer> entry : serviceNamesClone.entrySet()) {
     addServiceLifecycleLogs(entry);
     addServiceInstanceCountEvents(entry);
+    removeEndedServicesFromPollingList(entry);
   }
 }

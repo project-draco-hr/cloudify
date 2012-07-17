@@ -13,13 +13,9 @@
   }
   if (plannedNumberOfInstances == numberOfServiceInstances) {
     if (!isServiceInstall) {
-      if (!isUninstall) {
+      if (!isUninstall && !isSetInstances) {
         this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" successfully installed ("+ numberOfServiceInstances+ " Instances)");
-        this.serviceNames.remove(serviceName);
       }
-    }
- else {
-      this.serviceNames.remove(serviceName);
     }
   }
   final Zone zone=admin.getZones().getByName(absolutePuName);

@@ -18,10 +18,10 @@
   for (  final GridServiceContainer container : zone.getGridServiceContainers()) {
     logger.log(Level.FINE,"Polling GSC with uid: " + container.getUid());
     final LogEntries logEntries=container.logEntries(matcher);
+    final Date pollingStartTime=getGSCSamplingStartTime(container);
     for (    final LogEntry logEntry : logEntries) {
       if (logEntry.isLog()) {
-        final Date fiveMinutesAgoGscTime=new Date(new Date().getTime() + container.getOperatingSystem().getTimeDelta() - FIVE_MINUTES_MILLISECONDS);
-        if (fiveMinutesAgoGscTime.before(new Date(logEntry.getTimestamp()))) {
+        if (pollingStartTime.before(new Date(logEntry.getTimestamp()))) {
           final Map<String,String> serviceEventsMap=getEventDetailes(logEntry,container,absolutePuName);
           servicesLifecycleEventDetailes.add(serviceEventsMap);
         }

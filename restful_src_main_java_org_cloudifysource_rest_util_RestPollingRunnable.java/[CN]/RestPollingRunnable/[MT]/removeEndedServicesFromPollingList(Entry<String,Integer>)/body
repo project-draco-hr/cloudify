@@ -1,0 +1,9 @@
+{
+  String serviceName=entry.getKey();
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
+  int numberOfServiceInstances=getNumberOfServiceInstances(absolutePuName);
+  if (plannedNumberOfInstances == numberOfServiceInstances) {
+    this.serviceNames.remove(serviceName);
+  }
+}

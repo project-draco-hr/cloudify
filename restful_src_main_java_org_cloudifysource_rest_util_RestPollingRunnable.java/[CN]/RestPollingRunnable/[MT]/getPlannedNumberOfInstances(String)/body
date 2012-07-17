@@ -13,7 +13,7 @@
       }
     }
   }
-  if (serviceName.contains(serviceName)) {
+  if (serviceNames.containsKey(serviceName)) {
     return serviceNames.get(serviceName);
   }
   throw new IllegalStateException("Service planned number of instances is undefined");
