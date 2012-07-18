@@ -17,8 +17,8 @@
   final LogEntryMatcher matcher=regex(regex);
   for (  final GridServiceContainer container : zone.getGridServiceContainers()) {
     logger.log(Level.FINE,"Polling GSC with uid: " + container.getUid());
-    final LogEntries logEntries=container.logEntries(matcher);
     final Date pollingStartTime=getGSCSamplingStartTime(container);
+    final LogEntries logEntries=container.logEntries(matcher);
     for (    final LogEntry logEntry : logEntries) {
       if (logEntry.isLog()) {
         if (pollingStartTime.before(new Date(logEntry.getTimestamp()))) {
