@@ -2,6 +2,7 @@
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
   final int reservedMemoryCapacityPerMachineInMB=256;
+  contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName).sharedMachineProvisioning(SHARED_ISOLATION_ID,new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(zone).reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create());
   if (cloud == null) {
     if (!isLocalCloud()) {
