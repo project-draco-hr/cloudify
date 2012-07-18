@@ -33,10 +33,10 @@
   String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;
-  boolean continues=false;
+  boolean Continuous=false;
   while (!isDone) {
     try {
-      if (!continues) {
+      if (!Continuous) {
         lifecycleEventsPollingLatch.waitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
       }
  else {
@@ -53,7 +53,7 @@
         throw new CLIStatusException(e,"application_installation_timed_out_on_client",applicationName);
       }
  else {
-        continues=true;
+        Continuous=true;
       }
     }
   }

@@ -68,10 +68,10 @@ catch (  final PackagingException e) {
   String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,timeoutInMinutes);
   RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;
-  boolean continues=false;
+  boolean Continuous=false;
   while (!isDone) {
     try {
-      if (!continues) {
+      if (!Continuous) {
         lifecycleEventsPollingLatch.waitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
       }
  else {
@@ -88,7 +88,7 @@ catch (  final PackagingException e) {
         throw new CLIStatusException(e,"service_installation_timed_out_on_client",serviceName);
       }
  else {
-        continues=true;
+        Continuous=true;
       }
     }
   }
