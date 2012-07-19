@@ -3,16 +3,16 @@
     final String confirmationQuestion=ShellUtils.getFormattedMessage(messageKey,messageArgs);
     session.getConsole().print(confirmationQuestion + " ");
     session.getConsole().flush();
-    char responseChar='\0';
+    String response=null;
     StringBuilder responseBuffer=new StringBuilder();
     while (true) {
-      responseChar=(char)session.getKeyboard().read();
-      if (responseChar == WIN_RETURN_CHAR || responseChar == LINUX_RETURN_CHAR) {
+      response=readAvailable(session.getKeyboard());
+      if (LINE_SEPARATOR.equals(response)) {
         session.getConsole().println();
         break;
       }
-      session.getConsole().print(responseChar);
-      responseBuffer.append(responseChar);
+      session.getConsole().print(response);
+      responseBuffer.append(response);
       session.getConsole().flush();
     }
     String responseStr=responseBuffer.toString().trim();

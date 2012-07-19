@@ -1,0 +1,4 @@
+{
+  int bytesRead=keyboard.read(inputBuffer);
+  return new String(inputBuffer,0,bytesRead);
+}
