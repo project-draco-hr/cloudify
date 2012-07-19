@@ -4,8 +4,8 @@
   final Service service=ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
   Assert.assertNotNull("Lifecycle should not be null",service.getLifecycle());
   Assert.assertNotNull("Lifecycle should not be null",service.getLifecycle().getLocator());
-  Object result=((Callable<Object>)service.getLifecycle().getLocator()).call();
+  final Object result=((ClosureExecutableEntry)service.getLifecycle().getLocator()).getCommand().call();
   Assert.assertNotNull("locators result should not be null",result);
-  List<Long> list=(List<Long>)result;
+  final List<Long> list=(List<Long>)result;
   Assert.assertEquals("Expected empty list",0,list.size());
 }

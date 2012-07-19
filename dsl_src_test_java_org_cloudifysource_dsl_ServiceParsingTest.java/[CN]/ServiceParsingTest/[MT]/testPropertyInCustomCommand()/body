@@ -1,9 +1,9 @@
 {
   final File testParsingExtendDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_property_in_custom_command-service.groovy");
   final File testParsingExtendWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
-  Service service=ServiceReader.getServiceFromFile(testParsingExtendDslFile,testParsingExtendWorkDir).getService();
-  Closure<?> customCommand=(Closure<?>)service.getCustomCommands().get("custom_command");
-  String[] params=new String[2];
+  final Service service=ServiceReader.getServiceFromFile(testParsingExtendDslFile,testParsingExtendWorkDir).getService();
+  final Closure<?> customCommand=((ClosureExecutableEntry)service.getCustomCommands().get("custom_command")).getCommand();
+  final String[] params=new String[2];
   params[0]="name";
   params[1]="port";
   customCommand.call(params);

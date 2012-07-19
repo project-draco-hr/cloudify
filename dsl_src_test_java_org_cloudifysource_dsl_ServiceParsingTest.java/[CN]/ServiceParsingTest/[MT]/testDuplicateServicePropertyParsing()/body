@@ -4,7 +4,7 @@
   try {
     ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
   }
- catch (  IllegalArgumentException e) {
+ catch (  final IllegalArgumentException e) {
     System.out.println("Test passed. found duplication: " + e.getMessage());
   }
 }

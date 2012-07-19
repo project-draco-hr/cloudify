@@ -12,10 +12,22 @@
   }
   this.usedProperties.add(name);
   try {
-    if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("BeanUtils.setProperty(object=" + object + ",name="+ name+ ",value="+ value+ ",value.getClass()="+ value.getClass());
+    PropertyDescriptor descriptor=PropertyUtils.getPropertyDescriptor(object,name);
+    Class<?> propertyType=descriptor.getPropertyType();
+    if (propertyType.equals(ExecutableDSLEntry.class)) {
+      final ExecutableDSLEntry executableEntry=ExecutableDSLEntryFactory.createEntry(value,name);
+      BeanUtils.setProperty(object,name,executableEntry);
     }
-    BeanUtils.setProperty(object,name,value);
+ else     if (propertyType.equals(ExecutableEntriesMap.class)) {
+      final ExecutableEntriesMap entriesMap=ExecutableDSLEntryFactory.createEntriesMap(value,name);
+      BeanUtils.setProperty(object,name,entriesMap);
+    }
+ else {
+      if (logger.isLoggable(Level.FINEST)) {
+        logger.finest("BeanUtils.setProperty(object=" + object + ",name="+ name+ ",value="+ value+ ",value.getClass()="+ value.getClass());
+      }
+      BeanUtils.setProperty(object,name,value);
+    }
   }
  catch (  final Exception e) {
     throw new IllegalArgumentException("Failed   to set property " + name + " of Object "+ object+ " to value: "+ value,e);

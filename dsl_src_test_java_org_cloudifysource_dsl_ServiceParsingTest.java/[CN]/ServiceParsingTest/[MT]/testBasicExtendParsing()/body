@@ -11,7 +11,8 @@
   final Service service=ServiceReader.getServiceFromFile(testParsingExtendDslFile,testParsingExtendWorkDir).getService();
   Assert.assertEquals("test parsing extend",service.getName());
   final ServiceLifecycle lifecycle=service.getLifecycle();
-  Assert.assertEquals("test_parsing_extend_install.groovy",lifecycle.getInit());
+  Assert.assertEquals(ExecutableDSLEntryType.STRING,lifecycle.getInit().getEntryType());
+  Assert.assertEquals("test_parsing_extend_install.groovy",((StringExecutableEntry)lifecycle.getInit()).getCommand());
   Assert.assertNotNull(lifecycle.getStart());
   Assert.assertNotNull(lifecycle.getPostStart());
   Assert.assertNotNull(lifecycle.getPreStop());
