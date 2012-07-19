@@ -1,5 +1,5 @@
 {
-  final Object locator=this.service.getLifecycle().getLocator();
+  final ExecutableDSLEntry locator=this.service.getLifecycle().getLocator();
   if (locator != null) {
     return new ProcessLocatorExecutor(locator,launcher,puExtDir);
   }

@@ -1,8 +1,0 @@
-{
-  return createBeanIfNotExistsType(new USMInstaller(){
-    @Override public void install(){
-      new DSLEntryExecutor(service.getLifecycle().getInstall(),launcher,puExtDir);
-    }
-  }
-,USMInstaller.class);
-}

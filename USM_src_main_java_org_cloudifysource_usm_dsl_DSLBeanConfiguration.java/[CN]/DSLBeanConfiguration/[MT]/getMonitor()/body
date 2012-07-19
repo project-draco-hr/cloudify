@@ -5,7 +5,7 @@
   }
   if (monitor instanceof Closure<?>) {
     return new Monitor(){
-      @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(      final UniversalServiceManagerBean usm,      final UniversalServiceManagerConfiguration config) throws MonitorException {
+      @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(      final UniversalServiceManagerBean usm,      final ServiceConfiguration config) throws MonitorException {
         final Object obj=((Closure<?>)monitor).call();
         if (obj instanceof Map<?,?>) {
           return USMUtils.convertMapToNumericValues((Map<String,Object>)obj);
@@ -16,12 +16,12 @@
 ;
   }
   return new Monitor(){
-    @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(    final UniversalServiceManagerBean usm,    final UniversalServiceManagerConfiguration config) throws MonitorException {
+    @SuppressWarnings("unchecked") @Override public Map<String,Number> getMonitorValues(    final UniversalServiceManagerBean usm,    final ServiceConfiguration config) throws MonitorException {
       final Map<String,Object> returnMap=new HashMap<String,Object>();
       if (monitor instanceof Map<?,?>) {
         for (        final Map.Entry<String,Object> entryObject : ((Map<String,Object>)monitor).entrySet()) {
           final Object object=entryObject.getValue();
-          final EventResult result=new DSLEntryExecutor(object,launcher,puExtDir).run();
+          final EventResult result=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(object,entryObject.getKey()),launcher,puExtDir).run();
           if (!result.isSuccess()) {
             logger.log(Level.WARNING,"DSL Entry failed to execute: " + result.getException());
           }

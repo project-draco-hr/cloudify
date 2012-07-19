@@ -1,6 +1,8 @@
 {
   try {
-    return handleDsl();
+    ServiceConfiguration handleDsl=handleDsl();
+    logger.info("Successfully read Groovy based DSL");
+    return handleDsl;
   }
  catch (  DSLException e) {
     throw new USMException(e);

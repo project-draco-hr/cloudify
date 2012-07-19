@@ -1,8 +1,8 @@
 {
-  this.active=configuration instanceof DSLConfiguration;
+  this.active=configuration instanceof ServiceConfiguration;
   if (this.active) {
-    this.service=((DSLConfiguration)configuration).getService();
-    this.puExtDir=((DSLConfiguration)configuration).getPuExtDir();
-    this.serviceContext=((DSLConfiguration)configuration).getServiceContext();
+    this.service=configuration.getService();
+    this.puExtDir=configuration.getPuExtDir();
+    this.serviceContext=configuration.getServiceContext();
   }
 }

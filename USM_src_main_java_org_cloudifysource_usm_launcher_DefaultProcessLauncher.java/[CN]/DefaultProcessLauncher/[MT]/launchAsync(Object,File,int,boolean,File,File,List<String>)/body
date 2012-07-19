@@ -1,7 +1,0 @@
-{
-  if (arg instanceof Callable<?>) {
-    return launchAsyncFromClosure(arg);
-  }
-  commandLine=getCommandLineFromArgument(arg,workingDir,params);
-  return this.launch(commandLine,workingDir,retries,redirectErrorStream,outputFile,errorFile);
-}

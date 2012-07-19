@@ -1,0 +1,3 @@
+String commandName
+Map<String,Object> namedArgs
+Map<String,Object> result

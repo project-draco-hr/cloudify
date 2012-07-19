@@ -1,5 +1,5 @@
 {
-  final Object detector=this.service.getLifecycle().getStopDetection();
+  final ExecutableDSLEntry detector=this.service.getLifecycle().getStopDetection();
   if (detector == null) {
     return null;
   }

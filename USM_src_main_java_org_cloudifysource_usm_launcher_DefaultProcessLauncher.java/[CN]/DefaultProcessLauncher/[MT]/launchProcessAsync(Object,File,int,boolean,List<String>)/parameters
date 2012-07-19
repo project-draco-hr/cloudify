@@ -1,5 +1,0 @@
-Object arg
-File workingDir
-int retries
-boolean redirectErrorStream
-List<String> params

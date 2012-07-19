@@ -1,8 +1,5 @@
 {
   firePreInstall();
-  if (this.installer != null) {
-    this.installer.install();
-  }
   fireInstall();
   firePostInstall();
 }

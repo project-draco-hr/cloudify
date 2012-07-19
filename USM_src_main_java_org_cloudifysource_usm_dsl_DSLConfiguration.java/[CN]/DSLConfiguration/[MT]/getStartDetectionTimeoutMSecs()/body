@@ -1,3 +1,0 @@
-{
-  return this.service.getLifecycle().getStartDetectionTimeoutSecs() * MILLIS_IN_SECOND;
-}

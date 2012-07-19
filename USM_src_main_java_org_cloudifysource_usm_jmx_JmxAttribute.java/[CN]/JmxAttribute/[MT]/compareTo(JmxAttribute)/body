@@ -1,5 +1,5 @@
 {
-  int beanComparison=this.getObjectName().compareTo(o.getObjectName());
+  final int beanComparison=this.getObjectName().compareTo(o.getObjectName());
   if (beanComparison != 0) {
     return beanComparison;
   }

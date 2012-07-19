@@ -1,5 +1,5 @@
 {
-  final Service service=((DSLConfiguration)this.configuration).getService();
+  final Service service=this.configuration.getService();
   final String limitString=service.getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_PIDS_SIZE_LIMIT);
   if (StringUtils.isBlank(limitString)) {
     return DEFAULT_PIDS_SIZE_LIMIT;

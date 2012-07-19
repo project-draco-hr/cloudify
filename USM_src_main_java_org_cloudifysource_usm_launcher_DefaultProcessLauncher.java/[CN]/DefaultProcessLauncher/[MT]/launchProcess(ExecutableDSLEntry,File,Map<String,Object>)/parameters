@@ -1,0 +1,3 @@
+ExecutableDSLEntry arg
+File workingDir
+Map<String,Object> params

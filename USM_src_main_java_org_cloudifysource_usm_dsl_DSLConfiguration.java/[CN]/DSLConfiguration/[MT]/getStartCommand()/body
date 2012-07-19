@@ -1,4 +1,0 @@
-{
-  final Object start=this.service.getLifecycle().getStart();
-  return start;
-}

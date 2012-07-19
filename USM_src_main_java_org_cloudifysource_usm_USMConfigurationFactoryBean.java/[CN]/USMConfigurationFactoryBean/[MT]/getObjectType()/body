@@ -1,3 +1,3 @@
 {
-  return UniversalServiceManagerConfiguration.class;
+  return ServiceConfiguration.class;
 }

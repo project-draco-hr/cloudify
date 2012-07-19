@@ -1,3 +1,0 @@
-{
-  return this.service.getLifecycle().getStartDetectionIntervalSecs() * MILLIS_IN_SECOND;
-}

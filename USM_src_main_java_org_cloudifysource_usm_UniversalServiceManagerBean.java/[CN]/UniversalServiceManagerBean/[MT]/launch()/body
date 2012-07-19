@@ -6,7 +6,7 @@ synchronized (this.stateMutex) {
     try {
       this.process=null;
       this.serviceProcessPIDs=new ArrayList<Long>(0);
-      final Object startCommand=getUsmLifecycleBean().getConfiguration().getStartCommand();
+      final ExecutableDSLEntry startCommand=getUsmLifecycleBean().getConfiguration().getService().getLifecycle().getStart();
       if (startCommand == null) {
         logger.info("No start command specified in recipe. No processes will be launched or monitored");
         this.serviceProcessPIDs=new ArrayList<Long>(0);
@@ -23,9 +23,7 @@ synchronized (this.stateMutex) {
       startFileMonitoringTask();
       logger.info("Executing process liveness test");
       if (!getUsmLifecycleBean().isProcessLivenessTestPassed(this.process)) {
-        final UniversalServiceManagerConfiguration configuration=getUsmLifecycleBean().getConfiguration();
-        final long startDetectionTimeoutMilliSecs=configuration.getStartDetectionTimeoutMSecs();
-        final long startDetectionTimeoutSecs=TimeUnit.SECONDS.convert(startDetectionTimeoutMilliSecs,TimeUnit.MILLISECONDS);
+        final long startDetectionTimeoutSecs=getUsmLifecycleBean().getConfiguration().getService().getLifecycle().getStartDetectionTimeoutSecs();
         throw new USMException("The Start Detection test failed in the defined time period: " + startDetectionTimeoutSecs + " seconds."+ " Shutting down this instance.");
       }
       logger.info("Process liveness test passed");

@@ -1,0 +1,36 @@
+{
+  if (arg.getEntryType() == ExecutableDSLEntryType.STRING) {
+    final List<String> commandLineStringInParts=convertCommandLineStringToParts(((StringExecutableEntry)arg).getCommand());
+    if (params != null) {
+      commandLineStringInParts.addAll(params);
+    }
+    return commandLineStringInParts;
+  }
+  if (arg.getEntryType() == ExecutableDSLEntryType.MAP) {
+    @SuppressWarnings("unchecked") final Map<String,ExecutableDSLEntry> map=(Map<String,ExecutableDSLEntry>)arg;
+    final String os=System.getProperty("os.name");
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Looking for command line for Operating System Name: " + os);
+    }
+    final List<String> cmdLineList=lookUpCommandLineForOS(map,os);
+    if (cmdLineList != null) {
+      return cmdLineList;
+    }
+    logger.severe("Could not find a matching operating system expression for Operating System: " + os);
+    logger.severe("Attempting alternative command line: " + os);
+    final List<String> alternativeCommandLine=createAlternativeCommandLine(map,workDir);
+    if (alternativeCommandLine != null) {
+      return alternativeCommandLine;
+    }
+    logger.severe("Could not create alternative command line: " + os);
+  }
+  if (arg.getEntryType() == ExecutableDSLEntryType.LIST) {
+    final List<?> originalList=((ListExecutableEntry)arg).getCommand();
+    final List<String> resultList=new ArrayList<String>(originalList.size());
+    for (    final Object elem : originalList) {
+      resultList.add(elem.toString());
+    }
+    return resultList;
+  }
+  throw new IllegalArgumentException("Could not find command line for argument " + arg + "!");
+}

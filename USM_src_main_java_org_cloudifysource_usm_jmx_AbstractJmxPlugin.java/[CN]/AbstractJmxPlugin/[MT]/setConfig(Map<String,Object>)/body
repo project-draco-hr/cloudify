@@ -15,8 +15,8 @@
         this.password=(String)entry.getValue();
       }
  else {
-        List<?> list=(List<?>)entry.getValue();
-        JmxAttribute att=new JmxAttribute(list.get(0).toString(),list.get(1).toString(),entry.getKey());
+        final List<?> list=(List<?>)entry.getValue();
+        final JmxAttribute att=new JmxAttribute(list.get(0).toString(),list.get(1).toString(),entry.getKey());
         this.targets.add(att);
       }
     }

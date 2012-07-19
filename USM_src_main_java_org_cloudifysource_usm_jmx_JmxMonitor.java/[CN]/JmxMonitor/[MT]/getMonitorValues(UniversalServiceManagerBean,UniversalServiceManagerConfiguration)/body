@@ -1,4 +1,0 @@
-{
-  Map<String,Object> jmxAttributes=getJmxAttributes();
-  return USMUtils.convertMapToNumericValues(jmxAttributes);
-}
