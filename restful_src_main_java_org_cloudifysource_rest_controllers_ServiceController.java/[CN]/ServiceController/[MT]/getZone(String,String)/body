@@ -1,0 +1,9 @@
+{
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final Zone zone=admin.getZones().getByName(absolutePuName);
+  if (zone == null) {
+    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist");
+    throw new IllegalStateException("The service " + absolutePuName + " does not exist");
+  }
+  return zone;
+}

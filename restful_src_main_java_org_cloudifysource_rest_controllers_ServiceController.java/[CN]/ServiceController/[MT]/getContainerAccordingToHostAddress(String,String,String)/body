@@ -1,0 +1,10 @@
+{
+  final Zone zone=getZone(applicationName,serviceName);
+  GridServiceContainers gridServiceContainers=zone.getGridServiceContainers();
+  for (  GridServiceContainer container : gridServiceContainers) {
+    if (container.getMachine().getUid().equals(hostAddress)) {
+      return container;
+    }
+  }
+  throw new IllegalStateException("ServiceController failed to locate a grid" + " service container with host address " + hostAddress);
+}

@@ -1,0 +1,13 @@
+{
+  final Zone zone=getZone(applicationName,serviceName);
+  GridServiceContainers gridServiceContainers=zone.getGridServiceContainers();
+  for (  GridServiceContainer container : gridServiceContainers) {
+    ProcessingUnitInstance[] processingUnitInstances=container.getProcessingUnitInstances();
+    for (    ProcessingUnitInstance processingUnitInstance : processingUnitInstances) {
+      if (processingUnitInstance.getInstanceId() == instanceId) {
+        return container;
+      }
+    }
+  }
+  throw new IllegalStateException("ServiceController failed to locate a grid" + " service container with instance id " + instanceId);
+}

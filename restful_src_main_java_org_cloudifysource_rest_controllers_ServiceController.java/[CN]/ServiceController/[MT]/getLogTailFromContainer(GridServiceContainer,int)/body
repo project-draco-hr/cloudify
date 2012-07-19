@@ -1,0 +1,10 @@
+{
+  final LastNLogEntryMatcher matcher=LogEntryMatchers.lastN(numLines);
+  final LogEntries logEntries=container.logEntries(matcher);
+  StringBuilder sb=new StringBuilder();
+  for (  final LogEntry logEntry : logEntries) {
+    sb.append(logEntry.getText());
+    sb.append(System.getProperty("line.separator"));
+  }
+  return sb.toString();
+}

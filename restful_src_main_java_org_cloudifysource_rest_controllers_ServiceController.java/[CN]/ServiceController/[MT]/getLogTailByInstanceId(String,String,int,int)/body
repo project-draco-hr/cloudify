@@ -1,0 +1,12 @@
+{
+  GridServiceContainer container=null;
+  try {
+    container=getContainerAccordingToInstanceId(applicationName,serviceName,instanceId);
+  }
+ catch (  IllegalStateException e) {
+    logger.log(Level.INFO,"Failed retrieving the service logs. Reason: " + e.getMessage());
+    return errorStatus(e.getMessage());
+  }
+  String logTailFromContainer=getLogTailFromContainer(container,numLines);
+  return successStatus(logTailFromContainer);
+}
