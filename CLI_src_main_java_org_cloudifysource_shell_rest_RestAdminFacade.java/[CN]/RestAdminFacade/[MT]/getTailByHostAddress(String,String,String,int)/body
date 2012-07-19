@@ -1,0 +1,10 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/address/"+ hostAddress+ "/lines/"+ numLines+ "/tail";
+  try {
+    @SuppressWarnings("unchecked") String response=(String)client.get(url);
+    return response;
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}

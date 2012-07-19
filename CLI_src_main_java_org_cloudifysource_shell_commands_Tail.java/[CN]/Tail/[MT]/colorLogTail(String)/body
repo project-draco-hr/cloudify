@@ -1,0 +1,10 @@
+{
+  String result=logTail;
+  result=result.replaceAll(" WARNING ",ShellUtils.getBoldMessage(" WARNING "));
+  result=result.replaceAll(" FINE ",ShellUtils.getBoldMessage(" FINE "));
+  result=result.replaceAll(" FINER ",ShellUtils.getBoldMessage(" FINER "));
+  result=result.replaceAll(" FINEST ",ShellUtils.getBoldMessage(" FINEST "));
+  result=result.replaceAll(" INFO ",ShellUtils.getBoldMessage(" INFO "));
+  result=result.replaceAll(" SEVERE ",ShellUtils.getColorMessage(" SEVERE ",Color.RED));
+  return result;
+}
