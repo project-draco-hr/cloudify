@@ -1,5 +1,5 @@
 {
-  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/address/"+ hostAddress+ "/lines/"+ numLines+ "/tail";
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/address/"+ hostAddress+ "/tail/"+ "?numLines="+ numLines;
   try {
     @SuppressWarnings("unchecked") String response=(String)client.get(url);
     return response;
