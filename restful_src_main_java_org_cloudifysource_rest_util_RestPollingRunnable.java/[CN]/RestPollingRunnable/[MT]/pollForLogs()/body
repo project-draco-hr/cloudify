@@ -1,9 +1,11 @@
 {
   LinkedHashMap<String,Integer> serviceNamesClone=new LinkedHashMap<String,Integer>();
   serviceNamesClone.putAll(this.serviceNames);
-  for (  Map.Entry<String,Integer> entry : serviceNamesClone.entrySet()) {
-    addServiceLifecycleLogs(entry);
-    addServiceInstanceCountEvents(entry);
-    removeEndedServicesFromPollingList(entry);
+  for (  String serviceName : serviceNamesClone.keySet()) {
+    addServiceLifecycleLogs(serviceName);
+    int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
+    int numberOfServiceInstances=getNumberOfServiceInstances(serviceName);
+    addServiceInstanceCountEvents(serviceName,plannedNumberOfInstances,numberOfServiceInstances);
+    removeEndedServicesFromPollingList(serviceName,plannedNumberOfInstances,numberOfServiceInstances);
   }
 }

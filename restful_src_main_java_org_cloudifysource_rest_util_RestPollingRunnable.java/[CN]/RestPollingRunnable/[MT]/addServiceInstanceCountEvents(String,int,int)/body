@@ -1,8 +1,5 @@
 {
-  String serviceName=entry.getKey();
   String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
-  int numberOfServiceInstances=getNumberOfServiceInstances(absolutePuName);
   if (numberOfServiceInstances == 0) {
     if (!isUninstall) {
       this.lifecycleEventsContainer.addInstanceCountEvent("Deploying " + serviceName + " with "+ plannedNumberOfInstances+ " planned instances.");

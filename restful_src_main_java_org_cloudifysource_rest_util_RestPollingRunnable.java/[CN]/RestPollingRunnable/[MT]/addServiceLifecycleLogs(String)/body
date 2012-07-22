@@ -1,7 +1,6 @@
 {
   List<Map<String,String>> servicesLifecycleEventDetailes;
   servicesLifecycleEventDetailes=new ArrayList<Map<String,String>>();
-  String serviceName=entry.getKey();
   final String absolutePuName=ServiceUtils.getAbsolutePUName(this.applicationName,serviceName);
   logger.log(Level.FINE,"Polling for lifecycle events on service: " + absolutePuName);
   final Zone zone=admin.getZones().getByName(absolutePuName);

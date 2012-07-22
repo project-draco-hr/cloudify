@@ -1,4 +1,5 @@
 {
+  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   if (processingUnit != null) {
     if (processingUnit.getType().equals(ProcessingUnitType.UNIVERSAL)) {

@@ -1,0 +1,14 @@
+{
+  if (isUninstall) {
+    String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final Zone zone=admin.getZones().waitFor(absolutePuName,2,TimeUnit.SECONDS);
+    if (zone == null) {
+      this.serviceNames.remove(serviceName);
+    }
+  }
+ else {
+    if (plannedNumberOfInstances == numberOfServiceInstances) {
+      this.serviceNames.remove(serviceName);
+    }
+  }
+}
