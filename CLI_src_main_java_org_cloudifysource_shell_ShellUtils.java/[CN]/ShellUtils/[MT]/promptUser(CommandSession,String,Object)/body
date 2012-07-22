@@ -3,15 +3,24 @@
     final String confirmationQuestion=ShellUtils.getFormattedMessage(messageKey,messageArgs);
     session.getConsole().print(confirmationQuestion + " ");
     session.getConsole().flush();
-    String response=null;
+    char responseChar='\0';
     StringBuilder responseBuffer=new StringBuilder();
     while (true) {
-      response=readAvailable(session.getKeyboard());
-      session.getConsole().print(response);
-      if (response.endsWith(LINE_SEPARATOR)) {
+      responseChar=(char)session.getKeyboard().read();
+      if (responseChar == '\u007F') {
+        if (responseBuffer.length() > 0) {
+          responseBuffer.deleteCharAt(responseBuffer.length() - 1);
+          session.getConsole().print(Ansi.ansi().cursorLeft(1).eraseLine());
+        }
+      }
+ else       if (responseChar == WIN_RETURN_CHAR || responseChar == LINUX_RETURN_CHAR) {
+        session.getConsole().println();
         break;
       }
-      responseBuffer.append(response);
+ else {
+        session.getConsole().print(responseChar);
+        responseBuffer.append(responseChar);
+      }
       session.getConsole().flush();
     }
     String responseStr=responseBuffer.toString().trim();
