@@ -1,6 +1,7 @@
 {
   if (listeners != null && listeners.length > 0) {
     logEventStart(event,listeners);
+    long eventStartTime=System.currentTimeMillis();
     for (    final USMEvent listener : listeners) {
       EventResult er=null;
 switch (event) {
@@ -51,6 +52,6 @@ logEventFailure(event,listeners,er);
 throw new USMException("Failed to execute event: " + event + ". Error was: "+ er.getException());
 }
 }
-logEventSuccess(event,listeners);
+logEventSuccess(event,listeners,eventStartTime);
 }
 }

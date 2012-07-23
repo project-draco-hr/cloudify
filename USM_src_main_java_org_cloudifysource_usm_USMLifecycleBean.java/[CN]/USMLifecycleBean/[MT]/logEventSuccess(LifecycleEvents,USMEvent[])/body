@@ -1,5 +1,0 @@
-{
-  if (isLoggableEvent(event,listeners)) {
-    eventLogger.info(eventPrefix + event + CloudifyConstants.USM_EVENT_EXEC_SUCCESSFULLY);
-  }
-}
