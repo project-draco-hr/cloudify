@@ -3,7 +3,7 @@
   try {
     container=getContainerAccordingToHostAddress(applicationName,serviceName,hostAddress);
   }
- catch (  IllegalStateException e) {
+ catch (  RestServiceException e) {
     logger.log(Level.INFO,"Failed retrieving the service logs. Reason: " + e.getMessage());
     return errorStatus(e.getMessage());
   }
