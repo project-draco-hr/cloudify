@@ -1,0 +1,9 @@
+{
+  final ExecutableDSLEntry stop=this.service.getLifecycle().getStop();
+  if (stop != null) {
+    return null;
+  }
+ else {
+    return new DefaultStop();
+  }
+}

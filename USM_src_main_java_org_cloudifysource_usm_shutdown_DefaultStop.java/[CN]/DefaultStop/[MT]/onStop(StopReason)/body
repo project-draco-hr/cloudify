@@ -1,0 +1,22 @@
+{
+  final List<Long> pids=this.usm.getServiceProcessesList();
+  USMException firstException=null;
+  for (  final Long pid : pids) {
+    try {
+      if (USMUtils.isProcessAlive(pid)) {
+        usm.getUsmLifecycleBean().getProcessKiller().killProcess(pid);
+      }
+    }
+ catch (    final USMException e) {
+      firstException=e;
+      logger.log(Level.SEVERE,"Failed to kill process with pid: " + pid,e);
+    }
+  }
+  if (firstException == null) {
+    return EventResult.SUCCESS;
+  }
+ else {
+    logger.log(Level.SEVERE,"Default stop implementation failed to stop at least one process. " + "This process may be leaking. First exception was: " + firstException.getMessage(),firstException);
+    return new EventResult(firstException);
+  }
+}

@@ -1,8 +1,0 @@
-{
-  if (this.shutdownHookThread != null) {
-    final boolean result=Runtime.getRuntime().removeShutdownHook(this.shutdownHookThread);
-    if (!result) {
-      logger.severe("Failed to remove JVM shutdown hook during shutdown! ");
-    }
-  }
-}

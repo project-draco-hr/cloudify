@@ -7,7 +7,6 @@ synchronized (this.stateMutex) {
     }
     stop(StopReason.UNDEPLOY);
     executors.shutdown();
-    removeShutdownHook();
     try {
       getUsmLifecycleBean().fireShutdown();
     }

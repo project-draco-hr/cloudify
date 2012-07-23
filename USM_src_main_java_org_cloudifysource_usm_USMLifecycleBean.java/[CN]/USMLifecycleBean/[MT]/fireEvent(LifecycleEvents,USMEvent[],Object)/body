@@ -28,6 +28,9 @@ break;
 case PRE_STOP:
 er=((PreStopListener)listener).onPreStop((StopReason)reason);
 break;
+case STOP:
+er=((StopListener)listener).onStop((StopReason)reason);
+break;
 case POST_STOP:
 er=((PostStopListener)listener).onPostStop((StopReason)reason);
 break;

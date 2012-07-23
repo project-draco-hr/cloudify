@@ -13,6 +13,7 @@
   initEvents(allEvents,getPreStartListeners(),comp);
   initEvents(allEvents,getPostStartListeners(),comp);
   initEvents(allEvents,getPreStopListeners(),comp);
+  initEvents(allEvents,getStopListeners(),comp);
   initEvents(allEvents,getPostStopListeners(),comp);
   initEvents(allEvents,getShutdownListeners(),comp);
   initEvents(allEvents,getPreServiceStartListeners(),comp);

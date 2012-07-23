@@ -1,5 +1,5 @@
 {
-  final String tmp=((ServiceConfiguration)this.usmLifecycleBean.getConfiguration()).getService().getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_MONITORS_CACHE_EXPIRATION_TIMEOUT);
+  final String tmp=this.usmLifecycleBean.getConfiguration().getService().getCustomProperties().get(CloudifyConstants.CUSTOM_PROPERTY_MONITORS_CACHE_EXPIRATION_TIMEOUT);
   long cacheExpirationTimeout=DEFAULT_MONITORS_CACHE_EXPIRATION_TIMEOUT;
   if (tmp != null) {
     cacheExpirationTimeout=Long.parseLong(tmp);

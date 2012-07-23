@@ -5,16 +5,11 @@
  catch (  final USMException e) {
     logger.log(Level.SEVERE,"Failed to execute pre stop event: " + e.getMessage(),e);
   }
-  final List<Long> pids=this.serviceProcessPIDs;
-  for (  final Long pid : pids) {
-    try {
-      if (USMUtils.isProcessAlive(pid)) {
-        getUsmLifecycleBean().getProcessKiller().killProcess(pid);
-      }
-    }
- catch (    final USMException e) {
-      logger.log(Level.SEVERE,"Failed to kill process with pid: " + pid,e);
-    }
+  try {
+    getUsmLifecycleBean().fireStop(reason);
+  }
+ catch (  final USMException e) {
+    logger.log(Level.SEVERE,"Failed to execute stop event: " + e.getMessage(),e);
   }
   try {
     getUsmLifecycleBean().firePostStop(reason);
