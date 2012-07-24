@@ -1,0 +1,4 @@
+{
+  Map<String,String> attributes=getRestAdminFacade().listAttributes(scope,getCurrentApplicationName());
+  return GSRestClient.mapToJson(attributes);
+}

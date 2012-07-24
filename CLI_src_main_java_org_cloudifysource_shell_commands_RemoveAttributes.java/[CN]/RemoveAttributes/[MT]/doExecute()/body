@@ -1,0 +1,5 @@
+{
+  String[] attributeNames=parseAttributeNames();
+  getRestAdminFacade().deleteAttributes(scope,getCurrentApplicationName(),attributeNames);
+  return getFormattedMessage("attributes_removed_successfully");
+}

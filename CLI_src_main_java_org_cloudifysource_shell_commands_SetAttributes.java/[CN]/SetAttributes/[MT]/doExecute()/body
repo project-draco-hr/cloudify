@@ -1,0 +1,5 @@
+{
+  Map attributes=parseAttributes();
+  getRestAdminFacade().updateAttributes(scope,getCurrentApplicationName(),attributes);
+  return getFormattedMessage("attributes_updated_successfully");
+}
