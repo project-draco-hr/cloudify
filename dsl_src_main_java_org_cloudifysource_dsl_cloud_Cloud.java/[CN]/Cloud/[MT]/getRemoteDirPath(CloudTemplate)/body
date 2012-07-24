@@ -1,0 +1,4 @@
+{
+  String remoteEnvDirectoryPath=template.getRemoteDirectory();
+  return normalizeCifsPath(remoteEnvDirectoryPath);
+}

@@ -1,6 +1,0 @@
-{
-  String managementMachineTemplateName=getConfiguration().getManagementMachineTemplate();
-  CloudTemplate cloudTemplate=getTemplates().get(managementMachineTemplateName);
-  String remoteEnvDirectoryPath=cloudTemplate.getRemoteDirectory();
-  return normalizeCifsPath(remoteEnvDirectoryPath);
-}

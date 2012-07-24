@@ -1,5 +1,5 @@
 {
-  String remoteEnvDirectoryPath=getRemoteDirPath();
+  String remoteEnvDirectoryPath=getRemoteDirPath(template);
   File remoteKeyFile=new File(remoteEnvDirectoryPath,template.getKeyFile());
   logger.log(Level.FINE,"Looking for key file on remote machine: " + remoteKeyFile.getAbsolutePath());
   return remoteKeyFile.isFile();
