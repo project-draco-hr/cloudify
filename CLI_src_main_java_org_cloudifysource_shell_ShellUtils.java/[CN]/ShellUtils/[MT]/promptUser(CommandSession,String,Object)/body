@@ -1,5 +1,6 @@
 {
   if ((Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+    session.getConsole().print(Ansi.ansi().eraseLine(Erase.ALL));
     final String confirmationQuestion=ShellUtils.getFormattedMessage(messageKey,messageArgs);
     session.getConsole().print(confirmationQuestion + " ");
     session.getConsole().flush();
