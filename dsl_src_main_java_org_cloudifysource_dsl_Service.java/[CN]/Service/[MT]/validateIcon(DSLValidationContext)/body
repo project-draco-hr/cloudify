@@ -1,0 +1,9 @@
+{
+  if (icon != null) {
+    File dslFile=new File(validationContext.getFilePath());
+    File iconFile=new File(dslFile.getParent(),icon);
+    if (!iconFile.isFile()) {
+      throw new DSLValidationException("The icon file \"" + iconFile.getAbsolutePath() + "\" does not exist.");
+    }
+  }
+}

@@ -2,7 +2,7 @@
   try {
     Service service=new Service();
     service.setType("NonExistionType");
-    service.validateDefaultValues();
+    service.validateDefaultValues(new DSLValidationContext());
     fail("an invalid service was successfully validated");
   }
  catch (  DSLValidationException e) {
@@ -10,7 +10,7 @@
   try {
     Service service=new Service();
     service.setType("WEB_SERVER");
-    service.validateDefaultValues();
+    service.validateDefaultValues(new DSLValidationContext());
   }
  catch (  DSLValidationException e) {
     fail("Validation of service failed");

@@ -4,8 +4,12 @@
     if (method.getAnnotation(DSLValidation.class) != null) {
       final boolean accessible=method.isAccessible();
       try {
+        final Map<Object,Object> currentVars=this.getBinding().getVariables();
+        DSLValidationContext validationContext=new DSLValidationContext();
+        validationContext.setFilePath((String)currentVars.get(DSL_FILE_PATH_VAR));
+        validationContext.setWorkDirectory((String)currentVars.get(DSL_WORK_DIR_VAR));
         method.setAccessible(true);
-        method.invoke(obj);
+        method.invoke(obj,validationContext);
       }
  catch (      final InvocationTargetException e) {
         throw new DSLValidationException(e.getTargetException().getMessage(),e.getTargetException());

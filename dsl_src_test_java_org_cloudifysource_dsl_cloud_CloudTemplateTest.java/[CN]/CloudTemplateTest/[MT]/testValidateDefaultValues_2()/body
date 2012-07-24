@@ -13,5 +13,5 @@
   fixture.setOverrides(new HashMap());
   fixture.setPassword("");
   fixture.setMachineMemoryMB(1);
-  fixture.validateDefaultValues();
+  fixture.validateDefaultValues(new DSLValidationContext());
 }

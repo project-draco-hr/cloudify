@@ -2,5 +2,5 @@
   final ServiceNetwork fixture=new ServiceNetwork();
   fixture.setPort(1);
   fixture.setProtocolDescription((String)null);
-  fixture.checkDescription();
+  fixture.checkDescription(new DSLValidationContext());
 }
