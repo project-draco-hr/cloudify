@@ -10,5 +10,5 @@
   Map<String,String> response=adminFacade.setInstances(applicationName,serviceName,count,timeout);
   String pollingID=response.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   this.adminFacade.waitForLifecycleEvents(pollingID,timeout,TIMEOUT_ERROR_MESSAGE);
-  return getFormattedMessage("set_instances_completed_successfully",serviceName,count);
+  return getFormattedMessage("set_instances_completed_successfully",Color.GREEN,serviceName,count);
 }
