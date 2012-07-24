@@ -1,0 +1,5 @@
+{
+  this.applicationName=applicationName;
+  this.key=key;
+  this.value=value;
+}

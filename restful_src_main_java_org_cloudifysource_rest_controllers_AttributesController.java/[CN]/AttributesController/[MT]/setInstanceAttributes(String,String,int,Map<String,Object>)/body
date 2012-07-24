@@ -2,23 +2,6 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to set multiple attributes of instance number " + instanceId + " of service "+ ServiceUtils.getAbsolutePUName(applicationName,serviceName)+ " of application "+ applicationName);
   }
-  InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute();
-  attribute.setInstanceId(instanceId);
-  attribute.setServiceName(serviceName);
-  attribute.setApplicationName(applicationName);
-  InstanceCloudifyAttribute[] previousAttributesArr=gigaSpace.takeMultiple(attribute);
-  final Map<String,Object> previousAttributesMap=new HashMap<String,Object>();
-  for (  final InstanceCloudifyAttribute previousAttr : previousAttributesArr) {
-    previousAttributesMap.put(previousAttr.getKey(),previousAttr.getValue());
-  }
-  for (  final Entry<String,Object> attrEntry : attributesMap.entrySet()) {
-    InstanceCloudifyAttribute newAttr=new InstanceCloudifyAttribute();
-    newAttr.setInstanceId(instanceId);
-    newAttr.setServiceName(serviceName);
-    newAttr.setApplicationName(applicationName);
-    newAttr.setKey(attrEntry.getKey());
-    newAttr.setValue(attrEntry.getValue());
-    gigaSpace.write(newAttr);
-  }
-  return previousAttributesMap;
+  writeAttributesToSpace(applicationName,serviceName,instanceId,attributesMap);
+  return successStatus();
 }

@@ -2,9 +2,7 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to delete attribute " + attributeName + " of application "+ applicationName);
   }
-  ApplicationCloudifyAttribute attribute=new ApplicationCloudifyAttribute();
-  attribute.setApplicationName(applicationName);
-  attribute.setKey(attributeName);
+  ApplicationCloudifyAttribute attribute=new ApplicationCloudifyAttribute(applicationName,attributeName,null);
   ApplicationCloudifyAttribute previousValue=gigaSpace.take(attribute);
   Object value=(previousValue != null) ? previousValue.getValue() : null;
   Map<String,Object> mapResult=new HashMap<String,Object>();

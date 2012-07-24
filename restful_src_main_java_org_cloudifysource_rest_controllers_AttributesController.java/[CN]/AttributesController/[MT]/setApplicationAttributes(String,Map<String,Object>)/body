@@ -2,19 +2,6 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to set multiple attributes of application " + applicationName);
   }
-  ApplicationCloudifyAttribute attribute=new ApplicationCloudifyAttribute();
-  attribute.setApplicationName(applicationName);
-  ApplicationCloudifyAttribute[] previousAttributesArr=gigaSpace.takeMultiple(attribute);
-  final Map<String,Object> previousAttributesMap=new HashMap<String,Object>();
-  for (  final ApplicationCloudifyAttribute previousAttr : previousAttributesArr) {
-    previousAttributesMap.put(previousAttr.getKey(),previousAttr.getValue());
-  }
-  for (  final Entry<String,Object> attrEntry : attributesMap.entrySet()) {
-    ApplicationCloudifyAttribute newAttr=new ApplicationCloudifyAttribute();
-    newAttr.setApplicationName(applicationName);
-    newAttr.setKey(attrEntry.getKey());
-    newAttr.setValue(attrEntry.getValue());
-    gigaSpace.write(newAttr);
-  }
-  return previousAttributesMap;
+  writeAttributesToSpace(applicationName,null,null,attributesMap);
+  return successStatus();
 }

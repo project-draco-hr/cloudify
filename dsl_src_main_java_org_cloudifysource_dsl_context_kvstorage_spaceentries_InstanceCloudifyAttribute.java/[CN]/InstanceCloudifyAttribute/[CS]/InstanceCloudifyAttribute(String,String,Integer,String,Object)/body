@@ -1,0 +1,5 @@
+{
+  super(applicationName,key,value);
+  this.serviceName=serviceName;
+  this.instanceId=instanceId;
+}

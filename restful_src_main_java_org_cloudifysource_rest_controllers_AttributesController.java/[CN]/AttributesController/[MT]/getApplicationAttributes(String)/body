@@ -2,8 +2,7 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to get all attributes of application " + applicationName);
   }
-  ApplicationCloudifyAttribute templateAttribute=new ApplicationCloudifyAttribute();
-  templateAttribute.setApplicationName(applicationName);
+  ApplicationCloudifyAttribute templateAttribute=new ApplicationCloudifyAttribute(applicationName,null,null);
   ApplicationCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
   final Map<String,Object> attributesMap=new HashMap<String,Object>();
   for (  final ApplicationCloudifyAttribute attribute : attributes) {
