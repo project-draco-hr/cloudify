@@ -9,6 +9,31 @@
   }
   Map<String,String> response=adminFacade.setInstances(applicationName,serviceName,count,timeout);
   String pollingID=response.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
-  this.adminFacade.waitForLifecycleEvents(pollingID,timeout,TIMEOUT_ERROR_MESSAGE);
+  RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID,TIMEOUT_ERROR_MESSAGE);
+  boolean isDone=false;
+  boolean continuous=false;
+  while (!isDone) {
+    try {
+      if (!continuous) {
+        lifecycleEventsPollingLatch.waitForLifecycleEvents(timeout,TimeUnit.MINUTES);
+      }
+ else {
+        lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(timeout,TimeUnit.MINUTES);
+      }
+      isDone=true;
+    }
+ catch (    TimeoutException e) {
+      if (!(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+        throw e;
+      }
+      boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      if (!continueInstallation) {
+        throw new CLIStatusException(e,"application_installation_timed_out_on_client",applicationName);
+      }
+ else {
+        continuous=continueInstallation;
+      }
+    }
+  }
   return getFormattedMessage("set_instances_completed_successfully",Color.GREEN,serviceName,count);
 }
