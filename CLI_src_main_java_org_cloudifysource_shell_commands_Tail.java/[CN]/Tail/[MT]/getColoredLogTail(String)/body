@@ -1,6 +1,9 @@
 {
   String result=logTail;
+  result=result.replaceAll(" ALL ",ShellUtils.getBoldMessage(" ALL "));
+  result=result.replaceAll(" TRACE ",ShellUtils.getBoldMessage(" TRACE "));
   result=result.replaceAll(" WARNING ",ShellUtils.getBoldMessage(" WARNING "));
+  result=result.replaceAll(" WARN ",ShellUtils.getBoldMessage(" WARN "));
   result=result.replaceAll(" FINE ",ShellUtils.getBoldMessage(" FINE "));
   result=result.replaceAll(" FINER ",ShellUtils.getBoldMessage(" FINER "));
   result=result.replaceAll(" FINEST ",ShellUtils.getBoldMessage(" FINEST "));

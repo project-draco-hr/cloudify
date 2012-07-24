@@ -1,0 +1,8 @@
+{
+  try {
+    FileUtils.writeStringToFile(this.file,logTail);
+  }
+ catch (  IOException e) {
+    throw new CLIStatusException(e,"the_log_could_not_be_saved_to_file",this.file.getAbsolutePath());
+  }
+}
