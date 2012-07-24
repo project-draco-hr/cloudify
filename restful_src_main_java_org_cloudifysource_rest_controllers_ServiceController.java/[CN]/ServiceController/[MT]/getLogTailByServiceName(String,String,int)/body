@@ -1,0 +1,17 @@
+{
+  StringBuilder stringBuilder=new StringBuilder();
+  try {
+    ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
+    String instanceLogTail;
+    for (    ProcessingUnitInstance processingUnitInstance : processingUnit) {
+      stringBuilder.append("service instance id #" + processingUnitInstance.getInstanceId() + System.getProperty("line.separator"));
+      instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
+      stringBuilder.append(instanceLogTail);
+    }
+  }
+ catch (  RestServiceException e) {
+    logger.log(Level.INFO,"Failed retrieving the service logs. Reason: " + e.getMessage());
+    return errorStatus(e.getMessage());
+  }
+  return successStatus(stringBuilder.toString());
+}

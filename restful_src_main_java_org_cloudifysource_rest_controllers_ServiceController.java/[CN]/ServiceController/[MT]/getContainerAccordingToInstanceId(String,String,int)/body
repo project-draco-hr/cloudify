@@ -1,10 +1,5 @@
 {
-  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePUName);
-  if (processingUnit == null) {
-    logger.log(Level.FINE,"a Processing unit with the name " + absolutePUName + " was not found");
-    throw new RestServiceException("a Processing unit with the name " + absolutePUName + " was not found");
-  }
+  ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
   for (  ProcessingUnitInstance processingUnitInstance : processingUnit) {
     if (processingUnitInstance.getInstanceId() == instanceId) {
       return processingUnitInstance.getGridServiceContainer();
