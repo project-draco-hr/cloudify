@@ -21,7 +21,7 @@
       return false;
     }
     private boolean isConnectException(    final Throwable t){
-      return (t instanceof java.net.ConnectException) || (t instanceof java.rmi.ConnectException);
+      return (t instanceof java.net.SocketException) || (t instanceof java.rmi.ConnectException);
     }
   }
 ;
