@@ -3,7 +3,7 @@
   ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePUName);
   if (processingUnit == null) {
     logger.log(Level.FINE,"a Processing unit with the name " + absolutePUName + " was not found");
-    throw new RestServiceException("a Processing unit with the name " + absolutePUName + " was not found");
+    return null;
   }
   return processingUnit;
 }

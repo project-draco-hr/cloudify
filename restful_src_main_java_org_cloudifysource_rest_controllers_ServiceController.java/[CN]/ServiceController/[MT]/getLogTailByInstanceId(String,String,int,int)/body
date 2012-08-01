@@ -1,11 +1,9 @@
 {
-  GridServiceContainer container=null;
-  try {
-    container=getContainerAccordingToInstanceId(applicationName,serviceName,instanceId);
-  }
- catch (  RestServiceException e) {
-    logger.log(Level.INFO,"Failed retrieving the service logs. Reason: " + e.getMessage());
-    return errorStatus(e.getMessage());
+  GridServiceContainer container=getContainerAccordingToInstanceId(applicationName,serviceName,instanceId);
+  if (container == null) {
+    String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    logger.severe("Could not find service " + absolutePuName);
+    return unavailableServiceError(absolutePuName);
   }
   String logTailFromContainer=getLogTailFromContainer(container,numLines);
   return successStatus(logTailFromContainer);

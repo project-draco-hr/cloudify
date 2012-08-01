@@ -5,5 +5,5 @@
       return processingUnitInstance.getGridServiceContainer();
     }
   }
-  throw new RestServiceException("ServiceController failed to locate a grid" + " service container with instance id " + instanceId);
+  return null;
 }
