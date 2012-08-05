@@ -1,0 +1,7 @@
+{
+  CreateAffinityGroup affinityGroup=new CreateAffinityGroup();
+  affinityGroup.setName(name);
+  affinityGroup.setLabel(new String(Base64.encode(CLOUDIFY_AFFINITY_PREFIX + generateRandomUUID(UUID_LENGTH))));
+  affinityGroup.setLocation(location);
+  return affinityGroup;
+}

@@ -1,0 +1,4 @@
+{
+  ClientResponse response=doGet(subscriptionId + "/services/hostedservices/" + cloudServiceName+ "/deployments/"+ deploymentSlot);
+  return response.getEntity(String.class);
+}

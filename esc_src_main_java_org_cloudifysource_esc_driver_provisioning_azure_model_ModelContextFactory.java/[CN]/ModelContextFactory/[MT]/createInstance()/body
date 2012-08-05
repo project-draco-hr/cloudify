@@ -1,0 +1,11 @@
+{
+  JAXBContext context=null;
+  try {
+    context=JAXBContext.newInstance(getClasses());
+  }
+ catch (  JAXBException e) {
+    e.printStackTrace();
+    throw new RuntimeException("Could not create JAXBContext : " + e.getMessage());
+  }
+  return context;
+}

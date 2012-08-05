@@ -1,0 +1,4 @@
+String affinityGroup
+String location
+long timeout
+TimeUnit timeunit

@@ -1,0 +1,20 @@
+{
+  if (configurationSet == null) {
+    return null;
+  }
+  AdaptedConfigurationSet adaptedConfigurationSet=new AdaptedConfigurationSet();
+  if (configurationSet instanceof LinuxProvisioningConfigurationSet) {
+    LinuxProvisioningConfigurationSet linuxProvisioningConfigurationSet=(LinuxProvisioningConfigurationSet)configurationSet;
+    adaptedConfigurationSet.configurationSetType=linuxProvisioningConfigurationSet.getConfigurationSetType();
+    adaptedConfigurationSet.disableSshPasswordAuthentication=linuxProvisioningConfigurationSet.isDisableSshPasswordAuthentication();
+    adaptedConfigurationSet.hostName=linuxProvisioningConfigurationSet.getHostName();
+    adaptedConfigurationSet.userName=linuxProvisioningConfigurationSet.getUserName();
+    adaptedConfigurationSet.userPassword=linuxProvisioningConfigurationSet.getUserPassword();
+  }
+ else {
+    NetworkConfigurationSet networkConfigurationSet=(NetworkConfigurationSet)configurationSet;
+    adaptedConfigurationSet.inputEndpoints=networkConfigurationSet.getInputEndpoints();
+    adaptedConfigurationSet.configurationSetType=networkConfigurationSet.getConfigurationSetType();
+  }
+  return adaptedConfigurationSet;
+}

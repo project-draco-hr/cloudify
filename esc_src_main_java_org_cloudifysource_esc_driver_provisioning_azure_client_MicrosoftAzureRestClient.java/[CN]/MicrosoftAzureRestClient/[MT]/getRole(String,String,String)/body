@@ -1,0 +1,6 @@
+{
+  ClientResponse response=doGet(subscriptionId + "/services/hostedservices/" + serviceName+ "/deployments/"+ deploymentName+ "/roles/"+ roleName);
+  String responseBody=response.getEntity(String.class);
+  PersistentVMRole persistentVMRole=(PersistentVMRole)MicrosoftAzureModelUtils.unmarshall(responseBody);
+  return persistentVMRole;
+}

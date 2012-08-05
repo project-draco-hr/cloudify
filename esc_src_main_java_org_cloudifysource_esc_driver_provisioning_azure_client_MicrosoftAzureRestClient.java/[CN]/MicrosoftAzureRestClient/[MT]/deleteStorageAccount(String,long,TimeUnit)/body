@@ -1,0 +1,5 @@
+{
+  ClientResponse response=doDelete(subscriptionId + "/services/storageservices/" + storageAccountName);
+  String requestId=extractRequestId(response);
+  waitForRequestToFinish(requestId,timeout,timeunit);
+}

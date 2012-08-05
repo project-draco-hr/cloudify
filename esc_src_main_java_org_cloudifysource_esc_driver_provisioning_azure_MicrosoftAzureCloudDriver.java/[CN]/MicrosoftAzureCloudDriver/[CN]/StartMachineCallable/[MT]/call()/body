@@ -1,0 +1,4 @@
+{
+  final MachineDetails machineDetails=startMachine(duration,unit);
+  return machineDetails;
+}

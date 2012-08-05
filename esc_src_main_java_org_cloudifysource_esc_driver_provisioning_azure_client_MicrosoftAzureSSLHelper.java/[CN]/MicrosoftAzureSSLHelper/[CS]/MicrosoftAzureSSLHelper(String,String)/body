@@ -1,0 +1,4 @@
+{
+  this.pathToPfxFile=pathToPfx;
+  this.pfxPassword=pfxPassword;
+}

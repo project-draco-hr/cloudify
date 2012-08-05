@@ -1,0 +1,4 @@
+String affinityGroup
+String storageAccountName
+long timeout
+TimeUnit timeunit

@@ -1,0 +1,3 @@
+String addressPrefix
+String affinityGroupName
+String networkName

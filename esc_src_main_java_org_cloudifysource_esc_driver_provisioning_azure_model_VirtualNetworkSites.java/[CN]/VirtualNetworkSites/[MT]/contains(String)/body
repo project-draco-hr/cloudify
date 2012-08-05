@@ -1,0 +1,8 @@
+{
+  for (  VirtualNetworkSite site : virtualNetworkSites) {
+    if (site.getName().equals(networkName)) {
+      return true;
+    }
+  }
+  return false;
+}

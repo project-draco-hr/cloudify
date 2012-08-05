@@ -1,0 +1,8 @@
+{
+  for (  StorageService service : storageServices) {
+    if (service.getServiceName().equals(storageServiceName)) {
+      return true;
+    }
+  }
+  return false;
+}

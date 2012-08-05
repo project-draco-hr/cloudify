@@ -1,0 +1,5 @@
+{
+  ClientResponse response=resource.path(url).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
+  checkForError(response);
+  return response;
+}

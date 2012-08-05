@@ -1,0 +1,5 @@
+String cloudServiceName
+String deploymentName
+String roleName
+long timeout
+TimeUnit timeunit

@@ -1,0 +1,22 @@
+{
+  JAXBContext context=ModelContextFactory.createInstance();
+  StringWriter sw=new StringWriter();
+  Marshaller m;
+  try {
+    m=context.createMarshaller();
+    m.marshal(body,sw);
+    Document doc=createEmptyDocument();
+    m.marshal(body,doc);
+    String xml=getStringFromDocument(doc);
+    if (network) {
+      xml=addNameSpaceToRootElement(xml,"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration");
+    }
+ else {
+      xml=addNameSpaceToRootElement(xml,"http://schemas.microsoft.com/windowsazure");
+    }
+    return xml;
+  }
+ catch (  JAXBException e) {
+    throw new MicrosoftAzureException(e);
+  }
+}

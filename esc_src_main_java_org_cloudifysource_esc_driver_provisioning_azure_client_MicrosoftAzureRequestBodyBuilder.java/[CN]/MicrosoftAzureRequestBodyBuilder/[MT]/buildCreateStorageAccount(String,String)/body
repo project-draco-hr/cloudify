@@ -1,0 +1,7 @@
+{
+  CreateStorageServiceInput storageAccount=new CreateStorageServiceInput();
+  storageAccount.setAffinityGroup(affinityGroupName);
+  storageAccount.setLabel(new String(Base64.encode(CLOUDIFY_STORAGE_ACCOUNT_PREFIX)));
+  storageAccount.setServiceName(storageAccountName);
+  return storageAccount;
+}

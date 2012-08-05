@@ -1,0 +1,4 @@
+{
+  this.subscriptionId=subscriptionId;
+  this.init(pathToPfx,pfxPassword);
+}

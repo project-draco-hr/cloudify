@@ -1,0 +1,13 @@
+{
+  StartRoleOperation operation=new StartRoleOperation();
+  String xmlRequest;
+  try {
+    xmlRequest=MicrosoftAzureModelUtils.marshall(operation,false);
+  }
+ catch (  MicrosoftAzureException e) {
+    throw new MicrosoftAzureException(e);
+  }
+  ClientResponse response=doPost(subscriptionId + "/services/hostedservices/" + serviceName+ "/deployments/"+ deploymentName+ "/roleinstances/"+ roleName+ "/operations",xmlRequest);
+  String requestId=extractRequestId(response);
+  waitForRequestToFinish(requestId,timeout,timeunit);
+}

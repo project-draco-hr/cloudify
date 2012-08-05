@@ -1,0 +1,19 @@
+{
+  ClientResponse response=null;
+  for (int i=0; i < MAX_RETRIES; i++) {
+    try {
+      response=resource.path("/" + subscriptionId + "/services/hostedservices/"+ hostedServiceName+ "/deploymentslots/"+ deploymentSlot).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).get(ClientResponse.class);
+    }
+ catch (    ClientHandlerException e) {
+      logger.warning("Caught an exception while polling for deployment details :" + e.getMessage());
+      logger.warning("retrying request");
+      continue;
+    }
+  }
+  if (response == null) {
+    throw new MicrosoftAzureException("Failed getting deployment details after " + MAX_RETRIES + " attempts");
+  }
+  String responseBody=response.getEntity(String.class);
+  Deployment deployment=(Deployment)MicrosoftAzureModelUtils.unmarshall(responseBody);
+  return deployment;
+}

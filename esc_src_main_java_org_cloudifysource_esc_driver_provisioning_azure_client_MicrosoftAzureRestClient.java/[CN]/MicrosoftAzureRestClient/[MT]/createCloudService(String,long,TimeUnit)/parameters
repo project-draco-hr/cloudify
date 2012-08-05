@@ -1,0 +1,3 @@
+String affinityGroup
+long timeout
+TimeUnit timeunit

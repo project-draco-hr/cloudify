@@ -1,0 +1,14 @@
+{
+  int count=0;
+  int i=0;
+  while (count < 2) {
+    if (xml.charAt(i) == '>') {
+      count++;
+    }
+    i++;
+  }
+  String first=xml.substring(0,i - 1);
+  String second=xml.substring(i,xml.length());
+  String result=first + " xmlns=" + '"'+ nameSpace+ '"'+ ">"+ second;
+  return result;
+}

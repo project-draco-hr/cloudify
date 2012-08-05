@@ -1,0 +1,5 @@
+String state
+String hostedServiceName
+String deploymentSlot
+long timeout
+TimeUnit timeunit

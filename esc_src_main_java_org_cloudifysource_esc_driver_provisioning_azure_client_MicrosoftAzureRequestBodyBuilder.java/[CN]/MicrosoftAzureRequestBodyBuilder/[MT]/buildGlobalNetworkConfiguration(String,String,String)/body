@@ -1,0 +1,15 @@
+{
+  GlobalNetworkConfiguration networkConfiguration=new GlobalNetworkConfiguration();
+  VirtualNetworkConfiguration virtualNetworkConfiguration=new VirtualNetworkConfiguration();
+  VirtualNetworkSites virtualNetworkSites=new VirtualNetworkSites();
+  VirtualNetworkSite virtualNetworkSite=new VirtualNetworkSite();
+  AddressSpace addressSpace=new AddressSpace();
+  addressSpace.setAddressPrefix(addressPrefix);
+  virtualNetworkSite.setAddressSpace(addressSpace);
+  virtualNetworkSite.setAffinityGroup(affinityGroupName);
+  virtualNetworkSite.setName(networkName);
+  virtualNetworkSites.getVirtualNetworkSites().add(virtualNetworkSite);
+  virtualNetworkConfiguration.setVirtualNetworkSites(virtualNetworkSites);
+  networkConfiguration.setVirtualNetworkConfiguration(virtualNetworkConfiguration);
+  return networkConfiguration;
+}

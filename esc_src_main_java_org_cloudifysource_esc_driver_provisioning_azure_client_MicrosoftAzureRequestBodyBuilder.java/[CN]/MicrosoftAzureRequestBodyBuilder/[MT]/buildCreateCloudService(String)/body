@@ -1,0 +1,7 @@
+{
+  CreateHostedService hostedService=new CreateHostedService();
+  hostedService.setAffinityGroup(affinityGroup);
+  hostedService.setLabel(new String(Base64.encode(CLOUDIFY_CLOUD_SERVICE_PREFIX + generateRandomUUID(UUID_LENGTH))));
+  hostedService.setServiceName(CLOUDIFY_CLOUD_SERVICE_PREFIX + generateRandomUUID(UUID_LENGTH));
+  return hostedService;
+}

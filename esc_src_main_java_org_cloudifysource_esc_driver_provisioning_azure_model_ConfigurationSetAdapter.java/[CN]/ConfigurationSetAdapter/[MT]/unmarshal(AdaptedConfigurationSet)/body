@@ -1,0 +1,19 @@
+{
+  if (adaptedConfigurationSet == null) {
+    return null;
+  }
+  if (adaptedConfigurationSet.inputEndpoints != null) {
+    NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();
+    networkConfigurationSet.setConfigurationSetType(adaptedConfigurationSet.configurationSetType);
+    networkConfigurationSet.setInputEndpoints(adaptedConfigurationSet.inputEndpoints);
+    return networkConfigurationSet;
+  }
+ else {
+    LinuxProvisioningConfigurationSet linuxProvisioningConfigurationSet=new LinuxProvisioningConfigurationSet();
+    linuxProvisioningConfigurationSet.setDisableSshPasswordAuthentication(adaptedConfigurationSet.disableSshPasswordAuthentication);
+    linuxProvisioningConfigurationSet.setHostName(adaptedConfigurationSet.hostName);
+    linuxProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
+    linuxProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
+  }
+  return null;
+}

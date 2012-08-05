@@ -1,0 +1,10 @@
+{
+  DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+  try {
+    dbf.setNamespaceAware(false);
+    return dbf.newDocumentBuilder();
+  }
+ catch (  ParserConfigurationException e) {
+    throw new IllegalStateException(e);
+  }
+}

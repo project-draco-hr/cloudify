@@ -1,0 +1,5 @@
+{
+  Class<?>[] result=new Class<?>[CLASSES.size()];
+  CLASSES.toArray(result);
+  return result;
+}

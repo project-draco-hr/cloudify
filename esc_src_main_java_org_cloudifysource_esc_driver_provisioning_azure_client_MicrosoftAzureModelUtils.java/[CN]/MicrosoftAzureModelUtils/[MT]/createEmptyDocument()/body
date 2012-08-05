@@ -1,0 +1,4 @@
+{
+  DocumentBuilder documentBuilder=createDocumentBuilder();
+  return documentBuilder.newDocument();
+}

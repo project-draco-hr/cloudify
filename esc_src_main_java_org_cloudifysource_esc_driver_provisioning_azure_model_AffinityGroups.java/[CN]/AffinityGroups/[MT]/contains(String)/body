@@ -1,0 +1,8 @@
+{
+  for (  AffinityGroup group : affinityGroups) {
+    if (group.getName().equals(affinityGroupName)) {
+      return true;
+    }
+  }
+  return false;
+}

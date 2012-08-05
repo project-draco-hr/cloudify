@@ -1,0 +1,4 @@
+{
+  ClientResponse response=doGet(subscriptionId + "/locations");
+  return response.getEntity(String.class);
+}

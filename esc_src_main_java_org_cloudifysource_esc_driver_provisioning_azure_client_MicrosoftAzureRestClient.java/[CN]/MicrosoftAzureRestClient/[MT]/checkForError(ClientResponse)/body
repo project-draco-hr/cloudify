@@ -1,0 +1,8 @@
+{
+  int status=response.getStatus();
+  if (status != 200 && status != 201 && status != 202) {
+    Error error=(Error)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
+    String errorMessage=error.getMessage();
+    throw new MicrosoftAzureException(status + " : " + errorMessage);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  JAXBContext context=ModelContextFactory.createInstance();
+  Document xmlDoc=parse(entity);
+  Unmarshaller um=null;
+  try {
+    um=context.createUnmarshaller();
+    return um.unmarshal(xmlDoc);
+  }
+ catch (  JAXBException e) {
+    throw new MicrosoftAzureException(e);
+  }
+}
