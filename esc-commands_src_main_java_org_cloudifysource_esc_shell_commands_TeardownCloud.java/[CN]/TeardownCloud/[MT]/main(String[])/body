@@ -1,8 +1,0 @@
-{
-  TeardownCloud cmd=new TeardownCloud();
-  cmd.cloudProvider="ec2";
-  cmd.verbose=true;
-  cmd.adminFacade=new RestAdminFacade();
-  cmd.adminFacade.connect(null,null,"http://107.20.37.95:8100/");
-  cmd.execute(null);
-}
