@@ -1,7 +1,7 @@
 {
   if (isLoggableEvent(event,listeners)) {
-    long eventExecDuration=System.currentTimeMillis() - eventStartTime;
-    String durationAsString=DurationFormatUtils.formatDuration(eventExecDuration,"s.S 'seconds'");
-    eventLogger.info(eventPrefix + event + CloudifyConstants.USM_EVENT_EXEC_SUCCESSFULLY+ ", duration: "+ durationAsString+ ".");
+    long eventExecDuration=TimeUnit.SECONDS.convert(System.currentTimeMillis() - eventStartTime,TimeUnit.MILLISECONDS);
+    String formattedDuration=String.format("%.1f",(float)eventExecDuration);
+    eventLogger.info(eventPrefix + event + CloudifyConstants.USM_EVENT_EXEC_SUCCESSFULLY+ ", duration: "+ formattedDuration+ ".");
   }
 }
