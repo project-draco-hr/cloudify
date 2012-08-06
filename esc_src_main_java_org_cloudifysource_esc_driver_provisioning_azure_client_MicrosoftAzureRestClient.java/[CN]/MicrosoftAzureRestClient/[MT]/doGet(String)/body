@@ -1,5 +1,19 @@
 {
-  ClientResponse response=resource.path(url).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
-  checkForError(response);
+  ClientResponse response=null;
+  for (int i=0; i < MAX_RETRIES; i++) {
+    try {
+      response=resource.path(url).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
+      checkForError(response);
+      break;
+    }
+ catch (    ClientHandlerException e) {
+      logger.warning("Caught an exception while executing GET with url " + url + ". Message :"+ e.getMessage());
+      logger.warning("retrying request");
+      continue;
+    }
+  }
+  if (response == null) {
+    throw new TimeoutException("Timed out while executing GET after " + MAX_RETRIES);
+  }
   return response;
 }

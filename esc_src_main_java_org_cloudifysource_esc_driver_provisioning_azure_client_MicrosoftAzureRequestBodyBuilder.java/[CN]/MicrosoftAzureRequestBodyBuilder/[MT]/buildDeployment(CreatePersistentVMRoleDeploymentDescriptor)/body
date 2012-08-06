@@ -1,5 +1,4 @@
 {
-  String serverPrefix=desc.getServerPrefix();
   String deploymentSlot=desc.getDeploymentSlot();
   String imageName=desc.getImageName();
   String storageAccountName=desc.getStorageAccountName();
@@ -9,7 +8,7 @@
   String size=desc.getSize();
   String deploymentName=desc.getDeploymentName();
   InputEndpoints endPoints=desc.getInputEndpoints();
-  String roleName=serverPrefix + "_role" + UUIDHelper.generateRandomUUID(UUID_ROLE_LENGTH);
+  String roleName=desc.getRoleName();
   Deployment deployment=new Deployment();
   deployment.setDeploymentSlot(deploymentSlot);
   deployment.setVirtualNetworkName(networkName);

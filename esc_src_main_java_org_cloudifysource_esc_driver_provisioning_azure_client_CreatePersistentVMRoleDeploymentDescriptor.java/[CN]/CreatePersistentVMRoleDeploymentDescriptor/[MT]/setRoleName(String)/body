@@ -1,0 +1,3 @@
+{
+  this.roleName=roleName + UUIDHelper.generateRandomUUID(ROLE_NAME_UID_LENGTH);
+}
