@@ -2,7 +2,7 @@
   logger.info("Cloudify Adapter is starting a new machine");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
-  MachineDetails machineDetails=null;
+  MachineDetails machineDetails;
   try {
     cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
     machineDetails=provisionMachine(duration,unit);
@@ -12,7 +12,7 @@
     throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
-  String machineIp=null;
+  String machineIp;
   if (cloud.getConfiguration().isConnectToPrivateIp()) {
     machineIp=machineDetails.getPrivateAddress();
   }
