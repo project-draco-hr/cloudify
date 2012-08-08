@@ -8,6 +8,7 @@
   if (adminFacade.getApplicationsList().contains(applicationName)) {
     throw new CLIStatusException("application_already_deployed",application.getName());
   }
+  File cloudConfigurationZipFile=createCloudConfigurationZipFile();
   File zipFile;
   if (applicationFile.isFile()) {
     if (applicationFile.getName().endsWith(".zip") || applicationFile.getName().endsWith(".jar")) {
@@ -18,11 +19,16 @@
     }
   }
  else {
-    zipFile=Packager.packApplication(application,applicationFile);
+    if (cloudConfigurationZipFile == null) {
+      zipFile=Packager.packApplication(application,applicationFile);
+    }
+ else {
+      zipFile=Packager.packApplication(application,applicationFile,new File[]{cloudConfigurationZipFile});
+    }
   }
   logger.info("Uploading application " + applicationName);
-  Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,timeoutInMinutes);
-  String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,timeoutInMinutes);
+  final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     zipFile.delete();
   }
@@ -30,8 +36,8 @@
     throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);
   }
   printApplicationInfo(application);
-  String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
-  RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID,TIMEOUT_ERROR_MESSAGE);
+  final String pollingID=result.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
+  final RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;
   boolean continuous=false;
   while (!isDone) {
@@ -44,11 +50,11 @@
       }
       isDone=true;
     }
- catch (    TimeoutException e) {
+ catch (    final TimeoutException e) {
       if (!(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
         throw e;
       }
-      boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      final boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
       if (!continueInstallation) {
         throw new CLIStatusException(e,"application_installation_timed_out_on_client",applicationName);
       }

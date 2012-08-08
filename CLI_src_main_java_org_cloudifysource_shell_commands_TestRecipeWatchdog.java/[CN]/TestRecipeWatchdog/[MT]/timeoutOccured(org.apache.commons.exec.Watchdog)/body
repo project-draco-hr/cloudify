@@ -1,4 +1,4 @@
 {
-  logger.severe("The test recipe command has exceeded its timeout! The process watchdog is about to kill the test container.");
+  logger.severe("The test recipe command has exceeded its timeout! " + "The process watchdog is about to kill the test container.");
   super.timeoutOccured(arg0);
 }
