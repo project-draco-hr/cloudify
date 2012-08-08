@@ -1,0 +1,8 @@
+{
+  final String encodedFile=properties.get(SERVICE_CLOUD_CONFIGURATION_KEY);
+  if (encodedFile == null) {
+    return null;
+  }
+  final byte[] decodedFile=jcifs.util.Base64.decode(encodedFile);
+  return decodedFile;
+}

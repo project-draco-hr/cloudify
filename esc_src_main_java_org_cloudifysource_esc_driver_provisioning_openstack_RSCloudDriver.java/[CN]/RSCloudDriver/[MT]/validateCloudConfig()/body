@@ -5,6 +5,6 @@
   }
   String agentMachineNamePrefix=this.cloud.getProvider().getMachineNamePrefix();
   if (agentMachineNamePrefix.contains("_")) {
-    throw new IllegalArgumentException("The '_' character is not allowed in the attribute " + "'machineNamePrefix' for the rackspace cloud-driver as it is not supported in the rackspace cloud");
+    throw new IllegalArgumentException("The '_' character is not allowed in the attribute " + "'machineNamePrefix' for the rackspace cloud-driver as it " + "is not supported in the rackspace cloud");
   }
 }
