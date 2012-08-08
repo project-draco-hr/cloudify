@@ -1,0 +1,17 @@
+{
+  final String command=stringExecutableEntry.getCommand();
+  final String[] parts=command.split(" ");
+  final String fileName=parts[0];
+  if (fileName.endsWith(".groovy")) {
+    File file=new File(fileName);
+    if (!file.isAbsolute()) {
+      file=new File(workDirectory,fileName);
+    }
+    if (file.exists() && file.isFile()) {
+      GroovyFileCompilationResult result=groovyValidater.validateFile(file);
+      if (!result.isSuccess()) {
+        throw new DSLValidationException(result.getErrorMessage(),result.getCause());
+      }
+    }
+  }
+}

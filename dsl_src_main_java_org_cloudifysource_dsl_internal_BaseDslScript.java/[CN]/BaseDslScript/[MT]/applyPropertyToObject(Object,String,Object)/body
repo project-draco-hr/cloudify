@@ -15,11 +15,13 @@
     PropertyDescriptor descriptor=PropertyUtils.getPropertyDescriptor(object,name);
     Class<?> propertyType=descriptor.getPropertyType();
     if (propertyType.equals(ExecutableDSLEntry.class)) {
-      final ExecutableDSLEntry executableEntry=ExecutableDSLEntryFactory.createEntry(value,name);
+      final File workDirectory=getDSLFile().getParentFile();
+      final ExecutableDSLEntry executableEntry=ExecutableDSLEntryFactory.createEntry(value,name,workDirectory);
       BeanUtils.setProperty(object,name,executableEntry);
     }
  else     if (propertyType.equals(ExecutableEntriesMap.class)) {
-      final ExecutableEntriesMap entriesMap=ExecutableDSLEntryFactory.createEntriesMap(value,name);
+      final File workDirectory=getDSLFile().getParentFile();
+      final ExecutableEntriesMap entriesMap=ExecutableDSLEntryFactory.createEntriesMap(value,name,workDirectory);
       BeanUtils.setProperty(object,name,entriesMap);
     }
  else {
@@ -29,7 +31,10 @@
       BeanUtils.setProperty(object,name,value);
     }
   }
- catch (  final Exception e) {
+ catch (  final DSLValidationException e) {
+    throw new DSLValidationRuntimeException(e);
+  }
+catch (  final Exception e) {
     throw new IllegalArgumentException("Failed   to set property " + name + " of Object "+ object+ " to value: "+ value,e);
   }
   checkForApplicationServiceBlockNameParameter(name,value);

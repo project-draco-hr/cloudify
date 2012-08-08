@@ -1,5 +1,5 @@
 {
-  OutputStream out=new FileOutputStream(file);
+  final OutputStream out=new FileOutputStream(file);
   try {
     copy(in,out);
   }

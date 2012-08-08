@@ -1,0 +1,20 @@
+{
+  if (!sourceFile.exists()) {
+    throw new FileNotFoundException("Could not find: " + sourceFile);
+  }
+  if (!sourceFile.isFile()) {
+    throw new IllegalArgumentException(sourceFile + " is not a file!");
+  }
+  final File toZip=new File(zipfile,"");
+  toZip.setWritable(true);
+  final ZipOutputStream zout=new ZipOutputStream(new FileOutputStream(toZip));
+  try {
+    String name=sourceFile.getName();
+    zout.putNextEntry(new ZipEntry(name));
+    copy(sourceFile,zout);
+    zout.closeEntry();
+  }
+  finally {
+    zout.close();
+  }
+}

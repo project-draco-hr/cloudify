@@ -1,0 +1,7 @@
+{
+  final File destApplicationFolder=File.createTempFile("gs_application_","");
+  FileUtils.forceDelete(destApplicationFolder);
+  FileUtils.forceMkdir(destApplicationFolder);
+  FileUtils.copyDirectory(applicationDir,destApplicationFolder,SVNFileFilter.getFilter());
+  return destApplicationFolder;
+}

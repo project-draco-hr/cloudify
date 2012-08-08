@@ -1,5 +1,5 @@
 {
   final ExecutableEntriesMap result=new ExecutableEntriesMap();
-  copyElementsToEntriesMap(arg,entryName,result);
+  copyElementsToEntriesMap(arg,entryName,result,workDirectory);
   return result;
 }

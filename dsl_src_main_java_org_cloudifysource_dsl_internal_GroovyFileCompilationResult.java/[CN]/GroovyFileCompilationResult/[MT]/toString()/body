@@ -1,0 +1,3 @@
+{
+  return "GroovyFileCompilationResult [success=" + success + ", compilationErrorMessage="+ compilationErrorMessage+ ", errorMessage="+ errorMessage+ "]";
+}

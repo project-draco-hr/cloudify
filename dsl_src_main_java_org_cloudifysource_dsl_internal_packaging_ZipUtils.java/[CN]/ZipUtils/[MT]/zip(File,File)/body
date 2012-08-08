@@ -1,17 +1,17 @@
 {
-  URI base=directory.toURI();
-  File toZip=new File(zipfile,"");
+  final URI base=directory.toURI();
+  final File toZip=new File(zipfile,"");
   toZip.setWritable(true);
-  Stack<File> stack=new Stack<File>();
+  final Stack<File> stack=new Stack<File>();
   stack.push(directory);
-  OutputStream out=new FileOutputStream(toZip);
+  final OutputStream out=new FileOutputStream(toZip);
   Closeable res=out;
   try {
-    ZipOutputStream zout=new ZipOutputStream(out);
+    final ZipOutputStream zout=new ZipOutputStream(out);
     res=zout;
     while (!stack.isEmpty()) {
-      directory=stack.pop();
-      for (      File kid : directory.listFiles()) {
+      final File currentDirectory=stack.pop();
+      for (      final File kid : currentDirectory.listFiles()) {
         String name=base.relativize(kid.toURI()).getPath();
         if (kid.isDirectory()) {
           stack.push(kid);

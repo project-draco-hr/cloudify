@@ -1,11 +1,11 @@
 {
-  ZipFile zfile=new ZipFile(zipfile);
-  Enumeration<? extends ZipEntry> entries=zfile.entries();
+  final ZipFile zfile=new ZipFile(zipfile);
+  final Enumeration<? extends ZipEntry> entries=zfile.entries();
   while (entries.hasMoreElements()) {
-    ZipEntry entry=entries.nextElement();
-    File file=new File(directory,entry.getName());
+    final ZipEntry entry=entries.nextElement();
+    final File file=new File(directory,entry.getName());
     if (entry.isDirectory()) {
-      boolean mkdirs=file.mkdirs();
+      final boolean mkdirs=file.mkdirs();
       if (!mkdirs) {
         zfile.close();
         throw new IllegalStateException("cant create dir" + file.getAbsolutePath());
@@ -13,13 +13,13 @@
     }
  else {
       if (!file.getParentFile().exists()) {
-        boolean mkdirs=file.getParentFile().mkdirs();
+        final boolean mkdirs=file.getParentFile().mkdirs();
         if (!mkdirs) {
           zfile.close();
           throw new IllegalStateException("cant create dir" + file.getParentFile().getAbsolutePath());
         }
       }
-      InputStream in=zfile.getInputStream(entry);
+      final InputStream in=zfile.getInputStream(entry);
       try {
         copy(in,file);
       }

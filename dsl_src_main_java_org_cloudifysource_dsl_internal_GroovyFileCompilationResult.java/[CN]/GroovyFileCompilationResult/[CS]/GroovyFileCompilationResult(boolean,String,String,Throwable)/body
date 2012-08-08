@@ -1,0 +1,7 @@
+{
+  super();
+  this.success=success;
+  this.compilationErrorMessage=compilationErrorMessage;
+  this.errorMessage=errorMessage;
+  this.cause=cause;
+}
