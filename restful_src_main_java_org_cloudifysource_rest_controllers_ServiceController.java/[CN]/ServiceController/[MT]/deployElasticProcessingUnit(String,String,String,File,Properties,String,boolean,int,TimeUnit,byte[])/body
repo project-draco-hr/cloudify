@@ -28,7 +28,7 @@
     doDeploy(applicationName,serviceName,templateName,zone,srcFile,propsFile);
   }
  else   if (service.getLifecycle() != null) {
-    doDeploy(applicationName,serviceName,templateName,zone,srcFile,propsFile,service);
+    doDeploy(applicationName,serviceName,templateName,zone,srcFile,propsFile,service,serviceCloudConfigurationContents);
   }
  else   if (service.getDataGrid() != null) {
     deployDataGrid(applicationName,serviceName,zone,srcFile,propsFile,service.getDataGrid(),templateName);

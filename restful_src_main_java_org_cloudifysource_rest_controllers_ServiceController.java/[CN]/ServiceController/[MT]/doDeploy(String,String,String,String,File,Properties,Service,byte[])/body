@@ -25,6 +25,9 @@
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,cloudFileContents,templateName);
     final String[] zones=new String[]{serviceName};
     config.setGridServiceAgentZones(zones);
+    if (serviceCloudConfigurationContents != null) {
+      config.setServiceCloudConfiguration(serviceCloudConfigurationContents);
+    }
     final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);

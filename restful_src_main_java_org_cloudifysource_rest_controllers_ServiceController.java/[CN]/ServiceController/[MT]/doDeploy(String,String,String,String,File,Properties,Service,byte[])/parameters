@@ -5,3 +5,4 @@ String zone
 File serviceFile
 Properties contextProperties
 Service service
+byte[] serviceCloudConfigurationContents

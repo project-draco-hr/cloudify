@@ -1,5 +1,4 @@
 {
-  logger.finer("received request to deploy");
   logger.info("Deploying service with template: " + templateName);
   String actualTemplateName=templateName;
   if (cloud != null) {
@@ -24,12 +23,12 @@
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
     FileUtils.deleteQuietly(dest);
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null);
     destFile.deleteOnExit();
   }
  else {
     logger.warning("Deployment file could not be renamed to the absolute pu name." + " Deploaying using the name " + dest.getName());
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null);
     dest.deleteOnExit();
   }
   return successStatus(lifecycleEventsContainerID.toString());

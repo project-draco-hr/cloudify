@@ -3,8 +3,8 @@
   logger.fine("Installing application " + applicationName + " with the following services: "+ services);
   final boolean asyncInstallPossible=isAsyncInstallPossibleForApplication();
   logger.info("async install setting: " + asyncInstallPossible);
-  installServices(appDir,applicationName,asyncInstallPossible,cloud);
   try {
+    installServices(appDir,applicationName,asyncInstallPossible,cloud);
     FileUtils.deleteDirectory(appDir);
   }
  catch (  IOException e) {

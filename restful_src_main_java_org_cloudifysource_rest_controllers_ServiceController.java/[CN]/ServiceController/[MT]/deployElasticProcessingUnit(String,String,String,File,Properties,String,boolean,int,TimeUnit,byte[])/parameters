@@ -7,3 +7,4 @@ String originalTemplateName
 boolean isApplicationInstall
 int timeout
 TimeUnit timeUnit
+byte[] serviceCloudConfigurationContents

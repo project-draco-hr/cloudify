@@ -5,15 +5,22 @@
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
     final Properties contextProperties=createServiceContextProperties(service,applicationName,async,cloud);
     final String serviceName=service.getName();
+    String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    File serviceDirectory=new File(appDir,serviceName);
+    File serviceCloudConfiguration=new File(serviceDirectory,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+    byte[] serviceCloudConfigurationContents=null;
+    if (serviceCloudConfiguration.exists()) {
+      serviceCloudConfigurationContents=FileUtils.readFileToByteArray(serviceCloudConfiguration);
+      FileUtils.forceDelete(serviceCloudConfiguration);
+    }
     boolean found=false;
     try {
-      String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-      File packedFile=Packager.pack(new File(appDir,serviceName),absolutePUName);
+      File packedFile=Packager.pack(serviceDirectory,absolutePUName);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
       final String templateName=(service.getCompute() == null ? null : service.getCompute().getTemplate());
-      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS);
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }
