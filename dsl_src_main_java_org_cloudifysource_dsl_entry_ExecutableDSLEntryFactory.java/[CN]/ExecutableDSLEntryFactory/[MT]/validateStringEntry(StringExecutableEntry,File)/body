@@ -7,11 +7,5 @@
     if (!file.isAbsolute()) {
       file=new File(workDirectory,fileName);
     }
-    if (file.exists() && file.isFile()) {
-      GroovyFileCompilationResult result=groovyValidater.validateFile(file);
-      if (!result.isSuccess()) {
-        throw new DSLValidationException(result.getErrorMessage(),result.getCause());
-      }
-    }
   }
 }
