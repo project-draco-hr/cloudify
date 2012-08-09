@@ -1,15 +1,3 @@
 {
-  try {
-    this.groovyShell.parse(groovyFile);
-    return GroovyFileCompilationResult.SUCCESS;
-  }
- catch (  final CompilationFailedException e) {
-    return new GroovyFileCompilationResult(false,e.getMessage(),e.getMessage(),e);
-  }
-catch (  final IOException e) {
-    return new GroovyFileCompilationResult(false,e.getMessage(),e.getMessage(),e);
-  }
-catch (  final Throwable t) {
-    return new GroovyFileCompilationResult(false,t.getMessage(),t.getMessage(),t);
-  }
+  return GroovyFileCompilationResult.SUCCESS;
 }

@@ -1,3 +1,2 @@
 {
-  this.groovyShell=new GroovyShell(Thread.currentThread().getContextClassLoader());
 }
