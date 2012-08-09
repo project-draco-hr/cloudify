@@ -31,5 +31,5 @@
     lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null);
     dest.deleteOnExit();
   }
-  return successStatus(lifecycleEventsContainerID.toString());
+  return successStatus(lifecycleEventsContainerID);
 }
