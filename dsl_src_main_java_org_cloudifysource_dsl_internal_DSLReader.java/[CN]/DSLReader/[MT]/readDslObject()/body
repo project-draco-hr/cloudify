@@ -31,9 +31,12 @@
   }
   final GroovyShell gs=createGroovyShell(properties);
   final Object result=evaluateGroovyScript(gs);
+  if (result == null) {
+    throw new DSLException("The DSL evaluated to a null - check your syntax and try again");
+  }
   if (this.createServiceContext) {
     if (!(result instanceof Service)) {
-      throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Sevice. " + "Set the 'createServiceContext' option to false if you do not need a service conext");
+      throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Service. " + "Set the 'createServiceContext' option to false if you do not need a service conext");
     }
     if (isRunningInGSC) {
       if (clusterInfoToUseInGsc.getName() == null) {
