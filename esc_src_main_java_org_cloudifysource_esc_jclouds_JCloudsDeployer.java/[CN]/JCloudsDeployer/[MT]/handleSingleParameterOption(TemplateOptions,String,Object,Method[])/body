@@ -8,7 +8,7 @@
           ++numOfMethodsFound;
           logger.fine("Invoking " + entryKey + ". Number of methods found so far: "+ numOfMethodsFound);
           method.invoke(templateOptions,entryValue);
-          return;
+          return true;
         }
  catch (        final IllegalArgumentException e) {
           invocationException=e;
@@ -23,7 +23,7 @@ catch (        final InvocationTargetException e) {
     }
   }
   if (invocationException == null) {
-    throw new IllegalArgumentException("Failed to set template option: " + entryKey + " to value: "+ entryValue+ ". Could not find a matching method.");
+    return false;
   }
  else {
     throw new IllegalArgumentException("Failed to set template option: " + entryKey + " to value: "+ entryValue+ ". An error was encountered while trying to set the option: "+ invocationException.getMessage(),invocationException);

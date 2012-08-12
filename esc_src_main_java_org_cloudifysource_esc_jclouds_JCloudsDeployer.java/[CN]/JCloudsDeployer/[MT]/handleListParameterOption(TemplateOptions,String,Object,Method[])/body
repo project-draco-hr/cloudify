@@ -1,40 +1,22 @@
 {
-  Method m=null;
-  try {
-    m=templateOptions.getClass().getMethod(entryKey,entryValue.getClass());
-  }
- catch (  final SecurityException e) {
-    throw new IllegalArgumentException("Error while loo king for method to match option: " + entryKey + " with option value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
-  }
-catch (  final NoSuchMethodException e) {
-  }
-  if (m != null) {
-    handleSingleParameterOption(templateOptions,entryKey,entryValue,templateOptionMethods);
-  }
- else {
-    @SuppressWarnings("unchecked") final List<Object> paramList=(List<Object>)entryValue;
-    final Object[] paramArray=paramList.toArray();
-    final Class<?>[] classArray=new Class<?>[paramArray.length];
-    for (int i=0; i < classArray.length; i++) {
-      classArray[i]=paramArray[i].getClass();
-    }
-    try {
-      m=templateOptions.getClass().getMethod(entryKey,classArray);
-    }
- catch (    final SecurityException e) {
-      throw new IllegalArgumentException("Error while looking for method to match option: " + entryKey + " with option value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
-    }
-catch (    final NoSuchMethodException e) {
-    }
-    if (m == null) {
-      throw new IllegalArgumentException("Could not find a matching method to set template option: " + entryKey + " with the following values: "+ paramList);
-    }
- else {
-      try {
-        m.invoke(templateOptions,paramArray);
-      }
- catch (      final Exception e) {
-        throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ entryValue+ ". Error was: "+ e.getMessage(),e);
+  @SuppressWarnings("unchecked") final List<Object> paramList=(List<Object>)entryValue;
+  final Object[] paramArray=paramList.toArray();
+  for (  Method m : templateOptionMethods) {
+    if (m.getName().equals(entryKey)) {
+      if (m.getParameterTypes().length == paramList.size()) {
+        try {
+          m.invoke(templateOptions,paramArray);
+          return;
+        }
+ catch (        IllegalArgumentException e) {
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+        }
+catch (        IllegalAccessException e) {
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+        }
+catch (        InvocationTargetException e) {
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+        }
       }
     }
   }

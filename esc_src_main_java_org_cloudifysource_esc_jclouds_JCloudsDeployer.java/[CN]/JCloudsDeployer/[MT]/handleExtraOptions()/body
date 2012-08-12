@@ -9,11 +9,16 @@
       if (entryValue == null) {
         handleNullValueTemplateOption(optionEntries,templateOptions,entry,entryKey);
       }
- else       if (List.class.isAssignableFrom(entryValue.getClass())) {
-        handleListParameterOption(templateOptions,entryKey,entryValue,templateOptionsMethods);
-      }
  else {
-        handleSingleParameterOption(templateOptions,entryKey,entryValue,templateOptionsMethods);
+        final boolean found=handleSingleParameterOption(templateOptions,entryKey,entryValue,templateOptionsMethods);
+        if (!found) {
+          if (entryValue instanceof List<?>) {
+            handleListParameterOption(templateOptions,entryKey,entryValue,templateOptionsMethods);
+          }
+ else {
+            throw new IllegalArgumentException("Could not find a template option method matching name: " + entryKey + " and value: "+ entryValue+ ".");
+          }
+        }
       }
     }
   }
