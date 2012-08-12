@@ -31,11 +31,10 @@ synchronized (this.stateMutex) {
       initServiceProcessMode(this.process,exitCode);
     }
   finally {
-      if (!this.processMode.equals(USMProcessMode.NO_PROCESS)) {
-        this.serviceProcessPIDs=getUsmLifecycleBean().getServiceProcesses();
-        logger.info("Monitored processes: " + this.serviceProcessPIDs);
-        writePidsToFile();
-      }
+      logger.info("Executing Process Locators!");
+      this.serviceProcessPIDs=getUsmLifecycleBean().getServiceProcesses();
+      logger.info("Monitored processes: " + this.serviceProcessPIDs);
+      writePidsToFile();
     }
     getUsmLifecycleBean().firePostStart(StartReason.DEPLOY);
     startAsyncTasks();
