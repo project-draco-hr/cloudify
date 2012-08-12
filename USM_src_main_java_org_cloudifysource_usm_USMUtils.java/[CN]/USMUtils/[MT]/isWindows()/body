@@ -1,4 +1,0 @@
-{
-  final String os=System.getProperty("os.name").toLowerCase();
-  return os.indexOf("win") >= 0;
-}

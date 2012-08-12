@@ -2,7 +2,7 @@
   if (!file.exists()) {
     return false;
   }
-  if (USMUtils.isWindows()) {
+  if (ServiceUtils.isWindows()) {
     return true;
   }
   if (USMUtils.markFileAsExecutableUsingJdk(file)) {
