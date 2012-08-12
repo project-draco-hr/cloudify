@@ -1,0 +1,5 @@
+{
+  this.affinityPrefix=affinityPrefix;
+  this.cloudServicePrefix=cloudServicePrefix;
+  this.storagePrefix=storagePrefix;
+}

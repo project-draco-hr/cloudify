@@ -1,6 +1,8 @@
 {
-  ClientResponse response=doGet("/" + subscriptionId + "/affinitygroups");
+  ClientResponse response=doGet("/affinitygroups");
+  checkForError(response);
   String responseBody=response.getEntity(String.class);
+  checkForError(response);
   AffinityGroups affinityGroups=(AffinityGroups)MicrosoftAzureModelUtils.unmarshall(responseBody);
   return affinityGroups;
 }

@@ -1,0 +1,59 @@
+{
+  long currentTimeInMillis=System.currentTimeMillis();
+  long lockTimeout=endTime - currentTimeInMillis - ESTIMATED_TIME_TO_START_VM;
+  if (lockTimeout < 0) {
+    throw new MicrosoftAzureException("aborted request to provision virtual machine. " + "the timeout is less then the estimated time to provision the machine");
+  }
+  logger.fine("[" + Thread.currentThread().getName() + "] - waiting for pending request lock...");
+  boolean lockAcquired=pendingRequest.tryLock(lockTimeout,TimeUnit.MILLISECONDS);
+  String serviceName=null;
+  Deployment deployment=null;
+  if (lockAcquired) {
+    logger.fine("[" + Thread.currentThread().getName() + "] - lock acquired");
+    logger.fine("[" + Thread.currentThread().getName() + "] - executing a request to provision a new virtual machine");
+    try {
+      serviceName=createCloudService(deplyomentDesc.getAffinityGroup(),endTime);
+      deplyomentDesc.setHostedServiceName(serviceName);
+      deplyomentDesc.setDeploymentName(serviceName);
+      deployment=requestBodyBuilder.buildDeployment(deplyomentDesc);
+      String xmlRequest=MicrosoftAzureModelUtils.marshall(deployment,false);
+      logger.fine("[" + Thread.currentThread().getName() + "] - "+ "launching virtual machine : "+ deplyomentDesc.getRoleName());
+      ClientResponse response=doPost("/services/hostedservices/" + serviceName + "/deployments",xmlRequest);
+      String requestId=extractRequestId(response);
+      waitForRequestToFinish(requestId,endTime);
+      pendingRequest.unlock();
+      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+    }
+ catch (    final Exception e) {
+      pendingRequest.unlock();
+      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+      if (e instanceof MicrosoftAzureException) {
+        throw new MicrosoftAzureException(e);
+      }
+      if (e instanceof TimeoutException) {
+        throw new TimeoutException(e.getMessage());
+      }
+      if (e instanceof InterruptedException) {
+        throw new InterruptedException(e.getMessage());
+      }
+    }
+  }
+ else {
+    throw new TimeoutException("failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
+  }
+  Deployment deploymentResponse=waitForDeploymentStatus("Running",serviceName,deployment.getDeploymentSlot(),endTime);
+  deploymentResponse=waitForRoleInstanceStatus("ReadyRole",serviceName,deployment.getDeploymentSlot(),endTime);
+  RoleDetails roleAddressDetails=new RoleDetails();
+  roleAddressDetails.setId(deploymentResponse.getPrivateId());
+  roleAddressDetails.setPrivateIp(deploymentResponse.getRoleInstanceList().getRoleInstances().get(0).getIpAddress());
+  ConfigurationSets configurationSets=deploymentResponse.getRoleList().getRoles().get(0).getConfigurationSets();
+  String publicIp=null;
+  for (  ConfigurationSet configurationSet : configurationSets) {
+    if (configurationSet instanceof NetworkConfigurationSet) {
+      NetworkConfigurationSet networkConfigurationSet=(NetworkConfigurationSet)configurationSet;
+      publicIp=networkConfigurationSet.getInputEndpoints().getInputEndpoints().get(0).getvIp();
+    }
+  }
+  roleAddressDetails.setPublicIp(publicIp);
+  return roleAddressDetails;
+}

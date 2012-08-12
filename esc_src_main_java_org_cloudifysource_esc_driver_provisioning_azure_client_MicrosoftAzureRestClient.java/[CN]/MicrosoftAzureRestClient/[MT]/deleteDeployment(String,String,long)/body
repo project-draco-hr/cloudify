@@ -1,0 +1,36 @@
+{
+  long currentTimeInMillis=System.currentTimeMillis();
+  long lockTimeout=endTime - currentTimeInMillis;
+  logger.fine("[" + Thread.currentThread().getName() + "] - waiting for pending request lock...");
+  boolean lockAcquired=pendingRequest.tryLock(lockTimeout,TimeUnit.MILLISECONDS);
+  if (lockAcquired) {
+    logger.fine("[" + Thread.currentThread().getName() + "] - lock acquired");
+    logger.fine("[" + Thread.currentThread().getName() + "] - executing a request to delete virtual machine");
+    try {
+      logger.info("[" + Thread.currentThread().getName() + "] - deleting deployment of virtual machine from : "+ deploymentName);
+      ClientResponse response=doDelete("/services/hostedservices/" + hostedServiceName + "/deployments/"+ deploymentName);
+      String requestId=extractRequestId(response);
+      waitForRequestToFinish(requestId,endTime);
+      pendingRequest.unlock();
+      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+    }
+ catch (    final Exception e) {
+      logger.warning("[" + Thread.currentThread().getName() + "] failed deleting deployment of virtual machine from : "+ deploymentName);
+      pendingRequest.unlock();
+      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+      if (e instanceof MicrosoftAzureException) {
+        throw new MicrosoftAzureException(e);
+      }
+      if (e instanceof TimeoutException) {
+        throw new TimeoutException(e.getMessage());
+      }
+      if (e instanceof InterruptedException) {
+        throw new InterruptedException(e.getMessage());
+      }
+    }
+    return true;
+  }
+ else {
+    throw new TimeoutException("failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
+  }
+}

@@ -25,6 +25,7 @@
   this.password=this.template.getPassword();
   this.size=this.template.getHardwareId();
   this.subscriptionId=this.cloud.getUser().getUser();
+  this.cleanup=Boolean.parseBoolean((String)this.cloud.getCustom().get(AZURE_CLEANUP_ON_TEARDOWN));
   this.location=(String)this.cloud.getCustom().get(AZURE_AFFINITY_LOCATION);
   if (location == null) {
     throw new IllegalArgumentException("Custom field '" + AZURE_AFFINITY_LOCATION + "' must be set");
@@ -51,12 +52,10 @@
  else {
     this.serverNamePrefix=this.cloud.getProvider().getMachineNamePrefix();
   }
-  logger.fine("Initializing Azure REST Client");
-  this.azureClient=new MicrosoftAzureRestClient(this.subscriptionId,this.pathToPfxFile,this.pfxPassword);
   final String wireLog=(String)this.cloud.getCustom().get(AZURE_WIRE_LOG);
+  boolean enableWireLog=false;
   if (wireLog != null) {
-    if (Boolean.parseBoolean(wireLog)) {
-      this.azureClient.setLoggingFilter(logger);
-    }
+    enableWireLog=Boolean.parseBoolean(wireLog);
   }
+  initRestClient(this.subscriptionId,this.pathToPfxFile,this.pfxPassword,enableWireLog);
 }

@@ -1,0 +1,14 @@
+{
+  VirtualNetworkSites virtualNetworkSites=listVirtualNetworkSites();
+  int index=0;
+  for (int i=0; i < virtualNetworkSites.getVirtualNetworkSites().size(); i++) {
+    VirtualNetworkSite site=virtualNetworkSites.getVirtualNetworkSites().get(i);
+    if (site.getName().equals(virtualNetworkSite)) {
+      index=i;
+      break;
+    }
+  }
+  virtualNetworkSites.getVirtualNetworkSites().remove(index);
+  setNetworkConfiguration(endTime,virtualNetworkSites);
+  return true;
+}

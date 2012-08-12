@@ -1,5 +1,0 @@
-String serviceName
-String deploymentName
-String roleName
-long timeout
-TimeUnit timeunit

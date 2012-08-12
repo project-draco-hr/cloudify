@@ -1,4 +1,0 @@
-CreatePersistentVMRoleDeploymentDescriptor deplyomentDesc
-String serviceName
-long timeout
-TimeUnit timeunit

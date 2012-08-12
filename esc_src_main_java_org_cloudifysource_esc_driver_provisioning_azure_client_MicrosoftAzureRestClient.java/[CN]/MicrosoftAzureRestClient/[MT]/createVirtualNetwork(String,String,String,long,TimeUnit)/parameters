@@ -1,5 +1,0 @@
-String addressSpace
-String affinityGroup
-String networkName
-long timeout
-TimeUnit timeunit

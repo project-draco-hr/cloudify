@@ -12,7 +12,7 @@
   Deployment deployment=new Deployment();
   deployment.setDeploymentSlot(deploymentSlot);
   deployment.setVirtualNetworkName(networkName);
-  deployment.setLabel(CLOUDIFY_DEPLOYMENT_PREFIX);
+  deployment.setLabel(deploymentName);
   deployment.setName(deploymentName);
   RoleList roleList=new RoleList();
   Role role=new Role();

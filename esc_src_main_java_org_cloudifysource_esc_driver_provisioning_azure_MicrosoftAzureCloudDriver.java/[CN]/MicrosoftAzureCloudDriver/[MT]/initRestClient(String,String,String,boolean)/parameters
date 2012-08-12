@@ -1,0 +1,4 @@
+String subscriptionId
+String pathToPfxFile
+String pfxPassword
+boolean enableWireLog

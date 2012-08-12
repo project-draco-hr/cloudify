@@ -1,10 +1,10 @@
 {
-  ClientResponse response=resource.path("/" + subscriptionId + "/services/networking/media").header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
-  if (response.getStatus() == 404) {
+  ClientResponse response=doGet("/services/networking/media");
+  if (response.getStatus() == HTTP_NOT_FOUND) {
     return null;
   }
   String responseBody=response.getEntity(String.class);
-  if ((int)responseBody.charAt(0) == 65279) {
+  if ((int)responseBody.charAt(0) == BAD_CHAR) {
     responseBody=responseBody.substring(1);
   }
   GlobalNetworkConfiguration globalNetowrkConfiguration=(GlobalNetworkConfiguration)MicrosoftAzureModelUtils.unmarshall(responseBody);

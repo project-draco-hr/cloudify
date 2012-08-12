@@ -1,0 +1,12 @@
+{
+  StringBuilder builder=new StringBuilder();
+  builder.append("/services/hostedservices/" + hostedServiceName);
+  if (embedDeployments) {
+    builder.append("?embed-detail=true");
+  }
+  ClientResponse response=doGet(builder.toString());
+  checkForError(response);
+  String responseBody=response.getEntity(String.class);
+  HostedService hostedService=(HostedService)MicrosoftAzureModelUtils.unmarshall(responseBody);
+  return hostedService;
+}

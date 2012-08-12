@@ -1,0 +1,22 @@
+{
+  while (true) {
+    Operation operation=getOperation(requestId);
+    String status=operation.getStatus();
+    if (!status.equals(IN_PROGRESS)) {
+      if (status.equals(SUCCEEDED)) {
+        return;
+      }
+      if (status.equals(FAILED)) {
+        String errorMessage=operation.getError().getMessage();
+        String errorStatus=operation.getStatus();
+        throw new MicrosoftAzureException(errorStatus,errorMessage);
+      }
+    }
+ else {
+      Thread.sleep(DEFAULT_POLLING_INTERVAL);
+    }
+    if (System.currentTimeMillis() > endTime) {
+      throw new TimeoutException("Timed out waiting for operation to finish. last state was : " + status);
+    }
+  }
+}

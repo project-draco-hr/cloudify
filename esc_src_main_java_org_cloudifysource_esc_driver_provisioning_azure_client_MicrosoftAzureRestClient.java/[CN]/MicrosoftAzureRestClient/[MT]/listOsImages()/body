@@ -1,4 +1,5 @@
 {
-  ClientResponse response=doGet(subscriptionId + "/services/images");
+  ClientResponse response=doGet("/services/images");
+  checkForError(response);
   return response.getEntity(String.class);
 }

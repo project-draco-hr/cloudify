@@ -2,8 +2,7 @@
   ClientResponse response=null;
   for (int i=0; i < MAX_RETRIES; i++) {
     try {
-      response=resource.path(url).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
-      checkForError(response);
+      response=resource.path(subscriptionId + url).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).header(CONTENT_TYPE_HEADER_NAME,CONTENT_TYPE_HEADER_VALUE).get(ClientResponse.class);
       break;
     }
  catch (    ClientHandlerException e) {

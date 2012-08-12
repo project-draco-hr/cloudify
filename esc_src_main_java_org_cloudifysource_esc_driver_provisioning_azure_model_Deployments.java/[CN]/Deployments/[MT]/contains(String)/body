@@ -1,0 +1,8 @@
+{
+  for (  Deployment deployment : deployments) {
+    if (deployment.getName().equals(deploymentName)) {
+      return true;
+    }
+  }
+  return false;
+}

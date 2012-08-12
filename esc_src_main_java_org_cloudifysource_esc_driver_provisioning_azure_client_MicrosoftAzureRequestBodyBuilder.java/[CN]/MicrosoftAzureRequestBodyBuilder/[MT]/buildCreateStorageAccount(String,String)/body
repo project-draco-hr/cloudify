@@ -1,7 +1,11 @@
 {
   CreateStorageServiceInput storageAccount=new CreateStorageServiceInput();
   storageAccount.setAffinityGroup(affinityGroupName);
-  storageAccount.setLabel(new String(Base64.encode(CLOUDIFY_STORAGE_ACCOUNT_PREFIX)));
+  try {
+    storageAccount.setLabel(new String(Base64.encode(storagePrefix),UTF_8));
+  }
+ catch (  UnsupportedEncodingException e) {
+  }
   storageAccount.setServiceName(storageAccountName);
   return storageAccount;
 }

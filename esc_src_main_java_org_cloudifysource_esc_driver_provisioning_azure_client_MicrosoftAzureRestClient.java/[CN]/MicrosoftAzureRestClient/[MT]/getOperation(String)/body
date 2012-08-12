@@ -1,5 +1,5 @@
 {
-  ClientResponse response=resource.path("/" + subscriptionId + "/operations/"+ requestId).header(X_MS_VERSION_HEADER_NAME,X_MS_VERSION_HEADER_VALUE).get(ClientResponse.class);
+  ClientResponse response=doGet("/operations/" + requestId);
   Operation operation=(Operation)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
   return operation;
 }

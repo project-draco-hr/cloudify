@@ -1,0 +1,3 @@
+String machineIp
+boolean isPrivateIp
+long endTime

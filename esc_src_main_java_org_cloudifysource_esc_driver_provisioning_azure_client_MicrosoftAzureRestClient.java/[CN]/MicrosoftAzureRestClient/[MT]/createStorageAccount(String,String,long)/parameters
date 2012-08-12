@@ -1,0 +1,3 @@
+String affinityGroup
+String storageAccountName
+long endTime

@@ -1,0 +1,5 @@
+{
+  this.deploymentName=deploymentName;
+  this.hostedServiceName=hostedServiceName;
+  this.endTime=endTime;
+}

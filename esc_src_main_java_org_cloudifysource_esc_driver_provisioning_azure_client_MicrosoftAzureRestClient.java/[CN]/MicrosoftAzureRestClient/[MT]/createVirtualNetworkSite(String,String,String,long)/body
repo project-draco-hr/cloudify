@@ -1,0 +1,22 @@
+{
+  VirtualNetworkSites virtualNetworkSites=listVirtualNetworkSites();
+  if (virtualNetworkSites != null && virtualNetworkSites.contains(networkSiteName)) {
+    logger.fine("Found an existing virtual netowrk site : " + networkSiteName);
+    return;
+  }
+ else {
+    if (virtualNetworkSites == null) {
+      virtualNetworkSites=new VirtualNetworkSites();
+    }
+  }
+  logger.fine("creating virtual network site : " + networkSiteName);
+  VirtualNetworkSite newSite=new VirtualNetworkSite();
+  AddressSpace address=new AddressSpace();
+  address.setAddressPrefix(addressSpace);
+  newSite.setAddressSpace(address);
+  newSite.setAffinityGroup(affinityGroup);
+  newSite.setName(networkSiteName);
+  virtualNetworkSites.getVirtualNetworkSites().add(newSite);
+  setNetworkConfiguration(endTime,virtualNetworkSites);
+  logger.fine("created virtual network site : " + networkSiteName);
+}

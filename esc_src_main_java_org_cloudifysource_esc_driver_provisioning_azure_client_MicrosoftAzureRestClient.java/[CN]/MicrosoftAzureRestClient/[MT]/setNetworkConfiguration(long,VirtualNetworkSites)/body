@@ -1,0 +1,7 @@
+{
+  GlobalNetworkConfiguration networkConfiguration=requestBodyBuilder.buildGlobalNetworkConfiguration(virtualNetworkSites.getVirtualNetworkSites());
+  String xmlRequest=MicrosoftAzureModelUtils.marshall(networkConfiguration,true);
+  ClientResponse response=doPut("/services/networking/media",xmlRequest,"text/plain");
+  String requestId=extractRequestId(response);
+  waitForRequestToFinish(requestId,endTime);
+}

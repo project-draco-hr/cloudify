@@ -1,0 +1,15 @@
+{
+  while (true) {
+    Deployment deployment=getDeploymentByDeploymentSlot(hostedServiceName,deploymentSlot);
+    String status=deployment.getStatus();
+    if (status.equals(state)) {
+      return deployment;
+    }
+ else {
+      Thread.sleep(DEFAULT_POLLING_INTERVAL);
+    }
+    if (System.currentTimeMillis() > endTime) {
+      throw new TimeoutException("Timed out waiting for operation to finish. last state was : " + status);
+    }
+  }
+}

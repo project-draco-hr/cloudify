@@ -1,2 +1,46 @@
 {
+  long endTime=System.currentTimeMillis() + DEFAULT_SHUTDOWN_DURATION;
+  ExecutorService service=Executors.newCachedThreadPool();
+  try {
+    stopManagementMachines(endTime,service);
+  }
+  finally {
+    service.shutdown();
+  }
+  boolean deletedNetwork=false;
+  boolean deletedStorage=false;
+  Exception first=null;
+  if (cleanup) {
+    try {
+      deletedNetwork=azureClient.deleteVirtualNetworkSite(networkName,endTime);
+      logger.fine("deleted virtual network site : " + networkName);
+    }
+ catch (    final Exception e) {
+      first=e;
+      logger.warning("failed deleting virtual network site : " + networkName);
+      logger.warning(ExceptionUtils.getFullStackTrace(e));
+    }
+    try {
+      deletedStorage=azureClient.deleteStorageAccount(storageAccountName,endTime);
+    }
+ catch (    final Exception e) {
+      logger.warning("failed deleting storage account : " + networkName);
+      logger.warning(ExceptionUtils.getFullStackTrace(e));
+    }
+    if (deletedNetwork && deletedStorage) {
+      try {
+        azureClient.deleteAffinityGroup(affinityGroup,endTime);
+      }
+ catch (      final Exception e) {
+        logger.warning("failed deleting affinity group : " + affinityGroup);
+        logger.warning(ExceptionUtils.getFullStackTrace(e));
+      }
+    }
+ else {
+      logger.warning("not deleting affinity group since " + "failed deleting virtual network site and storage account.");
+    }
+    if (first != null) {
+      throw new CloudProvisioningException(first);
+    }
+  }
 }

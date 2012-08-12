@@ -1,0 +1,56 @@
+{
+  MachineDetails machineDetails=new MachineDetails();
+  CreatePersistentVMRoleDeploymentDescriptor desc=null;
+  RoleDetails roleAddressDetails=null;
+  try {
+    desc=new CreatePersistentVMRoleDeploymentDescriptor();
+    desc.setRoleName(serverNamePrefix + "_role");
+    desc.setDeploymentSlot(deploymentSlot);
+    desc.setImageName(imageName);
+    desc.setAvailabilitySetName(availabilitySet);
+    desc.setAffinityGroup(affinityGroup);
+    InputEndpoints inputEndpoints=createInputEndPoints();
+    desc.setInputEndpoints(inputEndpoints);
+    desc.setNetworkName(networkName);
+    desc.setPassword(password);
+    desc.setSize(size);
+    desc.setStorageAccountName(storageAccountName);
+    desc.setUserName(userName);
+    logger.info("creating a virtual machine with details : " + desc);
+    roleAddressDetails=azureClient.createVirtualMachineDeployment(desc,endTime);
+    machineDetails.setPrivateAddress(roleAddressDetails.getPrivateIp());
+    machineDetails.setPublicAddress(roleAddressDetails.getPublicIp());
+    machineDetails.setMachineId(roleAddressDetails.getId());
+    machineDetails.setAgentRunning(false);
+    machineDetails.setCloudifyInstalled(false);
+    machineDetails.setInstallationDirectory(this.template.getRemoteDirectory());
+    machineDetails.setRemoteDirectory(this.template.getRemoteDirectory());
+    machineDetails.setRemotePassword(password);
+    machineDetails.setRemoteUsername(userName);
+    logger.info("virtual machine started and is ready for use : " + machineDetails);
+    return machineDetails;
+  }
+ catch (  final MicrosoftAzureException e) {
+    logger.severe("failed creating virtual machine properly" + e.getMessage());
+    if (desc.getHostedServiceName() != null) {
+      try {
+        azureClient.deleteVirtualMachineByDeploymentIfExists(desc.getHostedServiceName(),desc.getDeploymentName(),endTime);
+      }
+ catch (      final Exception e1) {
+        if (e1 instanceof TimeoutException) {
+          throw new TimeoutException(e1.getMessage());
+        }
+ else {
+          throw new CloudProvisioningException(e1);
+        }
+      }
+    }
+ else {
+      logger.fine("not attempting to shutdown virtual machine " + desc.getRoleName() + " since a failure happened while to create a cloud service for this vm.");
+    }
+    throw new CloudProvisioningException(e);
+  }
+catch (  InterruptedException e) {
+    throw new CloudProvisioningException(e);
+  }
+}

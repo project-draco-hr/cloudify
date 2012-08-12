@@ -1,8 +1,0 @@
-{
-  CreateHostedService createHostedService=requestBodyBuilder.buildCreateCloudService(affinityGroup);
-  String xmlRequest=MicrosoftAzureModelUtils.marshall(createHostedService,false);
-  ClientResponse response=doPost("/" + subscriptionId + "/services/hostedservices",xmlRequest);
-  String requestId=extractRequestId(response);
-  waitForRequestToFinish(requestId,timeout,timeunit);
-  return createHostedService.getServiceName();
-}

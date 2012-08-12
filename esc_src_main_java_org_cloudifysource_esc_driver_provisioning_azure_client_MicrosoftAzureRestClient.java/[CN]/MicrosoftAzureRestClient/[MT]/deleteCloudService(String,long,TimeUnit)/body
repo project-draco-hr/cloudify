@@ -1,5 +1,0 @@
-{
-  ClientResponse response=doDelete(subscriptionId + "/services/hostedservices/" + cloudServiceName);
-  String requestId=extractRequestId(response);
-  waitForRequestToFinish(requestId,timeout,timeunit);
-}

@@ -1,0 +1,36 @@
+{
+  boolean roleDeleted=false;
+  boolean osDiskDeleted=false;
+  String diskName=null;
+  String roleName=null;
+  try {
+    Disks disks=listOSDisks();
+    for (    Disk disk : disks) {
+      AttachedTo attachedTo=disk.getAttachedTo();
+      if (attachedTo != null) {
+        if (cloudServiceName.equals(attachedTo.getHostedServiceName())) {
+          diskName=disk.getName();
+          roleName=attachedTo.getRoleName();
+          break;
+        }
+      }
+    }
+    roleDeleted=deleteDeployment(cloudServiceName,deploymentName,endTime);
+    logger.fine("deleting os disk : " + diskName + " that belonged to the virtual machine "+ roleName);
+    osDiskDeleted=deleteOSDisk(diskName,endTime);
+    logger.fine("deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
+    deleteCloudService(cloudServiceName,endTime);
+  }
+ catch (  final MicrosoftAzureException e) {
+    logger.severe(ExceptionUtils.getFullStackTrace(e));
+    throw e;
+  }
+catch (  final TimeoutException e) {
+    logger.severe(ExceptionUtils.getFullStackTrace(e));
+    throw e;
+  }
+catch (  final InterruptedException e) {
+    logger.severe(ExceptionUtils.getFullStackTrace(e));
+    throw e;
+  }
+}

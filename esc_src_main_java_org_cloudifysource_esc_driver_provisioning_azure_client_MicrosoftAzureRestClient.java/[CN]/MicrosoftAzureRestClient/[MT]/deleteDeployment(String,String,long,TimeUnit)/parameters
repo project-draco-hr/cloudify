@@ -1,4 +1,0 @@
-String hostedServiceName
-String deploymentName
-long timeout
-TimeUnit unit

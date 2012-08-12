@@ -1,0 +1,6 @@
+{
+  ClientResponse response=doDelete("/services/hostedservices/" + cloudServiceName);
+  String requestId=extractRequestId(response);
+  waitForRequestToFinish(requestId,endTime);
+  return true;
+}

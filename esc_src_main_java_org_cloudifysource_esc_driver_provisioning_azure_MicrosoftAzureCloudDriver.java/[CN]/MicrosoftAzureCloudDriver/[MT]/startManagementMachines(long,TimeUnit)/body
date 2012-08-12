@@ -1,31 +1,22 @@
 {
+  long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   try {
-    logger.fine("Creating Affinity Group : " + affinityGroup);
-    azureClient.createAffinityGroup(affinityGroup,location,duration,unit);
-    logger.fine("Creating Virtual Network : " + networkName);
-    azureClient.createVirtualNetwork(addressSpace,affinityGroup,networkName,duration,unit);
-    logger.fine("Creating a Storage Account : " + storageAccountName);
-    azureClient.createStorageAccount(affinityGroup,storageAccountName,duration,unit);
+    azureClient.createAffinityGroup(affinityGroup,location,endTime);
+    azureClient.createVirtualNetworkSite(addressSpace,affinityGroup,networkName,endTime);
+    azureClient.createStorageAccount(affinityGroup,storageAccountName,endTime);
   }
  catch (  final MicrosoftAzureException e) {
     throw new CloudProvisioningException(e);
   }
+catch (  InterruptedException e) {
+    throw new CloudProvisioningException(e);
+  }
   int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
   final ExecutorService executorService=Executors.newFixedThreadPool(numberOfManagementMachines);
-  final List<Future<MachineDetails>> results=new ArrayList<Future<MachineDetails>>(numberOfManagementMachines);
-  for (int i=0; i < numberOfManagementMachines; i++) {
-    StartMachineCallable task=new StartMachineCallable(duration,unit);
-    Future<MachineDetails> future=executorService.submit(task);
-    results.add(future);
+  try {
+    return startManagementMachines(endTime,numberOfManagementMachines,executorService);
   }
-  List<MachineDetails> managementMachinesDetails=new ArrayList<MachineDetails>();
-  for (  Future<MachineDetails> future : results) {
-    try {
-      managementMachinesDetails.add(future.get());
-    }
- catch (    final Exception e) {
-      throw new CloudProvisioningException(e);
-    }
+  finally {
+    executorService.shutdown();
   }
-  return managementMachinesDetails.toArray(new MachineDetails[numberOfManagementMachines]);
 }

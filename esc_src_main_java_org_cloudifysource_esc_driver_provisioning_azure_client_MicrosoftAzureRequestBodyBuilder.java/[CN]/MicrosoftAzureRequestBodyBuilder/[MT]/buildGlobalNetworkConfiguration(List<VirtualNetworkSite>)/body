@@ -1,0 +1,9 @@
+{
+  GlobalNetworkConfiguration networkConfiguration=new GlobalNetworkConfiguration();
+  VirtualNetworkConfiguration virtualNetworkConfiguration=new VirtualNetworkConfiguration();
+  VirtualNetworkSites virtualNetworkSites=new VirtualNetworkSites();
+  virtualNetworkSites.setVirtualNetworkSites(sites);
+  virtualNetworkConfiguration.setVirtualNetworkSites(virtualNetworkSites);
+  networkConfiguration.setVirtualNetworkConfiguration(virtualNetworkConfiguration);
+  return networkConfiguration;
+}

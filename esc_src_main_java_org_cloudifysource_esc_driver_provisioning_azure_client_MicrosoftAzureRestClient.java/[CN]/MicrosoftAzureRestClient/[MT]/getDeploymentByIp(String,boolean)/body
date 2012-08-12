@@ -1,0 +1,20 @@
+{
+  Deployment deployment=null;
+  HostedServices cloudServices=listHostedServices();
+  for (  HostedService hostedService : cloudServices) {
+    String cloudServiceName=hostedService.getServiceName();
+    deployment=getHostedService(cloudServiceName,true).getDeployments().getDeployments().get(0);
+    String deploymentName=deployment.getName();
+    deployment=getDeploymentByDeploymentName(cloudServiceName,deploymentName);
+    String publicIp=getPublicIpFromDeployment(deployment);
+    String privateIp=getPrivateIpFromDeployment(deployment);
+    String ip=isPrivateIp ? privateIp : publicIp;
+    if (machineIp.equals(ip)) {
+      deployment.setHostedServiceName(cloudServiceName);
+      logger.info("found a role with ip : " + machineIp);
+      return deployment;
+    }
+  }
+  logger.info("could not find any roles with ip :" + machineIp);
+  return null;
+}

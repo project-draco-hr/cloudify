@@ -1,8 +1,8 @@
 {
   int status=response.getStatus();
-  if (status != 200 && status != 201 && status != 202) {
+  if (status != HTTP_OK && status != HTTP_CREATED && status != HTTP_ACCEPTED) {
     Error error=(Error)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
     String errorMessage=error.getMessage();
-    throw new MicrosoftAzureException(status + " : " + errorMessage);
+    throw new MicrosoftAzureException(String.valueOf(status),errorMessage);
   }
 }

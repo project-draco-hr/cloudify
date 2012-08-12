@@ -1,0 +1,37 @@
+{
+  InputEndpoints inputEndpoints=new InputEndpoints();
+  if (this.endpoints != null) {
+    for (    Map<String,String> endpointMap : this.endpoints) {
+      String name=endpointMap.get("name");
+      int port=Integer.parseInt(endpointMap.get("port"));
+      String protocol=endpointMap.get("protocol");
+      InputEndpoint endpoint=new InputEndpoint();
+      endpoint.setLocalPort(port);
+      endpoint.setPort(port);
+      endpoint.setName(name);
+      endpoint.setProtocol(protocol);
+      inputEndpoints.getInputEndpoints().add(endpoint);
+    }
+  }
+  InputEndpoint sshEndpoint=new InputEndpoint();
+  sshEndpoint.setLocalPort(SSH_PORT);
+  sshEndpoint.setPort(SSH_PORT);
+  sshEndpoint.setName("SSH");
+  sshEndpoint.setProtocol("TCP");
+  inputEndpoints.getInputEndpoints().add(sshEndpoint);
+  if (this.management) {
+    InputEndpoint webuiEndpoint=new InputEndpoint();
+    webuiEndpoint.setLocalPort(WEBUI_PORT);
+    webuiEndpoint.setPort(WEBUI_PORT);
+    webuiEndpoint.setName("Webui");
+    webuiEndpoint.setProtocol("TCP");
+    inputEndpoints.getInputEndpoints().add(webuiEndpoint);
+    InputEndpoint restEndpoint=new InputEndpoint();
+    restEndpoint.setLocalPort(REST_PORT);
+    restEndpoint.setPort(REST_PORT);
+    restEndpoint.setName("Rest");
+    restEndpoint.setProtocol("TCP");
+    inputEndpoints.getInputEndpoints().add(restEndpoint);
+  }
+  return inputEndpoints;
+}

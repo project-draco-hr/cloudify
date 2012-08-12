@@ -1,0 +1,4 @@
+String addressSpace
+String affinityGroup
+String networkSiteName
+long endTime

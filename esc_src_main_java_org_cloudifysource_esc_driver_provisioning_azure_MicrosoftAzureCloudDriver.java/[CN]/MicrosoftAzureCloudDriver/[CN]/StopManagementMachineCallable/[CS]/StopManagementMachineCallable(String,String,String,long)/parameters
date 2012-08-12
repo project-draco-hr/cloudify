@@ -1,0 +1,4 @@
+String deploymentName
+String hostedServiceName
+String diskName
+long endTime

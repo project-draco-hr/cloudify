@@ -1,0 +1,3 @@
+{
+  return "CreatePersistentVMRoleDeploymentDescriptor [deploymentName=" + deploymentName + ", deploymentSlot="+ deploymentSlot+ ", imageName="+ imageName+ ", storageAccountName="+ storageAccountName+ ", size="+ size+ ", networkName="+ networkName+ ", availabilitySetName="+ availabilitySetName+ ", roleName="+ roleName+ ", affinityGroup="+ affinityGroup+ ", hostedServiceName="+ hostedServiceName+ ", inputEndpoints="+ inputEndpoints+ "]";
+}

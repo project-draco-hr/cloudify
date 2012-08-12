@@ -1,0 +1,4 @@
+String state
+String hostedServiceName
+String deploymentSlot
+long endTime

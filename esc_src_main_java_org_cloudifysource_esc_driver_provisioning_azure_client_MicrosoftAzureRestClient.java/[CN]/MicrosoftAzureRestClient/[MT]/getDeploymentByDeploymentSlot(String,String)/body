@@ -1,0 +1,14 @@
+{
+  ClientResponse response=null;
+  try {
+    response=doGet("/services/hostedservices/" + hostedServiceName + "/deploymentslots/"+ deploymentSlot);
+    checkForError(response);
+  }
+ catch (  TimeoutException e) {
+    logger.warning("Timed out while waiting for deployment details. this may cause a leaking node");
+    throw e;
+  }
+  String responseBody=response.getEntity(String.class);
+  Deployment deployment=(Deployment)MicrosoftAzureModelUtils.unmarshall(responseBody);
+  return deployment;
+}

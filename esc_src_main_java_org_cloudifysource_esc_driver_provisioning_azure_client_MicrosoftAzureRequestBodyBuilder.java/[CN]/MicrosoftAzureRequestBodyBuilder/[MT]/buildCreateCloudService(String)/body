@@ -1,7 +1,12 @@
 {
   CreateHostedService hostedService=new CreateHostedService();
   hostedService.setAffinityGroup(affinityGroup);
-  hostedService.setLabel(new String(Base64.encode(CLOUDIFY_CLOUD_SERVICE_PREFIX + generateRandomUUID(UUID_LENGTH))));
-  hostedService.setServiceName(CLOUDIFY_CLOUD_SERVICE_PREFIX + generateRandomUUID(UUID_LENGTH));
+  String randomUID=generateRandomUUID(UUID_LENGTH);
+  try {
+    hostedService.setLabel(new String(Base64.encode(cloudServicePrefix + randomUID),UTF_8));
+  }
+ catch (  UnsupportedEncodingException e) {
+  }
+  hostedService.setServiceName(cloudServicePrefix + randomUID);
   return hostedService;
 }

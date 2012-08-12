@@ -1,0 +1,31 @@
+{
+  final List<Future<MachineDetails>> results=new ArrayList<Future<MachineDetails>>(numberOfManagementMachines);
+  for (int i=0; i < numberOfManagementMachines; i++) {
+    StartMachineCallable task=new StartMachineCallable(endTime);
+    Future<MachineDetails> future=executorService.submit(task);
+    results.add(future);
+  }
+  List<Exception> exceptionsOnManagementStart=new ArrayList<Exception>();
+  List<MachineDetails> managementMachinesDetails=new ArrayList<MachineDetails>();
+  for (  Future<MachineDetails> future : results) {
+    try {
+      managementMachinesDetails.add(future.get());
+    }
+ catch (    final Exception e) {
+      exceptionsOnManagementStart.add(e);
+    }
+  }
+  if (exceptionsOnManagementStart.size() == 0) {
+    return managementMachinesDetails.toArray(new MachineDetails[numberOfManagementMachines]);
+  }
+ else {
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("here are all the exception caught from all threads");
+      for (      Exception e : exceptionsOnManagementStart) {
+        logger.finest(ExceptionUtils.getFullStackTrace(e));
+      }
+    }
+    stopManagementMachines();
+    throw new CloudProvisioningException("Failed starting management machines",exceptionsOnManagementStart.get(0));
+  }
+}

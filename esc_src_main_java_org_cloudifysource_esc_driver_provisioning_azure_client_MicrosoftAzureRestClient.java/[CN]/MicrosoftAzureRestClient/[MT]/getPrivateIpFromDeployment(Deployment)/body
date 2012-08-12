@@ -1,0 +1,3 @@
+{
+  return deployment.getRoleInstanceList().getRoleInstances().get(0).getIpAddress();
+}

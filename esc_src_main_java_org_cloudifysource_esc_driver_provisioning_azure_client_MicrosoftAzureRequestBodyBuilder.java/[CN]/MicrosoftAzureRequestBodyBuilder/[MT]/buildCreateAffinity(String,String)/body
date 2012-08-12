@@ -1,7 +1,12 @@
 {
   CreateAffinityGroup affinityGroup=new CreateAffinityGroup();
   affinityGroup.setName(name);
-  affinityGroup.setLabel(new String(Base64.encode(CLOUDIFY_AFFINITY_PREFIX + generateRandomUUID(UUID_LENGTH))));
+  String affinityGroupName=affinityPrefix + generateRandomUUID(UUID_LENGTH);
+  try {
+    affinityGroup.setLabel(new String(Base64.encode(affinityGroupName),UTF_8));
+  }
+ catch (  UnsupportedEncodingException e) {
+  }
   affinityGroup.setLocation(location);
   return affinityGroup;
 }

@@ -1,0 +1,41 @@
+{
+  List<Future<?>> futures=new ArrayList<Future<?>>();
+  Disks disks=null;
+  try {
+    disks=azureClient.listOSDisks();
+  }
+ catch (  MicrosoftAzureException e1) {
+    throw new CloudProvisioningException(e1);
+  }
+  for (  Disk disk : disks) {
+    AttachedTo attachedTo=disk.getAttachedTo();
+    if (attachedTo != null) {
+      String roleName=attachedTo.getRoleName();
+      if (roleName.startsWith(this.serverNamePrefix)) {
+        final String diskName=disk.getName();
+        final String deploymentName=attachedTo.getDeploymentName();
+        final String hostedServiceName=attachedTo.getHostedServiceName();
+        StopManagementMachineCallable task=new StopManagementMachineCallable(deploymentName,hostedServiceName,diskName,endTime);
+        futures.add(service.submit(task));
+      }
+    }
+  }
+  List<Exception> exceptionOnStopMachines=new ArrayList<Exception>();
+  for (  Future<?> future : futures) {
+    try {
+      future.get();
+    }
+ catch (    final Exception e) {
+      exceptionOnStopMachines.add(e);
+    }
+  }
+  if (exceptionOnStopMachines.size() != 0) {
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("here are all the exception caught from all threads");
+      for (      Exception e : exceptionOnStopMachines) {
+        logger.finest(ExceptionUtils.getFullStackTrace(e));
+      }
+    }
+    throw new CloudProvisioningException("Failed terminating management machines",exceptionOnStopMachines.get(0));
+  }
+}

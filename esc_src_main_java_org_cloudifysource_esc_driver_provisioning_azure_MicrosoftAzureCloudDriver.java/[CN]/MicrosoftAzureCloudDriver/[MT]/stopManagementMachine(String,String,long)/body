@@ -1,0 +1,12 @@
+{
+  try {
+    azureClient.deleteVirtualMachineByDeploymentName(hostedServiceName,deploymentName,endTime);
+    return true;
+  }
+ catch (  MicrosoftAzureException e) {
+    throw new CloudProvisioningException(e);
+  }
+catch (  InterruptedException e) {
+    throw new CloudProvisioningException(e);
+  }
+}

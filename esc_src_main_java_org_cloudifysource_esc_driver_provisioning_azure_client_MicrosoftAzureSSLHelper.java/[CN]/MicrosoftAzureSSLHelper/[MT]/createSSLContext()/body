@@ -1,12 +1,18 @@
 {
+  InputStream pfxFile=null;
   SSLContext context=null;
-  InputStream pfxFile=new FileInputStream(new File(pathToPfxFile));
-  KeyManagerFactory keyManagerFactory=KeyManagerFactory.getInstance(SUN_X_509_ALGORITHM);
-  KeyStore keyStore=KeyStore.getInstance(KEY_STORE_CONTEXT);
-  keyStore.load(pfxFile,pfxPassword.toCharArray());
-  pfxFile.close();
-  keyManagerFactory.init(keyStore,pfxPassword.toCharArray());
-  context=SSLContext.getInstance("SSL");
-  context.init(keyManagerFactory.getKeyManagers(),null,new SecureRandom());
-  return context;
+  try {
+    pfxFile=new FileInputStream(new File(pathToPfxFile));
+    KeyManagerFactory keyManagerFactory=KeyManagerFactory.getInstance(SUN_X_509_ALGORITHM);
+    KeyStore keyStore=KeyStore.getInstance(KEY_STORE_CONTEXT);
+    keyStore.load(pfxFile,pfxPassword.toCharArray());
+    pfxFile.close();
+    keyManagerFactory.init(keyStore,pfxPassword.toCharArray());
+    context=SSLContext.getInstance("SSL");
+    context.init(keyManagerFactory.getKeyManagers(),null,new SecureRandom());
+    return context;
+  }
+  finally {
+    pfxFile.close();
+  }
 }

@@ -1,0 +1,7 @@
+{
+  HostedService service=getHostedService(cloudServiceName,true);
+  Deployments deployments=service.getDeployments();
+  if (deployments.contains(deploymentName)) {
+    deleteVirtualMachineByDeploymentName(cloudServiceName,deploymentName,endTime);
+  }
+}

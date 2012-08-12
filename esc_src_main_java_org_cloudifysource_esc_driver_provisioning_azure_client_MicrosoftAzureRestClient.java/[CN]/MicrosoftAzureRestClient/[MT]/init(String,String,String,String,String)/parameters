@@ -1,0 +1,5 @@
+String pathToPfx
+String pfxPassword
+String affinityPrefix
+String cloudServicePrefix
+String storagePrefix

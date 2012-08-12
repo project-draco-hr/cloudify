@@ -1,0 +1,6 @@
+{
+  ClientResponse response=doDelete("/affinitygroups/" + affinityGroupName);
+  String requestId=extractRequestId(response);
+  waitForRequestToFinish(requestId,endTime);
+  return true;
+}

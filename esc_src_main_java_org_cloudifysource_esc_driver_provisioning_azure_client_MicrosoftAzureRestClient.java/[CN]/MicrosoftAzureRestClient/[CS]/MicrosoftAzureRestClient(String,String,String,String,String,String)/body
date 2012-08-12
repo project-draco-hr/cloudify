@@ -1,0 +1,7 @@
+{
+  this.subscriptionId=subscriptionId;
+  this.affinityPrefix=affinityPrefix;
+  this.cloudServicePrefix=cloudServicePrefix;
+  this.storagePrefix=storagePrefix;
+  this.init(pathToPfx,pfxPassword,affinityPrefix,cloudServicePrefix,storagePrefix);
+}

@@ -1,0 +1,11 @@
+{
+  ConfigurationSets configurationSets=deployment.getRoleList().getRoles().get(0).getConfigurationSets();
+  String publicIp=null;
+  for (  ConfigurationSet configurationSet : configurationSets) {
+    if (configurationSet instanceof NetworkConfigurationSet) {
+      NetworkConfigurationSet networkConfigurationSet=(NetworkConfigurationSet)configurationSet;
+      publicIp=networkConfigurationSet.getInputEndpoints().getInputEndpoints().get(0).getvIp();
+    }
+  }
+  return publicIp;
+}
