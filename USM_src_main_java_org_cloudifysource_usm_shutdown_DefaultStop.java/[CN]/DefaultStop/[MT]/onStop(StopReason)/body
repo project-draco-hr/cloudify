@@ -1,5 +1,9 @@
 {
   final List<Long> pids=this.usm.getServiceProcessesList();
+  Service service=this.usm.getUsmLifecycleBean().getConfiguration().getService();
+  if (service.getLifecycle().getStart() == null) {
+    logger.info("Service did not specify a 'start' element," + " so default stop implementation will not shutdown any processes. Current service process list: " + pids);
+  }
   USMException firstException=null;
   for (  final Long pid : pids) {
     try {
