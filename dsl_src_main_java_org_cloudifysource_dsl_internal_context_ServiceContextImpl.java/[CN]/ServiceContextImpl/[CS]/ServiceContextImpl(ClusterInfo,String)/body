@@ -4,4 +4,9 @@
   }
   this.clusterInfo=clusterInfo;
   this.serviceDirectory=serviceDirectory;
+  if (clusterInfo.getName() != null) {
+    FullServiceName fullName=ServiceUtils.getFullServiceName(clusterInfo.getName());
+    this.applicationName=fullName.getApplicationName();
+    this.serviceName=fullName.getServiceName();
+  }
 }
