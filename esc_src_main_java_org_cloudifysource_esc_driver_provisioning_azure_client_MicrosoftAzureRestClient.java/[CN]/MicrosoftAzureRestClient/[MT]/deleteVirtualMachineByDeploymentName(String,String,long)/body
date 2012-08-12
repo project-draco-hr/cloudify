@@ -1,6 +1,4 @@
 {
-  boolean roleDeleted=false;
-  boolean osDiskDeleted=false;
   String diskName=null;
   String roleName=null;
   try {
@@ -15,9 +13,9 @@
         }
       }
     }
-    roleDeleted=deleteDeployment(cloudServiceName,deploymentName,endTime);
+    deleteDeployment(cloudServiceName,deploymentName,endTime);
     logger.fine("deleting os disk : " + diskName + " that belonged to the virtual machine "+ roleName);
-    osDiskDeleted=deleteOSDisk(diskName,endTime);
+    deleteOSDisk(diskName,endTime);
     logger.fine("deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
     deleteCloudService(cloudServiceName,endTime);
   }
