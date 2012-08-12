@@ -1,6 +1,6 @@
 {
-  Properties props=loadBrandingProperties();
-  String welcome=props.getProperty("welcome");
+  final Properties props=loadBrandingProperties();
+  final String welcome=props.getProperty("welcome");
   if (welcome != null && welcome.length() > 0) {
     session.getConsole().println(welcome);
   }

@@ -1,4 +1,8 @@
 {
+  final boolean interactive=(Boolean)session.get(Constants.INTERACTIVE_MODE);
+  if (!interactive) {
+    return false;
+  }
   long lastAskedTS=getLastTimeAskedAboutVersionCheck();
   try {
     if (lastAskedTS <= (System.currentTimeMillis() - TWO_WEEKS_IN_MILLIS)) {
