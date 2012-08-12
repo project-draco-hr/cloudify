@@ -7,7 +7,7 @@
     logger.fine("[" + Thread.currentThread().getName() + "] - lock acquired");
     logger.fine("[" + Thread.currentThread().getName() + "] - executing a request to delete virtual machine");
     try {
-      logger.info("[" + Thread.currentThread().getName() + "] - deleting deployment of virtual machine from : "+ deploymentName);
+      logger.fine("[" + Thread.currentThread().getName() + "] - deleting deployment of virtual machine from : "+ deploymentName);
       ClientResponse response=doDelete("/services/hostedservices/" + hostedServiceName + "/deployments/"+ deploymentName);
       String requestId=extractRequestId(response);
       waitForRequestToFinish(requestId,endTime);
