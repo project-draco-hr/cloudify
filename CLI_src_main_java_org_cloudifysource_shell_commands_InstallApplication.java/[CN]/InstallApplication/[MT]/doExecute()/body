@@ -27,7 +27,7 @@
     }
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,timeoutInMinutes);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes());
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     zipFile.delete();
@@ -45,10 +45,10 @@
   while (!isDone) {
     try {
       if (!continuous) {
-        lifecycleEventsPollingLatch.waitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+        lifecycleEventsPollingLatch.waitForLifecycleEvents(getTimeoutInMinutes(),TimeUnit.MINUTES);
       }
  else {
-        lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(timeoutInMinutes,TimeUnit.MINUTES);
+        lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(getTimeoutInMinutes(),TimeUnit.MINUTES);
       }
       isDone=true;
     }
