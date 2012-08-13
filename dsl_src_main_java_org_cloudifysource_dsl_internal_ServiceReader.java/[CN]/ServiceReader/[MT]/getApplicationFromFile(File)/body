@@ -2,7 +2,7 @@
   File actualApplicationDslFile=inputFile;
   if (inputFile.isFile()) {
     if (inputFile.getName().endsWith(".zip") || inputFile.getName().endsWith(".jar")) {
-      File tempFolder=ServiceReader.unzipApplicationFile(inputFile);
+      final File tempFolder=ServiceReader.unzipApplicationFile(inputFile);
       actualApplicationDslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,tempFolder);
     }
   }

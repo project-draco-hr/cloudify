@@ -1,6 +1,6 @@
 {
-  GigaSpace managementSpace=attributesFacade.getManagementSpace();
-  AbstractCloudifyAttribute removeTemplate=prepareAttributeTemplate(key);
-  AbstractCloudifyAttribute previousValue=managementSpace.take(removeTemplate);
+  final GigaSpace managementSpace=attributesFacade.getManagementSpace();
+  final AbstractCloudifyAttribute removeTemplate=prepareAttributeTemplate(key);
+  final AbstractCloudifyAttribute previousValue=managementSpace.take(removeTemplate);
   return previousValue != null ? previousValue.getValue() : null;
 }

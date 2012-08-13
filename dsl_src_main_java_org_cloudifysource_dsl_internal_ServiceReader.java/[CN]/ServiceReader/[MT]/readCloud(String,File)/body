@@ -1,5 +1,5 @@
 {
-  DSLReader dslReader=new DSLReader();
+  final DSLReader dslReader=new DSLReader();
   dslReader.setCreateServiceContext(false);
   dslReader.setDslContents(dslContents);
   dslReader.setDslFile(dslFile);

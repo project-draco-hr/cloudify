@@ -1,4 +1,6 @@
 {
-  if (!(key instanceof String))   throw new IllegalArgumentException("key must be a string");
+  if (!(key instanceof String)) {
+    throw new IllegalArgumentException("key must be a string");
+  }
   return get((String)key);
 }

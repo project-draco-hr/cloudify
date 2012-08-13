@@ -1,8 +1,8 @@
 {
-  DSLReader dslReader=new DSLReader();
+  final DSLReader dslReader=new DSLReader();
   dslReader.setDslFile(dslFile);
   dslReader.setCreateServiceContext(false);
   dslReader.addProperty(DSLUtils.APPLICATION_DIR,dslFile.getParentFile().getAbsolutePath());
-  Application application=dslReader.readDslEntity(Application.class);
+  final Application application=dslReader.readDslEntity(Application.class);
   return application;
 }

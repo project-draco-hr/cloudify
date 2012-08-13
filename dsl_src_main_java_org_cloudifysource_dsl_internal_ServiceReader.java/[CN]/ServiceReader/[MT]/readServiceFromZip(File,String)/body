@@ -1,5 +1,5 @@
 {
-  File projectFolder=extractProjectFile(inputFile);
+  final File projectFolder=extractProjectFile(inputFile);
   try {
     return ServiceReader.getServiceFromDirectory(projectFolder,applicationName).getService();
   }

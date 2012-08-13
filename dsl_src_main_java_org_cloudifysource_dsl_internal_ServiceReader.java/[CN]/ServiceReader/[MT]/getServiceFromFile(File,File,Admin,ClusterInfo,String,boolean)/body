@@ -1,5 +1,5 @@
 {
-  DSLReader dslReader=new DSLReader();
+  final DSLReader dslReader=new DSLReader();
   dslReader.setAdmin(admin);
   dslReader.setClusterInfo(clusterInfo);
   dslReader.setPropertiesFileName(propertiesFileName);
@@ -7,6 +7,6 @@
   dslReader.setDslFile(dslFile);
   dslReader.setWorkDir(workDir);
   dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
-  Service service=dslReader.readDslEntity(Service.class);
+  final Service service=dslReader.readDslEntity(Service.class);
   return new DSLServiceCompilationResult(service,dslReader.getContext(),dslFile);
 }

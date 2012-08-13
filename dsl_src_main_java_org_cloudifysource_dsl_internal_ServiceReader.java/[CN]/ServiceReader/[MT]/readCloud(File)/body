@@ -3,6 +3,6 @@
     throw new FileNotFoundException(dslFile.getAbsolutePath());
   }
   final String dslContents=FileUtils.readFileToString(dslFile);
-  Cloud cloud=readCloud(dslContents,dslFile);
+  final Cloud cloud=readCloud(dslContents,dslFile);
   return cloud;
 }

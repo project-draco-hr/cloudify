@@ -1,6 +1,6 @@
 {
-  GigaSpace managementSpace=attributesFacade.getManagementSpace();
-  AbstractCloudifyAttribute propertyEntry=prepareAttributeTemplate(key);
-  AbstractCloudifyAttribute valueEntry=managementSpace.read(propertyEntry);
+  final GigaSpace managementSpace=attributesFacade.getManagementSpace();
+  final AbstractCloudifyAttribute propertyEntry=prepareAttributeTemplate(key);
+  final AbstractCloudifyAttribute valueEntry=managementSpace.read(propertyEntry);
   return valueEntry != null ? valueEntry.getValue() : null;
 }

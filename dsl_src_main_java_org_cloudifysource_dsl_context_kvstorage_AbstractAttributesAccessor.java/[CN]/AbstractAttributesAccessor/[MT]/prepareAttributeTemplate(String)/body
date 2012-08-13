@@ -1,5 +1,5 @@
 {
-  AbstractCloudifyAttribute propertyAttribute=prepareAttributeTemplate();
+  final AbstractCloudifyAttribute propertyAttribute=prepareAttributeTemplate();
   propertyAttribute.setApplicationName(applicationName);
   propertyAttribute.setKey(key);
   return propertyAttribute;

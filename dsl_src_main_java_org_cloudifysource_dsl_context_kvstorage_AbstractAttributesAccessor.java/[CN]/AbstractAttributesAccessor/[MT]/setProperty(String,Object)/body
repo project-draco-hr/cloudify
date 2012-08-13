@@ -2,7 +2,7 @@
   try {
     super.setProperty(name,value);
   }
- catch (  MissingPropertyException e) {
+ catch (  final MissingPropertyException e) {
     put(name,value);
   }
 }

@@ -1,5 +1,5 @@
 {
-  InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute();
+  final InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute();
   attribute.setInstanceId(instanceId);
   attribute.setServiceName(serviceName);
   return attribute;
