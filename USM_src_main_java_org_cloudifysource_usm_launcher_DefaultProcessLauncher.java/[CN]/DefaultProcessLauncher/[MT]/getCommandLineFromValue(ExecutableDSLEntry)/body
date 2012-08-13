@@ -3,7 +3,7 @@
     return convertCommandLineStringToParts(((StringExecutableEntry)value).getCommand());
   }
  else   if (value.getEntryType() == ExecutableDSLEntryType.LIST) {
-    @SuppressWarnings("unchecked") final List<String> result=((ListExecutableEntry)value).getCommand();
+    final List<String> result=((ListExecutableEntry)value).getCommand();
     return result;
   }
  else {

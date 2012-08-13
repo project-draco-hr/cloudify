@@ -9,10 +9,11 @@
     throw new USMException("Launch of process from closure exited with an exception: " + e.getMessage(),e);
   }
   if (retval == null) {
-    throw new USMException("Launch of process from closure did not return a process handle!");
+    return null;
   }
-  if (!(retval instanceof Process)) {
-    throw new USMException("Launch of process from closure returned a result that is not a process handle. Result was: " + retval);
+  if (retval instanceof Process) {
+    return (Process)retval;
   }
-  return (Process)retval;
+  logger.warning("The Start closure returned a non-null value that is not a Process. " + "This value will be ignored! Returned value was of type: " + retval.getClass().getName() + ". Value was: "+ retval);
+  return null;
 }
