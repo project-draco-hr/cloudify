@@ -8,7 +8,7 @@
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
   logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
-  UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes);
+  final UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes);
   if (uninstallOrder.size() > 0) {
     ((InternalAdmin)admin).scheduleAdminOperation(new Runnable(){
       @Override public void run(){
@@ -34,7 +34,7 @@
   }
   final String errors=sb.toString();
   if (errors.length() == 0) {
-    Map<String,Object> returnMap=new HashMap<String,Object>();
+    final Map<String,Object> returnMap=new HashMap<String,Object>();
     returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
     return RestUtils.successStatus(returnMap);
   }

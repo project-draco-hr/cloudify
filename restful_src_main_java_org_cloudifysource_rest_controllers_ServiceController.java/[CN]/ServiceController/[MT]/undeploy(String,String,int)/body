@@ -5,9 +5,9 @@
     return unavailableServiceError(absolutePuName);
   }
   logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
-  UUID lifecycleEventContainerID=startPollingForServiceUninstallLifecycleEvents(applicationName,serviceName,timeoutInMinutes);
+  final UUID lifecycleEventContainerID=startPollingForServiceUninstallLifecycleEvents(applicationName,serviceName,timeoutInMinutes);
   processingUnit.undeploy();
-  Map<String,Object> returnMap=new HashMap<String,Object>();
+  final Map<String,Object> returnMap=new HashMap<String,Object>();
   returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
   return successStatus(returnMap);
 }

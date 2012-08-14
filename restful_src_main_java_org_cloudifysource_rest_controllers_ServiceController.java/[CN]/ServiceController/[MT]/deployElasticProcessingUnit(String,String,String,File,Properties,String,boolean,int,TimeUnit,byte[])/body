@@ -13,8 +13,8 @@
   File projectDir=null;
   if (srcFile.getName().endsWith(".zip")) {
     projectDir=ServiceReader.extractProjectFile(srcFile);
-    File workingProjectDir=new File(projectDir,"ext");
-    String serviceFileName=propsFile.getProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME);
+    final File workingProjectDir=new File(projectDir,"ext");
+    final String serviceFileName=propsFile.getProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME);
     DSLServiceCompilationResult result;
     if (serviceFileName != null) {
       result=ServiceReader.getServiceFromFile(new File(workingProjectDir,serviceFileName),workingProjectDir);

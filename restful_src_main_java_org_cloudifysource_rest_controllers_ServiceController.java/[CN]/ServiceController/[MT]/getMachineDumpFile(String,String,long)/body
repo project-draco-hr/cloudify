@@ -1,7 +1,7 @@
 {
   final String[] actualProcessors=getProcessorsFromRequest(processors);
   try {
-    if ((ip != null) && (ip.length() > 0)) {
+    if (ip != null && ip.length() > 0) {
       Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
       if (machine == null) {
         machine=this.admin.getMachines().getHostsByName().get(ip);
@@ -14,10 +14,10 @@
     }
  else {
       long totalSize=0;
-      Iterator<Machine> iterator=this.admin.getMachines().iterator();
-      Map<String,Object> map=new HashMap<String,Object>();
+      final Iterator<Machine> iterator=this.admin.getMachines().iterator();
+      final Map<String,Object> map=new HashMap<String,Object>();
       while (iterator.hasNext()) {
-        Machine machine=iterator.next();
+        final Machine machine=iterator.next();
         final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
         totalSize+=dumpBytes.length;
         if (totalSize > fileSizeLimit) {
@@ -28,7 +28,7 @@
       return successStatus(map);
     }
   }
- catch (  RestServiceException e) {
+ catch (  final RestServiceException e) {
     return errorStatus(e.getMessageName(),e.getParams());
   }
 }

@@ -5,7 +5,7 @@
     data=getDumpRawData(dump,fileSizeLimit);
     return successStatus(data);
   }
- catch (  RestServiceException e) {
+ catch (  final RestServiceException e) {
     return errorStatus(e.getMessageName(),e.getParams());
   }
 }

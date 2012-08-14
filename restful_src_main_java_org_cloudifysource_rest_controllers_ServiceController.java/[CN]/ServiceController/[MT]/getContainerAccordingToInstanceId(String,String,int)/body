@@ -1,6 +1,6 @@
 {
-  ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
-  for (  ProcessingUnitInstance processingUnitInstance : processingUnit) {
+  final ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
+  for (  final ProcessingUnitInstance processingUnitInstance : processingUnit) {
     if (processingUnitInstance.getInstanceId() == instanceId) {
       return processingUnitInstance.getGridServiceContainer();
     }

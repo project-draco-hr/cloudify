@@ -23,7 +23,12 @@
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
     FileUtils.deleteQuietly(dest);
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null);
+    final File cloudConfigurationFile=ZipUtils.unzipEntry(destFile,"ext/" + CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+    byte[] cloudConfigurationContents=null;
+    if (cloudConfigurationFile != null) {
+      cloudConfigurationContents=FileUtils.readFileToByteArray(cloudConfigurationFile);
+    }
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents);
     destFile.deleteOnExit();
   }
  else {

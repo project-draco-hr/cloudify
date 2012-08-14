@@ -1,13 +1,13 @@
 {
-  StringBuilder stringBuilder=new StringBuilder();
-  ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
+  final StringBuilder stringBuilder=new StringBuilder();
+  final ProcessingUnit processingUnit=getProcessingUnit(applicationName,serviceName);
   if (processingUnit == null) {
-    String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
     logger.severe("Could not find service " + absolutePuName);
     return unavailableServiceError(absolutePuName);
   }
   String instanceLogTail;
-  for (  ProcessingUnitInstance processingUnitInstance : processingUnit) {
+  for (  final ProcessingUnitInstance processingUnitInstance : processingUnit) {
     stringBuilder.append("service instance id #" + processingUnitInstance.getInstanceId() + System.getProperty("line.separator"));
     instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
     stringBuilder.append(instanceLogTail);

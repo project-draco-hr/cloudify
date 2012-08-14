@@ -1,16 +1,16 @@
 {
-  Map<String,Object> resultsMap=new HashMap<String,Object>();
+  final Map<String,Object> resultsMap=new HashMap<String,Object>();
   if (!lifecyclePollingThreadContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
     return errorStatus("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
   }
-  RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(UUID.fromString(lifecycleEventContainerID));
-  LifecycleEventsContainer container=restPollingRunnable.getLifecycleEventsContainer();
-  boolean done=restPollingRunnable.isDone();
+  final RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(UUID.fromString(lifecycleEventContainerID));
+  final LifecycleEventsContainer container=restPollingRunnable.getLifecycleEventsContainer();
+  final boolean done=restPollingRunnable.isDone();
   if (!done) {
     extendThreadTimeout(restPollingRunnable,DEFAULT_TIME_EXTENTION_POLLING_TASK);
   }
  else {
-    Throwable t=restPollingRunnable.getExecutionException();
+    final Throwable t=restPollingRunnable.getExecutionException();
     if (t != null) {
       logger.log(Level.INFO,"Lifecycle events polling ended unexpectedly.",t);
       return errorStatus(t.getMessage());
@@ -20,16 +20,16 @@
     }
   }
   resultsMap.put(CloudifyConstants.IS_TASK_DONE,done);
-  List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
+  final List<String> lifecycleEvents=container.getLifecycleEvents(cursor);
   if (lifecycleEvents != null) {
-    int newCursorPos=cursor + lifecycleEvents.size();
+    final int newCursorPos=cursor + lifecycleEvents.size();
     resultsMap.put(CloudifyConstants.CURSOR_POS,newCursorPos);
     resultsMap.put(CloudifyConstants.LIFECYCLE_LOGS,lifecycleEvents);
   }
  else {
     resultsMap.put(CloudifyConstants.CURSOR_POS,cursor);
   }
-  long timeBeforeTaskTerminationMillis=restPollingRunnable.getEndTime() - System.currentTimeMillis();
+  final long timeBeforeTaskTerminationMillis=restPollingRunnable.getEndTime() - System.currentTimeMillis();
   resultsMap.put(CloudifyConstants.SERVER_POLLING_TASK_EXPIRATION_MILLI,Long.toString(timeBeforeTaskTerminationMillis));
   return successStatus(resultsMap);
 }

@@ -1,7 +1,7 @@
 {
   logger.info("Calculating external proc mem for template: " + template);
-  int machineMemoryMB=template.getMachineMemoryMB();
-  int reservedMemoryCapacityPerMachineInMB=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
+  final int machineMemoryMB=template.getMachineMemoryMB();
+  final int reservedMemoryCapacityPerMachineInMB=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
   final int safteyMargin=100;
   final long cloudExternalProcessMemoryInMB=machineMemoryMB - reservedMemoryCapacityPerMachineInMB - safteyMargin;
   if (cloudExternalProcessMemoryInMB <= 0) {

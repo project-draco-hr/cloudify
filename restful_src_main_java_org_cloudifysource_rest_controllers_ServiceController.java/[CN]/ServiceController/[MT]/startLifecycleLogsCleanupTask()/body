@@ -2,10 +2,10 @@
   this.lifecycleEventsCleaner.scheduleWithFixedDelay(new Runnable(){
     @Override public void run(){
       if (lifecyclePollingThreadContainer != null) {
-        Iterator<Entry<UUID,RestPollingRunnable>> it=lifecyclePollingThreadContainer.entrySet().iterator();
+        final Iterator<Entry<UUID,RestPollingRunnable>> it=lifecyclePollingThreadContainer.entrySet().iterator();
         while (it.hasNext()) {
-          Map.Entry<UUID,RestPollingRunnable> entry=it.next();
-          RestPollingRunnable restPollingRunnable=entry.getValue();
+          final Map.Entry<UUID,RestPollingRunnable> entry=it.next();
+          final RestPollingRunnable restPollingRunnable=entry.getValue();
           if (restPollingRunnable.isDone()) {
             logger.log(Level.INFO,"Polling Task with UUID " + entry.getKey().toString() + " has expired");
             it.remove();

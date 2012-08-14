@@ -15,7 +15,7 @@
     }
     boolean found=false;
     try {
-      File packedFile=Packager.pack(serviceDirectory,absolutePUName);
+      File packedFile=Packager.pack(serviceDirectory,absolutePUName,new File[0]);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);

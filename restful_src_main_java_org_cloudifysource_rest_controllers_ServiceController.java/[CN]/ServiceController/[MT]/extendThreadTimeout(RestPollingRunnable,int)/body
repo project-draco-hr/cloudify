@@ -1,5 +1,5 @@
 {
-  long taskExpiration=pollingRunnable.getEndTime() - System.currentTimeMillis();
+  final long taskExpiration=pollingRunnable.getEndTime() - System.currentTimeMillis();
   if (taskExpiration < MINIMAL_POLLING_TASK_EXPIRATION) {
     pollingRunnable.increaseEndTimeBy(timeoutInMinutes,TimeUnit.MINUTES);
   }

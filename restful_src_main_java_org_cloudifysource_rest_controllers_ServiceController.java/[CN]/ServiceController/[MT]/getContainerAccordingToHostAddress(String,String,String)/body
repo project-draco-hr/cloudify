@@ -1,16 +1,16 @@
 {
-  Machine machine=admin.getMachines().getHostsByAddress().get(hostAddress);
+  final Machine machine=admin.getMachines().getHostsByAddress().get(hostAddress);
   if (machine == null) {
     logger.log(Level.FINE,"a machine with host address " + hostAddress + " was not found in the cluster.");
     return null;
   }
-  String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  ProcessingUnitInstance[] processingUnitInstances=machine.getProcessingUnitInstances(absolutePUName);
+  final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final ProcessingUnitInstance[] processingUnitInstances=machine.getProcessingUnitInstances(absolutePUName);
   if (processingUnitInstances == null) {
     logger.log(Level.FINE,"a Processing unit instance with the name " + absolutePUName + " was not found");
     return null;
   }
-  for (  ProcessingUnitInstance instance : processingUnitInstances) {
+  for (  final ProcessingUnitInstance instance : processingUnitInstances) {
     if (instance.getOperatingSystem().getDetails().getHostAddress().equals(hostAddress)) {
       return instance.getGridServiceContainer();
     }

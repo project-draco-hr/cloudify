@@ -1,11 +1,11 @@
 {
-  Map<String,Object> returnMap=new HashMap<String,Object>();
+  final Map<String,Object> returnMap=new HashMap<String,Object>();
   final String puName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(puName);
+  final ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(puName);
   if (pu == null) {
     return errorStatus(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
   }
-  Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
+  final Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
   final String elasticProp=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC);
   final String templateName=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
   if (elasticProp == null || !Boolean.parseBoolean(elasticProp)) {

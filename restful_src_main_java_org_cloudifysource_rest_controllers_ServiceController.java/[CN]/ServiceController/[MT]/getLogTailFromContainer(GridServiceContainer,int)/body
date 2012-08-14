@@ -1,7 +1,7 @@
 {
   int numberOfLinesToTail;
   final String msg="tail is limited to no more than " + MAX_NUMBER_OF_LINES_TO_TAIL_ALLOWED + " lines.";
-  boolean tailThresholdBreached=numLines > MAX_NUMBER_OF_LINES_TO_TAIL_ALLOWED;
+  final boolean tailThresholdBreached=numLines > MAX_NUMBER_OF_LINES_TO_TAIL_ALLOWED;
   if (tailThresholdBreached) {
     logger.log(Level.INFO,msg);
     numberOfLinesToTail=MAX_NUMBER_OF_LINES_TO_TAIL_ALLOWED;
@@ -11,7 +11,7 @@
   }
   final LastNLogEntryMatcher matcher=LogEntryMatchers.lastN(numberOfLinesToTail);
   final LogEntries logEntries=container.logEntries(matcher);
-  StringBuilder sb=new StringBuilder();
+  final StringBuilder sb=new StringBuilder();
   for (  final LogEntry logEntry : logEntries) {
     sb.append(logEntry.getText());
     sb.append(System.getProperty("line.separator"));
