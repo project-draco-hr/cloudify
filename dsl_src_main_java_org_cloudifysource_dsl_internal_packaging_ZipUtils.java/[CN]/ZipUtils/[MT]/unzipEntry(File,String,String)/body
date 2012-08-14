@@ -1,0 +1,21 @@
+{
+  final ZipFile zfile=new ZipFile(zipfile);
+  final ZipEntry entry=zfile.getEntry(entryName);
+  if (entry == null) {
+    return null;
+  }
+  final InputStream in=zfile.getInputStream(entry);
+  final File entryDirectory=File.createTempFile("cloudConfiguFile",".tmp");
+  entryDirectory.delete();
+  entryDirectory.mkdirs();
+  final File entryFile=new File(entryDirectory,fileName);
+  entryFile.deleteOnExit();
+  entryDirectory.deleteOnExit();
+  try {
+    copy(in,entryFile);
+  }
+  finally {
+    in.close();
+  }
+  return entryFile;
+}

@@ -9,7 +9,7 @@
   toZip.setWritable(true);
   final ZipOutputStream zout=new ZipOutputStream(new FileOutputStream(toZip));
   try {
-    String name=sourceFile.getName();
+    final String name=sourceFile.getName();
     zout.putNextEntry(new ZipEntry(name));
     copy(sourceFile,zout);
     zout.closeEntry();
