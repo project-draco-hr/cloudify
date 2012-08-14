@@ -3,6 +3,7 @@
     throw new CLIStatusException("service_file_doesnt_exist",recipe.getPath());
   }
   File packedFile;
+  final File cloudConfigurationZipFile=createCloudConfigurationZipFile();
   Service service=null;
   try {
     if (recipe.getName().endsWith(".jar") || recipe.getName().endsWith(".war")) {
@@ -10,15 +11,15 @@
     }
  else     if (recipe.isDirectory()) {
       if (serviceFileName != null) {
-        File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + serviceFileName);
+        final File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + serviceFileName);
         if (!fullPathToRecipe.exists()) {
           throw new CLIStatusException("service_file_doesnt_exist",fullPathToRecipe.getPath());
         }
-        packedFile=Packager.pack(fullPathToRecipe);
+        packedFile=Packager.pack(fullPathToRecipe,new File[]{cloudConfigurationZipFile});
         service=ServiceReader.readService(fullPathToRecipe);
       }
  else {
-        packedFile=Packager.pack(recipe);
+        packedFile=Packager.pack(recipe,new File[]{cloudConfigurationZipFile});
         service=ServiceReader.readService(recipe);
       }
       packedFile.deleteOnExit();
@@ -65,8 +66,8 @@ catch (  final PackagingException e) {
       templateName="";
     }
   }
-  String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,getTimeoutInMinutes());
-  RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
+  final String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,getTimeoutInMinutes());
+  final RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;
   boolean continuous=false;
   while (!isDone) {
@@ -79,11 +80,11 @@ catch (  final PackagingException e) {
       }
       isDone=true;
     }
- catch (    TimeoutException e) {
+ catch (    final TimeoutException e) {
       if (!(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
         throw e;
       }
-      boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      final boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
       if (!continueInstallation) {
         throw new CLIStatusException(e,"service_installation_timed_out_on_client",serviceName);
       }

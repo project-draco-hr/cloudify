@@ -5,10 +5,10 @@
   if (!this.cloudConfiguration.exists()) {
     throw new CLIStatusException("cloud_configuration_file_not_found",this.cloudConfiguration.getAbsolutePath());
   }
-  final File tempDir=File.createTempFile("__Cloudify_Cloud_configuration",".tmp");
+  File tempDir=File.createTempFile("__Cloudify_Cloud_configuration",".tmp");
   FileUtils.forceDelete(tempDir);
   tempDir.mkdirs();
-  final File tempFile=new File(tempDir,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+  File tempFile=new File(tempDir,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
   tempFile.deleteOnExit();
   tempDir.deleteOnExit();
   if (this.cloudConfiguration.isDirectory()) {

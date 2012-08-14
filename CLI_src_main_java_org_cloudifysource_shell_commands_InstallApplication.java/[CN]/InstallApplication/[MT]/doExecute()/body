@@ -8,7 +8,7 @@
   if (adminFacade.getApplicationsList().contains(applicationName)) {
     throw new CLIStatusException("application_already_deployed",application.getName());
   }
-  File cloudConfigurationZipFile=createCloudConfigurationZipFile();
+  final File cloudConfigurationZipFile=createCloudConfigurationZipFile();
   File zipFile;
   if (applicationFile.isFile()) {
     if (applicationFile.getName().endsWith(".zip") || applicationFile.getName().endsWith(".jar")) {
