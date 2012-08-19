@@ -1,5 +1,5 @@
 {
-  super.setConfig(cloud,templateName,management,zones);
+  super.setConfig(cloud,templateName,management);
   this.availabilitySet=(String)this.template.getCustom().get(AZURE_AVAILABILITY_SET);
   String pfxFile=(String)this.template.getCustom().get(AZURE_PFX_FILE);
   if (pfxFile == null && management) {
