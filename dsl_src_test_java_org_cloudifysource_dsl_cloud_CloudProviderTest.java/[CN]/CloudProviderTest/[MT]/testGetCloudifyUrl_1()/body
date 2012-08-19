@@ -5,7 +5,6 @@
   fixture.setProvider("");
   fixture.setManagementOnlyFiles(new ArrayList());
   fixture.setCloudifyUrl("");
-  fixture.setDedicatedManagementMachines(true);
   fixture.setNumberOfManagementMachines(1);
   fixture.setManagementGroup("");
   fixture.setCloudifyOverridesUrl("");
