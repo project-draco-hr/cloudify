@@ -1,12 +1,7 @@
 {
   MachineDetails machineDetails;
   try {
-    if (location == null) {
-      machineDetails=cloudifyProvisioning.startMachine(duration,unit);
-    }
- else {
-      machineDetails=cloudifyProvisioning.startMachine(location,duration,unit);
-    }
+    machineDetails=cloudifyProvisioning.startMachine(locationId,duration,unit);
   }
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to start machine: " + e.getMessage(),e);

@@ -1,3 +1,0 @@
-{
-  return startMachine(null,duration,unit);
-}

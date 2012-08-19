@@ -1,3 +1,0 @@
-{
-  return provisionMachine(null,duration,unit);
-}

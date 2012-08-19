@@ -20,12 +20,11 @@
     }
   }
   try {
-    if (locationId != null) {
-      machineDetails=provisionMachine(locationId,duration,unit);
+    if (locationId == null) {
+      final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
+      locationId=template.getLocationId();
     }
- else {
-      machineDetails=provisionMachine(duration,unit);
-    }
+    machineDetails=provisionMachine(locationId,duration,unit);
   }
  catch (  final Exception e) {
     logger.log(Level.WARNING,"Failed to provision machine, reason: " + e.getMessage(),e);
