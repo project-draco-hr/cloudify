@@ -1,6 +1,5 @@
 {
   setMinimumNumberOfCpuCoresPerMachine(template.getNumberOfCores());
-  setDedicatedManagementMachines(cloud.getProvider().isDedicatedManagementMachines());
   setReservedMemoryCapacityPerMachineInMB(cloud.getProvider().getReservedMemoryCapacityPerMachineInMB());
   setCloudConfiguration(cloudFileContents);
   setCloudTemplateName(cloudTemplateName);
