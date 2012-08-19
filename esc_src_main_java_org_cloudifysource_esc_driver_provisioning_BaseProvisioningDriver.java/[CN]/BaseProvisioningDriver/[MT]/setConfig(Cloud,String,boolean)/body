@@ -2,7 +2,6 @@
   this.cloud=cloud;
   this.cloudTemplateName=cloudTemplateName;
   this.management=management;
-  this.zones=zones;
   this.cloudName=cloud.getName();
   publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
   initDeployer(cloud);

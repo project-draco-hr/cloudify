@@ -2,7 +2,6 @@
   this.cloud=cloud;
   this.management=management;
   this.templateName=templateName;
-  this.zones=zones;
   if (this.cloud.getTemplates().isEmpty()) {
     throw new IllegalArgumentException("No templates defined for this cloud");
   }

@@ -1,6 +1,5 @@
 {
-  final String[] zones=this.config.getGridServiceAgentZones().getZones().toArray(new String[0]);
-  logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName() + "-" + Arrays.toString(zones));
+  logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
   final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
   if (cloudContents == null) {
     throw new IllegalArgumentException("Cloud configuration was not set!");
@@ -40,7 +39,7 @@
         contextAware.setProvisioningDriverClassContext(provisioningDriverContext);
       }
       handleServiceCloudConfiguration();
-      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,zones);
+      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false);
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
