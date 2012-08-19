@@ -1,6 +1,7 @@
 {
   final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
   final String[] zones=this.config.getGridServiceAgentZones();
+  md.setLocationId(CLOUD_ZONE_PREFIX + md.getLocationId());
   final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zones,lookupLocatorsString,this.originalESMAdmin,false,null);
   logger.info("Created new Installation Details: " + details);
   return details;
