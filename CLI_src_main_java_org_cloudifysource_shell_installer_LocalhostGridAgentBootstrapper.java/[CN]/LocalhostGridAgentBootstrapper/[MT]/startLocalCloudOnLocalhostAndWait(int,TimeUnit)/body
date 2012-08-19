@@ -1,5 +1,5 @@
 {
-  setZone(LOCALCLOUD_GSA_ZONE);
+  setGridServiceAgentZone(LOCALCLOUD_GSA_ZONES);
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
   startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_MANAGEMENT_ARGUMENTS,timeout,timeunit,true);

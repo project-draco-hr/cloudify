@@ -11,9 +11,9 @@
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   }
-  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort;
-  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL;
-  String esmJavaOptions="-Xmx" + ESM_MEMORY_IN_MB + "m";
+  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  String esmJavaOptions="-Xmx" + ESM_MEMORY_IN_MB + "m"+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
   if (lookupGroups != null) {
@@ -32,8 +32,8 @@
     environment.put("NIC_ADDR",nicAddress);
   }
   environment.put("RMI_OPTIONS","");
-  if (zone != null) {
-    gsaJavaOptions+=" -Dcom.gs.zones=" + zone;
+  if (gsaZones != null) {
+    gsaJavaOptions+=" -D" + ZONES_PROPERTY + "="+ gsaZones;
   }
   environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
   environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);

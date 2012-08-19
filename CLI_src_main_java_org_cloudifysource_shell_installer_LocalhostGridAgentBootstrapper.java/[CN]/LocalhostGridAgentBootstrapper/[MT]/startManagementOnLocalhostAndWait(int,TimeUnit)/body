@@ -1,5 +1,5 @@
 {
-  setZone(MANAGEMENT_GSA_ZONE);
+  setGridServiceAgentZone(MANAGEMENT_ZONE);
   setDefaultNicAddress();
   startManagementOnLocalhostAndWaitInternal(CLOUD_MANAGEMENT_ARGUMENTS,timeout,timeunit,false);
 }
