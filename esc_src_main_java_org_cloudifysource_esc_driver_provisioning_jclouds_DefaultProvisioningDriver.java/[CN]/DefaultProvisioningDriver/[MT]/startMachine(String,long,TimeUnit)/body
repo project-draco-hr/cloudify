@@ -1,0 +1,17 @@
+{
+  logger.fine(this.getClass().getName() + ": startMachine, management mode: " + management);
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  if (System.currentTimeMillis() > end) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  try {
+    if (zone != null) {
+      deployer.setLocationId(zone);
+    }
+    final MachineDetails md=doStartMachine(end);
+    return md;
+  }
+ catch (  final Exception e) {
+    throw new CloudProvisioningException("Failed to start cloud machine",e);
+  }
+}

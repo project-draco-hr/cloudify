@@ -1,14 +1,3 @@
 {
-  MachineDetails machineDetails;
-  try {
-    machineDetails=cloudifyProvisioning.startMachine(duration,unit);
-  }
- catch (  final CloudProvisioningException e) {
-    throw new ElasticMachineProvisioningException("Failed to start machine: " + e.getMessage(),e);
-  }
-  if (machineDetails == null) {
-    throw new IllegalStateException("Provisioning provider: " + cloudifyProvisioning.getClass().getName() + " returned null when calling startMachine");
-  }
-  logger.info("New machine was provisioned. Machine details: " + machineDetails);
-  return machineDetails;
+  return provisionMachine(duration,unit,null);
 }

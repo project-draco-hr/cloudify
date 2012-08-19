@@ -1,0 +1,82 @@
+{
+  logger.info("Cloudify Adapter is starting a new machine");
+  final long end=System.currentTimeMillis() + unit.toMillis(duration);
+  logger.info("Calling provisioning implementation for new machine");
+  MachineDetails machineDetails;
+  try {
+    cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
+    List<String> cloudProviderZones=this.cloud.getProvider().getZones();
+    List<String> defaultZones=Arrays.asList(config.getGridServiceAgentZones());
+    defaultZones.addAll(cloudProviderZones);
+    List<String> cloudZones=new ArrayList<String>();
+    for (    String zone : zones) {
+      if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
+        cloudZones.add(zone.substring(CLOUD_ZONE_PREFIX.length(),zone.length() - 1));
+      }
+ else {
+        if (!defaultZones.contains(zone)) {
+          throw new UnsupportedOperationException("discovered an unsupported zone for machine allocation : " + zone);
+        }
+      }
+    }
+    if (cloudZones.size() != 0) {
+      machineDetails=provisionMachine(duration,unit,cloudZones.get(0));
+    }
+    if (cloudZones.size() > 1) {
+      throw new UnsupportedOperationException("found multiple zones for machine allocation : " + cloudZones);
+    }
+ else {
+      machineDetails=provisionMachine(duration,unit);
+    }
+  }
+ catch (  final Exception e) {
+    logger.log(Level.WARNING,"Failed to provision machine, reason: " + e.getMessage(),e);
+    throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
+  }
+  logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
+  String machineIp;
+  if (cloud.getConfiguration().isConnectToPrivateIp()) {
+    machineIp=machineDetails.getPrivateAddress();
+  }
+ else {
+    machineIp=machineDetails.getPublicAddress();
+  }
+  try {
+    checkForProvisioningTimeout(end,machineDetails);
+    if (machineDetails.isAgentRunning()) {
+      logger.info("Machine provisioning provided a machine and indicated that an agent is already running");
+    }
+ else {
+      logger.info("Cloudify Adapter is installing Cloudify on new machine");
+      installAndStartAgent(machineDetails,end);
+      checkForProvisioningTimeout(end,machineDetails);
+    }
+    if (machineIp == null) {
+      throw new IllegalArgumentException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
+    }
+    logger.info("Cloudify adapter is waiting for GSA to become available");
+    final GridServiceAgent gsa=waitForGsa(machineIp,end);
+    if (gsa == null) {
+      throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
+    }
+    return gsa;
+  }
+ catch (  final ElasticMachineProvisioningException e) {
+    logger.info("ElasticMachineProvisioningException occurred, " + e.getMessage());
+    logger.info(ExceptionUtils.getFullStackTrace(e));
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    throw e;
+  }
+catch (  final TimeoutException e) {
+    logger.info("TimeoutException occurred, " + e.getMessage());
+    logger.info(ExceptionUtils.getFullStackTrace(e));
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    throw e;
+  }
+catch (  final InterruptedException e) {
+    logger.info("InterruptedException occurred, " + e.getMessage());
+    logger.info(ExceptionUtils.getFullStackTrace(e));
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    throw e;
+  }
+}
