@@ -1,4 +1,5 @@
 {
+  setZone(LOCALCLOUD_GSA_ZONE);
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
   startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_MANAGEMENT_ARGUMENTS,timeout,timeunit,true);
