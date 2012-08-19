@@ -1,3 +1,0 @@
-{
-  return new ManualCapacityScaleConfigurer().memoryCapacity(dataGridConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create();
-}

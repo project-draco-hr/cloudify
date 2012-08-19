@@ -23,7 +23,7 @@
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
-    deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create());
+    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(containerMemoryInMB * numberOfInstances));
   }
   deployAndWait(serviceName,deployment);
   jarFile.delete();

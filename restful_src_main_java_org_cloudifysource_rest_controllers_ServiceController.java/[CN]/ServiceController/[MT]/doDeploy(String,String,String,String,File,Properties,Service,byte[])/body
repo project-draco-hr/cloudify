@@ -10,7 +10,8 @@
     }
  else {
       if (service == null || service.getScalingRules() == null) {
-        final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,externalProcessMemoryInMB);
+        final ManualCapacityScaleConfig scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).create();
         deployment.scale(scaleConfig);
       }
  else {
@@ -33,7 +34,8 @@
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
-      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB);
       scaleConfig.setAtMostOneContainerPerMachine(true);
       deployment.scale(scaleConfig);
     }

@@ -8,7 +8,7 @@
   if (cloud == null) {
     setSharedMachineProvisioning(deployment,zone,reservedMemoryCapacityPerMachineInMB);
     if (isLocalCloud()) {
-      deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(dataGridConfig));
+      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(dataGridConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
     }
  else {
       deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
@@ -23,7 +23,7 @@
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
-    deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create());
+    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)cloudExternalProcessMemoryInMB));
   }
   deployAndWait(serviceName,deployment);
 }

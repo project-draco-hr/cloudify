@@ -13,5 +13,5 @@
  else {
     throw new DSLException("Number of instances must be at least 1");
   }
-  return new ManualCapacityScaleConfigurer().memoryCapacity(externalProcessMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).create();
+  return externalProcessMemoryInMB * numberOfInstances;
 }
