@@ -1,8 +1,9 @@
 String applicationName
 String serviceName
-String zone
-File srcFile
+String[] agentZones
+File extractedServiceFolder
 Properties contextProperties
-DataGrid dataGridConfig
+StatelessProcessingUnit puConfig
 String templateName
+int numberOfInstances
 boolean locationAware

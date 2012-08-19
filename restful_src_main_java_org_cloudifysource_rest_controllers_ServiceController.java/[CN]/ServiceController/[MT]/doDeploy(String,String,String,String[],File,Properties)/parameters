@@ -1,6 +1,6 @@
 String applicationName
 String serviceName
 String templateName
-String zone
+String[] agentZones
 File srcFile
 Properties propsFile
