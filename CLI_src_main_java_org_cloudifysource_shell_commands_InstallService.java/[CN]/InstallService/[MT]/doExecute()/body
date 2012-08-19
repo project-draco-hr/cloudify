@@ -15,16 +15,11 @@
         if (!fullPathToRecipe.exists()) {
           throw new CLIStatusException("service_file_doesnt_exist",fullPathToRecipe.getPath());
         }
-        packedFile=Packager.pack(fullPathToRecipe,new File[]{cloudConfigurationZipFile});
+        packedFile=getPackedFile(cloudConfigurationZipFile,fullPathToRecipe);
         service=ServiceReader.readService(fullPathToRecipe);
       }
  else {
-        if (cloudConfigurationZipFile != null) {
-          packedFile=Packager.pack(recipe,new File[]{cloudConfigurationZipFile});
-        }
- else {
-          packedFile=Packager.pack(recipe,new File[0]);
-        }
+        packedFile=getPackedFile(cloudConfigurationZipFile,recipe);
         service=ServiceReader.readService(recipe);
       }
       packedFile.deleteOnExit();
