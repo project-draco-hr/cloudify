@@ -5,9 +5,7 @@
   MachineDetails machineDetails;
   try {
     cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
-    List<String> cloudProviderZones=this.cloud.getProvider().getZones();
     List<String> defaultZones=Arrays.asList(config.getGridServiceAgentZones());
-    defaultZones.addAll(cloudProviderZones);
     List<String> cloudZones=new ArrayList<String>();
     for (    String zone : zones) {
       if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
@@ -20,7 +18,7 @@
       }
     }
     if (cloudZones.size() != 0) {
-      machineDetails=provisionMachine(duration,unit,cloudZones.get(0));
+      machineDetails=provisionMachine(cloudZones.get(0),duration,unit);
     }
     if (cloudZones.size() > 1) {
       throw new UnsupportedOperationException("found multiple zones for machine allocation : " + cloudZones);
