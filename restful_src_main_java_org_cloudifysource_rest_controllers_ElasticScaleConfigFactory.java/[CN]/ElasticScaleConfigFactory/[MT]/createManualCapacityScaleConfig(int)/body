@@ -1,3 +1,0 @@
-{
-  return new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create();
-}

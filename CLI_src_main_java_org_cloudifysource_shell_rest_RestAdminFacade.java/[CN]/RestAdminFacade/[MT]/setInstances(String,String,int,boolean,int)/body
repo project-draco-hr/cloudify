@@ -1,5 +1,5 @@
 {
-  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout+ "/set-instances?count="+ count;
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout+ "/set-instances?count="+ count+ "&location-affinity="+ locationAffinity;
   try {
     @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.post(url);
     return response;

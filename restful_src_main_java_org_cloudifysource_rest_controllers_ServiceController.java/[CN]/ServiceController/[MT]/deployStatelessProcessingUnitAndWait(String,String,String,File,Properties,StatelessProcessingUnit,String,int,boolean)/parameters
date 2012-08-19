@@ -3,5 +3,7 @@ String serviceName
 String zone
 File extractedServiceFolder
 Properties contextProperties
-StatefulProcessingUnit puConfig
+StatelessProcessingUnit puConfig
 String templateName
+int numberOfInstances
+boolean locationAffinity

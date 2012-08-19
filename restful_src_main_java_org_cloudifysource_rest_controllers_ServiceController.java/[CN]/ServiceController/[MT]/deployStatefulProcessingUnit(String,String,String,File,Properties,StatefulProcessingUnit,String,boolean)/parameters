@@ -1,7 +1,8 @@
 String applicationName
 String serviceName
 String zone
-File srcFile
+File extractedServiceFolder
 Properties contextProperties
-DataGrid dataGridConfig
+StatefulProcessingUnit puConfig
 String templateName
+boolean locationAffinity

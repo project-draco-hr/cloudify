@@ -7,7 +7,7 @@
   if (initialNumberOfInstances == count) {
     return getFormattedMessage("num_instanes_already_met",count);
   }
-  Map<String,String> response=adminFacade.setInstances(applicationName,serviceName,count,timeout);
+  Map<String,String> response=adminFacade.setInstances(applicationName,serviceName,count,locationAffinity,timeout);
   String pollingID=response.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(pollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;

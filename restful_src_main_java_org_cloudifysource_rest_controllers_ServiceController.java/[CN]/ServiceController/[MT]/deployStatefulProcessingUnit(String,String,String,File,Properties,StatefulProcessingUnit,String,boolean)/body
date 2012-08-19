@@ -22,7 +22,7 @@
     final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
-    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(puConfig.getSla().getMemoryCapacity()));
+    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(puConfig.getSla().getMemoryCapacity(),locationAffinity));
   }
   deployAndWait(serviceName,deployment);
   jarFile.delete();
