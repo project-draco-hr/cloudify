@@ -2,7 +2,7 @@
   Set<? extends NodeMetadata> nodes=null;
   try {
     logger.fine("JClouds Deployer is creating new machines with group: " + groupName + ". This may take a few minutes");
-    nodes=createServersWithRetry(groupName,numberOfMachines,getTemplate());
+    nodes=createServersWithRetry(groupName,numberOfMachines,getTemplate(locationId));
   }
  catch (  final RunNodesException e) {
     throw new InstallerException("Failed to start Cloud server with JClouds",e);

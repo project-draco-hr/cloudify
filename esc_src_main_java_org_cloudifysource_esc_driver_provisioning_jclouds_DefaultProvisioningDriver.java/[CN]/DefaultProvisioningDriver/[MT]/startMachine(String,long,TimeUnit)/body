@@ -5,10 +5,9 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   try {
-    if (zone != null) {
-      deployer.setLocationId(zone);
-    }
-    final MachineDetails md=doStartMachine(end);
+    final String groupName=createNewServerName();
+    logger.fine("Starting a new cloud server with group: " + groupName);
+    final MachineDetails md=createServer(end,groupName,locationId);
     return md;
   }
  catch (  final Exception e) {

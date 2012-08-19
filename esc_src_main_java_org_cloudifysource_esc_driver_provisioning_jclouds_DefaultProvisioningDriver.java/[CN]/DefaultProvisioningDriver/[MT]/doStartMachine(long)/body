@@ -1,5 +1,0 @@
-{
-  final String groupName=createNewServerName();
-  logger.fine("Starting a new cloud server with group: " + groupName);
-  return createServer(end,groupName);
-}

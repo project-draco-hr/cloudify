@@ -2,7 +2,7 @@
   Set<? extends NodeMetadata> nodes=null;
   try {
     logger.fine("Cloudify Deployer is creating a new server with tag: " + serverName + ". This may take a few minutes");
-    nodes=createServersWithRetry(serverName,1,getTemplate());
+    nodes=createServersWithRetry(serverName,1,getTemplate(locationId));
   }
  catch (  final RunNodesException e) {
     throw new InstallerException("Failed to start Cloud server",e);

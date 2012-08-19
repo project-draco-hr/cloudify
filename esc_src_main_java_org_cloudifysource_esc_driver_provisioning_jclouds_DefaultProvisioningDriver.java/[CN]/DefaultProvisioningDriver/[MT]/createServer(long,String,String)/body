@@ -1,0 +1,40 @@
+{
+  final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
+  String locationId;
+  if (locationIdOverride == null) {
+    locationId=cloudTemplate.getLocationId();
+  }
+ else {
+    locationId=locationIdOverride;
+  }
+  NodeMetadata node;
+  final MachineDetails machineDetails;
+  try {
+    logger.fine("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
+    node=deployer.createServer(groupName,locationId);
+  }
+ catch (  final InstallerException e) {
+    throw new CloudProvisioningException("Failed to create cloud server",e);
+  }
+  logger.fine("New node is allocated, group name: " + groupName);
+  final String nodeId=node.getId();
+  try {
+    node=waitForNodeToBecomeReady(nodeId,end);
+    machineDetails=createMachineDetailsFromNode(node);
+    final FileTransferModes fileTransfer=cloudTemplate.getFileTransfer();
+    if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer.equals(FileTransferModes.CIFS)) {
+      if (machineDetails.getRemotePassword() == null) {
+        handleEC2WindowsCredentials(end,node,machineDetails,cloudTemplate);
+      }
+    }
+ else {
+      handleServerCredentials(machineDetails,cloudTemplate);
+    }
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
+    deployer.shutdownMachine(nodeId);
+    throw new CloudProvisioningException(e);
+  }
+  return machineDetails;
+}

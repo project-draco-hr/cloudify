@@ -8,7 +8,6 @@
   deployer.setImageId(cloudTemplate.getImageId());
   deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
   deployer.setHardwareId(cloudTemplate.getHardwareId());
-  deployer.setLocationId(cloudTemplate.getLocationId());
   deployer.setExtraOptions(cloudTemplate.getOptions());
   return deployer;
 }
