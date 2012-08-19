@@ -29,7 +29,7 @@
     if (!fixedZone.isEmpty()) {
       fixedZone+=",";
     }
-    fixedZone+="localcloud";
+    fixedZone+=LOCALCLOUD_ZONE;
   }
   if (service == null) {
     doDeploy(applicationName,serviceName,templateName,fixedZone,srcFile,propsFile);

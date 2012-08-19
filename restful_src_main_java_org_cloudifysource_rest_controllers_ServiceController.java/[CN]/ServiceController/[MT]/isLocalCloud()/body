@@ -1,14 +1,16 @@
 {
   final GridServiceAgent[] agents=admin.getGridServiceAgents().getAgents();
   final boolean isOnlyOneAgent=agents.length == 1;
-  final boolean isAgentWithoutZones=agents[0].getZones().isEmpty();
-  final boolean isLocalCloud=isOnlyOneAgent && isAgentWithoutZones;
+  GridServiceAgent agent=agents[0];
+  AtLeastOneZoneConfig requiredContainerZone=new AtLeastOneZoneConfigurer().addZone(LOCALCLOUD_ZONE).create();
+  final boolean isLocalCloudZone=agent.getExactZones().isStasfies(requiredContainerZone);
+  final boolean isLocalCloud=isOnlyOneAgent && isLocalCloudZone;
   if (logger.isLoggable(Level.FINE)) {
     if (!isOnlyOneAgent) {
       logger.fine("Not local cloud since there are " + agents.length + " agents");
     }
- else     if (!isAgentWithoutZones) {
-      logger.fine("Not local cloud since agent has zones " + agents[0].getZones());
+ else     if (!isLocalCloudZone) {
+      logger.fine("Not local cloud since no " + LOCALCLOUD_ZONE + " in agent zones "+ agent.getExactZones());
     }
   }
   return isLocalCloud;
