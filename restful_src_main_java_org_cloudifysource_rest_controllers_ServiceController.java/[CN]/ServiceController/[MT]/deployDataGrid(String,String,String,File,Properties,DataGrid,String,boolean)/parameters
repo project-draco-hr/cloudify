@@ -5,4 +5,4 @@ File srcFile
 Properties contextProperties
 DataGrid dataGridConfig
 String templateName
-boolean locationAffinity
+boolean locationAware

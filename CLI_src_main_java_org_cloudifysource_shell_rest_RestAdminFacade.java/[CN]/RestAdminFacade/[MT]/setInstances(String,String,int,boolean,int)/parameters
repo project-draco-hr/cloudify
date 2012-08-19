@@ -1,5 +1,5 @@
 String applicationName
 String serviceName
 int count
-boolean locationAffinity
+boolean locationAware
 int timeout

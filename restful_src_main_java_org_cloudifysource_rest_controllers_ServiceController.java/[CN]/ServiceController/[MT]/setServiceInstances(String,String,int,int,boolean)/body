@@ -24,7 +24,7 @@
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),locationAffinity));
+    pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),locationAware));
   }
   logger.log(Level.INFO,"Starting to poll for lifecycle events.");
   eventContainerID=startPollingForLifecycleEvents(serviceName,applicationName,count,false,timeout,TimeUnit.MINUTES);

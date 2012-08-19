@@ -6,4 +6,4 @@ Properties contextProperties
 StatelessProcessingUnit puConfig
 String templateName
 int numberOfInstances
-boolean locationAffinity
+boolean locationAware

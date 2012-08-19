@@ -5,4 +5,4 @@ File extractedServiceFolder
 Properties contextProperties
 StatefulProcessingUnit puConfig
 String templateName
-boolean locationAffinity
+boolean locationAware

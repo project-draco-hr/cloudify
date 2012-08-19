@@ -1,7 +1,7 @@
 {
-  boolean locationAffinity=false;
+  boolean locationAware=false;
   if (service != null) {
-    locationAffinity=service.isLocationAffinity();
+    locationAware=service.isLocationAware();
   }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
@@ -39,7 +39,7 @@
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
       int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
-      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,locationAffinity);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,locationAware);
       scaleConfig.setAtMostOneContainerPerMachine(true);
       deployment.scale(scaleConfig);
     }

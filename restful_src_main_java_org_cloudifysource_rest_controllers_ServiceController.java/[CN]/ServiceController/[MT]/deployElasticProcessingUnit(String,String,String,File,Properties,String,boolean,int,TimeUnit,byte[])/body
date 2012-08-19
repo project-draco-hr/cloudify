@@ -38,16 +38,16 @@
     doDeploy(applicationName,serviceName,templateName,fixedZone,srcFile,propsFile,service,serviceCloudConfigurationContents);
   }
  else   if (service.getDataGrid() != null) {
-    deployDataGrid(applicationName,serviceName,fixedZone,srcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAffinity());
+    deployDataGrid(applicationName,serviceName,fixedZone,srcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAware());
   }
  else   if (service.getStatelessProcessingUnit() != null) {
-    deployStatelessProcessingUnitAndWait(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAffinity());
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware());
   }
  else   if (service.getMirrorProcessingUnit() != null) {
-    deployStatelessProcessingUnitAndWait(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getMirrorProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAffinity());
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getMirrorProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware());
   }
  else   if (service.getStatefulProcessingUnit() != null) {
-    deployStatefulProcessingUnit(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getStatefulProcessingUnit(),templateName,service.isLocationAffinity());
+    deployStatefulProcessingUnit(applicationName,serviceName,fixedZone,new File(projectDir,"ext"),propsFile,service.getStatefulProcessingUnit(),templateName,service.isLocationAware());
   }
  else {
     throw new IllegalStateException("Unsupported service type");
