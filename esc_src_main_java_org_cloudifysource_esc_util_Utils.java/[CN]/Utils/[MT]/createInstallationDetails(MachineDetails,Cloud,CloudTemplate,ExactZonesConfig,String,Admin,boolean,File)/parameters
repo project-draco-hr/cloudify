@@ -1,7 +1,7 @@
 MachineDetails md
 Cloud cloud
 CloudTemplate template
-String[] zones
+ExactZonesConfig zones
 String lookupLocatorsString
 Admin admin
 boolean isManagement

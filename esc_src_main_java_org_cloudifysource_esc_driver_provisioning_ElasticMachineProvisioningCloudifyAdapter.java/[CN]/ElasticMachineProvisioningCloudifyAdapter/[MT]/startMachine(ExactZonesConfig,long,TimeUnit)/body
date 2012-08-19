@@ -3,25 +3,25 @@
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
-  try {
-    cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
-    List<String> defaultZones=Arrays.asList(config.getGridServiceAgentZones());
-    List<String> cloudZones=new ArrayList<String>();
-    for (    String zone : zones) {
-      if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
-        cloudZones.add(zone.substring(CLOUD_ZONE_PREFIX.length(),zone.length() - 1));
+  cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
+  AtLeastOneZoneConfig defaultZones=config.getGridServiceAgentZones();
+  if (!defaultZones.satisfiedBy(zones)) {
+    throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
+  }
+  String locationId=null;
+  for (  String zone : zones.getZones()) {
+    if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
+      if (locationId == null) {
+        locationId=zone.substring(CLOUD_ZONE_PREFIX.length());
       }
  else {
-        if (!defaultZones.contains(zone)) {
-          throw new UnsupportedOperationException("discovered an unsupported zone for machine allocation : " + zone);
-        }
+        throw new IllegalArgumentException("The specified zones " + zones + " should include only one zone with the "+ CLOUD_ZONE_PREFIX+ " prefix:"+ locationId);
       }
     }
-    if (cloudZones.size() != 0) {
-      machineDetails=provisionMachine(cloudZones.get(0),duration,unit);
-    }
-    if (cloudZones.size() > 1) {
-      throw new UnsupportedOperationException("found multiple zones for machine allocation : " + cloudZones);
+  }
+  try {
+    if (locationId != null) {
+      machineDetails=provisionMachine(locationId,duration,unit);
     }
  else {
       machineDetails=provisionMachine(duration,unit);
@@ -39,6 +39,9 @@
  else {
     machineIp=machineDetails.getPublicAddress();
   }
+  if (machineIp == null) {
+    throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
+  }
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (machineDetails.isAgentRunning()) {
@@ -48,9 +51,6 @@
       logger.info("Cloudify Adapter is installing Cloudify on new machine");
       installAndStartAgent(machineDetails,end);
       checkForProvisioningTimeout(end,machineDetails);
-    }
-    if (machineIp == null) {
-      throw new IllegalArgumentException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
     }
     logger.info("Cloudify adapter is waiting for GSA to become available");
     final GridServiceAgent gsa=waitForGsa(machineIp,end);

@@ -9,8 +9,7 @@
   }
   details.setManagementOnlyFiles(managementOnlyFiles);
   details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
-  final String[] zonesWithLocation=StringUtils.addStringToArray(zones,md.getLocationId());
-  details.setZones(StringUtils.join(zonesWithLocation,",",0,zonesWithLocation.length));
+  details.setZones(StringUtils.collectionToCommaDelimitedString(zones.getZones()));
   details.setPrivateIp(md.getPrivateAddress());
   details.setPublicIp(md.getPublicAddress());
   details.setLocator(lookupLocatorsString);

@@ -1,5 +1,5 @@
 {
-  final String[] zones=this.config.getGridServiceAgentZones();
+  final String[] zones=this.config.getGridServiceAgentZones().getZones().toArray(new String[0]);
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName() + "-" + Arrays.toString(zones));
   final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
   if (cloudContents == null) {
