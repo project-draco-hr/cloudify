@@ -62,6 +62,7 @@
  else {
       statisticsId.setTimeWindowStatistics(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
     }
+    statisticsId.setAgentZones(new AnyZonesConfig());
     AutomaticCapacityScaleRuleConfig rule=new AutomaticCapacityScaleRuleConfig();
     rule.setStatistics(statisticsId);
     if (scalingRule.getLowThreshold() == null) {
