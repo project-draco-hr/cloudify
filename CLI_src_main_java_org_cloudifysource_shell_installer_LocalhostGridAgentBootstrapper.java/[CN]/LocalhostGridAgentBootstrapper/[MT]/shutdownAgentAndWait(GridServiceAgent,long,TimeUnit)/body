@@ -10,7 +10,7 @@
     }
   }
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    boolean messagePublished=false;
+    private boolean messagePublished=false;
     /** 
  * Pings the agent to verify it's not available, indicating it was shut down.
  */
