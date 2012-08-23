@@ -7,6 +7,12 @@
  else {
     httpClient=new DefaultHttpClient();
   }
+  httpClient.addRequestInterceptor(new HttpRequestInterceptor(){
+    @Override public void process(    HttpRequest request,    HttpContext context) throws HttpException, IOException {
+      request.addHeader(CloudifyConstants.REST_API_VERSION_HEADER,version);
+    }
+  }
+);
   if (StringUtils.notEmpty(username) && StringUtils.notEmpty(password)) {
     httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY),new UsernamePasswordCredentials(username,password));
   }
