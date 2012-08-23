@@ -1,0 +1,6 @@
+{
+  final File testParsingBaseDslFile=new File(TEST_PARSING_RESOURCE_PATH + "test_location-aware-service.groovy");
+  final File testParsingBaseWorkDir=new File(TEST_PARSING_RESOURCE_PATH);
+  final Service service=ServiceReader.getServiceFromFile(testParsingBaseDslFile,testParsingBaseWorkDir).getService();
+  Assert.assertTrue("service.isLocationAware() returned false even though locationAware property is set to true",service.isLocationAware());
+}
