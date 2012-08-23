@@ -1,4 +1,5 @@
 {
+  setIsLocalCloud(isLocalCloud);
   final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
   if (gsaZones == null || gsaZones.isEmpty()) {
     throw new CLIException("Agent must be started with a zone");

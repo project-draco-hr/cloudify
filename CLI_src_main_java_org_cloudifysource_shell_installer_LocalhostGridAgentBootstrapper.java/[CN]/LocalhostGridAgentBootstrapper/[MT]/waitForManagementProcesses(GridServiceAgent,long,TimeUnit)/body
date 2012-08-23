@@ -38,10 +38,17 @@
     }
     private boolean isDone(    final Iterable<? extends AgentGridComponent> components,    final String serviceName){
       boolean found=false;
-      for (      final AgentGridComponent component : components) {
-        if (checkAgent(component)) {
+      if (isLocalCloud) {
+        if (components.iterator().hasNext()) {
           found=true;
-          break;
+        }
+      }
+ else {
+        for (        final AgentGridComponent component : components) {
+          if (checkAgent(component)) {
+            found=true;
+            break;
+          }
         }
       }
       if (verbose) {

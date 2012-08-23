@@ -7,7 +7,8 @@
   final String commandString=StringUtils.collectionToDelimitedString(commandLine," ");
   final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
-  String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
+  String localCloudOptions="-Xmx" + LOCALCLOUD_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
+  String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m"+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   }
@@ -20,26 +21,29 @@
     environment.put("LOOKUPGROUPS",lookupGroups);
   }
   if (lookupLocators != null) {
-    environment.put("LOOKUPLOCATORS",lookupLocators);
     final String disableMulticast="-Dcom.gs.multicast.enabled=false";
+    environment.put("LOOKUPLOCATORS",lookupLocators);
     gsaJavaOptions+=" " + disableMulticast;
     lusJavaOptions+=" " + disableMulticast;
     gsmJavaOptions+=" " + disableMulticast;
     esmJavaOptions+=" " + disableMulticast;
-    gscJavaOptions+=disableMulticast;
+    gscJavaOptions+=" " + disableMulticast;
+    localCloudOptions+=" " + disableMulticast;
   }
   if (nicAddress != null) {
     environment.put("NIC_ADDR",nicAddress);
   }
   environment.put("RMI_OPTIONS","");
-  if (gsaZones != null) {
-    gsaJavaOptions+=" -D" + ZONES_PROPERTY + "="+ gsaZones;
+  if (isLocalCloud) {
+    environment.put("COMPONENT_JAVA_OPTIONS",localCloudOptions);
   }
-  environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
-  environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);
-  environment.put("GSM_JAVA_OPTIONS",gsmJavaOptions);
-  environment.put("ESM_JAVA_OPTIONS",esmJavaOptions);
-  environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
+ else {
+    environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
+    environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);
+    environment.put("GSM_JAVA_OPTIONS",gsmJavaOptions);
+    environment.put("ESM_JAVA_OPTIONS",esmJavaOptions);
+    environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
+  }
   try {
     logger.fine("Executing command: " + commandString);
     final Process proc=pb.start();

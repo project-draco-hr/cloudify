@@ -2,5 +2,10 @@
   setGridServiceAgentZone(LOCALCLOUD_GSA_ZONES);
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
-  startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_MANAGEMENT_ARGUMENTS,timeout,timeunit,true);
+  if (isWindows()) {
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_WIN_MANAGEMENT_ARGUMENTS,timeout,timeunit,true);
+  }
+ else {
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_LINUX_MANAGEMENT_ARGUMENTS,timeout,timeunit,true);
+  }
 }

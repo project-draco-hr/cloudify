@@ -2,13 +2,25 @@
   final List<String> args=new ArrayList<String>();
   args.addAll(Arrays.asList(gsAgentArguments));
   String[] command;
-  if (isWindows()) {
-    command=Arrays.copyOf(WINDOWS_COMMAND,WINDOWS_COMMAND.length);
-    args.addAll(Arrays.asList(WINDOWS_ARGUMENTS_POSTFIX));
+  if (isLocalCloud) {
+    if (isWindows()) {
+      command=Arrays.copyOf(WINDOWS_LOCALCLOUD_COMMAND,WINDOWS_LOCALCLOUD_COMMAND.length);
+      args.addAll(Arrays.asList(WINDOWS_ARGUMENTS_POSTFIX));
+    }
+ else {
+      command=Arrays.copyOf(LINUX_LOCALCLOUD_COMMAND,LINUX_LOCALCLOUD_COMMAND.length);
+      args.addAll(Arrays.asList(LINUX_ARGUMENTS_POSTFIX));
+    }
   }
  else {
-    command=Arrays.copyOf(LINUX_COMMAND,LINUX_COMMAND.length);
-    args.addAll(Arrays.asList(LINUX_ARGUMENTS_POSTFIX));
+    if (isWindows()) {
+      command=Arrays.copyOf(WINDOWS_CLOUD_COMMAND,WINDOWS_CLOUD_COMMAND.length);
+      args.addAll(Arrays.asList(WINDOWS_ARGUMENTS_POSTFIX));
+    }
+ else {
+      command=Arrays.copyOf(LINUX_CLOUD_COMMAND,LINUX_CLOUD_COMMAND.length);
+      args.addAll(Arrays.asList(LINUX_ARGUMENTS_POSTFIX));
+    }
   }
   if (verbose) {
     String message="Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : "");
