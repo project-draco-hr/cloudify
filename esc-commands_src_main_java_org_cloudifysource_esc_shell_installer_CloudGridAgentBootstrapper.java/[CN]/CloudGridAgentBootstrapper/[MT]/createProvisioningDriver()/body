@@ -13,5 +13,6 @@ catch (  final Exception e) {
     contextAware.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
   }
   provisioning.addListener(new CliProvisioningDriverListener());
-  provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true);
+  String serviceName=null;
+  provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName);
 }

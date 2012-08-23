@@ -1,2 +1,3 @@
 {
+  this.serviceName=isolation.getName();
 }

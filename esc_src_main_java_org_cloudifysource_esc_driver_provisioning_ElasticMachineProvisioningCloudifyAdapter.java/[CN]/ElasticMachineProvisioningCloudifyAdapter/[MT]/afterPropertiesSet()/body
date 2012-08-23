@@ -39,7 +39,7 @@
         contextAware.setProvisioningDriverClassContext(provisioningDriverContext);
       }
       handleServiceCloudConfiguration();
-      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false);
+      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName);
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
