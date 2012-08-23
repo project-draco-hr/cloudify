@@ -5,6 +5,7 @@
   do {
     retry=false;
     try {
+      logger.info("starting machine with template : " + template);
       nodes=this.context.getComputeService().createNodesInGroup(group,count,template);
     }
  catch (    final ResourceNotFoundException e) {

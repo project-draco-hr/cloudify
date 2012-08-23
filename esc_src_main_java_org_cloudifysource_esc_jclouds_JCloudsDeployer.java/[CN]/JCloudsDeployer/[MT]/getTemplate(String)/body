@@ -1,22 +1,20 @@
 {
-  if (this.template == null) {
-    logger.fine("Creating Cloud Template. This may take a few seconds");
-    final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
-    if (imageId != null && !imageId.isEmpty()) {
-      builder.imageId(imageId);
-    }
-    if (minRamMegabytes > 0) {
-      builder.minRam(minRamMegabytes);
-    }
-    if (hardwareId != null && !hardwareId.isEmpty()) {
-      builder.hardwareId(hardwareId);
-    }
-    if (locationId != null && !locationId.isEmpty()) {
-      builder.locationId(locationId);
-    }
-    template=builder.build();
-    handleExtraOptions();
-    logger.fine("Cloud Template is ready for use.");
+  logger.fine("Creating Cloud Template with locationId=" + locationId + ". This may take a few seconds");
+  final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
+  if (imageId != null && !imageId.isEmpty()) {
+    builder.imageId(imageId);
   }
+  if (minRamMegabytes > 0) {
+    builder.minRam(minRamMegabytes);
+  }
+  if (hardwareId != null && !hardwareId.isEmpty()) {
+    builder.hardwareId(hardwareId);
+  }
+  if (locationId != null && !locationId.isEmpty()) {
+    builder.locationId(locationId);
+  }
+  Template template=builder.build();
+  handleExtraOptions(template);
+  logger.fine("Cloud Template is ready for use. " + template);
   return template;
 }
