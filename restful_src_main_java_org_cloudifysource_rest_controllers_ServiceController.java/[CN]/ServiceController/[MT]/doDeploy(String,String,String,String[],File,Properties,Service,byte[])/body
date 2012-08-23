@@ -20,7 +20,7 @@
         deployment.scale(scaleConfig);
       }
  else {
-        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB);
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB,false);
         deployment.scale(scaleConfig);
       }
     }
@@ -45,7 +45,7 @@
       deployment.scale(scaleConfig);
     }
  else {
-      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware);
       scaleConfig.setAtMostOneContainerPerMachine(true);
       deployment.scale(scaleConfig);
     }

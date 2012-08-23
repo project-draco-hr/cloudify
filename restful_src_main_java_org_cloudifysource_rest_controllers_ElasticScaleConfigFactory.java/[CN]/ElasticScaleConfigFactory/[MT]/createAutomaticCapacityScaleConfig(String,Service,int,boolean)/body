@@ -22,6 +22,9 @@
   CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
   CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getMaxAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).create();
   AutomaticCapacityScaleConfigurer scaleConfigurer=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).statisticsPollingInterval(service.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleOut(service.getScaleOutCooldownInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleIn(service.getScaleInCooldownInSeconds(),TimeUnit.SECONDS);
+  if (locationAware) {
+    scaleConfigurer.enableGridServiceAgentZonesAware();
+  }
   Map<String,ServiceStatisticsDetails> serviceStatisticsByName=new HashMap<String,ServiceStatisticsDetails>();
   if (service.getServiceStatistics() != null) {
     for (    AbstractStatisticsDetails calculatedStatistics : service.getServiceStatistics()) {
