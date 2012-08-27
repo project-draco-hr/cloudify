@@ -1,0 +1,16 @@
+{
+  Service service=new Service();
+  try {
+    service.validateNameExists(new DSLValidationContext());
+    fail("A service without a name was successfully validated");
+  }
+ catch (  DSLValidationException e) {
+  }
+  try {
+    service.setName(StringUtils.EMPTY);
+    service.validateNameExists(new DSLValidationContext());
+    fail("A service with an empty name was successfully validated");
+  }
+ catch (  DSLValidationException e) {
+  }
+}

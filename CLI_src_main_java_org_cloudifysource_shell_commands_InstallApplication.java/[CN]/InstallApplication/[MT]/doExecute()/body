@@ -4,7 +4,9 @@
   }
   logger.info("Validating file " + applicationFile.getName());
   final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
-  normalizeApplicationName(application);
+  if (StringUtils.isBlank(applicationName)) {
+    applicationName=application.getName();
+  }
   if (adminFacade.getApplicationsList().contains(applicationName)) {
     throw new CLIStatusException("application_already_deployed",application.getName());
   }

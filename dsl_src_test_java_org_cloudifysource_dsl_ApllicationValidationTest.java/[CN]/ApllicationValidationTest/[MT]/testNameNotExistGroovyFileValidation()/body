@@ -1,0 +1,13 @@
+{
+  final File applicationFile=new File(APPLICATION_WITHOUT_NAME_GROOVY);
+  try {
+    ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+    Assert.fail("Application name is missing, DSLValidationException expected.");
+  }
+ catch (  final DSLValidationException e) {
+  }
+catch (  final Exception e) {
+    Assert.fail("Application name is missing, DSLValidationException expected, instead " + e.getClass() + " was thrown.");
+    e.printStackTrace();
+  }
+}
