@@ -1,0 +1,7 @@
+{
+  final ValidateService fixture=new ValidateService();
+  fixture.setServiceFile(new File("src/test/resources/serviceValidation/groovy-service"));
+  fixture.messages=ShellUtils.getMessageBundle();
+  final Object result=fixture.doExecute();
+  Assert.assertTrue(((String)result).contains("success"));
+}

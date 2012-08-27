@@ -1,0 +1,13 @@
+{
+  if (!getApplicationFile().exists()) {
+    throw new CLIStatusException("application_not_found",getApplicationFile().getAbsolutePath());
+  }
+  Application application=null;
+  try {
+    application=ServiceReader.getApplicationFromFile(getApplicationFile()).getApplication();
+  }
+ catch (  final Exception e) {
+    throw new CLIStatusException(e,"application_parsing_failure",e.getMessage());
+  }
+  return getFormattedMessage("application_parsing_success",application.getName());
+}

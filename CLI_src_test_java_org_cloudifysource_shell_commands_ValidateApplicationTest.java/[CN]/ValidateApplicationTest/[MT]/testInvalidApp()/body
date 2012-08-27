@@ -1,0 +1,6 @@
+{
+  final ValidateApplication fixture=new ValidateApplication();
+  fixture.setApplicationFile(new File("src/test/resources/applicationValidation/failed-groovy-application"));
+  fixture.messages=ShellUtils.getMessageBundle();
+  fixture.doExecute();
+}

@@ -1,0 +1,13 @@
+{
+  if (!getServiceFile().exists()) {
+    throw new CLIStatusException("service_file_doesnt_exist",serviceFile.getPath());
+  }
+  Service service=null;
+  try {
+    service=ServiceReader.readService(getServiceFile());
+  }
+ catch (  final Exception e) {
+    throw new CLIStatusException(e,"service_parsing_failure",e.getMessage());
+  }
+  return getFormattedMessage("service_parsing_success",service.getName());
+}

@@ -1,0 +1,7 @@
+{
+  final ValidateApplication fixture=new ValidateApplication();
+  fixture.setApplicationFile(new File("src/test/resources/applicationValidation/groovy-application"));
+  fixture.messages=ShellUtils.getMessageBundle();
+  final Object result=fixture.doExecute();
+  Assert.assertTrue(((String)result).contains("success"));
+}
