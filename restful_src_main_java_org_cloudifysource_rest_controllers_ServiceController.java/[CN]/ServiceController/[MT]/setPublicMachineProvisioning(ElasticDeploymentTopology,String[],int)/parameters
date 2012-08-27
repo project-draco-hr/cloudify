@@ -1,0 +1,3 @@
+ElasticDeploymentTopology deployment
+String[] agentZones
+int reservedMemoryCapacityPerMachineInMB

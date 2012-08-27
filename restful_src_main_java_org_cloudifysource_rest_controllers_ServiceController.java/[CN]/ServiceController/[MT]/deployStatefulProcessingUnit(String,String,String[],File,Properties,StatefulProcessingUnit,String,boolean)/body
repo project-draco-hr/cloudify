@@ -6,12 +6,13 @@
   final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
-    setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
     verifyEsmExistsInCluster();
     if (isLocalCloud()) {
+      setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(puConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
     }
  else {
+      setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
   }

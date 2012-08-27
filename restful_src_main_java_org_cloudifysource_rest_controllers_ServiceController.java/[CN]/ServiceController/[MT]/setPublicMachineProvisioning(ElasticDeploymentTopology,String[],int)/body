@@ -1,10 +1,5 @@
 {
   DiscoveredMachineProvisioningConfig machineProvisioning=new DiscoveredMachineProvisioningConfigurer().reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create();
   machineProvisioning.setGridServiceAgentZones(agentZones);
-  if (isLocalCloud()) {
-    deployment.publicMachineProvisioning(machineProvisioning);
-  }
- else {
-    deployment.sharedMachineProvisioning(SHARED_ISOLATION_ID,machineProvisioning);
-  }
+  deployment.publicMachineProvisioning(machineProvisioning);
 }

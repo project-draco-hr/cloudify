@@ -6,11 +6,12 @@
   final ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).highlyAvailable(dataGridConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
-    setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
     if (isLocalCloud()) {
+      setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(dataGridConfig.getSla().getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
     }
  else {
+      setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
   }
