@@ -23,7 +23,7 @@
     }
   }
   if (verbose) {
-    String message="Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : "");
+    final String message="Starting " + name + (verbose ? ":\n" + StringUtils.collectionToDelimitedString(Arrays.asList(command)," ") + " "+ StringUtils.collectionToDelimitedString(args," ") : "");
     publishEvent(message);
     logger.fine(message);
   }

@@ -1,0 +1,13 @@
+{
+  if (cloudFileName != null && !cloudFileName.trim().isEmpty()) {
+    File cloudFile=new File(cloudFileName);
+    final Cloud cloud=ServiceReader.readCloud(cloudFile);
+    if (cloud != null) {
+      if (cloud.getProvider() != null) {
+        final int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+        return numberOfManagementMachines < 2;
+      }
+    }
+  }
+  return true;
+}

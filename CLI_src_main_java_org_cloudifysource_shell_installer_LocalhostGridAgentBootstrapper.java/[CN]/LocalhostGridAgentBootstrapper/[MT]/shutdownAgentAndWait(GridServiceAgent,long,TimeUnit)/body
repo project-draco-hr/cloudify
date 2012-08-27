@@ -16,9 +16,9 @@
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       if (!messagePublished) {
-        String shuttingDownAgentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_agent_teardown_localcloud");
+        final String shuttingDownAgentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_agent_teardown_localcloud");
         publishEvent(shuttingDownAgentMessage);
-        String shuttingDownManagmentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_managment");
+        final String shuttingDownManagmentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_managment");
         publishEvent(shuttingDownManagmentMessage);
         messagePublished=true;
       }

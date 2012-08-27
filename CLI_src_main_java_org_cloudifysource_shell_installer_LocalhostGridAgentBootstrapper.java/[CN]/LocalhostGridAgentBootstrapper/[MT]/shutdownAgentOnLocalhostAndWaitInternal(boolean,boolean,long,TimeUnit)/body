@@ -15,7 +15,7 @@
     if (agent == null) {
       logger.fine("Agent not running on local machine");
       if (verbose) {
-        String agentNotFoundMessage=ShellUtils.getMessageBundle().getString("agent_not_found_on_teardown_command");
+        final String agentNotFoundMessage=ShellUtils.getMessageBundle().getString("agent_not_found_on_teardown_command");
         publishEvent(agentNotFoundMessage);
       }
       throw new CLIStatusException("teardown_failed_agent_not_found");

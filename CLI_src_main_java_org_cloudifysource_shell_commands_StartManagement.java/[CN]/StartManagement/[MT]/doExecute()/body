@@ -1,20 +1,7 @@
 {
-  if (timeoutInMinutes < 0) {
+  new CloudifyLicenseVerifier().verifyLicense();
+  if (getTimeoutInMinutes() < 0) {
     throw new CLIException("-timeout cannot be negative");
-  }
-  boolean notHighlyAvailableManagementSpace=false;
-  File cloudFile=null;
-  String cloudConfigurationContents=null;
-  if (cloudFileName != null && !cloudFileName.trim().isEmpty()) {
-    cloudFile=new File(cloudFileName);
-    cloudConfigurationContents=FileUtils.readFileToString(cloudFile);
-    final Cloud cloud=parseCloud(cloudFile);
-    if (cloud != null) {
-      if (cloud.getProvider() != null) {
-        final int numberOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
-        notHighlyAvailableManagementSpace=numberOfManagementMachines < 2;
-      }
-    }
   }
   final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
@@ -25,10 +12,10 @@
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setNoWebServices(noWebServices);
   installer.setNoManagementSpace(noManagementSpace);
-  installer.setNotHighlyAvailableManagementSpace(notHighlyAvailableManagementSpace);
+  installer.setNotHighlyAvailableManagementSpace(isNotHAManagementSpace());
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
-  installer.setCloudContents(cloudConfigurationContents);
-  installer.startManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  installer.setCloudFilePath(cloudFileName);
+  installer.startManagementOnLocalhostAndWait(getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Management started successfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }

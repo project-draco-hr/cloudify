@@ -1,0 +1,9 @@
+{
+  final LicenseManager manager=new LicenseManager();
+  try {
+    manager.verifyLicense();
+  }
+ catch (  final LicenseException e) {
+    throw new CLIStatusException("bad_license",e.getMessage());
+  }
+}
