@@ -1,0 +1,8 @@
+{
+  if (isLocalcloud) {
+    installOnLocalCloud();
+  }
+ else {
+    install();
+  }
+}

@@ -1,0 +1,13 @@
+{
+  if (agentZone == null) {
+    throw new IllegalStateException("Management services must be installed on management zone");
+  }
+  SpaceDeployment deployment=new SpaceDeployment(serviceName).addZone(serviceName);
+  for (  final Entry<Object,Object> prop : getContextProperties().entrySet()) {
+    deployment.setContextProperty(prop.getKey().toString(),prop.getValue().toString());
+  }
+  for (  final String requiredPUName : dependencies) {
+    deployment.addDependencies(new ProcessingUnitDeploymentDependenciesConfigurer().dependsOnMinimumNumberOfDeployedInstancesPerPartition(requiredPUName,1).create());
+  }
+  getGridServiceManager().deploy(deployment);
+}
