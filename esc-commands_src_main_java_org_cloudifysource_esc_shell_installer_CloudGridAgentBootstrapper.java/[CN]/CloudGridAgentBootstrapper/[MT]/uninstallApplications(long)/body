@@ -1,5 +1,5 @@
 {
-  List<String> applicationsList=adminFacade.getApplicationsList();
+  final List<String> applicationsList=adminFacade.getApplicationsList();
   if (applicationsList.size() > 0) {
     logger.info("Uninstalling the currently deployed applications");
     for (    final String application : applicationsList) {

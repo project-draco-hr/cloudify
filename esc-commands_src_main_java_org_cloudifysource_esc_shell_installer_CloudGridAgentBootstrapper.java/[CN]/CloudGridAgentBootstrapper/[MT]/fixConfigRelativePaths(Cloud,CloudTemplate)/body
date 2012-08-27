@@ -1,6 +1,0 @@
-{
-  if (template.getLocalDirectory() != null && !new File(template.getLocalDirectory()).isAbsolute()) {
-    logger.fine("Assuming " + template.getLocalDirectory() + " is in "+ Environment.getHomeDirectory());
-    template.setLocalDirectory(new File(Environment.getHomeDirectory(),template.getLocalDirectory()).getAbsolutePath());
-  }
-}

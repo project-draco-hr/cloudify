@@ -1,0 +1,3 @@
+{
+  return "CloudConfigurationHolder [cloudConfiguration=" + cloudConfiguration + ", cloudConfigurationFilePath="+ cloudConfigurationFilePath+ "]";
+}

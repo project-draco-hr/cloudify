@@ -3,7 +3,6 @@
   installer.addListener(new CliAgentlessInstallerListener(this.verbose));
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
   final CloudTemplate template=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
-  fixConfigRelativePaths(cloud,template);
   final int numOfManagementMachines=machines.length;
   final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines,template);
   for (int i=1; i < installations.length; i++) {

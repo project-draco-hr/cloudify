@@ -5,5 +5,5 @@
     logger.warning("Could not find the expected Cloud Configuration Holder in Management space!" + " Defaulting to local cloud!");
     return null;
   }
-  return config.getCloudConfiguration();
+  return config;
 }

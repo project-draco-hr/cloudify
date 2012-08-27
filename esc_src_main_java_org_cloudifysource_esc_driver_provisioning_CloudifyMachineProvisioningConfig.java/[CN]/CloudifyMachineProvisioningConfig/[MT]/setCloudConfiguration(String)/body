@@ -1,3 +1,0 @@
-{
-  properties.put(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION,cloudConfiguration);
-}

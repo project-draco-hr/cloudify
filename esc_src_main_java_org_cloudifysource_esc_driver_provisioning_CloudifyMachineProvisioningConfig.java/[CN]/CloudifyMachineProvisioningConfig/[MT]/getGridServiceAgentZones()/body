@@ -1,4 +1,4 @@
 {
-  String[] zones=properties.getArray(ZONES_KEY,ZONES_SEPARATOR,ZONES_DEFAULT);
+  final String[] zones=properties.getArray(ZONES_KEY,ZONES_SEPARATOR,ZONES_DEFAULT);
   return new AtLeastOneZoneConfigurer().addZones(zones).create();
 }

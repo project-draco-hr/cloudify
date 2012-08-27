@@ -1,9 +1,9 @@
 {
   try {
-    org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(EC2_MISSING_TEMPLATE_PATH));
+    final org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(EC2_MISSING_TEMPLATE_PATH));
     assertTrue("The management template does not exist yet no error was thrown",false);
   }
- catch (  Throwable e) {
+ catch (  final Throwable e) {
     assertTrue("The management template does not exist yet no error was thrown. Error was: " + e.getMessage(),e.getMessage().contains("is not listed in the cloud's templates section") || e.getMessage().contains("managementMachineTemplate"));
   }
 }

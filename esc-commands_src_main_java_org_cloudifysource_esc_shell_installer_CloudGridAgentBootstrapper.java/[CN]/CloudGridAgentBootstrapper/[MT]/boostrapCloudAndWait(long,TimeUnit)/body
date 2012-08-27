@@ -15,7 +15,7 @@ catch (  final TimeoutException e) {
     throw new IllegalArgumentException("Received zero management servers from provisioning implementation");
   }
   try {
-    if (logger.isLoggable(Level.INFO)) {
+    if (logger.isLoggable(Level.FINE)) {
       for (      final MachineDetails server : servers) {
         logServerDetails(server);
       }
@@ -51,15 +51,15 @@ catch (  final TimeoutException e) {
     stopManagementMachines();
     throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
   }
-catch (  CLIException e) {
+catch (  final CLIException e) {
     stopManagementMachines();
     throw e;
   }
-catch (  InstallerException e) {
+catch (  final InstallerException e) {
     stopManagementMachines();
     throw e;
   }
-catch (  InterruptedException e) {
+catch (  final InterruptedException e) {
     stopManagementMachines();
     throw e;
   }

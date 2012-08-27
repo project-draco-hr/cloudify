@@ -1,6 +1,0 @@
-{
-  setMinimumNumberOfCpuCoresPerMachine(template.getNumberOfCores());
-  setReservedMemoryCapacityPerMachineInMB(cloud.getProvider().getReservedMemoryCapacityPerMachineInMB());
-  setCloudConfiguration(cloudFileContents);
-  setCloudTemplateName(cloudTemplateName);
-}

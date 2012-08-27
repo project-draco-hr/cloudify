@@ -1,15 +1,19 @@
 {
   logger.info("Loading cloud configuration");
-  this.cloudFileContents=getCloudConfigurationFromManagementSpace();
-  if (this.cloudFileContents == null) {
+  this.cloudConfigurationHolder=getCloudConfigurationFromManagementSpace();
+  logger.info("Cloud Configuration: " + this.cloudConfigurationHolder);
+  if (this.cloudConfigurationHolder.getCloudConfigurationFilePath() == null) {
     return null;
   }
   Cloud cloudConfiguration=null;
   try {
-    cloudConfiguration=ServiceReader.readCloud(cloudFileContents);
+    cloudConfiguration=ServiceReader.readCloud(new File(this.cloudConfigurationHolder.getCloudConfigurationFilePath()));
   }
  catch (  final DSLException e) {
-    throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudFileContents + ". Error was: "+ e.getMessage(),e);
+    throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudConfigurationHolder + ". Error was: "+ e.getMessage(),e);
+  }
+catch (  IOException e) {
+    throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudConfigurationHolder + ". Error was: "+ e.getMessage(),e);
   }
   logger.info("Successfully loaded cloud configuration file from management space");
   return cloudConfiguration;

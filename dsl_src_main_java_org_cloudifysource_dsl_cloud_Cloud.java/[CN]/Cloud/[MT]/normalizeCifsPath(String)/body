@@ -1,6 +1,6 @@
 {
   final String expression=CIFS_ABSOLUTE_PATH_WITH_DRIVE_REGEX;
-  Pattern pattern=Pattern.compile(expression);
+  final Pattern pattern=Pattern.compile(expression);
   if (pattern.matcher(path).matches()) {
     final char drive=path.charAt(1);
     return drive + ":\\" + path.substring("/c$/".length()).replace('/','\\');

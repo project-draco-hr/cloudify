@@ -1,0 +1,5 @@
+{
+  super();
+  this.cloudConfiguration=cloudConfiguration;
+  this.cloudConfigurationFilePath=cloudConfigurationFilePath;
+}

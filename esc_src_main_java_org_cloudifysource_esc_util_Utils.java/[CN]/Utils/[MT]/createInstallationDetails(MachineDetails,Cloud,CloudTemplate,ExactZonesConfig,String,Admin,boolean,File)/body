@@ -1,6 +1,7 @@
 {
   final InstallationDetails details=new InstallationDetails();
-  details.setLocalDir(template.getLocalDirectory());
+  details.setLocalDir(template.getAbsoluteUploadDir());
+  details.setRelativeLocalDir(template.getLocalDirectory());
   final String remoteDir=template.getRemoteDirectory();
   details.setRemoteDir(remoteDir);
   final List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());

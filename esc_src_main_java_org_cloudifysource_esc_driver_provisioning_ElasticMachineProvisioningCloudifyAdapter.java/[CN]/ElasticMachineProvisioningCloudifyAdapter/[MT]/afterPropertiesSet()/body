@@ -1,11 +1,12 @@
 {
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
-  final String cloudContents=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION);
-  if (cloudContents == null) {
-    throw new IllegalArgumentException("Cloud configuration was not set!");
+  final String cloudConfigDirectory=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY);
+  if (cloudConfigDirectory == null) {
+    logger.severe("Missing cloud configuration property. Properties are: " + this.properties);
+    throw new IllegalArgumentException("Cloud configuration directory was not set!");
   }
   try {
-    this.cloud=ServiceReader.readCloud(cloudContents);
+    this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectory);
     this.cloudTemplateName=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
     if (this.cloudTemplateName == null) {
       throw new BeanConfigurationException("Cloud template was not set!");
@@ -51,7 +52,7 @@ catch (    final Exception e) {
     logger.info("Locators string used for new instances will be: " + this.lookupLocatorsString);
   }
  catch (  final DSLException e) {
-    logger.severe("Could not parse the provided cloud configuration: " + cloudContents + ": "+ e.getMessage());
-    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudContents + ": "+ e.getMessage());
+    logger.severe("Could not parse the provided cloud configuration from : " + cloudConfigDirectory + ": "+ e.getMessage());
+    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudConfigDirectory + ": "+ e.getMessage(),e);
   }
 }

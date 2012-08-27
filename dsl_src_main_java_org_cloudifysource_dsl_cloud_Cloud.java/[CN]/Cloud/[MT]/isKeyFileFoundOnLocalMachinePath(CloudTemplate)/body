@@ -1,6 +1,0 @@
-{
-  String localAbsolutePath=getLocalDirPath(template);
-  File localKeyFile=new File(localAbsolutePath,template.getKeyFile());
-  logger.log(Level.FINE,"Looking for key file on local machine: " + localKeyFile.getAbsolutePath());
-  return localKeyFile.isFile();
-}

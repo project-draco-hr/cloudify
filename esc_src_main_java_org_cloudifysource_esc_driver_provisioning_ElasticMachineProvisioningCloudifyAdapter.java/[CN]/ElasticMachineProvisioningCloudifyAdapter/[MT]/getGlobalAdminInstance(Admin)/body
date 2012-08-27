@@ -1,11 +1,11 @@
 {
 synchronized (GLOBAL_ADMIN_MUTEX) {
     if (globalAdminInstance == null) {
-      AdminFactory factory=new AdminFactory();
-      for (      String group : esmAdminInstance.getGroups()) {
+      final AdminFactory factory=new AdminFactory();
+      for (      final String group : esmAdminInstance.getGroups()) {
         factory.addGroup(group);
       }
-      for (      LookupLocator locator : esmAdminInstance.getLocators()) {
+      for (      final LookupLocator locator : esmAdminInstance.getLocators()) {
         factory.addLocator(locator.getHost() + ":" + locator.getPort());
       }
       globalAdminInstance=factory.createAdmin();

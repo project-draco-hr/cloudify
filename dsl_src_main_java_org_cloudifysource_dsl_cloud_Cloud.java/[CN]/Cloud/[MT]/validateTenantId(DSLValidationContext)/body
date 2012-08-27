@@ -1,6 +1,6 @@
 {
   if (this.custom.containsKey("openstack.tenant")) {
-    String tenantId=(String)custom.get("openstack.tenant");
+    final String tenantId=(String)custom.get("openstack.tenant");
     if (tenantId.equalsIgnoreCase("ENTER_TENANT")) {
       throw new DSLValidationException("The tenant id property must be set");
     }

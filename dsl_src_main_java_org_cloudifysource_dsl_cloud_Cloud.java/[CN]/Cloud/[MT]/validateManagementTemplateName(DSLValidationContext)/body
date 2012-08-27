@@ -1,7 +1,7 @@
 {
-  CloudConfiguration configuration=getConfiguration();
-  Map<String,CloudTemplate> templates=getTemplates();
-  String managementTemplateName=configuration.getManagementMachineTemplate();
+  final CloudConfiguration configuration=getConfiguration();
+  final Map<String,CloudTemplate> templates=getTemplates();
+  final String managementTemplateName=configuration.getManagementMachineTemplate();
   if (StringUtils.isBlank(managementTemplateName)) {
     throw new DSLValidationException("managementMachineTemplate may not be empty");
   }

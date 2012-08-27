@@ -4,7 +4,7 @@
     if (!details.isLus() && details.getManagementOnlyFiles() != null) {
       excludedFiles.addAll(Arrays.asList(details.getManagementOnlyFiles()));
     }
-    copyFiles(targetHost,details.getUsername(),details.getPassword(),details.getLocalDir(),details.getRemoteDir(),details.getKeyFile(),excludedFiles,details.getCloudFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS,details.getFileTransferMode(),details);
+    copyFiles(details,targetHost,excludedFiles,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
   }
  catch (  final FileSystemException e) {
     throw new InstallerException("Uploading files to remote server failed.",e);

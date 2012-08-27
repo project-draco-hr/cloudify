@@ -1,0 +1,5 @@
+InstallationDetails details
+String host
+Set<String> excludedFiles
+long timeout
+TimeUnit unit
