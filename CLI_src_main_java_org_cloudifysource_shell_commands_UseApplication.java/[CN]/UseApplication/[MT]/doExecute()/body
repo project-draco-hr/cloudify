@@ -1,5 +1,15 @@
 {
-  session.put(Constants.ACTIVE_APP,applicationName);
-  GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
-  return getFormattedMessage("using_application",Color.GREEN,applicationName);
+  boolean useApplicaiton=true;
+  List<String> applicationsList=adminFacade.getApplicationsList();
+  if (!applicationsList.contains(applicationName)) {
+    useApplicaiton=ShellUtils.promptUser(session,"application_does_not_exist",applicationName);
+  }
+  if (useApplicaiton) {
+    session.put(Constants.ACTIVE_APP,applicationName);
+    GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
+    return getFormattedMessage("using_application",Color.GREEN,applicationName);
+  }
+ else {
+    return getFormattedMessage("operation_aborted",Color.RED,"\"use-application\"");
+  }
 }
