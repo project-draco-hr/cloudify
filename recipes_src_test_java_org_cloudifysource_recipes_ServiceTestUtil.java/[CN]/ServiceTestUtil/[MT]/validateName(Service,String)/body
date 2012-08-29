@@ -1,4 +1,0 @@
-{
-  Assert.assertNotNull(service);
-  Assert.assertTrue("Service name isn't correct",service.getName().compareTo(serviceName) == 0);
-}

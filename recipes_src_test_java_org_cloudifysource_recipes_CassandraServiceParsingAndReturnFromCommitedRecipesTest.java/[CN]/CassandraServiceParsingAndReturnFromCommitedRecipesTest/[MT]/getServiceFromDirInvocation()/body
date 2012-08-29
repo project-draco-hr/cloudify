@@ -1,6 +1,0 @@
-{
-  cassandraWorkDir=new File(LEGAL_RESOURCES_PATH);
-  service=ServiceReader.getServiceFromDirectory(cassandraWorkDir,CloudifyConstants.DEFAULT_APPLICATION_NAME).getService();
-  ServiceTestUtil.validateName(service,nameInGroovy);
-  ServiceTestUtil.validateIcon(service);
-}

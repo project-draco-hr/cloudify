@@ -1,9 +1,0 @@
-{
-  String icon=service.getIcon();
-  if (icon.startsWith("http")) {
-    HttpURLConnection connection=(HttpURLConnection)new URL(icon).openConnection();
-    connection.setRequestMethod("HEAD");
-    Assert.assertEquals("The icon URL cannot establish a connection",HttpURLConnection.HTTP_OK,connection.getResponseCode());
-    connection.disconnect();
-  }
-}
