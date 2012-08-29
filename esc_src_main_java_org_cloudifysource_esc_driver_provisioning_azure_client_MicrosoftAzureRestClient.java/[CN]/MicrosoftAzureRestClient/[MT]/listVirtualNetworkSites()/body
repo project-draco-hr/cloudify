@@ -4,7 +4,7 @@
     return null;
   }
   String responseBody=response.getEntity(String.class);
-  if ((int)responseBody.charAt(0) == BAD_CHAR) {
+  if (responseBody.charAt(0) == BAD_CHAR) {
     responseBody=responseBody.substring(1);
   }
   GlobalNetworkConfiguration globalNetowrkConfiguration=(GlobalNetworkConfiguration)MicrosoftAzureModelUtils.unmarshall(responseBody);
