@@ -4,6 +4,6 @@
   final Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir).getService();
   assertNotNull(service);
   assertNull(service.getUserInterface());
-  ServiceTestUtil.validateName(service,nameInGroovy);
+  ServiceTestUtil.validateName(service,NAME_IN_GROOVY);
   ServiceTestUtil.validateIcon(service,CORRUPTED_RESOURCES_PATH);
 }

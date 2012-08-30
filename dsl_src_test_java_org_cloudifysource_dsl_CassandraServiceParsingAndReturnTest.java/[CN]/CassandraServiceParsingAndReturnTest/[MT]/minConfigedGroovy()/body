@@ -3,5 +3,5 @@
   final File cassandraWorkDir=new File(CORRUPTED_RESOURCES_PATH);
   final Service service=ServiceReader.getServiceFromFile(cassandraDslFile,cassandraWorkDir).getService();
   assertNotNull(service);
-  ServiceTestUtil.validateName(service,nameInGroovy);
+  ServiceTestUtil.validateName(service,NAME_IN_GROOVY);
 }
