@@ -5,12 +5,7 @@
   if (pfxFile == null && management) {
     throw new IllegalArgumentException("Custom field '" + AZURE_PFX_FILE + "' must be set");
   }
-  if (this.management) {
-    this.pathToPfxFile=Environment.getHomeDirectory() + File.separator + this.template.getLocalDirectory()+ File.separator+ pfxFile;
-  }
- else {
-    this.pathToPfxFile=this.template.getRemoteDirectory() + File.separator + pfxFile;
-  }
+  this.pathToPfxFile=this.template.getAbsoluteUploadDir() + File.separator + pfxFile;
   this.pfxPassword=(String)this.template.getCustom().get(AZURE_PFX_PASSWORD);
   if (pfxPassword == null && management) {
     throw new IllegalArgumentException("Custom field '" + AZURE_PFX_PASSWORD + "' must be set");
