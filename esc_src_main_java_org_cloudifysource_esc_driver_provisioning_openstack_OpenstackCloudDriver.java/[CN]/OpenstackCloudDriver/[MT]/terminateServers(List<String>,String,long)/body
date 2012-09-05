@@ -14,10 +14,12 @@
       try {
         this.getNode(serverId,token);
       }
- catch (      final UniformInterfaceException e) {
-        if (e.getResponse().getStatus() == HTTP_NOT_FOUND) {
-          ++successCounter;
-          break;
+ catch (      final OpenstackException e) {
+        if (e.getCause() instanceof UniformInterfaceException) {
+          if (((UniformInterfaceException)e.getCause()).getResponse().getStatus() == HTTP_NOT_FOUND) {
+            ++successCounter;
+            break;
+          }
         }
         throw e;
       }
