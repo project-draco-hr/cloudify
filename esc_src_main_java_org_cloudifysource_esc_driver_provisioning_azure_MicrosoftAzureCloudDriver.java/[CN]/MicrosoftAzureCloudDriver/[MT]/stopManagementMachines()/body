@@ -24,7 +24,7 @@
       deletedStorage=azureClient.deleteStorageAccount(storageAccountName,endTime);
     }
  catch (    final Exception e) {
-      logger.warning("failed deleting storage account : " + networkName);
+      logger.warning("failed deleting storage account : " + storageAccountName);
       logger.warning(ExceptionUtils.getFullStackTrace(e));
     }
     if (deletedNetwork && deletedStorage) {
