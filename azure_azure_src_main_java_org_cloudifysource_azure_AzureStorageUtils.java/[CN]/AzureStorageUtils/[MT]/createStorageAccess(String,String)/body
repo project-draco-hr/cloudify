@@ -1,5 +1,0 @@
-{
-  BlobStorageClient objBlobStorage=BlobStorageClient.create(URI.create(BLOB_HOST_NAME),false,strAccountName,strAccountKey);
-  objBlobStorage.setRetryPolicy(RetryPolicies.retryN(1,TimeSpan.fromSeconds(5)));
-  return objBlobStorage;
-}

@@ -1,8 +1,0 @@
-{
-  try {
-    getAzureDeployment().updateDeploymentConfig(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName),configFile);
-  }
- catch (  AzureDeploymentException e) {
-    throw new CLIException(e);
-  }
-}

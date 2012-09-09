@@ -1,3 +1,0 @@
-{
-  waitForAzureDeploymentStatus(status,timeUnit.convert(progressInMinutes,TimeUnit.MINUTES),timeout,timeUnit);
-}

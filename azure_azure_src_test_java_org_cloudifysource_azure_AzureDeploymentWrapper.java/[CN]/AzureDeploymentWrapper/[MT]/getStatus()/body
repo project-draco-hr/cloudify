@@ -1,9 +1,0 @@
-{
-  try {
-    return azureConfig.getDeploymentStatus(hostedService,slot);
-  }
- catch (  Exception e) {
-    Assert.fail("Failed getting status: " + e.getLocalizedMessage());
-  }
-  return null;
-}

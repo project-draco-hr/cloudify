@@ -1,7 +1,0 @@
-{
-  Collection<String> locations=new HashSet<String>(Arrays.asList(listLocations()));
-  if (!locations.contains(location)) {
-    throw new AzureDeploymentException("The location " + location + " is invalid. Use one of the following locations: "+ locations);
-  }
-  executeAzureConfig(argument(CREATE_HOSTED_SERVICE_FLAG),argument(HOSTED_SERVICE_FLAG,name),argument(LABEL_FLAG,label),argument(LOCATION_FLAG,location),argument(DESCRIPTION_FLAG,description));
-}

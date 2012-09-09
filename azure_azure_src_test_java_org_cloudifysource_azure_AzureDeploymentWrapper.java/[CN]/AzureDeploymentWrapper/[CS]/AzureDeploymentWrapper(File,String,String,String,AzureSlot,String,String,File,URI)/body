@@ -1,9 +1,0 @@
-{
-  azureConfig=new AzureDeployment(azureConfigExe,subscriptionId,certificateThumbprint,true);
-  this.hostedService=hostedService;
-  this.slot=slot;
-  this.name=name;
-  this.label=label;
-  this.cscfgFile=cscfgFile;
-  this.packageUri=packageUri;
-}

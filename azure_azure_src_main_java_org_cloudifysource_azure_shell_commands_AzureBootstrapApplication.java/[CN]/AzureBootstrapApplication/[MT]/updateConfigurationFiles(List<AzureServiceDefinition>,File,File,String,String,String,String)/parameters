@@ -1,7 +1,0 @@
-List<AzureServiceDefinition> serviceList
-File inDirectory
-File outDirectory
-String storageAccount
-String storageAccessKey
-String rdpLoginUsername
-String rdpLoginEncryptedPassword

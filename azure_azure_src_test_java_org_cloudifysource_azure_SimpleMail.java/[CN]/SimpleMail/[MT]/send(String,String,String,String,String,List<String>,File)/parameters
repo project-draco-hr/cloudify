@@ -1,7 +1,0 @@
-String mailHost
-String user
-String password
-String title
-String content
-List<String> recipients
-File fileAttachment

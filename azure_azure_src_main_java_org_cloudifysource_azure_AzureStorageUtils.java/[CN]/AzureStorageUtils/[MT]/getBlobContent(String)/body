@@ -1,3 +1,0 @@
-{
-  return new BlobContents(new BlobFileStream(sourceFile));
-}
