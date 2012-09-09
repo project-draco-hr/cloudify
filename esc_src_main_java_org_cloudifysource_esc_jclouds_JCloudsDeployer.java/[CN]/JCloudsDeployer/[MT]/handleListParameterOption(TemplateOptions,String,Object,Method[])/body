@@ -9,13 +9,13 @@
           return;
         }
  catch (        IllegalArgumentException e) {
-          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ Arrays.toString(paramArray)+ ". Error was: "+ e.getMessage(),e);
         }
 catch (        IllegalAccessException e) {
-          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ Arrays.toString(paramArray)+ ". Error was: "+ e.getMessage(),e);
         }
 catch (        InvocationTargetException e) {
-          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ paramArray+ ". Error was: "+ e.getMessage(),e);
+          throw new IllegalArgumentException("Failed to set option: " + entryKey + " by invoking method: "+ m+ " with value: "+ Arrays.toString(paramArray)+ ". Error was: "+ e.getMessage(),e);
         }
       }
     }
