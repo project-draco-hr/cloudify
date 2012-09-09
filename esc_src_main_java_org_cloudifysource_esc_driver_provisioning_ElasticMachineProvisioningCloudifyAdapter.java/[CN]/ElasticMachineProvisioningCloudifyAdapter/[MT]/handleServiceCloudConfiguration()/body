@@ -12,7 +12,7 @@
     tempServiceConfigurationDirectory.mkdirs();
     ZipUtils.unzip(tempZipFile,tempServiceConfigurationDirectory);
     final File[] childFiles=tempServiceConfigurationDirectory.listFiles();
-    logger.info("Unzipped configuration contained top-level entries: " + childFiles);
+    logger.info("Unzipped configuration contained top-level entries: " + Arrays.toString(childFiles));
     if (childFiles.length != 1) {
       throw new BeanConfigurationException("Received a service cloud configuration file, " + "but root of zip file had more then one entry!");
     }
