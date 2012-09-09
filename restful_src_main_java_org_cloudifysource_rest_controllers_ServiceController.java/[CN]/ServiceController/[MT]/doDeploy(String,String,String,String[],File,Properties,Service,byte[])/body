@@ -34,7 +34,7 @@
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
     final String[] zones=new String[]{serviceName};
     config.setGridServiceAgentZones(zones);
     if (serviceCloudConfigurationContents != null) {
