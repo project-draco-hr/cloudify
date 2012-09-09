@@ -1,3 +1,0 @@
-{
-  executeAzureConfig(argument(SET_DEPLOYMENT_CONFIG_FLAG),argument(HOSTED_SERVICE_FLAG,hostedService),argument(SLOT_FLAG,slot.getSlot()),argument(CONFIG_FLAG,cscfgFile.getFile().getAbsolutePath()));
-}

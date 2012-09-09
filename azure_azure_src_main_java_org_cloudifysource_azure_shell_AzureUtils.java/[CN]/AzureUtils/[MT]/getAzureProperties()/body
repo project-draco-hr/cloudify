@@ -1,4 +1,0 @@
-{
-  File propertiesFile=getAzurePropertiesFile();
-  return ShellUtils.loadProperties(propertiesFile);
-}

@@ -1,6 +1,0 @@
-{
-  if (!(status == AzureDeploymentStatus.RUNNING || status == AzureDeploymentStatus.SUSPENDED)) {
-    throw new IllegalArgumentException("status must be either Running or Suspended");
-  }
-  executeAzureConfig(argument(UPDATE_DEPLOYMENT_FLAG),argument(HOSTED_SERVICE_FLAG,hostedServiceName),argument(SLOT_FLAG,deploymentSlot.getSlot()),argument(STATUS_FLAG,status.getStatus()));
-}

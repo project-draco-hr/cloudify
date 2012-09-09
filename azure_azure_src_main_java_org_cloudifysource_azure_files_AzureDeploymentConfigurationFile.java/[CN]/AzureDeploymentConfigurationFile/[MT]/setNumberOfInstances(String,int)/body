@@ -1,4 +1,0 @@
-{
-  logger.fine("Setting role " + role + " number of instances to "+ instances);
-  getEditor().setNodeValue(getXpathForInstanceCount(role),String.valueOf(instances));
-}

@@ -1,8 +1,0 @@
-{
-  try {
-    getAzureDeployment().deleteDeployment(azureHostedServiceName,AzureSlot.fromString(azureDeploymentSlotName));
-  }
- catch (  AzureDeploymentException e) {
-    throw new CLIException(e);
-  }
-}

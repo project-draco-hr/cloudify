@@ -1,7 +1,0 @@
-{
-  this.azureConfigExeFile=azureConfigExeFile;
-  this.encUtilExeFile=encUtilExeFile;
-  this.subscriptionId=subscriptionId;
-  this.certificateThumbprint=certificateThumbprint;
-  this.verbose=verbose;
-}

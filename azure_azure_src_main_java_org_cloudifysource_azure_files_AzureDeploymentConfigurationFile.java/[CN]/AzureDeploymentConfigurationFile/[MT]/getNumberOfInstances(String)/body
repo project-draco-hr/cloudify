@@ -1,9 +1,0 @@
-{
-  String resultString=getEditor().getNodeValue(getXpathForInstanceCount(role));
-  try {
-    return Integer.parseInt(resultString);
-  }
- catch (  NumberFormatException e) {
-    throw new XMLXPathEditorException(e);
-  }
-}

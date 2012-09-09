@@ -1,8 +1,0 @@
-{
-  File file=new File(filepath);
-  if (!file.isAbsolute()) {
-    File azureDirectory=ShellUtils.getCliDirectory();
-    file=new File(azureDirectory,filepath);
-  }
-  return file;
-}
