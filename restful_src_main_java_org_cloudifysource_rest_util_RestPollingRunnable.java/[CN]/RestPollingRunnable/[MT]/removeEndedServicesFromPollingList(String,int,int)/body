@@ -3,7 +3,18 @@
     String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
     final Zone zone=admin.getZones().waitFor(absolutePuName,2,TimeUnit.SECONDS);
     if (zone == null) {
-      this.serviceNames.remove(serviceName);
+      try {
+        Boolean undeployedSuccessfully=this.undeployTask.get(ONE_SEC,TimeUnit.MINUTES);
+        if (undeployedSuccessfully) {
+          this.serviceNames.remove(serviceName);
+        }
+      }
+ catch (      Exception e) {
+        String message="undeploy task has ended unsuccessfully. Some machines may not have been terminated!";
+        logger.log(Level.WARNING,message,e);
+        lifecycleEventsContainer.addInstanceCountEvent(message);
+        throw new ExecutionException(message,e);
+      }
     }
   }
  else {

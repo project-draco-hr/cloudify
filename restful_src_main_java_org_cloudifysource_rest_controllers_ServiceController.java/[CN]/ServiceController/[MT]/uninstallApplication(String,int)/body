@@ -7,19 +7,21 @@
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
+  FutureTask<Boolean> undeployTask=null;
   logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
-  final UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes);
   if (uninstallOrder.size() > 0) {
-    ((InternalAdmin)admin).scheduleAdminOperation(new Runnable(){
+    undeployTask=new FutureTask<Boolean>(new Runnable(){
+      long startTime=System.currentTimeMillis();
       @Override public void run(){
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
+          long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
           try {
             if (processingUnit.waitForManaged(10,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
             }
  else {
               logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
-              processingUnit.undeploy();
+              processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MINUTES);
             }
           }
  catch (          final Exception e) {
@@ -30,8 +32,10 @@
         logger.log(Level.INFO,"Application " + applicationName + " undeployment complete");
       }
     }
-);
+,true);
+    ((InternalAdmin)admin).scheduleAdminOperation(undeployTask);
   }
+  final UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes,undeployTask);
   final String errors=sb.toString();
   if (errors.length() == 0) {
     final Map<String,Object> returnMap=new HashMap<String,Object>();
