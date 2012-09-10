@@ -1,8 +1,0 @@
-{
-  String title="SGTest Suite Azure results";
-  String username="tgrid";
-  String password="tgrid";
-  String mailHost="192.168.10.6";
-  List<String> recipients=Arrays.asList(new String[]{"itaif@gigaspaces.com","kobi@gigaspaces.com","alexb@gigaspaces.com","dank@gigaspaces.com","barakme@gigaspaces.com","adaml@gigaspaces.com","noak@gigaspaces.com","guy@gigaspaces.com"});
-  send(mailHost,username,password,title,content,recipients,fileAttachment);
-}

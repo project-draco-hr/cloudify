@@ -19,7 +19,7 @@
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
     validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
     final String locators=extractLocators(admin);
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);

@@ -1,4 +1,0 @@
-{
-  runProcess(new String[]{"ipconfig","/flushdns"});
-  runProcess(new String[]{"cmd","/c","\"sc query dnscache | findstr RUNNING && net stop dnscache && net start dnscache\""});
-}

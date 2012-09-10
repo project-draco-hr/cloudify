@@ -1,3 +1,0 @@
-{
-  return getInternalEndpointXPath(roleName,internalEndpointName) + "/FixedPortRange";
-}

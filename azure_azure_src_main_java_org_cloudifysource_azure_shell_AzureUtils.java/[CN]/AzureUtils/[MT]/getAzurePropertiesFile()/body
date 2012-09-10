@@ -1,3 +1,0 @@
-{
-  return toAbsoluteFile(AZURE_PROPERTIES_FILENAME);
-}

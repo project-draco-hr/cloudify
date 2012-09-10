@@ -1,4 +1,0 @@
-AzureDeploymentWrapper azureDeploymentWrapper
-AzureDeploymentStatus status
-long timeout
-TimeUnit timeunit

@@ -1,8 +1,0 @@
-{
-  try {
-    return (String)xPath.evaluate(xPathExpression,document,XPathConstants.STRING);
-  }
- catch (  XPathExpressionException e) {
-    throw new XMLXPathEditorException(e);
-  }
-}

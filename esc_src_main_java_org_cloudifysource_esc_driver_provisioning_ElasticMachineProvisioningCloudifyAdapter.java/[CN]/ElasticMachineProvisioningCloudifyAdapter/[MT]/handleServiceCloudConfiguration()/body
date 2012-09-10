@@ -1,6 +1,5 @@
 {
   final byte[] serviceCloudConfigurationContents=this.config.getServiceCloudConfiguration();
-  logger.info("serviceCloudConfigurationContents is: " + serviceCloudConfigurationContents);
   if (serviceCloudConfigurationContents != null) {
     logger.info("Found service cloud configuration - saving to file");
     final File tempZipFile=File.createTempFile("__CLOUD_DRIVER_SERVICE_CONFIGURATION_FILE",".zip");
@@ -12,7 +11,7 @@
     tempServiceConfigurationDirectory.mkdirs();
     ZipUtils.unzip(tempZipFile,tempServiceConfigurationDirectory);
     final File[] childFiles=tempServiceConfigurationDirectory.listFiles();
-    logger.info("Unzipped configuration contained top-level entries: " + childFiles);
+    logger.info("Unzipped configuration contained top-level entries: " + Arrays.toString(childFiles));
     if (childFiles.length != 1) {
       throw new BeanConfigurationException("Received a service cloud configuration file, " + "but root of zip file had more then one entry!");
     }

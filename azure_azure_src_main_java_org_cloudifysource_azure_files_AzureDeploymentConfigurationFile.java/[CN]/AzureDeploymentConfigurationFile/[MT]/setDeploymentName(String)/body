@@ -1,3 +1,0 @@
-{
-  getEditor().setNodeAttribute("/ServiceConfiguration","serviceName",deploymentName);
-}

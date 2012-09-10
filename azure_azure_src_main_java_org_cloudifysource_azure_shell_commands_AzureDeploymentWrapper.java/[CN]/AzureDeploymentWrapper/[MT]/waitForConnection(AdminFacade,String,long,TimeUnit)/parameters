@@ -1,4 +1,0 @@
-AdminFacade adminFacade
-String restAdminUrl
-long timeout
-TimeUnit timeunit
