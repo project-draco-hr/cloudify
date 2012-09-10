@@ -1,0 +1,12 @@
+{
+  final File applicationFile=new File(APPLICATION_WITH_EMPTY_NAME_GROOVY);
+  try {
+    ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+    Assert.fail("Application name is empty, IllegalArgumentException expected.");
+  }
+ catch (  final IllegalArgumentException e) {
+  }
+catch (  final Exception e) {
+    Assert.fail("Application name is empty, IllegalArgumentException expected, instead " + e.getClass() + " was thrown.");
+  }
+}
