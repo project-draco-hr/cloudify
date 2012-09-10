@@ -32,7 +32,6 @@
     machineDetails=provisionMachine(locationId,duration,unit);
   }
  catch (  final Exception e) {
-    logger.log(Level.WARNING,"Failed to provision machine, reason: " + e.getMessage(),e);
     throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);

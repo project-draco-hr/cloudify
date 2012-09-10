@@ -1,7 +1,7 @@
 {
   if (instanceId != null) {
-    Map instanceList=getInstanceList(applicationName,serviceName);
-    if (instanceList == null || instanceList.size() == 0) {
+    Map<String,Object> instanceList=getInstanceList(applicationName,serviceName);
+    if (instanceList == null || instanceList.isEmpty()) {
       throw new CLIStatusException("service_has_no_instances",serviceName);
     }
   }
