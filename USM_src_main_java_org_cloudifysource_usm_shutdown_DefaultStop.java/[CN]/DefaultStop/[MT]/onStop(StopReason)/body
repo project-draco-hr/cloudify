@@ -5,15 +5,17 @@
     logger.info("Service did not specify a 'start' element," + " so default stop implementation will not shutdown any processes. Current service process list: " + pids);
   }
   USMException firstException=null;
-  for (  final Long pid : pids) {
-    try {
-      if (USMUtils.isProcessAlive(pid)) {
-        usm.getUsmLifecycleBean().getProcessKiller().killProcess(pid);
+  if (pids != null) {
+    for (    final Long pid : pids) {
+      try {
+        if (USMUtils.isProcessAlive(pid)) {
+          usm.getUsmLifecycleBean().getProcessKiller().killProcess(pid);
+        }
       }
-    }
- catch (    final USMException e) {
-      firstException=e;
-      logger.log(Level.SEVERE,"Failed to kill process with pid: " + pid,e);
+ catch (      final USMException e) {
+        firstException=e;
+        logger.log(Level.SEVERE,"Failed to kill process with pid: " + pid,e);
+      }
     }
   }
   if (firstException == null) {
