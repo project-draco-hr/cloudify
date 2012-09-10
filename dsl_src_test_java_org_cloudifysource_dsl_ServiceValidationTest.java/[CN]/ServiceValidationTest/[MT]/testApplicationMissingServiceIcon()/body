@@ -1,0 +1,12 @@
+{
+  final File applicationFile=new File(APPLICATION_MISSING_SERVICE_ICON_PATH);
+  try {
+    ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+    Assert.fail("Application has a service without an icon, IllegalArgumentException expected.");
+  }
+ catch (  final IllegalArgumentException e) {
+  }
+catch (  final Exception e) {
+    Assert.fail("Application has a service without an icon, IllegalArgumentException expected, instead " + e.getClass() + " was thrown.");
+  }
+}
