@@ -3,6 +3,7 @@
   args.addAll(Arrays.asList(gsAgentArguments));
   String[] command;
   if (isLocalCloud) {
+    publishEvent(ShellUtils.getMessageBundle().getString("starting_bootstrap_localcloud"));
     if (isWindows()) {
       command=Arrays.copyOf(WINDOWS_LOCALCLOUD_COMMAND,WINDOWS_LOCALCLOUD_COMMAND.length);
       args.addAll(Arrays.asList(WINDOWS_ARGUMENTS_POSTFIX));
