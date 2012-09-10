@@ -1,9 +1,0 @@
-String hostedServiceName
-String deploymentName
-String deploymentLabel
-AzureSlot deploymentSlot
-File cscfgFile
-File packageFile
-String storageAccount
-String storageKey
-String storageContainer

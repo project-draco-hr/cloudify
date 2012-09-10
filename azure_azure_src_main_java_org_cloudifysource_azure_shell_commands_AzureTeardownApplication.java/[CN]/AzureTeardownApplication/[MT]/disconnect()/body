@@ -1,6 +1,0 @@
-{
-  final AdminFacade adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
-  if (adminFacade.isConnected()) {
-    adminFacade.disconnect();
-  }
-}

@@ -1,4 +1,0 @@
-AdminFacade adminFacade
-int numberOfMachines
-long timeout
-TimeUnit timeunit

@@ -1,3 +1,0 @@
-{
-  executeAzureConfig(argument(CREATE_DEPLOYMENT_FLAG),argument(HOSTED_SERVICE_FLAG,hostedServiceName),argument(NAME_FLAG,deploymentName),argument(LABEL_FLAG,deploymentLabel),argument(SLOT_FLAG,deploymentSlot.getSlot()),argument(CONFIG_FLAG,cscfgFile.getAbsolutePath()),argument(PACKAGE_FLAG,packageFile.getAbsolutePath()),argument(STORAGE_ACCOUNT_FLAG,storageAccount),argument(STORAGE_KEY_FLAG,storageKey),argument(STORAGE_CONTAINER_FLAG,storageContainer.toLowerCase()));
-}

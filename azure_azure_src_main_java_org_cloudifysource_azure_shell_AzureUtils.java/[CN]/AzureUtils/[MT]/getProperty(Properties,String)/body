@@ -1,7 +1,0 @@
-{
-  String value=properties.getProperty(name);
-  if (value == null) {
-    throw new IllegalArgumentException(AzureUtils.getAzurePropertiesFile().getAbsolutePath() + " does not contain property " + name);
-  }
-  return value;
-}

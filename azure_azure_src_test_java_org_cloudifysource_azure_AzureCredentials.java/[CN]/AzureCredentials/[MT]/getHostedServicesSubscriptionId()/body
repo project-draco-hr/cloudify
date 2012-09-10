@@ -1,3 +1,0 @@
-{
-  return getMandatorySystemProperty("azure.services.subscription");
-}

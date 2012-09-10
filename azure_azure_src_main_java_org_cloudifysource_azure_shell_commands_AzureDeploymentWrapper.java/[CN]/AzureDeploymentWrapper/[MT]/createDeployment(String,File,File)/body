@@ -1,8 +1,0 @@
-{
-  try {
-    getAzureDeployment().createDeployment(azureHostedServiceName,azureDeploymentName,azureDeploymentName,AzureSlot.fromString(azureDeploymentSlotName),cscfgFile,cspkgFile,storageAccount,storageAccessKey,storageBlobContainerName);
-  }
- catch (  AzureDeploymentException e) {
-    throw new CLIException(e);
-  }
-}

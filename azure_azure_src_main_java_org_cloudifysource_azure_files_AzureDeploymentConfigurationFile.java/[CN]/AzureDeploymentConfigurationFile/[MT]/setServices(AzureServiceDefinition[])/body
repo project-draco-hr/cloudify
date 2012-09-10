@@ -1,7 +1,0 @@
-{
-  String[] services=AzureServiceDefinition.extractServiceNames(serviceDefinitions);
-  getEditor().findNodeDuplicateByAttribute("/ServiceConfiguration/Role[@name='internal']",services,"name");
-  for (  AzureServiceDefinition serviceDefinition : serviceDefinitions) {
-    setNumberOfInstances(serviceDefinition.getServiceName(),serviceDefinition.getNumberOfInstances());
-  }
-}

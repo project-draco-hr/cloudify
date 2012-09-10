@@ -1,7 +1,0 @@
-{
-  String value=System.getProperty(systemPropertyName);
-  if (value == null) {
-    throw new IllegalStateException("The system property " + systemPropertyName + " is undefined.");
-  }
-  return value;
-}
