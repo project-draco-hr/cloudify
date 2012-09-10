@@ -1,7 +1,7 @@
 {
   boolean isServiceFile=false;
-  String serviceSuffix=DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX.toLowerCase().trim();
-  String filePath=validationContext.getFilePath().toLowerCase().trim();
+  String serviceSuffix=DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX.trim();
+  String filePath=validationContext.getFilePath().trim();
   if (filePath.endsWith(serviceSuffix)) {
     isServiceFile=true;
   }
