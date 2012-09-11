@@ -1,3 +1,4 @@
 String applicationName
 List<ProcessingUnit> uninstallOrder
 int timeoutInMinutes
+FutureTask<Boolean> undeployTask

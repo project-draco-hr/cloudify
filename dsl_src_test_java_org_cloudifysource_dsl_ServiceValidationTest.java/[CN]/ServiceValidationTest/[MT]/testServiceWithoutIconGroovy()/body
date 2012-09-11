@@ -1,0 +1,11 @@
+{
+  try {
+    ServiceReader.readService(new File(SERVICE_WITHOUT_ICON_PATH));
+    Assert.fail("Service name is empty, DSLValidationException expected.");
+  }
+ catch (  PackagingException e) {
+  }
+catch (  Exception e) {
+    Assert.fail("Service name is empty, DSLValidationException expected, instead " + e.getClass() + " was thrown.");
+  }
+}

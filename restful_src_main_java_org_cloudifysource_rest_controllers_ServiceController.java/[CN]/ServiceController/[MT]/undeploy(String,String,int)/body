@@ -4,9 +4,14 @@
   if (processingUnit == null) {
     return unavailableServiceError(absolutePuName);
   }
-  logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
-  final UUID lifecycleEventContainerID=startPollingForServiceUninstallLifecycleEvents(applicationName,serviceName,timeoutInMinutes);
-  processingUnit.undeploy();
+  FutureTask<Boolean> undeployTask=new FutureTask<Boolean>(new Callable<Boolean>(){
+    public Boolean call() throws Exception {
+      return processingUnit.undeployAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+    }
+  }
+);
+  undeployTask.run();
+  final UUID lifecycleEventContainerID=startPollingForServiceUninstallLifecycleEvents(applicationName,serviceName,timeoutInMinutes,undeployTask);
   final Map<String,Object> returnMap=new HashMap<String,Object>();
   returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
   return successStatus(returnMap);
