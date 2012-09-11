@@ -24,6 +24,7 @@
       }
     }
   }
+  machineEventListener.elasticMachineProvisioningProgressChanged(new MachineStartRequestedEvent());
   try {
     if (locationId == null) {
       final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
@@ -45,6 +46,8 @@
   if (machineIp == null) {
     throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
   }
+  machineEventListener.elasticMachineProvisioningProgressChanged(new MachineStartedEvent(machineIp));
+  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartRequestedEvent(machineIp));
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (machineDetails.isAgentRunning()) {
@@ -60,6 +63,7 @@
     if (gsa == null) {
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
+    agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartedEvent(machineIp,gsa.getUid()));
     return gsa;
   }
  catch (  final ElasticMachineProvisioningException e) {
