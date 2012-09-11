@@ -68,6 +68,12 @@
     handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
     throw e;
   }
+catch (  final ElasticGridServiceAgentProvisioningException e) {
+    logger.info("ElasticGridServiceAgentProvisioningException occurred, " + e.getMessage());
+    logger.info(ExceptionUtils.getFullStackTrace(e));
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    throw e;
+  }
 catch (  final TimeoutException e) {
     logger.info("TimeoutException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
