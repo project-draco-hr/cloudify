@@ -2,40 +2,40 @@
   if (name.equals("userInterface")) {
     return new UserInterface();
   }
- else   if (name.equals("plugin")) {
+  if (name.equals("plugin")) {
     return new PluginDescriptor();
   }
- else   if (name.equals("metricGroup")) {
+  if (name.equals("metricGroup")) {
     return new MetricGroup();
   }
- else   if (name.equals("widgetGroup")) {
+  if (name.equals("widgetGroup")) {
     return new WidgetGroup();
   }
- else   if (name.equals("balanceGauge")) {
+  if (name.equals("balanceGauge")) {
     return new BalanceGauge();
   }
- else   if (name.equals("barLineChart")) {
+  if (name.equals("barLineChart")) {
     return new BarLineChart();
   }
- else   if (name.equals("network")) {
+  if (name.equals("network")) {
     return new ServiceNetwork();
   }
- else   if (name.equals("statelessProcessingUnit")) {
+  if (name.equals("statelessProcessingUnit")) {
     return new StatelessProcessingUnit();
   }
- else   if (name.equals("statefulProcessingUnit")) {
+  if (name.equals("statefulProcessingUnit")) {
     return new StatefulProcessingUnit();
   }
- else   if (name.equalsIgnoreCase("mirrorProcessingUnit")) {
+  if (name.equalsIgnoreCase("mirrorProcessingUnit")) {
     return new MirrorProcessingUnit();
   }
- else   if (name.equals("memcached")) {
+  if (name.equals("memcached")) {
     return new Memcached();
   }
- else   if (name.equals("dataGrid")) {
+  if (name.equals("dataGrid")) {
     return new DataGrid();
   }
- else   if (name.equals("sla")) {
+  if (name.equals("sla")) {
     return new Sla();
   }
   return null;
