@@ -9,9 +9,16 @@
     File dslFile=new File(filePath);
     File iconFile=new File(dslFile.getParent(),icon);
     if (!iconFile.isFile()) {
+      File dslDirectory=dslFile.getParentFile();
       if (getExtendedServicesPaths() != null) {
         for (        final String extendedPath : getExtendedServicesPaths()) {
-          iconFile=new File(dslFile.getParent() + "/" + extendedPath,icon);
+          if (isAbsolutePath(extendedPath)) {
+            dslDirectory=new File(extendedPath);
+          }
+ else {
+            dslDirectory=new File(dslDirectory.getAbsolutePath() + "/" + extendedPath);
+          }
+          iconFile=new File(dslDirectory.getAbsolutePath(),icon);
           if (iconFile.isFile()) {
             break;
           }
