@@ -24,7 +24,10 @@
       }
     }
   }
-  machineEventListener.elasticMachineProvisioningProgressChanged(new MachineStartRequestedEvent());
+  MachineStartRequestedCloudifyEvent machineStartEvent=new MachineStartRequestedCloudifyEvent();
+  machineStartEvent.setTemplateName(cloudTemplateName);
+  machineStartEvent.setLocationId(locationId);
+  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartEvent);
   try {
     if (locationId == null) {
       final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
@@ -46,8 +49,12 @@
   if (machineIp == null) {
     throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
   }
-  machineEventListener.elasticMachineProvisioningProgressChanged(new MachineStartedEvent(machineIp));
-  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartRequestedEvent(machineIp));
+  MachineStartedCloudifyEvent machineStartedEvent=new MachineStartedCloudifyEvent();
+  machineStartedEvent.setMachineDetails(machineDetails);
+  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartedEvent);
+  GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
+  agentStartEvent.setHostAddress(machineIp);
+  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (machineDetails.isAgentRunning()) {

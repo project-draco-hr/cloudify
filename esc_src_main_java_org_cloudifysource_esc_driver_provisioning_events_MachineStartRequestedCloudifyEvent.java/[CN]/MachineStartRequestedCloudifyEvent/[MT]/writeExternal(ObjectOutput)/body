@@ -1,0 +1,5 @@
+{
+  super.writeExternal(out);
+  IOUtils.writeString(out,templateName);
+  IOUtils.writeString(out,locationId);
+}
