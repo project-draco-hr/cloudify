@@ -1,0 +1,5 @@
+{
+  CloudProvider cp=new CloudProvider();
+  String cloudifyUrl2=cp.getCloudifyUrl();
+  System.out.println(cloudifyUrl2);
+}

@@ -1,0 +1,22 @@
+{
+  String productUri;
+  String versionPostFix;
+  String editionUrlVariable;
+  if (PlatformVersion.getEdition().equalsIgnoreCase(CloudifyConstants.CLOUDIFY_EDITION)) {
+    productUri="org/cloudifysource";
+    versionPostFix="";
+    editionUrlVariable="cloudify";
+    return String.format(this.cloudifyUrl,productUri,versionPostFix,editionUrlVariable);
+  }
+ else {
+    productUri="com/gigaspaces/xap";
+    editionUrlVariable="xap-premium";
+    if (PlatformVersion.getBuildNumber().contains("-")) {
+      versionPostFix=".SNAPSHOT";
+    }
+ else {
+      versionPostFix=".RELEASE";
+    }
+    return String.format(cloudifyUrl,productUri,versionPostFix,editionUrlVariable);
+  }
+}
