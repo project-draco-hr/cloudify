@@ -1,6 +1,5 @@
 {
-  String value=attrValue.toString().replace("\\\"","\"").trim();
-  if (value.startsWith("\"") && value.endsWith("\""))   value=value.substring(1,value.length() - 1);
+  String value=attrValue.toString().trim();
   String shortAttrName=getShortName(attrName);
   if (shortAttrName.equals(RestDocConstants.JSON_REQUEST_EXAMPLE_REQUEST_PARAMS))   requestJsonBody=value;
  else   if (shortAttrName.equals(RestDocConstants.JSON_REQUEST_EXAMPLE_COMMENTS))   comments=value;

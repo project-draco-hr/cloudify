@@ -1,3 +1,0 @@
-{
-  return Utils.getAnnotation(annotations,RestDocConstants.CONTROLLER_ANNOTATION) == null;
-}
