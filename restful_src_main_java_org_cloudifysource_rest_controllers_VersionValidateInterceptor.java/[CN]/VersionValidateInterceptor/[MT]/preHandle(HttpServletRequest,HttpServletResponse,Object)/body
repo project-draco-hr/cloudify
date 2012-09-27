@@ -5,7 +5,7 @@
     logger.log(Level.FINEST,"Validating the value of " + CloudifyConstants.REST_API_VERSION_HEADER + " header, request URI = "+ request.getRequestURI()+ ", request REST-API version = "+ version+ " current REST-API version = "+ currentVersion);
   }
   if (version == null) {
-    logger.log(Level.WARNING,"The " + CloudifyConstants.REST_API_VERSION_HEADER + " header is missing, the request URI is "+ request.getRequestURI());
+    logger.log(Level.FINE,"The " + CloudifyConstants.REST_API_VERSION_HEADER + " header is missing, the request URI is "+ request.getRequestURI());
   }
  else   if (!version.equals(currentVersion)) {
     throw new ServletException("The value of " + CloudifyConstants.REST_API_VERSION_HEADER + " header of request URI "+ request.getRequestURI()+ " expected ["+ currentVersion+ "] but was ["+ version+ "]");
