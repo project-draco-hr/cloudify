@@ -24,17 +24,15 @@
     return new DSLEntryResult(false,null);
   }
   final Method m=this.activeMethods.get(methodName);
-  if (m != null) {
-    try {
-      m.invoke(this.activeObject,arg);
-      return new DSLEntryResult(true,this.activeObject);
-    }
- catch (    final Exception e) {
-      logger.log(Level.SEVERE,"Failed to invoke method " + methodName + ": "+ e.getMessage(),e);
-      throw new IllegalStateException("Failed to invoke method " + methodName + " on object "+ this.activeObject,e);
-    }
-  }
- else {
+  if (m == null) {
     return new DSLEntryResult(false,null);
   }
+  try {
+    m.invoke(this.activeObject,arg);
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Failed to invoke method " + methodName + ": "+ e.getMessage(),e);
+    throw new IllegalStateException("Failed to invoke method " + methodName + " on object "+ this.activeObject,e);
+  }
+  return new DSLEntryResult(true,this.activeObject);
 }

@@ -6,7 +6,9 @@ synchronized (this.stateMutex) {
       logger.severe("Attempted to delete PID file: " + getPidFile() + " but failed. The file may remain and be picked up by a new GSC");
     }
     stop(StopReason.UNDEPLOY);
-    executors.shutdown();
+    if (executors != null) {
+      executors.shutdown();
+    }
     try {
       getUsmLifecycleBean().fireShutdown();
     }

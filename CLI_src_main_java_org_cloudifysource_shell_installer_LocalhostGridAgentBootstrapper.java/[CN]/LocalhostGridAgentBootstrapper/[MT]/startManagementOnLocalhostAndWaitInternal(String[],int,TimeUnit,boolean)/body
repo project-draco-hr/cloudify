@@ -116,7 +116,7 @@
           }
           final GigaSpace gigaspace=managementSpaceInstaller.getGigaSpace();
           final CloudConfigurationHolder holder=new CloudConfigurationHolder(null,getCloudFilePath());
-          logger.info("Writing cloud Configuration to space: " + holder);
+          logger.fine("Writing cloud Configuration to space: " + holder);
           gigaspace.write(holder);
           ((ISpaceProxy)gigaspace.getSpace()).close();
         }

@@ -9,6 +9,6 @@
  else {
     bindHost="127.0.0.1";
   }
-  addCloudDetailsToMap(map,bindHost);
+  map.putAll(ServiceDetailsHelper.createCloudDetailsMap(bindHost));
   return map;
 }

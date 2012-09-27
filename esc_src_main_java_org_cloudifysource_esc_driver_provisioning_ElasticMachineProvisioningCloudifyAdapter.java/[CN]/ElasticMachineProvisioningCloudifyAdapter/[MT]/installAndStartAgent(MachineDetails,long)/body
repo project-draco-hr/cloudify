@@ -5,7 +5,7 @@
     installationDetails=createInstallationDetails(cloud,machineDetails);
   }
  catch (  final FileNotFoundException e) {
-    throw new ElasticMachineProvisioningException("Failed to create installation details for agent: " + e.getMessage(),e);
+    throw new ElasticGridServiceAgentProvisioningException("Failed to create installation details for agent: " + e.getMessage(),e);
   }
   logger.info("Starting agentless installation process on started machine with installation details: " + installationDetails);
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
@@ -13,6 +13,6 @@
     installer.installOnMachineWithIP(installationDetails,remainingTimeTill(end),TimeUnit.MILLISECONDS);
   }
  catch (  final InstallerException e) {
-    throw new ElasticMachineProvisioningException("Failed to install Cloudify Agent on newly provisioned machine: " + e.getMessage(),e);
+    throw new ElasticGridServiceAgentProvisioningException("Failed to install Cloudify Agent on newly provisioned machine: " + e.getMessage(),e);
   }
 }

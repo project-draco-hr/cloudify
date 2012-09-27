@@ -1,4 +1,5 @@
 {
+  final Map<String,Object> map=new HashMap<String,Object>();
   final String privateIp=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP);
   final String publicIp=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP);
   if (privateIp != null) {
@@ -21,4 +22,5 @@
   if (hardwareId != null) {
     map.put(CloudifyConstants.USM_DETAILS_HARDWARE_ID,hardwareId);
   }
+  return map;
 }
