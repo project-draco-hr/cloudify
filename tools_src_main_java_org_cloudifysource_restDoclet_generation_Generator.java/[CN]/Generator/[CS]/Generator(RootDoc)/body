@@ -1,0 +1,4 @@
+{
+  documentation=rootDoc;
+  setFlags(documentation.options());
+}

@@ -1,0 +1,21 @@
+{
+  for (int i=0; i < options.length; i++) {
+    if (options[i][0].equals(RestDocConstants.VELOCITY_TEMPLATE_PATH_FLAG)) {
+      velocityTemplatePath=options[i][1];
+      isUserDefineTemplatePath=true;
+    }
+ else     if (options[i][0].equals(RestDocConstants.DOC_DEST_PATH_FLAG))     docPath=options[i][1];
+ else     if (options[i][0].equals(RestDocConstants.VERSION_FLAG))     version=options[i][1];
+  }
+  if (velocityTemplatePath != null) {
+    int fileNameIndex=velocityTemplatePath.lastIndexOf("/") + 1;
+    velocityTemplateFileName=velocityTemplatePath.substring(fileNameIndex);
+    velocityTemplatePath=velocityTemplatePath.substring(0,fileNameIndex - 1);
+  }
+ else {
+    velocityTemplateFileName=RestDocConstants.DEFAULT_VELOCITY_TEMPLATE_FILE_NAME;
+    velocityTemplatePath=this.getClass().getClassLoader().getResource(velocityTemplateFileName).getPath();
+  }
+  if (docPath == null)   docPath=RestDocConstants.DEFAULT_DOC_DEST_PATH;
+  if (version == null)   version="";
+}

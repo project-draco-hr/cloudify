@@ -1,0 +1,13 @@
+{
+  List<DocAnnotation> docAnnotations=new LinkedList<DocAnnotation>();
+  for (  AnnotationDesc annotationDesc : annotations) {
+    DocAnnotation docAnnotation=Utils.createNewAnnotation(annotationDesc.annotationType().typeName());
+    for (    ElementValuePair elementValuePair : annotationDesc.elementValues()) {
+      String element=elementValuePair.element().toString();
+      Object constractAttrValue=docAnnotation.constractAttrValue(elementValuePair.value().value());
+      docAnnotation.addAttribute(element,constractAttrValue);
+    }
+    docAnnotations.add(docAnnotation);
+  }
+  return docAnnotations;
+}

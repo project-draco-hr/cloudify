@@ -1,0 +1,9 @@
+{
+  Object shortAttrValue=getShortValue(attrValue);
+  String shortAttrValueStr=(shortAttrValue instanceof String) ? ((String)shortAttrValue).trim() : null;
+  String shortAttrName=getShortName(attrName);
+  if (shortAttrName.equals(RestDocConstants.REQUEST_PARAMS_VALUE))   value=shortAttrValueStr;
+  if (shortAttrName.equals(RestDocConstants.REQUEST_PARAMS_DEFAULT_VALUE))   defaultValue=shortAttrValueStr;
+  if (shortAttrName.equals(RestDocConstants.REQUEST_PARAMS_REQUIRED))   requierd=(Boolean)attrValue;
+  attributes.put(shortAttrName,shortAttrValue);
+}

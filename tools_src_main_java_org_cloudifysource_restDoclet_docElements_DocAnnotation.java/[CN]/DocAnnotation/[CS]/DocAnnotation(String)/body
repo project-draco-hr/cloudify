@@ -1,0 +1,4 @@
+{
+  this.name=name;
+  attributes=new HashMap<String,Object>();
+}

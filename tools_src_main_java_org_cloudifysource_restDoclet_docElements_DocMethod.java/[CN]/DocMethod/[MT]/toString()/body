@@ -1,0 +1,17 @@
+{
+  String str="\nmapping: " + uri + "\n";
+  if (description != null && !description.isEmpty()) {
+    str+="description: \n";
+    String[] split=description.trim().split("\n");
+    for (    String string : split) {
+      str+="   " + string + "\n";
+    }
+  }
+  if (httpMethods != null) {
+    str+="httpMethods:\n";
+    for (    DocHttpMethod httpMethod : httpMethods) {
+      str+=httpMethod + "\n";
+    }
+  }
+  return str;
+}

@@ -1,0 +1,9 @@
+{
+  DocReturnDetails returnDetails=new DocReturnDetails();
+  returnDetails.setReturnType(methodDoc.returnType());
+  Tag[] returnTags=methodDoc.tags("return");
+  if (returnTags.length > 0) {
+    returnDetails.setDescription(returnTags[0].text());
+  }
+  return returnDetails;
+}

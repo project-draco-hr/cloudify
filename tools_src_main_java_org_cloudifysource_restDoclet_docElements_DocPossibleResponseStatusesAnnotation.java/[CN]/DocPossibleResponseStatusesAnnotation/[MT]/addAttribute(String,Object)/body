@@ -1,0 +1,10 @@
+{
+  String shortAttrName=getShortName(attrName);
+  if (shortAttrName.endsWith(RestDocConstants.POSSIBLE_RESPONSE_STATUSES_CODES)) {
+    codes=(Integer[])attrValue;
+  }
+ else   if (shortAttrName.endsWith(RestDocConstants.POSSIBLE_RESPONSE_STATUSES_DESCRIPTIONS)) {
+    descriptions=(String[])attrValue;
+  }
+  attributes.put(shortAttrName,attrValue);
+}

@@ -1,0 +1,21 @@
+{
+  String httpMethodShort=httpMethodName.substring(httpMethodName.lastIndexOf(".") + 1);
+  String str="http method: " + httpMethodShort + "\n";
+  if (StringUtils.isBlank(description))   str+="description: " + description + "\n";
+  if (params != null && params.size() != 0) {
+    str+="parameters: \n";
+    for (    DocParameter param : params) {
+      str+="   " + param + "\n";
+    }
+  }
+  str+="returns " + returnDetails;
+  if (jsonResponseExample != null)   str+="Response example: " + jsonResponseExample + "\n";
+  if (jsonRequestExample != null)   str+="Request example: " + jsonRequestExample + "\n";
+  if (possibleResponseStatuses != null) {
+    str+="Returns: ";
+    for (    DocResponseStatus responseStatus : possibleResponseStatuses) {
+      str+="* " + responseStatus + "\n";
+    }
+  }
+  return str;
+}

@@ -1,0 +1,10 @@
+{
+  String str="Parameter[";
+  if (annotations != null) {
+    if (annotations.size() == 1)     str+=annotations.get(0) + ", ";
+ else     str+=annotations + ", ";
+  }
+  str+="type = " + type + ", name = "+ name;
+  if (description != null)   str+=description;
+  return str + "]";
+}

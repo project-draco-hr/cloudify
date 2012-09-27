@@ -1,0 +1,24 @@
+{
+  String location=null;
+  for (  DocAnnotation docAnnotation : annotations) {
+    DocAnnotationTypes annotationType=DocAnnotationTypes.fromName(docAnnotation.getName());
+switch (annotationType) {
+case PATH_VARIABLE:
+      if (location != null)       location+=" or ";
+    location="in path";
+  break;
+case REQUEST_PARAM:
+requestParamAnnotation=(DocRequestParamAnnotation)docAnnotation;
+if (location != null) location+=" or ";
+location="in request's parameters";
+break;
+case REQUEST_BODY:
+if (location != null) location+=" or ";
+location="in request's body";
+break;
+default :
+throw new IllegalArgumentException("Unsupported parameter annotation - " + annotationType);
+}
+}
+this.location=location;
+}

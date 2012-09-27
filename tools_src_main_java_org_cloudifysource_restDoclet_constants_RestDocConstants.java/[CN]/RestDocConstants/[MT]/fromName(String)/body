@@ -1,0 +1,12 @@
+{
+  if (annotationName.equals(CONTROLLER_ANNOTATION))   return CONTROLLER;
+ else   if (annotationName.equals(REQUEST_MAPPING_ANNOTATION))   return REQUEST_MAPPING;
+ else   if (annotationName.equals(REQUEST_PARAMS_ANNOTATION))   return REQUEST_PARAM;
+ else   if (annotationName.equals(REQUEST_BODY_ANNOTATION))   return REQUEST_BODY;
+ else   if (annotationName.equals(RESPONSE_BODY_ANNOTATION))   return RESPONSE_BODY;
+ else   if (annotationName.equals(PATH_VARIABLE_ANNOTATION))   return PATH_VARIABLE;
+ else   if (annotationName.equals(JSON_RESPONSE_EXAMPLE_ANNOTATION))   return JSON_RESPONSE_EXAMPLE;
+ else   if (annotationName.equals(JSON_REQUEST_EXAMPLE_ANNOTATION))   return JSON_REQUEST_EXAMPLE;
+ else   if (annotationName.endsWith(POSSIBLE_RESPONSE_STATUSES_ANNOTATION))   return POSSIBLE_RESPONSE_STATUSES;
+ else   return DEFAULT;
+}

@@ -1,0 +1,16 @@
+{
+  List<DocController> controllers=generateControllers(documentation.classes());
+  Utils.printMethodsToFile(controllers,"methods");
+  String generatedHtml=generateHtmlDocumentation(controllers);
+  FileWriter velocityfileWriter=null;
+  try {
+    File file=new File(docPath);
+    if (file.getParentFile() != null)     file.getParentFile().mkdirs();
+    logger.log(Level.INFO,"Write generated velocity to " + file.getAbsolutePath());
+    velocityfileWriter=new FileWriter(file);
+    velocityfileWriter.write(generatedHtml);
+  }
+  finally {
+    if (velocityfileWriter != null)     velocityfileWriter.close();
+  }
+}
