@@ -7,7 +7,7 @@
         machine=this.admin.getMachines().getHostsByName().get(ip);
       }
       if (machine == null) {
-        return errorStatus("machine_not_found",ip);
+        return errorStatus(ResponseConstants.MACHINE_NOT_FOUND,ip);
       }
       final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
       return successStatus(dumpBytes);
@@ -21,7 +21,7 @@
         final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
         totalSize+=dumpBytes.length;
         if (totalSize > fileSizeLimit) {
-          throw new RestServiceException("dump_file_too_large",Long.toString(dumpBytes.length),Long.toString(totalSize));
+          throw new RestServiceException(ResponseConstants.DUMP_FILE_TOO_LARGE,Long.toString(dumpBytes.length),Long.toString(totalSize));
         }
         map.put(machine.getHostAddress(),dumpBytes);
       }

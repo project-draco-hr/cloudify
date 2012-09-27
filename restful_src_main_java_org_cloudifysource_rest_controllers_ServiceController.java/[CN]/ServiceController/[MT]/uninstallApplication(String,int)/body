@@ -4,10 +4,6 @@
     logger.log(Level.INFO,"Cannot uninstall application " + applicationName + " since it has not been discovered yet.");
     return RestUtils.errorStatus(ResponseConstants.FAILED_TO_LOCATE_APP,applicationName);
   }
-  if (app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
-    logger.log(Level.INFO,"Cannot uninstall the Management application.");
-    return RestUtils.errorStatus(ResponseConstants.CANNOT_UNINSTALL_MANAGEMENT_APP);
-  }
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
@@ -25,7 +21,7 @@
             }
  else {
               logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
-              processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MILLISECONDS);
+              processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MINUTES);
             }
           }
  catch (          final Exception e) {

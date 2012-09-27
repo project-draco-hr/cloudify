@@ -8,7 +8,7 @@
       actualFileSizeLimit=fileSizeLimit;
     }
     if (target.length() >= actualFileSizeLimit) {
-      throw new RestServiceException("dump_file_too_large",Long.toString(target.length()),Long.toString(actualFileSizeLimit));
+      throw new RestServiceException(ResponseConstants.DUMP_FILE_TOO_LARGE,Long.toString(target.length()),Long.toString(actualFileSizeLimit));
     }
     final byte[] dumpBytes=FileUtils.readFileToByteArray(target);
     return dumpBytes;

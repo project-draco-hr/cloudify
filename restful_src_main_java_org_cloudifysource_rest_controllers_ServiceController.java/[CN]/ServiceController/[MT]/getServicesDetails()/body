@@ -1,18 +1,3 @@
 {
-  logger.info("Creating service details");
-  String bindHost;
-  try {
-    bindHost=InetAddress.getLocalHost().getHostAddress();
-  }
- catch (  UnknownHostException e) {
-    logger.log(Level.SEVERE,"Failed to get local host, defaulting to 127.0.0.1",e);
-    bindHost="127.0.0.1";
-  }
-  final Map<String,Object> map=ServiceDetailsHelper.createCloudDetailsMap(bindHost);
-  @SuppressWarnings("deprecation") final CustomServiceDetails csd=new CustomServiceDetails(CloudifyConstants.USM_DETAILS_SERVICE_ID,CustomServiceDetails.SERVICE_TYPE,"REST","REST","REST");
-  final ServiceDetails[] res=new ServiceDetails[]{csd};
-  final Map<String,Object> result=csd.getAttributes();
-  result.putAll(map);
-  logger.info("Service details created: " + result);
-  return res;
+  return null;
 }
