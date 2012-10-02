@@ -5,11 +5,10 @@
   final String remoteDir=template.getRemoteDirectory();
   details.setRemoteDir(remoteDir);
   final List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
-  if (template.getKeyFile() != null) {
+  if (template.getKeyFile() != null && isManagement) {
     managementOnlyFiles.add(template.getKeyFile());
   }
   details.setManagementOnlyFiles(managementOnlyFiles);
-  details.setManagementOnlyFiles(cloud.getProvider().getManagementOnlyFiles());
   details.setZones(StringUtils.collectionToCommaDelimitedString(zones.getZones()));
   details.setPrivateIp(md.getPrivateAddress());
   details.setPublicIp(md.getPublicAddress());

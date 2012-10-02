@@ -37,7 +37,7 @@ logger.fine("Setting local directory for file upload to: " + localDirPath);
 final FileSystemManager mng=createdManager;
 mng.setLogger(org.apache.commons.logging.LogFactory.getLog(logger.getName()));
 final FileObject localDir=mng.resolveFile("file:" + localDirPath);
-final FileObject remoteDir=mng.resolveFile(target,opts);
+final FileObject remoteDir=resolveTargetDirectory(opts,target,mng);
 logger.fine("Copying files to: " + target + " from local dir: "+ localDir.getName().getPath()+ " excluding "+ excludedFiles.toString());
 try {
 remoteDir.copyFrom(localDir,new FileSelector(){
@@ -45,6 +45,17 @@ remoteDir.copyFrom(localDir,new FileSelector(){
 if (excludedFiles.contains(fileInfo.getFile().getName().getBaseName())) {
 logger.fine(fileInfo.getFile().getName().getBaseName() + " excluded");
 return false;
+}
+if (details.getKeyFile() != null) {
+if (fileInfo.getFile().getType() == FileType.FILE) {
+String fileName=new File(fileInfo.getFile().getURL().toString()).getName();
+String keyFileName=new File(details.getKeyFile()).getName();
+if (StringUtils.equals(keyFileName,fileName)) {
+if (!details.isLus()) {
+return false;
+}
+}
+}
 }
 final FileObject remoteFile=mng.resolveFile(remoteDir,localDir.getName().getRelativeName(fileInfo.getFile().getName()));
 if (!remoteFile.exists()) {

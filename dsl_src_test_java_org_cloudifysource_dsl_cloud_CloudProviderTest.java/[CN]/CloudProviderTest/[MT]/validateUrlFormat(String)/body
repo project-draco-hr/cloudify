@@ -1,0 +1,5 @@
+{
+  String[] schema={"http"};
+  UrlValidator urlValidator=new UrlValidator(schema);
+  assertTrue("Cloudify URL validation on url " + result + " failed",urlValidator.isValid(result));
+}

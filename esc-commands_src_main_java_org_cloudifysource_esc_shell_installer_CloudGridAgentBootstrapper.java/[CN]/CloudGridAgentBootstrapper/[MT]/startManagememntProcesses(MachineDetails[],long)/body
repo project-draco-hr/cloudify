@@ -12,13 +12,6 @@
   for (  final InstallationDetails detail : installations) {
     detail.setLocator(lookup);
   }
-  final File uploadDir=new File(template.getLocalDirectory());
-  try {
-    FileUtils.copyFileToDirectory(this.cloudFile,uploadDir);
-    installOnMachines(endTime,installer,numOfManagementMachines,installations);
-  }
-  finally {
-    FileUtils.forceDelete(new File(uploadDir,this.cloudFile.getName()));
-  }
+  installOnMachines(endTime,installer,numOfManagementMachines,installations);
   return machines;
 }

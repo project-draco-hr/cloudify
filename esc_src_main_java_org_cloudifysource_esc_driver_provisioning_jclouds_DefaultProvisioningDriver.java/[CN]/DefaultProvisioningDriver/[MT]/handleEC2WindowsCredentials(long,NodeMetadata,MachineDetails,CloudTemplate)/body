@@ -1,8 +1,7 @@
 {
   File pemFile=null;
   if (this.management) {
-    final String baseDirectory=Environment.getHomeDirectory();
-    final File localDirectory=new File(baseDirectory,cloudTemplate.getLocalDirectory());
+    final File localDirectory=new File(cloudTemplate.getAbsoluteUploadDir());
     pemFile=new File(localDirectory,cloudTemplate.getKeyFile());
   }
  else {
