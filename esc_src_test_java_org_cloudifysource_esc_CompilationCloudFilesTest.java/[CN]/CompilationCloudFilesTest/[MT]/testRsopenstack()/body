@@ -1,0 +1,11 @@
+{
+  try {
+    testCloudFileCompilation(RSOPENSTACK);
+  }
+ catch (  RuntimeException e) {
+    Assert.assertTrue(e.getCause() instanceof DSLValidationException && e.getMessage().contains("The tenant id property must be set"));
+  }
+catch (  Exception e) {
+    Assert.fail("RSOPENSTACK validation failed: " + e.getMessage());
+  }
+}

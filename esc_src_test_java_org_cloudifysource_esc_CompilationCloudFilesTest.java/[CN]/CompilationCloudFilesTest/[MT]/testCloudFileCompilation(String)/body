@@ -1,0 +1,4 @@
+{
+  File dslFile=new File(cloudFilePath);
+  ServiceReader.readCloud(dslFile);
+}
