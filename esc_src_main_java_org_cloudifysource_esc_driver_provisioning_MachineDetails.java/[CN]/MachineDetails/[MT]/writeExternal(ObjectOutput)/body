@@ -1,0 +1,12 @@
+{
+  IOUtils.writeString(out,privateAddress);
+  IOUtils.writeString(out,publicAddress);
+  out.writeBoolean(cloudifyInstalled);
+  IOUtils.writeString(out,installationDirectory);
+  out.writeBoolean(agentRunning);
+  IOUtils.writeString(out,machineId);
+  IOUtils.writeString(out,fileTransferMode.name());
+  IOUtils.writeString(out,remoteExecutionMode.name());
+  IOUtils.writeString(out,remoteDirectory);
+  IOUtils.writeString(out,locationId);
+}

@@ -1,0 +1,12 @@
+{
+  privateAddress=IOUtils.readString(in);
+  publicAddress=IOUtils.readString(in);
+  cloudifyInstalled=in.readBoolean();
+  installationDirectory=IOUtils.readString(in);
+  agentRunning=in.readBoolean();
+  machineId=IOUtils.readString(in);
+  fileTransferMode=FileTransferModes.valueOf(IOUtils.readString(in));
+  remoteExecutionMode=RemoteExecutionModes.valueOf(IOUtils.readString(in));
+  remoteDirectory=IOUtils.readString(in);
+  locationId=IOUtils.readString(in);
+}
