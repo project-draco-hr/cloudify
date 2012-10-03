@@ -10,7 +10,7 @@
   Tailer tailer=null;
   try {
     final long startTime=System.currentTimeMillis();
-    while (System.currentTimeMillis() < startTime + timeoutInSeconds * 1000L) {
+    while (System.currentTimeMillis() < startTime + TimeUnit.SECONDS.toMillis(timeoutInSeconds)) {
       if (file.exists()) {
         if (tailer == null) {
           tailer=Tailer.create(file,listener,TIMEOUT_BETWEEN_FILE_QUERYING,false);

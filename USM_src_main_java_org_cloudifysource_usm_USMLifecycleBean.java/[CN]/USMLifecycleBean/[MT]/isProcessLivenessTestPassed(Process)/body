@@ -4,7 +4,7 @@
     return true;
   }
   final long startTime=System.currentTimeMillis();
-  final long endTime=startTime + (configuration.getService().getLifecycle().getStartDetectionTimeoutSecs() * MILLIS_IN_SECOND);
+  final long endTime=startTime + TimeUnit.SECONDS.toMillis(configuration.getService().getLifecycle().getStartDetectionTimeoutSecs());
   int currentTestIndex=0;
   boolean processIsRunning=(launchedProcess != null);
   while (System.currentTimeMillis() < endTime && currentTestIndex < this.livenessDetectors.length) {
@@ -48,7 +48,7 @@
       currentTestIndex=index;
     }
     try {
-      Thread.sleep(configuration.getService().getLifecycle().getStartDetectionIntervalSecs() * MILLIS_IN_SECOND);
+      Thread.sleep(TimeUnit.SECONDS.toMillis(configuration.getService().getLifecycle().getStartDetectionIntervalSecs()));
     }
  catch (    final InterruptedException e) {
       throw new USMException("Interruped while waiting for start detection",e);
