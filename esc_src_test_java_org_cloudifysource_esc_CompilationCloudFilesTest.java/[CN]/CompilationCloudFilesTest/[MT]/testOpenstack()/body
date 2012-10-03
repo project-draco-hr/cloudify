@@ -1,0 +1,11 @@
+{
+  try {
+    testCloudFileCompilation(OPENSTACK);
+  }
+ catch (  RuntimeException e) {
+    Assert.assertTrue(e.getCause() instanceof DSLValidationException && e.getMessage().contains("User field still has default configuration value of ENTER_USER"));
+  }
+catch (  Exception e) {
+    Assert.fail("OPENSTACK validation failed: " + e.getMessage());
+  }
+}

@@ -1,0 +1,11 @@
+{
+  try {
+    testCloudFileCompilation(AZURE);
+  }
+ catch (  MissingPropertyException e) {
+    Assert.assertTrue(e.getMessage().contains("No such property: username for class: dslEntity"));
+  }
+catch (  Exception e) {
+    Assert.fail("AZURE validation failed: " + e.getMessage());
+  }
+}

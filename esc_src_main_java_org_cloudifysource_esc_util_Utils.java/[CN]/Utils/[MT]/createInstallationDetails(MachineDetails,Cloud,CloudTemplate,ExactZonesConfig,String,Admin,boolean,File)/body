@@ -5,7 +5,7 @@
   final String remoteDir=template.getRemoteDirectory();
   details.setRemoteDir(remoteDir);
   final List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
-  if (template.getKeyFile() != null) {
+  if (template.getKeyFile() != null && isManagement) {
     managementOnlyFiles.add(template.getKeyFile());
   }
   details.setManagementOnlyFiles(managementOnlyFiles);

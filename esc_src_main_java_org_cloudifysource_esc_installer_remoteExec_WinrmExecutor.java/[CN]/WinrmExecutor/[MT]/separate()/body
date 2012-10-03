@@ -1,4 +1,4 @@
 {
-  sb.append(this.separator);
+  sb.append(this.SEPARATOR);
   return this;
 }
