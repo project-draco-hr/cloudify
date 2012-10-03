@@ -1,0 +1,5 @@
+{
+  super.readExternal(in);
+  templateName=IOUtils.readString(in);
+  locationId=IOUtils.readString(in);
+}
