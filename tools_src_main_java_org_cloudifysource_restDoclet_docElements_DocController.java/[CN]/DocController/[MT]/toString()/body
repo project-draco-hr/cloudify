@@ -1,0 +1,8 @@
+{
+  String str="Controller " + name + " uri = "+ uri+ "\n";
+  if (description != null && !description.isEmpty())   str+=description + "\n";
+  for (  Entry<String,DocMethod> entry : methods.entrySet()) {
+    str+=entry.getValue() + "\n";
+  }
+  return str;
+}

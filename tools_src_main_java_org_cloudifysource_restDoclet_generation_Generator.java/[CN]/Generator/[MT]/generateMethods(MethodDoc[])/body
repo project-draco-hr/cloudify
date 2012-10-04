@@ -1,0 +1,19 @@
+{
+  SortedMap<String,DocMethod> docMethods=new TreeMap<String,DocMethod>();
+  for (  MethodDoc methodDoc : methods) {
+    List<DocAnnotation> annotations=generateAnnotations(methodDoc.annotations());
+    DocRequestMappingAnnotation requestMappingAnnotation=Utils.getRequestMappingAnnotation(annotations);
+    if (requestMappingAnnotation == null)     continue;
+    DocHttpMethod httpMethod=generateHttpMethod(methodDoc,requestMappingAnnotation.getMethod(),annotations);
+    String uri=requestMappingAnnotation.getValue();
+    if (StringUtils.isBlank(uri))     throw new IllegalArgumentException("method " + methodDoc.name() + " is missing request mapping annotation's value (uri).");
+    DocMethod docMethod=docMethods.get(uri);
+    if (docMethod != null)     docMethod.addHttpMethod(httpMethod);
+ else {
+      docMethod=new DocMethod(httpMethod);
+      docMethod.setUri(uri);
+    }
+    docMethods.put(docMethod.getUri(),docMethod);
+  }
+  return docMethods;
+}

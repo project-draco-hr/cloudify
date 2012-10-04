@@ -1,0 +1,12 @@
+{
+  Object shortAttrValue=getShortValue(attrValue);
+  String shortAttrValueStr=(shortAttrValue instanceof String[]) ? ((String[])shortAttrValue)[0].trim() : ((shortAttrValue instanceof String) ? ((String)shortAttrValue).trim() : null);
+  String shortAttrName=getShortName(attrName);
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_VALUE))   value=shortAttrValueStr.startsWith("/") ? shortAttrValueStr : ("/" + shortAttrValueStr);
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_METHOD))   method=(((FieldDocImpl[])attrValue)[0]).name();
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_HEADERS))   headers=shortAttrValueStr;
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_PARAMS))   params=shortAttrValueStr;
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_PRODUCES))   produces=shortAttrValueStr;
+  if (shortAttrName.equals(RestDocConstants.REQUEST_MAPPING_CONSUMED))   consumes=shortAttrValueStr;
+  attributes.put(shortAttrName,shortAttrValue);
+}

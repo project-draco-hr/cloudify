@@ -1,0 +1,10 @@
+{
+  String value=attrValue.toString().replace("\\\"","\"").trim();
+  String shortAttrName=getShortName(attrName);
+  if (shortAttrName.equals(RestDocConstants.JSON_RESPONSE_EXAMPLE_STATUS))   status=value;
+  if (shortAttrName.equals(RestDocConstants.JSON_RESPONSE_EXAMPLE_RESPONSE)) {
+    response=value;
+  }
+ else   if (shortAttrName.equals(RestDocConstants.JSON_RESPONSE_EXAMPLE_COMMENTS))   comments=value;
+  attributes.put(shortAttrName,value);
+}

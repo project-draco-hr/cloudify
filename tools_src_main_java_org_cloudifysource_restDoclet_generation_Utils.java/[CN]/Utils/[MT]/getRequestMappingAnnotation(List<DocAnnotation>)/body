@@ -1,0 +1,3 @@
+{
+  return (DocRequestMappingAnnotation)getAnnotation(annotations,RestDocConstants.REQUEST_MAPPING_ANNOTATION);
+}

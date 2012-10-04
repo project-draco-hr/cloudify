@@ -1,0 +1,3 @@
+{
+  return (DocRequestParamAnnotation)getAnnotation(annotations,RestDocConstants.REQUEST_PARAMS_ANNOTATION);
+}

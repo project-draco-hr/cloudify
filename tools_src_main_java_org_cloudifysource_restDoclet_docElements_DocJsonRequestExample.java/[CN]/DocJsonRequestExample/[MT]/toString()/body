@@ -1,0 +1,15 @@
+{
+  String str="@" + RestDocConstants.JSON_REQUEST_EXAMPLE_ANNOTATION + "[";
+  boolean isEmpty=true;
+  if (!StringUtils.isBlank(requestJsonBody)) {
+    str+="requestJsonBody = " + requestJsonBody;
+    isEmpty=false;
+  }
+  if (!StringUtils.isBlank(comments)) {
+    if (isEmpty=false)     str+=", ";
+    str+="comments = " + comments;
+    isEmpty=false;
+  }
+  if (isEmpty == true)   str+="annotation has no attributes";
+  return str + "]";
+}

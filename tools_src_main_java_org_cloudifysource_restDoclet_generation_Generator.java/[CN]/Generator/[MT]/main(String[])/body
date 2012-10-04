@@ -1,0 +1,3 @@
+{
+  com.sun.tools.javadoc.Main.execute(new String[]{RestDocConstants.DOCLET_FLAG,RestDoclet.class.getName(),RestDocConstants.SOURCE_PATH_FLAG,RestDocConstants.SOURCES_PATH,RestDocConstants.CONTROLLERS_PACKAGE});
+}

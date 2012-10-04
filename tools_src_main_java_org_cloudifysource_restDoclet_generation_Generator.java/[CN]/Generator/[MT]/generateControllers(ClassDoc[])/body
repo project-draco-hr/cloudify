@@ -1,0 +1,9 @@
+{
+  List<DocController> controllers=new LinkedList<DocController>();
+  for (  ClassDoc classDoc : classes) {
+    DocController controller=generateController(classDoc);
+    if (controller == null)     continue;
+    controllers.add(controller);
+  }
+  return controllers;
+}

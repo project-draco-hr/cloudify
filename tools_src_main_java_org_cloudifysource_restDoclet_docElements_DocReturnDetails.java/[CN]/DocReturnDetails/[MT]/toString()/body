@@ -1,0 +1,5 @@
+{
+  String str=returnType.typeName();
+  if (description != null)   str+=": " + description;
+  return str;
+}

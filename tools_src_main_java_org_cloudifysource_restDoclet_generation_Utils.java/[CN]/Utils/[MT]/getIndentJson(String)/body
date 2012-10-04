@@ -1,0 +1,24 @@
+{
+  if (StringUtils.isBlank(body))   return null;
+  JsonGenerator gen=null;
+  StringWriter out=new StringWriter();
+  try {
+    JsonFactory fac=new JsonFactory();
+    JsonParser parser=fac.createJsonParser(new StringReader(body));
+    ObjectMapper mapper=new ObjectMapper();
+    JsonNode node=mapper.readTree(parser);
+    gen=fac.createJsonGenerator(out);
+    gen.useDefaultPrettyPrinter();
+    mapper.writeTree(gen,node);
+  }
+ catch (  JsonParseException e) {
+    throw new JsonParseException("error occured while parsing " + body + ", error msg is "+ e.getMessage(),null);
+  }
+ finally {
+    if (gen != null) {
+      gen.flush();
+      gen.close();
+    }
+  }
+  return out.toString();
+}

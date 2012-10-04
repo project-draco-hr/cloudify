@@ -1,0 +1,6 @@
+{
+  if (option.equals(RestDocConstants.VELOCITY_TEMPLATE_PATH_FLAG) || option.equals(RestDocConstants.DOC_DEST_PATH_FLAG) || option.equals(RestDocConstants.VERSION_FLAG)) {
+    return 2;
+  }
+  return 0;
+}

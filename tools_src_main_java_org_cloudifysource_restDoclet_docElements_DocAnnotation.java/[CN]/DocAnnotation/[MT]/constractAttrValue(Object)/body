@@ -1,0 +1,16 @@
+{
+  Class<? extends Object> class1=value.getClass();
+  if (class1.isArray()) {
+    AnnotationValue[] values=(AnnotationValue[])value;
+    Object firstValue=values[0].value();
+    Object constractedValues=Array.newInstance(firstValue.getClass(),values.length);
+    for (int i=0; i < values.length; i++) {
+      Object currentValue=values[i].value();
+      Array.set(constractedValues,i,currentValue);
+    }
+    return constractedValues;
+  }
+ else {
+    return value;
+  }
+}
