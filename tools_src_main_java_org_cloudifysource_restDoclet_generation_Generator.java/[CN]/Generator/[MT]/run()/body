@@ -1,6 +1,5 @@
 {
   List<DocController> controllers=generateControllers(documentation.classes());
-  Utils.printMethodsToFile(controllers,"methods");
   String generatedHtml=generateHtmlDocumentation(controllers);
   FileWriter velocityfileWriter=null;
   try {
