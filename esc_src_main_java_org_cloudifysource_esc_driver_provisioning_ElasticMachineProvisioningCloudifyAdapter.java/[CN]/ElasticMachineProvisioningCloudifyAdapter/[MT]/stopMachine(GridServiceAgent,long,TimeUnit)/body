@@ -1,17 +1,33 @@
 {
   final String machineIp=agent.getMachine().getHostAddress();
+  GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
+  agentStopEvent.setHostAddress(machineIp);
+  agentStopEvent.setAgentUid(agent.getUid());
+  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStopEvent);
   logger.fine("Shutting down agent: " + agent + " on host: "+ machineIp);
   try {
     agent.shutdown();
     logger.fine("Agent on host: " + machineIp + " successfully shut down");
+    GridServiceAgentStoppedEvent agentStoppedEvent=new GridServiceAgentStoppedEvent();
+    agentStoppedEvent.setHostAddress(machineIp);
+    agentStoppedEvent.setAgentUid(agent.getUid());
+    agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStoppedEvent);
   }
  catch (  final Exception e) {
     logger.log(Level.WARNING,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of machine.",e);
   }
   try {
+    MachineStopRequestedEvent machineStopEvent=new MachineStopRequestedEvent();
+    machineStopEvent.setHostAddress(machineIp);
+    machineEventListener.elasticMachineProvisioningProgressChanged(machineStopEvent);
     logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
     final boolean shutdownResult=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
     logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownResult);
+    if (shutdownResult) {
+      MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
+      machineStopEvent.setHostAddress(machineIp);
+      machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
+    }
     return shutdownResult;
   }
  catch (  final CloudProvisioningException e) {
