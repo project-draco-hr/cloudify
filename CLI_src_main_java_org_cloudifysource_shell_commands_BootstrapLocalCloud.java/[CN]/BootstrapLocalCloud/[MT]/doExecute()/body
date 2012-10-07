@@ -1,5 +1,4 @@
 {
-  new CloudifyLicenseVerifier().verifyLicense();
   final String javaHome=System.getenv("JAVA_HOME");
   if (javaHome == null || javaHome.trim().length() == 0) {
     return messages.getString("missing_java_home");
