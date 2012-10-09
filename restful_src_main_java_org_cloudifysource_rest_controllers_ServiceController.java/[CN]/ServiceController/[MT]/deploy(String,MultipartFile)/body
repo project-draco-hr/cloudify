@@ -6,12 +6,12 @@
   srcFile.transferTo(dest);
   final GridServiceManager gsm=getGsm();
   if (gsm == null) {
-    return errorStatus(FAILED_TO_LOCATE_GSM);
+    throw new RestErrorException(FAILED_TO_LOCATE_GSM);
   }
   final ProcessingUnit pu=gsm.deploy(new ProcessingUnitDeployment(dest).setContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName));
   dest.delete();
   if (pu == null) {
-    return errorStatus(FAILED_TO_LOCATE_SERVICE_AFTER_DEPLOYMENT,applicationName);
+    throw new RestErrorException(FAILED_TO_LOCATE_SERVICE_AFTER_DEPLOYMENT,applicationName);
   }
   return successStatus(pu.getName());
 }

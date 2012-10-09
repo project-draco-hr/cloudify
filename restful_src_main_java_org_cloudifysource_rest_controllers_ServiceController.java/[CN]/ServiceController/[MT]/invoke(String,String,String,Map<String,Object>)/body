@@ -11,7 +11,7 @@
   final Map<String,Object> invocationResult=new HashMap<String,Object>();
   final ProcessingUnitInstance[] instances=pu.getInstances();
   if (instances.length == 0) {
-    return errorStatus(ResponseConstants.NO_PROCESSING_UNIT_INSTANCES_FOUND_FOR_INVOCATION,serviceName);
+    throw new RestErrorException(ResponseConstants.NO_PROCESSING_UNIT_INSTANCES_FOUND_FOR_INVOCATION,serviceName);
   }
   final Map<String,Future<Object>> futures=new HashMap<String,Future<Object>>(instances.length);
   for (  final ProcessingUnitInstance instance : instances) {
