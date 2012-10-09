@@ -6,6 +6,6 @@
     return successStatus(data);
   }
  catch (  final RestServiceException e) {
-    return errorStatus(e.getMessageName(),e.getParams());
+    throw new RestErrorException(e.getMessageName(),e.getParams());
   }
 }

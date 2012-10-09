@@ -10,5 +10,5 @@
       return successStatus();
     }
   }
-  return errorStatus(SERVICE_INSTANCE_UNAVAILABLE);
+  throw new RestErrorException(SERVICE_INSTANCE_UNAVAILABLE);
 }
