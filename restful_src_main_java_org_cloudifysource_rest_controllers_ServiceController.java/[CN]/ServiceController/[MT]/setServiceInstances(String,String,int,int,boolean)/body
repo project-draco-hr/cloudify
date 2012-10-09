@@ -3,13 +3,13 @@
   final String puName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   final ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(puName);
   if (pu == null) {
-    throw new RestErrorException(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
+    return errorStatus(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
   }
   final Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
   final String elasticProp=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC);
   final String templateName=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
   if (elasticProp == null || !Boolean.parseBoolean(elasticProp)) {
-    throw new RestErrorException(ResponseConstants.SERVICE_NOT_ELASTIC,serviceName);
+    return errorStatus(ResponseConstants.SERVICE_NOT_ELASTIC,serviceName);
   }
   logger.info("Scaling " + puName + " to "+ count+ " instances");
   UUID eventContainerID;
@@ -18,7 +18,7 @@
       pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(512 * count,MemoryUnit.MEGABYTES).create());
     }
  else {
-      throw new RestErrorException(ResponseConstants.SET_INSTANCES_NOT_SUPPORTED_IN_EAGER);
+      return errorStatus(ResponseConstants.SET_INSTANCES_NOT_SUPPORTED_IN_EAGER);
     }
   }
  else {

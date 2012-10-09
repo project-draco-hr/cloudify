@@ -11,5 +11,5 @@
   if (result) {
     return successStatus();
   }
-  throw new RestErrorException(ResponseConstants.FAILED_TO_ADD_INSTANCE,applicationName,serviceName);
+  return errorStatus(ResponseConstants.FAILED_TO_ADD_INSTANCE,applicationName,serviceName);
 }

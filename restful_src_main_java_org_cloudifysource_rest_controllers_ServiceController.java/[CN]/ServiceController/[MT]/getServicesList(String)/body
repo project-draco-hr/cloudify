@@ -4,7 +4,7 @@
   }
   final Application app=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
   if (app == null) {
-    throw new RestErrorException(FAILED_TO_LOCATE_APP,applicationName);
+    return errorStatus(FAILED_TO_LOCATE_APP,applicationName);
   }
   final ProcessingUnits pus=app.getProcessingUnits();
   final List<String> serviceNames=new ArrayList<String>(pus.getSize());
