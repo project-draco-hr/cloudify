@@ -1,5 +1,4 @@
 {
-  new CloudifyLicenseVerifier().verifyLicense();
   if (getTimeoutInMinutes() < 0) {
     throw new CLIException("-timeout cannot be negative");
   }
