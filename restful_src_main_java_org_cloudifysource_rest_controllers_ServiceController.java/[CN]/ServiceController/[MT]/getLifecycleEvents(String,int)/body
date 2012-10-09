@@ -1,7 +1,7 @@
 {
   final Map<String,Object> resultsMap=new HashMap<String,Object>();
   if (!lifecyclePollingThreadContainer.containsKey(UUID.fromString(lifecycleEventContainerID))) {
-    throw new RestErrorException("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
+    return errorStatus("Lifecycle events container with UUID: " + lifecycleEventContainerID + " does not exist or expired.");
   }
   final RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(UUID.fromString(lifecycleEventContainerID));
   final LifecycleEventsContainer container=restPollingRunnable.getLifecycleEventsContainer();
@@ -13,7 +13,7 @@
     final Throwable t=restPollingRunnable.getExecutionException();
     if (t != null) {
       logger.log(Level.INFO,"Lifecycle events polling ended unexpectedly.",t);
-      throw new RestErrorException(t.getMessage());
+      return errorStatus(t.getMessage());
     }
  else {
       logger.log(Level.FINE,"Lifecycle events polling ended successfully.");

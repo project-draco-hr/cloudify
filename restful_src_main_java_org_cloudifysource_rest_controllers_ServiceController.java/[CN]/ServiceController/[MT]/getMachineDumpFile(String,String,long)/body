@@ -7,7 +7,7 @@
         machine=this.admin.getMachines().getHostsByName().get(ip);
       }
       if (machine == null) {
-        throw new RestErrorException(ResponseConstants.MACHINE_NOT_FOUND,ip);
+        return errorStatus(ResponseConstants.MACHINE_NOT_FOUND,ip);
       }
       final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
       return successStatus(dumpBytes);
@@ -29,6 +29,6 @@
     }
   }
  catch (  final RestServiceException e) {
-    throw new RestErrorException(e.getMessageName(),e.getParams());
+    return errorStatus(e.getMessageName(),e.getParams());
   }
 }

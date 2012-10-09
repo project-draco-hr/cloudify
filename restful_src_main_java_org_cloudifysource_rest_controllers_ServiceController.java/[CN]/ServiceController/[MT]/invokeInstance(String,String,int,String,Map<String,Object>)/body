@@ -11,7 +11,7 @@
   final InternalProcessingUnitInstance pui=findInstanceById(pu,instanceId);
   if (pui == null) {
     logger.severe("Could not find service instance " + instanceId + " for service "+ absolutePuName);
-    throw new RestErrorException(ResponseConstants.SERVICE_INSTANCE_UNAVAILABLE,applicationName,absolutePuName,Integer.toString(instanceId));
+    return errorStatus(ResponseConstants.SERVICE_INSTANCE_UNAVAILABLE,applicationName,absolutePuName,Integer.toString(instanceId));
   }
   final String instanceName=buildServiceInstanceName(pui);
   try {
@@ -22,6 +22,6 @@
   }
  catch (  final Exception e) {
     logger.severe("Error invoking pu instance " + absolutePuName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName());
-    throw new RestErrorException(FAILED_TO_INVOKE_INSTANCE,absolutePuName,Integer.toString(instanceId),e.getMessage());
+    return errorStatus(FAILED_TO_INVOKE_INSTANCE,absolutePuName,Integer.toString(instanceId),e.getMessage());
   }
 }

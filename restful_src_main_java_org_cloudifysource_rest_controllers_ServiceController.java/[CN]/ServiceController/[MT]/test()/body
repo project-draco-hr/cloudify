@@ -4,5 +4,5 @@
   }
   final String groups=Arrays.toString(admin.getGroups());
   final String locators=Arrays.toString(admin.getLocators());
-  throw new RestErrorException(FAILED_TO_LOCATE_LUS,groups,locators);
+  return errorStatus(FAILED_TO_LOCATE_LUS,groups,locators);
 }
