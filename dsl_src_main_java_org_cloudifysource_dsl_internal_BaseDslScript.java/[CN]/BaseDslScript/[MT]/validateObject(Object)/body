@@ -6,7 +6,7 @@
       try {
         final Map<Object,Object> currentVars=this.getBinding().getVariables();
         DSLValidationContext validationContext=new DSLValidationContext();
-        validationContext.setFilePath((String)currentVars.get(DSL_FILE_PATH_VAR));
+        validationContext.setFilePath((String)currentVars.get(DSLReader.DSL_FILE_PATH_PROPERTY_NAME));
         method.setAccessible(true);
         method.invoke(obj,validationContext);
       }
