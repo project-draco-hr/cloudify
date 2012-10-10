@@ -1,3 +1,3 @@
 {
-  return (Utils.getAnnotation(annotations,RestDocConstants.CONTROLLER_ANNOTATION) == null || classDoc.qualifiedTypeName().equals(RestDocConstants.ADMIN_API_CONTROLLER_CLASS_NAME));
+  return (Utils.getAnnotation(annotations,RestDocConstants.CONTROLLER_ANNOTATION) == null || RestDocConstants.ADMIN_API_CONTROLLER_CLASS_NAME.equals(classDoc.qualifiedTypeName()));
 }

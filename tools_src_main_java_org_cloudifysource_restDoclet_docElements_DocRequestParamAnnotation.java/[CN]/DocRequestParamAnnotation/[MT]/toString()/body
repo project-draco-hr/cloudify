@@ -4,6 +4,5 @@
   if (value != null)   str+=RestDocConstants.REQUEST_PARAMS_VALUE + " = \"" + value+ "\"";
   if (defaultValue != null)   str+=RestDocConstants.REQUEST_PARAMS_DEFAULT_VALUE + " = \"" + defaultValue+ "\"";
   if (requierd != null)   str+=RestDocConstants.REQUEST_PARAMS_REQUIRED + " = \"" + requierd+ "\"";
-  str+="}";
-  return str;
+  return str + "}";
 }

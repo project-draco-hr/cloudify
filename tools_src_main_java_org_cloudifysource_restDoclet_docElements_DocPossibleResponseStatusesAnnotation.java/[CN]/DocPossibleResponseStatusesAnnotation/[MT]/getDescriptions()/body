@@ -1,3 +1,3 @@
 {
-  return descriptions;
+  return this.descriptions;
 }

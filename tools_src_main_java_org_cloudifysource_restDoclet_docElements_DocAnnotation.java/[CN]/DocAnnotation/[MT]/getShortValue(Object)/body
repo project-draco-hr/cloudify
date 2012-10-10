@@ -1,9 +1,9 @@
 {
-  String strValue=value.toString();
   if (!(value instanceof String))   return value;
+  String strValue=(String)value;
   int beginIndex=0;
-  int endIndex=strValue.length();
   if (strValue.startsWith("\""))   beginIndex=1;
+  int endIndex=strValue.length();
   if (strValue.endsWith("\""))   endIndex--;
   return strValue.substring(beginIndex,endIndex);
 }

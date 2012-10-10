@@ -1,8 +1,10 @@
 {
-  String str="Controller " + name + " uri = "+ uri+ "\n";
-  if (description != null && !description.isEmpty())   str+=description + "\n";
-  for (  Entry<String,DocMethod> entry : methods.entrySet()) {
-    str+=entry.getValue() + "\n";
+  StringBuilder builder=new StringBuilder("Controller " + name + " uri = "+ uri+ "\n");
+  if (description != null && !description.isEmpty())   builder.append(description + "\n");
+  if (methods != null) {
+    for (    Entry<String,DocMethod> entry : methods.entrySet()) {
+      builder.append(entry.getValue().toString() + "\n");
+    }
   }
-  return str;
+  return builder.toString();
 }

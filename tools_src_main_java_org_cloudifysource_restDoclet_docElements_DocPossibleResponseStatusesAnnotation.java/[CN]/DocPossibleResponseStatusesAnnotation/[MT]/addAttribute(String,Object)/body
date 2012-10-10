@@ -6,5 +6,5 @@
  else   if (shortAttrName.endsWith(RestDocConstants.POSSIBLE_RESPONSE_STATUSES_DESCRIPTIONS)) {
     descriptions=(String[])attrValue;
   }
-  attributes.put(shortAttrName,attrValue);
+  super.addAttribute(shortAttrName,attrValue);
 }

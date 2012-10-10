@@ -1,12 +1,16 @@
 {
-  String location="";
+  if (annotations == null)   return;
+  String currLocation="";
   for (  DocAnnotation docAnnotation : annotations) {
     String annotationName=docAnnotation.getName();
-    if (!location.isEmpty())     location+=" or ";
-    location+=annotationName;
+    if (!currLocation.isEmpty())     currLocation+=" or ";
+    currLocation+=annotationName;
     DocAnnotationTypes docAnnotationType=DocAnnotationTypes.fromName(annotationName);
-    if (docAnnotationType == DocAnnotationTypes.REQUEST_PARAM)     requestParamAnnotation=(DocRequestParamAnnotation)docAnnotation;
+    if (docAnnotationType == DocAnnotationTypes.REQUEST_PARAM) {
+      if (!(docAnnotation instanceof DocRequestParamAnnotation))       throw new ClassCastException("Annotation type is " + DocAnnotationTypes.REQUEST_PARAM + ", expected class type to be "+ DocRequestParamAnnotation.class.getName());
+      requestParamAnnotation=(DocRequestParamAnnotation)docAnnotation;
+    }
  else     if (docAnnotationType != DocAnnotationTypes.PATH_VARIABLE && docAnnotationType != DocAnnotationTypes.REQUEST_BODY)     throw new IllegalArgumentException("Unsupported parameter annotation - " + annotationName);
   }
-  this.location=location;
+  this.location=currLocation;
 }

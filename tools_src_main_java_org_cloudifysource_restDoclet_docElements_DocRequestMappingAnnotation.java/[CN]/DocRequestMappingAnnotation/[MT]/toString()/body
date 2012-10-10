@@ -6,7 +6,7 @@
   if (params != null)   str+=RestDocConstants.REQUEST_MAPPING_PARAMS + " = \"" + params+ "\", ";
   if (produces != null)   str+=RestDocConstants.REQUEST_MAPPING_PRODUCES + " = \"" + produces+ "\", ";
   if (consumes != null)   str+=RestDocConstants.REQUEST_MAPPING_CONSUMED + " = \"" + consumes+ "\", ";
-  if (str.lastIndexOf(",") != -1)   str=str.substring(0,str.lastIndexOf(","));
-  str+="}";
-  return str;
+  int lastIndexOf=str.lastIndexOf(',');
+  if (lastIndexOf != -1)   str=str.substring(0,lastIndexOf);
+  return str + "}";
 }

@@ -1,12 +1,12 @@
 {
-  if (annotationName.equals(CONTROLLER_ANNOTATION))   return CONTROLLER;
- else   if (annotationName.equals(REQUEST_MAPPING_ANNOTATION))   return REQUEST_MAPPING;
- else   if (annotationName.equals(REQUEST_PARAMS_ANNOTATION))   return REQUEST_PARAM;
- else   if (annotationName.equals(REQUEST_BODY_ANNOTATION))   return REQUEST_BODY;
- else   if (annotationName.equals(RESPONSE_BODY_ANNOTATION))   return RESPONSE_BODY;
- else   if (annotationName.equals(PATH_VARIABLE_ANNOTATION))   return PATH_VARIABLE;
- else   if (annotationName.equals(JSON_RESPONSE_EXAMPLE_ANNOTATION))   return JSON_RESPONSE_EXAMPLE;
- else   if (annotationName.equals(JSON_REQUEST_EXAMPLE_ANNOTATION))   return JSON_REQUEST_EXAMPLE;
- else   if (annotationName.endsWith(POSSIBLE_RESPONSE_STATUSES_ANNOTATION))   return POSSIBLE_RESPONSE_STATUSES;
+  if (CONTROLLER_ANNOTATION.equals(annotationName))   return CONTROLLER;
+ else   if (REQUEST_MAPPING_ANNOTATION.equals(annotationName))   return REQUEST_MAPPING;
+ else   if (REQUEST_PARAMS_ANNOTATION.equals(annotationName))   return REQUEST_PARAM;
+ else   if (REQUEST_BODY_ANNOTATION.equals(annotationName))   return REQUEST_BODY;
+ else   if (RESPONSE_BODY_ANNOTATION.equals(annotationName))   return RESPONSE_BODY;
+ else   if (PATH_VARIABLE_ANNOTATION.equals(annotationName))   return PATH_VARIABLE;
+ else   if (JSON_RESPONSE_EXAMPLE_ANNOTATION.equals(annotationName))   return JSON_RESPONSE_EXAMPLE;
+ else   if (JSON_REQUEST_EXAMPLE_ANNOTATION.equals(annotationName))   return JSON_REQUEST_EXAMPLE;
+ else   if (POSSIBLE_RESPONSE_STATUSES_ANNOTATION.endsWith(annotationName))   return POSSIBLE_RESPONSE_STATUSES;
  else   return DEFAULT;
 }

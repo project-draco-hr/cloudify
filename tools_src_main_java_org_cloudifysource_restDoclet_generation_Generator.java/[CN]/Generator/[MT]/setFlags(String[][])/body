@@ -1,14 +1,16 @@
 {
+  int flagPos=0;
+  int contentPos=1;
   for (int i=0; i < options.length; i++) {
-    if (options[i][0].equals(RestDocConstants.VELOCITY_TEMPLATE_PATH_FLAG)) {
-      velocityTemplatePath=options[i][1];
+    if (RestDocConstants.VELOCITY_TEMPLATE_PATH_FLAG.equals(options[i][flagPos])) {
+      velocityTemplatePath=options[i][contentPos];
       isUserDefineTemplatePath=true;
     }
- else     if (options[i][0].equals(RestDocConstants.DOC_DEST_PATH_FLAG))     docPath=options[i][1];
- else     if (options[i][0].equals(RestDocConstants.VERSION_FLAG))     version=options[i][1];
+ else     if (RestDocConstants.DOC_DEST_PATH_FLAG.equals(options[i][flagPos]))     docPath=options[i][contentPos];
+ else     if (RestDocConstants.VERSION_FLAG.equals(options[i][flagPos]))     version=options[i][contentPos];
   }
   if (velocityTemplatePath != null) {
-    int fileNameIndex=velocityTemplatePath.lastIndexOf("/") + 1;
+    int fileNameIndex=velocityTemplatePath.lastIndexOf('/') + 1;
     velocityTemplateFileName=velocityTemplatePath.substring(fileNameIndex);
     velocityTemplatePath=velocityTemplatePath.substring(0,fileNameIndex - 1);
   }

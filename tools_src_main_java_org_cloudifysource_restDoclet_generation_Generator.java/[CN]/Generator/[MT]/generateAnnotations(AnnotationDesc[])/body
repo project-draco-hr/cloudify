@@ -4,7 +4,7 @@
     DocAnnotation docAnnotation=Utils.createNewAnnotation(annotationDesc.annotationType().typeName());
     for (    ElementValuePair elementValuePair : annotationDesc.elementValues()) {
       String element=elementValuePair.element().toString();
-      Object constractAttrValue=docAnnotation.constractAttrValue(elementValuePair.value().value());
+      Object constractAttrValue=DocAnnotation.constractAttrValue(elementValuePair.value().value());
       docAnnotation.addAttribute(element,constractAttrValue);
     }
     docAnnotations.add(docAnnotation);

@@ -1,7 +1,7 @@
 {
   String value=attrValue.toString().trim();
   String shortAttrName=getShortName(attrName);
-  if (shortAttrName.equals(RestDocConstants.JSON_REQUEST_EXAMPLE_REQUEST_PARAMS))   requestJsonBody=value;
- else   if (shortAttrName.equals(RestDocConstants.JSON_REQUEST_EXAMPLE_COMMENTS))   comments=value;
-  attributes.put(shortAttrName,value);
+  if (RestDocConstants.JSON_REQUEST_EXAMPLE_REQUEST_PARAMS.equals(shortAttrName))   requestJsonBody=value;
+ else   if (RestDocConstants.JSON_REQUEST_EXAMPLE_COMMENTS.equals(shortAttrName))   comments=value;
+  super.addAttribute(shortAttrName,value);
 }

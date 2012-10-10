@@ -10,7 +10,5 @@
     }
     return constractedValues;
   }
- else {
-    return value;
-  }
+  return value;
 }
