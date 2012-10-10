@@ -25,7 +25,7 @@
     logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownResult);
     if (shutdownResult) {
       MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
-      machineStopEvent.setHostAddress(machineIp);
+      machineStoppedEvent.setHostAddress(machineIp);
       machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
     }
     return shutdownResult;
