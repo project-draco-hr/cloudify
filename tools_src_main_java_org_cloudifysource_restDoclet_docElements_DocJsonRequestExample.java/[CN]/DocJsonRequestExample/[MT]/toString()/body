@@ -6,10 +6,10 @@
     isEmpty=false;
   }
   if (!StringUtils.isBlank(comments)) {
-    if (isEmpty=false)     str+=", ";
+    if (!isEmpty)     str+=", ";
     str+="comments = " + comments;
     isEmpty=false;
   }
-  if (isEmpty == true)   str+="annotation has no attributes";
+  if (isEmpty)   str+="annotation has no attributes";
   return str + "]";
 }

@@ -8,13 +8,10 @@
   testRequest(reqeust,uriHandlers.get(HTTP_POST),"{\"status\":\"success\"}");
   reqeust=createMockPostRequest(requestUri,convertToJson(attrUpdatedMap));
   testRequest(reqeust,uriHandlers.get(HTTP_POST),"{\"status\":\"success\"}");
-  Map<String,Object> merged=new HashMap<String,Object>();
-  merged.putAll(attrInitialMap);
-  merged.putAll(attrUpdatedMap);
   reqeust=createMockGetRequest(requestUri);
-  testRequest(reqeust,uriHandlers.get(HTTP_GET),convertToJson(merged));
+  testRequest(reqeust,uriHandlers.get(HTTP_GET),convertToJson(attrUpdatedMap));
   reqeust=createMockDeleteRequest(requestUri);
-  testRequest(reqeust,uriHandlers.get(HTTP_DELETE),convertToJson(merged));
+  testRequest(reqeust,uriHandlers.get(HTTP_DELETE),convertToJson(attrUpdatedMap));
   reqeust=createMockGetRequest(requestUri);
   testRequest(reqeust,uriHandlers.get(HTTP_GET),convertToJson(new HashMap<String,Object>()));
   System.out.println("finished test for uri: " + requestUri);
