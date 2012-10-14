@@ -1,0 +1,16 @@
+{
+  if (source.isDirectory()) {
+    for (    File f : source.listFiles()) {
+      uploadFile(new File(source.getPath() + "/" + f.getName()),target + "/" + f.getName(),store,client);
+    }
+  }
+ else {
+    getLog().info("Processing " + source + ", upload size is: "+ (source).length()+ ". Target: "+ target);
+    store.putBlob(container,store.blobBuilder(target).payload(source).build());
+    getLog().info("Upload of " + source + " was ended successfully");
+    if (publicUrl != null && Boolean.parseBoolean(publicUrl)) {
+      String ownerId=client.getObjectACL(container,target).getOwner().getId();
+      client.putObjectACL(container,target,AccessControlList.fromCannedAccessPolicy(CannedAccessPolicy.PUBLIC_READ,ownerId));
+    }
+  }
+}
