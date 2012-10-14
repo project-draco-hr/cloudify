@@ -26,7 +26,7 @@
     }
  catch (    final Exception e) {
       pendingRequest.unlock();
-      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+      logger.fine("[" + Thread.currentThread().getName() + "] - a failure occured : unlocking lock");
       if (e instanceof MicrosoftAzureException) {
         throw new MicrosoftAzureException(e);
       }

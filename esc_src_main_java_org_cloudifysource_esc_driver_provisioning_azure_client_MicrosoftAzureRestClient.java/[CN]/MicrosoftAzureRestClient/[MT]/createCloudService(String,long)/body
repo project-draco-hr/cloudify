@@ -11,7 +11,7 @@
     logger.fine("[" + Thread.currentThread().getName() + "] - cloud cervice created : "+ serviceName);
   }
  catch (  final Exception e) {
-    logger.warning("failed to create cloud service " + e.getMessage());
+    logger.warning("failed to create cloud service : " + e.getMessage());
     if (e instanceof MicrosoftAzureException) {
       throw new MicrosoftAzureException(e);
     }
