@@ -31,7 +31,7 @@
     return machineDetails;
   }
  catch (  final MicrosoftAzureException e) {
-    logger.severe("failed creating virtual machine properly" + e.getMessage());
+    logger.severe("failed creating virtual machine properly : " + e.getMessage());
     if (desc.getHostedServiceName() != null) {
       try {
         azureClient.deleteVirtualMachineByDeploymentIfExists(desc.getHostedServiceName(),desc.getDeploymentName(),endTime);
@@ -46,7 +46,7 @@
       }
     }
  else {
-      logger.fine("not attempting to shutdown virtual machine " + desc.getRoleName() + " since a failure happened while to create a cloud service for this vm.");
+      logger.fine("not attempting to shutdown virtual machine " + desc.getRoleName() + " since a failure happened while trying to create a cloud service for this vm.");
     }
     throw new CloudProvisioningException(e);
   }
