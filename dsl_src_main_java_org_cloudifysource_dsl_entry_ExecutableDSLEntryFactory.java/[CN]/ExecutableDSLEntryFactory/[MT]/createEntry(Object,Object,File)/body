@@ -2,15 +2,16 @@
   if (arg instanceof Closure<?>) {
     return new ClosureExecutableEntry((Closure<?>)arg);
   }
- else   if (arg instanceof String) {
+  if (arg instanceof String) {
     final StringExecutableEntry stringExecutableEntry=new StringExecutableEntry((String)arg);
     validateStringEntry(stringExecutableEntry,workDirectory);
     return stringExecutableEntry;
   }
- else   if (arg instanceof List<?>) {
-    return new ListExecutableEntry((List<String>)arg);
+  if (arg instanceof List<?>) {
+    @SuppressWarnings("unchecked") List<String> listString=(List<String>)arg;
+    return new ListExecutableEntry(listString);
   }
- else   if (arg instanceof Map<?,?>) {
+  if (arg instanceof Map<?,?>) {
     final MapExecutableEntry result=new MapExecutableEntry();
     copyElementsToEntriesMap(arg,entryName,result,workDirectory);
     return result;
