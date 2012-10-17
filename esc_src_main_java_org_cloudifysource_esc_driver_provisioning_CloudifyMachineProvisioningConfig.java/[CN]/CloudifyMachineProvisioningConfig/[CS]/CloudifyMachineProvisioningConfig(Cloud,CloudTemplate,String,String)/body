@@ -1,7 +1,13 @@
 {
   setMinimumNumberOfCpuCoresPerMachine(template.getNumberOfCores());
   setReservedMemoryCapacityPerMachineInMB(cloud.getProvider().getReservedMemoryCapacityPerMachineInMB());
-  setCloudConfigurationDirectory(managementTemplateRemoteDirectory);
-  logger.info("Setting cloud configuration directory to: " + template.getRemoteDirectory());
+  String remoteDir=managementTemplateRemoteDirectory;
+  logger.log(Level.FINE,"Original remote directory is: " + remoteDir);
+  if (template.getFileTransfer().equals(FileTransferModes.CIFS)) {
+    logger.log(Level.FINE,"Running on windows, modifying remote directory config. Original was: " + remoteDir);
+    remoteDir=getWindowsRemoteDirPath(managementTemplateRemoteDirectory);
+  }
+  logger.log(Level.INFO,"Setting cloud configuration directory to: " + remoteDir);
+  setCloudConfigurationDirectory(remoteDir);
   setCloudTemplateName(cloudTemplateName);
 }

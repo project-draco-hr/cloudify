@@ -1,0 +1,12 @@
+{
+  String homeDirectoryName=remoteDirectory;
+  homeDirectoryName=homeDirectoryName.replace(REMOTE_ADMIN_SHARE_CHAR,"");
+  if (homeDirectoryName.startsWith(FORWARD_SLASH)) {
+    homeDirectoryName=homeDirectoryName.substring(1);
+  }
+  if (homeDirectoryName.charAt(1) == FORWARD_SLASH.charAt(0)) {
+    homeDirectoryName=homeDirectoryName.substring(0,1) + COLON_CHAR + homeDirectoryName.substring(1);
+  }
+  homeDirectoryName=homeDirectoryName.replace(FORWARD_SLASH,BACK_SLASH);
+  return homeDirectoryName;
+}

@@ -1,0 +1,5 @@
+{
+  String homeDirectoryName=getWindowsRemoteDirPath(remoteDirectoryPath);
+  File localDirectory=new File(homeDirectoryName,localDirName);
+  return localDirectory.getAbsolutePath();
+}

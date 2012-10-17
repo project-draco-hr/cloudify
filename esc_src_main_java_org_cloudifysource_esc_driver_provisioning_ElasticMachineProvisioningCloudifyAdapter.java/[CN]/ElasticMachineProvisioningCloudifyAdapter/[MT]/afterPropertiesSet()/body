@@ -16,18 +16,12 @@
       throw new BeanConfigurationException("The provided cloud template name: " + this.cloudTemplateName + " was not found in the cloud configuration");
     }
     logger.info("Remote Directory is: " + cloudTemplate.getRemoteDirectory());
-    if (ServiceUtils.isWindows()) {
+    if (cloudTemplate.getFileTransfer().equals(FileTransferModes.CIFS)) {
       logger.info("Windows machine - modifying local directory location");
-      String localDirectoryName=cloudTemplate.getRemoteDirectory();
-      localDirectoryName=localDirectoryName.replace("$","");
-      if (localDirectoryName.startsWith("/")) {
-        localDirectoryName=localDirectoryName.substring(1);
-      }
-      if (localDirectoryName.charAt(1) == '/') {
-        localDirectoryName=localDirectoryName.substring(0,1) + ":" + localDirectoryName.substring(1);
-      }
-      logger.info("Modified local dir name is: " + localDirectoryName);
-      cloudTemplate.setLocalDirectory(localDirectoryName);
+      String remoteDirName=cloudTemplate.getRemoteDirectory();
+      String windowsLocalDirPath=getWindowsLocalDirPath(remoteDirName,cloudTemplate.getLocalDirectory());
+      logger.info("Modified local dir name is: " + windowsLocalDirPath);
+      cloudTemplate.setLocalDirectory(windowsLocalDirPath);
     }
  else {
       cloudTemplate.setLocalDirectory(cloudTemplate.getRemoteDirectory());
