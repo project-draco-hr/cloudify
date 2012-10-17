@@ -1,5 +1,0 @@
-{
-  ManualCapacityScaleConfig config=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).atMostOneContainerPerMachine().create();
-  config.setGridServiceAgentZonesAware(locationAware);
-  return config;
-}
