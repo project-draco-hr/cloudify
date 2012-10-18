@@ -1,7 +1,0 @@
-{
-  Map<String,String> paramComments=new HashMap<String,String>();
-  for (  ParamTag paramTag : methodDoc.paramTags()) {
-    paramComments.put(paramTag.parameterName(),paramTag.parameterComment());
-  }
-  return paramComments;
-}

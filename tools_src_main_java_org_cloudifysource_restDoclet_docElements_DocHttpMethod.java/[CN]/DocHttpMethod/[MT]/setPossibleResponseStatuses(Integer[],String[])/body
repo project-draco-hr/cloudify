@@ -1,8 +1,0 @@
-{
-  if (this.possibleResponseStatuses == null)   this.possibleResponseStatuses=new LinkedList<DocResponseStatus>();
-  for (int i=0; i < codes.length; i++) {
-    int code=codes[i];
-    DocResponseStatus possibleResponseStatus=new DocResponseStatus(code,ResponseCodes.fromCode(code).getReasonPhrase(),descriptions[i].trim());
-    this.possibleResponseStatuses.add(possibleResponseStatus);
-  }
-}

@@ -1,4 +1,0 @@
-{
-  if (requestParamAnnotation != null)   return requestParamAnnotation.getDefaultValue();
-  return null;
-}

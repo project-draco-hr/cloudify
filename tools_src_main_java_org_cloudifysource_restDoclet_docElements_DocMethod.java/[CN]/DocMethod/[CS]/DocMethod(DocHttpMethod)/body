@@ -1,4 +1,0 @@
-{
-  httpMethods=new LinkedList<DocHttpMethod>();
-  httpMethods.add(httpMethod);
-}

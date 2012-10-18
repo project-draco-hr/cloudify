@@ -1,3 +1,0 @@
-{
-  return (DocJsonResponseExample)getAnnotation(annotations,RestDocConstants.JSON_RESPONSE_EXAMPLE_ANNOTATION);
-}

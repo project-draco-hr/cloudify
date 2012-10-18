@@ -1,3 +1,0 @@
-{
-  return (DocPossibleResponseStatusesAnnotation)getAnnotation(annotations,RestDocConstants.POSSIBLE_RESPONSE_STATUSES_ANNOTATION);
-}
