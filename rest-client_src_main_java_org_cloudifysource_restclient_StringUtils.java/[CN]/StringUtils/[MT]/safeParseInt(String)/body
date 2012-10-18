@@ -1,6 +1,6 @@
 {
   try {
-    return Integer.parseInt(str);
+    return Integer.valueOf(str);
   }
  catch (  NumberFormatException e) {
     return null;
