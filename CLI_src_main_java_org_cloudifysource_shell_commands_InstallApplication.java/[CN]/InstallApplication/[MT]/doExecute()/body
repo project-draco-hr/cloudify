@@ -3,7 +3,13 @@
     throw new CLIStatusException("application_not_found",applicationFile.getAbsolutePath());
   }
   logger.info("Validating file " + applicationFile.getName());
-  final Application application=ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+  final DSLReader dslReader=new DSLReader();
+  File dslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,applicationFile);
+  dslReader.setDslFile(dslFile);
+  dslReader.setCreateServiceContext(false);
+  dslReader.addProperty(DSLUtils.APPLICATION_DIR,dslFile.getParentFile().getAbsolutePath());
+  dslReader.setOverridesFile(overrides);
+  final Application application=dslReader.readDslEntity(Application.class);
   if (StringUtils.isBlank(applicationName)) {
     applicationName=application.getName();
   }
@@ -21,12 +27,14 @@
     }
   }
  else {
-    if (cloudConfigurationZipFile == null) {
-      zipFile=Packager.packApplication(application,applicationFile);
+    List<File> additionalServiceFiles=new LinkedList<File>();
+    if (cloudConfigurationZipFile != null) {
+      additionalServiceFiles.add(cloudConfigurationZipFile);
     }
- else {
-      zipFile=Packager.packApplication(application,applicationFile,new File[]{cloudConfigurationZipFile});
+    if (overrides != null) {
+      additionalServiceFiles.add(overrides);
     }
+    zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
   final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes(),!disableSelfHealing);

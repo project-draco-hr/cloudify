@@ -1,0 +1,18 @@
+{
+  if (dslFile == null) {
+    return;
+  }
+  final String baseFileName=dslFile.getName();
+  final int indexOfLastComma=baseFileName.lastIndexOf('.');
+  if (indexOfLastComma < 0) {
+    dslName=baseFileName;
+  }
+ else {
+    dslName=baseFileName.substring(0,indexOfLastComma);
+  }
+  dslFileNamePrefix=dslName;
+  final int indexOfHyphen=dslName.indexOf("-");
+  if (indexOfHyphen >= 0) {
+    dslName=dslName.substring(0,indexOfHyphen);
+  }
+}

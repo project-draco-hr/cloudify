@@ -1,0 +1,10 @@
+{
+  int indexOfSeparator=propertyFullName.indexOf(".");
+  if (indexOfSeparator > 0) {
+    String prefix=propertyFullName.substring(0,indexOfSeparator);
+    if ((this.clazz.equals(Service.class) && prefix.equals("service")) || (this.clazz.equals(Application.class) && prefix.equals("application"))) {
+      return propertyFullName.substring(indexOfSeparator + 1);
+    }
+  }
+  throw new IllegalArgumentException("Property[" + propertyFullName + "] doesn't exist at properties file. "+ "It should be a field of current dsl and declared at the overrides file starting with \"<dslType>.\" "+ "when dsl type can be service or application");
+}

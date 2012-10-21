@@ -10,16 +10,19 @@
       packedFile=recipe;
     }
  else     if (recipe.isDirectory()) {
+      List<File> additionFiles=new LinkedList<File>();
+      if (cloudConfigurationZipFile != null)       additionFiles.add(cloudConfigurationZipFile);
+      if (overrides != null)       additionFiles.add(overrides);
       if (serviceFileName != null) {
         final File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + serviceFileName);
         if (!fullPathToRecipe.exists()) {
           throw new CLIStatusException("service_file_doesnt_exist",fullPathToRecipe.getPath());
         }
-        packedFile=getPackedFile(cloudConfigurationZipFile,fullPathToRecipe);
+        packedFile=Packager.pack(fullPathToRecipe,additionFiles);
         service=ServiceReader.readService(fullPathToRecipe);
       }
  else {
-        packedFile=getPackedFile(cloudConfigurationZipFile,recipe);
+        packedFile=Packager.pack(recipe,additionFiles);
         service=ServiceReader.readService(recipe);
       }
       packedFile.deleteOnExit();

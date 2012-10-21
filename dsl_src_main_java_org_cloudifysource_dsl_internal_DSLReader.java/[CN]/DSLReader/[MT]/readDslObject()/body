@@ -8,6 +8,8 @@
   LinkedHashMap<Object,Object> properties=null;
   try {
     properties=createDSLProperties();
+    createDSLOverrides();
+    overrideProperties(properties);
   }
  catch (  final Exception e) {
     throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
@@ -34,6 +36,7 @@
   if (result == null) {
     throw new DSLException("The DSL evaluated to a null - check your syntax and try again");
   }
+  overrideFields(result);
   if (this.createServiceContext) {
     if (!(result instanceof Service)) {
       throw new IllegalArgumentException("The DSL reader cannot create a service context to a DSL that does not evaluate to a Service. " + "Set the 'createServiceContext' option to false if you do not need a service conext");

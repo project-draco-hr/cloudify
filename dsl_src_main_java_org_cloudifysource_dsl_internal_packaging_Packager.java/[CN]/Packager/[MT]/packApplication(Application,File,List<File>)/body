@@ -16,7 +16,7 @@
     }
     applicationFolderToPack=destApplicationFolder;
   }
-  if (additionalServiceFiles != null && additionalServiceFiles.length > 0) {
+  if ((additionalServiceFiles != null) && (!additionalServiceFiles.isEmpty())) {
     if (applicationFolderToPack == applicationDir) {
       applicationFolderToPack=createCopyDirectory(applicationFolderToPack);
     }

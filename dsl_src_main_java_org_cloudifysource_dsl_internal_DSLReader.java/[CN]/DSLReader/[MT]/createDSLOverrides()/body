@@ -1,0 +1,10 @@
+{
+  if (overridesFile == null)   return;
+  try {
+    ConfigObject parse=new ConfigSlurper().parse(overridesFile.toURI().toURL());
+    parse.flatten(overrideProperties);
+  }
+ catch (  final Exception e) {
+    throw new IOException("Failed to read overrides file: " + overridesFile,e);
+  }
+}

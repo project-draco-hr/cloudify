@@ -1,0 +1,15 @@
+{
+  if (overridesFile == null) {
+    return;
+  }
+  for (  Entry<String,Object> entry : overrideProperties.entrySet()) {
+    String key=entry.getKey();
+    Object propertyValue=entry.getValue();
+    if (properties.containsKey(key)) {
+      properties.put(key,propertyValue);
+    }
+ else {
+      overrideFields.put(key,propertyValue);
+    }
+  }
+}

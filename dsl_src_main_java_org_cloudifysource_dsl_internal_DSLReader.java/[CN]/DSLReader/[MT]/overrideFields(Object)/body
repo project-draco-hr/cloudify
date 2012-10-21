@@ -1,0 +1,23 @@
+{
+  if (overrideFields == null)   return;
+  Class<? extends Object> resultClass=result.getClass();
+  for (  Entry<String,Object> entry : overrideFields.entrySet()) {
+    String fieldName=convertOverridePropertyNameToFieldName(entry.getKey());
+    try {
+      PropertyUtils.getNestedProperty(result,fieldName);
+    }
+ catch (    Exception e) {
+      throw new IllegalArgumentException("Cannot override field[" + fieldName + "] from "+ resultClass.getName()+ ", failed during getProperty: "+ e);
+    }
+    try {
+      Object value=BaseDslScript.convertValueToExecutableDSLEntryIfNeeded(workDir,result,fieldName,entry.getValue());
+      if (logger.isLoggable(Level.FINEST)) {
+        logger.finest("PropertyUtils.setNestedProperty(object=" + result + ",name="+ fieldName+ ",value="+ value+ ",value.getClass()="+ value.getClass());
+      }
+      PropertyUtils.setNestedProperty(result,fieldName,value);
+    }
+ catch (    Exception e) {
+      throw new IllegalArgumentException("Cannot override field[" + fieldName + "] from "+ resultClass.getName()+ ", failed during setProperty: "+ e);
+    }
+  }
+}
