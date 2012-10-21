@@ -1,3 +1,7 @@
 {
+  List<GridServiceAgent> result=new ArrayList<GridServiceAgent>();
+  GridServiceAgent[] agents=this.originalESMAdmin.getGridServiceAgents().getAgents();
+  for (  GridServiceAgent agent : agents) {
+  }
   return this.originalESMAdmin.getGridServiceAgents().getAgents();
 }

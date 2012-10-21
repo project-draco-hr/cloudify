@@ -4,7 +4,7 @@
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
   cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
-  AtLeastOneZoneConfig defaultZones=config.getGridServiceAgentZones();
+  ZonesConfig defaultZones=config.getGridServiceAgentZones();
   logger.fine("default zones = " + defaultZones.getZones());
   if (!defaultZones.isSatisfiedBy(zones)) {
     throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
