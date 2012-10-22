@@ -2,9 +2,9 @@
   String runtimeExceptionString="Caught: java.lang.Exception: Some runtime exception" + System.getProperty("line.separator") + "at cassandra_install.run(cassandra_install.groovy:55)";
   String wrappedExceptionString=this.wrapperString + runtimeExceptionString + this.wrapperString;
   String exceptionString=GroovyExceptionHandler.getExceptionString(wrappedExceptionString);
-  Assert.assertTrue("Runtime exception " + runtimeExceptionString + " was not properly extracted from the wrapped exception string ",exceptionString.equals(runtimeExceptionString));
+  Assert.assertTrue("Runtime exception " + runtimeExceptionString + " was not properly extracted from the wrapped exception string ",exceptionString.contains(runtimeExceptionString));
   runtimeExceptionString="Caught: java.lang.StringIndexOutOfBoundsException: String index out of range: -1" + System.getProperty("line.separator") + "at file.run(file.groovy:2)";
   wrappedExceptionString=this.wrapperString + runtimeExceptionString + this.wrapperString;
   exceptionString=GroovyExceptionHandler.getExceptionString(wrappedExceptionString);
-  Assert.assertTrue("Runtime exception " + runtimeExceptionString + " was not properly extracted from the wrapped exception string ",exceptionString.equals(runtimeExceptionString));
+  Assert.assertTrue("Runtime exception " + runtimeExceptionString + " was not properly extracted from the wrapped exception string ",exceptionString.contains(runtimeExceptionString));
 }
