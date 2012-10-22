@@ -1,5 +1,5 @@
 {
-  final File packed=pack(recipeDirOrFile,additionalServiceFiles);
+  final File packed=pack(recipeDirOrFile,service,additionalServiceFiles);
   final File destFile=new File(packed.getParent(),destFileName + ".zip");
   if (destFile.exists()) {
     FileUtils.deleteQuietly(destFile);

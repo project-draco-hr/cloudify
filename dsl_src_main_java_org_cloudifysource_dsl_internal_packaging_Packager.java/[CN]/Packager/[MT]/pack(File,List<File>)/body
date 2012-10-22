@@ -1,5 +1,5 @@
 {
   final File recipeFile=recipeDirOrFile.isDirectory() ? DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipeDirOrFile) : recipeDirOrFile;
   final Service service=ServiceReader.readService(recipeFile);
-  return Packager.pack(recipeFile,service,additionalServiceFiles);
+  return pack(recipeFile,false,service,additionalServiceFiles);
 }

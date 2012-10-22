@@ -4,7 +4,7 @@
     if (method.getAnnotation(DSLValidation.class) != null) {
       final boolean accessible=method.isAccessible();
       try {
-        final Map<Object,Object> currentVars=this.getBinding().getVariables();
+        @SuppressWarnings("unchecked") final Map<Object,Object> currentVars=this.getBinding().getVariables();
         DSLValidationContext validationContext=new DSLValidationContext();
         validationContext.setFilePath((String)currentVars.get(DSLReader.DSL_FILE_PATH_PROPERTY_NAME));
         method.setAccessible(true);
