@@ -1,8 +1,5 @@
 {
-  String exceptionReason=getRuntimeException(input);
-  if (exceptionReason.isEmpty()) {
-    exceptionReason=getCompilationException(input);
-  }
+  String exceptionReason=getCompilationException(input);
   if (exceptionReason.isEmpty()) {
     exceptionReason=input;
   }

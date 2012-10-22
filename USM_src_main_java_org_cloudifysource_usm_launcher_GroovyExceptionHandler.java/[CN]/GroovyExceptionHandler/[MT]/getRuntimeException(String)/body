@@ -1,3 +1,0 @@
-{
-  return getPatternMatch(input,RUNTIME_EXCEPTION_CAUGHT_REGEX,Pattern.MULTILINE + Pattern.DOTALL);
-}

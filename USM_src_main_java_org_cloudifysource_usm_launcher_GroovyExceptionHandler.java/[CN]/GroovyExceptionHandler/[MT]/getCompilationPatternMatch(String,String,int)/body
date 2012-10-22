@@ -2,8 +2,10 @@
   if (input == null) {
     return "";
   }
-  final Pattern pattern=Pattern.compile(regex,regexFlags);
-  final Matcher matcher=pattern.matcher(input);
+  if (compilationPattern == null) {
+    compilationPattern=Pattern.compile(regex,regexFlags);
+  }
+  final Matcher matcher=compilationPattern.matcher(input);
   int beginIndex=0;
   int endIndex=0;
   if (matcher.find()) {
