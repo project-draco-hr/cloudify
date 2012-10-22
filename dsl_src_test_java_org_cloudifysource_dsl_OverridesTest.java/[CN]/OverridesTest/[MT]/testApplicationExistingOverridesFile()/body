@@ -1,0 +1,8 @@
+{
+  try {
+    testDSLOverrides(APPLICATION_PATH,null,Application.class);
+  }
+ catch (  DSLException e) {
+    fail("Failed to read application " + APPLICATION_PATH + e);
+  }
+}

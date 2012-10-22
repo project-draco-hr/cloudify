@@ -1,0 +1,8 @@
+{
+  try {
+    testDSLOverrides(SERVICE_PATH,null,Service.class);
+  }
+ catch (  DSLException e) {
+    fail("Failed to read service " + SERVICE_PATH + e);
+  }
+}
