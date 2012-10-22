@@ -6,3 +6,4 @@ String lookupLocatorsString
 Admin admin
 boolean isManagement
 File cloudFile
+GSAReservationId reservationId

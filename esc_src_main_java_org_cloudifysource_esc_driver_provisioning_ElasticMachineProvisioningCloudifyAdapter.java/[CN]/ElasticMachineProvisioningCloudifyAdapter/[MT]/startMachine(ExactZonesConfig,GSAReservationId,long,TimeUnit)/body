@@ -63,7 +63,7 @@
     }
  else {
       logger.info("Cloudify Adapter is installing Cloudify on new machine");
-      installAndStartAgent(machineDetails,end);
+      installAndStartAgent(machineDetails,reservationId,end);
       checkForProvisioningTimeout(end,machineDetails);
     }
     logger.info("Cloudify adapter is waiting for GSA to become available");
