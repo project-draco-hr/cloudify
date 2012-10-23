@@ -1,2 +1,3 @@
 MachineDetails machineDetails
+GSAReservationId reservationId
 long end

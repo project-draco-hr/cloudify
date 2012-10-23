@@ -1,3 +1,4 @@
 ExactZonesConfig zones
+GSAReservationId reservationId
 long duration
 TimeUnit unit
