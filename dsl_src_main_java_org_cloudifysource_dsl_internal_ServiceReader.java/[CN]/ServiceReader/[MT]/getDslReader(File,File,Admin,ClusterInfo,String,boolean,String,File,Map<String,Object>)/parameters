@@ -1,0 +1,9 @@
+File dslFile
+File workDir
+Admin admin
+ClusterInfo clusterInfo
+String propertiesFileName
+boolean isRunningInGSC
+String fileNameSuffix
+File overridesFile
+Map<String,Object> applicationProperties

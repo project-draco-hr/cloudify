@@ -9,7 +9,7 @@
       properties.put(key,propertyValue);
     }
  else {
-      overrideFields.put(key,propertyValue);
+      throw new IllegalArgumentException("Cannot override property[" + key + "]. It doesn't exist in the properties file.");
     }
   }
 }

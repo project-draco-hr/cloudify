@@ -1,0 +1,10 @@
+{
+  if (applicationProperties == null) {
+    return;
+  }
+  for (  Entry<String,Object> entry : applicationProperties.entrySet()) {
+    String propertyName=entry.getKey();
+    Object propertyValue=entry.getValue();
+    properties.put(propertyName,propertyValue);
+  }
+}

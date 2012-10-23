@@ -1,8 +1,0 @@
-{
-  try {
-    testDSLOverrides(EXTERNAL_OVERRIDES_APPLICATION_PATH,APPLICATION_ILLEGAL_OVERRIDES_FIELDS_PATH,Application.class);
-    fail("Expected DSLException for application " + EXTERNAL_OVERRIDES_APPLICATION_PATH);
-  }
- catch (  DSLException e) {
-  }
-}

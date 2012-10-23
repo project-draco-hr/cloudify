@@ -32,7 +32,7 @@
     }
  else {
       packedFile=recipe;
-      service=ServiceReader.readServiceFromZip(packedFile,CloudifyConstants.DEFAULT_APPLICATION_NAME);
+      service=ServiceReader.readServiceFromZip(packedFile);
     }
   }
  catch (  final IOException e) {

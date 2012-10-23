@@ -1,0 +1,5 @@
+{
+  DSLReader dslReader=getDslReader(null,workDir,null,null,null,true,DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,null,applicationProperties);
+  final Service service=dslReader.readDslEntity(Service.class);
+  return new DSLServiceCompilationResult(service,dslReader.getContext(),null);
+}

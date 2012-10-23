@@ -1,5 +1,5 @@
 {
-  Set<Entry<String,Object>> entrySet=reader.getOverrideFields().entrySet();
+  Set<Entry<String,Object>> entrySet=expectedFields.entrySet();
   for (  Entry<String,Object> entry : entrySet) {
     try {
       Object fieldValue=PropertyUtils.getNestedProperty(object,entry.getKey());
@@ -7,9 +7,5 @@
     }
  catch (    Exception e) {
     }
-  }
-  try {
-  }
- catch (  Exception e) {
   }
 }

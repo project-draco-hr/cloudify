@@ -1,6 +1,6 @@
 {
   try {
-    testDSLOverrides(SERVICE_PATH,null,Service.class);
+    testDSLOverrides(SERVICE_PATH,null,Service.class,SERVICE_OVERRIDEN_PROEPRTIES_MATCHING_FIELDS);
   }
  catch (  DSLException e) {
     fail("Failed to read service " + SERVICE_PATH + e);

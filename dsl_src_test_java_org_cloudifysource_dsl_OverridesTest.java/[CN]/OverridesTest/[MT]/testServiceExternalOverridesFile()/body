@@ -1,6 +1,6 @@
 {
   try {
-    testDSLOverrides(EXTERNAL_OVERRIDES_SERVICE_PATH,SERVICE_EXTERNAL_OVERRIDES_FILE_PATH,Service.class);
+    testDSLOverrides(EXTERNAL_OVERRIDES_SERVICE_PATH,SERVICE_EXTERNAL_OVERRIDES_FILE_PATH,Service.class,SERVICE_OVERRIDEN_PROEPRTIES_MATCHING_FIELDS);
   }
  catch (  DSLException e) {
     fail("Failed to read application " + SERVICE_PATH + e);

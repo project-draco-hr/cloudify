@@ -4,6 +4,6 @@
   if (!serviceDir.exists() || !serviceDir.isDirectory()) {
     throw new java.lang.IllegalStateException("Could not find service directory: " + serviceDir + " while loading application");
   }
-  DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(serviceDir,this.application.getName());
+  DSLServiceCompilationResult result=ServiceReader.getServiceFromDirectory(serviceDir);
   return result.getService();
 }

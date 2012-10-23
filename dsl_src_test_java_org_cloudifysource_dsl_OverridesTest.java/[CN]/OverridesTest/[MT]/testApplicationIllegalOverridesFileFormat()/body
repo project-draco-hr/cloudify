@@ -1,6 +1,6 @@
 {
   try {
-    testDSLOverrides(EXTERNAL_OVERRIDES_APPLICATION_PATH,APPLICATION_ILLEGAL_OVERRIDES_FILE_FORMAT_PATH,Application.class);
+    testDSLOverrides(EXTERNAL_OVERRIDES_APPLICATION_PATH,APPLICATION_ILLEGAL_OVERRIDES_FILE_FORMAT_PATH,Application.class,null);
     fail("Expected DSLException for application " + EXTERNAL_OVERRIDES_APPLICATION_PATH);
   }
  catch (  DSLException e) {

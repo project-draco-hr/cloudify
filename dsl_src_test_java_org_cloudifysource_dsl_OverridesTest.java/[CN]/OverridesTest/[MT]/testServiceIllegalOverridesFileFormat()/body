@@ -1,6 +1,6 @@
 {
   try {
-    testDSLOverrides(EXTERNAL_OVERRIDES_SERVICE_PATH,SERVICE_ILLEGAL_OVERRIDES_FILE_FORMAT_PATH,Service.class);
+    testDSLOverrides(EXTERNAL_OVERRIDES_SERVICE_PATH,SERVICE_ILLEGAL_OVERRIDES_FILE_FORMAT_PATH,Service.class,null);
     fail("Expected DSLException for service " + EXTERNAL_OVERRIDES_SERVICE_PATH);
   }
  catch (  DSLException e) {

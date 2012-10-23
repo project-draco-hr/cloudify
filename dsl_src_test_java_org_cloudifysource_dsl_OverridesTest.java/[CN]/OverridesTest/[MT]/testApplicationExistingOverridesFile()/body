@@ -1,6 +1,6 @@
 {
   try {
-    testDSLOverrides(APPLICATION_PATH,null,Application.class);
+    testDSLOverrides(APPLICATION_PATH,null,Application.class,APPLICATION_OVERRIDEN_PROEPRTIES_MATCHING_FIELDS);
   }
  catch (  DSLException e) {
     fail("Failed to read application " + APPLICATION_PATH + e);

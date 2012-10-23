@@ -1,12 +1,5 @@
 {
-  final DSLReader dslReader=new DSLReader();
-  dslReader.setAdmin(admin);
-  dslReader.setClusterInfo(clusterInfo);
-  dslReader.setPropertiesFileName(propertiesFileName);
-  dslReader.setRunningInGSC(isRunningInGSC);
-  dslReader.setDslFile(dslFile);
-  dslReader.setWorkDir(workDir);
-  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  final DSLReader dslReader=getDslReader(dslFile,workDir,admin,clusterInfo,propertiesFileName,isRunningInGSC,DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,null,null);
   final Service service=dslReader.readDslEntity(Service.class);
   return new DSLServiceCompilationResult(service,dslReader.getContext(),dslFile);
 }
