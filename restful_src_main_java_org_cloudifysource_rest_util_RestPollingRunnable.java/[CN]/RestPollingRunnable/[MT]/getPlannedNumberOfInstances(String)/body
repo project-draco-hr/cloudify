@@ -2,12 +2,12 @@
   if (isUninstall) {
     return 0;
   }
-  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   if (processingUnit != null) {
-    Map<String,String> elasticProperties=((DefaultProcessingUnit)processingUnit).getElasticProperties();
+    final Map<String,String> elasticProperties=((DefaultProcessingUnit)processingUnit).getElasticProperties();
     if (elasticProperties.containsKey("schema")) {
-      String clusterSchemaValue=elasticProperties.get("schema");
+      final String clusterSchemaValue=elasticProperties.get("schema");
       if ("partitioned-sync2backup".equals(clusterSchemaValue)) {
         return processingUnit.getTotalNumberOfInstances();
       }

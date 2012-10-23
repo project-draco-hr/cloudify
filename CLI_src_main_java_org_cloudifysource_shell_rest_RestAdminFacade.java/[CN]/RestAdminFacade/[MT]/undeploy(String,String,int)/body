@@ -1,7 +1,7 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeoutInMinutes+ "/undeploy";
   try {
-    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.delete(url);
+    @SuppressWarnings("unchecked") final Map<String,String> response=(Map<String,String>)client.delete(url);
     return response;
   }
  catch (  final ErrorStatusException e) {

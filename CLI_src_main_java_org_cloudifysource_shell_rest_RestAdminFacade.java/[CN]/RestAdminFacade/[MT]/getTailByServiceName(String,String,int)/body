@@ -1,7 +1,7 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/tail/"+ "?numLines="+ numLines;
   try {
-    @SuppressWarnings("unchecked") String response=(String)client.get(url);
+    final String response=(String)client.get(url);
     return response;
   }
  catch (  final ErrorStatusException e) {

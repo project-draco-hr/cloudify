@@ -1,0 +1,30 @@
+{
+  final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile);
+  final List<Service> services=createServiceDependencyOrder(result.getApplication());
+  if (!isLocalCloud() && cloud != null) {
+    for (    final Service service : services) {
+      final ComputeDetails compute=service.getCompute();
+      if (compute != null && StringUtils.isNotBlank(compute.getTemplate())) {
+        getComputeTemplate(cloud,compute.getTemplate());
+      }
+    }
+  }
+  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud,selfHealing);
+  if (installer.isAsyncInstallPossibleForApplication()) {
+    installer.run();
+  }
+ else {
+    this.executorService.execute(installer);
+  }
+  logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
+  final UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),timeout,TimeUnit.MINUTES);
+  final String[] serviceOrder=new String[services.size()];
+  for (int i=0; i < serviceOrder.length; i++) {
+    serviceOrder[i]=services.get(i).getName();
+  }
+  final Map<String,Object> returnMap=new HashMap<String,Object>();
+  returnMap.put(CloudifyConstants.SERVICE_ORDER,Arrays.toString(serviceOrder));
+  returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
+  final Map<String,Object> retval=successStatus(returnMap);
+  return retval;
+}

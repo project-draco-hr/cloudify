@@ -1,0 +1,9 @@
+String applicationName
+String serviceName
+String templateName
+String[] agentZones
+File serviceFile
+Properties contextProperties
+Service service
+byte[] serviceCloudConfigurationContents
+boolean selfHealing

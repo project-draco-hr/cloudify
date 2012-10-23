@@ -1,5 +1,5 @@
 {
-  RestLifecycleEventsLatch restLifecycleEventsLatch=new RestLifecycleEventsLatch();
+  final RestLifecycleEventsLatch restLifecycleEventsLatch=new RestLifecycleEventsLatch();
   restLifecycleEventsLatch.setPollingId(pollingID);
   restLifecycleEventsLatch.setRestClient(client);
   restLifecycleEventsLatch.setTimeoutMessage(timeoutMessage);

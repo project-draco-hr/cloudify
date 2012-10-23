@@ -1,0 +1,65 @@
+{
+  boolean locationAware=false;
+  if (service != null) {
+    locationAware=service.isLocationAware();
+  }
+  final int externalProcessMemoryInMB=512;
+  final int containerMemoryInMB=128;
+  final int reservedMemoryCapacityPerMachineInMB=256;
+  contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
+  if (!selfHealing) {
+    contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
+  }
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
+  if (isLocalCloud()) {
+    setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
+  }
+ else {
+    setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
+  }
+  if (cloud == null) {
+    if (!isLocalCloud()) {
+      deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
+    }
+ else {
+      if (service == null || service.getScalingRules() == null) {
+        int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,externalProcessMemoryInMB);
+        final ManualCapacityScaleConfig scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).create();
+        deployment.scale(scaleConfig);
+      }
+ else {
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB,false);
+        deployment.scale(scaleConfig);
+      }
+    }
+  }
+ else {
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
+    final String[] zones=new String[]{serviceName};
+    config.setGridServiceAgentZones(zones);
+    if (serviceCloudConfigurationContents != null) {
+      config.setServiceCloudConfiguration(serviceCloudConfigurationContents);
+    }
+    final String locators=extractLocators(admin);
+    config.setLocator(locators);
+    setDedicatedMachineProvisioning(deployment,config);
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    if (service == null || service.getScalingRules() == null) {
+      int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,locationAware);
+      scaleConfig.setAtMostOneContainerPerMachine(true);
+      deployment.scale(scaleConfig);
+    }
+ else {
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware);
+      scaleConfig.setAtMostOneContainerPerMachine(true);
+      deployment.scale(scaleConfig);
+    }
+  }
+  setContextProperties(deployment,contextProperties);
+  verifyEsmExistsInCluster();
+  deployAndWait(serviceName,deployment);
+}

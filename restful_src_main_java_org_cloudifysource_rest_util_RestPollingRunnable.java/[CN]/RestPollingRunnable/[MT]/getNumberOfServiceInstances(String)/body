@@ -1,9 +1,9 @@
 {
-  String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-  ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   if (processingUnit != null) {
     if (processingUnit.getType().equals(ProcessingUnitType.UNIVERSAL)) {
-      return getNumberOfUSMServicesWithRunningState(absolutePuName);
+      return getNumberOfUSMServicesWithState(absolutePuName,USMState.RUNNING);
     }
     return admin.getProcessingUnits().getProcessingUnit(absolutePuName).getInstances().length;
   }

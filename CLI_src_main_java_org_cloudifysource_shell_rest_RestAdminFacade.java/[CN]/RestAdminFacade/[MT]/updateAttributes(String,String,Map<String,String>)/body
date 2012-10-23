@@ -1,5 +1,5 @@
 {
-  String url=getRelativeUrlForAttributes(scope,appplicationName);
+  final String url=getRelativeUrlForAttributes(scope,appplicationName);
   try {
     client.post(url,attributes);
   }

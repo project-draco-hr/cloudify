@@ -4,7 +4,7 @@
     return this.gscStartTimeMap.get(uid);
   }
  else {
-    Date date=new Date(new Date().getTime() + gsc.getOperatingSystem().getTimeDelta() - FIVE_SECONDS_MILLI);
+    final Date date=new Date(new Date().getTime() + gsc.getOperatingSystem().getTimeDelta() - FIVE_SECONDS_MILLI);
     this.gscStartTimeMap.put(uid,date);
     return date;
   }

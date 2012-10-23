@@ -1,0 +1,8 @@
+String applicationName
+String serviceName
+int timeout
+String templateName
+String zone
+MultipartFile srcFile
+MultipartFile propsFile
+Boolean selfHealing

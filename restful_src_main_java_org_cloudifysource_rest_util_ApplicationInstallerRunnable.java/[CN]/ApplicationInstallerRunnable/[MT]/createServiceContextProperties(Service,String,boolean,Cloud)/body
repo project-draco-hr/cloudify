@@ -7,9 +7,9 @@
       contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
     }
  else {
-      String[] splitServiceNames=serviceNames.split(",");
-      List<String> absoluteServiceNames=new ArrayList<String>();
-      for (      String name : splitServiceNames) {
+      final String[] splitServiceNames=serviceNames.split(",");
+      final List<String> absoluteServiceNames=new ArrayList<String>();
+      for (      final String name : splitServiceNames) {
         absoluteServiceNames.add(ServiceUtils.getAbsolutePUName(applicationName,name.trim()));
       }
       contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,Arrays.toString(absoluteServiceNames.toArray()));

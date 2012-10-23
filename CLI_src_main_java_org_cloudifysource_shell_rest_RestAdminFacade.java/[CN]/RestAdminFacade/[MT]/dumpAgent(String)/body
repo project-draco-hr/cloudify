@@ -1,7 +1,7 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "dump/" + ip;
   try {
-    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.get(url);
+    @SuppressWarnings("unchecked") final Map<String,String> response=(Map<String,String>)client.get(url);
     return response;
   }
  catch (  final ErrorStatusException e) {

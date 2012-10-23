@@ -1,0 +1,23 @@
+{
+  final ProcessingUnitInstanceStatistics statistics=pui.getStatistics();
+  if (statistics == null) {
+    return false;
+  }
+  final Map<String,ServiceMonitors> puMonitors=statistics.getMonitors();
+  if (puMonitors == null) {
+    return false;
+  }
+  final ServiceMonitors serviceMonitors=puMonitors.get("USM");
+  if (serviceMonitors == null) {
+    return false;
+  }
+  final Map<String,Object> monitors=serviceMonitors.getMonitors();
+  if (monitors == null) {
+    return false;
+  }
+  final int instanceState=(Integer)monitors.get(CloudifyConstants.USM_MONITORS_STATE_ID);
+  if (CloudifyConstants.USMState.values()[instanceState].equals(state)) {
+    return true;
+  }
+  return false;
+}

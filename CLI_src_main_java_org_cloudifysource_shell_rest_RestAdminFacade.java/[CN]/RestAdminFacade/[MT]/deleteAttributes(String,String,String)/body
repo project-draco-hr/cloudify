@@ -1,6 +1,6 @@
 {
-  String url=getRelativeUrlForAttributes(scope,applicationName);
-  for (  String attributeName : attributeNames) {
+  final String url=getRelativeUrlForAttributes(scope,applicationName);
+  for (  final String attributeName : attributeNames) {
     try {
       client.delete(url + "/" + attributeName);
     }

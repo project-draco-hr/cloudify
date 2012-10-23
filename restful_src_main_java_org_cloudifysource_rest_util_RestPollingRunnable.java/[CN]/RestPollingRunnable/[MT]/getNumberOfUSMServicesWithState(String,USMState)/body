@@ -1,0 +1,10 @@
+{
+  int puInstanceCounter=0;
+  final ProcessingUnit processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePUName);
+  for (  final ProcessingUnitInstance pui : processingUnit) {
+    if (isUsmInState(pui,state)) {
+      puInstanceCounter++;
+    }
+  }
+  return puInstanceCounter;
+}

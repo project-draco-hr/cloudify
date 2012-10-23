@@ -1,11 +1,12 @@
 {
-  LinkedHashMap<String,Integer> serviceNamesClone=new LinkedHashMap<String,Integer>();
+  final LinkedHashMap<String,Integer> serviceNamesClone=new LinkedHashMap<String,Integer>();
   serviceNamesClone.putAll(this.serviceNames);
-  for (  String serviceName : serviceNamesClone.keySet()) {
+  for (  final String serviceName : serviceNamesClone.keySet()) {
     addServiceLifecycleLogs(serviceName);
-    int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
-    int numberOfServiceInstances=getNumberOfServiceInstances(serviceName);
-    addServiceInstanceCountEvents(serviceName,plannedNumberOfInstances,numberOfServiceInstances);
-    removeEndedServicesFromPollingList(serviceName,plannedNumberOfInstances,numberOfServiceInstances);
+    final int plannedNumberOfInstances=getPlannedNumberOfInstances(serviceName);
+    final int numberOfServiceInstances=getNumberOfServiceInstances(serviceName);
+    final int numberOfFailedInstances=getNumberOfFailedInstances(serviceName);
+    addServiceInstanceCountEvents(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
+    removeEndedServicesFromPollingList(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
   }
 }

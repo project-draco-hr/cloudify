@@ -1,0 +1,29 @@
+{
+  if (isUninstall) {
+    final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final Zone zone=admin.getZones().waitFor(absolutePuName,ONE_SEC,TimeUnit.SECONDS);
+    if (zone == null) {
+      try {
+        final Boolean undeployedSuccessfully=this.undeployTask.get(ONE_SEC,TimeUnit.SECONDS);
+        if (undeployedSuccessfully) {
+          this.serviceNames.remove(serviceName);
+        }
+      }
+ catch (      final Exception e) {
+        if (e instanceof TimeoutException) {
+        }
+ else {
+          final String message="undeploy task has ended unsuccessfully. " + "Some machines may not have been terminated!";
+          logger.log(Level.WARNING,message,e);
+          lifecycleEventsContainer.addInstanceCountEvent(message);
+          throw new ExecutionException(message,e);
+        }
+      }
+    }
+  }
+ else {
+    if (plannedNumberOfInstances == numberOfServiceInstances + numberOfFailedInstances) {
+      this.serviceNames.remove(serviceName);
+    }
+  }
+}

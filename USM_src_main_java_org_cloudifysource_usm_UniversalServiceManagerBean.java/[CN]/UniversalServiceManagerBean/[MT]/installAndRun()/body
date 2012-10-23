@@ -1,7 +1,18 @@
 {
-  getUsmLifecycleBean().install();
-  if (this.asyncInstall) {
-    waitForDependencies();
+  try {
+    getUsmLifecycleBean().install();
+    if (this.asyncInstall) {
+      waitForDependencies();
+    }
+    launch();
   }
-  launch();
+ catch (  USMException e) {
+    if (this.selfHealing) {
+      throw e;
+    }
+ else {
+      logger.log(Level.SEVERE,"An exception was encountered while executing the service lifecycle. " + "Self-healing is disabled so this service will not be restarted.",e);
+      this.state=USMState.ERROR;
+    }
+  }
 }

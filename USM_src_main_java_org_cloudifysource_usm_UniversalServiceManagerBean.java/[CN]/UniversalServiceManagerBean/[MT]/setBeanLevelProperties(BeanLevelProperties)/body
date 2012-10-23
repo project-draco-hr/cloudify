@@ -5,4 +5,12 @@
   final String dependenciesString=beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
   this.dependencies=parseDependenciesString(dependenciesString);
   logger.info("Dependencies for this service: " + Arrays.toString(this.dependencies));
+  final String selfHealingProperty=beanLevelProperties.getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING);
+  if (selfHealingProperty != null) {
+    logger.info("Disable self healing context property is set to: " + selfHealingProperty);
+    this.selfHealing=Boolean.parseBoolean(selfHealingProperty);
+  }
+ else {
+    this.selfHealing=true;
+  }
 }

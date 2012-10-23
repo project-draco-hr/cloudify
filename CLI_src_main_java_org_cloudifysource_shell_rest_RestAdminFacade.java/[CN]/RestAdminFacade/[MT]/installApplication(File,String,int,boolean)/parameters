@@ -1,0 +1,4 @@
+File applicationFile
+String applicationName
+int timeout
+boolean selfHealing

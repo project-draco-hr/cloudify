@@ -1,0 +1,12 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout+ "?zone="+ zone+ "&template="+ templateName+ "&selfHealing="+ Boolean.toString(selfHealing);
+  try {
+    return (String)client.postFile(url,packedFile,contextProperties);
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  final RestException e) {
+    throw new CLIException(e);
+  }
+}

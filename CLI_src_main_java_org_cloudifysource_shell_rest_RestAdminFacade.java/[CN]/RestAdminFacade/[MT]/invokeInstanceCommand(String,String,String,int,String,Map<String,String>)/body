@@ -2,7 +2,7 @@
   final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances/"+ instanceId+ "/beans/"+ beanName+ "/invoke";
   Map<String,String> resultMap;
   try {
-    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.post(url,buildCustomCommandParams(commandName,paramsMap));
+    @SuppressWarnings("unchecked") final Map<String,String> response=(Map<String,String>)client.post(url,buildCustomCommandParams(commandName,paramsMap));
     resultMap=response;
   }
  catch (  final ErrorStatusException e) {

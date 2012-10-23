@@ -8,7 +8,7 @@
   if (!scope.toLowerCase().startsWith("service")) {
     throw new CLIStatusException("illegal_scope",scope);
   }
-  String[] serviceScope=scope.split(":");
+  final String[] serviceScope=scope.split(":");
   if (serviceScope.length < 2) {
     throw new CLIStatusException("service_scope_must_contain_service_name");
   }
@@ -20,7 +20,7 @@
   if ("all-instances".equalsIgnoreCase(instanceIdentifier)) {
     return "/attributes/instances";
   }
-  Integer instanceId=StringUtils.safeParseInt(instanceIdentifier);
+  final Integer instanceId=StringUtils.safeParseInt(instanceIdentifier);
   if (instanceIdentifier == null) {
     throw new CLIStatusException("illegal_instance_identifier",instanceIdentifier);
   }

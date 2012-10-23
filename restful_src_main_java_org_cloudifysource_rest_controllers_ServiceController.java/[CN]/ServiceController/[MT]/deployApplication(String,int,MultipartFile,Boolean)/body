@@ -1,0 +1,10 @@
+{
+  final File applicationFile=copyMultipartFileToLocalFile(srcFile);
+  boolean actualSelfHealing=true;
+  if (selfHealing != null && !selfHealing) {
+    actualSelfHealing=false;
+  }
+  final Object returnObject=doDeployApplication(applicationName,applicationFile,timeout,actualSelfHealing);
+  applicationFile.delete();
+  return returnObject;
+}

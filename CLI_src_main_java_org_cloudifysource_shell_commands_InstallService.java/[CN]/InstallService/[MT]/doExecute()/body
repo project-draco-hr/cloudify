@@ -68,7 +68,7 @@ catch (  final PackagingException e) {
       templateName="";
     }
   }
-  final String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,getTimeoutInMinutes());
+  final String lifecycleEventContainerPollingID=adminFacade.installElastic(packedFile,currentApplicationName,serviceName,zone,props,templateName,getTimeoutInMinutes(),!disableSelfHealing);
   final RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
   boolean isDone=false;
   boolean continuous=false;

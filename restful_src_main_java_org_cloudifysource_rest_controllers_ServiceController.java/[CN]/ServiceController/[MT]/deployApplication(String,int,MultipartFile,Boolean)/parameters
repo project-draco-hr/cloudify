@@ -1,0 +1,4 @@
+String applicationName
+int timeout
+MultipartFile srcFile
+Boolean selfHealing

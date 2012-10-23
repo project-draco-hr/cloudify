@@ -9,7 +9,7 @@
     }
     pollForLogs();
   }
- catch (  Throwable e) {
+ catch (  final Throwable e) {
     terminateTaskGracefully();
     if (!(e instanceof RestServiceException)) {
       logger.log(Level.INFO,"Polling task ended unexpectedly. Reason: " + e.getMessage(),e);

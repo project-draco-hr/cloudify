@@ -1,7 +1,7 @@
 {
-  String url=getRelativeUrlForAttributes(scope,applicationName);
+  final String url=getRelativeUrlForAttributes(scope,applicationName);
   try {
-    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.get(url,null);
+    @SuppressWarnings("unchecked") final Map<String,String> response=(Map<String,String>)client.get(url,null);
     return response;
   }
  catch (  final ErrorStatusException e) {

@@ -5,9 +5,9 @@
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
     final Properties contextProperties=createServiceContextProperties(service,applicationName,async,cloud);
     final String serviceName=service.getName();
-    String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-    File serviceDirectory=new File(appDir,serviceName);
-    File serviceCloudConfiguration=new File(serviceDirectory,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+    final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final File serviceDirectory=new File(appDir,serviceName);
+    final File serviceCloudConfiguration=new File(serviceDirectory,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
     byte[] serviceCloudConfigurationContents=null;
     if (serviceCloudConfiguration.exists()) {
       serviceCloudConfigurationContents=FileUtils.readFileToByteArray(serviceCloudConfiguration);
@@ -15,21 +15,21 @@
     }
     boolean found=false;
     try {
-      File packedFile=Packager.pack(serviceDirectory,absolutePUName,new File[0]);
+      final File packedFile=Packager.pack(serviceDirectory,absolutePUName,new File[0]);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
-      final String templateName=(service.getCompute() == null ? null : service.getCompute().getTemplate());
-      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents);
+      final String templateName=service.getCompute() == null ? null : service.getCompute().getTemplate();
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents,selfHealing);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }
- catch (      IOException ioe) {
+ catch (      final IOException ioe) {
         logger.warning("Failed to delete temporary directory: " + packedFile.getParentFile());
       }
       if (!async) {
         logger.info("Waiting for instance of service: " + serviceName + " of application: "+ applicationName);
-        boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
+        final boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
         if (!instanceFound) {
           throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
         }
@@ -38,7 +38,7 @@
       found=true;
       logger.fine("service " + service + " deployed.");
     }
- catch (    Exception e) {
+ catch (    final Exception e) {
       logger.log(Level.SEVERE,"Failed to install service: " + serviceName + " of application: "+ applicationName+ ". Application installation will halt. "+ "Some services may already have started, and should be shutdown manually. Error was: "+ e.getMessage(),e);
       return;
     }

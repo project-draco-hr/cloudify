@@ -29,7 +29,7 @@
     }
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes());
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes(),!disableSelfHealing);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     zipFile.delete();

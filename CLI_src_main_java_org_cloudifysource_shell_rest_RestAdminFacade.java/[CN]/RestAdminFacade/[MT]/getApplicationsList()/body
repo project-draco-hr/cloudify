@@ -1,6 +1,6 @@
 {
   try {
-    @SuppressWarnings("unchecked") List<String> applications=(List<String>)client.get("/service/applications");
+    @SuppressWarnings("unchecked") final List<String> applications=(List<String>)client.get("/service/applications");
     return applications;
   }
  catch (  final ErrorStatusException e) {

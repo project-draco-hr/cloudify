@@ -1,0 +1,7 @@
+String applicationName
+String serviceName
+String templateName
+String[] agentZones
+File srcFile
+Properties propsFile
+boolean selfHealing
