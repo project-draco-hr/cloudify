@@ -1,3 +1,3 @@
 {
-  return new File((String)this.getBinding().getVariable(DSL_FILE_PATH_VAR));
+  return new File((String)this.getBinding().getVariable(DSLReader.DSL_FILE_PATH_PROPERTY_NAME));
 }

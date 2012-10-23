@@ -1,0 +1,3 @@
+{
+  return ((Boolean)this.getBinding().getVariable(DSLReader.DSL_VALIDATE_OBJECTS_PROPERTY_NAME));
+}
