@@ -1,11 +1,11 @@
 {
   boolean locationAware=false;
-  boolean shared=false;
+  boolean dedicated=true;
   if (service != null) {
     locationAware=service.isLocationAware();
   }
-  if (service != null) {
-    shared=service.isShared();
+  if (service.getDeployment() != null && service.getDeployment().getGlobal() != null) {
+    dedicated=false;
   }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
@@ -35,13 +35,7 @@
   }
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    final long cloudExternalProcessMemoryInMB;
-    if (shared) {
-      cloudExternalProcessMemoryInMB=service.getInstanceMemoryMB();
-    }
- else {
-      cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    }
+    final long cloudExternalProcessMemoryInMB=service.getDeployment().getGlobal() != null ? service.getDeployment().getGlobal().getInstanceMemoryMB() : calculateExternalProcessMemory(cloud,template);
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
     if (serviceCloudConfigurationContents != null) {
@@ -50,7 +44,7 @@
     final String locators=extractLocators(admin);
     config.setLocator(locators);
     config.setDedicatedManagementMachines(true);
-    if (shared) {
+    if (!dedicated) {
       logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
       setPublicMachineProvisioning(deployment,config);
     }
@@ -61,15 +55,15 @@
     if (service == null || service.getScalingRules() == null) {
       int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
       double totalCpuCores=calculateTotalCpuCores(serviceName,service);
-      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,shared);
-      if (!shared) {
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,dedicated);
+      if (dedicated) {
         scaleConfig.setAtMostOneContainerPerMachine(true);
       }
       deployment.scale(scaleConfig);
     }
  else {
       final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware);
-      if (!shared) {
+      if (!dedicated) {
         scaleConfig.setAtMostOneContainerPerMachine(true);
       }
       deployment.scale(scaleConfig);

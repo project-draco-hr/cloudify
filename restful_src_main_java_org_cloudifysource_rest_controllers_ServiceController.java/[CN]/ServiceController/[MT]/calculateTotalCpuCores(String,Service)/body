@@ -2,10 +2,10 @@
   if (service == null) {
     return 0;
   }
-  double numberOfCpuCoresPerInstance=service.getInstanceCpuCores();
-  if (numberOfCpuCoresPerInstance < 0) {
+  double instanceCpuCores=service.getDeployment().getGlobal() != null ? service.getDeployment().getGlobal().getInstanceCpuCores() : 0;
+  if (instanceCpuCores < 0) {
     throw new IllegalArgumentException("instanceCpuCores must be positive");
   }
   int numberOfInstances=service.getNumInstances();
-  return numberOfInstances * numberOfCpuCoresPerInstance;
+  return numberOfInstances * instanceCpuCores;
 }

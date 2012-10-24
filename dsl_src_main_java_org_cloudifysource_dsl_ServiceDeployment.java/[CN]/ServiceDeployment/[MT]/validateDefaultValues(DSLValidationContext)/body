@@ -1,0 +1,5 @@
+{
+  if (global != null && dedicated != null) {
+    throw new DSLValidationException("cannot define both global and dedicated deployment types. " + "please choose one or the other");
+  }
+}
