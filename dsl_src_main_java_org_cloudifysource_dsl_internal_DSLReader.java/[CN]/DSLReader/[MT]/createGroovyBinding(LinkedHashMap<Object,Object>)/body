@@ -9,6 +9,7 @@
     for (    final Entry<Object,Object> entry : entries) {
       binding.setVariable((String)entry.getKey(),entry.getValue());
     }
+    binding.setVariable(DSLUtils.DSL_PROPERTIES,properties);
     if (context != null) {
       binding.setVariable("context",context);
     }

@@ -6,6 +6,7 @@
   final DSLReader dslReader=new DSLReader();
   File dslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,applicationFile);
   dslReader.setDslFile(dslFile);
+  dslReader.setWorkDir(dslFile.getParentFile());
   dslReader.setCreateServiceContext(false);
   dslReader.addProperty(DSLUtils.APPLICATION_DIR,dslFile.getParentFile().getAbsolutePath());
   dslReader.setOverridesFile(overrides);
@@ -31,10 +32,11 @@
     if (cloudConfigurationZipFile != null) {
       additionalServiceFiles.add(cloudConfigurationZipFile);
     }
+    List<File> additionalApplicationFile=new LinkedList<File>();
     if (overrides != null) {
-      additionalServiceFiles.add(overrides);
+      additionalApplicationFile.add(createOverridesFile(overrides));
     }
-    zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
+    zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
   final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes(),!disableSelfHealing);

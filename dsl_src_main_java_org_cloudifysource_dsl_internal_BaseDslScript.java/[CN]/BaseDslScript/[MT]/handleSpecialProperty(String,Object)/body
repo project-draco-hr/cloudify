@@ -1,4 +1,5 @@
 {
+  Object localArg=arg;
   if (name.equals(EXTEND_PROPERTY_NAME)) {
     if (propertyCounter > 1) {
       throw new DSLException(EXTEND_PROPERTY_NAME + " must be first inside the service block");
@@ -8,15 +9,15 @@
       if (arr.length != 1) {
         throw new DSLException(EXTEND_PROPERTY_NAME + " property must be a single string");
       }
-      arg=((Object[])arg)[0];
+      localArg=((Object[])arg)[0];
     }
-    if (!(arg instanceof String)) {
+    if (!(localArg instanceof String)) {
       throw new DSLException(EXTEND_PROPERTY_NAME + " property must be a string");
     }
     if (!(this.activeObject instanceof Service)) {
       throw new DSLException(EXTEND_PROPERTY_NAME + " property can only be used on a service");
     }
-    final String extendServicePath=(String)arg;
+    final String extendServicePath=(String)localArg;
     try {
       File extendedServiceAbsPath=new File(extendServicePath);
       if (!extendedServiceAbsPath.isAbsolute()) {

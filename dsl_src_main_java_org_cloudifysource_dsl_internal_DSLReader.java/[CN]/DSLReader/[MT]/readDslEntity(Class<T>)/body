@@ -1,5 +1,4 @@
 {
-  this.clazz=clazz;
   final Object result=readDslObject();
   if (result == null) {
     throw new IllegalStateException("The file " + dslFile + " evaluates to null, not to a DSL object");

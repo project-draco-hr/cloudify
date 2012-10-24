@@ -1,11 +1,11 @@
 {
-  File workDir=new File(servicePath);
-  boolean isApplication=!clazz.equals(Service.class);
+  final File workDir=new File(servicePath);
+  final boolean isApplication=!clazz.equals(Service.class);
   File overridesFile=null;
   if (overridesFilePath != null) {
     overridesFile=new File(overridesFilePath);
   }
-  DSLReader reader=new DSLReader();
+  final DSLReader reader=new DSLReader();
   reader.setWorkDir(workDir);
   reader.setRunningInGSC(true);
   if (isApplication) {
@@ -17,7 +17,7 @@
     reader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
   }
   reader.setOverridesFile(overridesFile);
-  Object object=reader.readDslEntity(clazz);
-  assertOverrides(object,reader,expectedFields);
+  final Object object=reader.readDslEntity(clazz);
+  assertOverrides(object,reader,expectedFields,workDir);
   return object;
 }

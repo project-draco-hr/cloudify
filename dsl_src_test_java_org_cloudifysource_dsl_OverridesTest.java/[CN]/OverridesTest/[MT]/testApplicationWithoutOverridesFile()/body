@@ -2,7 +2,7 @@
   try {
     testDSLOverrides(EXTERNAL_OVERRIDES_APPLICATION_PATH,null,Application.class,APPLICATION_WITHOUT_OVERRIDES_OVERRIDEN_PROEPRTIES_MATCHING_FIELDS);
   }
- catch (  DSLException e) {
+ catch (  final DSLException e) {
     fail("Failed to read application " + EXTERNAL_OVERRIDES_APPLICATION_PATH + e);
   }
 }

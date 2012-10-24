@@ -1,5 +1,7 @@
 {
-  if (overridesFile == null)   return;
+  if (overridesFile == null) {
+    return;
+  }
   try {
     ConfigObject parse=new ConfigSlurper().parse(overridesFile.toURI().toURL());
     parse.flatten(overrideProperties);
