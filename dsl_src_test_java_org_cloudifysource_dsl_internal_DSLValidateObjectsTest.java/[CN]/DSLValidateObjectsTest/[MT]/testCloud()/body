@@ -1,0 +1,20 @@
+{
+  File cloudFile=new File(CLOUD_PATH);
+  DSLReader dslReader=new DSLReader();
+  dslReader.setDslFile(cloudFile);
+  dslReader.setWorkDir(cloudFile.getParentFile());
+  dslReader.setCreateServiceContext(false);
+  try {
+    dslReader.readDslEntity(Cloud.class);
+    Assert.fail("The validation of file " + CLOUD_PATH + " was supposed to fail");
+  }
+ catch (  Exception e) {
+  }
+  try {
+    dslReader.setValidateObjects(false);
+    dslReader.readDslEntity(Cloud.class);
+  }
+ catch (  Exception e) {
+    Assert.fail("Expecting no validation for cloud file " + CLOUD_PATH + ", exception was "+ e.getMessage());
+  }
+}

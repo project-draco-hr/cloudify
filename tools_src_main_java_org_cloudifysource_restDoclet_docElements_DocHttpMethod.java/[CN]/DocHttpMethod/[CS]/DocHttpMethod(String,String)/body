@@ -1,4 +1,0 @@
-{
-  this.methodSignatureName=methodSignatureName;
-  this.httpMethodName=requestMethod;
-}

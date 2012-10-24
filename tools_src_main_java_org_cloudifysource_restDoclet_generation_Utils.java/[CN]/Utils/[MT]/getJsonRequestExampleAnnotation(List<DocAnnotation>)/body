@@ -1,3 +1,0 @@
-{
-  return (DocJsonRequestExample)getAnnotation(annotations,RestDocConstants.JSON_REQUEST_EXAMPLE_ANNOTATION);
-}

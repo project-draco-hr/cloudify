@@ -1,9 +1,0 @@
-{
-  Object shortAttrValue=getShortValue(attrValue);
-  String shortAttrValueStr=(shortAttrValue instanceof String) ? ((String)shortAttrValue).trim() : null;
-  String shortAttrName=getShortName(attrName);
-  if (RestDocConstants.REQUEST_PARAMS_VALUE.equals(shortAttrName))   value=shortAttrValueStr;
-  if (RestDocConstants.REQUEST_PARAMS_DEFAULT_VALUE.equals(shortAttrName))   defaultValue=shortAttrValueStr;
-  if (RestDocConstants.REQUEST_PARAMS_REQUIRED.equals(shortAttrName))   requierd=(Boolean)attrValue;
-  super.addAttribute(shortAttrName,shortAttrValue);
-}

@@ -1,0 +1,19 @@
+{
+  File serviceFile=new File(SERVICE_PATH);
+  DSLReader dslReader=new DSLReader();
+  dslReader.setDslFile(serviceFile);
+  dslReader.setWorkDir(serviceFile.getParentFile());
+  try {
+    dslReader.readDslEntity(Service.class);
+    Assert.fail("The validation of service file " + SERVICE_PATH + " was supposed to fail");
+  }
+ catch (  Exception e) {
+  }
+  try {
+    dslReader.setValidateObjects(false);
+    dslReader.readDslEntity(Service.class);
+  }
+ catch (  Exception e) {
+    Assert.fail("Expecting no Validation for service file " + SERVICE_PATH + " exception was "+ e.getMessage());
+  }
+}

@@ -16,11 +16,13 @@
         this.rootObject=retval;
       }
       swapActiveObject(closure,retval);
-      try {
-        validateObject(retval);
-      }
- catch (      final DSLValidationException e) {
-        throw new DSLValidationRuntimeException(e);
+      if (isValidateObjects()) {
+        try {
+          validateObject(retval);
+        }
+ catch (        final DSLValidationException e) {
+          throw new DSLValidationRuntimeException(e);
+        }
       }
       if (this.activeObject != null) {
         try {

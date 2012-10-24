@@ -1,3 +1,0 @@
-MethodDoc methodDoc
-String httpMethodName
-List<DocAnnotation> annotations
