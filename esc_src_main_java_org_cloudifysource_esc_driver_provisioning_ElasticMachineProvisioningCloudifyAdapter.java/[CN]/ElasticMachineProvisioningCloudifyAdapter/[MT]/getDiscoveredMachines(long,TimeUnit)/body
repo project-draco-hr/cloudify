@@ -3,8 +3,10 @@
   GridServiceAgent[] agents=this.originalESMAdmin.getGridServiceAgents().getAgents();
   for (  GridServiceAgent agent : agents) {
     String template=agent.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.CLOUDIFY_CLOUD_TEMPLATE_NAME);
-    if (template.equals(this.cloudTemplateName)) {
-      result.add(agent);
+    if (template != null) {
+      if (template.equals(this.cloudTemplateName)) {
+        result.add(agent);
+      }
     }
   }
   return result.toArray(new GridServiceAgent[result.size()]);
