@@ -8,6 +8,9 @@
         result.add(agent);
       }
     }
+ else {
+      logger.fine("in getDiscoveredMachines() --> agent on host " + agent.getMachine().getHostAddress() + " does not have a template name attached to its env variables");
+    }
   }
   return result.toArray(new GridServiceAgent[result.size()]);
 }
