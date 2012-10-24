@@ -1,2 +1,4 @@
 int totalMemoryInMB
+double totalCpuCores
 boolean locationAware
+boolean shared

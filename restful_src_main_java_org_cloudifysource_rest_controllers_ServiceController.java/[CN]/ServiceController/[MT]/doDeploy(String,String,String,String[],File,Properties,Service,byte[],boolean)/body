@@ -1,7 +1,11 @@
 {
   boolean locationAware=false;
+  boolean shared=false;
   if (service != null) {
     locationAware=service.isLocationAware();
+  }
+  if (service != null) {
+    shared=service.isShared();
   }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
@@ -11,17 +15,13 @@
     contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
   }
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
-  if (isLocalCloud()) {
-    setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
-  }
- else {
-    setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
-  }
   if (cloud == null) {
     if (!isLocalCloud()) {
+      setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
     }
  else {
+      setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       if (service == null || service.getScalingRules() == null) {
         int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,externalProcessMemoryInMB);
         final ManualCapacityScaleConfig scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).create();
@@ -35,27 +35,43 @@
   }
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final long cloudExternalProcessMemoryInMB;
+    if (shared) {
+      cloudExternalProcessMemoryInMB=service.getInstanceMemoryMB();
+    }
+ else {
+      cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
-    final String[] zones=new String[]{serviceName};
-    config.setGridServiceAgentZones(zones);
     if (serviceCloudConfigurationContents != null) {
       config.setServiceCloudConfiguration(serviceCloudConfigurationContents);
     }
     final String locators=extractLocators(admin);
     config.setLocator(locators);
-    setDedicatedMachineProvisioning(deployment,config);
+    config.setDedicatedManagementMachines(true);
+    if (shared) {
+      logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
+      setPublicMachineProvisioning(deployment,config);
+    }
+ else {
+      setDedicatedMachineProvisioning(deployment,config);
+    }
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
       int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
-      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,locationAware);
-      scaleConfig.setAtMostOneContainerPerMachine(true);
+      double totalCpuCores=calculateTotalCpuCores(serviceName,service);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,shared);
+      if (!shared) {
+        scaleConfig.setAtMostOneContainerPerMachine(true);
+      }
       deployment.scale(scaleConfig);
     }
  else {
       final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware);
-      scaleConfig.setAtMostOneContainerPerMachine(true);
+      if (!shared) {
+        scaleConfig.setAtMostOneContainerPerMachine(true);
+      }
       deployment.scale(scaleConfig);
     }
   }

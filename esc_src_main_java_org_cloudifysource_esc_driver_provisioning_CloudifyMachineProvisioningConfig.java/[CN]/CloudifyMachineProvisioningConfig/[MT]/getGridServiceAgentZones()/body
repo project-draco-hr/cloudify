@@ -1,4 +1,7 @@
 {
   final String[] zones=properties.getArray(ZONES_KEY,ZONES_SEPARATOR,ZONES_DEFAULT);
+  if (zones.length == 0) {
+    return new AnyZonesConfig();
+  }
   return new AtLeastOneZoneConfigurer().addZones(zones).create();
 }

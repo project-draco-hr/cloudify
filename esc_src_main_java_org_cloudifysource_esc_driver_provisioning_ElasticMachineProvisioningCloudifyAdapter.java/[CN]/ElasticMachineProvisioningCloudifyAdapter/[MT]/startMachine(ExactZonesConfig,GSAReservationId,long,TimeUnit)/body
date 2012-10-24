@@ -4,7 +4,7 @@
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
   cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
-  AtLeastOneZoneConfig defaultZones=config.getGridServiceAgentZones();
+  ZonesConfig defaultZones=config.getGridServiceAgentZones();
   logger.fine("default zones = " + defaultZones.getZones());
   if (!defaultZones.isSatisfiedBy(zones)) {
     throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
@@ -72,6 +72,9 @@
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartedEvent(machineIp,gsa.getUid()));
+    if (gsa.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.CLOUDIFY_CLOUD_TEMPLATE_NAME) == null) {
+      throw new ElasticGridServiceAgentProvisioningException("an agent was started. but the property " + CloudifyConstants.CLOUDIFY_CLOUD_TEMPLATE_NAME + " was missing from its environment variables.");
+    }
     return gsa;
   }
  catch (  final ElasticMachineProvisioningException e) {

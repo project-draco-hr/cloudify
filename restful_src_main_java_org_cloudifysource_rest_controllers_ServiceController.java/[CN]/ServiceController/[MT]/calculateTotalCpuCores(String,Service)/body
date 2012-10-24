@@ -1,0 +1,11 @@
+{
+  if (service == null) {
+    return 0;
+  }
+  double numberOfCpuCoresPerInstance=service.getInstanceCpuCores();
+  if (numberOfCpuCoresPerInstance < 0) {
+    throw new IllegalArgumentException("instanceCpuCores must be positive");
+  }
+  int numberOfInstances=service.getNumInstances();
+  return numberOfInstances * numberOfCpuCoresPerInstance;
+}

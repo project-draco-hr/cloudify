@@ -24,7 +24,7 @@
     config.setLocator(locators);
     setDedicatedMachineProvisioning(deployment,config);
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
-    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)cloudExternalProcessMemoryInMB,locationAware));
+    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)cloudExternalProcessMemoryInMB,0,locationAware,false));
   }
   deployAndWait(serviceName,deployment);
 }
