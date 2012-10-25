@@ -1,8 +1,5 @@
 {
-  ManualCapacityScaleConfig config=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(totalCpuCores).create();
-  if (!shared) {
-    config.setAtMostOneContainerPerMachine(true);
-  }
+  final ManualCapacityScaleConfig config=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(totalCpuCores).create();
   config.setGridServiceAgentZonesAware(locationAware);
   return config;
 }

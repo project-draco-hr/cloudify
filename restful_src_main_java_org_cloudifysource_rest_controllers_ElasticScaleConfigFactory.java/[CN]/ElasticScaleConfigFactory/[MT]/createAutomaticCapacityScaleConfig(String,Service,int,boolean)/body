@@ -2,7 +2,7 @@
   if (externalProcessMemoryInMB <= 0) {
     throw new IllegalArgumentException("externalProcessMemoryInMB must be positive");
   }
-  List<ScalingRuleDetails> scalingRules=service.getScalingRules();
+  final List<ScalingRuleDetails> scalingRules=service.getScalingRules();
   if (scalingRules.isEmpty()) {
     throw new DSLException("scalingRules cannot be empty");
   }
@@ -18,35 +18,35 @@
   if (service.getNumInstances() > service.getMaxAllowedInstances()) {
     throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or less than the maximum number of instances ("+ service.getMaxAllowedInstances()+ ")");
   }
-  double instanceCpuCores=service.getInstanceCpuCores();
-  CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getMinAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstances() * instanceCpuCores).create();
-  CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getNumInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).numberOfCpuCores(service.getNumInstances() * instanceCpuCores).create();
-  CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity((service.getMaxAllowedInstances() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstances() * instanceCpuCores).create();
-  CapacityRequirementsConfig minCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity((service.getMinAllowedInstancesPerLocation() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstancesPerLocation() * instanceCpuCores).create();
-  CapacityRequirementsConfig maxCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity((service.getMaxAllowedInstancesPerLocation() * externalProcessMemoryInMB),MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstancesPerLocation() * instanceCpuCores).create();
-  AutomaticCapacityScaleConfigurer scaleConfigurer=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).minCapacityPerZone(minCapacityPerZone).maxCapacityPerZone(maxCapacityPerZone).statisticsPollingInterval(service.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleOut(service.getScaleOutCooldownInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleIn(service.getScaleInCooldownInSeconds(),TimeUnit.SECONDS);
-  if (!service.isShared()) {
+  final double instanceCpuCores=service.getDeployment().getGlobal() != null ? service.getDeployment().getGlobal().getInstanceCpuCores() : 0;
+  final CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getMinAllowedInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstances() * instanceCpuCores).create();
+  final CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getNumInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getNumInstances() * instanceCpuCores).create();
+  final CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getMaxAllowedInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstances() * instanceCpuCores).create();
+  final CapacityRequirementsConfig minCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity(service.getMinAllowedInstancesPerLocation() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstancesPerLocation() * instanceCpuCores).create();
+  final CapacityRequirementsConfig maxCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity(service.getMaxAllowedInstancesPerLocation() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstancesPerLocation() * instanceCpuCores).create();
+  final AutomaticCapacityScaleConfigurer scaleConfigurer=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).minCapacityPerZone(minCapacityPerZone).maxCapacityPerZone(maxCapacityPerZone).statisticsPollingInterval(service.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleOut(service.getScaleOutCooldownInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleIn(service.getScaleInCooldownInSeconds(),TimeUnit.SECONDS);
+  if (service.getDeployment() == null || service.getDeployment().getDedicated() != null) {
     scaleConfigurer.atMostOneContainerPerMachine();
   }
   if (locationAware) {
     scaleConfigurer.enableGridServiceAgentZonesAware();
   }
-  Map<String,ServiceStatisticsDetails> serviceStatisticsByName=new HashMap<String,ServiceStatisticsDetails>();
+  final Map<String,ServiceStatisticsDetails> serviceStatisticsByName=new HashMap<String,ServiceStatisticsDetails>();
   if (service.getServiceStatistics() != null) {
-    for (    AbstractStatisticsDetails calculatedStatistics : service.getServiceStatistics()) {
+    for (    final AbstractStatisticsDetails calculatedStatistics : service.getServiceStatistics()) {
       if (calculatedStatistics instanceof ServiceStatisticsDetails) {
         serviceStatisticsByName.put(calculatedStatistics.getName(),(ServiceStatisticsDetails)calculatedStatistics);
       }
     }
   }
-  for (  ScalingRuleDetails scalingRule : scalingRules) {
-    Object serviceStatisticsObject=scalingRule.getServiceStatistics();
+  for (  final ScalingRuleDetails scalingRule : scalingRules) {
+    final Object serviceStatisticsObject=scalingRule.getServiceStatistics();
     if (serviceStatisticsObject == null) {
       throw new DSLException(SCALING_RULE_MUST_SPECIFY_SERVICE_STATISTICS_ERROR_MSG);
     }
     ServiceStatisticsDetails serviceStatistics=null;
     if (serviceStatisticsObject instanceof String) {
-      String serviceStatisticsName=(String)serviceStatisticsObject;
+      final String serviceStatisticsName=(String)serviceStatisticsObject;
       serviceStatistics=serviceStatisticsByName.get(serviceStatisticsName);
       if (serviceStatistics == null) {
         throw new DSLException(SCALING_RULE_MUST_SPECIFY_SERVICE_STATISTICS_ERROR_MSG + " " + serviceStatisticsName+ " is not recognized. Possible values are: "+ serviceStatisticsByName.keySet());
@@ -58,7 +58,7 @@
  else {
       throw new DSLException(SCALING_RULE_MUST_SPECIFY_SERVICE_STATISTICS_ERROR_MSG + " Unsupported type " + serviceStatisticsObject.getClass());
     }
-    ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
+    final ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
     statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
     statisticsId.setMetric(serviceStatistics.getMetric());
     statisticsId.setInstancesStatistics(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
@@ -72,7 +72,7 @@
       statisticsId.setTimeWindowStatistics(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
     }
     statisticsId.setAgentZones(new AnyZonesConfig());
-    AutomaticCapacityScaleRuleConfig rule=new AutomaticCapacityScaleRuleConfig();
+    final AutomaticCapacityScaleRuleConfig rule=new AutomaticCapacityScaleRuleConfig();
     rule.setStatistics(statisticsId);
     if (scalingRule.getLowThreshold() == null) {
       if (logger.isLoggable(Level.FINE)) {
@@ -80,11 +80,11 @@
       }
     }
  else {
-      Comparable<?> threshold=scalingRule.getLowThreshold().getValue();
+      final Comparable<?> threshold=scalingRule.getLowThreshold().getValue();
       if (threshold == null) {
         throw new DSLException(serviceName + " scalingRule for " + serviceStatistics.getMetric()+ " lowThreshold value is missing");
       }
-      int instancesDecrease=scalingRule.getLowThreshold().getInstancesDecrease();
+      final int instancesDecrease=scalingRule.getLowThreshold().getInstancesDecrease();
       if (instancesDecrease < 0) {
         throw new DSLException(serviceName + " scalingRule for " + serviceStatistics.getMetric()+ " lowThreshold instancesDecrease cannot be a negative number ("+ instancesDecrease+ ")");
       }
@@ -104,11 +104,11 @@
       }
     }
  else {
-      Comparable<?> threshold=scalingRule.getHighThreshold().getValue();
+      final Comparable<?> threshold=scalingRule.getHighThreshold().getValue();
       if (threshold == null) {
         throw new DSLException(serviceName + " scalingRule for " + serviceStatistics.getMetric()+ " highThreshold value is missing");
       }
-      int instancesIncrease=scalingRule.getHighThreshold().getInstancesIncrease();
+      final int instancesIncrease=scalingRule.getHighThreshold().getInstancesIncrease();
       if (instancesIncrease < 0) {
         throw new DSLException(serviceName + " scalingRule for " + serviceStatistics.getMetric()+ " highThreshold instancesIncrease cannot be a negative number ("+ instancesIncrease+ ")");
       }
