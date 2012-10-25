@@ -25,7 +25,7 @@
   final CapacityRequirementsConfig minCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity(service.getMinAllowedInstancesPerLocation() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstancesPerLocation() * instanceCpuCores).create();
   final CapacityRequirementsConfig maxCapacityPerZone=new CapacityRequirementsConfigurer().memoryCapacity(service.getMaxAllowedInstancesPerLocation() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstancesPerLocation() * instanceCpuCores).create();
   final AutomaticCapacityScaleConfigurer scaleConfigurer=new AutomaticCapacityScaleConfigurer().minCapacity(minCapacity).initialCapacity(initialCapacity).maxCapacity(maxCapacity).minCapacityPerZone(minCapacityPerZone).maxCapacityPerZone(maxCapacityPerZone).statisticsPollingInterval(service.getSamplingPeriodInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleOut(service.getScaleOutCooldownInSeconds(),TimeUnit.SECONDS).cooldownAfterScaleIn(service.getScaleInCooldownInSeconds(),TimeUnit.SECONDS);
-  if (service.getDeployment() == null || service.getDeployment().getDedicated() != null) {
+  if (service.getDeployment().getDedicated() != null) {
     scaleConfigurer.atMostOneContainerPerMachine();
   }
   if (locationAware) {
