@@ -3,13 +3,13 @@
   boolean dedicated=true;
   if (service != null) {
     locationAware=service.isLocationAware();
-  }
-  if (service.getDeployment() == null) {
-    service.setDeployment(ServiceDeploymentFactory.newDedicatedDeplyoment());
-  }
+    if (service.getDeployment() == null) {
+      service.setDeployment(ServiceDeploymentFactory.newDedicatedDeplyoment());
+    }
  else {
-    if (service.getDeployment().getGlobal() != null) {
-      dedicated=false;
+      if (service.getDeployment().getGlobal() != null) {
+        dedicated=false;
+      }
     }
   }
   final int externalProcessMemoryInMB=512;
