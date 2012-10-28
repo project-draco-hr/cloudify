@@ -1,4 +1,5 @@
 String applicationName
 File applicationFile
+File applicationOverridesFile
 int timeout
 boolean selfHealing

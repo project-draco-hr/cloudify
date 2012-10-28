@@ -15,6 +15,14 @@
     }
     boolean found=false;
     try {
+      File applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      if (applicationOverridesFile != null) {
+        FileUtils.copyFile(applicationOverridesFile,new File(serviceDirectory,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME));
+      }
+      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      if (applicationPropertiesFile != null) {
+        FileUtils.copyFile(applicationPropertiesFile,new File(serviceDirectory,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME));
+      }
       File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
