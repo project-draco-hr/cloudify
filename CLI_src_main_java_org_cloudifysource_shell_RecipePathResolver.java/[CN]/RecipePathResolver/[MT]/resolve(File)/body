@@ -1,6 +1,5 @@
 {
   if (recipeFileOrFolder.isAbsolute()) {
-    logger.info("looking for recipe in " + recipeFileOrFolder.getAbsolutePath());
     if (recipeFileOrFolder.exists()) {
       resolved=recipeFileOrFolder;
       return true;
