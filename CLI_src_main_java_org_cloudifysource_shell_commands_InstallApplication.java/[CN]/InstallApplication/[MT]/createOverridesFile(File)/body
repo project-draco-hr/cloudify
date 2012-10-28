@@ -1,9 +1,0 @@
-{
-  String overridesFileNamePrefix=applicationName + DSLUtils.APPLICATION_FILE_NAME_SUFFIX;
-  String overridesFileName=overridesFileNamePrefix + DSLUtils.OVERRIDES_FILE_SUFFIX;
-  if (overridesFileName.equals(overridesFile.getName()))   return overridesFile;
-  File copiedOverridesFile=new File(overridesFileName);
-  FileUtils.copyFile(overridesFile,copiedOverridesFile);
-  copiedOverridesFile.deleteOnExit();
-  return copiedOverridesFile;
-}

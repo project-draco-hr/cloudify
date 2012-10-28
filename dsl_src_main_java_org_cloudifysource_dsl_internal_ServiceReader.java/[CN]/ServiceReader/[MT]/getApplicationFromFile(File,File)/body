@@ -1,0 +1,14 @@
+{
+  File actualApplicationDslFile=inputFile;
+  if (inputFile.isFile()) {
+    if (inputFile.getName().endsWith(".zip") || inputFile.getName().endsWith(".jar")) {
+      final File tempFolder=ServiceReader.unzipApplicationFile(inputFile);
+      actualApplicationDslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,tempFolder);
+    }
+  }
+ else {
+    actualApplicationDslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,inputFile);
+  }
+  final Application app=ServiceReader.readApplicationFromFile(actualApplicationDslFile,overridesFile);
+  return new DSLApplicationCompilatioResult(app,actualApplicationDslFile.getParentFile(),actualApplicationDslFile);
+}

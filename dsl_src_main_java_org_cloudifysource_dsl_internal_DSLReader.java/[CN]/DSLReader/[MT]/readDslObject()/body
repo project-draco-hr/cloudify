@@ -8,7 +8,7 @@
   LinkedHashMap<Object,Object> properties=null;
   try {
     properties=createDSLProperties();
-    createDSLOverrides();
+    createDSLOverrides(overridesFile,overrideProperties);
     overrideProperties(properties);
     addApplicationProperties(properties);
   }

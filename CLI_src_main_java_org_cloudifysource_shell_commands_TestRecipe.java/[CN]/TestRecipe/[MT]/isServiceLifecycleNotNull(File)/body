@@ -7,16 +7,7 @@
       throw new CLIException(getFormattedMessage("test_recipe_service_lifecycle_missing"));
     }
   }
- catch (  final FileNotFoundException e) {
-    logger.log(Level.SEVERE,"Service configuration file not found " + e.getMessage(),e);
-    throw new CLIException("Failed to locate service configuration file. " + e.getMessage(),e);
-  }
-catch (  final PackagingException e) {
-    logger.log(Level.SEVERE,"Packaging failed: " + e.getMessage(),e);
-    e.printStackTrace();
-    throw new CLIException("Packaging failed: " + e.getMessage(),e);
-  }
-catch (  final DSLException e) {
+ catch (  final DSLException e) {
     logger.log(Level.SEVERE,"DSL Parsing failed: " + e.getMessage(),e);
     e.printStackTrace();
     throw new CLIException("Packaging failed: " + e.getMessage(),e);

@@ -26,7 +26,11 @@
           recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
         }
       }
-      service=ServiceReader.readService(recipeFile);
+      final DSLReader dslReader=createDslReader(recipeFile);
+      service=dslReader.readDslEntity(Service.class);
+      if (overrides != null) {
+        additionFiles.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName()));
+      }
       packedFile=Packager.pack(recipeFile,false,service,additionFiles);
       packedFile.deleteOnExit();
     }

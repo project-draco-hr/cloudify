@@ -1,20 +1,3 @@
 {
-  if (this.overridesFile != null) {
-    if (!this.overridesFile.exists()) {
-      throw new FileNotFoundException("Could not find overrides file: " + this.overridesFile.getAbsolutePath());
-    }
-    if (!this.overridesFile.isFile()) {
-      throw new FileNotFoundException(this.overridesFile.getName() + " is not a file!");
-    }
-  }
- else {
-    if (this.dslFile == null) {
-      return;
-    }
-    final String defaultOverridesFileName=dslFileNamePrefix + ".overrides";
-    final File defaultOverridesFile=new File(workDir,defaultOverridesFileName);
-    if (defaultOverridesFile.exists()) {
-      this.overridesFile=defaultOverridesFile;
-    }
-  }
+  overridesFile=getOverridesFile(overridesFile,dslFileNamePrefix + DSLUtils.OVERRIDES_FILE_SUFFIX);
 }
