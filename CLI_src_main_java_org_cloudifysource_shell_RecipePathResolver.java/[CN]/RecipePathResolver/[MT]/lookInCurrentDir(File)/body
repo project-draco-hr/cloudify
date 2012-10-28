@@ -1,0 +1,12 @@
+{
+  String currentDir=new File(".").getAbsolutePath();
+  File fileUnderCurrentDir=new File(currentDir + File.separator + file.getPath());
+  logger.info("looking for recipe in " + fileUnderCurrentDir.getAbsolutePath());
+  if (fileUnderCurrentDir.exists()) {
+    return fileUnderCurrentDir;
+  }
+ else {
+    pathsLooked.add(fileUnderCurrentDir.getAbsolutePath());
+    return null;
+  }
+}

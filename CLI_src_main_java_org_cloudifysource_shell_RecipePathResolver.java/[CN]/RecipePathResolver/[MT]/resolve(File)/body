@@ -1,0 +1,25 @@
+{
+  if (recipeFileOrFolder.isAbsolute()) {
+    logger.info("looking for recipe in " + recipeFileOrFolder.getAbsolutePath());
+    if (recipeFileOrFolder.exists()) {
+      resolved=recipeFileOrFolder;
+      return true;
+    }
+ else {
+      pathsLooked.add(recipeFileOrFolder.getAbsolutePath());
+      return false;
+    }
+  }
+  File recipe=null;
+  recipe=lookInCurrentDir(recipeFileOrFolder);
+  if (recipe != null) {
+    resolved=recipe;
+    return true;
+  }
+  recipe=lookInDefaultLocation(recipeFileOrFolder);
+  if (recipe != null) {
+    resolved=recipe;
+    return true;
+  }
+  return false;
+}

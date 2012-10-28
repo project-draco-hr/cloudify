@@ -1,0 +1,12 @@
+{
+  String homeDir=Environment.getHomeDirectory();
+  File fileUnderDefaultLocation=new File(homeDir + defaultLocation + File.separator+ file.getPath());
+  logger.info("looking for recipe in " + fileUnderDefaultLocation.getAbsolutePath());
+  if (fileUnderDefaultLocation.exists()) {
+    return fileUnderDefaultLocation;
+  }
+ else {
+    pathsLooked.add(fileUnderDefaultLocation.getAbsolutePath());
+    return null;
+  }
+}
