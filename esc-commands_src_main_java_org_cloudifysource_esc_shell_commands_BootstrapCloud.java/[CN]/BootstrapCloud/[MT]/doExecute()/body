@@ -1,6 +1,13 @@
 {
   String pathSeparator=System.getProperty("file.separator");
-  File providerDirectory=new File(ShellUtils.getCliDirectory(),"plugins" + pathSeparator + "esc"+ pathSeparator+ cloudProvider);
+  RecipePathResolver pathResolver=new RecipePathResolver(ShellUtils.getCliDirectory() + pathSeparator + "plugins"+ pathSeparator+ "esc");
+  File providerDirectory=null;
+  if (pathResolver.resolve(new File(cloudProvider))) {
+    providerDirectory=pathResolver.getResolved();
+  }
+ else {
+    throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
+  }
   File cloudFile=findCloudFile(providerDirectory);
   Cloud cloud=ServiceReader.readCloud(cloudFile);
   CloudGridAgentBootstrapper installer=new CloudGridAgentBootstrapper();
