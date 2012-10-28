@@ -12,7 +12,7 @@
   FileUtils.forceMkdir(springFolder);
   logger.finer("created pu structure under " + destPuFolder);
   if (additionalServiceFiles != null) {
-    for (    File file : additionalServiceFiles) {
+    for (    final File file : additionalServiceFiles) {
       FileUtils.copyFileToDirectory(file,extFolder);
     }
   }
@@ -22,13 +22,6 @@
   if (srcUsmLibDir.exists()) {
     FileUtils.copyDirectory(srcUsmLibDir,libFolder,SVNFileFilter.getFilter());
   }
-  final File usmLibDir=getUsmLibDir(service);
-  final File srcUsmJar=new File(usmLibDir,"usm.jar");
-  if (!srcUsmJar.exists()) {
-    throw new PackagingException("could not find usm.jar");
-  }
-  FileUtils.copyDirectory(usmLibDir,libFolder,SVNFileFilter.getFilter());
-  logger.finer("copied " + srcUsmJar.getName());
   final InputStream puXmlStream=Packager.class.getClassLoader().getResourceAsStream("META-INF/spring/default_usm_pu.xml");
   if (puXmlStream == null) {
     throw new PackagingException("can not find locate default pu.xml");
@@ -43,6 +36,7 @@
     logger.log(Level.SEVERE,"failed to close default_usm_pu.xml stream",e);
   }
   copyExtendedServiceFiles(service,recipeFile,extFolder);
+  createManifestFile(destPuFolder);
   logger.finer("created pu folder " + destPuFolder.getAbsolutePath());
   return destPuFolder;
 }

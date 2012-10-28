@@ -16,20 +16,20 @@
     }
     applicationFolderToPack=destApplicationFolder;
   }
-  if ((additionalServiceFiles != null) && (additionalServiceFiles.length > 0)) {
+  if (additionalServiceFiles != null && additionalServiceFiles.length > 0) {
     if (applicationFolderToPack == applicationDir) {
       applicationFolderToPack=createCopyDirectory(applicationFolderToPack);
     }
-    List<Service> services=application.getServices();
-    for (    Service service : services) {
-      File serviceDir=new File(applicationFolderToPack,service.getName());
+    final List<Service> services=application.getServices();
+    for (    final Service service : services) {
+      final File serviceDir=new File(applicationFolderToPack,service.getName());
       if (!serviceDir.exists()) {
         throw new PackagingException("Could not find service folder at: " + serviceDir);
       }
       if (!serviceDir.isDirectory()) {
         throw new PackagingException("Was expecting a directory at: " + serviceDir);
       }
-      for (      File fileToCopy : additionalServiceFiles) {
+      for (      final File fileToCopy : additionalServiceFiles) {
         FileUtils.copyFileToDirectory(fileToCopy,serviceDir);
       }
     }

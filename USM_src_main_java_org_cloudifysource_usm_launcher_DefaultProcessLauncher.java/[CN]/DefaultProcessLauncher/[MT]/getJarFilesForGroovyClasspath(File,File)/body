@@ -3,6 +3,7 @@
   addJarsFromDirectoryToList(new File(workingDir.getParentFile(),"lib"),list);
   addJarsFromDirectoryToList(new File(gsHome,"lib/required"),list);
   addJarsFromDirectoryToList(new File(gsHome,"lib/platform/usm"),list);
+  addJarsFromDirectoryToList(new File(gsHome,"lib/platform/cloudify"),list);
   addJarsFromDirectoryToList(new File(gsHome,"lib/platform/sigar"),list);
   return list;
 }
