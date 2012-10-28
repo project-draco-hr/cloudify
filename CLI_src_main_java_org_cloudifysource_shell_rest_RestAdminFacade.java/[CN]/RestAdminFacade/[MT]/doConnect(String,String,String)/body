@@ -17,7 +17,7 @@
     throw new CLIStatusException("could_not_parse_url",url,e);
   }
   try {
-    client=new GSRestClient(user,password,urlObj,PlatformVersion.getVersionNumber());
+    client=new GSRestClient(user,password,urlObj,"2.3.0-Cloudify-m1");
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
  catch (  final ErrorStatusException e) {

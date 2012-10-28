@@ -1,6 +1,10 @@
 {
-  if (!recipe.exists()) {
-    throw new CLIStatusException("service_file_doesnt_exist",recipe.getPath());
+  RecipePathResolver pathResolver=new RecipePathResolver("/recipes/services");
+  if (pathResolver.resolve(recipe)) {
+    recipe=pathResolver.getResolved();
+  }
+ else {
+    throw new CLIStatusException("service_file_doesnt_exist",pathResolver.getPathsLooked().toArray());
   }
   File packedFile;
   final File cloudConfigurationZipFile=createCloudConfigurationZipFile();
