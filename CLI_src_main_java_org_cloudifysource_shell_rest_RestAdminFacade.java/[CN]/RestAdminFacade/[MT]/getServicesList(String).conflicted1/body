@@ -1,9 +1,0 @@
-{
-  try {
-    @SuppressWarnings("unchecked") List<String> services=(List<String>)client.get("/service/applications/" + applicationName + "/services");
-    return services;
-  }
- catch (  final ErrorStatusException ese) {
-    throw new CLIStatusException(ese,ese.getReasonCode(),ese.getArgs());
-  }
-}

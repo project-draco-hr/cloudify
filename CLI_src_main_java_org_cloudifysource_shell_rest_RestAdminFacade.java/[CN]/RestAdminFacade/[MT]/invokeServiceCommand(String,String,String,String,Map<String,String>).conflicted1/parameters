@@ -1,5 +1,0 @@
-String applicationName
-String serviceName
-String beanName
-String commandName
-Map<String,String> params

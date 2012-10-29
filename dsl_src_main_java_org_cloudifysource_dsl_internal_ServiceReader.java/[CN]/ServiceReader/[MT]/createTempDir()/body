@@ -3,6 +3,5 @@
   final String path=tempFile.getAbsolutePath();
   tempFile.delete();
   tempFile.mkdirs();
-  final File baseDir=new File(path);
-  return baseDir;
+  return new File(path);
 }

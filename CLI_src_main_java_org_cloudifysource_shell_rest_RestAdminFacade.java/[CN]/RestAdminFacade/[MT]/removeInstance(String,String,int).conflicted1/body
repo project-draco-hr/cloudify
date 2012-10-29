@@ -1,9 +1,0 @@
-{
-  final String relativeUrl=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances/"+ instanceId+ "/remove";
-  try {
-    client.delete(relativeUrl);
-  }
- catch (  final ErrorStatusException e) {
-    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
-  }
-}

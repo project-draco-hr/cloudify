@@ -3,7 +3,7 @@
   try {
     final HttpResponse response=httpClient.execute(httpMethod);
     final int statusCode=response.getStatusLine().getStatusCode();
-    if (statusCode != HTTP_STATUS_OK) {
+    if (statusCode != CloudifyConstants.HTTP_STATUS_CODE_OK) {
       if (logger.isLoggable(Level.FINE)) {
         logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_CODE + statusCode);
       }
@@ -23,7 +23,7 @@
         }
       }
  catch (      final IOException e) {
-        if (statusCode == NOT_FOUND_404_ERROR_CODE) {
+        if (statusCode == CloudifyConstants.HTTP_STATUS_NOT_FOUND) {
           throw new ErrorStatusException(e,"URL_not_found",httpMethod.getURI());
         }
         throw new ErrorStatusException(e,"CLI_unable_to_parse_to_JSON",responseBody);

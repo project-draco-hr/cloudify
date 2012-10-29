@@ -1,6 +1,0 @@
-{
-  StringBuilder url=new StringBuilder(urlObj.toString());
-  final int portIndex=url.indexOf("/","http://".length());
-  url.insert(portIndex,':' + Integer.toString(CloudifyConstants.DEFAULT_REST_PORT));
-  return new URL(url.toString());
-}

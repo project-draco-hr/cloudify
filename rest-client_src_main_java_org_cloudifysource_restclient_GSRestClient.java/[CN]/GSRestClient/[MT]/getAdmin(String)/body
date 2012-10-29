@@ -5,7 +5,7 @@
   InputStream instream=null;
   try {
     final HttpResponse response=httpClient.execute(httpMethod);
-    if (response.getStatusLine().getStatusCode() != HTTP_STATUS_OK) {
+    if (response.getStatusLine().getStatusCode() != CloudifyConstants.HTTP_STATUS_CODE_OK) {
       logger.log(Level.FINE,httpMethod.getURI() + MSG_RESPONSE_CODE + response.getStatusLine().getStatusCode());
       throw new RestException(response.getStatusLine().toString());
     }
