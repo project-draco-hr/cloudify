@@ -1,0 +1,9 @@
+{
+  ProcessingUnit processingUnit=getProcessingUnit(absolutePuName);
+  List<InstanceDescription> instancesDescriptionList=new ArrayList<InstanceDescription>();
+  for (  ProcessingUnitInstance processingUnitInstance : processingUnit) {
+    InstanceDescription instanceDescription=getInstanceDescription(processingUnitInstance);
+    instancesDescriptionList.add(instanceDescription);
+  }
+  return instancesDescriptionList;
+}

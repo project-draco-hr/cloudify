@@ -1,0 +1,11 @@
+{
+  String instanceState;
+  ProcessingUnit processingUnit=processingUnitInstance.getProcessingUnit();
+  if (processingUnit.getType().equals(ProcessingUnitType.UNIVERSAL)) {
+    instanceState=getInstanceUsmState(processingUnitInstance).toString();
+  }
+ else {
+    instanceState=processingUnit.getStatus().toString();
+  }
+  return instanceState;
+}

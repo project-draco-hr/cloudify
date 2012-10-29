@@ -1,0 +1,15 @@
+{
+  try {
+    @SuppressWarnings("unchecked") final List<Object> applications=(List<Object>)client.get("/service/applications/description");
+    ObjectMapper map=new ObjectMapper();
+    List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
+    for (    Object object : applications) {
+      ApplicationDescription applicationDescription=map.convertValue(object,ApplicationDescription.class);
+      applicationDescriptionList.add(applicationDescription);
+    }
+    return applicationDescriptionList;
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}
