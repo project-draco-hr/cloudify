@@ -1,5 +1,0 @@
-{
-  ServiceDeployment deployment=new ServiceDeployment();
-  deployment.setDedicated(new DedicatedServiceDeploymentDescriptor());
-  return deployment;
-}

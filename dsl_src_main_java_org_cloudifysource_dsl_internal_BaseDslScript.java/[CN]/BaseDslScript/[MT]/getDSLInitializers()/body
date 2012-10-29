@@ -29,9 +29,9 @@
     addObjectInitializerForClass(dslObjectInitializersByName,LowThresholdDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ServiceStatisticsDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,PerInstanceStatisticsDetails.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,ServiceDeployment.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,PublicServiceDeploymentDescriptor.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,DedicatedServiceDeploymentDescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,IsolationSLA.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,GlobalIsolationSLADescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,DedicatedIsolationSLADescriptor.class);
   }
   return dslObjectInitializersByName;
 }
