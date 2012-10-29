@@ -9,7 +9,7 @@
       }
     }
   }
-  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,services,this.cloud,selfHealing);
+  final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,applicationOverridesFile,services,this.cloud,selfHealing);
   if (installer.isAsyncInstallPossibleForApplication()) {
     installer.run();
   }
@@ -25,6 +25,5 @@
   final Map<String,Object> returnMap=new HashMap<String,Object>();
   returnMap.put(CloudifyConstants.SERVICE_ORDER,Arrays.toString(serviceOrder));
   returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
-  final Map<String,Object> retval=successStatus(returnMap);
-  return retval;
+  return successStatus(returnMap);
 }

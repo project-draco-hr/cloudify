@@ -2,7 +2,6 @@
   final DSLReader dslReader=new DSLReader();
   File dslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,applicationFile);
   dslReader.setDslFile(dslFile);
-  dslReader.setWorkDir(dslFile.getParentFile());
   dslReader.setCreateServiceContext(false);
   dslReader.addProperty(DSLUtils.APPLICATION_DIR,dslFile.getParentFile().getAbsolutePath());
   dslReader.setOverridesFile(overrides);

@@ -1,0 +1,3 @@
+{
+  return doDeploy(applicationName,serviceFile);
+}

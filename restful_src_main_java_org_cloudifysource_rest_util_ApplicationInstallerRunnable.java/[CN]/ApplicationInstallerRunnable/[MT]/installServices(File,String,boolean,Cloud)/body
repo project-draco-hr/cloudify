@@ -15,7 +15,10 @@
     }
     boolean found=false;
     try {
-      File applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      File applicationOverridesFile=overridesFile;
+      if (applicationOverridesFile == null) {
+        applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      }
       if (applicationOverridesFile != null) {
         FileUtils.copyFile(applicationOverridesFile,new File(serviceDirectory,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME));
       }

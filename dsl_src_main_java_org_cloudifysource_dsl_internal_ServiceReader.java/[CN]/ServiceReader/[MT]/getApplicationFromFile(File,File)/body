@@ -9,6 +9,13 @@
  else {
     actualApplicationDslFile=DSLReader.findDefaultDSLFile(DSLReader.APPLICATION_DSL_FILE_NAME_SUFFIX,inputFile);
   }
-  final Application app=ServiceReader.readApplicationFromFile(actualApplicationDslFile,overridesFile);
-  return new DSLApplicationCompilatioResult(app,actualApplicationDslFile.getParentFile(),actualApplicationDslFile);
+  final DSLReader dslReader=new DSLReader();
+  File workDir=actualApplicationDslFile.getParentFile();
+  dslReader.setDslFile(actualApplicationDslFile);
+  dslReader.setWorkDir(workDir);
+  dslReader.setCreateServiceContext(false);
+  dslReader.addProperty(DSLUtils.APPLICATION_DIR,workDir.getAbsolutePath());
+  dslReader.setOverridesFile(overridesFile);
+  final Application application=dslReader.readDslEntity(Application.class);
+  return new DSLApplicationCompilatioResult(application,actualApplicationDslFile.getParentFile(),actualApplicationDslFile);
 }

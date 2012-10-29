@@ -1,8 +1,8 @@
 {
-  File externalPropertiesFile=getOverridesFile(null,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME);
+  File externalPropertiesFile=getFileIfExist(null,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME);
   Map<String,Object> externalProperties=new HashMap<String,Object>();
   createDSLOverrides(externalPropertiesFile,externalProperties);
-  File externalOverridesFile=getOverridesFile(null,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME);
+  File externalOverridesFile=getFileIfExist(null,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME);
   Map<String,Object> externalOverrides=new HashMap<String,Object>();
   createDSLOverrides(externalOverridesFile,externalOverrides);
   if (externalOverrides != null) {

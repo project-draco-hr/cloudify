@@ -1,0 +1,3 @@
+ComponentType componentType
+String componentName
+Set<Integer> componentInstanceIDs

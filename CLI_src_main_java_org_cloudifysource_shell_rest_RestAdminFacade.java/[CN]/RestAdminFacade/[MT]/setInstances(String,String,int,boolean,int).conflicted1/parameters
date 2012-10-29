@@ -1,0 +1,5 @@
+String applicationName
+String serviceName
+int count
+boolean locationAware
+int timeout

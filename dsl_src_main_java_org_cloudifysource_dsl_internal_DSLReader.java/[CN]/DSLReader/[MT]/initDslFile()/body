@@ -1,5 +1,8 @@
 {
   if (dslFile != null) {
+    if (workDir == null) {
+      workDir=dslFile.getParentFile();
+    }
     return;
   }
   if (dslContents != null) {
@@ -17,5 +20,8 @@
   if (!workDir.isDirectory()) {
     throw new IllegalArgumentException(workDir.getAbsolutePath() + " must be a directory");
   }
-  this.dslFile=findDefaultDSLFile(dslFileNameSuffix,workDir);
+  dslFile=findDefaultDSLFile(dslFileNameSuffix,workDir);
+  if (workDir == null) {
+    workDir=dslFile.getParentFile();
+  }
 }

@@ -1,0 +1,10 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/instances";
+  try {
+    @SuppressWarnings("unchecked") Map<String,Object> instances=(Map<String,Object>)client.get(url);
+    return instances;
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}

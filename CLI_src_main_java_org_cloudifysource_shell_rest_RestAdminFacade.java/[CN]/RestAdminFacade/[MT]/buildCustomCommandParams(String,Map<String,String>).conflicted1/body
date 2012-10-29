@@ -1,0 +1,8 @@
+{
+  final Map<String,String> params=new HashMap<String,String>();
+  params.put(GS_USM_COMMAND_NAME,commandName);
+  for (  final Map.Entry<String,String> entry : parametersMap.entrySet()) {
+    params.put(entry.getKey(),entry.getValue());
+  }
+  return params;
+}

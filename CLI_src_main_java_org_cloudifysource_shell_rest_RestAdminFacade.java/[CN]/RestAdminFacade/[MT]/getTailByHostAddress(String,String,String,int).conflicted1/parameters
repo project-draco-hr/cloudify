@@ -1,0 +1,4 @@
+String serviceName
+String applicationName
+String hostAddress
+int numLines

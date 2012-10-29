@@ -1,0 +1,20 @@
+{
+  Map<String,Object> map;
+  try {
+    map=client.getAdminData("machines/HostsByAddress");
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  final RestException e) {
+    throw new CLIException(e);
+  }
+  @SuppressWarnings("unchecked") final List<String> list=(List<String>)map.get("HostsByAddress-Elements");
+  final List<String> result=new ArrayList<String>(list.size());
+  for (  final String host : list) {
+    final String[] parts=host.split("/");
+    final String ip=parts[parts.length - 1];
+    result.add(ip);
+  }
+  return result;
+}

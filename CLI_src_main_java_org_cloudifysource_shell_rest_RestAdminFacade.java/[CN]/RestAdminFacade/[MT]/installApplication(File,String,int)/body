@@ -1,0 +1,13 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/timeout/"+ timeout;
+  try {
+    @SuppressWarnings("unchecked") Map<String,String> response=(Map<String,String>)client.postFile(url,applicationFile);
+    return response;
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  final RestException e) {
+    throw new CLIException(e);
+  }
+}

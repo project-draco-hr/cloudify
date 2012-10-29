@@ -1,0 +1,3 @@
+Integer instanceId
+String applicationName
+String serviceName

@@ -1,0 +1,29 @@
+{
+  if ("global".equals(scope)) {
+    return "/attributes/globals";
+  }
+  if ("application".equals(scope)) {
+    return "/attributes/applications/" + applicationName;
+  }
+  if (!scope.toLowerCase().startsWith("service")) {
+    throw new CLIStatusException("illegal_scope",scope);
+  }
+  String[] serviceScope=scope.split(":");
+  if (serviceScope.length < 2) {
+    throw new CLIStatusException("service_scope_must_contain_service_name");
+  }
+  final String serviceName=serviceScope[1];
+  if (serviceScope.length == 2) {
+    return "/attributes/services/" + applicationName + "/"+ serviceName;
+  }
+  final String instanceIdentifier=serviceScope[2];
+  if ("all-instances".equalsIgnoreCase(instanceIdentifier)) {
+    return "/attributes/instances";
+  }
+  Integer instanceId=StringUtils.safeParseInt(instanceIdentifier);
+  if (instanceIdentifier == null) {
+    throw new CLIStatusException("illegal_instance_identifier",instanceIdentifier);
+  }
+  validateInstanceId(instanceId,applicationName,serviceName);
+  return "/attributes/instances/" + applicationName + "/"+ serviceName+ "/"+ instanceIdentifier;
+}
