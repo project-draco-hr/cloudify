@@ -4,7 +4,7 @@
   try {
     bindHost=InetAddress.getLocalHost().getHostAddress();
   }
- catch (  UnknownHostException e) {
+ catch (  final UnknownHostException e) {
     logger.log(Level.SEVERE,"Failed to get local host, defaulting to 127.0.0.1",e);
     bindHost="127.0.0.1";
   }

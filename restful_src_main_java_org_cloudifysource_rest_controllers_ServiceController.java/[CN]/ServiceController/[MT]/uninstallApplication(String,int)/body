@@ -18,7 +18,7 @@
       long startTime=System.currentTimeMillis();
       @Override public void run(){
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
-          long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
+          final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
           try {
             if (processingUnit.waitForManaged(10,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());

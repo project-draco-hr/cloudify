@@ -12,7 +12,7 @@
  catch (  final DSLException e) {
     throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudConfigurationHolder + ". Error was: "+ e.getMessage(),e);
   }
-catch (  IOException e) {
+catch (  final IOException e) {
     throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudConfigurationHolder + ". Error was: "+ e.getMessage(),e);
   }
   logger.info("Successfully loaded cloud configuration file from management space");

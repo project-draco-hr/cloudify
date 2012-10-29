@@ -2,10 +2,10 @@
   if (service == null) {
     return 0;
   }
-  double instanceCpuCores=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceCpuCores() : 0;
+  final double instanceCpuCores=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceCpuCores() : 0;
   if (instanceCpuCores < 0) {
     throw new IllegalArgumentException("instanceCpuCores must be positive");
   }
-  int numberOfInstances=service.getNumInstances();
+  final int numberOfInstances=service.getNumInstances();
   return numberOfInstances * instanceCpuCores;
 }
