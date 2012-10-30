@@ -1,0 +1,15 @@
+{
+  String serviceName=ServiceUtils.getApplicationServiceName(absolutePuName,applicationName);
+  int plannedNumberOfInstances=getPlannedNumberOfInstances(absolutePuName);
+  int numberOfServiceInstances=getNumberOfServiceInstances(absolutePuName);
+  List<InstanceDescription> serviceInstancesDescription=getServiceInstacesDescription(absolutePuName);
+  DeploymentState serviceState=getServiceState(serviceInstancesDescription,absolutePuName);
+  ServiceDescription serviceDescription=new ServiceDescription();
+  serviceDescription.setPlannedInstances(plannedNumberOfInstances);
+  serviceDescription.setInstanceCount(numberOfServiceInstances);
+  serviceDescription.setApplicationName(applicationName);
+  serviceDescription.setServiceName(serviceName);
+  serviceDescription.setInstancesDescription(serviceInstancesDescription);
+  serviceDescription.setServiceState(serviceState);
+  return serviceDescription;
+}

@@ -1,0 +1,24 @@
+{
+  ProcessingUnit pu=getProcessingUnit(absolutePuName);
+  logger.log(Level.FINE,"Determining service state for service " + absolutePuName);
+  if (pu.getType().equals(ProcessingUnitType.UNIVERSAL)) {
+    for (    InstanceDescription instanceDescription : serviceInstancesStatus) {
+      String instanceState=instanceDescription.getInstanceStatus();
+      if (instanceState.equals(USMState.ERROR.toString())) {
+        return DeploymentState.FAILED;
+      }
+    }
+    if (getNumberOfServiceInstances(absolutePuName) != getPlannedNumberOfInstances(absolutePuName)) {
+      return DeploymentState.INSTALLING;
+    }
+    return DeploymentState.STARTED;
+  }
+ else {
+    if (!pu.getStatus().equals(DeploymentStatus.INTACT)) {
+      return DeploymentState.INSTALLING;
+    }
+ else {
+      return DeploymentState.STARTED;
+    }
+  }
+}

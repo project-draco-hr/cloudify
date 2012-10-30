@@ -1,0 +1,11 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(ShellUtils.getBoldMessage(applicationDescription.getApplicationName()) + "  " + applicationDescription.getApplicationState());
+  String serviceDescriptionAsString;
+  for (  ServiceDescription serviceDescription : applicationDescription.getServicesDescription()) {
+    serviceDescriptionAsString=getServiceDescriptionAsString(serviceDescription);
+    sb.append(NEW_LINE);
+    sb.append(TAB_CHAR + serviceDescriptionAsString);
+  }
+  return sb.toString();
+}

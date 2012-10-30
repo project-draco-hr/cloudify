@@ -1,0 +1,14 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to list applications");
+  }
+  final Application app=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
+  if (app == null) {
+    throw new RestErrorException(FAILED_TO_LOCATE_APP,applicationName);
+  }
+  ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(admin);
+  ApplicationDescription applicationDescription=appDescriptionFactory.getApplicationDescription(applicationName);
+  List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
+  applicationDescriptionList.add(applicationDescription);
+  return successStatus(applicationDescriptionList);
+}

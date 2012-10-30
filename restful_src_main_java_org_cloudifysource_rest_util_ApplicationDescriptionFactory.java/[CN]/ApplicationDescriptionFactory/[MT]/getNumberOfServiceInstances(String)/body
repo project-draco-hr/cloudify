@@ -1,0 +1,10 @@
+{
+  ProcessingUnit processingUnit=getProcessingUnit(absolutePuName);
+  if (processingUnit != null) {
+    if (processingUnit.getType().equals(ProcessingUnitType.UNIVERSAL)) {
+      return getNumberOfUSMServicesWithRunningState(absolutePuName);
+    }
+    return getProcessingUnit(absolutePuName).getInstances().length;
+  }
+  return 0;
+}
