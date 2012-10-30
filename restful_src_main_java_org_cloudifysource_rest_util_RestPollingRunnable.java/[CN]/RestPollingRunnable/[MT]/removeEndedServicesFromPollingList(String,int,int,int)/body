@@ -1,12 +1,12 @@
 {
   if (isUninstall) {
     final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-    logger.info("uninstalling " + absolutePuName);
     try {
       final Boolean undeployedSuccessfully=this.undeployTask.get(ONE_SEC,TimeUnit.SECONDS);
       if (undeployedSuccessfully) {
         logger.info("undeployAndWait for processing unit " + absolutePuName + " has finished");
         this.serviceNames.remove(serviceName);
+        this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" uninstalled successfully");
       }
     }
  catch (    final Exception e) {

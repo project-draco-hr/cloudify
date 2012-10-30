@@ -21,10 +21,9 @@
   }
   final Zone zone=admin.getZones().getByName(absolutePuName);
   if (zone == null) {
-    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist");
+    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist. "+ "this means processing unit instance was removed.");
     if (isUninstall) {
-      this.lifecycleEventsContainer.addInstanceCountEvent("Undeployed service " + serviceName + ".");
-      this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" uninstalled successfully");
+      this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" was stopped successfully , waiting for machines to shutdown...");
     }
   }
 }
