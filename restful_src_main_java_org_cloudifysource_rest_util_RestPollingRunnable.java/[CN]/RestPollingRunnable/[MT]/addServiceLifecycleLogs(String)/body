@@ -5,11 +5,6 @@
   logger.log(Level.FINE,"Polling for lifecycle events on service: " + absolutePuName);
   final Zone zone=admin.getZones().getByName(absolutePuName);
   if (zone == null) {
-    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist");
-    if (isUninstall) {
-      logger.log(Level.INFO,"Polling for service " + absolutePuName + " has ended successfully");
-      this.serviceNames.remove(serviceName);
-    }
     return;
   }
   final String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,absolutePuName);
