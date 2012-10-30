@@ -3,12 +3,12 @@
     logger.finer("received request to list applications");
   }
   final Applications apps=admin.getApplications();
-  final ApplicationDescriptionFactory applicationDescriptionFactory=new ApplicationDescriptionFactory(admin);
-  final List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
+  ApplicationDescriptionFactory applicationDescriptionFactory=new ApplicationDescriptionFactory(admin);
+  List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
   for (  final Application app : apps) {
-    final String applicationName=app.getName();
+    String applicationName=app.getName();
     if (!app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
-      final ApplicationDescription applicationDescription=applicationDescriptionFactory.getApplicationDescription(applicationName);
+      ApplicationDescription applicationDescription=applicationDescriptionFactory.getApplicationDescription(applicationName);
       applicationDescriptionList.add(applicationDescription);
     }
   }
