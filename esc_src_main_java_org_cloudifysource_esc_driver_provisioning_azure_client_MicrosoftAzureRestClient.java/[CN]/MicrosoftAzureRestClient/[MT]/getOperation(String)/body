@@ -1,5 +1,4 @@
 {
   ClientResponse response=doGet("/operations/" + requestId);
-  Operation operation=(Operation)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
-  return operation;
+  return (Operation)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
 }

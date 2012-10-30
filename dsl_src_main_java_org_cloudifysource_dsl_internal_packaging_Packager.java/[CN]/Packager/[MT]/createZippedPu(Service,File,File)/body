@@ -1,6 +1,7 @@
 {
   logger.finer("trying to zip " + puFolderToZip.getAbsolutePath());
-  final String serviceName=service.getName() != null ? service.getName() : recipeFile.getParentFile().getName();
+  String name=service.getName();
+  final String serviceName=name != null ? name : recipeFile.getParentFile().getName();
   final File tmpFile=File.createTempFile("ServicePackage",null);
   tmpFile.delete();
   tmpFile.mkdir();

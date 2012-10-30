@@ -4,5 +4,6 @@
     fail("Expected DSLException for service " + EXTERNAL_OVERRIDES_SERVICE_PATH);
   }
  catch (  final IllegalArgumentException e) {
+    Assert.assertTrue(e.getMessage().contains("Cannot override property"));
   }
 }

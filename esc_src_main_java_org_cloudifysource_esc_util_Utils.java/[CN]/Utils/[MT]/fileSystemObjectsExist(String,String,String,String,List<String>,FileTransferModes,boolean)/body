@@ -6,7 +6,7 @@
  else {
     objectsExist=false;
   }
-  if (!fileTransferMode.equals(FileTransferModes.SCP)) {
+  if (!(fileTransferMode == FileTransferModes.SCP)) {
     throw new IOException("File resolving is currently not supported for this file transfer protocol (" + fileTransferMode + ")");
   }
   final FileSystemOptions opts=new FileSystemOptions();

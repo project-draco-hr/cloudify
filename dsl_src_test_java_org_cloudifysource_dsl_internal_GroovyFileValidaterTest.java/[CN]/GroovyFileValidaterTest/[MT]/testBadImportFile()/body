@@ -1,4 +1,4 @@
 {
   GroovyFileCompilationResult result=validator.validateFile(new File("src/test/resources/groovyFileValidation/badImport.groovy"));
-  Assert.assertEquals(false,result.isSuccess());
+  Assert.assertEquals(Boolean.FALSE,result.isSuccess());
 }

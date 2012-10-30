@@ -15,7 +15,7 @@
   logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
   if (uninstallOrder.size() > 0) {
     undeployTask=new FutureTask<Boolean>(new Runnable(){
-      long startTime=System.currentTimeMillis();
+      private final long startTime=System.currentTimeMillis();
       @Override public void run(){
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
           final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
@@ -36,7 +36,7 @@
         logger.log(Level.INFO,"Application " + applicationName + " undeployment complete");
       }
     }
-,true);
+,Boolean.TRUE);
     ((InternalAdmin)admin).scheduleAdminOperation(undeployTask);
   }
   final UUID lifecycleEventContainerID=startPollingForApplicationUninstallLifecycleEvents(applicationName,uninstallOrder,timeoutInMinutes,undeployTask);

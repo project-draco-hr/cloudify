@@ -1,4 +1,4 @@
 {
   GroovyFileCompilationResult result=validator.validateFile(new File("src/test/resources/groovyFileValidation/empty.groovy"));
-  Assert.assertEquals(true,result.isSuccess());
+  Assert.assertEquals(Boolean.TRUE,result.isSuccess());
 }

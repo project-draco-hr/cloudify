@@ -4,8 +4,7 @@
     Map<String,Object> readValue=mapper.readValue(new StringReader(resp),Map.class);
     Map<String,Object> accessMap=(Map<String,Object>)readValue.get("access");
     Map<String,String> tokenMap=(Map<String,String>)accessMap.get("token");
-    String tokenId=tokenMap.get("id");
-    return tokenId;
+    return tokenMap.get("id");
   }
  catch (  JsonParseException e) {
     throw new RuntimeException(e);

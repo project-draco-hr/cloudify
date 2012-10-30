@@ -7,6 +7,5 @@
   ClientResponse response=doGet(builder.toString());
   checkForError(response);
   String responseBody=response.getEntity(String.class);
-  HostedService hostedService=(HostedService)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return hostedService;
+  return (HostedService)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

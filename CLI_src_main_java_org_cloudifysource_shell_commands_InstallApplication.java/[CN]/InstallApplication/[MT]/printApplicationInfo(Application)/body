@@ -1,6 +1,7 @@
 {
-  logger.info("Application [" + applicationName + "] with "+ application.getServices().size()+ " services");
-  for (  final Service service : application.getServices()) {
+  List<Service> services=application.getServices();
+  logger.info("Application [" + applicationName + "] with "+ services.size()+ " services");
+  for (  final Service service : services) {
     if (service.getDependsOn().isEmpty()) {
       logger.info("Service [" + service.getName() + "] "+ service.getNumInstances()+ " planned instances");
     }

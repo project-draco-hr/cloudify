@@ -1,6 +1,5 @@
 {
   ClientConfig config=new DefaultClientConfig();
   config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,new HTTPSProperties(null,context));
-  Client client=Client.create(config);
-  return client;
+  return Client.create(config);
 }

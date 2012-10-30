@@ -1,6 +1,5 @@
 {
-  int contextIndex=uriPathArray.indexOf(getHostContext() + "/admin");
-  String relativePath=uriPathArray.substring(contextIndex);
-  String newUrlPath=getHostAddress() + relativePath;
-  return newUrlPath;
+  final int contextIndex=uriPathArray.indexOf(getHostContext() + "/admin");
+  final String relativePath=uriPathArray.substring(contextIndex);
+  return getHostAddress() + relativePath;
 }

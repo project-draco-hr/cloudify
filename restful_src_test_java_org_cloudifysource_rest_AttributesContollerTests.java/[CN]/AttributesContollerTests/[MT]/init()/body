@@ -1,6 +1,6 @@
 {
   handlerAdapter=applicationContext.getBean(RequestMappingHandlerAdapter.class);
-  controller=applicationContext.getBean(AttributesController.class);
+  AttributesController controller=applicationContext.getBean(AttributesController.class);
   singleAttributeUrisMapping=new HashMap<String,HashMap<String,HandlerMethod>>();
   multipleAttributesUrisMapping=new HashMap<String,HashMap<String,HandlerMethod>>();
   final String singleGlobalAttributeUri="/attributes/globals/" + ATTRIBUTE_NAME;

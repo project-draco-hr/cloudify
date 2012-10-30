@@ -2,6 +2,5 @@
   ClientResponse response=doGet("/services/disks");
   checkForError(response);
   String responseBody=response.getEntity(String.class);
-  Disks disks=(Disks)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return disks;
+  return (Disks)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

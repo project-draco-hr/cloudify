@@ -15,8 +15,8 @@
   if (monitors == null) {
     return false;
   }
-  final int instanceState=(Integer)monitors.get(CloudifyConstants.USM_MONITORS_STATE_ID);
-  if (CloudifyConstants.USMState.values()[instanceState].equals(state)) {
+  @SuppressWarnings("boxing") final int instanceState=(Integer)monitors.get(CloudifyConstants.USM_MONITORS_STATE_ID);
+  if (CloudifyConstants.USMState.values()[instanceState] == CloudifyConstants.USMState.RUNNING) {
     return true;
   }
   return false;

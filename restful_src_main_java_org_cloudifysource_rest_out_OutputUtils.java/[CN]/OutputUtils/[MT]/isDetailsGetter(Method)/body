@@ -1,4 +1,4 @@
 {
-  String name=getter.getName();
+  final String name=getter.getName();
   return name.startsWith("get") && name.endsWith("Details");
 }

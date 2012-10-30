@@ -5,8 +5,6 @@
       Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
       if (machine == null) {
         machine=this.admin.getMachines().getHostsByName().get(ip);
-      }
-      if (machine == null) {
         throw new RestErrorException(ResponseConstants.MACHINE_NOT_FOUND,ip);
       }
       final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);

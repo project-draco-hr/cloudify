@@ -1,6 +1,6 @@
 {
-  String methodName=method.getName();
-  Class<?> retType=method.getReturnType();
+  final String methodName=method.getName();
+  final Class<?> retType=method.getReturnType();
   if (methodName.equals("getGigaSpace") || methodName.equals("getIJSpace")) {
     return false;
   }

@@ -1,5 +1,5 @@
 {
-  if (this.mode.equals(RemoteExecutionModes.SSH)) {
+  if (this.mode == RemoteExecutionModes.SSH) {
     sb.append(str);
   }
  else {

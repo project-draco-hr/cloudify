@@ -36,7 +36,10 @@
   final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes(),!disableSelfHealing);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
-    zipFile.delete();
+    boolean delete=zipFile.delete();
+    if (!delete) {
+      logger.info("Failed to delete application file: " + zipFile.getAbsolutePath());
+    }
   }
   if (serviceOrder.charAt(0) != '[' && serviceOrder.charAt(serviceOrder.length() - 1) != ']') {
     throw new IllegalStateException("Cannot parse service order response: " + serviceOrder);

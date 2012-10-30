@@ -2,6 +2,5 @@
   ClientResponse response=doGet("/services/hostedservices");
   String responseBody=response.getEntity(String.class);
   checkForError(response);
-  HostedServices hostedServices=(HostedServices)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return hostedServices;
+  return (HostedServices)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

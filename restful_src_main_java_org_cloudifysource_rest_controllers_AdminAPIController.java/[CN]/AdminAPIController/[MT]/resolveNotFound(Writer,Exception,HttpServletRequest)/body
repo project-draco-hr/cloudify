@@ -1,5 +1,5 @@
 {
-  String requestURL=request.getRequestURL().toString();
+  final String requestURL=request.getRequestURL().toString();
   logger.log(Level.INFO,"Cannot find URL: " + requestURL,e);
   writer.write("{\"status\":\"error\", \"error\":\"" + "Cannot find URL: " + requestURL + "cause: "+ e.getMessage()+ "\"}");
 }

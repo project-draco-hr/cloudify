@@ -2,11 +2,11 @@
   if (isNull(listObject)) {
     return;
   }
-  int listSize=((List<?>)listObject).size();
-  String[] uriPathList=new String[listSize];
+  final int listSize=((List<?>)listObject).size();
+  final String[] uriPathList=new String[listSize];
   for (int i=0; i < listSize; i++) {
     uriPathList[i]=completeURL.concat("/" + i);
   }
-  String[] commands=completeURL.split("/");
+  final String[] commands=completeURL.split("/");
   outputMap.put(commands[commands.length - 1].concat("-Size"),uriPathList);
 }

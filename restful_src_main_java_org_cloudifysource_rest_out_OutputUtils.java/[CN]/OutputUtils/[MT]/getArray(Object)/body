@@ -1,6 +1,6 @@
 {
-  int arrlength=Array.getLength(val);
-  Object[] outputArray=new Object[arrlength];
+  final int arrlength=Array.getLength(val);
+  final Object[] outputArray=new Object[arrlength];
   for (int i=0; i < arrlength; ++i) {
     outputArray[i]=Array.get(val,i);
   }

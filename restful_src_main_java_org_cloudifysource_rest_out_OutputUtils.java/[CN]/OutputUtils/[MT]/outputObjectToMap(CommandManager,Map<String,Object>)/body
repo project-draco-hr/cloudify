@@ -1,6 +1,6 @@
 {
-  Object object=manager.getFinalCommand().getCommandObject();
-  String commandURL=getRelativePathURLS(manager.getCommandURL());
-  String commandName=manager.getFinalCommandName();
+  final Object object=manager.getFinalCommand().getCommandObject();
+  final String commandURL=getRelativePathURLS(manager.getCommandURL());
+  final String commandName=manager.getFinalCommandName();
   simpleOutputObjectToMap(object,commandURL,commandName,outputMap);
 }

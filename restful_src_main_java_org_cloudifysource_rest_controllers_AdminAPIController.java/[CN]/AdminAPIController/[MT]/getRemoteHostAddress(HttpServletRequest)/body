@@ -1,5 +1,5 @@
 {
-  String host=httpServletRequest.getServerName();
-  int port=httpServletRequest.getServerPort();
+  final String host=httpServletRequest.getServerName();
+  final int port=httpServletRequest.getServerPort();
   return "http://" + host + ":"+ port;
 }
