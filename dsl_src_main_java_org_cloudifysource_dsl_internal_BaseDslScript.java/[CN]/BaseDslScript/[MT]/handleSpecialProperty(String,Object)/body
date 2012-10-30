@@ -20,19 +20,20 @@
     final String extendServicePath=(String)localArg;
     try {
       File extendedServiceAbsPath=new File(extendServicePath);
-      if (!extendedServiceAbsPath.isAbsolute()) {
-        if (logger.isLoggable(Level.FINER)) {
-          logger.finer("locating extended file, using relative path [" + extendServicePath + "]");
-        }
-        final String dslFilePath=(String)getProperty(ServiceReader.DSL_FILE_PATH_PROPERTY_NAME);
-        if (dslFilePath == null) {
-          throw new IllegalStateException("No dsl file path present in binding context");
-        }
-        final String activeServiceDirectory=new File(dslFilePath).getParent();
-        extendedServiceAbsPath=new File(activeServiceDirectory + "/" + extendServicePath);
+      RecipePathResolver resolver=new RecipePathResolver();
+      final String dslFilePath=(String)getProperty(ServiceReader.DSL_FILE_PATH_PROPERTY_NAME);
+      if (dslFilePath == null) {
+        throw new IllegalStateException("No dsl file path present in binding context");
       }
- else       if (logger.isLoggable(Level.FINER)) {
-        logger.finer("locating extended file, using absolute path [" + extendServicePath + "]");
+      logger.info("dsl file path is --> " + dslFilePath);
+      final File activeServiceDirectory=new File(dslFilePath).getParentFile();
+      logger.info("current direcotry is --> " + activeServiceDirectory.getAbsolutePath());
+      resolver.setCurrentDirectory(activeServiceDirectory);
+      if (resolver.resolveService(extendedServiceAbsPath)) {
+        extendedServiceAbsPath=resolver.getResolved();
+      }
+ else {
+        throw new DSLException("could not find extended service in paths " + StringUtils.join(resolver.getPathsLooked().toArray(),", "));
       }
       if (logger.isLoggable(Level.FINER)) {
         logger.finer("reading extended service file [" + extendedServiceAbsPath + "]");
@@ -40,7 +41,7 @@
       final Service baseService=readServiceToExtend(extendedServiceAbsPath);
       BeanUtils.copyProperties(this.activeObject,baseService);
       final Service activeService=(Service)activeObject;
-      activeService.getExtendedServicesPaths().addFirst(extendServicePath);
+      activeService.getExtendedServicesPaths().addFirst(extendedServiceAbsPath.getAbsolutePath());
       return true;
     }
  catch (    final IllegalAccessException e) {

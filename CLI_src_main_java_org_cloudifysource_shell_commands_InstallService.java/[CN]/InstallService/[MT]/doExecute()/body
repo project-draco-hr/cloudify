@@ -1,6 +1,6 @@
 {
-  RecipePathResolver pathResolver=new RecipePathResolver("/recipes/services");
-  if (pathResolver.resolve(recipe)) {
+  RecipePathResolver pathResolver=new RecipePathResolver();
+  if (pathResolver.resolveService(recipe)) {
     recipe=pathResolver.getResolved();
   }
  else {

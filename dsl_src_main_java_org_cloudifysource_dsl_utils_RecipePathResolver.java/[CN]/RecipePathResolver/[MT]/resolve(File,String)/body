@@ -15,7 +15,7 @@
     resolved=recipe;
     return true;
   }
-  recipe=lookInDefaultLocation(recipeFileOrFolder);
+  recipe=lookInDefaultLocation(recipeFileOrFolder,defaultLocation);
   if (recipe != null) {
     resolved=recipe;
     return true;

@@ -1,8 +1,7 @@
 {
-  String pathSeparator=System.getProperty("file.separator");
-  RecipePathResolver pathResolver=new RecipePathResolver(ShellUtils.getCliDirectory() + pathSeparator + "plugins"+ pathSeparator+ "esc");
+  RecipePathResolver pathResolver=new RecipePathResolver();
   File providerDirectory=null;
-  if (pathResolver.resolve(new File(cloudProvider))) {
+  if (pathResolver.resolveCloud(new File(cloudProvider))) {
     providerDirectory=pathResolver.getResolved();
   }
  else {

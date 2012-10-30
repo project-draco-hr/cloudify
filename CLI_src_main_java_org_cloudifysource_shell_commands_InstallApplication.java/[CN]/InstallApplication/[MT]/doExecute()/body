@@ -1,6 +1,6 @@
 {
-  RecipePathResolver pathResolver=new RecipePathResolver("/recipes/apps");
-  if (pathResolver.resolve(applicationFile)) {
+  RecipePathResolver pathResolver=new RecipePathResolver();
+  if (pathResolver.resolveApplication(applicationFile)) {
     applicationFile=pathResolver.getResolved();
   }
  else {
