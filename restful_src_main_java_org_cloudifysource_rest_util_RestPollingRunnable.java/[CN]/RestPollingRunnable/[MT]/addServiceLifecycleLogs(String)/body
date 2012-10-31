@@ -5,6 +5,7 @@
   logger.log(Level.FINE,"Polling for lifecycle events on service: " + absolutePuName);
   final Zone zone=admin.getZones().getByName(absolutePuName);
   if (zone == null) {
+    logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist. not polling for logs");
     return;
   }
   final String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,absolutePuName);

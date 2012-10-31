@@ -1,5 +1,7 @@
 {
   final String machineIp=agent.getMachine().getHostAddress();
+  Exception failedToShutdownAgentException=null;
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
   agentStopEvent.setHostAddress(machineIp);
   agentStopEvent.setAgentUid(agent.getUid());
@@ -14,26 +16,33 @@
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStoppedEvent);
   }
  catch (  final Exception e) {
-    logger.log(Level.WARNING,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of machine.",e);
+    failedToShutdownAgentException=e;
+    logger.log(Level.FINE,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of machine.",e);
   }
   try {
     MachineStopRequestedEvent machineStopEvent=new MachineStopRequestedEvent();
     machineStopEvent.setHostAddress(machineIp);
     machineEventListener.elasticMachineProvisioningProgressChanged(machineStopEvent);
     logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
-    final boolean shutdownResult=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
-    logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownResult);
-    if (shutdownResult) {
+    final boolean shutdownSuccesfull=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
+    logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownSuccesfull);
+    if (shutdownSuccesfull) {
       MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
       machineStoppedEvent.setHostAddress(machineIp);
       machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
+      while (agent.isDiscovered()) {
+        Thread.sleep(DEFAULT_AGENT_DISCOVEREY_INTERVAL);
+        if (System.currentTimeMillis() > endTime && agent.isDiscovered()) {
+          if (failedToShutdownAgentException != null) {
+            throw new ElasticGridServiceAgentProvisioningException("Machine is stopped but agent [" + agent.getUid() + "] is still discovered."+ "Failed to shutdown agent:"+ failedToShutdownAgentException.getMessage(),failedToShutdownAgentException);
+          }
+          throw new ElasticGridServiceAgentProvisioningException("Machine is stopped but agent[" + agent.getUid() + "] is still discovered.");
+        }
+      }
     }
-    return shutdownResult;
+    return shutdownSuccesfull;
   }
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed with error: "+ e.getMessage(),e);
-  }
-catch (  final AdminException e) {
-    throw new ElasticMachineProvisioningException("Failed to shutdown agent " + agent.getMachine().getHostAddress(),e);
   }
 }
