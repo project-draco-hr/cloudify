@@ -1,20 +1,20 @@
 {
-  Class<?> aClass=object.getClass();
+  final Class<?> aClass=object.getClass();
   if (PrimitiveWrapper.is(aClass)) {
     outputMap.put(rawCommandName,object.toString());
     return;
   }
-  List<Method> validGetterMethods=getValidGetters(aClass);
+  final List<Method> validGetterMethods=getValidGetters(aClass);
   Object resultObject=null;
   String commandName;
-  for (  Method method : validGetterMethods) {
-    Class<?> methodReturnType=method.getReturnType();
+  for (  final Method method : validGetterMethods) {
+    final Class<?> methodReturnType=method.getReturnType();
     commandName=getGetterCommandName(method.getName());
     String nextCommandURL=null;
     if (isDetailsGetter(method)) {
       resultObject=safeInvoke(method,object);
       if (!isNull(resultObject)) {
-        HashMap<String,Object> detailsMap=new HashMap<String,Object>();
+        final HashMap<String,Object> detailsMap=new HashMap<String,Object>();
         simpleOutputObjectToMap(resultObject,commandURL + "/" + commandName,commandName,detailsMap);
         outputMap.put(commandName,detailsMap);
       }

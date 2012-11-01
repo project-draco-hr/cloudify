@@ -1,6 +1,6 @@
 {
   try {
-    return Packager.pack(recipeDirOrFile,null);
+    return Packager.pack(recipeDirOrFile);
   }
  catch (  final IOException e) {
     throw new CLIException(e);

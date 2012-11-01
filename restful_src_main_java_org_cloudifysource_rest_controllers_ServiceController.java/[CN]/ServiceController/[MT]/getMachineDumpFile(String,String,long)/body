@@ -5,28 +5,24 @@
       Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
       if (machine == null) {
         machine=this.admin.getMachines().getHostsByName().get(ip);
-      }
-      if (machine == null) {
         throw new RestErrorException(ResponseConstants.MACHINE_NOT_FOUND,ip);
       }
       final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
       return successStatus(dumpBytes);
     }
- else {
-      long totalSize=0;
-      final Iterator<Machine> iterator=this.admin.getMachines().iterator();
-      final Map<String,Object> map=new HashMap<String,Object>();
-      while (iterator.hasNext()) {
-        final Machine machine=iterator.next();
-        final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
-        totalSize+=dumpBytes.length;
-        if (totalSize > fileSizeLimit) {
-          throw new RestServiceException(ResponseConstants.DUMP_FILE_TOO_LARGE,Long.toString(dumpBytes.length),Long.toString(totalSize));
-        }
-        map.put(machine.getHostAddress(),dumpBytes);
+    long totalSize=0;
+    final Iterator<Machine> iterator=this.admin.getMachines().iterator();
+    final Map<String,Object> map=new HashMap<String,Object>();
+    while (iterator.hasNext()) {
+      final Machine machine=iterator.next();
+      final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
+      totalSize+=dumpBytes.length;
+      if (totalSize > fileSizeLimit) {
+        throw new RestServiceException(ResponseConstants.DUMP_FILE_TOO_LARGE,Long.toString(dumpBytes.length),Long.toString(totalSize));
       }
-      return successStatus(map);
+      map.put(machine.getHostAddress(),dumpBytes);
     }
+    return successStatus(map);
   }
  catch (  final RestServiceException e) {
     throw new RestErrorException(e.getMessageName(),e.getParams());

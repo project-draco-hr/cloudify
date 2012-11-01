@@ -4,11 +4,7 @@
     if (allowNull) {
       return defaultValue;
     }
- else {
-      throw new IllegalArgumentException("Template option '" + key + "' must be set");
-    }
+    throw new IllegalArgumentException("Template option '" + key + "' must be set");
   }
- else {
-    return value;
-  }
+  return value;
 }

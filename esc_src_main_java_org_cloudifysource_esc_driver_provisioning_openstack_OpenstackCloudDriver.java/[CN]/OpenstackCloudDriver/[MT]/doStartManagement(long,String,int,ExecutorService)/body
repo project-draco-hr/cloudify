@@ -25,16 +25,14 @@
   if (firstException == null) {
     return machines.toArray(new MachineDetails[machines.size()]);
   }
- else {
-    logger.warning("Provisioning of management machines failed, the following node will be shut down: " + machines);
-    for (    final MachineDetails machineDetails : machines) {
-      try {
-        this.terminateServer(machineDetails.getMachineId(),token,endTime);
-      }
- catch (      final Exception e) {
-        logger.log(Level.SEVERE,"While shutting down machine after provisioning of management machines failed, " + "shutdown of node: " + machineDetails.getMachineId() + " failed. This machine may be leaking. Error was: "+ e.getMessage(),e);
-      }
+  logger.warning("Provisioning of management machines failed, the following node will be shut down: " + machines);
+  for (  final MachineDetails machineDetails : machines) {
+    try {
+      this.terminateServer(machineDetails.getMachineId(),token,endTime);
     }
-    throw new CloudProvisioningException("Failed to launch management machines: " + firstException.getMessage(),firstException);
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"While shutting down machine after provisioning of management machines failed, " + "shutdown of node: " + machineDetails.getMachineId() + " failed. This machine may be leaking. Error was: "+ e.getMessage(),e);
+    }
   }
+  throw new CloudProvisioningException("Failed to launch management machines: " + firstException.getMessage(),firstException);
 }

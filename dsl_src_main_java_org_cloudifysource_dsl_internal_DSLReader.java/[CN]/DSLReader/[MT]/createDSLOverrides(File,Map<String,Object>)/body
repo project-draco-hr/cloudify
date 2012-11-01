@@ -1,0 +1,12 @@
+{
+  if (file == null) {
+    return;
+  }
+  try {
+    ConfigObject parse=new ConfigSlurper().parse(file.toURI().toURL());
+    parse.flatten(overridesMap);
+  }
+ catch (  final Exception e) {
+    throw new IOException("Failed to read overrides file: " + file,e);
+  }
+}

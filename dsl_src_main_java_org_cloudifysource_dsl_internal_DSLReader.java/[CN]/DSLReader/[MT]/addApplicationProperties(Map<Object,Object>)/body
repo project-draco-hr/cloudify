@@ -1,0 +1,8 @@
+{
+  if (applicationProperties == null) {
+    applicationProperties=createApplicationProperties();
+  }
+  for (  Entry<String,Object> entry : applicationProperties.entrySet()) {
+    properties.put(entry.getKey(),entry.getValue());
+  }
+}

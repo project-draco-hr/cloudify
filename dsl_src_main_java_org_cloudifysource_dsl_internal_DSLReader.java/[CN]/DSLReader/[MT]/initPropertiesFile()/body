@@ -12,16 +12,7 @@
   if (this.dslFile == null) {
     return;
   }
-  final String baseFileName=dslFile.getName();
-  final int indexOfLastComma=baseFileName.lastIndexOf('.');
-  String fileNamePrefix;
-  if (indexOfLastComma < 0) {
-    fileNamePrefix=baseFileName;
-  }
- else {
-    fileNamePrefix=baseFileName.substring(0,indexOfLastComma);
-  }
-  final String defaultPropertiesFileName=fileNamePrefix + ".properties";
+  final String defaultPropertiesFileName=dslFileNamePrefix + DSLUtils.PROPERTIES_FILE_SUFFIX;
   final File defaultPropertiesFile=new File(workDir,defaultPropertiesFileName);
   if (defaultPropertiesFile.exists()) {
     this.propertiesFileName=defaultPropertiesFileName;

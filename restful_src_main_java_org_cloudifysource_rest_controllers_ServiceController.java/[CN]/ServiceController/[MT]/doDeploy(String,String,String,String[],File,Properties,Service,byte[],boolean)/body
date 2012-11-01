@@ -28,7 +28,7 @@
  else {
       setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
       if (service == null || service.getScalingRules() == null) {
-        int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,externalProcessMemoryInMB);
+        final int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,externalProcessMemoryInMB);
         final ManualCapacityScaleConfig scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).create();
         deployment.scale(scaleConfig);
       }
@@ -58,8 +58,8 @@
     }
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
-      int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
-      double totalCpuCores=calculateTotalCpuCores(serviceName,service);
+      final int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
+      final double totalCpuCores=calculateTotalCpuCores(serviceName,service);
       final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,dedicated);
       if (dedicated) {
         scaleConfig.setAtMostOneContainerPerMachine(true);

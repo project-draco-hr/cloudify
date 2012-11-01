@@ -15,7 +15,18 @@
     }
     boolean found=false;
     try {
-      final File packedFile=Packager.pack(serviceDirectory,absolutePUName,new File[0]);
+      File applicationOverridesFile=overridesFile;
+      if (applicationOverridesFile == null) {
+        applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      }
+      if (applicationOverridesFile != null) {
+        FileUtils.copyFile(applicationOverridesFile,new File(serviceDirectory,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME));
+      }
+      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      if (applicationPropertiesFile != null) {
+        FileUtils.copyFile(applicationPropertiesFile,new File(serviceDirectory,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME));
+      }
+      File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);

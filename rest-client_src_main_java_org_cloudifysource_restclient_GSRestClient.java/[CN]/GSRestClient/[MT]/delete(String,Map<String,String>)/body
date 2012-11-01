@@ -5,6 +5,5 @@
       httpdelete.getParams().setParameter(entry.getKey(),entry.getValue());
     }
   }
-  Object executeHttpMethod=executeHttpMethod(httpdelete);
-  return executeHttpMethod;
+  return executeHttpMethod(httpdelete);
 }

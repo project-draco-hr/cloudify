@@ -6,6 +6,5 @@
   if (dslFile != null) {
     dslReader.setWorkDir(dslFile.getParentFile());
   }
-  final Cloud cloud=dslReader.readDslEntity(Cloud.class);
-  return cloud;
+  return dslReader.readDslEntity(Cloud.class);
 }

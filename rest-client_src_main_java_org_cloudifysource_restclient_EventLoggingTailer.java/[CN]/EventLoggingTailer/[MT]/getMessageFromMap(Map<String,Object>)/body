@@ -1,5 +1,4 @@
 {
   String cleanEventText=(lifecycleEventMap.get(EventLogConstants.getEventTextKey())).toString().split(" - ")[1];
-  String outputMessage='[' + lifecycleEventMap.get(EventLogConstants.getMachineHostNameKey()).toString() + '/'+ lifecycleEventMap.get(EventLogConstants.getMachineHostAddressKey())+ "] "+ cleanEventText;
-  return outputMessage;
+  return '[' + lifecycleEventMap.get(EventLogConstants.getMachineHostNameKey()).toString() + '/'+ lifecycleEventMap.get(EventLogConstants.getMachineHostAddressKey())+ "] "+ cleanEventText;
 }

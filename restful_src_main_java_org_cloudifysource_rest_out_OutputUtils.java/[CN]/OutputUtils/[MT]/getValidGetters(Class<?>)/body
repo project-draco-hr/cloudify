@@ -1,7 +1,7 @@
 {
-  Method[] allMethods=aClass.getMethods();
-  List<Method> validGetterMethods=new ArrayList<Method>();
-  for (  Method method : allMethods) {
+  final Method[] allMethods=aClass.getMethods();
+  final List<Method> validGetterMethods=new ArrayList<Method>();
+  for (  final Method method : allMethods) {
     if (isValidObjectGetter(method)) {
       validGetterMethods.add(method);
     }

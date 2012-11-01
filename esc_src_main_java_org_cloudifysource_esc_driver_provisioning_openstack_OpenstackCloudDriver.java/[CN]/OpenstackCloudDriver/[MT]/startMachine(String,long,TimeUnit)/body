@@ -13,9 +13,7 @@
       throttlingTimeout=calcEndTimeInMillis(DEFAULT_TIMEOUT_AFTER_CLOUD_INTERNAL_ERROR,TimeUnit.MILLISECONDS);
       throw new CloudProvisioningException(STARTING_THROTTLING,e);
     }
- else {
-      throw new CloudProvisioningException(e);
-    }
+    throw new CloudProvisioningException(e);
   }
   return md;
 }

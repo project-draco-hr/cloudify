@@ -5,9 +5,7 @@
     if (m.find()) {
       return m.group(1);
     }
- else {
-      throw new IllegalStateException("Failed to allocate floating IP - IP not found in response");
-    }
+    throw new IllegalStateException("Failed to allocate floating IP - IP not found in response");
   }
  catch (  final UniformInterfaceException e) {
     logRestError(e);

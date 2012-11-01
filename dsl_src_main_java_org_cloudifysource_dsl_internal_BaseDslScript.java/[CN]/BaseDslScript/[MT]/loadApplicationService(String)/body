@@ -10,15 +10,19 @@
   }
   DSLServiceCompilationResult result;
   try {
-    result=ServiceReader.getServiceFromDirectory(serviceDir,((Application)this.rootObject).getName());
+    Object applicationProperties=getBinding().getVariables().get(DSLUtils.DSL_PROPERTIES);
+    Map<String,Object> applicationPropertiesMap=null;
+    if (applicationProperties != null) {
+      if (applicationProperties instanceof Map) {
+        applicationPropertiesMap=(Map<String,Object>)applicationProperties;
+      }
+ else {
+        throw new DSLException("applicationProperties must be a map.");
+      }
+    }
+    result=ServiceReader.getApplicationServiceFromDirectory(serviceDir,applicationPropertiesMap);
   }
- catch (  final FileNotFoundException e) {
-    throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application: "+ e.getMessage(),e);
-  }
-catch (  final PackagingException e) {
-    throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application: "+ e.getMessage(),e);
-  }
-catch (  final DSLException e) {
+ catch (  final DSLException e) {
     throw new IllegalArgumentException("Failed to load service: " + serviceName + " while loading application: "+ e.getMessage(),e);
   }
   final Service service=result.getService();

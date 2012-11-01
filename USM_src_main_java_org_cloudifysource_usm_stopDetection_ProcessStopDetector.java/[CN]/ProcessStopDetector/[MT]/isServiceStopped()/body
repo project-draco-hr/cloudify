@@ -3,7 +3,7 @@
   if (logger.isLoggable(Level.FINE)) {
     logger.fine("Process based stop detection is running. Scanning processes: " + pids);
   }
-  if (pids.size() == 0) {
+  if (pids.isEmpty()) {
     return false;
   }
   if (stopOnAllProcessesDead) {

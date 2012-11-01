@@ -1,0 +1,4 @@
+File recipeDirOrFile
+boolean isDir
+Service service
+List<File> additionalServiceFiles

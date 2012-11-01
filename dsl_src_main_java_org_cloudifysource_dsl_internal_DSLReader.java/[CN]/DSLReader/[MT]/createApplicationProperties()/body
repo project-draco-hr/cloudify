@@ -1,0 +1,14 @@
+{
+  File externalPropertiesFile=getFileIfExist(null,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME);
+  Map<String,Object> externalProperties=new HashMap<String,Object>();
+  createDSLOverrides(externalPropertiesFile,externalProperties);
+  File externalOverridesFile=getFileIfExist(null,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME);
+  Map<String,Object> externalOverrides=new HashMap<String,Object>();
+  createDSLOverrides(externalOverridesFile,externalOverrides);
+  if (externalOverrides != null) {
+    for (    Entry<String,Object> entry : externalOverrides.entrySet()) {
+      externalProperties.put(entry.getKey(),entry.getValue());
+    }
+  }
+  return externalProperties;
+}

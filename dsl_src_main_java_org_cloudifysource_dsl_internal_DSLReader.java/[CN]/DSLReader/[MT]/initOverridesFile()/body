@@ -1,0 +1,3 @@
+{
+  overridesFile=getFileIfExist(overridesFile,dslFileNamePrefix + DSLUtils.OVERRIDES_FILE_SUFFIX);
+}

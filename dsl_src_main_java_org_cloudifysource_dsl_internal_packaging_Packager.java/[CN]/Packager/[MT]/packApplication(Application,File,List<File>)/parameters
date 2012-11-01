@@ -1,0 +1,3 @@
+Application application
+File applicationDir
+List<File> additionalServiceFiles

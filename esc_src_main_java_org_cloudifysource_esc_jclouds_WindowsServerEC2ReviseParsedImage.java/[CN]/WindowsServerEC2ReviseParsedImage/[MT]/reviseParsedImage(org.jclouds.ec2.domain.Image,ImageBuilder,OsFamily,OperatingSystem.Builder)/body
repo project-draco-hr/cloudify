@@ -1,5 +1,5 @@
 {
-  if (family.equals(OsFamily.UNRECOGNIZED)) {
+  if (family == OsFamily.UNRECOGNIZED) {
     if (from.getName() == null) {
       return;
     }

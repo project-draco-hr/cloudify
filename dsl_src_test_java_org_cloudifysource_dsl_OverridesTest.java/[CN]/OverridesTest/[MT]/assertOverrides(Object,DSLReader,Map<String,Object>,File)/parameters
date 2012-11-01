@@ -1,0 +1,4 @@
+Object object
+DSLReader reader
+Map<String,Object> expectedFields
+File workDirectory

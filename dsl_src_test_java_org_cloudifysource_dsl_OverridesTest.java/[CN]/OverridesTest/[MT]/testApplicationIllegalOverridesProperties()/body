@@ -1,0 +1,9 @@
+{
+  try {
+    testDSLOverrides(EXTERNAL_OVERRIDES_APPLICATION_PATH,APPLICATION_ILLEGAL_OVERRIDES_PROPERTIES_PATH,Application.class,null);
+    fail("Expected DSLException for application " + EXTERNAL_OVERRIDES_APPLICATION_PATH);
+  }
+ catch (  final IllegalArgumentException e) {
+    Assert.assertTrue(e.getMessage().contains("Cannot override property"));
+  }
+}

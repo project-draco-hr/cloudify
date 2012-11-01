@@ -6,7 +6,7 @@
  catch (  PackagingException e) {
     Throwable cause=e.getCause().getCause();
     Assert.assertTrue("Exception was not caused by DSLException",cause instanceof DSLException);
-    Assert.assertTrue("the proper exception was not thrown. expecting parsing to fail due to multiple processingUnit closures in serviceFile",cause.getMessage().contains("There may only be one type of processing unit defined. Found more than one"));
+    Assert.assertTrue("the proper exception was not thrown. expecting parsing to fail" + " due to multiple processingUnit closures in serviceFile",cause.getMessage().contains("There may only be one type of processing unit defined. Found more than one"));
   }
 catch (  DSLException e) {
     Assert.assertFalse("Failed on packaging. Exception was " + ExceptionUtils.getStackTrace(e),true);

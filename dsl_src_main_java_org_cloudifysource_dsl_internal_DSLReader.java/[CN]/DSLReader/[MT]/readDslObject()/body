@@ -8,9 +8,12 @@
   LinkedHashMap<Object,Object> properties=null;
   try {
     properties=createDSLProperties();
+    createDSLOverrides(overridesFile,overrideProperties);
+    overrideProperties(properties);
+    addApplicationProperties(properties);
   }
  catch (  final Exception e) {
-    throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile,e);
+    throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile.getName() + ": "+ e.getMessage(),e);
   }
   if (this.variables != null) {
     properties.putAll(this.variables);

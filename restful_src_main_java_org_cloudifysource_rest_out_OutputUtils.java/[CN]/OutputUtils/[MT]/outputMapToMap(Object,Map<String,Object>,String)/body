@@ -2,14 +2,14 @@
   if (isNull(mapObject)) {
     return;
   }
-  Map<?,?> map=(Map<?,?>)mapObject;
-  int mapSize=map.size();
-  String[] uriPathArray=new String[mapSize];
+  final Map<?,?> map=(Map<?,?>)mapObject;
+  final int mapSize=map.size();
+  final String[] uriPathArray=new String[mapSize];
   int i=0;
-  for (  Object key : map.keySet()) {
+  for (  final Object key : map.keySet()) {
     uriPathArray[i]=completeURL.concat("/" + key.toString().replace(" ","%20"));
     i++;
   }
-  String[] commands=completeURL.split("/");
+  final String[] commands=completeURL.split("/");
   outputMap.put(commands[commands.length - 1].concat("-Elements"),uriPathArray);
 }

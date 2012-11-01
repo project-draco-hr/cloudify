@@ -1,5 +1,5 @@
 {
-  if (SecurityPropagation.CLUSTER.equals(securityPropagation)) {
+  if (securityPropagation == SecurityPropagation.CLUSTER) {
     final org.springframework.security.core.userdetails.UserDetails userDetails=(org.springframework.security.core.userdetails.UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     adminFactory.userDetails(userDetails.getUsername(),userDetails.getPassword());
   }

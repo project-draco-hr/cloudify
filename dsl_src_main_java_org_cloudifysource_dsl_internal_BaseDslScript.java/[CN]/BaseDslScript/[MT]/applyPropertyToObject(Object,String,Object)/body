@@ -7,29 +7,17 @@
   }
   if (this.usedProperties.contains(name)) {
     if (!isDuplicatePropertyAllowed(value)) {
-      throw new IllegalArgumentException("Property duplication was found: Property " + name + " is defined more than once.");
+      throw new IllegalArgumentException("Property duplication was found: Property " + name + " is define"+ "d more than once.");
     }
   }
   this.usedProperties.add(name);
+  Object convertedValue=null;
   try {
-    PropertyDescriptor descriptor=PropertyUtils.getPropertyDescriptor(object,name);
-    Class<?> propertyType=descriptor.getPropertyType();
-    if (propertyType.equals(ExecutableDSLEntry.class)) {
-      final File workDirectory=getDSLFile().getParentFile();
-      final ExecutableDSLEntry executableEntry=ExecutableDSLEntryFactory.createEntry(value,name,workDirectory);
-      BeanUtils.setProperty(object,name,executableEntry);
+    convertedValue=convertValueToExecutableDSLEntryIfNeeded(getDSLFile().getParentFile(),object,name,value);
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("BeanUtils.setProperty(object=" + object + ",name="+ name+ ",value="+ convertedValue+ ",value.getClass()="+ convertedValue.getClass());
     }
- else     if (propertyType.equals(ExecutableEntriesMap.class)) {
-      final File workDirectory=getDSLFile().getParentFile();
-      final ExecutableEntriesMap entriesMap=ExecutableDSLEntryFactory.createEntriesMap(value,name,workDirectory);
-      BeanUtils.setProperty(object,name,entriesMap);
-    }
- else {
-      if (logger.isLoggable(Level.FINEST)) {
-        logger.finest("BeanUtils.setProperty(object=" + object + ",name="+ name+ ",value="+ value+ ",value.getClass()="+ value.getClass());
-      }
-      BeanUtils.setProperty(object,name,value);
-    }
+    BeanUtils.setProperty(object,name,convertedValue);
   }
  catch (  final DSLValidationException e) {
     throw new DSLValidationRuntimeException(e);

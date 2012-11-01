@@ -29,7 +29,7 @@
       exceptionOnStopMachines.add(e);
     }
   }
-  if (exceptionOnStopMachines.size() != 0) {
+  if (!(exceptionOnStopMachines.isEmpty())) {
     if (logger.isLoggable(Level.FINEST)) {
       logger.finest("here are all the exception caught from all threads");
       for (      Exception e : exceptionOnStopMachines) {

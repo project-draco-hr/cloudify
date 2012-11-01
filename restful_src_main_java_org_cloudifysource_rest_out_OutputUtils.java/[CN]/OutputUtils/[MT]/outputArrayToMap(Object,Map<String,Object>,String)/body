@@ -3,12 +3,12 @@
     return;
   }
   arrayObject=getArray(arrayObject);
-  int arrayLength=((Object[])arrayObject).length;
-  String[] uriPathArray=new String[arrayLength];
+  final int arrayLength=((Object[])arrayObject).length;
+  final String[] uriPathArray=new String[arrayLength];
   for (int i=0; i < arrayLength; i++) {
     uriPathArray[i]=completeURL.concat("/" + i);
   }
-  String[] commands=completeURL.split("/");
+  final String[] commands=completeURL.split("/");
   outputMap.put(commands[commands.length - 1] + "-Elements",uriPathArray);
   outputMap.put(commands[commands.length - 1] + "-Size",arrayLength);
 }

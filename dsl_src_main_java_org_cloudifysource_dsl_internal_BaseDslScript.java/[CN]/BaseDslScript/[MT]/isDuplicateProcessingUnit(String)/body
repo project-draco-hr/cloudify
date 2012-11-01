@@ -1,6 +1,6 @@
 {
-  final Set<String> processingUnitTypes=getProcessingUnitTypes();
-  if (processingUnitTypes.contains(name)) {
+  final Set<String> types=getProcessingUnitTypes();
+  if (types.contains(name)) {
     if (StringUtils.isEmpty(this.processingUnitType)) {
       this.processingUnitType=name;
     }

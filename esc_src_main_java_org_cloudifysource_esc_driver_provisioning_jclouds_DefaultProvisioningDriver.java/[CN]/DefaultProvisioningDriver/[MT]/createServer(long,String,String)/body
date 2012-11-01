@@ -22,7 +22,7 @@
     node=waitForNodeToBecomeReady(nodeId,end);
     machineDetails=createMachineDetailsFromNode(node);
     final FileTransferModes fileTransfer=cloudTemplate.getFileTransfer();
-    if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer.equals(FileTransferModes.CIFS)) {
+    if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer == FileTransferModes.CIFS) {
       if (machineDetails.getRemotePassword() == null) {
         handleEC2WindowsCredentials(end,node,machineDetails,cloudTemplate);
       }

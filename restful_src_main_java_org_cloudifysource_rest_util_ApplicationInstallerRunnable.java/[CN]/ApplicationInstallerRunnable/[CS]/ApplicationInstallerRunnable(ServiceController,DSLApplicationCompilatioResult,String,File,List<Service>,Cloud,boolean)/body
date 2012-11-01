@@ -1,0 +1,10 @@
+{
+  super();
+  this.controller=controller;
+  this.result=result;
+  this.applicationName=applicationName;
+  this.overridesFile=overridesFile;
+  this.services=services;
+  this.cloud=cloud;
+  this.selfHealing=selfHealing;
+}

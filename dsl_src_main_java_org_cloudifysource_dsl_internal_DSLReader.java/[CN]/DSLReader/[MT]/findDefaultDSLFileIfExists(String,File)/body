@@ -1,0 +1,12 @@
+{
+  File found=null;
+  try {
+    found=findDefaultDSLFile(fileNameSuffix,dir);
+  }
+ catch (  IllegalArgumentException e) {
+    if (e.getMessage().contains("Found multiple configuration files")) {
+      throw e;
+    }
+  }
+  return found;
+}

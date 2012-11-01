@@ -34,7 +34,7 @@
       sb.append(service.getName());
     }
     final String cycleString=sb.toString();
-    throw new IllegalArgumentException("The dependency graph of application: " + application.getName() + " contains one or more cycles. The services that form a cycle are part of the following group: "+ cycleString);
+    throw new IllegalArgumentException("The dependency graph of application: " + application.getName() + " contains one or more cycles. "+ "The services that form a cycle are part of the following group: "+ cycleString);
   }
   final TopologicalOrderIterator<Service,DefaultEdge> iterator=new TopologicalOrderIterator<Service,DefaultEdge>(graph);
   final List<Service> orderedList=new ArrayList<Service>();

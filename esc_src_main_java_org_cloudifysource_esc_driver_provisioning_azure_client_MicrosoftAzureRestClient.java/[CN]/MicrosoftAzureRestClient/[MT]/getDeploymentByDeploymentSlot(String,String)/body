@@ -9,6 +9,5 @@
     throw e;
   }
   String responseBody=response.getEntity(String.class);
-  Deployment deployment=(Deployment)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return deployment;
+  return (Deployment)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

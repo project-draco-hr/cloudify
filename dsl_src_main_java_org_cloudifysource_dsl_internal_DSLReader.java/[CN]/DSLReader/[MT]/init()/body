@@ -1,4 +1,6 @@
 {
   initDslFile();
+  setDslName();
   initPropertiesFile();
+  initOverridesFile();
 }

@@ -1,7 +1,7 @@
 {
-  CommandManager manager=new CommandManager(httpServletRequest,getAdmin());
+  final CommandManager manager=new CommandManager(httpServletRequest,getAdmin());
   manager.runCommands();
-  String hostAddress=getRemoteHostAddress(httpServletRequest);
-  String hostContext=httpServletRequest.getContextPath();
+  final String hostAddress=getRemoteHostAddress(httpServletRequest);
+  final String hostContext=httpServletRequest.getContextPath();
   return OutputDispatcher.outputResultObjectToMap(manager,hostAddress,hostContext);
 }

@@ -1,0 +1,13 @@
+{
+  final File packed=pack(recipeDirOrFile,service,additionalServiceFiles);
+  final File destFile=new File(packed.getParent(),destFileName + ".zip");
+  if (destFile.exists()) {
+    FileUtils.deleteQuietly(destFile);
+  }
+  if (packed.renameTo(destFile)) {
+    FileUtils.deleteQuietly(packed);
+    return destFile;
+  }
+  logger.info("Failed to rename " + packed.getName() + " to "+ destFile.getName());
+  return packed;
+}

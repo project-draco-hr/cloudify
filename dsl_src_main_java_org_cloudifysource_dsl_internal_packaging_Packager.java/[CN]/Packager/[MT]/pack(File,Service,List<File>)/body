@@ -1,0 +1,6 @@
+{
+  if (service == null) {
+    return pack(recipeDirOrFile,additionalServiceFiles);
+  }
+  return pack(recipeDirOrFile,recipeDirOrFile.isDirectory(),service,additionalServiceFiles);
+}

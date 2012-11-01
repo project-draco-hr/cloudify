@@ -1,0 +1,11 @@
+{
+  boolean actualSelfHealing=true;
+  if (selfHealing != null && !selfHealing) {
+    actualSelfHealing=false;
+  }
+  final File applicationFile=copyMultipartFileToLocalFile(srcFile);
+  final File applicationOverridesFile=copyMultipartFileToLocalFile(recipeOverridesFile);
+  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,timeout,actualSelfHealing);
+  applicationFile.delete();
+  return returnObject;
+}

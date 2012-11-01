@@ -1,0 +1,5 @@
+String applicationName
+int timeout
+MultipartFile srcFile
+MultipartFile recipeOverridesFile
+Boolean selfHealing

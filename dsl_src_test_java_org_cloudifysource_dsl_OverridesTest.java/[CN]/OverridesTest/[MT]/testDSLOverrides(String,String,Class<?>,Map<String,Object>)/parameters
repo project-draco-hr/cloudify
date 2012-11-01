@@ -1,0 +1,4 @@
+String servicePath
+String overridesFilePath
+Class<?> clazz
+Map<String,Object> expectedFields

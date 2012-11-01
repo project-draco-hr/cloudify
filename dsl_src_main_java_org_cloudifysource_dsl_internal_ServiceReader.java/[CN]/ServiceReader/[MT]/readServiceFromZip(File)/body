@@ -1,0 +1,9 @@
+{
+  final File projectFolder=extractProjectFile(inputFile);
+  try {
+    return ServiceReader.getServiceFromDirectory(projectFolder).getService();
+  }
+  finally {
+    FileUtils.forceDelete(projectFolder);
+  }
+}

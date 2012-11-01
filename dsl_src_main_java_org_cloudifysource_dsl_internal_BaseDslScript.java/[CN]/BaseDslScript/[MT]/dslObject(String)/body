@@ -13,10 +13,11 @@
   }
  else {
     if (data.isAllowInternalNode()) {
-      if (data.getParentElement() != null && !data.getParentElement().isEmpty()) {
-        final DSLObjectInitializerData parentType=getDSLInitializers().get(data.getParentElement());
+      String parentElement=data.getParentElement();
+      if (parentElement != null && !parentElement.isEmpty()) {
+        final DSLObjectInitializerData parentType=getDSLInitializers().get(parentElement);
         if (parentType == null) {
-          throw new IllegalStateException("The DSL type " + name + " has a declared parent type of "+ data.getParentElement()+ " which is not a known type. This should not happen.");
+          throw new IllegalStateException("The DSL type " + name + " has a declared parent type of "+ parentElement+ " which is not a known type. This should not happen.");
         }
         if (!parentType.getClazz().isAssignableFrom(this.activeObject.getClass())) {
           throw new DSLException("The type: " + name + " may only be nested under elements of type "+ parentType.getName());

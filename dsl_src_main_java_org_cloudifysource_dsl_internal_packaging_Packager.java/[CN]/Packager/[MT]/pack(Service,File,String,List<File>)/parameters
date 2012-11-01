@@ -1,0 +1,4 @@
+Service service
+File recipeDirOrFile
+String destFileName
+List<File> additionalServiceFiles

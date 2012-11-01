@@ -1,7 +1,7 @@
 {
   Object retval=null;
-  String className=obj.getClass().getName();
-  String methodName=method.getName();
+  final String className=obj.getClass().getName();
+  final String methodName=method.getName();
   try {
     if (getBlackList().contains(methodName + " " + className)) {
       return null;
@@ -16,10 +16,10 @@
       return "DataSet " + obj.getClass().getTypeParameters()[0];
     }
   }
- catch (  InvocationTargetException e) {
+ catch (  final InvocationTargetException e) {
     throw new RuntimeException("Invocation error: Failed to execute getter function " + method.getName() + ". Reason: "+ e.getMessage(),e);
   }
-catch (  Exception e) {
+catch (  final Exception e) {
     throw new RuntimeException("Failed to execute getter function " + method.getName() + ". Reason: "+ e.getMessage(),e);
   }
   return retval == null ? NULL_OBJECT_DENOTER : retval;

@@ -3,6 +3,5 @@
   checkForError(response);
   String responseBody=response.getEntity(String.class);
   checkForError(response);
-  AffinityGroups affinityGroups=(AffinityGroups)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return affinityGroups;
+  return (AffinityGroups)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

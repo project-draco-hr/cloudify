@@ -9,6 +9,5 @@
   }
   String first=xml.substring(0,i - 1);
   String second=xml.substring(i,xml.length());
-  String result=first + " xmlns=" + '"'+ nameSpace+ '"'+ ">"+ second;
-  return result;
+  return first + " xmlns=" + '"'+ nameSpace+ '"'+ ">"+ second;
 }

@@ -1,6 +1,5 @@
 {
   ClientResponse response=doGet("/services/storageservices");
   String responseBody=response.getEntity(String.class);
-  StorageServices storageServices=(StorageServices)MicrosoftAzureModelUtils.unmarshall(responseBody);
-  return storageServices;
+  return (StorageServices)MicrosoftAzureModelUtils.unmarshall(responseBody);
 }

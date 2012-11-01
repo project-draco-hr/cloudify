@@ -12,7 +12,7 @@
     serviceJarFiles.add(classpathDir);
   }
   final CompilerConfiguration cc=createCompilerConfiguration(baseClassName,serviceJarFiles);
-  final Binding binding=createGroovyBinding(properties,context,dslFile);
+  final Binding binding=createGroovyBinding(properties);
   final GroovyShell gs=new GroovyShell(ServiceReader.class.getClassLoader(),binding,cc);
   return gs;
 }

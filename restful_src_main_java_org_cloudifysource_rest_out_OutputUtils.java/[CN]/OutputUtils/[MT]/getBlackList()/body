@@ -1,5 +1,5 @@
 {
-  HashSet<String> blackList=new HashSet<String>();
+  final HashSet<String> blackList=new HashSet<String>();
   blackList.add("getReplicationStatus com.j_spaces.core.admin.JSpaceAdminProxy");
   blackList.add("getClusterConfigFile com.j_spaces.core.admin.JSpaceAdminProxy");
   blackList.add("getTargetSpaces com.gigaspaces.internal.client.spaceproxy.SpaceProxyImpl");

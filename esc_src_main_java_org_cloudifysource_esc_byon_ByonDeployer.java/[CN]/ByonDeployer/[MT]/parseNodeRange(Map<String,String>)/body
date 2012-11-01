@@ -6,12 +6,12 @@
   String currnentId;
   final String nodeId=nodeMap.get(CLOUD_NODE_ID).trim();
   final String ipRange=nodeMap.get(CLOUD_NODE_HOST_RANGE).trim();
-  final int ipDashIndex=ipRange.indexOf("-");
+  final int ipDashIndex=ipRange.indexOf('-');
   if (ipDashIndex < 0) {
     throw new CloudProvisioningException(EMPTY_IP_RANGE_ERR_MESSAGE);
   }
-  final String ipRangeStart=ipRange.substring(0,ipRange.indexOf("-"));
-  final String ipRangeEnd=ipRange.substring(ipRange.indexOf("-") + 1);
+  final String ipRangeStart=ipRange.substring(0,ipRange.indexOf('-'));
+  final String ipRangeEnd=ipRange.substring(ipRange.indexOf('-') + 1);
   if (IPUtils.ip2Long(ipRangeStart) < IPUtils.ip2Long(ipRangeEnd)) {
     if (isIdTemplate(nodeId)) {
       useIdAsTemplate=true;
