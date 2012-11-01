@@ -2,17 +2,11 @@
   if (applicationName == null) {
     return new GlobalCloudifyAttribute(name,value);
   }
- else {
-    if (serviceName == null) {
-      return new ApplicationCloudifyAttribute(applicationName,name,value);
-    }
- else {
-      if (instanceId == null) {
-        return new ServiceCloudifyAttribute(applicationName,serviceName,name,value);
-      }
- else {
-        return new InstanceCloudifyAttribute(applicationName,serviceName,instanceId,name,value);
-      }
-    }
+  if (serviceName == null) {
+    return new ApplicationCloudifyAttribute(applicationName,name,value);
   }
+  if (instanceId == null) {
+    return new ServiceCloudifyAttribute(applicationName,serviceName,name,value);
+  }
+  return new InstanceCloudifyAttribute(applicationName,serviceName,instanceId,name,value);
 }
