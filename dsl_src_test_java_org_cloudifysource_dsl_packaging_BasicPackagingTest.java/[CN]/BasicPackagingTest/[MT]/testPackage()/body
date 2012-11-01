@@ -1,0 +1,21 @@
+{
+  final File file=Packager.pack(new File("src/test/resources/PackagerValidation/BasicTest"),new ArrayList<File>(0));
+  assertNotNull(file);
+  assertTrue(file.exists());
+  final ZipFile zipFile=new ZipFile(file);
+  final ZipEntry manifestEntry=zipFile.getEntry("META-INF/MANIFEST.MF");
+  assertNotNull(manifestEntry);
+  final InputStream inputStream=zipFile.getInputStream(manifestEntry);
+  final Manifest mf=new Manifest();
+  mf.read(inputStream);
+  final String cp=mf.getMainAttributes().getValue("Class-Path");
+  assertNotNull(cp);
+  assertTrue(cp.contains("dsl.jar"));
+  assertTrue(cp.contains("usm.jar"));
+  inputStream.close();
+  assertNotNull(zipFile.getEntry("ext/groovy-service.groovy"));
+  assertNotNull(zipFile.getEntry("ext/run.groovy"));
+  assertNotNull(zipFile.getEntry("META-INF/spring/pu.xml"));
+  assertTrue(null == zipFile.getEntry("lib/usm.jar"));
+  file.delete();
+}
