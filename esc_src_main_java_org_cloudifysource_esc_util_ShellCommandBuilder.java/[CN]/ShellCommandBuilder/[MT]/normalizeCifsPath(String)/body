@@ -3,6 +3,9 @@
   if (pattern == null) {
     pattern=Pattern.compile(expression);
   }
+  if (str == null) {
+    return null;
+  }
   if (pattern.matcher(str).matches()) {
     final char drive=str.charAt(1);
     return drive + ":\\" + str.substring("/c$/".length()).replace('/','\\');
