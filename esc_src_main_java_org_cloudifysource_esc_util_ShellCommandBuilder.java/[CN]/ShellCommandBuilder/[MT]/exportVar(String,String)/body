@@ -1,4 +1,5 @@
 {
+  logger.fine("exporting var: " + name + " with value "+ value);
   String actualValue=value;
   if (value == null) {
     actualValue="";
@@ -8,12 +9,12 @@ case SSH:
     sb.append("export ").append(name).append("=").append(actualValue);
   break;
 case WINRM:
-String normalizedValue=normalizeCifsPath(value);
-if (value.startsWith("\"") && value.endsWith("\"")) {
-normalizedValue=value.replace("\"","'");
+String normalizedValue=normalizeCifsPath(actualValue);
+if (normalizedValue.startsWith("\"") && normalizedValue.endsWith("\"")) {
+normalizedValue=normalizedValue.replace("\"","'");
 }
  else {
-if (!(value.startsWith("\"") && value.endsWith("\""))) {
+if (!(normalizedValue.startsWith("\"") && normalizedValue.endsWith("\""))) {
   normalizedValue="'" + normalizedValue + "'";
 }
 }
