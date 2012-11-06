@@ -1,0 +1,14 @@
+{
+  DSLReader dslReader=new DSLReader();
+  dslReader.setDslFile(templatesFile);
+  dslReader.setCreateServiceContext(false);
+  Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
+  List<CloudTemplateHolder> cloudTemplatesList=new ArrayList<CloudTemplateHolder>();
+  for (  Entry<String,CloudTemplate> entry : cloudTemplateMap.entrySet()) {
+    CloudTemplateHolder holder=new CloudTemplateHolder();
+    holder.setName(entry.getKey());
+    holder.setCloudTemplate(entry.getValue());
+    cloudTemplatesList.add(holder);
+  }
+  return cloudTemplatesList.toArray(new CloudTemplateHolder[cloudTemplateMap.size()]);
+}

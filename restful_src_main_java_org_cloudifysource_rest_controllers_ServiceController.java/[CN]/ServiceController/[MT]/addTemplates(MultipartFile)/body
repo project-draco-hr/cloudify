@@ -1,0 +1,11 @@
+{
+  File localTemplatesFile=copyMultipartFileToLocalFile(templatesFile);
+  CloudTemplateHolder[] cloudTemplates=ServiceReader.getCloudTemplatesFromFile(localTemplatesFile);
+  LeaseContext<CloudTemplateHolder>[] writeResults=gigaSpace.writeMultiple(cloudTemplates);
+  for (  LeaseContext<CloudTemplateHolder> leaseContext : writeResults) {
+    if (leaseContext == null) {
+      throw new RestErrorException("Faild to add cloud templates from file " + templatesFile.getName());
+    }
+  }
+  return successStatus();
+}
