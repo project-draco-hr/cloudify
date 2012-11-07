@@ -1,0 +1,10 @@
+{
+  File fileUnderCurrentDir=new File(currentDir + File.separator + file.getPath());
+  if (fileUnderCurrentDir.exists()) {
+    return fileUnderCurrentDir;
+  }
+ else {
+    pathsLooked.add(fileUnderCurrentDir.getAbsolutePath());
+    return null;
+  }
+}

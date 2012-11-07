@@ -1,0 +1,7 @@
+{
+  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP);
+  if (envVar != null) {
+    return envVar;
+  }
+  return ServiceUtils.getPrimaryInetAddress();
+}

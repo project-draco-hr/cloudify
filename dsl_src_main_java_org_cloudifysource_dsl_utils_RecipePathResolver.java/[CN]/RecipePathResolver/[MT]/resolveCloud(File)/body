@@ -1,0 +1,3 @@
+{
+  return resolve(cloudRecipeFileOrFolder,DEFAULT_CLOUDS_PATH);
+}

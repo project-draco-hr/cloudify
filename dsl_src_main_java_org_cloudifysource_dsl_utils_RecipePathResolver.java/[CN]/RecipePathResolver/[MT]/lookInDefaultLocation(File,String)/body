@@ -1,0 +1,11 @@
+{
+  String homeDir=Environment.getHomeDirectory();
+  File fileUnderDefaultLocation=new File(homeDir + defaultLocation + File.separator+ file.getPath());
+  if (fileUnderDefaultLocation.exists()) {
+    return fileUnderDefaultLocation;
+  }
+ else {
+    pathsLooked.add(fileUnderDefaultLocation.getAbsolutePath());
+    return null;
+  }
+}

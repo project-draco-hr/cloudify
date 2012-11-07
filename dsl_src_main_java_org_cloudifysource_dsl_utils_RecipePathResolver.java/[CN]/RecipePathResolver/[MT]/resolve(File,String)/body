@@ -1,0 +1,24 @@
+{
+  if (recipeFileOrFolder.isAbsolute()) {
+    if (recipeFileOrFolder.exists()) {
+      resolved=recipeFileOrFolder;
+      return true;
+    }
+ else {
+      pathsLooked.add(recipeFileOrFolder.getAbsolutePath());
+      return false;
+    }
+  }
+  File recipe=null;
+  recipe=lookInCurrentDir(recipeFileOrFolder);
+  if (recipe != null) {
+    resolved=recipe;
+    return true;
+  }
+  recipe=lookInDefaultLocation(recipeFileOrFolder,defaultLocation);
+  if (recipe != null) {
+    resolved=recipe;
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,3 @@
+{
+  return resolve(recipeFileOrFolder,DEFAULT_SERVICES_PATH);
+}
