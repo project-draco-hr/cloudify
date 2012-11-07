@@ -7,3 +7,4 @@ Admin admin
 boolean isManagement
 File cloudFile
 GSAReservationId reservationId
+String templateName
