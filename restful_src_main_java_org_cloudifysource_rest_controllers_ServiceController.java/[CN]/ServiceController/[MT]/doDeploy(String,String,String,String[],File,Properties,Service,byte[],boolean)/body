@@ -59,7 +59,7 @@
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {
       final int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
-      final double totalCpuCores=calculateTotalCpuCores(serviceName,service);
+      final double totalCpuCores=calculateTotalCpuCores(service);
       final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,dedicated);
       if (dedicated) {
         scaleConfig.setAtMostOneContainerPerMachine(true);
