@@ -67,6 +67,7 @@
     details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_JAVA_URL,template.getJavaUrl());
   }
   details.setReservationId(reservationId);
+  details.setTemplateName(templateName);
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }
