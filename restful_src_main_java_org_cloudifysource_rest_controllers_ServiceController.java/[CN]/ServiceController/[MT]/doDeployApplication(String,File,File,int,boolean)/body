@@ -1,5 +1,6 @@
 {
   final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
+  validateTemplate(result.getApplication());
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
   if (!isLocalCloud() && cloud != null) {
     for (    final Service service : services) {

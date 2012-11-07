@@ -24,6 +24,7 @@
     }
     service=result.getService();
   }
+  validateTemplate(service);
   String[] agentZones;
   if (isLocalCloud()) {
     agentZones=new String[]{zone,LOCALCLOUD_ZONE};
