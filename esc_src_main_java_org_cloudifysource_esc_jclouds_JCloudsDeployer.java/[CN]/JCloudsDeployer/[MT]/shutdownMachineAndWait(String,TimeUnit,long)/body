@@ -2,13 +2,13 @@
   this.context.getComputeService().destroyNode(serverId);
   logger.info("Machine: " + serverId + " shutdown has started. Waiting for process to complete");
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
-  NodeState state=null;
+  NodeMetadata.Status state=null;
   while (System.currentTimeMillis() < endTime) {
     final NodeMetadata node=this.context.getComputeService().getNodeMetadata(serverId);
     if (node == null) {
       return;
     }
-    state=node.getState();
+    state=node.getStatus();
     logger.info("Machine: " + serverId + " state is: "+ state);
 switch (state) {
 case TERMINATED:
