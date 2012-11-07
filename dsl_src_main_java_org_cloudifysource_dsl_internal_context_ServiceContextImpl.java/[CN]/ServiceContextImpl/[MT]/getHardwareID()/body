@@ -1,0 +1,4 @@
+{
+  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_CLOUD_HARDWARE_ID);
+  return envVar;
+}

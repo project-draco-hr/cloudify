@@ -1,5 +1,5 @@
 {
-  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP);
+  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP);
   if (envVar != null) {
     return envVar;
   }

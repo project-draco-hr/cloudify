@@ -1,0 +1,4 @@
+{
+  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_CLOUD_IMAGE_ID);
+  return envVar;
+}
