@@ -4,7 +4,7 @@
   final Iterator<? extends NodeMetadata> nodesIterator=nodes.iterator();
   while (nodesIterator.hasNext()) {
     final NodeMetadata node=nodesIterator.next();
-    if (node.getState() != NodeState.TERMINATED) {
+    if (node.getStatus() != NodeMetadata.Status.TERMINATED) {
       runningNodes.add(node);
     }
   }

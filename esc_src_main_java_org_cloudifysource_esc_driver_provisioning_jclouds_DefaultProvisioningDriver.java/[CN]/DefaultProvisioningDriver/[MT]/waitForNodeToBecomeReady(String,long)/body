@@ -2,7 +2,7 @@
   NodeMetadata node=null;
   while (System.currentTimeMillis() < end) {
     node=deployer.getServerByID(id);
-switch (node.getState()) {
+switch (node.getStatus()) {
 case RUNNING:
       return node;
 case PENDING:
@@ -14,7 +14,7 @@ case ERROR:
 case UNRECOGNIZED:
 case SUSPENDED:
 default :
-throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + node.getState().toString() + " state. Node details: "+ node);
+throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + node.getStatus().toString() + " state. Node details: "+ node);
 }
 }
 throw new TimeoutException("Node failed to reach RUNNING mode in time");
