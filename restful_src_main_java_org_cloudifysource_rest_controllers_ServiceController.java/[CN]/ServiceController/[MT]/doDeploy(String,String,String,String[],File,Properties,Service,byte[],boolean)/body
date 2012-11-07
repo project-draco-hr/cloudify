@@ -15,9 +15,9 @@
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
   final int reservedMemoryCapacityPerMachineInMB=256;
-  contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
   if (!selfHealing) {
-    contextProperties.put(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
   }
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(serviceFile).memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES).addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).name(serviceName);
   if (cloud == null) {
