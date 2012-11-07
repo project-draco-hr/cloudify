@@ -4,10 +4,10 @@
   boolean atLeastOneServiceFailed=false;
   for (  ServiceDescription serviceDescription : serviceDescriptionList) {
     logger.log(Level.FINE,"checking status for service " + serviceDescription.getServiceName());
-    if (serviceDescription.getServiceState().equals(DeploymentState.INSTALLING) || serviceDescriptionList.isEmpty()) {
+    if (serviceDescription.getServiceState() == DeploymentState.INSTALLING || serviceDescriptionList.isEmpty()) {
       servicesStillInstalling=true;
     }
-    if (serviceDescription.getServiceState().equals(DeploymentState.FAILED)) {
+    if (serviceDescription.getServiceState() == DeploymentState.FAILED) {
       atLeastOneServiceFailed=true;
     }
   }
