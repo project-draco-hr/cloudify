@@ -8,10 +8,8 @@
       md.setPublicAddress(node.getPublicIp());
       break;
     }
- else {
-      if (currentStatus.contains("error")) {
-        throw new OpenstackException("Server provisioning failed. Node ID: " + node.getId() + ", status: "+ node.getStatus());
-      }
+    if (currentStatus.contains("error")) {
+      throw new OpenstackException("Server provisioning failed. Node ID: " + node.getId() + ", status: "+ node.getStatus());
     }
     if (System.currentTimeMillis() > endTime) {
       throw new TimeoutException("timeout creating server. last status:" + respone);
