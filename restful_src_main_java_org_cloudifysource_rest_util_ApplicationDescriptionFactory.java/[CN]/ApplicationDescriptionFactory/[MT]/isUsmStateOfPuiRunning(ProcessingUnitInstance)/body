@@ -1,6 +1,6 @@
 {
   USMState instanceState=getInstanceUsmState(pui);
-  if (instanceState.equals(CloudifyConstants.USMState.RUNNING)) {
+  if (instanceState == CloudifyConstants.USMState.RUNNING) {
     return true;
   }
   return false;

@@ -2,7 +2,7 @@
   final CustomServiceMonitors csm=new CustomServiceMonitors(CloudifyConstants.USM_MONITORS_SERVICE_ID);
   final ServiceMonitors[] res=new ServiceMonitors[]{csm};
   final USMState currentState=usm.getState();
-  if (!currentState.equals(USMState.RUNNING)) {
+  if (currentState != USMState.RUNNING) {
     csm.getMonitors().put(CloudifyConstants.USM_MONITORS_STATE_ID,currentState.ordinal());
     return res;
   }

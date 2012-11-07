@@ -1,7 +1,7 @@
 {
   ProcessingUnit pu=getProcessingUnit(absolutePuName);
   logger.log(Level.FINE,"Determining service state for service " + absolutePuName);
-  if (pu.getType().equals(ProcessingUnitType.UNIVERSAL)) {
+  if (pu.getType() == ProcessingUnitType.UNIVERSAL) {
     for (    InstanceDescription instanceDescription : serviceInstancesStatus) {
       String instanceState=instanceDescription.getInstanceStatus();
       if (instanceState.equals(USMState.ERROR.toString())) {
@@ -14,7 +14,7 @@
     return DeploymentState.STARTED;
   }
  else {
-    if (!pu.getStatus().equals(DeploymentStatus.INTACT)) {
+    if (pu.getStatus() != DeploymentStatus.INTACT) {
       return DeploymentState.INSTALLING;
     }
  else {
