@@ -18,5 +18,5 @@
   Assert.assertNotNull(lifecycle.getPreStop());
   Assert.assertNotNull(lifecycle.getStop());
   Assert.assertEquals(1,service.getExtendedServicesPaths().size());
-  Assert.assertEquals("test_parsing_base-service.groovy",service.getExtendedServicesPaths().getFirst());
+  Assert.assertEquals(new File(TEST_PARSING_RESOURCE_PATH,"test_parsing_base-service.groovy").getAbsolutePath(),service.getExtendedServicesPaths().getFirst());
 }
