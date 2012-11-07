@@ -1,0 +1,11 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "templates";
+  List<String> response;
+  try {
+    response=(List<String>)client.postFile(url,templatesFile);
+  }
+ catch (  RestException e) {
+    throw new CLIException(e);
+  }
+  return response;
+}

@@ -1,6 +1,0 @@
-{
-  File localTemplatesFile=copyMultipartFileToLocalFile(templatesFile);
-  CloudTemplateHolder[] cloudTemplates=ServiceReader.getCloudTemplatesFromFile(localTemplatesFile);
-  CloudTemplateHolder[][] takeMultiple=gigaSpace.takeMultiple(cloudTemplates);
-  return successStatus();
-}

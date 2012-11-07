@@ -1,11 +1,20 @@
 {
   File localTemplatesFile=copyMultipartFileToLocalFile(templatesFile);
   CloudTemplateHolder[] cloudTemplates=ServiceReader.getCloudTemplatesFromFile(localTemplatesFile);
-  LeaseContext<CloudTemplateHolder>[] writeResults=gigaSpace.writeMultiple(cloudTemplates);
-  for (  LeaseContext<CloudTemplateHolder> leaseContext : writeResults) {
-    if (leaseContext == null) {
-      throw new RestErrorException("Faild to add cloud templates from file " + templatesFile.getName());
+  List<String> failedToAddTemplates=new LinkedList<String>();
+  List<String> addedTemplates=new LinkedList<String>();
+  for (  CloudTemplateHolder holder : cloudTemplates) {
+    LeaseContext<CloudTemplateHolder> writeResult=gigaSpace.write(holder);
+    String name=holder.getName();
+    if (writeResult == null) {
+      failedToAddTemplates.add(name);
+    }
+ else {
+      addedTemplates.add(name);
     }
   }
-  return successStatus();
+  if (!failedToAddTemplates.isEmpty()) {
+    throw new RestErrorException("failed_to_add_templates",failedToAddTemplates.toString(),templatesFile.getName());
+  }
+  return successStatus(addedTemplates);
 }
