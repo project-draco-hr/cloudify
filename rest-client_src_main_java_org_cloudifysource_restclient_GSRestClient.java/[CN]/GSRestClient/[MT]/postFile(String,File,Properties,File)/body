@@ -1,0 +1,22 @@
+{
+  File tempFile;
+  try {
+    tempFile=writeMapToFile(params);
+  }
+ catch (  final IOException e) {
+    throw new RestException(e);
+  }
+  final MultipartEntity reqEntity=new MultipartEntity();
+  FileBody cloudOverridesBody=null;
+  if (cloudOverrides != null) {
+    cloudOverridesBody=new FileBody(cloudOverrides);
+    reqEntity.addPart("cloudOverridesFile",cloudOverridesBody);
+  }
+  final FileBody bin=new FileBody(file);
+  final FileBody propsFile=new FileBody(tempFile);
+  reqEntity.addPart("file",bin);
+  reqEntity.addPart("props",propsFile);
+  final HttpPost httppost=new HttpPost(getFullUrl(relativeUrl));
+  httppost.setEntity(reqEntity);
+  return executeHttpMethod(httppost);
+}

@@ -1,6 +1,8 @@
 {
   final File workDir=new File(servicePath);
-  final boolean isApplication=!clazz.equals(Service.class);
+  final boolean isApplication=clazz.equals(Application.class);
+  final boolean isService=clazz.equals(Service.class);
+  final boolean isCloud=clazz.equals(Cloud.class);
   File overridesFile=null;
   if (overridesFilePath != null) {
     overridesFile=new File(overridesFilePath);
@@ -13,8 +15,15 @@
     reader.addProperty(DSLUtils.APPLICATION_DIR,workDir.getAbsolutePath());
     reader.setCreateServiceContext(false);
   }
- else {
+ else   if (isService) {
     reader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  }
+ else   if (isCloud) {
+    reader.setDslFileNameSuffix(DSLReader.CLOUD_DSL_FILE_NAME_SUFFIX);
+    reader.setCreateServiceContext(false);
+  }
+ else {
+    throw new DSLException("Class " + clazz.getName() + " does not exist in the DSL Domain");
   }
   reader.setOverridesFile(overridesFile);
   final Object object=reader.readDslEntity(clazz);

@@ -1,0 +1,7 @@
+String applicationName
+int timeout
+MultipartFile srcFile
+String authGroups
+MultipartFile recipeOverridesFile
+MultipartFile cloudOverrides
+Boolean selfHealing

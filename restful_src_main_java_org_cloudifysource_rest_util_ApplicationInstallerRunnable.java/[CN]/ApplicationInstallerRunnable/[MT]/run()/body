@@ -4,7 +4,7 @@
   final boolean asyncInstallPossible=isAsyncInstallPossibleForApplication();
   logger.info("async install setting: " + asyncInstallPossible);
   try {
-    installServices(appDir,applicationName,authGroups,asyncInstallPossible,cloud);
+    installServices(appDir,applicationName,authGroups,asyncInstallPossible,cloud,cloudOverrides);
     FileUtils.deleteDirectory(appDir);
   }
  catch (  final IOException e) {

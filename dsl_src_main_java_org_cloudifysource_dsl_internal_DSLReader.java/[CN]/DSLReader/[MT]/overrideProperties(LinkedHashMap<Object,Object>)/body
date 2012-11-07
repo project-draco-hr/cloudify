@@ -1,7 +1,4 @@
 {
-  if (overridesFile == null) {
-    return;
-  }
   for (  Entry<String,Object> entry : overrideProperties.entrySet()) {
     String key=entry.getKey();
     Object propertyValue=entry.getValue();

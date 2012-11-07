@@ -1,6 +1,0 @@
-String applicationName
-int timeout
-MultipartFile srcFile
-String authGroups
-MultipartFile recipeOverridesFile
-Boolean selfHealing

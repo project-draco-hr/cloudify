@@ -1,9 +1,0 @@
-String applicationName
-String serviceName
-String authGroups
-String[] agentZones
-File extractedServiceFolder
-Properties contextProperties
-StatefulProcessingUnit puConfig
-String templateName
-boolean locationAware

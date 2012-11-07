@@ -1,0 +1,34 @@
+{
+  final File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder,serviceName);
+  final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
+  final int reservedMemoryCapacityPerMachineInMB=256;
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,authGroups).name(serviceName);
+  setContextProperties(deployment,contextProperties);
+  if (cloud == null) {
+    verifyEsmExistsInCluster();
+    if (isLocalCloud()) {
+      setPublicMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
+      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * numberOfInstances,MemoryUnit.MEGABYTES).create());
+    }
+ else {
+      setSharedMachineProvisioning(deployment,agentZones,reservedMemoryCapacityPerMachineInMB);
+      deployment.scale(ElasticScaleConfigFactory.createEagerScaleConfig());
+    }
+  }
+ else {
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    validateAndPrepareStatelessSla(puConfig.getSla(),cloud,template);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
+    if (cloudOverride != null) {
+      config.setCloudOverridesPerService(cloudOverride);
+    }
+    final String locators=extractLocators(admin);
+    config.setLocator(locators);
+    setDedicatedMachineProvisioning(deployment,config);
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    deployment.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig(containerMemoryInMB * numberOfInstances,0,locationAware,true));
+  }
+  deployAndWait(serviceName,deployment);
+  jarFile.delete();
+}

@@ -1,0 +1,3 @@
+{
+  properties.put(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_OVERRIDES_PER_SERVICE,FileUtils.readFileToString(cloudOverrides));
+}
