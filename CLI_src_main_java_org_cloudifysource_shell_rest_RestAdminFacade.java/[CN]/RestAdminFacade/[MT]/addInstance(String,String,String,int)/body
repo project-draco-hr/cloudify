@@ -3,6 +3,7 @@
   final Map<String,String> params=new HashMap<String,String>();
   try {
     params.put("timeout",Integer.toString(timeout));
+    params.put("authGroups",authGroups);
     client.post(url,params);
   }
  catch (  final ErrorStatusException e) {

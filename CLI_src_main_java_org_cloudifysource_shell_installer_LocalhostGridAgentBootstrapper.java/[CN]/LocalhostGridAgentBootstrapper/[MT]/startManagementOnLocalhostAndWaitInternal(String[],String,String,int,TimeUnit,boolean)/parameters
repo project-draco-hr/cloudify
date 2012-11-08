@@ -1,4 +1,6 @@
 String[] gsAgentArgs
+String username
+String password
 int timeout
 TimeUnit timeunit
 boolean isLocalCloud

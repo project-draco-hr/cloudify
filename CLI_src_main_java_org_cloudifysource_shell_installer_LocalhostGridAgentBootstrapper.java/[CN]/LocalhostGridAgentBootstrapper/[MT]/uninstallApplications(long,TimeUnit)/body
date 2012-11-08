@@ -1,11 +1,11 @@
 {
-  List<String> applicationsList=null;
+  Collection<String> applicationsList=null;
   boolean applicationsExist=false;
   try {
     if (!adminFacade.isConnected()) {
       throw new CLIException("Failed to fetch applications list. " + "Client is not connected to the rest server.");
     }
-    applicationsList=adminFacade.getApplicationsList();
+    applicationsList=adminFacade.getApplicationsMap().values();
     applicationsExist=applicationsList.size() > 1;
   }
  catch (  final CLIException e) {

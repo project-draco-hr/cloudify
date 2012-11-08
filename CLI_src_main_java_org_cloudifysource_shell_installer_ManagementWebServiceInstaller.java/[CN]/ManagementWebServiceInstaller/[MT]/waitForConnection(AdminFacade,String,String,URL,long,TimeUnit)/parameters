@@ -1,4 +1,6 @@
 AdminFacade adminFacade
+String username
+String password
 URL url
 long timeout
 TimeUnit timeunit

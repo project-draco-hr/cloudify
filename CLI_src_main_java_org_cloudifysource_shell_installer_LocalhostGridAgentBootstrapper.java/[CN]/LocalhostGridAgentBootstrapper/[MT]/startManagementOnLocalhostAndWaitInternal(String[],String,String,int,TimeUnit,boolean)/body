@@ -89,6 +89,8 @@
         restInstaller.setVerbose(verbose);
         restInstaller.setMemory(REST_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
         restInstaller.setPort(REST_PORT);
+        restInstaller.setUsername(username);
+        restInstaller.setPassword(password);
         restInstaller.setWarFile(new File(REST_FILE));
         restInstaller.setServiceName(REST_NAME);
         restInstaller.setManagementZone(MANAGEMENT_ZONE);

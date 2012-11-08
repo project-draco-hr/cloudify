@@ -3,6 +3,6 @@
   final URL url=waitForProcessingUnitInstance(agent,timeout,timeunit);
   final long remainingTime=timeunit.toMillis(timeout) - (System.currentTimeMillis() - startTime);
   if (waitForConnection) {
-    waitForConnection(adminFacade,url,remainingTime,TimeUnit.MILLISECONDS);
+    waitForConnection(adminFacade,username,password,url,remainingTime,TimeUnit.MILLISECONDS);
   }
 }

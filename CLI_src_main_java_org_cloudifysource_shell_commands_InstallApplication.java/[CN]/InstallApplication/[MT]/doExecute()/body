@@ -12,7 +12,7 @@
   if (StringUtils.isBlank(applicationName)) {
     applicationName=application.getName();
   }
-  if (adminFacade.getApplicationsList().contains(applicationName)) {
+  if (adminFacade.getApplicationsMap().containsValue(applicationName)) {
     throw new CLIStatusException("application_already_deployed",application.getName());
   }
   final File cloudConfigurationZipFile=createCloudConfigurationZipFile();
@@ -37,7 +37,7 @@
     zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,getTimeoutInMinutes(),!disableSelfHealing);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     boolean delete=zipFile.delete();

@@ -16,6 +16,6 @@
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);
-  installer.startManagementOnLocalhostAndWait(getTimeoutInMinutes(),TimeUnit.MINUTES);
+  installer.startManagementOnLocalhostAndWait(username,password,getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Management started successfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }

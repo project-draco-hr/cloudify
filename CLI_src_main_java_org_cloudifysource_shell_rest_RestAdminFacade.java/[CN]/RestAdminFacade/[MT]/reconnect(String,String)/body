@@ -1,0 +1,9 @@
+{
+  try {
+    client.setCredentials(username,password);
+    client.get(SERVICE_CONTROLLER_URL + "testrest");
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}
