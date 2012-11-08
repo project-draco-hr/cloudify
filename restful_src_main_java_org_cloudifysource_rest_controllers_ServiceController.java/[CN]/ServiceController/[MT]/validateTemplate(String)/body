@@ -1,4 +1,7 @@
 {
+  if (cloud == null) {
+    return;
+  }
   final CloudTemplate template=cloud.getTemplates().get(templateName);
   if (template == null) {
     throw new RestErrorException(CloudifyErrorMessages.MISSING_TEMPLATE.getName(),templateName);
