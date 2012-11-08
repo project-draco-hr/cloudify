@@ -1,4 +1,7 @@
 {
+  if (service == null) {
+    return;
+  }
   ComputeDetails compute=service.getCompute();
   String templateName=null;
   if (compute != null) {
