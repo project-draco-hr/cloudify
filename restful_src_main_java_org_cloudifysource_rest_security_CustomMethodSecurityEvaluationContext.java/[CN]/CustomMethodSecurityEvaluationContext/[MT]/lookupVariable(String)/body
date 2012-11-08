@@ -1,0 +1,11 @@
+{
+  Object variable=super.lookupVariable(name);
+  if (variable != null) {
+    return variable;
+  }
+  if (!argumentsAdded) {
+    addArgumentsAsVariables();
+    argumentsAdded=true;
+  }
+  return super.lookupVariable(name);
+}

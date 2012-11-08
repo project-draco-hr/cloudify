@@ -1,0 +1,3 @@
+{
+  return permissionEvaluator.hasPermission(authentication,(Serializable)targetId,targetType,permission);
+}

@@ -1,0 +1,9 @@
+{
+  CustomMethodSecurityEvaluationContext ctx=new CustomMethodSecurityEvaluationContext(auth,mi,parameterNameDiscoverer);
+  CustomMethodSecurityExpressionRoot root=new CustomMethodSecurityExpressionRoot(auth);
+  root.setTrustResolver(trustResolver);
+  root.setPermissionEvaluator(permissionEvaluator);
+  root.setRoleHierarchy(roleHierarchy);
+  ctx.setRootObject(root);
+  return ctx;
+}

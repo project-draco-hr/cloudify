@@ -1,0 +1,4 @@
+Authentication authentication
+Serializable targetId
+String targetType
+Object permission

@@ -1,0 +1,16 @@
+{
+  Object[] args=mi.getArguments();
+  if (args.length == 0) {
+    return;
+  }
+  Object targetObject=mi.getThis();
+  Method method=AopUtils.getMostSpecificMethod(mi.getMethod(),targetObject.getClass());
+  String[] paramNames=parameterNameDiscoverer.getParameterNames(method);
+  if (paramNames == null) {
+    logger.warn("Unable to resolve method parameter names for method: " + method + ". Debug symbol information is required if you are using parameter names in expressions.");
+    return;
+  }
+  for (int i=0; i < args.length; i++) {
+    super.setVariable(paramNames[i],args[i]);
+  }
+}

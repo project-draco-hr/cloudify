@@ -1,0 +1,4 @@
+{
+  logger.warning("Evaluating expression using hasPermission signature #2");
+  return false;
+}

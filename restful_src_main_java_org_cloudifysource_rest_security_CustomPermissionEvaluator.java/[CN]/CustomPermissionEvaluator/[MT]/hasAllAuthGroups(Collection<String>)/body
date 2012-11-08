@@ -1,0 +1,8 @@
+{
+  boolean isPermitted=false;
+  Collection<String> userAuthGroups=getUserAuthGroups();
+  if (userAuthGroups.containsAll(requestedAuthGroups)) {
+    isPermitted=true;
+  }
+  return isPermitted;
+}

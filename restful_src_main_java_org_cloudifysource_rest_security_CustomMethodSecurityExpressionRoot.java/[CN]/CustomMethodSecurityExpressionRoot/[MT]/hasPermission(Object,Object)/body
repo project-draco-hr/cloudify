@@ -1,0 +1,10 @@
+{
+  if (target == null) {
+    Set<String> userAuthGroups=new HashSet<String>();
+    for (    GrantedAuthority authority : authentication.getAuthorities()) {
+      userAuthGroups.add(authority.getAuthority());
+    }
+    target=userAuthGroups;
+  }
+  return permissionEvaluator.hasPermission(authentication,target,permission);
+}

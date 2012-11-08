@@ -1,0 +1,3 @@
+{
+  ((CustomMethodSecurityExpressionRoot)ctx.getRootObject().getValue()).setReturnObject(returnObject);
+}
