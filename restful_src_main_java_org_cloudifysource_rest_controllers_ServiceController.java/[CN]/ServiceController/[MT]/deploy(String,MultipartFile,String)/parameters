@@ -1,0 +1,3 @@
+String applicationName
+MultipartFile srcFile
+String authGroups

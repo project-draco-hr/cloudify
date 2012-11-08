@@ -1,0 +1,9 @@
+String applicationName
+String authGroups
+String serviceName
+String[] agentZones
+File srcFile
+Properties contextProperties
+DataGrid dataGridConfig
+String templateName
+boolean locationAware

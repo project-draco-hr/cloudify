@@ -1,3 +1,0 @@
-{
-  doDeploy(applicationName,serviceName,templateName,agentZones,srcFile,propsFile,null,null,selfHealing);
-}

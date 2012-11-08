@@ -1,0 +1,12 @@
+String serviceName
+String applicationName
+String authGroups
+String zone
+File srcFile
+Properties propsFile
+String originalTemplateName
+boolean isApplicationInstall
+int timeout
+TimeUnit timeUnit
+byte[] serviceCloudConfigurationContents
+boolean selfHealing

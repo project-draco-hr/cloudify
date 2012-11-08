@@ -1,6 +1,10 @@
 {
   final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   final int timeout=Integer.parseInt(params.get("timeout"));
+  String authGroups=params.get("authGroups");
+  if (StringUtils.isBlank(authGroups)) {
+    authGroups=Arrays.toString(getUserAuthGroups().toArray(new String[0]));
+  }
   final ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (processingUnit == null) {
     return unavailableServiceError(absolutePuName);

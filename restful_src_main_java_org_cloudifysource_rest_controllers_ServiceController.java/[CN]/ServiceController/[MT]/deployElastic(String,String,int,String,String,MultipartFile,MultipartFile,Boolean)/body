@@ -20,6 +20,7 @@
   if (destFile.exists()) {
     FileUtils.deleteQuietly(destFile);
   }
+  String authGroups=Arrays.toString(getUserAuthGroups().toArray(new String[0]));
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
     FileUtils.deleteQuietly(dest);
@@ -28,12 +29,12 @@
     if (cloudConfigurationFile != null) {
       cloudConfigurationContents=FileUtils.readFileToByteArray(cloudConfigurationFile);
     }
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,authGroups,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing);
     destFile.deleteOnExit();
   }
  else {
     logger.warning("Deployment file could not be renamed to the absolute pu name." + " Deploaying using the name " + dest.getName());
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,authGroups,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing);
     dest.deleteOnExit();
   }
   return successStatus(lifecycleEventsContainerID);

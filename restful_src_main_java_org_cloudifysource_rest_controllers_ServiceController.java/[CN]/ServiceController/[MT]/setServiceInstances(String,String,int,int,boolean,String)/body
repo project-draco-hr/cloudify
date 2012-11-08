@@ -1,0 +1,36 @@
+{
+  final Map<String,Object> returnMap=new HashMap<String,Object>();
+  final String puName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(puName);
+  if (pu == null) {
+    throw new RestErrorException(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
+  }
+  final Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
+  final String elasticProp=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC);
+  final String templateName=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
+  if (elasticProp == null || !Boolean.parseBoolean(elasticProp)) {
+    throw new RestErrorException(ResponseConstants.SERVICE_NOT_ELASTIC,serviceName);
+  }
+  logger.info("Scaling " + puName + " to "+ count+ " instances");
+  if (StringUtils.isBlank(authGroups)) {
+    authGroups=Arrays.toString(getUserAuthGroups().toArray(new String[0]));
+  }
+  UUID eventContainerID;
+  if (cloud == null) {
+    if (isLocalCloud()) {
+      pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(512 * count,MemoryUnit.MEGABYTES).create());
+    }
+ else {
+      throw new RestErrorException(ResponseConstants.SET_INSTANCES_NOT_SUPPORTED_IN_EAGER);
+    }
+  }
+ else {
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),0,locationAware,false));
+  }
+  logger.log(Level.INFO,"Starting to poll for lifecycle events.");
+  eventContainerID=startPollingForLifecycleEvents(serviceName,applicationName,count,false,timeout,TimeUnit.MINUTES);
+  returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,eventContainerID);
+  return successStatus(returnMap);
+}

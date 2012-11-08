@@ -1,8 +1,0 @@
-String applicationName
-String serviceName
-String[] agentZones
-File srcFile
-Properties contextProperties
-DataGrid dataGridConfig
-String templateName
-boolean locationAware
