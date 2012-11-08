@@ -4,8 +4,8 @@
   String serviceDescriptionAsString;
   for (  ServiceDescription serviceDescription : applicationDescription.getServicesDescription()) {
     serviceDescriptionAsString=getServiceDescriptionAsString(serviceDescription);
-    sb.append(NEW_LINE);
-    sb.append(TAB_CHAR + serviceDescriptionAsString);
+    sb.append(CloudifyConstants.NEW_LINE);
+    sb.append(CloudifyConstants.TAB_CHAR + serviceDescriptionAsString);
   }
   return sb.toString();
 }

@@ -1,0 +1,12 @@
+{
+  if (!dir.isDirectory()) {
+    throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory.");
+  }
+  final File[] files=dir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.endsWith(fileNameSuffix);
+    }
+  }
+);
+  return files;
+}

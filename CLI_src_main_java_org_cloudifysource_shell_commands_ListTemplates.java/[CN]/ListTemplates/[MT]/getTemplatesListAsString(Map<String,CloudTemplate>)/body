@@ -1,0 +1,12 @@
+{
+  StringBuilder sb=new StringBuilder();
+  for (  Entry<String,CloudTemplate> entry : templatesList.entrySet()) {
+    sb.append(ShellUtils.getBoldMessage(entry.getKey()));
+    sb.append(CloudifyConstants.NEW_LINE + CloudifyConstants.TAB_CHAR);
+    String cloudTemplateStr=entry.getValue().getFormatedString();
+    cloudTemplateStr=cloudTemplateStr.replaceAll(CloudifyConstants.NEW_LINE,CloudifyConstants.NEW_LINE + CloudifyConstants.TAB_CHAR);
+    sb.append(cloudTemplateStr);
+    sb.append(CloudifyConstants.NEW_LINE);
+  }
+  return sb.toString();
+}

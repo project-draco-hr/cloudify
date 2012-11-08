@@ -1,10 +1,5 @@
 {
-  final File[] files=dir.listFiles(new FilenameFilter(){
-    @Override public boolean accept(    final File dir,    final String name){
-      return name.endsWith(fileNameSuffix);
-    }
-  }
-);
+  File[] files=findDefaultDSLFiles(fileNameSuffix,dir);
   if (files.length > 1) {
     throw new IllegalArgumentException("Found multiple configuration files: " + Arrays.toString(files) + ". "+ "Only one may be supplied in the folder.");
   }

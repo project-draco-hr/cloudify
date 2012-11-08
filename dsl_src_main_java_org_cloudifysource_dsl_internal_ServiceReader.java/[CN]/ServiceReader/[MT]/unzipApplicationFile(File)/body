@@ -1,5 +1,0 @@
-{
-  final File baseDir=ServiceReader.createTempDir();
-  ZipUtils.unzip(inputFile,baseDir);
-  return baseDir;
-}

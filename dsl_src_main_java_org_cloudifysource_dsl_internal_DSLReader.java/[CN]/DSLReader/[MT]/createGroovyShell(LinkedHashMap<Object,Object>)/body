@@ -6,7 +6,9 @@
     classpathDir=this.getWorkDir().getAbsolutePath();
   }
  else   if (this.getDslFile() != null) {
-    classpathDir=this.getDslFile().getParentFile().getAbsolutePath();
+    if (this.getDslFile().getParentFile() != null) {
+      classpathDir=this.getDslFile().getParentFile().getAbsolutePath();
+    }
   }
   if (classpathDir != null) {
     serviceJarFiles.add(classpathDir);

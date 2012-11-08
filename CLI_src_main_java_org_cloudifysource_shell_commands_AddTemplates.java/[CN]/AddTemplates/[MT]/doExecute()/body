@@ -1,3 +1,7 @@
 {
-  return null;
+  List<CloudTemplateHolder> cloudTemplatesFromFolder=validateTemplatesFolder();
+  logger.info("Adding " + cloudTemplatesFromFolder.size() + " templates to cloud.");
+  File zipFile=Packager.createZipFile("templates",templatesFolder);
+  List<String> addedTempaltes=adminFacade.addTempaltes(zipFile);
+  return getFormattedMessage("templates_added_successfully",Color.GREEN,getFormatedAddedTemplateNamesList(addedTempaltes));
 }

@@ -1,3 +1,4 @@
 {
-  return null;
+  adminFacade.removeTemplate(templateName);
+  return getFormattedMessage("template_removed_successfully",Color.GREEN,templateName);
 }

@@ -16,6 +16,7 @@
         instream.close();
       }
  catch (      final IOException e) {
+        e.printStackTrace();
       }
     }
   }

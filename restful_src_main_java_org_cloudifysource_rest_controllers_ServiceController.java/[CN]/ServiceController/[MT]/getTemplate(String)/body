@@ -1,7 +1,7 @@
 {
   CloudTemplate cloudTemplate=cloud.getTemplates().get(templateName);
   if (cloudTemplate == null) {
-    throw new RestErrorException("failed_to_remove_template",templateName);
+    throw new RestErrorException("failed_to_get_template",templateName);
   }
   return successStatus(cloudTemplate);
 }

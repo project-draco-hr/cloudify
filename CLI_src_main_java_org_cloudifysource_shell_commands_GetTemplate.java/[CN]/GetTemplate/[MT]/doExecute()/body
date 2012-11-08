@@ -1,3 +1,4 @@
 {
-  return null;
+  CloudTemplate template=adminFacade.getTemplate(templateName);
+  return template.getFormatedString();
 }

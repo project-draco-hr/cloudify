@@ -42,8 +42,5 @@
       }
     }
   }
-  final File zipFile=File.createTempFile("application",".zip");
-  zipFile.deleteOnExit();
-  ZipUtils.zip(applicationFolderToPack,zipFile);
-  return zipFile;
+  return createZipFile("application",applicationFolderToPack);
 }

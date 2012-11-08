@@ -1,5 +1,5 @@
 {
-  final File tempFile=File.createTempFile("GS_tmp_dir",".application");
+  final File tempFile=File.createTempFile("GS_tmp_dir","." + suffix);
   final String path=tempFile.getAbsolutePath();
   tempFile.delete();
   tempFile.mkdirs();

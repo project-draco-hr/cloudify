@@ -1,14 +1,24 @@
 {
+  File actualTemplatesDslFile=templatesFile;
+  if (templatesFile.isFile()) {
+    if (templatesFile.getName().endsWith(".zip") || templatesFile.getName().endsWith(".jar")) {
+      final File tempFolder=ServiceReader.unzipApplicationFile(templatesFile,"templates");
+      actualTemplatesDslFile=DSLReader.findDefaultDSLFile(DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX,tempFolder);
+    }
+  }
+ else {
+    actualTemplatesDslFile=DSLReader.findDefaultDSLFile(DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX,templatesFile);
+  }
   DSLReader dslReader=new DSLReader();
-  dslReader.setDslFile(templatesFile);
+  dslReader.setDslFile(actualTemplatesDslFile);
   dslReader.setCreateServiceContext(false);
   Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
-  List<CloudTemplateHolder> cloudTemplatesList=new ArrayList<CloudTemplateHolder>();
+  List<CloudTemplateHolder> cloudTemplatesList=new LinkedList<CloudTemplateHolder>();
   for (  Entry<String,CloudTemplate> entry : cloudTemplateMap.entrySet()) {
     CloudTemplateHolder holder=new CloudTemplateHolder();
     holder.setName(entry.getKey());
     holder.setCloudTemplate(entry.getValue());
     cloudTemplatesList.add(holder);
   }
-  return cloudTemplatesList.toArray(new CloudTemplateHolder[cloudTemplateMap.size()]);
+  return cloudTemplatesList;
 }
