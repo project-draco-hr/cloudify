@@ -1,2 +1,4 @@
+String username
+String password
 long timeout
 TimeUnit timeoutUnit

@@ -3,7 +3,7 @@
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
-        adminFacade.connect(null,null,restAdminUrl.toString());
+        adminFacade.connect(username,password,restAdminUrl.toString());
         return true;
       }
  catch (      final CLIException e) {

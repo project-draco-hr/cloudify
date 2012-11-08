@@ -13,7 +13,5 @@
     }
   }
 );
-  if (StringUtils.notEmpty(username) && StringUtils.notEmpty(password)) {
-    httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY),new UsernamePasswordCredentials(username,password));
-  }
+  setCredentials(username,password);
 }

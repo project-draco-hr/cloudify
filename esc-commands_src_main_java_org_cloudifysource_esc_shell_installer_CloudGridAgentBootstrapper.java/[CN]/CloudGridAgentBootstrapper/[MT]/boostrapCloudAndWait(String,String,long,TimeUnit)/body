@@ -34,7 +34,7 @@ catch (  final TimeoutException e) {
       }
       final URL restAdminUrl=new URI("http",null,ipAddress,REST_GATEWAY_PORT,null,null,null).toURL();
       final URL webUIUrl=new URI("http",null,ipAddress,WEBUI_PORT,null,null,null).toURL();
-      waitForConnection(restAdminUrl,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+      waitForConnection(username,password,restAdminUrl,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
       logger.info("Rest service is available at: " + restAdminUrl + '.');
       logger.info("Webui service is available at: " + webUIUrl + '.');
     }
