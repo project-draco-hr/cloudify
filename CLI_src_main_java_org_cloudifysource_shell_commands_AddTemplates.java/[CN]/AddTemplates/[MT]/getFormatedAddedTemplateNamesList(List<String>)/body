@@ -4,5 +4,5 @@
   for (  String templateName : tempaltes) {
     sb.append(CloudifyConstants.NEW_LINE).append(CloudifyConstants.TAB_CHAR).append(templateName);
   }
-  return null;
+  return sb;
 }

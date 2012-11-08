@@ -1,26 +1,17 @@
 {
-  File localTemplatesFile=copyMultipartFileToLocalFile(templatesFolder);
-  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX,localTemplatesFile);
-  Map<File,List<CloudTemplateHolder>> cloudTemplates=new HashMap<File,List<CloudTemplateHolder>>();
-  for (  File templatesFile : templatesFiles) {
-    cloudTemplates.put(templatesFile,ServiceReader.getCloudTemplatesFromFile(templatesFile));
-  }
-  Map<String,List<String>> failedToAddTemplates=new HashMap<String,List<String>>();
+  File localTemplatesFolder=copyMultipartFileToLocalFile(templatesFolder);
+  List<CloudTemplateHolder> cloudTemplates=ServiceReader.getCloudTemplatesFromFile(localTemplatesFolder);
+  List<String> failedToAddTemplates=new LinkedList<String>();
   List<String> addedTemplates=new LinkedList<String>();
-  for (  Entry<File,List<CloudTemplateHolder>> entry : cloudTemplates.entrySet()) {
-    List<CloudTemplateHolder> holders=entry.getValue();
-    List<String> failedToAddTemplatesNames=new LinkedList<String>();
-    for (    CloudTemplateHolder holder : holders) {
-      LeaseContext<CloudTemplateHolder> writeResult=gigaSpace.write(holder);
-      String name=holder.getName();
-      if (writeResult == null) {
-        failedToAddTemplatesNames.add(name);
-      }
- else {
-        addedTemplates.add(name);
-      }
+  for (  CloudTemplateHolder holder : cloudTemplates) {
+    LeaseContext<CloudTemplateHolder> writeResult=gigaSpace.write(holder);
+    String name=holder.getName();
+    if (writeResult == null) {
+      failedToAddTemplates.add(name);
     }
-    failedToAddTemplates.put(entry.getKey().getName(),failedToAddTemplatesNames);
+ else {
+      addedTemplates.add(name);
+    }
   }
   if (!failedToAddTemplates.isEmpty()) {
     throw new RestErrorException("failed_to_add_templates",failedToAddTemplates.toString(),templatesFolder.getName());
