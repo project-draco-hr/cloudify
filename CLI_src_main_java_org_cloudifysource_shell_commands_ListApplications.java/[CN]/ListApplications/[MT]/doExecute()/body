@@ -1,3 +1,10 @@
 {
-  return adminFacade.getApplicationsMap();
+  Map<ApplicationDescription,String> origMap=adminFacade.getApplicationsDescriptionAndAuthGroups();
+  Map<String,String> displayMap=new HashMap<String,String>(origMap.size());
+  for (  ApplicationDescription applicationDescription : origMap.keySet()) {
+    String appDescStr=getApplicationDescriptionAsString(applicationDescription);
+    String authGroups=origMap.get(applicationDescription);
+    displayMap.put(appDescStr,authGroups);
+  }
+  return displayMap;
 }

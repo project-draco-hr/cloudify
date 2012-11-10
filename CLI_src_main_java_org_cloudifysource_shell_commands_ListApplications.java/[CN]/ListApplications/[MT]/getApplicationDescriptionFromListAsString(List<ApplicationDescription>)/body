@@ -1,8 +1,0 @@
-{
-  StringBuilder sb=new StringBuilder();
-  for (  ApplicationDescription applicationDescription : applicationsList) {
-    sb.append(getApplicationDescriptionAsString(applicationDescription));
-    sb.append(NEW_LINE);
-  }
-  return sb.toString();
-}
