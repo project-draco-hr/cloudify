@@ -1,8 +1,4 @@
 {
-  try {
-    return (Map<ApplicationDescription,String>)client.get("/service/applications/description");
-  }
- catch (  final ErrorStatusException e) {
-    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
-  }
+  Map<ApplicationDescription,String> applicationDescriptionMap=new HashMap<ApplicationDescription,String>();
+  return applicationDescriptionMap;
 }
