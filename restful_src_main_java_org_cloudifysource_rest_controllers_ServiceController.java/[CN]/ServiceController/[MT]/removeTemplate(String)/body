@@ -1,6 +1,8 @@
 {
-  CloudTemplate cloudTemplate=cloud.getTemplates().remove(templateName);
-  if (cloudTemplate == null) {
+  CloudTemplateHolder cloudTemplateHolder=new CloudTemplateHolder();
+  cloudTemplateHolder.setName(templateName);
+  CloudTemplateHolder take=gigaSpace.take(cloudTemplateHolder);
+  if (take == null) {
     throw new RestErrorException("failed_to_remove_template",templateName);
   }
   return successStatus();

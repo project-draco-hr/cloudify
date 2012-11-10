@@ -1,0 +1,15 @@
+{
+  listenerContainer=new SimpleNotifyContainerConfigurer(gigaSpace).template(new CloudTemplateHolder()).notifyWrite(true).notifyUpdate(true).notifyTake(true).fifo(true).eventListenerAnnotation(new Object(){
+    @SpaceDataEvent public void onNotification(    final CloudTemplateHolder data,    final GigaSpace space,    final TransactionStatus txStatus,    final EntryArrivedRemoteEvent entryArrivedRemoteEvent){
+      NotifyActionType notifyActionType=entryArrivedRemoteEvent.getNotifyActionType();
+      if (notifyActionType.isWrite() || notifyActionType.isUpdate()) {
+        addTemplateToCloud(data.getName(),data.getCloudTemplate());
+      }
+ else       if (notifyActionType.isTake()) {
+        removeTemplateFromCloud(data.getName());
+      }
+    }
+  }
+).notifyContainer();
+  listenerContainer.start();
+}

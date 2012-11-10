@@ -1,4 +1,4 @@
 {
   CloudTemplate template=adminFacade.getTemplate(templateName);
-  return template.getFormatedString();
+  return templateName + ":" + CloudifyConstants.NEW_LINE+ template.toFormatedString();
 }

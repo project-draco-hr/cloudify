@@ -1,0 +1,8 @@
+{
+  if (cloud != null) {
+    cloud.getTemplates().put(templateName,cloudTemplate);
+  }
+ else {
+    localCloudTemplates.put(templateName,cloudTemplate);
+  }
+}

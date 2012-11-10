@@ -1,5 +1,5 @@
 {
-  CloudTemplate cloudTemplate=cloud.getTemplates().get(templateName);
+  CloudTemplate cloudTemplate=getCloudTemplates().get(templateName);
   if (cloudTemplate == null) {
     throw new RestErrorException("failed_to_get_template",templateName);
   }

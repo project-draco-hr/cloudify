@@ -1,5 +1,7 @@
 {
   StringBuilder sb=new StringBuilder();
+  sb.append("{");
+  sb.append(CloudifyConstants.NEW_LINE);
   sb.append(getFormatedLine("imageId",imageId));
   sb.append(getFormatedLine("hardwareId",hardwareId));
   sb.append(getFormatedLine("locationId",locationId));
@@ -20,5 +22,6 @@
   sb.append(getFormatedLine("absoluteUploadDir",absoluteUploadDir));
   sb.append(getFormatedLine("env ",env));
   sb.append(getFormatedLine("machineMemoryMB",machineMemoryMB));
-  return sb.toString();
+  String str=sb.substring(0,sb.lastIndexOf(","));
+  return str + CloudifyConstants.NEW_LINE + "}";
 }

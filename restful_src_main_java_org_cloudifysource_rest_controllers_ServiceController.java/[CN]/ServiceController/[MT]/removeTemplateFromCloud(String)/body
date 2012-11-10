@@ -1,0 +1,8 @@
+{
+  if (cloud != null) {
+    cloud.getTemplates().remove(templateName);
+  }
+ else {
+    localCloudTemplates.remove(templateName);
+  }
+}

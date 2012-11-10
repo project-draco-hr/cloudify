@@ -1,0 +1,6 @@
+{
+  if (cloud != null) {
+    return cloud.getTemplates();
+  }
+  return localCloudTemplates;
+}

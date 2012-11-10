@@ -8,5 +8,5 @@
       return "";
     }
   }
-  return objName + " = " + obj.toString()+ CloudifyConstants.NEW_LINE;
+  return CloudifyConstants.TAB_CHAR + objName + " = "+ obj.toString()+ ","+ CloudifyConstants.NEW_LINE;
 }
