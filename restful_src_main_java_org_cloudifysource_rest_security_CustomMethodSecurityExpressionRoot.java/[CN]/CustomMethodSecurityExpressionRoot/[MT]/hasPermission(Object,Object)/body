@@ -1,10 +1,13 @@
 {
   if (target == null) {
-    Set<String> userAuthGroups=new HashSet<String>();
+    StringBuffer authGroups=new StringBuffer();
     for (    GrantedAuthority authority : authentication.getAuthorities()) {
-      userAuthGroups.add(authority.getAuthority());
+      if (authGroups.length() > 0) {
+        authGroups.append(", ");
+      }
+      authGroups.append(authority.getAuthority());
     }
-    target=userAuthGroups;
+    target=authGroups.toString();
   }
   return permissionEvaluator.hasPermission(authentication,target,permission);
 }
