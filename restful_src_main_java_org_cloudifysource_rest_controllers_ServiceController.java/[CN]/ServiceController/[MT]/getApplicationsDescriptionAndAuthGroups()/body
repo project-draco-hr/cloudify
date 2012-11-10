@@ -1,0 +1,22 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to list application descriptions");
+  }
+  final Applications apps=admin.getApplications();
+  ApplicationDescriptionFactory applicationDescriptionFactory=new ApplicationDescriptionFactory(admin);
+  Map<ApplicationDescription,String> appDescGroupsMap=new HashMap<ApplicationDescription,String>(apps.getSize());
+  for (  final Application app : apps) {
+    if (!app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
+      String appAuthGroups="";
+      ProcessingUnit pu=app.getProcessingUnits().iterator().next();
+      if (pu != null) {
+        appAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+      }
+ else {
+      }
+      ApplicationDescription applicationDescription=applicationDescriptionFactory.getApplicationDescription(app.getName());
+      appDescGroupsMap.put(applicationDescription,appAuthGroups);
+    }
+  }
+  return successStatus(appDescGroupsMap);
+}

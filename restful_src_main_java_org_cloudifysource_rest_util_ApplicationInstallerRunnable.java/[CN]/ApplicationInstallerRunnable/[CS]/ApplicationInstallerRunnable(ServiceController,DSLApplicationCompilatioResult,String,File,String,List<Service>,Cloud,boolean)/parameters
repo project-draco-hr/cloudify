@@ -1,8 +1,8 @@
 ServiceController controller
 DSLApplicationCompilatioResult result
 String applicationName
-String authGroups
 File overridesFile
+String authGroups
 List<Service> services
 Cloud cloud
 boolean selfHealing
