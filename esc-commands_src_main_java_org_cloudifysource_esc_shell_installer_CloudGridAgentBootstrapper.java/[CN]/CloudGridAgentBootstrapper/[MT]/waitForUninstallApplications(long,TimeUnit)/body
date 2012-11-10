@@ -1,7 +1,7 @@
 {
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
     @Override public boolean isDone() throws CLIException, InterruptedException {
-      final Collection<String> applications=adminFacade.getApplicationsMap().values();
+      final Collection<String> applications=adminFacade.getApplicationsNamesAndAuthGroups().values();
       boolean done=true;
       for (      final String application : applications) {
         if (!MANAGEMENT_APPLICATION.equals(application)) {

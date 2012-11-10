@@ -7,7 +7,6 @@
  else {
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
-  File providerDirectory=new File(ShellUtils.getCliDirectory(),"plugins" + PATH_SEPARATOR + "esc"+ PATH_SEPARATOR+ cloudProvider);
   copySecurityFile(providerDirectory.getAbsolutePath());
   File cloudFile=findCloudFile(providerDirectory);
   Cloud cloud=ServiceReader.readCloud(cloudFile);
