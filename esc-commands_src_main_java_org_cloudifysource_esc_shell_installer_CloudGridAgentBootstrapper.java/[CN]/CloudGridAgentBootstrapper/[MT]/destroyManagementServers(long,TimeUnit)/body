@@ -4,12 +4,12 @@
     if (!adminFacade.isConnected()) {
       throw new CLIException("Please connect to the cloud before tearing down");
     }
-    uninstallApplications(end);
+    uninstallApplications(end,(int)timeoutUnit.toMinutes(timeout));
   }
  else {
     if (adminFacade.isConnected()) {
       try {
-        uninstallApplications(end);
+        uninstallApplications(end,(int)timeoutUnit.toMinutes(timeout));
       }
  catch (      final InterruptedException e) {
         throw e;

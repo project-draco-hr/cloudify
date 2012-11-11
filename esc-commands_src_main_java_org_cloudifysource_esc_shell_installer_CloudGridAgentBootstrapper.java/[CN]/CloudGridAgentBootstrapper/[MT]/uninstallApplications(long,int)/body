@@ -4,7 +4,7 @@
     logger.info("Uninstalling the currently deployed applications");
     for (    final String application : applicationsList) {
       if (!application.equals(MANAGEMENT_APPLICATION)) {
-        adminFacade.uninstallApplication(application,(int)end);
+        adminFacade.uninstallApplication(application,timeoutInMinutes);
       }
     }
   }
