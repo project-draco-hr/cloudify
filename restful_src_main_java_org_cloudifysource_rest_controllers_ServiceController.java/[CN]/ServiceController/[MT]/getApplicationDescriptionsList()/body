@@ -1,0 +1,15 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to list application descriptions");
+  }
+  final Applications apps=admin.getApplications();
+  List<ApplicationDescription> appDescriptions=new ArrayList<ApplicationDescription>();
+  ApplicationDescriptionFactory applicationDescriptionFactory=new ApplicationDescriptionFactory(admin);
+  for (  final Application app : apps) {
+    if (!app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
+      ApplicationDescription applicationDescription=applicationDescriptionFactory.getApplicationDescription(app);
+      appDescriptions.add(applicationDescription);
+    }
+  }
+  return successStatus(appDescriptions);
+}
