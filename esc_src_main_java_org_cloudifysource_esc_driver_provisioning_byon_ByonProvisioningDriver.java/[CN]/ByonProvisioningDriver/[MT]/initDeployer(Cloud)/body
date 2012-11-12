@@ -15,7 +15,7 @@
             publishEvent("prov_invalid_configuration");
             throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration");
           }
-          deployer.addNodesList(templateName,nodesList);
+          deployer.addNodesList(templateName,templatesMap.get(templateName),nodesList);
         }
         return deployer;
       }

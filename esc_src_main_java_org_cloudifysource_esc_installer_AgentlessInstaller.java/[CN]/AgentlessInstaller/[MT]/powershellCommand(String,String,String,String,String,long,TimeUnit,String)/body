@@ -8,7 +8,7 @@
     throw new InstallerException("Error while trying to find powershell.exe",e);
   }
   logger.fine("Checking WinRM Connection");
-  checkConnection(targetHost,POWERSHELL_PORT,millisUntil,milliseconds);
+  checkConnection(targetHost,RemoteExecutionModes.WINRM.getPort(),millisUntil,milliseconds);
   logger.fine("Executing remote command");
   try {
     invokeRemotePowershellCommand(targetHost,command,username,password,localDir);

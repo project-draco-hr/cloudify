@@ -6,6 +6,9 @@
   for (  CustomNode node : parsedNodes) {
     try {
       node.setResolvedIP(IPUtils.resolveHostName(node.getPrivateIP()));
+      if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
+        node.setLoginPort(RemoteExecutionModes.WINRM.getPort());
+      }
       Utils.validateConnection(node.getResolvedIP(),node.getLoginPort());
       resolvedNodes.add(node);
     }
