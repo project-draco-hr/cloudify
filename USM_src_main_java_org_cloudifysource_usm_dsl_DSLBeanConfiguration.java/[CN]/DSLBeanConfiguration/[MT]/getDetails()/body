@@ -20,7 +20,7 @@
               }
             }
  else {
-              returnMap.put(entry.getKey(),entry.getValue().toString());
+              returnMap.put(entry.getKey(),entry.getValue());
             }
           }
         }

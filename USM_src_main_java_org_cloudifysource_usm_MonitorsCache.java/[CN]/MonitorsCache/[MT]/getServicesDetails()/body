@@ -15,6 +15,7 @@
       logger.log(Level.SEVERE,"Failed to execute service details",e);
     }
   }
+  handleGStringDetails(result);
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("Details are: " + Arrays.toString(res));
   }

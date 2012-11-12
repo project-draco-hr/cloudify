@@ -1,0 +1,8 @@
+{
+  final Set<Entry<String,Object>> entries=result.entrySet();
+  for (  final Entry<String,Object> entry : entries) {
+    if ((entry.getValue() != null) && (entry.getValue() instanceof GString)) {
+      entry.setValue(entry.getValue().toString());
+    }
+  }
+}
