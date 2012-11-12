@@ -22,6 +22,7 @@
   installer.setVerbose(verbose);
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
+  installer.setNoWebServices(noWebServices);
   limitLoggingLevel();
   logger.info(getFormattedMessage("bootstrapping_cloud",cloudProvider));
   try {
