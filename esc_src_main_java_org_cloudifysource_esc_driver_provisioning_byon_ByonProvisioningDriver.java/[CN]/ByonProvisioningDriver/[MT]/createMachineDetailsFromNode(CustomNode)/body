@@ -21,5 +21,7 @@
     publishEvent("prov_node_loading_failed",nodeStr);
     throw new CloudProvisioningException("Cloud node loading failed, missing credentials for server: " + nodeStr);
   }
+  md.setRemoteExecutionMode(template.getRemoteExecution());
+  md.setFileTransferMode(template.getFileTransfer());
   return md;
 }

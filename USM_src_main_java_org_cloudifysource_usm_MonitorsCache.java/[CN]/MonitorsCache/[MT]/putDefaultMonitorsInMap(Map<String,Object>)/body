@@ -1,6 +1,6 @@
 {
   map.put(CloudifyConstants.USM_MONITORS_CHILD_PROCESS_ID,usm.getChildProcessID());
-  List<Long> serviceProcessIDs=usm.getServiceProcessesList();
+  final List<Long> serviceProcessIDs=usm.getServiceProcessesList();
   if (serviceProcessIDs.size() > 0) {
     if (serviceProcessIDs.size() == 1) {
       map.put(CloudifyConstants.USM_MONITORS_ACTUAL_PROCESS_ID,serviceProcessIDs.get(0));
