@@ -5,7 +5,7 @@
     if (!adminFacade.isConnected()) {
       throw new CLIException("Failed to fetch applications list. " + "Client is not connected to the rest server.");
     }
-    applicationsList=adminFacade.getApplicationsNamesAndAuthGroups().values();
+    applicationsList=adminFacade.getApplicationNamesList();
     applicationsExist=applicationsList.size() > 1;
   }
  catch (  final CLIException e) {

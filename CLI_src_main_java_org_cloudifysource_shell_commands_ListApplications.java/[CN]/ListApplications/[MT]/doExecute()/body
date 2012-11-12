@@ -1,3 +1,5 @@
 {
-  return adminFacade.getApplicationsNamesAndAuthGroups();
+  List<ApplicationDescription> applicationsList=adminFacade.getApplicationDescriptionsList();
+  String appsDescription=getApplicationDescriptionFromListAsString(applicationsList);
+  return appsDescription;
 }

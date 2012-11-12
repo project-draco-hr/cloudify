@@ -1,6 +1,6 @@
 {
   try {
-    return (Map<String,String>)client.get("/service/applications");
+    return (List<String>)client.get("/service/applications");
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());

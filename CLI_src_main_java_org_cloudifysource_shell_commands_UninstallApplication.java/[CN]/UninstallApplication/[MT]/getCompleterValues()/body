@@ -1,6 +1,6 @@
 {
   try {
-    return getRestAdminFacade().getApplicationsNamesAndAuthGroups().values();
+    return getRestAdminFacade().getApplicationNamesList();
   }
  catch (  final CLIException e) {
     return new ArrayList<String>();

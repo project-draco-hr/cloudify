@@ -1,4 +1,0 @@
-{
-  Map<ApplicationDescription,String> applicationDescriptionMap=new HashMap<ApplicationDescription,String>();
-  return applicationDescriptionMap;
-}

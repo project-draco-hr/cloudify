@@ -1,6 +1,6 @@
 {
   boolean useApplicaiton=true;
-  Collection<String> applicationsList=adminFacade.getApplicationsNamesAndAuthGroups().values();
+  Collection<String> applicationsList=adminFacade.getApplicationNamesList();
   if (!applicationsList.contains(applicationName)) {
     useApplicaiton=ShellUtils.promptUser(session,"application_does_not_exist",applicationName);
   }
