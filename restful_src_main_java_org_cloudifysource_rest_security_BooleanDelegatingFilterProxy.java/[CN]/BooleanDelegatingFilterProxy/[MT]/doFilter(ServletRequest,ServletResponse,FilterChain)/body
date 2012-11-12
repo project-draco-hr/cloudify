@@ -1,0 +1,9 @@
+{
+  final String springSecured=System.getProperty("springSecured");
+  if (StringUtils.isNotBlank(springSecured) && springSecured.equalsIgnoreCase("true")) {
+    super.doFilter(request,response,filterChain);
+  }
+ else {
+    filterChain.doFilter(request,response);
+  }
+}
