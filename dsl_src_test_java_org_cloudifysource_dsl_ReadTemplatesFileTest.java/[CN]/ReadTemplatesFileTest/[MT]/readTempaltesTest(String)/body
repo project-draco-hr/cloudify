@@ -1,0 +1,16 @@
+{
+  try {
+    File templatesFile=new File(folderName);
+    List<CloudTemplateHolder> cloudTemplatesFromFile=ServiceReader.readCloudTemplatesFromDirectory(templatesFile);
+    Assert.assertEquals(2,cloudTemplatesFromFile.size());
+    List<String> names=new LinkedList<String>();
+    for (    CloudTemplateHolder cloudTemplateHolder : cloudTemplatesFromFile) {
+      names.add(cloudTemplateHolder.getName());
+    }
+    Assert.assertTrue(names.contains("SMALL_LINUX"));
+    Assert.assertTrue(names.contains("TOMCAT"));
+  }
+ catch (  Exception e) {
+    Assert.fail("failed to read templates from file " + TEMPLATES_FILE_PATH + " error message is "+ e.getMessage());
+  }
+}

@@ -1,0 +1,22 @@
+{
+  DSLReader dslReader=new DSLReader();
+  dslReader.setDslFile(templateFile);
+  dslReader.setCreateServiceContext(false);
+  dslReader.setValidateObjects(false);
+  Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
+  if (cloudTemplateMap.isEmpty()) {
+    throw new DSLException("The file " + templateFile + " evaluates to an empty map.");
+  }
+  int size=cloudTemplateMap.size();
+  if (size > DSLUtils.MAX_TEMPLATES_PER_FILE) {
+    throw new DSLException("Too many templates in one groovy file: " + templateFile + " declares "+ size+ " templates, only "+ DSLUtils.MAX_TEMPLATES_PER_FILE+ " allowed.");
+  }
+  List<CloudTemplateHolder> cloudTemplateHolders=new ArrayList<CloudTemplateHolder>(cloudTemplateMap.size());
+  for (  Entry<String,CloudTemplate> entry : cloudTemplateMap.entrySet()) {
+    CloudTemplateHolder holder=new CloudTemplateHolder();
+    holder.setName(entry.getKey());
+    holder.setCloudTemplate(entry.getValue());
+    cloudTemplateHolders.add(holder);
+  }
+  return cloudTemplateHolders;
+}

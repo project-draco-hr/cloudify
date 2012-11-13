@@ -1,0 +1,3 @@
+{
+  readTempaltesTest(NO_UPLOAD_TEMPLATES_FILE_PATH);
+}

@@ -1,20 +1,58 @@
 {
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",5,TimeUnit.SECONDS);
+  ProcessingUnitInstance[] instances=processingUnit.getInstances();
   File localTemplatesFolder=copyMultipartFileToLocalFile(templatesFolder);
-  List<CloudTemplateHolder> cloudTemplates=ServiceReader.getCloudTemplatesFromFile(localTemplatesFolder);
-  List<String> failedToAddTemplates=new LinkedList<String>();
-  List<String> addedTemplates=new LinkedList<String>();
-  for (  CloudTemplateHolder holder : cloudTemplates) {
-    LeaseContext<CloudTemplateHolder> writeResult=gigaSpace.write(holder);
-    String name=holder.getName();
-    if (writeResult == null) {
-      failedToAddTemplates.add(name);
-    }
- else {
-      addedTemplates.add(name);
-    }
+  List<CloudTemplateHolder> cloudTemplates=ServiceReader.readCloudTemplatesFromZip(localTemplatesFolder);
+  List<String> expectedAddedTemplatesList=new ArrayList<String>(cloudTemplates.size());
+  for (  CloudTemplateHolder cloudTemplateHolder : cloudTemplates) {
+    expectedAddedTemplatesList.add(cloudTemplateHolder.getName());
   }
-  if (!failedToAddTemplates.isEmpty()) {
-    throw new RestErrorException("failed_to_add_templates",failedToAddTemplates.toString(),templatesFolder.getName());
+  int expectedTemplatesSize=expectedAddedTemplatesList.size();
+  logger.log(Level.INFO,"addTemplates - sending templates folder to " + instances.length + " rest instances.");
+  for (  ProcessingUnitInstance processingUnitInstance : instances) {
+    JeeServiceDetails jeeDetails=processingUnitInstance.getJeeDetails();
+    String host=jeeDetails.getHost();
+    Integer port=jeeDetails.getPort();
+    int statusCode;
+    String responseBody;
+    try {
+      logger.log(Level.INFO,"addTemplates - sending templates to rest instance " + host + ":"+ port);
+      DefaultHttpClient httpClient=new DefaultHttpClient();
+      final MultipartEntity reqEntity=new MultipartEntity();
+      final FileBody bin=new FileBody(localTemplatesFolder);
+      reqEntity.addPart(CloudifyConstants.REQUEST_PARAM_TEMPLATES_DIR_NAME,bin);
+      String uri="http://" + host + ":"+ "8080/rest"+ "/service/templates/internal";
+      HttpPost postMethod=new HttpPost(uri);
+      postMethod.setEntity(reqEntity);
+      HttpResponse httpResponse=httpClient.execute(postMethod);
+      statusCode=httpResponse.getStatusLine().getStatusCode();
+      responseBody=getResponseBody(httpResponse,postMethod);
+    }
+ catch (    Exception e) {
+      logger.log(Level.INFO,"Failed to send the request to " + host + ":"+ port);
+      throw new RestErrorException("failed_to_send_templates_to_rest",templatesFolder.getName(),e.getCause().getMessage());
+    }
+    final ObjectMapper mapper=new ObjectMapper();
+    Object response=((Map<String,Object>)mapper.readValue(responseBody,TypeFactory.type(Map.class))).get(RestUtils.RESPONSE_KEY);
+    if (statusCode != HTTP_OK) {
+      logger.log(Level.INFO,"Response error code " + statusCode + ", response: "+ response);
+      throw new RestErrorException("failed_to_send_templates_to_rest",templatesFolder.getName(),response != null ? response.toString() : null);
+    }
+    final JavaType javaType=TypeFactory.type(Map.class);
+    List<String> responseList=(List<String>)response;
+    if (responseList == null) {
+      throw new RestErrorException("not_all_templates_was_added",templatesFolder.getName(),host,String.valueOf(expectedTemplatesSize),null);
+    }
+    int addedTemplatesSize=responseList.size();
+    if (addedTemplatesSize != expectedTemplatesSize) {
+      logger.log(Level.INFO,"Expected " + expectedTemplatesSize + " added templates"+ " but got "+ addedTemplatesSize+ ".");
+      throw new RestErrorException("not_all_templates_was_added",templatesFolder.getName(),host,String.valueOf(expectedTemplatesSize),String.valueOf(addedTemplatesSize));
+    }
+    if (!expectedAddedTemplatesList.equals(responseList)) {
+      logger.log(Level.INFO,"Expected added templates list: " + expectedAddedTemplatesList + ", actual list: "+ responseList+ ".");
+      throw new RestErrorException("not_all_templates_was_added",templatesFolder.getName(),host,expectedAddedTemplatesList.toString(),responseList.toString());
+    }
+    logger.log(Level.INFO,"Added " + addedTemplatesSize + " templates to REST host address "+ host);
   }
-  return successStatus(addedTemplates);
+  return successStatus(expectedAddedTemplatesList);
 }

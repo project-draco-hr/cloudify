@@ -1,0 +1,9 @@
+{
+  try {
+    File templatesFile=new File(ILLEGAL_DUPLICATE_TEMPLATES_FILES_PATH);
+    ServiceReader.readCloudTemplatesFromDirectory(templatesFile);
+    Assert.fail("Multiple templates in one file should throw an exception.");
+  }
+ catch (  Exception e) {
+  }
+}

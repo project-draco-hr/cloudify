@@ -1,0 +1,29 @@
+{
+  String hostAddress=InetAddress.getLocalHost().getHostAddress();
+  logger.log(Level.INFO,"addTemplatesInternal - adding templates to rest host: " + hostAddress);
+  File localTemplatesFolder=copyMultipartFileToLocalFile(templatesFolder);
+  List<CloudTemplateHolder> cloudTemplatesHolders=ServiceReader.readCloudTemplatesFromZip(localTemplatesFolder);
+  List<String> alreadyExistTemplates=new LinkedList<String>();
+  List<String> addedTemplates=new LinkedList<String>();
+  for (  CloudTemplateHolder holder : cloudTemplatesHolders) {
+    String name=holder.getName();
+    Map<String,CloudTemplate> cloudTemplates;
+    if (cloud == null) {
+      cloudTemplates=localCloudTemplates;
+    }
+ else {
+      cloudTemplates=cloud.getTemplates();
+    }
+    if (cloudTemplates.containsKey(name)) {
+      alreadyExistTemplates.add(name);
+    }
+ else {
+      cloudTemplates.put(name,holder.getCloudTemplate());
+      addedTemplates.add(name);
+    }
+  }
+  if (!alreadyExistTemplates.isEmpty()) {
+    throw new RestErrorException("failed_to_add_templates",alreadyExistTemplates.toString(),templatesFolder.getName(),"templates already exist.");
+  }
+  return successStatus(addedTemplates);
+}
