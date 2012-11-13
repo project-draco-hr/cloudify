@@ -39,7 +39,7 @@
         deployment.scale(scaleConfig);
       }
  else {
-        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB,false);
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,externalProcessMemoryInMB,false,false);
         deployment.scale(scaleConfig);
       }
     }
@@ -67,16 +67,10 @@
       final int totalMemoryInMB=calculateTotalMemoryInMB(serviceName,service,(int)cloudExternalProcessMemoryInMB);
       final double totalCpuCores=calculateTotalCpuCores(service);
       final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,locationAware,dedicated);
-      if (dedicated) {
-        scaleConfig.setAtMostOneContainerPerMachine(true);
-      }
       deployment.scale(scaleConfig);
     }
  else {
-      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware);
-      if (dedicated) {
-        scaleConfig.setAtMostOneContainerPerMachine(true);
-      }
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(serviceName,service,(int)cloudExternalProcessMemoryInMB,locationAware,dedicated);
       deployment.scale(scaleConfig);
     }
   }

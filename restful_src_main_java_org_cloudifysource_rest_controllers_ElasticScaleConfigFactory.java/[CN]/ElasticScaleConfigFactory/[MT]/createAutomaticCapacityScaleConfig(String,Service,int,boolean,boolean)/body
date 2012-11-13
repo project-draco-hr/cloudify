@@ -28,6 +28,9 @@
   if (locationAware) {
     scaleConfigurer.enableGridServiceAgentZonesAware();
   }
+  if (dedicated) {
+    scaleConfigurer.atMostOneContainerPerMachine();
+  }
   final Map<String,ServiceStatisticsDetails> serviceStatisticsByName=new HashMap<String,ServiceStatisticsDetails>();
   if (service.getServiceStatistics() != null) {
     for (    final AbstractStatisticsDetails calculatedStatistics : service.getServiceStatistics()) {
