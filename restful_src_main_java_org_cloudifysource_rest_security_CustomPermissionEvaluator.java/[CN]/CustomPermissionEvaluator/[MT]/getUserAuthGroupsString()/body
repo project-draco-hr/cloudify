@@ -1,0 +1,4 @@
+{
+  Collection<String> userAuthGroups=getUserAuthGroups();
+  return Arrays.toString(userAuthGroups.toArray(new String[0]));
+}

@@ -19,10 +19,12 @@
     throw new AuthorizationServiceException("Failed to verify permissions, invalid authorization groups object" + " type: " + targetDomainObject.getClass().getName());
   }
   if (targetDomainObject == null) {
-    targetDomainObject="";
+    authGroupsString="";
   }
-  authGroupsString=((String)targetDomainObject).trim();
-  requestedAuthGroups=splitAndTrim(authGroupsString,AUTH_GROUPS_DELIMITER);
+ else {
+    authGroupsString=((String)targetDomainObject).trim();
+  }
+  requestedAuthGroups=Utils.splitAndTrimString(authGroupsString,AUTH_GROUPS_DELIMITER);
   userAuthGroups=getUserAuthGroups();
   boolean relevantRoleFound=false;
   if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {

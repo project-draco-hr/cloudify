@@ -20,7 +20,13 @@
   if (destFile.exists()) {
     FileUtils.deleteQuietly(destFile);
   }
-  String authGroups=Arrays.toString(getUserAuthGroups().toArray(new String[0]));
+  String authGroups;
+  if (permissionEvaluator != null) {
+    authGroups=permissionEvaluator.getUserAuthGroupsString();
+  }
+ else {
+    authGroups="";
+  }
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
     FileUtils.deleteQuietly(dest);

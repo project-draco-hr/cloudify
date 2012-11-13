@@ -1,0 +1,4 @@
+{
+  logger.warn("Grant user " + authentication.getName() + " permission '"+ permission+ "' on object with Id '"+ targetId);
+  return true;
+}

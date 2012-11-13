@@ -1,8 +1,0 @@
-{
-  Collection<String> values=new HashSet<String>();
-  StringTokenizer tokenizer=new StringTokenizer(csvString,delimiter);
-  while (tokenizer.hasMoreTokens()) {
-    values.add(tokenizer.nextToken().trim());
-  }
-  return values;
-}
