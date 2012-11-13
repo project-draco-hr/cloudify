@@ -1,8 +1,14 @@
 {
+  final Integer port=(Integer)cloud.getCustom().get(CloudifyConstants.CUSTOM_CLOUD_PROPERTY_UNICAST_DISCOVERY_PORT);
   final StringBuilder lookupSb=new StringBuilder();
   for (  final InstallationDetails detail : installations) {
     final String ip=cloud.getConfiguration().isConnectToPrivateIp() ? detail.getPrivateIp() : detail.getPublicIp();
-    lookupSb.append(ip).append(',');
+    if (port == null) {
+      lookupSb.append(ip).append(',');
+    }
+ else {
+      lookupSb.append(ip).append(":").append(port).append(',');
+    }
   }
   lookupSb.setLength(lookupSb.length() - 1);
   return lookupSb.toString();
