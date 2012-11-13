@@ -48,8 +48,8 @@ return false;
 }
 if (details.getKeyFile() != null) {
 if (fileInfo.getFile().getType() == FileType.FILE) {
-String fileName=new File(fileInfo.getFile().getURL().toString()).getName();
-String keyFileName=new File(details.getKeyFile()).getName();
+final String fileName=new File(fileInfo.getFile().getURL().toString()).getName();
+final String keyFileName=new File(details.getKeyFile()).getName();
 if (StringUtils.equals(keyFileName,fileName)) {
 if (!details.isLus()) {
 return false;

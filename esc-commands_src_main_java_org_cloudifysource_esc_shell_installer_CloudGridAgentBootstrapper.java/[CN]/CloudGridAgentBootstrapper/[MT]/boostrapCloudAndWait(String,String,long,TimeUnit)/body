@@ -24,19 +24,8 @@ catch (  final TimeoutException e) {
       throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. " + "Please shut them down before continuing");
     }
     startManagememntProcesses(servers,end);
-    for (    final MachineDetails server : servers) {
-      String ipAddress=null;
-      if (cloud.getConfiguration().isBootstrapManagementOnPublicIp()) {
-        ipAddress=server.getPublicAddress();
-      }
- else {
-        ipAddress=server.getPrivateAddress();
-      }
-      final URL restAdminUrl=new URI("http",null,ipAddress,REST_GATEWAY_PORT,null,null,null).toURL();
-      final URL webUIUrl=new URI("http",null,ipAddress,WEBUI_PORT,null,null,null).toURL();
-      waitForConnection(username,password,restAdminUrl,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
-      logger.info("Rest service is available at: " + restAdminUrl + '.');
-      logger.info("Webui service is available at: " + webUIUrl + '.');
+    if (!isNoWebServices()) {
+      waitForManagementWebServices(username,password,end,servers);
     }
   }
  catch (  final IOException e) {
