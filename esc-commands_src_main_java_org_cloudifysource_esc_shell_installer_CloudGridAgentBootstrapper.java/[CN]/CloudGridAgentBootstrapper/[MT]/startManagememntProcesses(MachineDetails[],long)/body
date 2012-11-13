@@ -5,7 +5,8 @@
   final CloudTemplate template=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
   final int numOfManagementMachines=machines.length;
   final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines,template);
-  for (int i=1; i < installations.length; i++) {
+  int i=isNoWebServices() ? 0 : 1;
+  for (; i < installations.length; i++) {
     installations[i].setNoWebServices(true);
   }
   final String lookup=createLocatorsString(installations);
