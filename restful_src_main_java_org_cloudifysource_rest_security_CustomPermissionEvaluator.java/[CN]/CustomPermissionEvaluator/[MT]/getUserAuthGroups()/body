@@ -1,7 +1,7 @@
 {
   Set<String> userAuthGroups=new HashSet<String>();
   Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-  if (authentication instanceof AnonymousAuthenticationToken) {
+  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new AccessDeniedException("Anonymous user is not supported");
   }
   for (  GrantedAuthority authority : authentication.getAuthorities()) {

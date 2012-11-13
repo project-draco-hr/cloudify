@@ -2,7 +2,7 @@
   boolean permissionGranted=false;
   String permissionName, authGroupsString;
   Collection<String> requestedAuthGroups, userAuthGroups;
-  if (authentication instanceof AnonymousAuthenticationToken) {
+  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new AccessDeniedException("Anonymous user is not supported");
   }
   if (permission != null && !(permission instanceof String)) {
