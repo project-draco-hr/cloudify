@@ -1,5 +1,5 @@
 {
-  final String springSecured=System.getenv(CloudifyConstants.SPRING_BEANS_PROFILE_ENV_VAR);
+  final String springSecured=System.getenv(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR);
   if (StringUtils.isNotBlank(springSecured) && springSecured.equalsIgnoreCase("true")) {
     super.doFilter(request,response,filterChain);
   }
