@@ -1,4 +1,9 @@
 {
+  if (cloudOverrides != null) {
+    if (cloudOverrides.length() >= TEN_K) {
+      throw new CLIStatusException(CloudifyErrorMessages.CLOUD_OVERRIDES_TO_LONG.getName());
+    }
+  }
   RecipePathResolver pathResolver=new RecipePathResolver();
   if (pathResolver.resolveApplication(applicationFile)) {
     applicationFile=pathResolver.getResolved();
@@ -37,7 +42,7 @@
     zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,cloudOverrides);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     boolean delete=zipFile.delete();

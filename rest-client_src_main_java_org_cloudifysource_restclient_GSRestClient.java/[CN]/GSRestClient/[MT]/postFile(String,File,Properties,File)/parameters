@@ -1,0 +1,4 @@
+String relativeUrl
+File file
+Properties params
+File cloudOverrides

@@ -1,0 +1,11 @@
+String applicationName
+String serviceName
+String authGroups
+String[] agentZones
+File extractedServiceFolder
+Properties contextProperties
+StatelessProcessingUnit puConfig
+String templateName
+int numberOfInstances
+boolean locationAware
+File cloudOverride

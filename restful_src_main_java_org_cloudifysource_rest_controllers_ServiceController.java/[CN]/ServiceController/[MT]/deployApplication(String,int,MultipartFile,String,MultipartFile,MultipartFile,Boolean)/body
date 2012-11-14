@@ -1,0 +1,20 @@
+{
+  boolean actualSelfHealing=true;
+  if (selfHealing != null && !selfHealing) {
+    actualSelfHealing=false;
+  }
+  final File applicationFile=copyMultipartFileToLocalFile(srcFile);
+  if (StringUtils.isBlank(authGroups)) {
+    if (permissionEvaluator != null) {
+      authGroups=permissionEvaluator.getUserAuthGroupsString();
+    }
+ else {
+      authGroups="";
+    }
+  }
+  final File applicationOverridesFile=copyMultipartFileToLocalFile(recipeOverridesFile);
+  final File cloudOverridesFile=copyMultipartFileToLocalFile(cloudOverrides);
+  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,authGroups,timeout,actualSelfHealing,cloudOverridesFile);
+  applicationFile.delete();
+  return returnObject;
+}

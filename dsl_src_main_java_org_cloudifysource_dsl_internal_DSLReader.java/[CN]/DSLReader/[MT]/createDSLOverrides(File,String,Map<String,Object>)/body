@@ -1,0 +1,18 @@
+{
+  if (file == null && script == null) {
+    return;
+  }
+  if (file != null) {
+    try {
+      final ConfigObject parse=new ConfigSlurper().parse(file.toURI().toURL());
+      parse.flatten(overridesMap);
+    }
+ catch (    final Exception e) {
+      throw new IOException("Failed to read overrides file: " + file,e);
+    }
+  }
+  if (script != null) {
+    final ConfigObject parse=new ConfigSlurper().parse(script);
+    parse.flatten(overridesMap);
+  }
+}

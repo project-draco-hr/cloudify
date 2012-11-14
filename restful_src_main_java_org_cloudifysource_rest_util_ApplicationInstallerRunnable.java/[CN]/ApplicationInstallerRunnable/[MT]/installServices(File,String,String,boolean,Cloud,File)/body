@@ -1,0 +1,61 @@
+{
+  logger.info("Installing service for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
+  for (  final Service service : services) {
+    logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
+    service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
+    final Properties contextProperties=createServiceContextProperties(service,applicationName,async,cloud);
+    final String serviceName=service.getName();
+    final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final File serviceDirectory=new File(appDir,serviceName);
+    final File serviceCloudConfiguration=new File(serviceDirectory,CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+    byte[] serviceCloudConfigurationContents=null;
+    if (serviceCloudConfiguration.exists()) {
+      serviceCloudConfigurationContents=FileUtils.readFileToByteArray(serviceCloudConfiguration);
+      FileUtils.forceDelete(serviceCloudConfiguration);
+    }
+    boolean found=false;
+    try {
+      File applicationOverridesFile=overridesFile;
+      if (applicationOverridesFile == null) {
+        applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      }
+      if (applicationOverridesFile != null) {
+        FileUtils.copyFile(applicationOverridesFile,new File(serviceDirectory,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME));
+      }
+      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      if (applicationPropertiesFile != null) {
+        FileUtils.copyFile(applicationPropertiesFile,new File(serviceDirectory,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME));
+      }
+      File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
+      result.getApplicationFile().delete();
+      packedFile.deleteOnExit();
+      logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
+      final String templateName=service.getCompute() == null ? null : service.getCompute().getTemplate();
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,authGroups,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
+      try {
+        FileUtils.deleteDirectory(packedFile.getParentFile());
+      }
+ catch (      final IOException ioe) {
+        logger.warning("Failed to delete temporary directory: " + packedFile.getParentFile());
+      }
+      if (!async) {
+        logger.info("Waiting for instance of service: " + serviceName + " of application: "+ applicationName);
+        final boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
+        if (!instanceFound) {
+          throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
+        }
+        logger.info("Found instance of: " + serviceName);
+      }
+      found=true;
+      logger.fine("service " + service + " deployed.");
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to install service: " + serviceName + " of application: "+ applicationName+ ". Application installation will halt. "+ "Some services may already have started, and should be shutdown manually. Error was: "+ e.getMessage(),e);
+      return;
+    }
+    if (!found) {
+      logger.severe("Failed to find an instance of service: " + serviceName + " while installing application "+ applicationName+ ". Application installation will stop. Some services may have been installed!");
+      return;
+    }
+  }
+}

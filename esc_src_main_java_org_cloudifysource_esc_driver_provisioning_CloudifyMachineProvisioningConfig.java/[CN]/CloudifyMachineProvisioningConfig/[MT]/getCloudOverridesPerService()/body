@@ -1,0 +1,3 @@
+{
+  return properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_OVERRIDES_PER_SERVICE,"");
+}

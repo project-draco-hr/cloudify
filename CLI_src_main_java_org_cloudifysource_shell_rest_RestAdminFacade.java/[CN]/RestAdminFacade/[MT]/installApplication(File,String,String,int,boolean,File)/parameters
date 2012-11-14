@@ -1,0 +1,6 @@
+File applicationFile
+String applicationName
+String authGroups
+int timeout
+boolean selfHealing
+File cloudOverrides

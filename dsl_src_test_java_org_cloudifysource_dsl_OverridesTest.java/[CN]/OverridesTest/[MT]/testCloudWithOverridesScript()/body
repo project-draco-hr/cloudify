@@ -1,0 +1,8 @@
+{
+  Cloud cloud=ServiceReader.readCloudFromDirectory(EC2_CLOUD_WITH_SCRIPT_PATH,FileUtils.readFileToString(new File(EC2_CLOUD_WITH_FILE_OVERRIDES_PATH)));
+  Assert.assertEquals("OverridesTestUser",cloud.getUser().getUser());
+  Assert.assertEquals("OverridesTestApiKey",cloud.getUser().getApiKey());
+  Assert.assertEquals("OverridesTestKeyPair",(String)cloud.getTemplates().get("SMALL_LINUX").getOptions().get("keyPair"));
+  Assert.assertEquals("OverridesTestImageId",cloud.getTemplates().get("SMALL_LINUX").getImageId());
+  Assert.assertEquals("TestKeyFile.pem",cloud.getTemplates().get("SMALL_LINUX").getKeyFile());
+}

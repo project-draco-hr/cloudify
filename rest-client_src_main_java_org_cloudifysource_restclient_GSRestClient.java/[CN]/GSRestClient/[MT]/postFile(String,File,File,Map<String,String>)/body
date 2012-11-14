@@ -1,0 +1,20 @@
+{
+  final MultipartEntity entity=new MultipartEntity();
+  FileBody cloudOverridesBody=null;
+  if (cloudOverrides != null) {
+    cloudOverridesBody=new FileBody(cloudOverrides);
+    entity.addPart("cloudOverridesFile",cloudOverridesBody);
+  }
+  entity.addPart("file",new FileBody(file));
+  try {
+    for (    Map.Entry<String,String> param : params.entrySet()) {
+      entity.addPart(param.getKey(),new StringBody(param.getValue(),Charset.forName("UTF-8")));
+    }
+  }
+ catch (  final IOException e) {
+    throw new RestException(e);
+  }
+  final HttpPost httppost=new HttpPost(getFullUrl(relativeUrl));
+  httppost.setEntity(entity);
+  return executeHttpMethod(httppost);
+}
