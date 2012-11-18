@@ -37,7 +37,7 @@
     }
     List<File> additionalApplicationFile=new LinkedList<File>();
     if (overrides != null) {
-      additionalApplicationFile.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName()));
+      additionalApplicationFile.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName() + DSLUtils.APPLICATION_FILE_NAME_SUFFIX));
     }
     zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
   }

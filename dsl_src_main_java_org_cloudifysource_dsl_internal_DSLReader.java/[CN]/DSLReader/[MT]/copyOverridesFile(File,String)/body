@@ -1,5 +1,5 @@
 {
-  String overridesFileName=dslName + DSLUtils.APPLICATION_FILE_NAME_SUFFIX + DSLUtils.OVERRIDES_FILE_SUFFIX;
+  String overridesFileName=dslName + DSLUtils.OVERRIDES_FILE_SUFFIX;
   if (overridesFileName.equals(overridesFile.getName())) {
     return overridesFile;
   }

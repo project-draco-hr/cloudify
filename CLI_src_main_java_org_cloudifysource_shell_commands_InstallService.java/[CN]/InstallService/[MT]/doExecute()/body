@@ -23,9 +23,6 @@
       if (cloudConfigurationZipFile != null) {
         additionFiles.add(cloudConfigurationZipFile);
       }
-      if (overrides != null) {
-        additionFiles.add(overrides);
-      }
       File recipeFile=recipe;
       if (serviceFileName != null) {
         final File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + serviceFileName);
@@ -42,7 +39,7 @@
       final DSLReader dslReader=createDslReader(recipeFile);
       service=dslReader.readDslEntity(Service.class);
       if (overrides != null) {
-        additionFiles.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName()));
+        additionFiles.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName() + DSLUtils.SERVICE_FILE_NAME_SUFFIX));
       }
       packedFile=Packager.pack(recipeFile,false,service,additionFiles);
       packedFile.deleteOnExit();
