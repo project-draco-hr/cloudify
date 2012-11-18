@@ -16,6 +16,7 @@
     CloudTemplateHolder holder=new CloudTemplateHolder();
     holder.setName(entry.getKey());
     holder.setCloudTemplate(entry.getValue());
+    holder.setTemplateFileName(templateFile.getName());
     cloudTemplateHolders.add(holder);
   }
   return cloudTemplateHolders;

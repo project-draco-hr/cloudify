@@ -1,0 +1,9 @@
+{
+  File templateDirectory=ServiceReader.unzipCloudTemplatesFolder(templatesZip);
+  List<CloudTemplateHolder> readCloudTemplates=readCloudTemplatesFromDirectory(templateDirectory);
+  List<String> templateNames=new ArrayList<String>(readCloudTemplates.size());
+  for (  CloudTemplateHolder cloudTemplateHolder : readCloudTemplates) {
+    templateNames.add(cloudTemplateHolder.getName());
+  }
+  return templateNames;
+}

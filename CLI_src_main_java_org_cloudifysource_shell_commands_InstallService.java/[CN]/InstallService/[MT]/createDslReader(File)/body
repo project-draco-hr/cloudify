@@ -4,6 +4,6 @@
   dslReader.setWorkDir(recipeFile.getParentFile());
   dslReader.setRunningInGSC(true);
   dslReader.setOverridesFile(overrides);
-  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
   return dslReader;
 }

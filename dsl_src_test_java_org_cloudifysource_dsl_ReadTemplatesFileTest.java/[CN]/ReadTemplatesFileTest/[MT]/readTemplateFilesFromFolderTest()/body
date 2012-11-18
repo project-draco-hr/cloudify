@@ -1,3 +1,4 @@
 {
+  File file=FileUtils.createTempFolder("yael");
   readTempaltesTest(TEMPLATES_FILE_PATH);
 }

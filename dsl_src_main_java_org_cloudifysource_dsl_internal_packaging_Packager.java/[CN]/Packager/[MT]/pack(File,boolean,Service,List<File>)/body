@@ -1,7 +1,7 @@
 {
   File recipeFile=recipeDirOrFile;
   if (isDir) {
-    recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipeDirOrFile);
+    recipeFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,recipeDirOrFile);
   }
   if (!recipeFile.isFile()) {
     throw new IllegalArgumentException(recipeFile + " is not a file");

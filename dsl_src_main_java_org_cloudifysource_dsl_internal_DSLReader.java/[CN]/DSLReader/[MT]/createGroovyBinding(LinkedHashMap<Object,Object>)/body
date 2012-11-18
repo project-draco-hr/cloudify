@@ -14,7 +14,7 @@
       binding.setVariable("context",context);
     }
   }
-  binding.setVariable(DSL_VALIDATE_OBJECTS_PROPERTY_NAME,validateObjects);
-  binding.setVariable(DSL_FILE_PATH_PROPERTY_NAME,dslFile == null ? null : dslFile.getPath());
+  binding.setVariable(DSLUtils.DSL_VALIDATE_OBJECTS_PROPERTY_NAME,validateObjects);
+  binding.setVariable(DSLUtils.DSL_FILE_PATH_PROPERTY_NAME,dslFile == null ? null : dslFile.getPath());
   return binding;
 }

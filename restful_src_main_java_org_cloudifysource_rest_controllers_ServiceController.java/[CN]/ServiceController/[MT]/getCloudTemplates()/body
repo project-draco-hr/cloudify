@@ -1,5 +1,6 @@
 {
   if (cloud != null) {
+    logger.log(Level.INFO,"get templates from cloud. cloud templates: " + cloud.getTemplates());
     return cloud.getTemplates();
   }
   return localCloudTemplates;

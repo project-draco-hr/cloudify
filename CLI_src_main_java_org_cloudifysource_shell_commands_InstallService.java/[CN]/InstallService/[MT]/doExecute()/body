@@ -29,10 +29,10 @@
         if (!fullPathToRecipe.exists()) {
           throw new CLIStatusException("service_file_doesnt_exist",fullPathToRecipe.getPath());
         }
-        recipeFile=fullPathToRecipe.isDirectory() ? DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,fullPathToRecipe) : fullPathToRecipe;
+        recipeFile=fullPathToRecipe.isDirectory() ? DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,fullPathToRecipe) : fullPathToRecipe;
       }
  else {
-        recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
+        recipeFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
       }
       final DSLReader dslReader=createDslReader(recipeFile);
       service=dslReader.readDslEntity(Service.class);

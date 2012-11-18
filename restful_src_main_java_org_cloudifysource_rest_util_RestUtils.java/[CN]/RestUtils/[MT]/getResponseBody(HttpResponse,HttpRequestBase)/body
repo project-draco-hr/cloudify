@@ -4,7 +4,6 @@
     final HttpEntity entity=response.getEntity();
     if (entity == null) {
       final RestErrorException e=new RestErrorException("comm_error",httpMethod.getURI().toString()," response entity is null");
-      logger.log(Level.FINE,"Response entity is null",e);
       throw e;
     }
     instream=entity.getContent();

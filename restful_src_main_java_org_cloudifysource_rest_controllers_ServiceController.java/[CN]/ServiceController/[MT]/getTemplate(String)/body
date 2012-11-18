@@ -1,6 +1,8 @@
 {
   CloudTemplate cloudTemplate=getCloudTemplates().get(templateName);
+  logger.log(Level.INFO,"getTemplate - getting tempalte: " + templateName + ". cloud tempaltes: "+ getCloudTemplates());
   if (cloudTemplate == null) {
+    logger.log(Level.INFO,"getTemplate found null tempalte [" + templateName + "]. cloud tempaltes: "+ getCloudTemplates());
     throw new RestErrorException("failed_to_get_template",templateName);
   }
   return successStatus(cloudTemplate);

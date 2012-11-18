@@ -12,7 +12,7 @@
  else {
     dslReader.setDslFile(serviceFileToExtend);
   }
-  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
   dslReader.setPropertiesFileName(null);
   final Service service=dslReader.readDslEntity(Service.class);
   return service;

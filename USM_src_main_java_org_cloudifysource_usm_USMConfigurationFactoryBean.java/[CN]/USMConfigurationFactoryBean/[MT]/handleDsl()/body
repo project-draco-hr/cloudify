@@ -10,7 +10,7 @@
   dslReader.setRunningInGSC(isRunningInGSC);
   dslReader.setDslFile(dslFile);
   dslReader.setWorkDir(this.puExtDir);
-  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
   dslReader.setLoadUsmLib(false);
   logger.info("Loading Service configuration from DSL File");
   Service service=dslReader.readDslEntity(Service.class);

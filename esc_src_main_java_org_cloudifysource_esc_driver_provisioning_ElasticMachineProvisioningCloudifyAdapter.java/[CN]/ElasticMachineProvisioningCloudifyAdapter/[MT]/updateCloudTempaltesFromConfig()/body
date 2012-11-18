@@ -1,0 +1,10 @@
+{
+  String cloudConfigurationDirectoryPath=config.getCloudConfigurationDirectory();
+  logger.info("Updating additional cloud templates from files at " + cloudConfigurationDirectoryPath);
+  File cloudConfigurationDirectory=new File(cloudConfigurationDirectoryPath);
+  List<CloudTemplateHolder> cloudTemplateHolders=ServiceReader.readCloudTemplatesFromDirectory(cloudConfigurationDirectory);
+  for (  CloudTemplateHolder holder : cloudTemplateHolders) {
+    cloud.getTemplates().put(holder.getName(),holder.getCloudTemplate());
+  }
+  logger.info("Updated additional cloud templates: " + cloudTemplateHolders);
+}

@@ -1,0 +1,7 @@
+{
+  File unzipFile=unzipFile(zipFile,"tempaltes");
+  if (unzipFile.isFile()) {
+    throw new IllegalArgumentException("templates folder is not a folder: " + unzipFile.getAbsolutePath());
+  }
+  return unzipFile;
+}

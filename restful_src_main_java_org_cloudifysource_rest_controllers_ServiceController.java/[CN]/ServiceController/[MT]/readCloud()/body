@@ -1,6 +1,6 @@
 {
   logger.info("Loading cloud configuration");
-  final CloudConfigurationHolder cloudConfigurationHolder=getCloudConfigurationFromManagementSpace();
+  cloudConfigurationHolder=getCloudConfigurationFromManagementSpace();
   logger.info("Cloud Configuration: " + cloudConfigurationHolder);
   if (cloudConfigurationHolder.getCloudConfigurationFilePath() == null) {
     return null;

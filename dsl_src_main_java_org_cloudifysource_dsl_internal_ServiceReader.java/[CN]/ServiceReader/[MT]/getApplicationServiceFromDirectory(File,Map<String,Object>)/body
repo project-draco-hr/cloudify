@@ -2,7 +2,7 @@
   final DSLReader dslReader=new DSLReader();
   dslReader.setRunningInGSC(true);
   dslReader.setWorkDir(workDir);
-  dslReader.setDslFileNameSuffix(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
   dslReader.setOverridesFile(null);
   dslReader.setApplicationProperties(applicationProperties);
   final Service service=dslReader.readDslEntity(Service.class);

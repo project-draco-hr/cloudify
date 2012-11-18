@@ -4,7 +4,7 @@
     extendedServiceFile=new File(recipeFile.getParent() + "/" + extendedServicePath);
   }
   if (extendedServiceFile.isDirectory()) {
-    extendedServiceFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,extendedServiceFile);
+    extendedServiceFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,extendedServiceFile);
   }
   return extendedServiceFile;
 }

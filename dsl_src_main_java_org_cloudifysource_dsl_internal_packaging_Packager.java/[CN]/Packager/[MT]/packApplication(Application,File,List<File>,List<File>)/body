@@ -11,7 +11,7 @@
     final File destApplicationFolder=createCopyDirectory(applicationFolderToPack);
     for (    final Service service : application.getServices()) {
       final File extFolder=new File(destApplicationFolder + "/" + service.getName());
-      final File recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,new File(applicationDir + "/" + service.getName()));
+      final File recipeFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,new File(applicationDir + "/" + service.getName()));
       copyExtendedServiceFiles(service,recipeFile,extFolder);
     }
     applicationFolderToPack=destApplicationFolder;

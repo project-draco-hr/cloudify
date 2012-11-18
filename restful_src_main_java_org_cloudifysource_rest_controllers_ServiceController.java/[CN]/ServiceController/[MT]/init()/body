@@ -22,5 +22,4 @@
     throw new IllegalStateException("ServiceController failed to locate temp directory",e);
   }
   startLifecycleLogsCleanupTask();
-  startListeningToSpace();
 }
