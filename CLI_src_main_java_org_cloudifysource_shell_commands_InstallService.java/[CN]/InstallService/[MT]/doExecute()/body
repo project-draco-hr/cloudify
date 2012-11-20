@@ -32,17 +32,25 @@
         recipeFile=fullPathToRecipe.isDirectory() ? DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,fullPathToRecipe) : fullPathToRecipe;
       }
  else {
-        if (recipe.isDirectory()) {
-          recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
-        }
+        recipeFile=DSLReader.findDefaultDSLFile(DSLReader.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
       }
       final DSLReader dslReader=createDslReader(recipeFile);
       service=dslReader.readDslEntity(Service.class);
+      File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.PROPERTIES_FILE_SUFFIX,recipe);
+      if (servicePropertiesFile == null) {
+        servicePropertiesFile=new File(recipe,serviceName + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
+      }
+      File finalPropsFile=new File(servicePropertiesFile.getName());
+      FileAppender appender=new FileAppender(finalPropsFile);
       if (overrides != null) {
-        additionFiles.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName() + DSLUtils.SERVICE_FILE_NAME_SUFFIX));
+        appender.append("Service Properties File",servicePropertiesFile);
+        appender.append("Overrides Properties File",overrides);
+        appender.flush();
+        additionFiles.add(finalPropsFile);
       }
       packedFile=Packager.pack(recipeFile,false,service,additionFiles);
       packedFile.deleteOnExit();
+      finalPropsFile.delete();
     }
  else {
       packedFile=recipe;

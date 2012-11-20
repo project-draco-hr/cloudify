@@ -11,12 +11,12 @@
   final File springFolder=new File(destPuFolder.getAbsolutePath(),"/META-INF/spring");
   FileUtils.forceMkdir(springFolder);
   logger.finer("created pu structure under " + destPuFolder);
+  FileUtils.copyDirectory(srcFolder,extFolder);
   if (additionalServiceFiles != null) {
     for (    final File file : additionalServiceFiles) {
       FileUtils.copyFileToDirectory(file,extFolder);
     }
   }
-  FileUtils.copyDirectory(srcFolder,extFolder);
   logger.finer("copied files from " + srcFolder.getAbsolutePath() + " to "+ extFolder.getAbsolutePath());
   final File srcUsmLibDir=new File(srcFolder,"usmlib");
   if (srcUsmLibDir.exists()) {

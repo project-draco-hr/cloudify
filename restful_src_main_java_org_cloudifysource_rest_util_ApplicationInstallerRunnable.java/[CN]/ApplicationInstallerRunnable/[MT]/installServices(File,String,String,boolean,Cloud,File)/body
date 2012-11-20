@@ -15,17 +15,30 @@
     }
     boolean found=false;
     try {
+      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.PROPERTIES_FILE_SUFFIX,serviceDirectory);
+      if (servicePropertiesFile == null) {
+        servicePropertiesFile=new File(serviceDirectory,serviceName + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
+      }
       File applicationOverridesFile=overridesFile;
       if (applicationOverridesFile == null) {
         applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
       }
-      if (applicationOverridesFile != null) {
-        FileUtils.copyFile(applicationOverridesFile,new File(serviceDirectory,DSLUtils.APPLICATION_OVERRIDES_FILE_NAME));
+      File finalPropsFile=new File(servicePropertiesFile.getName());
+      FileAppender appender=new FileAppender(finalPropsFile);
+      if (applicationPropertiesFile != null && applicationPropertiesFile.exists()) {
+        appender.append("Application Properties File",applicationPropertiesFile);
       }
-      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
-      if (applicationPropertiesFile != null) {
-        FileUtils.copyFile(applicationPropertiesFile,new File(serviceDirectory,DSLUtils.APPLICATION_PROPERTIES_FILE_NAME));
+      if (servicePropertiesFile.exists()) {
+        appender.append("Service Properties File",servicePropertiesFile);
+        servicePropertiesFile.delete();
       }
+      if (applicationOverridesFile != null && applicationOverridesFile.exists()) {
+        appender.append("Overrides properties file",applicationOverridesFile);
+      }
+      appender.flush();
+      FileUtils.copyFileToDirectory(finalPropsFile,serviceDirectory);
+      finalPropsFile.delete();
       File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
