@@ -3,7 +3,7 @@
   String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/timeout/"+ timeout+ "?selfHealing="+ Boolean.toString(selfHealing);
   try {
     if (org.apache.commons.lang.StringUtils.isBlank(authGroups)) {
-      response=(Map<String,String>)client.postFile(url,applicationFile);
+      response=(Map<String,String>)client.postFile(url,applicationFile,cloudOverrides,null);
     }
  else {
       Map<String,String> paramsMap=new HashMap<String,String>();
