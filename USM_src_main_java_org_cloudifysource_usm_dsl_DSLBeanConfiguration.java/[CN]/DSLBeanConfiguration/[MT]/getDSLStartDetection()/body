@@ -11,7 +11,9 @@
         if (retcode instanceof Boolean) {
           return (Boolean)retcode;
         }
-        return true;
+ else {
+          throw new USMException("The start detector return code was not a boolean! Result was: " + retcode);
+        }
       }
       logger.log(Level.WARNING,"Liveness Detector failed to execut. Exception was: " + result.getException(),result.getException());
       return false;
