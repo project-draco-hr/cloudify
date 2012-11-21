@@ -1,0 +1,8 @@
+{
+  String cleanEventText=eventText;
+  int index=eventText.indexOf(EVENT_TEXT_SEPARATOR);
+  if (index >= 0) {
+    cleanEventText=eventText.substring(index + EVENT_TEXT_SEPARATOR.length());
+  }
+  return cleanEventText;
+}

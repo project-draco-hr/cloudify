@@ -1,6 +1,11 @@
 {
-  final ProcessingUnit pu=getGridServiceManager().deploy(deployment,60,TimeUnit.SECONDS);
-  if (pu == null) {
-    throw new TimeoutException("Timed out waiting for Service " + serviceName + " deployment.");
+  try {
+    final ProcessingUnit pu=getGridServiceManager().deploy(deployment,60,TimeUnit.SECONDS);
+    if (pu == null) {
+      throw new TimeoutException("Timed out waiting for Service " + serviceName + " deployment.");
+    }
+  }
+ catch (  ProcessingUnitAlreadyDeployedException e) {
+    throw new RestErrorException(CloudifyErrorMessages.SERVICE_ALREADY_INSTALLED.getName(),serviceName);
   }
 }

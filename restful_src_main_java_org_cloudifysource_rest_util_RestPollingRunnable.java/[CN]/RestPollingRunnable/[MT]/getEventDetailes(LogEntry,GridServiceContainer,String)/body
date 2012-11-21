@@ -4,6 +4,9 @@
   returnMap.put(EventLogConstants.getMachineHostNameKey(),container.getMachine().getHostName());
   returnMap.put(EventLogConstants.getMachineHostAddressKey(),container.getMachine().getHostAddress());
   returnMap.put(EventLogConstants.getServiceNameKey(),ServiceUtils.getApplicationServiceName(absolutePuName,this.applicationName));
-  returnMap.put(EventLogConstants.getEventTextKey(),logEntry.getText().replaceFirst(absolutePuName + "-",returnMap.get(EventLogConstants.getServiceNameKey()) + "-"));
+  final String serviceName=returnMap.get(EventLogConstants.getServiceNameKey()) + "-";
+  final String originalText=logEntry.getText();
+  final String modifiedText=originalText.replaceFirst(absolutePuName + "-",serviceName);
+  returnMap.put(EventLogConstants.getEventTextKey(),modifiedText);
   return returnMap;
 }
