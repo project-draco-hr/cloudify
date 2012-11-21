@@ -2,7 +2,7 @@
   if (template.getPassword() != null) {
     return template.getPassword();
   }
-  if ((node.getCredentials() != null) && (node.getCredentials().getOptionalPassword() != null)) {
+  if (node.getCredentials() != null && node.getCredentials().getOptionalPassword() != null) {
     if (node.getCredentials().getOptionalPassword().isPresent()) {
       return node.getCredentials().getPassword();
     }

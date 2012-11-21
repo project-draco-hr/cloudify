@@ -15,7 +15,7 @@
   final String password=createMachinePassword(node,template);
   md.setRemoteUsername(username);
   md.setRemotePassword(password);
-  String locationId=node.getLocation().getId();
+  final String locationId=node.getLocation().getId();
   md.setLocationId(locationId);
   return md;
 }

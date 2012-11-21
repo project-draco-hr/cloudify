@@ -8,6 +8,10 @@
   final MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
   if (existingManagementServers.length > 0) {
     logger.info("Found existing servers matching the name: " + managementMachinePrefix);
+    for (    MachineDetails machineDetails : existingManagementServers) {
+      final String existingManagementServerDescription=createManagementServerDescription(machineDetails);
+      logger.info(existingManagementServerDescription);
+    }
     return existingManagementServers;
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
