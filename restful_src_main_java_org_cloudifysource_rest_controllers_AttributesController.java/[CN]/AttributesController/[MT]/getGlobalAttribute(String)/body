@@ -2,10 +2,10 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to get global attribute " + attributeName);
   }
-  GlobalCloudifyAttribute templateAttribute=new GlobalCloudifyAttribute(attributeName,null);
-  GlobalCloudifyAttribute valueEntry=gigaSpace.read(templateAttribute);
-  Object value=(valueEntry != null) ? valueEntry.getValue() : null;
-  Map<String,Object> mapResult=new HashMap<String,Object>();
+  final GlobalCloudifyAttribute templateAttribute=new GlobalCloudifyAttribute(attributeName,null);
+  final GlobalCloudifyAttribute valueEntry=gigaSpace.read(templateAttribute);
+  final Object value=valueEntry != null ? valueEntry.getValue() : null;
+  final Map<String,Object> mapResult=new HashMap<String,Object>();
   mapResult.put(attributeName,value);
   return mapResult;
 }

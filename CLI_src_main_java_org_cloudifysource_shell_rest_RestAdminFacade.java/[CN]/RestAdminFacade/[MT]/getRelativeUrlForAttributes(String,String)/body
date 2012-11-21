@@ -18,7 +18,7 @@
   }
   final String instanceIdentifier=serviceScope[2];
   if ("all-instances".equalsIgnoreCase(instanceIdentifier)) {
-    return "/attributes/instances";
+    return "/attributes/instances/" + applicationName + "/"+ serviceName;
   }
   final Integer instanceId=StringUtils.safeParseInt(instanceIdentifier);
   if (instanceIdentifier == null) {

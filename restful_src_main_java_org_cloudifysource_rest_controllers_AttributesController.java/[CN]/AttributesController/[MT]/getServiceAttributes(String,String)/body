@@ -2,8 +2,8 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to get all attributes of service " + ServiceUtils.getAbsolutePUName(applicationName,serviceName) + " of application "+ applicationName);
   }
-  ServiceCloudifyAttribute templateAttribute=new ServiceCloudifyAttribute(applicationName,serviceName,null,null);
-  ServiceCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
+  final ServiceCloudifyAttribute templateAttribute=new ServiceCloudifyAttribute(applicationName,serviceName,null,null);
+  final ServiceCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
   final Map<String,Object> attributesMap=new HashMap<String,Object>();
   for (  final ServiceCloudifyAttribute attribute : attributes) {
     attributesMap.put(attribute.getKey(),attribute.getValue());

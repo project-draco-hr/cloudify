@@ -2,8 +2,8 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to delete multiple global attributes");
   }
-  GlobalCloudifyAttribute attribute=new GlobalCloudifyAttribute();
-  GlobalCloudifyAttribute[] previousAttributesArr=gigaSpace.takeMultiple(attribute);
+  final GlobalCloudifyAttribute attribute=new GlobalCloudifyAttribute();
+  final GlobalCloudifyAttribute[] previousAttributesArr=gigaSpace.takeMultiple(attribute);
   final Map<String,Object> previousAttributesMap=new HashMap<String,Object>();
   for (  final GlobalCloudifyAttribute previousAttr : previousAttributesArr) {
     previousAttributesMap.put(previousAttr.getKey(),previousAttr.getValue());

@@ -2,10 +2,10 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to delete attribute " + attributeName + " of instance number "+ instanceId+ " of service "+ ServiceUtils.getAbsolutePUName(applicationName,serviceName)+ " of application "+ applicationName);
   }
-  InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute(applicationName,serviceName,instanceId,attributeName,null);
-  InstanceCloudifyAttribute previousValue=gigaSpace.take(attribute);
-  Object value=(previousValue != null) ? previousValue.getValue() : null;
-  Map<String,Object> mapResult=new HashMap<String,Object>();
+  final InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute(applicationName,serviceName,instanceId,attributeName,null);
+  final InstanceCloudifyAttribute previousValue=gigaSpace.take(attribute);
+  final Object value=previousValue != null ? previousValue.getValue() : null;
+  final Map<String,Object> mapResult=new HashMap<String,Object>();
   mapResult.put(attributeName,value);
   return mapResult;
 }

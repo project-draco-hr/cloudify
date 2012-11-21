@@ -1,8 +1,8 @@
 {
-  AbstractCloudifyAttribute[] attributesToWrite=new AbstractCloudifyAttribute[attributesMap.size()];
+  final AbstractCloudifyAttribute[] attributesToWrite=new AbstractCloudifyAttribute[attributesMap.size()];
   int i=0;
   for (  final Entry<String,Object> attrEntry : attributesMap.entrySet()) {
-    AbstractCloudifyAttribute newAttr=createCloudifyAttribute(applicationName,serviceName,instanceId,attrEntry.getKey(),null);
+    final AbstractCloudifyAttribute newAttr=createCloudifyAttribute(applicationName,serviceName,instanceId,attrEntry.getKey(),null);
     gigaSpace.take(newAttr);
     newAttr.setValue(attrEntry.getValue());
     attributesToWrite[i++]=newAttr;

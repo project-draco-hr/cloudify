@@ -1,4 +1,5 @@
 {
+  String[] actualArgs=args;
   initializeLogConfiguration();
   initializeProxyConfiguration();
   InputStream is=null;
@@ -29,12 +30,12 @@
       }
       sis=new SequenceInputStream(is,exitInputStream);
       System.setIn(sis);
-      args=new String[0];
+      actualArgs=new String[0];
     }
     instance=new GigaShellMain(isInteractive);
     instance.setApplication("cloudify");
     Ansi.ansi();
-    instance.run(args);
+    instance.run(actualArgs);
   }
   finally {
     if (is != null) {

@@ -2,8 +2,8 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to get all global attributes");
   }
-  GlobalCloudifyAttribute templateAttribute=new GlobalCloudifyAttribute();
-  GlobalCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
+  final GlobalCloudifyAttribute templateAttribute=new GlobalCloudifyAttribute();
+  final GlobalCloudifyAttribute[] attributes=gigaSpace.readMultiple(templateAttribute);
   final Map<String,Object> attributesMap=new HashMap<String,Object>();
   for (  final GlobalCloudifyAttribute attribute : attributes) {
     attributesMap.put(attribute.getKey(),attribute.getValue());

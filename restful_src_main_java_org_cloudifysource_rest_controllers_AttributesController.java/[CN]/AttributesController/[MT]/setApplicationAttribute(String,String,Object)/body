@@ -2,12 +2,12 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to set attribute " + attributeName + " of application "+ applicationName+ " to: "+ attributeValue);
   }
-  ApplicationCloudifyAttribute attribute=new ApplicationCloudifyAttribute(applicationName,attributeName,null);
-  ApplicationCloudifyAttribute previousValue=gigaSpace.take(attribute);
+  final ApplicationCloudifyAttribute attribute=new ApplicationCloudifyAttribute(applicationName,attributeName,null);
+  final ApplicationCloudifyAttribute previousValue=gigaSpace.take(attribute);
   attribute.setValue(attributeValue);
   gigaSpace.write(attribute);
-  Object value=(previousValue != null) ? previousValue.getValue() : null;
-  Map<String,Object> mapResult=new HashMap<String,Object>();
+  final Object value=previousValue != null ? previousValue.getValue() : null;
+  final Map<String,Object> mapResult=new HashMap<String,Object>();
   mapResult.put(attributeName,value);
   return mapResult;
 }
