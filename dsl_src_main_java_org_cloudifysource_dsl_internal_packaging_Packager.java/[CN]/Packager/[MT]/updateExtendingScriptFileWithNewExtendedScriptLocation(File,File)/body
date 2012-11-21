@@ -9,7 +9,7 @@
     String line=bufferedReader.readLine();
     while (line != null) {
       if (line.trim().startsWith(BaseDslScript.EXTEND_PROPERTY_NAME + " ")) {
-        line=line.substring(0,line.indexOf(BaseDslScript.EXTEND_PROPERTY_NAME) + 6);
+        line=line.substring(0,line.indexOf(BaseDslScript.EXTEND_PROPERTY_NAME) + BaseDslScript.EXTEND_PROPERTY_NAME.length());
         line+=" \"" + localExtendedServiceFile.getName() + "\"";
       }
       bufferedWriter.write(line + StringUtils.NEW_LINE);
