@@ -1,4 +1,4 @@
 {
-  GridServiceContainerOptions options=new GridServiceContainerOptions().vmInputArgument("-Xmx" + MANAGEMENT_SERVICES_MEMORY_IN_MB + "m").vmInputArgument("-Dcom.gs.zones=rest,cloudifyManagementSpace,webui");
+  final GridServiceContainerOptions options=new GridServiceContainerOptions().vmInputArgument("-Xmx" + MANAGEMENT_SERVICES_MEMORY_IN_MB + "m").vmInputArgument("-Dcom.gs.zones=rest,cloudifyManagementSpace,webui");
   agent.startGridServiceAndWait(options);
 }
