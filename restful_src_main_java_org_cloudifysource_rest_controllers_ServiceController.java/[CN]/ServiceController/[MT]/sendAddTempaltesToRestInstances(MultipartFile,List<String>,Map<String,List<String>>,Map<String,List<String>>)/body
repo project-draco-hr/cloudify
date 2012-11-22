@@ -1,0 +1,29 @@
+{
+  ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
+  logger.log(Level.INFO,"addTemplates - sending templates folder to " + (instances.length - 1) + " instances.");
+  for (  ProcessingUnitInstance puInstance : instances) {
+    String host=puInstance.getMachine().getHostName() + "/" + puInstance.getMachine().getHostAddress();
+    if (!(RestUtils.isLocalHost(InetAddress.getByName(host)))) {
+      logger.log(Level.INFO,"addTemplates - sending add templates request to " + host + ", post file: "+ templatesFolder.getName());
+      Map<String,Object> response;
+      try {
+        response=executePostRestRequest(templatesFolder,puInstance,puInstance.getMachine().getHostAddress(),"/service/templates/internal");
+      }
+ catch (      Exception e) {
+        logger.log(Level.INFO,"addTemplates - failed to execute http request to " + host + ". Error: "+ e);
+        failedToAddTemplatesByHost.put(host,expectedTemplates);
+        continue;
+      }
+      failedToAddTemplatesByHost.put(host,(List<String>)response.get(FAILED_TO_ADD_TEMPLATES_KEY));
+      List<String> addedTemplates=(List<String>)response.get(SUCCESSFULLY_ADDED_TEMPLATES_KEY);
+      addedTemplatesByHost.put(host,addedTemplates);
+      if (!expectedTemplates.equals(addedTemplates)) {
+        logger.log(Level.INFO,"addTemplates - failed to add templates to " + host + ", expected list: "+ expectedTemplates.toString()+ ", actual list: "+ addedTemplates.toString());
+        LinkedList<String> missingTemplates=new LinkedList<String>(expectedTemplates);
+        missingTemplates.removeAll(addedTemplates);
+        failedToAddTemplatesByHost.put(host,missingTemplates);
+      }
+      logger.log(Level.INFO,"addTemplates - successfully added " + addedTemplates.size() + " templates to "+ host+ "("+ addedTemplates+ ")");
+    }
+  }
+}

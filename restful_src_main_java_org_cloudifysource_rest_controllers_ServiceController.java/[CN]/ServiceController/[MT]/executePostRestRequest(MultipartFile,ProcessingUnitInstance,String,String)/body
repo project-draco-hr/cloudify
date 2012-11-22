@@ -1,0 +1,21 @@
+{
+  String uri="http://" + hostAddress + ":"+ puInstance.getJeeDetails().getPort()+ url;
+  logger.log(Level.INFO,"executeRestRequest - sending rest request to uri " + uri);
+  HttpPost postMethod=new HttpPost(uri);
+  final MultipartEntity reqEntity=new MultipartEntity();
+  final ByteArrayBody bin=new ByteArrayBody(templatesFolder.getBytes(),CloudifyConstants.REQUEST_PARAM_TEMPLATES_DIR_NAME);
+  reqEntity.addPart(CloudifyConstants.REQUEST_PARAM_TEMPLATES_DIR_NAME,bin);
+  postMethod.setEntity(reqEntity);
+  Object response=null;
+  Map<String,Object> responseMap;
+  DefaultHttpClient httpClient=new DefaultHttpClient();
+  try {
+    response=RestUtils.executeHttpMethod(postMethod,RestUtils.RESPONSE_KEY,httpClient);
+    responseMap=(Map<String,Object>)response;
+  }
+ catch (  ClassCastException e) {
+    throw new RestErrorException("bad_response_type",hostAddress,"Map<String, Object>",response == null ? null : response.toString());
+  }
+  logger.log(Level.INFO,"executeRestRequest - successfully sent post request to " + hostAddress);
+  return responseMap;
+}

@@ -1,9 +1,10 @@
 {
   try {
     File templatesFile=new File(ILLEGAL_TEMPLATES_FILE_PATH);
-    ServiceReader.readCloudTemplatesFromDirectory(templatesFile);
-    Assert.fail("Multiple templates in one file should throw an exception.");
+    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    Assert.fail("Multiple templates in one file yielded no exception.");
   }
- catch (  Exception e) {
+ catch (  DSLException e) {
+    Assert.assertTrue(e.getMessage().startsWith("Too many templates in one groovy file"));
   }
 }

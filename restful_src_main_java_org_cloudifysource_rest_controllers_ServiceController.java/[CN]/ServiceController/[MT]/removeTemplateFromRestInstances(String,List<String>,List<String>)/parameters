@@ -1,0 +1,3 @@
+String templateName
+List<String> successfullyRemoved
+List<String> failedToRemoveHosts

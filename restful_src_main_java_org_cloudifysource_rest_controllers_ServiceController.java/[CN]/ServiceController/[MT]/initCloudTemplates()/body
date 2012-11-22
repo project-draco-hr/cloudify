@@ -1,0 +1,11 @@
+{
+  File additionalTemplatesFolder=new File(cloudConfigurationDir,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
+  if (!additionalTemplatesFolder.exists()) {
+    return;
+  }
+  File[] listFiles=additionalTemplatesFolder.listFiles();
+  for (  File templatesFolder : listFiles) {
+    lastTemplateFileNum.incrementAndGet();
+    CloudTemplatesReader.addAdditionalTemplates(cloud,templatesFolder);
+  }
+}

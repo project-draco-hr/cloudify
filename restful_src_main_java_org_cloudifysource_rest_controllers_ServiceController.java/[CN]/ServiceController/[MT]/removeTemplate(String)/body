@@ -1,31 +1,17 @@
 {
+  if (cloud == null) {
+    throw new RestErrorException("local_cloud_not_support_tempaltes","remove-template");
+  }
   logger.log(Level.INFO,"removeTemplate - removing template " + templateName);
-  final String templatefileName=additionalTemplateFiles.get(templateName);
-  String cloudConfigurationFilePath=new File(getCloudConfigurationFilePath()).getParent();
-  if (templatefileName == null) {
-    logger.log(Level.INFO,"removeTemplate RestErrorException - tempalte [" + templateName + "] doesnt exist.");
-    throw new RestErrorException("failed_to_remove_template_file",templatefileName,"template file doesn't exist in folder " + cloudConfigurationFilePath);
+  removeTemplateFromCloud(templateName);
+  logger.log(Level.INFO,"removeTemplate - template [" + templateName + "] removed.");
+  List<String> successfullyRemoved=new LinkedList<String>();
+  List<String> failedToRemoveHosts=new LinkedList<String>();
+  removeTemplateFromRestInstances(templateName,successfullyRemoved,failedToRemoveHosts);
+  if (!failedToRemoveHosts.isEmpty()) {
+    logger.log(Level.INFO,"removeTemplate - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts+ ". Succeeded to remove the template from: "+ successfullyRemoved);
+    throw new RestErrorException("failed_to_remove_template",templateName,failedToRemoveHosts.toString());
   }
-  File templateFile=new File(cloudConfigurationFilePath,templatefileName);
-  logger.log(Level.INFO,"removeTemplate- removing template file " + templateFile.getAbsolutePath());
-  if (!templateFile.exists()) {
-    throw new RestErrorException("failed_to_remove_template_file",templateFile.getAbsolutePath(),"template file doesn't exist.");
-  }
-  boolean deleted=false;
-  try {
-    deleted=templateFile.delete();
-  }
- catch (  SecurityException e) {
-    throw new RestErrorException("failed_to_remove_template_file",templateFile.getAbsolutePath(),e.getMessage());
-  }
-  if (!deleted) {
-    throw new RestErrorException("failed_to_remove_template_file",templateFile.getAbsolutePath(),"template file was not deleted.");
-  }
-  logger.log(Level.INFO,"removeTemplate- removing template from cloud: " + templateName);
-  Map<String,CloudTemplate> cloudTemplates=getCloudTemplates();
-  if (!cloudTemplates.containsKey(templateName)) {
-    throw new RestErrorException("failed_to_remove_template",templateName);
-  }
-  removeTemplateFromCloudTemplatesList(templateName);
+  logger.log(Level.INFO,"removeTemplate - Succeeded to remove template [" + templateName + "] from: "+ successfullyRemoved);
   return successStatus();
 }

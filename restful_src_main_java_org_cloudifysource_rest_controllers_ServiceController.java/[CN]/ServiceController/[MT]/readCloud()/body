@@ -2,12 +2,15 @@
   logger.info("Loading cloud configuration");
   cloudConfigurationHolder=getCloudConfigurationFromManagementSpace();
   logger.info("Cloud Configuration: " + cloudConfigurationHolder);
-  if (cloudConfigurationHolder.getCloudConfigurationFilePath() == null) {
+  String cloudConfigurationFilePath=cloudConfigurationHolder.getCloudConfigurationFilePath();
+  if (cloudConfigurationFilePath == null) {
     return null;
   }
   Cloud cloudConfiguration=null;
   try {
-    cloudConfiguration=ServiceReader.readCloud(new File(cloudConfigurationHolder.getCloudConfigurationFilePath()));
+    File cloudConfigurationFile=new File(cloudConfigurationFilePath);
+    cloudConfigurationDir=cloudConfigurationFile.getParentFile();
+    cloudConfiguration=ServiceReader.readCloud(cloudConfigurationFile);
   }
  catch (  final DSLException e) {
     throw new IllegalArgumentException("Failed to read cloud configuration file: " + cloudConfigurationHolder + ". Error was: "+ e.getMessage(),e);

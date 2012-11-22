@@ -1,0 +1,4 @@
+MultipartFile templatesFolder
+ProcessingUnitInstance puInstance
+String hostAddress
+String url

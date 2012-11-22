@@ -1,0 +1,14 @@
+{
+  String templatesPath=templatesFolder.getAbsolutePath();
+  List<CloudTemplateHolder> cloudTemplatesHolders;
+  try {
+    cloudTemplatesHolders=CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFolder);
+  }
+ catch (  DSLException e) {
+    throw new RestErrorException("read_dsl_file_from_folder_failed",templatesPath,e.getMessage());
+  }
+  if (cloudTemplatesHolders.isEmpty()) {
+    throw new RestErrorException("no_template_files",templatesPath);
+  }
+  return cloudTemplatesHolders;
+}

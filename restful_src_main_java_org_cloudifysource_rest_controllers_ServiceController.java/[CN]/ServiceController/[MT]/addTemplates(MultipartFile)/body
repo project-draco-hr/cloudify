@@ -1,25 +1,27 @@
 {
-  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
-  ProcessingUnitInstance[] instances=processingUnit.getInstances();
-  File localTemplateFolder=ServiceReader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
+  if (cloud == null) {
+    throw new RestErrorException("local_cloud_not_support_tempaltes","add-templates");
+  }
+  logger.log(Level.INFO,"addTemplates - starting add templates.");
+  File localTemplateFolder=CloudTemplatesReader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
   try {
-    List<String> expectedTemplatesList=addTemplatesToCloud(localTemplateFolder,InetAddress.getLocalHost().getHostAddress());
-    logger.log(Level.INFO,"addTemplates - sending templates folder to " + (instances.length - 1) + " rest instances.");
-    for (    ProcessingUnitInstance puInstance : instances) {
-      InetAddress puInstanceAddress=InetAddress.getByName(puInstance.getMachine().getHostName());
-      if (!(RestUtils.isLocalHost(puInstanceAddress))) {
-        String hostAddress=puInstance.getMachine().getHostAddress();
-        String address=hostAddress + ":" + puInstance.getJeeDetails().getPort();
-        address="localhost:8080/rest";
-        List<String> addedTemplates=executeRestRequest(templatesFolder,address);
-        if (!expectedTemplatesList.equals(addedTemplates)) {
-          logger.log(Level.INFO,"addTemplates RestErrorException - failed_to_add_templates:\n" + "to ip " + hostAddress + "(host name: "+ puInstance.getMachine().getHostName()+ "), from templates folder: "+ localTemplateFolder.getAbsolutePath()+ ", expected list: "+ expectedTemplatesList.toString()+ ", actual list: "+ addedTemplates.toString());
-          throw new RestErrorException("failed_to_add_templates",hostAddress,localTemplateFolder.getAbsolutePath(),expectedTemplatesList.toString(),addedTemplates.toString());
-        }
-        logger.log(Level.INFO,"addTemplates - added " + addedTemplates.size() + " templates to REST host address "+ hostAddress);
-      }
+    Map<String,Object> result=addTemplatesToCloud(localTemplateFolder);
+    List<String> expectedTemplates=(List<String>)result.get(SUCCESSFULLY_ADDED_TEMPLATES_KEY);
+    List<String> failedToAdd=(List<String>)result.get(FAILED_TO_ADD_TEMPLATES_KEY);
+    Map<String,List<String>> failedToAddTemplatesByHost=new HashMap<String,List<String>>();
+    if (!failedToAdd.isEmpty()) {
+      logger.log(Level.WARNING,"addTemplatesInternal - Failed to add templates: " + failedToAdd.toString() + " from "+ localTemplateFolder.getAbsolutePath());
+      failedToAddTemplatesByHost.put(InetAddress.getLocalHost().getHostName(),failedToAdd);
     }
-    return successStatus(expectedTemplatesList);
+    Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
+    addedTemplatesByHost.put(InetAddress.getLocalHost().getHostName(),expectedTemplates);
+    sendAddTempaltesToRestInstances(templatesFolder,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
+    if (!failedToAddTemplatesByHost.isEmpty()) {
+      logger.log(Level.INFO,"Failed to add the following tempaltes: " + failedToAddTemplatesByHost + ". Successfully added templates (by host): "+ addedTemplatesByHost);
+      throw new RestErrorException("failed_to_add_templates",localTemplateFolder.getAbsolutePath(),addedTemplatesByHost.toString(),failedToAddTemplatesByHost.toString());
+    }
+    logger.log(Level.INFO,"Successfully added templates: " + addedTemplatesByHost.toString());
+    return successStatus(expectedTemplates);
   }
   finally {
     localTemplateFolder.delete();

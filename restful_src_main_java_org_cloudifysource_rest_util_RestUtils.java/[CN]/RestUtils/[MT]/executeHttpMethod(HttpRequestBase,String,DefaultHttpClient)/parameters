@@ -1,0 +1,3 @@
+HttpRequestBase httpMethod
+String responseJsonKey
+DefaultHttpClient httpClient

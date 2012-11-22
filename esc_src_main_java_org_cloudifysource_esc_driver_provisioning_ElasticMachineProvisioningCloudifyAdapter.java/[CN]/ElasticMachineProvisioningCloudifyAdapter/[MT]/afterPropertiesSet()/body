@@ -1,18 +1,19 @@
 {
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
-  final String cloudConfigDirectory=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY);
-  if (cloudConfigDirectory == null) {
+  final String cloudConfigDirectoryPath=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY);
+  if (cloudConfigDirectoryPath == null) {
     logger.severe("Missing cloud configuration property. Properties are: " + this.properties);
     throw new IllegalArgumentException("Cloud configuration directory was not set!");
   }
   try {
     String cloudOverridesPerService=config.getCloudOverridesPerService();
-    this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectory,cloudOverridesPerService);
+    this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectoryPath,cloudOverridesPerService);
+    File cloudConfigDirectory=new File(cloudConfigDirectoryPath);
     this.cloudTemplateName=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
     if (this.cloudTemplateName == null) {
       throw new BeanConfigurationException("Cloud template was not set!");
     }
-    updateCloudTempaltesFromConfig();
+    addTemplatesToCloud(cloudConfigDirectory);
     final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
     if (cloudTemplate == null) {
       throw new BeanConfigurationException("The provided cloud template name: " + this.cloudTemplateName + " was not found in the cloud configuration");
@@ -48,7 +49,7 @@ catch (    final Exception e) {
     logger.info("Locators string used for new instances will be: " + this.lookupLocatorsString);
   }
  catch (  final DSLException e) {
-    logger.severe("Could not parse the provided cloud configuration from : " + cloudConfigDirectory + ": "+ e.getMessage());
-    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudConfigDirectory + ": "+ e.getMessage(),e);
+    logger.severe("Could not parse the provided cloud configuration from : " + cloudConfigDirectoryPath + ": "+ e.getMessage());
+    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudConfigDirectoryPath + ": "+ e.getMessage(),e);
   }
 }

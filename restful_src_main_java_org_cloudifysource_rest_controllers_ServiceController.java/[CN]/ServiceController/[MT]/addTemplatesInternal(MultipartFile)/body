@@ -1,9 +1,8 @@
 {
-  File localTemplatesFolder=ServiceReader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
+  File localTemplatesFolder=CloudTemplatesReader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
   try {
-    String hostAddress=InetAddress.getLocalHost().getHostAddress();
-    logger.log(Level.INFO,"addTemplatesInternal - adding templates to rest host: " + hostAddress + ", templates folder: "+ localTemplatesFolder.getAbsolutePath());
-    return successStatus(addTemplatesToCloud(localTemplatesFolder,hostAddress));
+    logger.log(Level.INFO,"addTemplatesInternal - adding templates from templates folder: " + localTemplatesFolder.getAbsolutePath());
+    return successStatus(addTemplatesToCloud(localTemplatesFolder));
   }
   finally {
     localTemplatesFolder.delete();

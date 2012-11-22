@@ -1,3 +1,13 @@
 {
-  readTempaltesTest(NO_UPLOAD_TEMPLATES_FILE_PATH);
+  try {
+    File templatesFile=new File(NO_UPLOAD_TEMPLATES_FILE_PATH);
+    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    Assert.fail("Templates folder missing an upload folder yield no exception.");
+  }
+ catch (  DSLValidationException e) {
+    Assert.assertTrue(e.getMessage().startsWith("Could not find upload directory"));
+  }
+catch (  DSLException e) {
+    Assert.fail("Got DSLException instead of DSLValidationException " + "(The case is templates folder missing an upload folder)");
+  }
 }

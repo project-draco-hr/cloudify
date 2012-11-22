@@ -2,6 +2,7 @@
   logger.info("Initializing service controller cloud configuration");
   this.cloud=readCloud();
   if (cloud != null) {
+    initCloudTemplates();
     if (this.cloud.getTemplates().isEmpty()) {
       throw new IllegalArgumentException("No templates defined in cloud configuration!");
     }

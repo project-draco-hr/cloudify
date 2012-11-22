@@ -1,0 +1,14 @@
+{
+  logger.log(Level.INFO,"addTemplatesToCloud - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+  List<CloudTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
+  List<String> failedToAddTemplates=new LinkedList<String>();
+  List<String> addedTempaltes=new LinkedList<String>();
+  addTempaltesToCloudList(templatesFolder,cloudTemplatesHolders,addedTempaltes,failedToAddTemplates);
+  File cloudTemplateFolder=getTempaltesFolder();
+  copyTemplateFilesToCloudConfigDir(templatesFolder,cloudTemplateFolder);
+  Map<String,Object> resultMap=new HashMap<String,Object>();
+  resultMap.put(SUCCESSFULLY_ADDED_TEMPLATES_KEY,addedTempaltes);
+  resultMap.put(FAILED_TO_ADD_TEMPLATES_KEY,failedToAddTemplates);
+  logger.log(Level.INFO,"addTemplatesToCloud - Successfully added templates: " + addedTempaltes.toString());
+  return resultMap;
+}

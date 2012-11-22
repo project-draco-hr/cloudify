@@ -1,9 +1,10 @@
 {
   try {
-    File templatesFile=new File(ILLEGAL_DUPLICATE_TEMPLATES_FILES_PATH);
-    ServiceReader.readCloudTemplatesFromDirectory(templatesFile);
-    Assert.fail("Multiple templates in one file should throw an exception.");
+    File templatesFile=new File(ILLEGAL_DUPLICATE_TEMPLATES_FILE_PATH);
+    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    Assert.fail("Duplicate templates yielded no exception.");
   }
- catch (  Exception e) {
+ catch (  DSLException e) {
+    Assert.assertTrue(e.getMessage().startsWith("Template with name [TOMCAT] already exist in folder"));
   }
 }

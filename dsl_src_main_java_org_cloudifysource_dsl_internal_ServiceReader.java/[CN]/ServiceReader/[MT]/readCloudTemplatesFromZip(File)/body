@@ -1,4 +1,0 @@
-{
-  File templateDirectory=ServiceReader.unzipCloudTemplatesFolder(templatesZip);
-  return readCloudTemplatesFromDirectory(templateDirectory);
-}

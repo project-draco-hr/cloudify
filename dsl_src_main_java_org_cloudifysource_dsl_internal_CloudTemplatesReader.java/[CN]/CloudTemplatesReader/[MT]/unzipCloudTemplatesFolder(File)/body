@@ -1,0 +1,8 @@
+{
+  final File unzipFile=ServiceReader.createTempDir("tempaltes");
+  ZipUtils.unzip(zipFile,unzipFile);
+  if (unzipFile.isFile()) {
+    throw new IllegalArgumentException("templates folder is not a folder: " + unzipFile.getAbsolutePath());
+  }
+  return unzipFile;
+}

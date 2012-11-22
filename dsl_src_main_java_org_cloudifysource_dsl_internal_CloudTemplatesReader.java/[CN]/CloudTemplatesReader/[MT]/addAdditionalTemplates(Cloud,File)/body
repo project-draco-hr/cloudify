@@ -1,0 +1,17 @@
+{
+  List<CloudTemplateHolder> additionalTemplates=null;
+  try {
+    additionalTemplates=readCloudTemplatesFromDirectory(folder);
+  }
+ catch (  DSLException e) {
+    logger.log(Level.WARNING,"addAdditionalTemplates - " + "Failed to read tempaltes from directory: " + folder.getAbsolutePath() + "Error: "+ e.getMessage());
+  }
+  for (  CloudTemplateHolder holder : additionalTemplates) {
+    String tempalteName=holder.getName();
+    Map<String,CloudTemplate> cloudTemplates=cloud.getTemplates();
+    if (cloudTemplates.containsKey(tempalteName)) {
+      logger.log(Level.WARNING,"addAdditionalTemplates - " + "template already exist: " + tempalteName);
+    }
+    cloudTemplates.put(tempalteName,holder.getCloudTemplate());
+  }
+}
