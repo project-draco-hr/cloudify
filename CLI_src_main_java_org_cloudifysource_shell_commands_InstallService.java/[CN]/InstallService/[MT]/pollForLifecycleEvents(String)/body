@@ -1,0 +1,28 @@
+{
+  final RestLifecycleEventsLatch lifecycleEventsPollingLatch=this.adminFacade.getLifecycleEventsPollingLatch(lifecycleEventContainerPollingID,TIMEOUT_ERROR_MESSAGE);
+  boolean isDone=false;
+  boolean continuous=false;
+  while (!isDone) {
+    try {
+      if (!continuous) {
+        lifecycleEventsPollingLatch.waitForLifecycleEvents(getTimeoutInMinutes(),TimeUnit.MINUTES);
+      }
+ else {
+        lifecycleEventsPollingLatch.continueWaitForLifecycleEvents(getTimeoutInMinutes(),TimeUnit.MINUTES);
+      }
+      isDone=true;
+    }
+ catch (    final TimeoutException e) {
+      if (!(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+        throw e;
+      }
+      final boolean continueInstallation=promptWouldYouLikeToContinueQuestion();
+      if (!continueInstallation) {
+        throw new CLIStatusException(e,"service_installation_timed_out_on_client",serviceName);
+      }
+ else {
+        continuous=true;
+      }
+    }
+  }
+}
