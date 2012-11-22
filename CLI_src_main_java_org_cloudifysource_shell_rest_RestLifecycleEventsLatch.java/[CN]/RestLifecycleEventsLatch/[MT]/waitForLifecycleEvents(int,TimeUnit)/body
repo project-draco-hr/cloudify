@@ -1,6 +1,6 @@
 {
   createConditionLatch(timeout,TimeUnit.MINUTES).waitFor(new Predicate(){
-    @Override public boolean isDone() throws CLIException, InterruptedException {
+    @SuppressWarnings("unchecked") @Override public boolean isDone() throws CLIException, InterruptedException {
       url="/service/lifecycleEventContainerID/" + pollingID + "/cursor/"+ cursor;
       try {
         lifecycleEventLogs=(Map<String,Object>)client.get(url);
