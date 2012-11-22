@@ -24,7 +24,14 @@
       if (applicationOverridesFile == null) {
         applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
       }
-      File finalPropsFile=new File(servicePropertiesFile.getName());
+      File tempFile=File.createTempFile("__cloudify",".props");
+      tempFile.deleteOnExit();
+      String tempFileName=tempFile.getName();
+      tempFile.delete();
+      File uniqueFolder=new File(TEMP_FOLDER + File.separator + tempFileName);
+      uniqueFolder.mkdir();
+      File finalPropsFile=new File(uniqueFolder,servicePropertiesFile.getName());
+      finalPropsFile.deleteOnExit();
       FileAppender appender=new FileAppender(finalPropsFile);
       if (applicationPropertiesFile != null && applicationPropertiesFile.exists()) {
         appender.append("Application Properties File",applicationPropertiesFile);

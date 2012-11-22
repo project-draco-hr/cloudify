@@ -40,7 +40,13 @@
       if (servicePropertiesFile == null) {
         servicePropertiesFile=new File(recipe,serviceName + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
       }
-      File finalPropsFile=new File(servicePropertiesFile.getName());
+      File tempFile=File.createTempFile("__cloudify","");
+      String tempFileName=tempFile.getName();
+      tempFile.delete();
+      File uniqueFolder=new File(TEMP_FOLDER + File.separator + tempFileName);
+      uniqueFolder.mkdir();
+      File finalPropsFile=new File(uniqueFolder,servicePropertiesFile.getName());
+      finalPropsFile.deleteOnExit();
       FileAppender appender=new FileAppender(finalPropsFile);
       if (overrides != null) {
         appender.append("Service Properties File",servicePropertiesFile);
