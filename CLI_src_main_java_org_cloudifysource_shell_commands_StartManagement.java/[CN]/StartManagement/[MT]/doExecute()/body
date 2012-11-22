@@ -3,6 +3,7 @@
   if (getTimeoutInMinutes() < 0) {
     throw new CLIException("-timeout cannot be negative");
   }
+  setSecurityMode();
   final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
@@ -16,6 +17,6 @@
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);
-  installer.startManagementOnLocalhostAndWait(username,password,getTimeoutInMinutes(),TimeUnit.MINUTES);
+  installer.startManagementOnLocalhostAndWait(isSecurityOn,username,password,getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Management started successfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }

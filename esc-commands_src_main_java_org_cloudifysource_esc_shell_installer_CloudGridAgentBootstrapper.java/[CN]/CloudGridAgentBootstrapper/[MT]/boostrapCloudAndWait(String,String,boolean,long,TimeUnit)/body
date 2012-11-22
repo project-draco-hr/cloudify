@@ -1,0 +1,55 @@
+{
+  final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
+  createProvisioningDriver();
+  MachineDetails[] servers;
+  try {
+    servers=provisioning.startManagementMachines(timeout,timeoutUnit);
+  }
+ catch (  final CloudProvisioningException e) {
+    throw new InstallerException("Failed to start managememnt servers. Reason: " + e.getMessage(),e);
+  }
+catch (  final TimeoutException e) {
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
+  }
+  if (servers.length == 0) {
+    throw new IllegalArgumentException("Received zero management servers from provisioning implementation");
+  }
+  try {
+    if (logger.isLoggable(Level.FINE)) {
+      for (      final MachineDetails server : servers) {
+        logServerDetails(server);
+      }
+    }
+    if (servers[0].isAgentRunning()) {
+      throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. " + "Please shut them down before continuing");
+    }
+    startManagememntProcesses(servers,isSecurityOn,end);
+    if (!isNoWebServices()) {
+      waitForManagementWebServices(username,password,end,servers);
+    }
+  }
+ catch (  final IOException e) {
+    stopManagementMachines();
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " failed. Reason: "+ e.getMessage(),e);
+  }
+catch (  final URISyntaxException e) {
+    stopManagementMachines();
+    throw new CLIException("Bootstrap-cloud failed. Reason: " + e.getMessage(),e);
+  }
+catch (  final TimeoutException e) {
+    stopManagementMachines();
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
+  }
+catch (  final CLIException e) {
+    stopManagementMachines();
+    throw e;
+  }
+catch (  final InstallerException e) {
+    stopManagementMachines();
+    throw e;
+  }
+catch (  final InterruptedException e) {
+    stopManagementMachines();
+    throw e;
+  }
+}

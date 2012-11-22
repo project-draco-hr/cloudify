@@ -8,7 +8,7 @@
       final Future<Exception> future=executors.submit(new Callable<Exception>(){
         @Override public Exception call(){
           try {
-            installer.installOnMachineWithIP(detail,Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
+            installer.installOnMachineWithIP(detail,CalcUtils.millisUntil(endTime),TimeUnit.MILLISECONDS);
           }
  catch (          final TimeoutException e) {
             logger.log(Level.INFO,"Failed accessing management VM " + detail.getPublicIp() + " Reason: "+ e.getMessage(),e);
@@ -30,7 +30,7 @@ catch (          final InstallerException e) {
     }
     for (    final Future<Exception> future : futures) {
       try {
-        final Exception e=future.get(Utils.millisUntil(endTime),TimeUnit.MILLISECONDS);
+        final Exception e=future.get(CalcUtils.millisUntil(endTime),TimeUnit.MILLISECONDS);
         if (e != null) {
           if (e instanceof TimeoutException) {
             throw (TimeoutException)e;

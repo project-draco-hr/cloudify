@@ -17,7 +17,7 @@ default :
 throw new UnsupportedOperationException("File Transfer Mode: " + details.getFileTransferMode() + " not supported");
 }
 publishEvent("attempting_to_access_vm",targetHost);
-checkConnection(targetHost,port,Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+checkConnection(targetHost,port,CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
 publishEvent("uploading_files_to_node",targetHost);
 uploadFilesToServer(details,end,targetHost);
 publishEvent("launching_agent_on_node",targetHost);

@@ -11,6 +11,6 @@
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setGridServiceAgentZone(zone);
   installer.setAutoShutdown(autoShutdown);
-  installer.startAgentOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+  installer.startAgentOnLocalhostAndWait(false,timeoutInMinutes,TimeUnit.MINUTES);
   return "Agent started succesfully. Use the shutdown-agent command to shutdown agent running on local machine.";
 }

@@ -1,0 +1,7 @@
+String[] gsAgentArgs
+String username
+boolean isSecurityOn
+String password
+int timeout
+TimeUnit timeunit
+boolean isLocalCloud

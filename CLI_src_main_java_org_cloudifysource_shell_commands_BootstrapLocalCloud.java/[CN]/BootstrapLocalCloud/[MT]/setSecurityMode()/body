@@ -1,0 +1,11 @@
+{
+  if (StringUtils.isNotBlank(username) && StringUtils.isBlank(password)) {
+    throw new IllegalArgumentException("Password is missing or empty");
+  }
+  if (StringUtils.isBlank(username) && StringUtils.isNotBlank(password)) {
+    throw new IllegalArgumentException("Username is missing or empty");
+  }
+  if ((StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) || StringUtils.isNotBlank(securityFilePath)) {
+    isSecurityOn=true;
+  }
+}

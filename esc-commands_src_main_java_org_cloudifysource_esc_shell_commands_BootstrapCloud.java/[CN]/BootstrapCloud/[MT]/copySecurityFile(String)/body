@@ -1,5 +1,5 @@
 {
-  if (securityFilePath == null) {
+  if (StringUtils.isBlank(securityFilePath)) {
     securityFilePath=CLOUDIFY_HOME + "/config/security/spring-security.xml";
   }
   File securitySourceFile=new File(securityFilePath);

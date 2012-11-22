@@ -7,7 +7,10 @@
  else {
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
-  copySecurityFile(providerDirectory.getAbsolutePath());
+  setSecurityMode();
+  if (isSecurityOn) {
+    copySecurityFile(providerDirectory.getAbsolutePath());
+  }
   File cloudFile=findCloudFile(providerDirectory);
   Cloud cloud=ServiceReader.readCloud(cloudFile);
   CloudGridAgentBootstrapper installer=new CloudGridAgentBootstrapper();
@@ -26,7 +29,7 @@
   limitLoggingLevel();
   logger.info(getFormattedMessage("bootstrapping_cloud",cloudProvider));
   try {
-    installer.boostrapCloudAndWait(username,password,timeoutInMinutes,TimeUnit.MINUTES);
+    installer.boostrapCloudAndWait(username,password,isSecurityOn,timeoutInMinutes,TimeUnit.MINUTES);
     return getFormattedMessage("cloud_started_successfully",cloudProvider);
   }
   finally {

@@ -11,5 +11,5 @@
       }
     }
   }
-  waitForUninstallApplications(Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+  waitForUninstallApplications(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
 }

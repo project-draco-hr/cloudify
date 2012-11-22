@@ -2,7 +2,7 @@
   final AgentlessInstaller installer=new AgentlessInstaller();
   InstallationDetails installationDetails;
   try {
-    installationDetails=createInstallationDetails(cloud,machineDetails,reservationId);
+    installationDetails=createInstallationDetails(cloud,machineDetails,reservationId,false);
   }
  catch (  final FileNotFoundException e) {
     throw new ElasticGridServiceAgentProvisioningException("Failed to create installation details for agent: " + e.getMessage(),e);

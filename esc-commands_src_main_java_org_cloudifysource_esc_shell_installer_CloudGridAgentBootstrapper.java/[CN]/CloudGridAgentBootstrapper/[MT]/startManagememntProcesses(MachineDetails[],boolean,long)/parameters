@@ -1,0 +1,3 @@
+MachineDetails[] machines
+boolean isSecurityOn
+long endTime

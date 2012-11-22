@@ -8,6 +8,10 @@
   if (!javaHomeValid) {
     return getFormattedMessage("incorrect_java_home",Color.RED,javaHome);
   }
+  setSecurityMode();
+  if (isSecurityOn) {
+    copySecurityFile();
+  }
   final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
   installer.setLookupGroups(lookupGroups);
@@ -16,6 +20,6 @@
   installer.setWaitForWebui(true);
   installer.addListener(new CLILocalhostBootstrapperListener());
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-  installer.startLocalCloudOnLocalhostAndWait(username,password,timeoutInMinutes,TimeUnit.MINUTES);
+  installer.startLocalCloudOnLocalhostAndWait(isSecurityOn,username,password,timeoutInMinutes,TimeUnit.MINUTES);
   return messages.getString("local_cloud_started");
 }

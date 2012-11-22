@@ -8,7 +8,7 @@
     remoteDirectory=remoteDirectory + "/" + details.getRelativeLocalDir();
   }
   final String scriptPath=remoteDirectory + "/" + scriptFileName;
-  final ShellCommandBuilder scb=new ShellCommandBuilder(details.getRemoteExecutionMode()).exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,CloudifyConstants.SPRING_BEANS_PROFILE_DEFAULT).exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.isBindToPrivateIp() ? details.getPrivateIp() : details.getPublicIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVar(CloudifyConstants.CLOUDIFY_LINK_ENV,details.getCloudifyUrl() != null ? "\"" + details.getCloudifyUrl() + "\"" : "").exportVar(CloudifyConstants.CLOUDIFY_OVERRIDES_LINK_ENV,details.getOverridesUrl() != null ? "\"" + details.getOverridesUrl() + "\"" : "").exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,details.getPublicIp()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME,details.getTemplateName()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
+  final ShellCommandBuilder scb=new ShellCommandBuilder(details.getRemoteExecutionMode()).exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,details.isSecurityOn() ? CloudifyConstants.SPRING_PROFILE_SECURE : CloudifyConstants.SPRING_PROFILE_NON_SECURE).exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.isBindToPrivateIp() ? details.getPrivateIp() : details.getPublicIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVar(CloudifyConstants.CLOUDIFY_LINK_ENV,details.getCloudifyUrl() != null ? "\"" + details.getCloudifyUrl() + "\"" : "").exportVar(CloudifyConstants.CLOUDIFY_OVERRIDES_LINK_ENV,details.getOverridesUrl() != null ? "\"" + details.getOverridesUrl() + "\"" : "").exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,details.getPublicIp()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME,details.getTemplateName()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
   if (details.getReservationId() != null) {
     scb.exportVar(GSA_RESERVATION_ID_ENV,details.getReservationId().toString());
   }
@@ -34,10 +34,10 @@
   logger.fine("Calling startup script on target: " + targetHost + " with LOCATOR="+ details.getLocator()+ "\nThis may take a few minutes");
 switch (details.getRemoteExecutionMode()) {
 case SSH:
-    sshCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS);
+    sshCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
   break;
 case WINRM:
-powershellCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),Utils.millisUntil(end),TimeUnit.MILLISECONDS,details.getLocalDir());
+powershellCommand(targetHost,command,details.getUsername(),details.getPassword(),details.getKeyFile(),CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS,details.getLocalDir());
 break;
 default :
 throw new UnsupportedOperationException();

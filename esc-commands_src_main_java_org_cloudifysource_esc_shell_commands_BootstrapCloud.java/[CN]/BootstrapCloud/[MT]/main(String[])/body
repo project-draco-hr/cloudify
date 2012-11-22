@@ -1,7 +1,0 @@
-{
-  BootstrapCloud cmd=new BootstrapCloud();
-  cmd.cloudProvider="ec2";
-  cmd.verbose=true;
-  cmd.adminFacade=new RestAdminFacade();
-  cmd.execute(null);
-}
