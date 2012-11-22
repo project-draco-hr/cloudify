@@ -68,6 +68,7 @@
   }
   details.setReservationId(reservationId);
   details.setTemplateName(templateName);
+  details.setSecurityOn(isSecurityOn);
   details.setMachineId(md.getMachineId());
   logger.fine("Created InstallationDetails: " + details);
   return details;

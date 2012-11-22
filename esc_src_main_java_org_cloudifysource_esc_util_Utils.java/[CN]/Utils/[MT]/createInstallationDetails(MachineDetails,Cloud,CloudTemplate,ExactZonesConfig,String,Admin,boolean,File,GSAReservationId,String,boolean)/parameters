@@ -8,3 +8,4 @@ boolean isManagement
 File cloudFile
 GSAReservationId reservationId
 String templateName
+boolean isSecurityOn
