@@ -4,17 +4,18 @@
     actualSelfHealing=false;
   }
   final File applicationFile=copyMultipartFileToLocalFile(srcFile);
+  String effectiveAuthGroups=authGroups;
   if (StringUtils.isBlank(authGroups)) {
     if (permissionEvaluator != null) {
-      authGroups=permissionEvaluator.getUserAuthGroupsString();
+      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
     }
  else {
-      authGroups="";
+      effectiveAuthGroups="";
     }
   }
   final File applicationOverridesFile=copyMultipartFileToLocalFile(recipeOverridesFile);
   final File cloudOverridesFile=copyMultipartFileToLocalFile(cloudOverrides);
-  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,authGroups,timeout,actualSelfHealing,cloudOverridesFile);
+  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,effectiveAuthGroups,timeout,actualSelfHealing,cloudOverridesFile);
   applicationFile.delete();
   return returnObject;
 }
