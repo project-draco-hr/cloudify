@@ -19,7 +19,7 @@
       try {
         String resolvedIP=IPUtils.resolveHostName(node.getPrivateIP());
         node.setResolvedIP(resolvedIP);
-        Utils.validateConnection(node.getResolvedIP(),node.getLoginPort());
+        IPUtils.validateConnection(node.getResolvedIP(),node.getLoginPort());
         allocatedNodesPool.add(node);
         freeNodesPool.remove(node);
       }
@@ -44,7 +44,7 @@
         try {
           String resolvedIP=IPUtils.resolveHostName(currentNode.getPrivateIP());
           currentNode.setResolvedIP(resolvedIP);
-          Utils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
+          IPUtils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
           if (!allocatedNodesPool.contains(currentNode)) {
             allocatedNodesPool.add(currentNode);
           }

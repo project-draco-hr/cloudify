@@ -1,0 +1,8 @@
+{
+  Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    throw new RestErrorException("Login failed.");
+  }
+  logger.finer("User " + authentication.getName() + " logged in.");
+  return successStatus();
+}

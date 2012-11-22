@@ -5,7 +5,7 @@
   }
   final File applicationFile=copyMultipartFileToLocalFile(srcFile);
   String effectiveAuthGroups=authGroups;
-  if (StringUtils.isBlank(authGroups)) {
+  if (StringUtils.isBlank(effectiveAuthGroups)) {
     if (permissionEvaluator != null) {
       effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
     }

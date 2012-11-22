@@ -1,4 +1,4 @@
 String relativeUrl
 File file
 Properties props
-File cloudOverrides
+Map<String,String> params

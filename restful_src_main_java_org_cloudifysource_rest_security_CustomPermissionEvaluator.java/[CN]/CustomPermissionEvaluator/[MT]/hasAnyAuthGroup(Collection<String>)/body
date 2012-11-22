@@ -2,11 +2,9 @@
   boolean isPermitted=false;
   Collection<String> userAuthGroups=getUserAuthGroups();
   for (  String requestedAuthGroup : requestedAuthGroups) {
-    for (    String userAuthGroup : userAuthGroups) {
-      if (requestedAuthGroup.equalsIgnoreCase(userAuthGroup)) {
-        isPermitted=true;
-        break;
-      }
+    if (userAuthGroups.contains(requestedAuthGroup)) {
+      isPermitted=true;
+      break;
     }
   }
   return isPermitted;

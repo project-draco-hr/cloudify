@@ -14,6 +14,15 @@
   if (templateName != null) {
     propsFile.setProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE,templateName);
   }
+  String effectiveAuthGroups=authGroups;
+  if (StringUtils.isBlank(effectiveAuthGroups)) {
+    if (permissionEvaluator != null) {
+      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
+    }
+ else {
+      effectiveAuthGroups="";
+    }
+  }
   Service service=null;
   File projectDir=null;
   if (srcFile.getName().endsWith(".zip")) {
@@ -38,22 +47,22 @@
     agentZones=new String[]{zone};
   }
   if (service == null) {
-    doDeploy(applicationName,serviceName,authGroups,templateName,agentZones,srcFile,propsFile,selfHealing,cloudOverrides);
+    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,srcFile,propsFile,selfHealing,cloudOverrides);
   }
  else   if (service.getLifecycle() != null) {
-    doDeploy(applicationName,serviceName,authGroups,templateName,agentZones,srcFile,propsFile,service,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
+    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,srcFile,propsFile,service,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
   }
  else   if (service.getDataGrid() != null) {
-    deployDataGrid(applicationName,serviceName,authGroups,agentZones,srcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAware(),cloudOverrides);
+    deployDataGrid(applicationName,serviceName,effectiveAuthGroups,agentZones,srcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAware(),cloudOverrides);
   }
  else   if (service.getStatelessProcessingUnit() != null) {
-    deployStatelessProcessingUnitAndWait(applicationName,serviceName,authGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware(),cloudOverrides);
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,effectiveAuthGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware(),cloudOverrides);
   }
  else   if (service.getMirrorProcessingUnit() != null) {
-    deployStatelessProcessingUnitAndWait(applicationName,serviceName,authGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getMirrorProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware(),cloudOverrides);
+    deployStatelessProcessingUnitAndWait(applicationName,serviceName,effectiveAuthGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getMirrorProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware(),cloudOverrides);
   }
  else   if (service.getStatefulProcessingUnit() != null) {
-    deployStatefulProcessingUnit(applicationName,serviceName,authGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getStatefulProcessingUnit(),templateName,service.isLocationAware(),cloudOverrides);
+    deployStatefulProcessingUnit(applicationName,serviceName,effectiveAuthGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getStatefulProcessingUnit(),templateName,service.isLocationAware(),cloudOverrides);
   }
  else {
     throw new IllegalStateException("Unsupported service type");

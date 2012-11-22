@@ -3,8 +3,17 @@
     logger.log(Level.WARNING,"Caught exception, but response already commited. Not sending error message based on exception",e);
   }
  else {
+    final String message;
+    if (e instanceof AccessDeniedException) {
+      message="{\"status\":\"error\", \"error\":\"" + CloudifyErrorMessages.NO_PERMISSION_ACCESS_DENIED.getName() + "\"}";
+    }
+ else     if (e instanceof BadCredentialsException) {
+      message="{\"status\":\"error\", \"error\":\"" + CloudifyErrorMessages.BAD_CREDENTIALS.getName() + "\"}";
+    }
+ else {
+      message="{\"status\":\"error\", \"error\":\"" + e.getMessage() + "\"}";
+    }
     final ServletOutputStream outputStream=response.getOutputStream();
-    final String message="{\"status\":\"error\", \"error\":\"" + e.getMessage() + "\"}";
     logger.log(Level.SEVERE,"caught exception. Sending response message " + message,e);
     final byte[] messageBytes=message.getBytes();
     outputStream.write(messageBytes);

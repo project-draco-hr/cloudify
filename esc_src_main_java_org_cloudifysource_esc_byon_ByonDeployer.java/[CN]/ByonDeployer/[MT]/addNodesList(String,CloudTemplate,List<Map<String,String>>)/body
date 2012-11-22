@@ -9,7 +9,7 @@
       if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
         node.setLoginPort(RemoteExecutionModes.WINRM.getPort());
       }
-      Utils.validateConnection(node.getResolvedIP(),node.getLoginPort());
+      IPUtils.validateConnection(node.getResolvedIP(),node.getLoginPort());
       resolvedNodes.add(node);
     }
  catch (    final Exception ex) {

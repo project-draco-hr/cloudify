@@ -21,12 +21,14 @@
   if (destFile.exists()) {
     FileUtils.deleteQuietly(destFile);
   }
-  String authGroups;
-  if (permissionEvaluator != null) {
-    authGroups=permissionEvaluator.getUserAuthGroupsString();
-  }
+  String effectiveAuthGroups=authGroups;
+  if (StringUtils.isBlank(effectiveAuthGroups)) {
+    if (permissionEvaluator != null) {
+      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
+    }
  else {
-    authGroups="";
+      effectiveAuthGroups="";
+    }
   }
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
@@ -36,12 +38,12 @@
     if (cloudConfigurationFile != null) {
       cloudConfigurationContents=FileUtils.readFileToByteArray(cloudConfigurationFile);
     }
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,authGroups,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing,cloudOverrides);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing,cloudOverrides);
     destFile.deleteOnExit();
   }
  else {
     logger.warning("Deployment file could not be renamed to the absolute pu name." + " Deploaying using the name " + dest.getName());
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,authGroups,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing,cloudOverrides);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing,cloudOverrides);
     dest.deleteOnExit();
   }
   return successStatus(lifecycleEventsContainerID);
