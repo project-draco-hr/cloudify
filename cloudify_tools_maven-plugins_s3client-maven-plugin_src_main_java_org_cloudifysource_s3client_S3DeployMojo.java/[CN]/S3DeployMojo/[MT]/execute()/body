@@ -5,9 +5,8 @@
     context=new BlobStoreContextFactory().createContext("aws-s3",user,key,wiring,new Properties());
     S3Client client=S3Client.class.cast(context.getProviderSpecificContext().getApi());
     BlobStore store=context.getBlobStore();
-    String s="/";
-    String path=project.getGroupId().replace(".",s) + s + project.getArtifactId();
-    File source=new File(getLocalRepo() + s + path);
+    String path=project.getGroupId().replace(".","/") + "/" + project.getArtifactId()+ "/"+ project.getVersion();
+    File source=new File(getLocalRepo() + "/" + path);
     uploadFile(source,path,store,client);
   }
  catch (  Exception e) {
