@@ -11,9 +11,10 @@
         if (retcode instanceof Boolean) {
           return (Boolean)retcode;
         }
- else {
-          throw new USMException("The start detector return code was not a boolean! Result was: " + retcode);
+        if (detector instanceof ClosureExecutableEntry) {
+          throw new USMException("A start detector closure return a result that is not boolean! Result was: " + retcode);
         }
+        return true;
       }
       logger.log(Level.WARNING,"Liveness Detector failed to execut. Exception was: " + result.getException(),result.getException());
       return false;
