@@ -1,5 +1,18 @@
 {
-  if (global != null && dedicated != null) {
-    throw new DSLValidationException("cannot define both global and dedicated deployment types. " + "please choose one or the other");
+  List<Object> notNulls=new ArrayList<Object>();
+  if (global != null) {
+    notNulls.add(global);
+  }
+  if (dedicated != null) {
+    notNulls.add(global);
+  }
+  if (appShared != null) {
+    notNulls.add(global);
+  }
+  if (tenantShared != null) {
+    notNulls.add(global);
+  }
+  if (notNulls.size() > 1) {
+    throw new DSLValidationException("cannot define two types of isolation sla's. please choose one");
   }
 }

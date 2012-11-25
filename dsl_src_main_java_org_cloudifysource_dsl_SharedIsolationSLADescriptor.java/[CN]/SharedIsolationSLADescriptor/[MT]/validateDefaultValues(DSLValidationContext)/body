@@ -1,0 +1,6 @@
+{
+  super.validateDefaultValues(validationContext);
+  if (isolationId == null) {
+    throw new DSLValidationException("isolationId cannot be null");
+  }
+}
