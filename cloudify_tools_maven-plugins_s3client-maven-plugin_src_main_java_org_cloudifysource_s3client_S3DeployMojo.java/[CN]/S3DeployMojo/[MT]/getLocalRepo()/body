@@ -1,4 +1,5 @@
 {
-  String s=System.getProperty("file.separator");
-  return System.getProperty("user.home") + s + ".m2"+ s+ "repository";
+  String localRepoProp=System.getProperty("maven.repo.local");
+  if (localRepoProp != null)   return localRepoProp;
+  return System.getProperty("user.home") + "/.m2/repository";
 }
