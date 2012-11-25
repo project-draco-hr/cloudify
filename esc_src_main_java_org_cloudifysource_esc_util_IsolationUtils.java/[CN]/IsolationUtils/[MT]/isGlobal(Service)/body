@@ -1,0 +1,6 @@
+{
+  if (service.getIsolationSLA() != null && service.getIsolationSLA().getGlobal() != null) {
+    return true;
+  }
+  return false;
+}

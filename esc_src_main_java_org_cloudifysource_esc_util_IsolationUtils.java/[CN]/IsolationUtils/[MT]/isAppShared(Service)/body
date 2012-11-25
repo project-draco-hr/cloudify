@@ -1,0 +1,6 @@
+{
+  if (service.getIsolationSLA() != null && service.getIsolationSLA().getAppShared() != null) {
+    return true;
+  }
+  return false;
+}

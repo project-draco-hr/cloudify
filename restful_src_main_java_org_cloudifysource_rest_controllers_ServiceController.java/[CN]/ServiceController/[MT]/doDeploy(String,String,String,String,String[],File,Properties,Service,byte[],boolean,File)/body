@@ -3,11 +3,12 @@
   boolean dedicated=true;
   if (service != null) {
     locationAware=service.isLocationAware();
-    if (service.getIsolationSLA() == null) {
+    IsolationSLA isolationSLA=service.getIsolationSLA();
+    if (isolationSLA == null) {
       service.setIsolationSLA(IsolationSLAFactory.newDedicatedIsolationSLA());
     }
  else {
-      if (service.getIsolationSLA().getGlobal() != null) {
+      if (isolationSLA.getGlobal() != null) {
         dedicated=false;
       }
     }
@@ -61,8 +62,18 @@
     config.setLocator(locators);
     config.setDedicatedManagementMachines(true);
     if (!dedicated) {
-      logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
-      setPublicMachineProvisioning(deployment,config);
+      if (IsolationUtils.isGlobal(service)) {
+        logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
+        setPublicMachineProvisioning(deployment,config);
+      }
+ else       if (IsolationUtils.isAppShared(service)) {
+        logger.info("app shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ applicationName);
+        setSharedMachineProvisioning(deployment,config,applicationName);
+      }
+ else       if (IsolationUtils.isTenantShared(service)) {
+        logger.info("tenant shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ authGroups);
+        setSharedMachineProvisioning(deployment,config,authGroups);
+      }
     }
  else {
       setDedicatedMachineProvisioning(deployment,config);
