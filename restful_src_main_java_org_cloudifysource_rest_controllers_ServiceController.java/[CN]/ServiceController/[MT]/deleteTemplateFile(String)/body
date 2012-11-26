@@ -1,0 +1,33 @@
+{
+  File templateFile=getTemplateFile(templateName);
+  if (templateFile == null) {
+    throw new RestErrorException("failed_to_remove_template_file",templateName,"template file doesn't exist");
+  }
+  String templatesPath=templateFile.getAbsolutePath();
+  logger.log(Level.INFO,"removeTemplateFromCloud- removing template file " + templatesPath);
+  boolean deleted=false;
+  try {
+    deleted=templateFile.delete();
+  }
+ catch (  SecurityException e) {
+    throw new RestErrorException("failed_to_remove_template_file",templatesPath,e.getMessage());
+  }
+  if (!deleted) {
+    throw new RestErrorException("failed_to_remove_template_file",templatesPath,"template file was not deleted.");
+  }
+  logger.log(Level.INFO,"deleteTemplateFile- Successfully deleted template file [" + templatesPath + "].");
+  File tempalteFolder=templateFile.getParentFile();
+  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX,tempalteFolder);
+  if (templatesFiles == null || templatesFiles.length == 0) {
+    try {
+      FileUtils.deleteDirectory(tempalteFolder);
+    }
+ catch (    IOException e) {
+      logger.log(Level.WARNING,"deleteTemplateFile- Failed to delete templates folder" + tempalteFolder);
+    }
+  }
+  File templatesFolder=getTempaltesFolder();
+  if (templatesFolder.list().length == 0) {
+    tempalteFolder.delete();
+  }
+}

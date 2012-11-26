@@ -1,7 +1,7 @@
 {
   try {
     File templatesFile=new File(folderName);
-    List<CloudTemplateHolder> cloudTemplatesFromFile=CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    List<CloudTemplateHolder> cloudTemplatesFromFile=reader.readCloudTemplatesFromDirectory(templatesFile);
     Assert.assertEquals(2,cloudTemplatesFromFile.size());
     List<String> names=new LinkedList<String>();
     for (    CloudTemplateHolder cloudTemplateHolder : cloudTemplatesFromFile) {

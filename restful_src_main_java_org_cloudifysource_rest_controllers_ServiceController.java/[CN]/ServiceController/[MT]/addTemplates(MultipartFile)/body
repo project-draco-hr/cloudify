@@ -1,29 +1,26 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes","add-templates");
+    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","add-templates");
   }
   logger.log(Level.INFO,"addTemplates - starting add templates.");
-  File localTemplateFolder=CloudTemplatesReader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
+  File loaclTemplatesZipFile=null;
+  File unzippedTemplatesFolder=null;
   try {
-    Map<String,Object> result=addTemplatesToCloud(localTemplateFolder);
-    List<String> expectedTemplates=(List<String>)result.get(SUCCESSFULLY_ADDED_TEMPLATES_KEY);
-    List<String> failedToAdd=(List<String>)result.get(FAILED_TO_ADD_TEMPLATES_KEY);
-    Map<String,List<String>> failedToAddTemplatesByHost=new HashMap<String,List<String>>();
-    if (!failedToAdd.isEmpty()) {
-      logger.log(Level.WARNING,"addTemplatesInternal - Failed to add templates: " + failedToAdd.toString() + " from "+ localTemplateFolder.getAbsolutePath());
-      failedToAddTemplatesByHost.put(InetAddress.getLocalHost().getHostName(),failedToAdd);
-    }
+    loaclTemplatesZipFile=copyMultipartFileToLocalFile(templatesFolder);
+    unzippedTemplatesFolder=new CloudTemplatesReader().unzipCloudTemplatesFolder(loaclTemplatesZipFile);
+    List<String> expectedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder);
+    Map<String,Map<String,String>> failedToAddTemplatesByHost=new HashMap<String,Map<String,String>>();
     Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
-    addedTemplatesByHost.put(InetAddress.getLocalHost().getHostName(),expectedTemplates);
     sendAddTempaltesToRestInstances(templatesFolder,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
     if (!failedToAddTemplatesByHost.isEmpty()) {
-      logger.log(Level.INFO,"Failed to add the following tempaltes: " + failedToAddTemplatesByHost + ". Successfully added templates (by host): "+ addedTemplatesByHost);
-      throw new RestErrorException("failed_to_add_templates",localTemplateFolder.getAbsolutePath(),addedTemplatesByHost.toString(),failedToAddTemplatesByHost.toString());
+      logger.log(Level.INFO,"addTemplates - Failed to add the following tempaltes (by host): " + failedToAddTemplatesByHost + ".\nSuccessfully added templates (by host): "+ addedTemplatesByHost);
+      throw new RestErrorException("failed_to_add_templates",failedToAddTemplatesByHost,addedTemplatesByHost);
     }
-    logger.log(Level.INFO,"Successfully added templates: " + addedTemplatesByHost.toString());
+    logger.log(Level.INFO,"addTemplates - Successfully added templates: " + addedTemplatesByHost.toString());
     return successStatus(expectedTemplates);
   }
   finally {
-    localTemplateFolder.delete();
+    FileUtils.deleteQuietly(unzippedTemplatesFolder);
+    FileUtils.deleteQuietly(loaclTemplatesZipFile);
   }
 }

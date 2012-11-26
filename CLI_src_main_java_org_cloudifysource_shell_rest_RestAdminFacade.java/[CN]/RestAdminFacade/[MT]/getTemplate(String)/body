@@ -3,7 +3,6 @@
   CloudTemplate response;
   try {
     Object result=client.get(url);
-    logger.log(Level.INFO,"CLI getTemplate got template: " + result.toString());
     ObjectMapper mapper=new ObjectMapper();
     response=mapper.convertValue(result,CloudTemplate.class);
   }

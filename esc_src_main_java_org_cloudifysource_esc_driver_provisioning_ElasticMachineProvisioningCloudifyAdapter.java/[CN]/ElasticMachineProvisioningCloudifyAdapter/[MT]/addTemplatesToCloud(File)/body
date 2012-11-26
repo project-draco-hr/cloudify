@@ -4,7 +4,6 @@
     return;
   }
   File[] listFiles=additionalTemplatesFolder.listFiles();
-  for (  File templatesFolder : listFiles) {
-    CloudTemplatesReader.addAdditionalTemplates(cloud,templatesFolder);
-  }
+  CloudTemplatesReader reader=new CloudTemplatesReader();
+  reader.addAdditionalTemplates(cloud,listFiles);
 }

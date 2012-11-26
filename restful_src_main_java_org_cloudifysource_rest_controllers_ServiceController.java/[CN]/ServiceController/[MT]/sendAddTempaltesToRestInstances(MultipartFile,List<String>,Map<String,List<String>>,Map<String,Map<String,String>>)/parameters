@@ -1,4 +1,4 @@
 MultipartFile templatesFolder
 List<String> expectedTemplates
 Map<String,List<String>> addedTemplatesByHost
-Map<String,List<String>> failedToAddTemplatesByHost
+Map<String,Map<String,String>> failedToAddTemplatesByHost

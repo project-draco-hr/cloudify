@@ -8,12 +8,11 @@
   try {
     String cloudOverridesPerService=config.getCloudOverridesPerService();
     this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectoryPath,cloudOverridesPerService);
-    File cloudConfigDirectory=new File(cloudConfigDirectoryPath);
     this.cloudTemplateName=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
     if (this.cloudTemplateName == null) {
       throw new BeanConfigurationException("Cloud template was not set!");
     }
-    addTemplatesToCloud(cloudConfigDirectory);
+    addTemplatesToCloud(new File(cloudConfigDirectoryPath));
     final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
     if (cloudTemplate == null) {
       throw new BeanConfigurationException("The provided cloud template name: " + this.cloudTemplateName + " was not found in the cloud configuration");

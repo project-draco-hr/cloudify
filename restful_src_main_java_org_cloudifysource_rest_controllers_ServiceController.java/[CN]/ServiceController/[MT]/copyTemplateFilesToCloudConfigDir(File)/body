@@ -1,0 +1,19 @@
+{
+  File templatesDirParent=getTempaltesFolder();
+  String folderName="templates_" + lastTemplateFileNum.incrementAndGet();
+  File copiedtemplatesFolder=new File(templatesDirParent,folderName);
+  while (copiedtemplatesFolder.exists()) {
+    folderName="templates_" + lastTemplateFileNum.incrementAndGet();
+    copiedtemplatesFolder=new File(templatesDirParent,folderName);
+  }
+  copiedtemplatesFolder.mkdir();
+  try {
+    FileUtils.copyDirectory(templatesDirToCopy,copiedtemplatesFolder);
+    return copiedtemplatesFolder;
+  }
+ catch (  IOException e) {
+    FileUtils.deleteDirectory(copiedtemplatesFolder);
+    lastTemplateFileNum.decrementAndGet();
+    throw e;
+  }
+}

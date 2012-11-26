@@ -1,7 +1,7 @@
 {
   try {
     File templatesFile=new File(ILLEGAL_TEMPLATES_FILE_PATH);
-    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    reader.readCloudTemplatesFromDirectory(templatesFile);
     Assert.fail("Multiple templates in one file yielded no exception.");
   }
  catch (  DSLException e) {

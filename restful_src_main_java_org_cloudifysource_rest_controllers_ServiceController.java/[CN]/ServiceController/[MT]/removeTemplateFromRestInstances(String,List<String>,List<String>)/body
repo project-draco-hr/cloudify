@@ -5,9 +5,9 @@
   for (  ProcessingUnitInstance puInstance : instances) {
     InetAddress ip;
     String puHostName=puInstance.getMachine().getHostName();
-    String host=puHostName + "/" + puInstance.getMachine().getHostAddress();
+    String hostAddress=puInstance.getMachine().getHostAddress();
+    String host=puHostName + "/" + hostAddress;
     try {
-      failedToRemoveHosts.add(puHostName);
       ip=InetAddress.getByName(puHostName);
     }
  catch (    UnknownHostException e) {
@@ -20,7 +20,7 @@
     }
     logger.log(Level.INFO,"removeTemplate - Executing delete http request to " + host);
     try {
-      executeDeleteRestRequest(puInstance,host,"/service/templates/" + templateName + "/internal");
+      executeDeleteRestRequest(puInstance,hostAddress,"/service/templates/" + templateName + "/internal");
     }
  catch (    RestErrorException e) {
       failedToRemoveHosts.add(host);

@@ -1,7 +1,7 @@
 {
   try {
     File templatesFile=new File(NO_UPLOAD_TEMPLATES_FILE_PATH);
-    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    reader.readCloudTemplatesFromDirectory(templatesFile);
     Assert.fail("Templates folder missing an upload folder yield no exception.");
   }
  catch (  DSLValidationException e) {

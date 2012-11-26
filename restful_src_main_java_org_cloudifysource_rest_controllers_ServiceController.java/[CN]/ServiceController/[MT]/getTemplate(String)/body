@@ -1,6 +1,6 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes","get-template");
+    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","get-template");
   }
   CloudTemplate cloudTemplate=cloud.getTemplates().get(templateName);
   if (cloudTemplate == null) {

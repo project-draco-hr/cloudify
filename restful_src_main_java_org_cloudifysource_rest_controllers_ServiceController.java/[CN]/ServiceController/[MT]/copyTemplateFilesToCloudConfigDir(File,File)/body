@@ -1,6 +1,0 @@
-{
-  String folderName="templates_" + lastTemplateFileNum.incrementAndGet();
-  File copiedtemplatesFolder=new File(templatesDirParent,folderName);
-  copiedtemplatesFolder.mkdir();
-  FileUtils.copyDirectory(templatesDirToCopy,copiedtemplatesFolder);
-}

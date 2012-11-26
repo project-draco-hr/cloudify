@@ -1,7 +1,7 @@
 {
   try {
     File templatesFile=new File(ILLEGAL_DUPLICATE_TEMPLATES_FILE_PATH);
-    CloudTemplatesReader.readCloudTemplatesFromDirectory(templatesFile);
+    reader.readCloudTemplatesFromDirectory(templatesFile);
     Assert.fail("Duplicate templates yielded no exception.");
   }
  catch (  DSLException e) {
