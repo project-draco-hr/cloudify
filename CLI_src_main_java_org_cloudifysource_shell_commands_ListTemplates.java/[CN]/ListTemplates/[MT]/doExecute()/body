@@ -1,4 +1,5 @@
 {
   Map<String,CloudTemplate> templatesList=adminFacade.listTemplates();
-  return getTemplatesListAsString(templatesList);
+  String formattedList=getTemplatesListAsString(templatesList);
+  return formattedList;
 }
