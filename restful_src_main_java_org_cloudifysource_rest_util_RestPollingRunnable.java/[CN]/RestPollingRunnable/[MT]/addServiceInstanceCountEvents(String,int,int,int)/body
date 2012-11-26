@@ -2,7 +2,7 @@
   final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   if (numberOfServiceInstances == 0) {
     if (!isUninstall) {
-      this.lifecycleEventsContainer.addInstanceCountEvent("Deploying " + serviceName + " with "+ plannedNumberOfInstances+ " planned instances.");
+      this.lifecycleEventsContainer.addNonLifecycleEvents("Deploying " + serviceName + " with "+ plannedNumberOfInstances+ " planned instances.");
     }
   }
  else {
@@ -10,12 +10,12 @@
     if (numberOfFailedInstances > 0) {
       event+=" failed " + numberOfFailedInstances;
     }
-    this.lifecycleEventsContainer.addInstanceCountEvent(event);
+    this.lifecycleEventsContainer.addNonLifecycleEvents(event);
   }
   if (plannedNumberOfInstances == numberOfServiceInstances) {
     if (!isServiceInstall) {
       if (!isUninstall && !isSetInstances) {
-        this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" successfully installed ("+ numberOfServiceInstances+ " Instances)");
+        this.lifecycleEventsContainer.addNonLifecycleEvents("Service \"" + serviceName + "\" successfully installed ("+ numberOfServiceInstances+ " Instances)");
       }
     }
   }
@@ -23,7 +23,7 @@
   if (zone == null) {
     logger.log(Level.FINE,"Zone " + absolutePuName + " does not exist. "+ "this means processing unit instance was removed.");
     if (isUninstall) {
-      this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" was stopped successfully , releasing cloud resources...");
+      this.lifecycleEventsContainer.addNonLifecycleEvents("Service \"" + serviceName + "\" was stopped successfully , releasing cloud resources...");
     }
   }
 }

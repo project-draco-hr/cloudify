@@ -6,7 +6,7 @@
       if (undeployedSuccessfully) {
         logger.info("undeployAndWait for processing unit " + absolutePuName + " has finished");
         this.serviceNames.remove(serviceName);
-        this.lifecycleEventsContainer.addInstanceCountEvent("Service \"" + serviceName + "\" uninstalled successfully");
+        this.lifecycleEventsContainer.addNonLifecycleEvents("Service \"" + serviceName + "\" uninstalled successfully");
       }
     }
  catch (    final Exception e) {
@@ -16,7 +16,7 @@
  else {
         final String message="undeploy task has ended unsuccessfully. " + "Some machines may not have been terminated!";
         logger.log(Level.WARNING,message,e);
-        lifecycleEventsContainer.addInstanceCountEvent(message);
+        lifecycleEventsContainer.addNonLifecycleEvents(message);
         throw new ExecutionException(message,e);
       }
     }

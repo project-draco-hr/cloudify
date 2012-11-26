@@ -11,14 +11,16 @@
     }
   }
   final ApplicationInstallerRunnable installer=new ApplicationInstallerRunnable(this,result,applicationName,applicationOverridesFile,authGroups,services,this.cloud,selfHealing,cloudOverrides);
+  logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
+  final UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),timeout,TimeUnit.MINUTES);
+  installer.setTaskPollingId(lifecycleEventContainerID);
   if (installer.isAsyncInstallPossibleForApplication()) {
     installer.run();
   }
  else {
     this.executorService.execute(installer);
   }
-  logger.log(Level.INFO,"Starting to poll for installation lifecycle events.");
-  final UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),timeout,TimeUnit.MINUTES);
+  installer.setTaskPollingId(lifecycleEventContainerID);
   final String[] serviceOrder=new String[services.size()];
   for (int i=0; i < serviceOrder.length; i++) {
     serviceOrder[i]=services.get(i).getName();

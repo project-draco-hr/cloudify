@@ -1,6 +1,6 @@
 {
   RestPollingRunnable restPollingRunnable;
-  logger.info("starting POLL on service : " + serviceName + " app: "+ applicationName);
+  logger.info("starting poll on service : " + serviceName + " app: "+ applicationName);
   final LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
   final UUID lifecycleEventsContainerID=UUID.randomUUID();
   lifecycleEventsContainer.setEventsSet(this.eventsSet);

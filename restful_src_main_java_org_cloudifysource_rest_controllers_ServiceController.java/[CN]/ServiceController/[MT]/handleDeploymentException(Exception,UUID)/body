@@ -1,0 +1,13 @@
+{
+  if (pollingTaskId == null) {
+    logger.log(Level.INFO,"No polling task was set for the deployment task. " + "Aborting deployment exception handling.");
+    return;
+  }
+  if (!this.lifecyclePollingThreadContainer.containsKey(pollingTaskId)) {
+    logger.log(Level.FINE,"Polling task with UUID " + pollingTaskId.toString() + " is no longer active.");
+  }
+ else {
+    RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(pollingTaskId);
+    restPollingRunnable.setDeploymentExecutionException(e);
+  }
+}
