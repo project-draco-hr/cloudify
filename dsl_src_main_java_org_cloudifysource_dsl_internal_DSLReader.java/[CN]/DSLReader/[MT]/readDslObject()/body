@@ -13,7 +13,14 @@
     addApplicationProperties(properties);
   }
  catch (  final Exception e) {
-    throw new IllegalArgumentException("Failed to load properties file " + this.propertiesFile.getName() + ": "+ e.getMessage(),e);
+    String msg=null;
+    if (propertiesFile != null) {
+      msg="Failed to load properties file " + this.propertiesFile.getName() + ": "+ e.getMessage();
+    }
+ else {
+      msg="Failed to load properties file: " + e.getMessage();
+    }
+    throw new IllegalArgumentException(msg,e);
   }
   if (this.variables != null) {
     properties.putAll(this.variables);
