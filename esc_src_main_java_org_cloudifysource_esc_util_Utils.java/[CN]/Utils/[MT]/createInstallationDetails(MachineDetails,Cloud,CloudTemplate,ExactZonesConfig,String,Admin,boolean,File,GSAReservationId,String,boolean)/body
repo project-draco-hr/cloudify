@@ -57,7 +57,9 @@
   }
   details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVILEGED,Boolean.toString(template.isPrivileged()));
   if (!org.apache.commons.lang.StringUtils.isBlank(template.getInitializationCommand())) {
-    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_INIT_COMMAND,template.getInitializationCommand());
+    final String command=template.getInitializationCommand();
+    final String quotedCommand="\"" + command + "\"";
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_INIT_COMMAND,quotedCommand);
   }
   final Set<Entry<String,String>> entries=template.getEnv().entrySet();
   for (  Entry<String,String> entry : entries) {
