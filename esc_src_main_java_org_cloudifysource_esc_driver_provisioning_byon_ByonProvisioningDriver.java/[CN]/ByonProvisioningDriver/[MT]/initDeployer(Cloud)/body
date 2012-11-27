@@ -12,8 +12,8 @@
             nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
           }
           if (nodesList == null) {
-            publishEvent("prov_invalid_configuration");
-            throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration");
+            publishEvent(CloudifyErrorMessages.MISSING_NODES_LIST.getName(),templateName);
+            throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration for tempalte " + templateName + " - missing nodes list.");
           }
           deployer.addNodesList(templateName,templatesMap.get(templateName),nodesList);
         }
