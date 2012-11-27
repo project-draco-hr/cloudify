@@ -15,10 +15,14 @@
     updateCloudTempaltesUploadPath(addedTempaltes,localTemplatesDir);
   }
  catch (  IOException e) {
-    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + e.getMessage(),e);
+    String errorMessage=e.getMessage();
+    if (errorMessage == null) {
+      errorMessage=e.toString();
+    }
+    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + errorMessage,e);
     for (    String tempalteName : addedTempaltes) {
       cloud.getTemplates().remove(tempalteName);
-      failedToAddTemplates.put(tempalteName,e.getMessage());
+      failedToAddTemplates.put(tempalteName,errorMessage);
     }
     throw new RestErrorException("failed_to_add_all_templates",failedToAddTemplates);
   }

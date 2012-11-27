@@ -13,7 +13,11 @@
       logger.log(Level.WARNING,"addTemplates - failed to execute http request to " + host + ". Error: "+ e,e);
       Map<String,String> expectedMap=new HashMap<String,String>();
       for (      String expectedTempalte : expectedTemplates) {
-        expectedMap.put(expectedTempalte,e.getMessage());
+        String errorMessage=e.getMessage();
+        if (errorMessage == null) {
+          errorMessage=e.toString();
+        }
+        expectedMap.put(expectedTempalte,errorMessage);
       }
       failedToAddTemplatesByHost.put(host,expectedMap);
       continue;
