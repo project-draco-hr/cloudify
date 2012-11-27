@@ -11,9 +11,9 @@
     List<String> expectedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder);
     Map<String,Map<String,String>> failedToAddTemplatesByHost=new HashMap<String,Map<String,String>>();
     Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
-    sendAddTempaltesToRestInstances(templatesFolder,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
+    sendAddTempaltesToRestInstances(loaclTemplatesZipFile,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
     if (!failedToAddTemplatesByHost.isEmpty()) {
-      logger.log(Level.INFO,"addTemplates - Failed to add the following tempaltes (by host): " + failedToAddTemplatesByHost + ".\nSuccessfully added templates (by host): "+ addedTemplatesByHost);
+      logger.log(Level.WARNING,"addTemplates - Failed to add the following tempaltes (by host): " + failedToAddTemplatesByHost + ".\nSuccessfully added templates (by host): "+ addedTemplatesByHost);
       throw new RestErrorException("failed_to_add_templates",failedToAddTemplatesByHost,addedTemplatesByHost);
     }
     logger.log(Level.INFO,"addTemplates - Successfully added templates: " + addedTemplatesByHost.toString());

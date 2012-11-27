@@ -1,6 +1,6 @@
 {
   ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
-  logger.log(Level.INFO,"addTemplates - sending templates folder to " + (instances.length - 1) + " instances.");
+  logger.log(Level.INFO,"addTemplates - sending templates folder to " + instances.length + " instances.");
   for (  ProcessingUnitInstance puInstance : instances) {
     String hostAddress=puInstance.getMachine().getHostAddress();
     String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
@@ -10,7 +10,7 @@
       response=executePostRestRequest(templatesFolder,puInstance,"/service/templates/internal");
     }
  catch (    Exception e) {
-      logger.log(Level.WARNING,"addTemplates - failed to execute http request to " + host + ". Error: "+ e);
+      logger.log(Level.WARNING,"addTemplates - failed to execute http request to " + host + ". Error: "+ e,e);
       Map<String,String> expectedMap=new HashMap<String,String>();
       for (      String expectedTempalte : expectedTemplates) {
         expectedMap.put(expectedTempalte,e.getMessage());

@@ -1,30 +1,17 @@
 {
   ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
   ProcessingUnitInstance[] instances=processingUnit.getInstances();
-  logger.log(Level.INFO,"removeTemplate - sending remove request to " + (instances.length - 1) + " REST instances. Template's name is "+ templateName);
+  logger.log(Level.INFO,"removeTemplate - sending remove request to " + instances.length + " REST instances. Template's name is "+ templateName);
   for (  ProcessingUnitInstance puInstance : instances) {
-    InetAddress ip;
-    String puHostName=puInstance.getMachine().getHostName();
     String hostAddress=puInstance.getMachine().getHostAddress();
-    String host=puHostName + "/" + hostAddress;
-    try {
-      ip=InetAddress.getByName(puHostName);
-    }
- catch (    UnknownHostException e) {
-      failedToRemoveHosts.add(host);
-      logger.log(Level.WARNING,"removeTemplate - Failed to remove template [" + templateName + "] from host "+ host+ ". UnknownHostException: "+ e.getMessage());
-      continue;
-    }
-    if (RestUtils.isLocalHost(ip)) {
-      continue;
-    }
+    String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
     logger.log(Level.INFO,"removeTemplate - Executing delete http request to " + host);
     try {
       executeDeleteRestRequest(puInstance,hostAddress,"/service/templates/" + templateName + "/internal");
     }
  catch (    RestErrorException e) {
       failedToRemoveHosts.add(host);
-      logger.log(Level.WARNING,"removeTemplate - Failed to execute http request to " + host + ". Error: "+ e.getMessage());
+      logger.log(Level.WARNING,"removeTemplate - Failed to execute http request to " + host + ". Error: "+ e.getMessage(),e);
       continue;
     }
     successfullyRemoved.add(host);
