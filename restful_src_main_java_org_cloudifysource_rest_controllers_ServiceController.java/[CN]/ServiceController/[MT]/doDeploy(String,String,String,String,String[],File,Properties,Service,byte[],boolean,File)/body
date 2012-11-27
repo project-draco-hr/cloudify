@@ -3,15 +3,7 @@
   boolean dedicated=true;
   if (service != null) {
     locationAware=service.isLocationAware();
-    IsolationSLA isolationSLA=service.getIsolationSLA();
-    if (isolationSLA == null) {
-      service.setIsolationSLA(IsolationSLAFactory.newDedicatedIsolationSLA());
-    }
- else {
-      if (isolationSLA.getGlobal() != null) {
-        dedicated=false;
-      }
-    }
+    dedicated=IsolationUtils.isDedicated(service);
   }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
@@ -41,7 +33,13 @@
   }
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    final long cloudExternalProcessMemoryInMB=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceMemoryMB() : calculateExternalProcessMemory(cloud,template);
+    long cloudExternalProcessMemoryInMB=0;
+    if (dedicated) {
+      cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    }
+ else {
+      cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
+    }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
     if (cloudOverrides != null) {
@@ -71,6 +69,9 @@
         setSharedMachineProvisioning(deployment,config,applicationName);
       }
  else       if (IsolationUtils.isTenantShared(service)) {
+        if (authGroups == null) {
+          throw new IllegalStateException("authGroups cannot be null when using tenant shared isolation");
+        }
         logger.info("tenant shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ authGroups);
         setSharedMachineProvisioning(deployment,config,authGroups);
       }

@@ -2,7 +2,7 @@
   if (service == null) {
     return 0;
   }
-  final double instanceCpuCores=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceCpuCores() : 0;
+  double instanceCpuCores=IsolationUtils.getInstanceCpuCores(service);
   if (instanceCpuCores < 0) {
     throw new IllegalArgumentException("instanceCpuCores must be positive");
   }

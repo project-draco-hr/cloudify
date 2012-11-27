@@ -18,7 +18,7 @@
   if (service.getNumInstances() > service.getMaxAllowedInstances()) {
     throw new DSLException("number of instances (" + service.getNumInstances() + ") must be equal or less than the maximum number of instances ("+ service.getMaxAllowedInstances()+ ")");
   }
-  final double instanceCpuCores=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceCpuCores() : 0;
+  double instanceCpuCores=IsolationUtils.getInstanceCpuCores(service);
   final CapacityRequirementsConfig minCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getMinAllowedInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMinAllowedInstances() * instanceCpuCores).create();
   final CapacityRequirementsConfig initialCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getNumInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getNumInstances() * instanceCpuCores).create();
   final CapacityRequirementsConfig maxCapacity=new CapacityRequirementsConfigurer().memoryCapacity(service.getMaxAllowedInstances() * externalProcessMemoryInMB,MemoryUnit.MEGABYTES).numberOfCpuCores(service.getMaxAllowedInstances() * instanceCpuCores).create();
