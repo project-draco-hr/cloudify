@@ -5,8 +5,7 @@
   logger.log(Level.INFO,"executeRestRequest - sending rest request to uri " + uri);
   HttpPost postMethod=new HttpPost(uri);
   final MultipartEntity reqEntity=new MultipartEntity();
-  final ByteArrayBody bin=new ByteArrayBody(templatesFolder.getBytes(),CloudifyConstants.TEMPLATES_DIR_PARAM_NAME);
-  reqEntity.addPart(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,bin);
+  reqEntity.addPart(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,new FileBody(templatesFolder));
   postMethod.setEntity(reqEntity);
   Object response=null;
   Map<String,Object> responseMap;

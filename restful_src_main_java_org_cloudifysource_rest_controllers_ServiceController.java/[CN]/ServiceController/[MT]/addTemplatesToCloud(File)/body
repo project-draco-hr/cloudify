@@ -15,7 +15,7 @@
     updateCloudTempaltesUploadPath(addedTempaltes,localTemplatesDir);
   }
  catch (  IOException e) {
-    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files.");
+    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + e.getMessage(),e);
     for (    String tempalteName : addedTempaltes) {
       cloud.getTemplates().remove(tempalteName);
       failedToAddTemplates.put(tempalteName,e.getMessage());

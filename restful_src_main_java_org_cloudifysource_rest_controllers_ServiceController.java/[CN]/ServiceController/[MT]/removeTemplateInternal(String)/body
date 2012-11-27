@@ -4,7 +4,7 @@
     removeTemplateFromCloud(templateName);
   }
  catch (  RestErrorException e) {
-    logger.log(Level.INFO,"removeTemplateInternal - failed to remove template [" + templateName + "]."+ " Error: "+ e.getMessage());
+    logger.log(Level.WARNING,"removeTemplateInternal - failed to remove template [" + templateName + "]."+ " Error: "+ e.getMessage(),e);
     throw e;
   }
   logger.log(Level.INFO,"removeTemplateFromCloud- Successfully removed template [" + templateName + "].");

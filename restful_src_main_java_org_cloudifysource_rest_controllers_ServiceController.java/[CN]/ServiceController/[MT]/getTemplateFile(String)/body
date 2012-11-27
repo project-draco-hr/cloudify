@@ -6,7 +6,6 @@
     logger.log(Level.INFO,"Searching for template file " + templateFileName + " in "+ templateFolder.getAbsolutePath());
     File[] listFiles=templateFolder.listFiles(new FilenameFilter(){
       @Override public boolean accept(      final File dir,      final String name){
-        logger.log(Level.WARNING,"Scanning files in " + templateFolder.getAbsolutePath() + " current name is "+ name+ " dir is "+ dir.getAbsolutePath()+ " equals = "+ templateFileName.equals(name));
         return templateFileName.equals(name);
       }
     }
