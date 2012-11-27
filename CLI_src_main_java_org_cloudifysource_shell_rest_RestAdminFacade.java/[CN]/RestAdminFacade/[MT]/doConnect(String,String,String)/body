@@ -21,7 +21,7 @@
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
  catch (  final ErrorStatusException e) {
-    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+    throw new CLIStatusException(e);
   }
 catch (  final RestException e) {
     throw new CLIException(e);
