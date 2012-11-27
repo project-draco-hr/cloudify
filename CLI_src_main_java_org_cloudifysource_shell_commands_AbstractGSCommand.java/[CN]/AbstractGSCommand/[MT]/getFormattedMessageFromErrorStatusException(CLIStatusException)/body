@@ -1,12 +1,3 @@
 {
-  String message=getFormattedMessage(e.getReasonCode(),(Object[])null);
-  if (message == null) {
-    message=e.getReasonCode();
-  }
-  if (e.getArgs() == null || e.getArgs().length == 0) {
-    return message;
-  }
- else {
-    return MessageFormat.format(message,e.getArgs());
-  }
+  return getFormattedMessageFromErrorStatusException(e,null);
 }

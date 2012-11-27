@@ -1,0 +1,3 @@
+{
+  deployment.sharedMachineProvisioning(isolationId,config);
+}

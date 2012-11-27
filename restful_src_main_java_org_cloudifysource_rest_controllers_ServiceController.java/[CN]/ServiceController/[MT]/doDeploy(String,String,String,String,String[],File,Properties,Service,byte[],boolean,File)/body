@@ -3,14 +3,7 @@
   boolean dedicated=true;
   if (service != null) {
     locationAware=service.isLocationAware();
-    if (service.getIsolationSLA() == null) {
-      service.setIsolationSLA(IsolationSLAFactory.newDedicatedIsolationSLA());
-    }
- else {
-      if (service.getIsolationSLA().getGlobal() != null) {
-        dedicated=false;
-      }
-    }
+    dedicated=IsolationUtils.isDedicated(service);
   }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
@@ -40,7 +33,13 @@
   }
  else {
     final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    final long cloudExternalProcessMemoryInMB=service.getIsolationSLA().getGlobal() != null ? service.getIsolationSLA().getGlobal().getInstanceMemoryMB() : calculateExternalProcessMemory(cloud,template);
+    long cloudExternalProcessMemoryInMB=0;
+    if (dedicated) {
+      cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    }
+ else {
+      cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
+    }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
     if (cloudOverrides != null) {
@@ -61,8 +60,21 @@
     config.setLocator(locators);
     config.setDedicatedManagementMachines(true);
     if (!dedicated) {
-      logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
-      setPublicMachineProvisioning(deployment,config);
+      if (IsolationUtils.isGlobal(service)) {
+        logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
+        setPublicMachineProvisioning(deployment,config);
+      }
+ else       if (IsolationUtils.isAppShared(service)) {
+        logger.info("app shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ applicationName);
+        setSharedMachineProvisioning(deployment,config,applicationName);
+      }
+ else       if (IsolationUtils.isTenantShared(service)) {
+        if (authGroups == null) {
+          throw new IllegalStateException("authGroups cannot be null when using tenant shared isolation");
+        }
+        logger.info("tenant shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ authGroups);
+        setSharedMachineProvisioning(deployment,config,authGroups);
+      }
     }
  else {
       setDedicatedMachineProvisioning(deployment,config);

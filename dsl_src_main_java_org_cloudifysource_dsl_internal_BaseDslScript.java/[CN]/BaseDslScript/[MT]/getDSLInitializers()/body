@@ -31,6 +31,8 @@
     addObjectInitializerForClass(dslObjectInitializersByName,PerInstanceStatisticsDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,IsolationSLA.class);
     addObjectInitializerForClass(dslObjectInitializersByName,GlobalIsolationSLADescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,TenantSharedIsolationSLADescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,AppSharedIsolationSLADescriptor.class);
     addObjectInitializerForClass(dslObjectInitializersByName,DedicatedIsolationSLADescriptor.class);
   }
   return dslObjectInitializersByName;

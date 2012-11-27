@@ -1,0 +1,6 @@
+{
+  if (service.getIsolationSLA() != null && service.getIsolationSLA().getTenantShared() != null) {
+    return true;
+  }
+  return false;
+}

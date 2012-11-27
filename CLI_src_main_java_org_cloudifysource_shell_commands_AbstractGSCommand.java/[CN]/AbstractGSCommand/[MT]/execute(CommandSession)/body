@@ -13,7 +13,12 @@
   }
  catch (  final CLIStatusException cse) {
     if (verbose) {
-      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse),cse);
+      if (cse.getVerboseData() == null) {
+        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse),cse);
+      }
+ else {
+        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse,cse.getVerboseData()));
+      }
     }
  else {
       logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse));

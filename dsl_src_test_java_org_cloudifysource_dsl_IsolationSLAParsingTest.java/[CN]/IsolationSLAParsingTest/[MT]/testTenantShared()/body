@@ -1,0 +1,5 @@
+{
+  Service service=ServiceReader.getServiceFromFile(new File(TENANT_SHARED_PATH));
+  Assert.assertTrue(service.getIsolationSLA() != null);
+  Assert.assertTrue(service.getIsolationSLA().getTenantShared() != null);
+}
