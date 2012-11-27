@@ -2,5 +2,5 @@
   if (requestedAuthGroups.size() == 0) {
     return true;
   }
-  return hasAllAuthGroups(requestedAuthGroups);
+  return hasAnyAuthGroup(requestedAuthGroups);
 }

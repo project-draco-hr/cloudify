@@ -1,0 +1,8 @@
+{
+  if (isSecureConnection) {
+    return CloudifyConstants.SECURE_REST_PORT;
+  }
+ else {
+    return CloudifyConstants.DEFAULT_REST_PORT;
+  }
+}

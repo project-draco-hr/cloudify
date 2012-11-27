@@ -1,5 +1,0 @@
-String username
-String password
-boolean isLocalCloud
-GridServiceAgent agent
-List<AbstractManagementServiceInstaller> waitForManagementServices

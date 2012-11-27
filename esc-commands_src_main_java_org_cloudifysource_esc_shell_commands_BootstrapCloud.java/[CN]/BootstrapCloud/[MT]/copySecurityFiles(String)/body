@@ -1,0 +1,21 @@
+{
+  if (StringUtils.isNotBlank(securityFilePath)) {
+    File securitySourceFile=new File(securityFilePath);
+    if (!securitySourceFile.isFile()) {
+      throw new Exception("Security configuration file not found: " + securityFilePath);
+    }
+    File securityTargetFile=new File(providerDirectory,OVERRIDES_FOLDER + PATH_SEPARATOR + "spring-security.xml");
+    FileUtils.copyFile(securitySourceFile,securityTargetFile);
+  }
+ else {
+    throw new IllegalArgumentException("-securityfile is missing or empty");
+  }
+  if (StringUtils.isNotBlank(keystore)) {
+    File keystoreSourceFile=new File(keystore);
+    if (!keystoreSourceFile.isFile()) {
+      throw new Exception("Keystore file not found: " + keystore);
+    }
+    File keystoreTargetFile=new File(providerDirectory,OVERRIDES_FOLDER + PATH_SEPARATOR + "keystore");
+    FileUtils.copyFile(keystoreSourceFile,keystoreTargetFile);
+  }
+}

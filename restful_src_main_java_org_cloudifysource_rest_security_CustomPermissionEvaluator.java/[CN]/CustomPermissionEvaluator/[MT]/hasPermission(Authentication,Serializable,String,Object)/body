@@ -1,4 +1,9 @@
 {
   logger.warning("Evaluating expression using hasPermission unimplemented signature");
-  return false;
+  if (SecuredObjectTypes.AUTHORIZATION_GROUP.toString().equalsIgnoreCase(targetType)) {
+    return hasPermission(authentication,targetId,permission);
+  }
+ else {
+    throw new IllegalArgumentException("This object type cannot be secured: " + targetType);
+  }
 }

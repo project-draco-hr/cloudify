@@ -1,0 +1,11 @@
+{
+  setGridServiceAgentZone(LOCALCLOUD_GSA_ZONES);
+  setDefaultNicAddress();
+  setDefaultLocalcloudLookup();
+  if (isWindows()) {
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_WIN_MANAGEMENT_ARGUMENTS,securityProfile,username,password,keystorePassword,timeout,timeunit,true);
+  }
+ else {
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_LINUX_MANAGEMENT_ARGUMENTS,securityProfile,username,password,keystorePassword,timeout,timeunit,true);
+  }
+}

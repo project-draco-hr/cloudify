@@ -1,0 +1,6 @@
+String username
+String password
+boolean isLocalCloud
+boolean isSecureConnection
+GridServiceAgent agent
+List<AbstractManagementServiceInstaller> waitForManagementServices

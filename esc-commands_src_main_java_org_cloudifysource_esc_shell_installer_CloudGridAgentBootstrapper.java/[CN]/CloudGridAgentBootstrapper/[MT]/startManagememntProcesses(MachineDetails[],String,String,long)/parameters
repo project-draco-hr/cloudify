@@ -1,0 +1,4 @@
+MachineDetails[] machines
+String securityProfile
+String keystorePassword
+long endTime

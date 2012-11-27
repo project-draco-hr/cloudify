@@ -1,0 +1,3 @@
+{
+  return CloudifyConstants.SPRING_PROFILE_SSL.equalsIgnoreCase(springSecurityProfile);
+}

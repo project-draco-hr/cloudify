@@ -1,0 +1,4 @@
+String[] command
+String[] args
+String securityProfile
+String keystorePassword

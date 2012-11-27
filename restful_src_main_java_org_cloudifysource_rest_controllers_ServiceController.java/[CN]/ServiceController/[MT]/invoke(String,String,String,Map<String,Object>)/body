@@ -8,6 +8,10 @@
     logger.severe("Could not find service " + absolutePuName);
     return unavailableServiceError(absolutePuName);
   }
+  if (permissionEvaluator != null) {
+    String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    permissionEvaluator.verifyPermission(puAuthGroups,"deploy");
+  }
   final Map<String,Object> invocationResult=new HashMap<String,Object>();
   final ProcessingUnitInstance[] instances=pu.getInstances();
   if (instances.length == 0) {

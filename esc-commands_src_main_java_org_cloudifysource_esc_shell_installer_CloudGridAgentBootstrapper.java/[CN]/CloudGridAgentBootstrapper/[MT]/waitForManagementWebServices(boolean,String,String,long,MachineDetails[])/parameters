@@ -1,0 +1,5 @@
+boolean isSecureConnection
+String username
+String password
+long end
+MachineDetails[] servers

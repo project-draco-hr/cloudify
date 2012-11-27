@@ -13,8 +13,8 @@
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
   setSecurityMode();
-  if (isSecurityOn) {
-    copySecurityFile(providerDirectory.getAbsolutePath());
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SSL)) {
+    copySecurityFiles(providerDirectory.getAbsolutePath());
   }
   File cloudFile=findCloudFile(providerDirectory);
   File cloudPropertiesFile=DSLReader.findDefaultDSLFile(DSLUtils.PROPERTIES_FILE_SUFFIX,providerDirectory);
@@ -51,7 +51,7 @@
   limitLoggingLevel();
   logger.info(getFormattedMessage("bootstrapping_cloud",cloudProvider));
   try {
-    installer.boostrapCloudAndWait(username,password,isSecurityOn,timeoutInMinutes,TimeUnit.MINUTES);
+    installer.boostrapCloudAndWait(securityProfile,username,password,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
     return getFormattedMessage("cloud_started_successfully",cloudProvider);
   }
   finally {

@@ -1,0 +1,20 @@
+{
+  String formattedURL=url;
+  if (!formattedURL.endsWith("/")) {
+    formattedURL=formattedURL + '/';
+  }
+  String protocolPrefix=ShellUtils.getRestProtocol(isSecureConnection) + "://";
+  if (!formattedURL.startsWith("http://") && !formattedURL.startsWith("https://")) {
+    formattedURL=protocolPrefix + formattedURL;
+  }
+  URL urlObj;
+  urlObj=new URL(formattedURL);
+  if (urlObj.getPort() == -1) {
+    final StringBuilder urlSB=new StringBuilder(formattedURL);
+    final int portIndex=formattedURL.indexOf("/",protocolPrefix.length());
+    urlSB.insert(portIndex,':' + ShellUtils.getRestPortAsString(isSecureConnection));
+    formattedURL=urlSB.toString();
+    urlObj=new URL(formattedURL);
+  }
+  return formattedURL;
+}

@@ -1,0 +1,5 @@
+{
+  if (!hasPermission(authentication,targetDomainObject,permission)) {
+    throw new AccessDeniedException("User " + authentication.getName() + " is not permitted to "+ "access the target objects");
+  }
+}

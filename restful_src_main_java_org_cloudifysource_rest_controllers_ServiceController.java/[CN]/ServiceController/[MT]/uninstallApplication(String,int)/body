@@ -1,4 +1,5 @@
 {
+  final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
   final Application app=this.admin.getApplications().waitFor(applicationName,10,TimeUnit.SECONDS);
   if (app == null) {
     logger.log(Level.INFO,"Cannot uninstall application " + applicationName + " since it has not been discovered yet.");
@@ -18,9 +19,13 @@
       private final long startTime=System.currentTimeMillis();
       @Override public void run(){
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
+          if (permissionEvaluator != null) {
+            String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+            permissionEvaluator.verifyPermission(authentication,puAuthGroups,"deploy");
+          }
           final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
           try {
-            if (processingUnit.waitForManaged(10,TimeUnit.SECONDS) == null) {
+            if (processingUnit.waitForManaged(TIMEOUT_WAITING_FOR_GSM_SEC,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
             }
  else {

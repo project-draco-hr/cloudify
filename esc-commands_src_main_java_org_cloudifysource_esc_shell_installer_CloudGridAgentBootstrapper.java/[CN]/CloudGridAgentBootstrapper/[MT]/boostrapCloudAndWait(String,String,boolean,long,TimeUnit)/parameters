@@ -1,5 +1,0 @@
-String username
-String password
-boolean isSecurityOn
-long timeout
-TimeUnit timeoutUnit

@@ -1,3 +1,0 @@
-boolean isSecurityOn
-long timeout
-TimeUnit timeunit

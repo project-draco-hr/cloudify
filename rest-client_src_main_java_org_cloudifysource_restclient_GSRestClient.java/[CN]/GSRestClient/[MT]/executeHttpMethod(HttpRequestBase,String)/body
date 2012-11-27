@@ -12,6 +12,15 @@
         logger.log(Level.FINE,httpMethod.getURI() + " response body " + responseBody);
       }
       try {
+        if (statusCode == CloudifyConstants.HTTP_STATUS_NOT_FOUND) {
+          throw new ErrorStatusException("URL_not_found",httpMethod.getURI());
+        }
+ else         if (statusCode == CloudifyConstants.HTTP_STATUS_ACCESS_DENIED) {
+          throw new ErrorStatusException(CloudifyErrorMessages.NO_PERMISSION_ACCESS_DENIED.getName(),httpMethod.getURI());
+        }
+ else         if (statusCode == CloudifyConstants.HTTP_STATUS_BAD_CREDENTIALS) {
+          throw new ErrorStatusException(CloudifyErrorMessages.BAD_CREDENTIALS.getName(),httpMethod.getURI());
+        }
         final Map<String,Object> errorMap=GSRestClient.jsonToMap(responseBody);
         final String status=(String)errorMap.get(STATUS_KEY);
         if (ERROR.equals(status)) {
@@ -26,15 +35,6 @@
         }
       }
  catch (      final IOException e) {
-        if (statusCode == CloudifyConstants.HTTP_STATUS_NOT_FOUND) {
-          throw new ErrorStatusException(e,"URL_not_found",httpMethod.getURI());
-        }
- else         if (statusCode == CloudifyConstants.HTTP_STATUS_ACCESS_DENIED) {
-          throw new ErrorStatusException(e,CloudifyErrorMessages.NO_PERMISSION_ACCESS_DENIED.getName(),httpMethod.getURI());
-        }
- else         if (statusCode == CloudifyConstants.HTTP_STATUS_BAD_CREDENTIALS) {
-          throw new ErrorStatusException(e,CloudifyErrorMessages.BAD_CREDENTIALS.getName(),httpMethod.getURI());
-        }
         throw new ErrorStatusException(e,"CLI_unable_to_parse_to_JSON",responseBody);
       }
     }

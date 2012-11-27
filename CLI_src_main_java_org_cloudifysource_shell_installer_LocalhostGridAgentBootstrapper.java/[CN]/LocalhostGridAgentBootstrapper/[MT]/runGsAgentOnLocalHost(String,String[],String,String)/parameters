@@ -1,0 +1,4 @@
+String name
+String[] gsAgentArguments
+String securityProfile
+String keystorePassword

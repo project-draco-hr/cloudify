@@ -6,7 +6,7 @@
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
-        adminFacade.connect(username,password,url.toString());
+        adminFacade.connect(username,password,url.toString(),isSecureConnection);
         return true;
       }
  catch (      final CLIException e) {

@@ -1,0 +1,4 @@
+{
+  Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+  verifyPermission(authentication,targetDomainObject,permission);
+}

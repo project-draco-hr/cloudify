@@ -16,6 +16,16 @@
   final FileBody propsFile=new FileBody(tempFile);
   reqEntity.addPart("file",bin);
   reqEntity.addPart("props",propsFile);
+  if (params != null) {
+    try {
+      for (      Map.Entry<String,String> param : params.entrySet()) {
+        reqEntity.addPart(param.getKey(),new StringBody(param.getValue(),Charset.forName("UTF-8")));
+      }
+    }
+ catch (    final IOException e) {
+      throw new RestException(e);
+    }
+  }
   final HttpPost httppost=new HttpPost(getFullUrl(relativeUrl));
   httppost.setEntity(reqEntity);
   return executeHttpMethod(httppost);

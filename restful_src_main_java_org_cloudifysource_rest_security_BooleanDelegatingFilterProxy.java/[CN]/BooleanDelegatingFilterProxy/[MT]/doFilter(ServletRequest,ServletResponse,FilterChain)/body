@@ -1,6 +1,6 @@
 {
-  final String springSecured=System.getenv(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR);
-  if (StringUtils.isNotBlank(springSecured) && springSecured.equalsIgnoreCase("true")) {
+  final String springSecurityProfile=System.getenv(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR);
+  if (CloudifyConstants.SPRING_PROFILE_SSL.equalsIgnoreCase(springSecurityProfile)) {
     super.doFilter(request,response,filterChain);
   }
  else {

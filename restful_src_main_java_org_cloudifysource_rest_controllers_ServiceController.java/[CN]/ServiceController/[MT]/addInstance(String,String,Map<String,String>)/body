@@ -9,6 +9,10 @@
   if (processingUnit == null) {
     return unavailableServiceError(absolutePuName);
   }
+  if (permissionEvaluator != null) {
+    String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    permissionEvaluator.verifyPermission(puAuthGroups,"deploy");
+  }
   final int before=processingUnit.getNumberOfInstances();
   processingUnit.incrementInstance();
   final boolean result=processingUnit.waitFor(before + 1,timeout,TimeUnit.SECONDS);

@@ -1,0 +1,6 @@
+String username
+String password
+URL restAdminUrl
+boolean isSecureConnection
+long timeout
+TimeUnit timeunit

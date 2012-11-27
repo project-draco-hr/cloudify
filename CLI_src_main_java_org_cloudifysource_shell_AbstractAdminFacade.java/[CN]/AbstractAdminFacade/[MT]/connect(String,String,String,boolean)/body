@@ -1,0 +1,9 @@
+{
+  if (!isConnected()) {
+    doConnect(user,password,url,isSecureConnection);
+    this.connected=true;
+  }
+ else {
+    throw new CLIStatusException("already_connected");
+  }
+}

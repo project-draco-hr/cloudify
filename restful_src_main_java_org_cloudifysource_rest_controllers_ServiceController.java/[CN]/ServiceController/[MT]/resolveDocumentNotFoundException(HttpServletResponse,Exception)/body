@@ -4,13 +4,8 @@
   }
  else {
     final String message;
-    if (e instanceof AccessDeniedException) {
+    if (e instanceof AccessDeniedException || e instanceof BadCredentialsException) {
       message="{\"status\":\"error\", \"error\":\"" + CloudifyErrorMessages.NO_PERMISSION_ACCESS_DENIED.getName() + "\"}";
-    }
- else     if (e instanceof BadCredentialsException) {
-      message="{\"status\":\"error\", \"error\":\"" + CloudifyErrorMessages.BAD_CREDENTIALS.getName() + "\"}";
-    }
- else {
       logger.log(Level.WARNING,"An unexpected error was thrown: " + e.getMessage(),e);
       Map<String,Object> restErrorMap=RestUtils.verboseErrorStatus(CloudifyErrorMessages.GENERAL_SERVER_ERROR.getName(),ExceptionUtils.getStackTrace(e),e.getMessage());
       message=new ObjectMapper().writeValueAsString(restErrorMap);
