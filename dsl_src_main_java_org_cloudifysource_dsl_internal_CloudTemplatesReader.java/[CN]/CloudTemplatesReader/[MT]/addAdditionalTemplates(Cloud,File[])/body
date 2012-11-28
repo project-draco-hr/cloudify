@@ -2,6 +2,8 @@
   List<CloudTemplate> addedTemplates=new LinkedList<CloudTemplate>();
   List<CloudTemplateHolder> additionalTemplates=null;
   for (  File folder : templatesFolders) {
+    logger.info("addAdditionalTemplates - Adding templates to cloud from folder: " + folder.getAbsolutePath());
+    logger.info("addAdditionalTemplates - Folder's files: " + Arrays.toString(folder.listFiles()));
     try {
       additionalTemplates=readCloudTemplatesFromDirectory(folder);
     }

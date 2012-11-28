@@ -16,6 +16,8 @@
     holder.setName(entry.getKey());
     holder.setCloudTemplate(entry.getValue());
     holder.setTemplateFileName(templateFile.getName());
+    holder.setPropertiesFileName(dslReader.getPropertiesFileName());
+    holder.setOverridesFileName(dslReader.getOverridesFile().getName());
     cloudTemplateHolders.add(holder);
   }
   return cloudTemplateHolders;
