@@ -1,5 +1,5 @@
 {
-  if (requestedAuthGroups.size() == 0) {
+  if (requestedAuthGroups.isEmpty()) {
     return true;
   }
   return hasAnyAuthGroup(requestedAuthGroups);

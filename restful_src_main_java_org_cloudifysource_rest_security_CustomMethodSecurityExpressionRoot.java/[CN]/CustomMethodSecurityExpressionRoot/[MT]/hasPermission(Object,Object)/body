@@ -1,6 +1,6 @@
 {
   if (target == null) {
-    StringBuffer authGroups=new StringBuffer();
+    StringBuilder authGroups=new StringBuilder();
     for (    GrantedAuthority authority : authentication.getAuthorities()) {
       if (authGroups.length() > 0) {
         authGroups.append(", ");

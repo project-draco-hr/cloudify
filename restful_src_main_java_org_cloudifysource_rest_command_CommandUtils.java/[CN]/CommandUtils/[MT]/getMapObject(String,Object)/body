@@ -1,5 +1,5 @@
 {
-  Map<?,?> map=(Map<?,?>)mapObject;
+  Map<String,Object> map=(Map<String,Object>)mapObject;
   if (map.containsKey(key)) {
     return map.get(key);
   }

@@ -6,12 +6,12 @@
   if (filterTarget instanceof Collection || filterTarget.getClass().isArray()) {
     return super.filter(filterTarget,filterExpression,ctx);
   }
-  if (filterTarget instanceof Map<?,?>) {
-    Map<String,Object> returnValue=(Map<String,Object>)filterTarget;
-    if (returnValue.get(RestUtils.STATUS_KEY).equals(RestUtils.SUCCESS)) {
+  if (filterTarget instanceof Map) {
+    @SuppressWarnings("unchecked") Map<String,Object> returnValue=(Map<String,Object>)filterTarget;
+    if (RestUtils.SUCCESS.equals(returnValue.get(RestUtils.STATUS_KEY))) {
       Object responseObject=returnValue.get(RestUtils.RESPONSE_KEY);
-      if (responseObject != null && responseObject instanceof Map) {
-        Map<String,String> objectsMap=(Map<String,String>)responseObject;
+      if (responseObject instanceof Map) {
+        @SuppressWarnings("unchecked") Map<String,String> objectsMap=(Map<String,String>)responseObject;
         Map<Object,String> retainMap=new HashMap<Object,String>();
         for (        Map.Entry<String,String> entry : objectsMap.entrySet()) {
           String filterObject=entry.getValue();
@@ -22,8 +22,8 @@
         }
         returnValue=RestUtils.successStatus(retainMap);
       }
- else       if (responseObject != null && responseObject instanceof List) {
-        List<Object> objectsList=(List<Object>)responseObject;
+ else       if (responseObject instanceof List) {
+        @SuppressWarnings("unchecked") List<Object> objectsList=(List<Object>)responseObject;
         List<Object> retainList=new ArrayList<Object>();
         for (        Object object : objectsList) {
           if (object instanceof ApplicationDescription) {
