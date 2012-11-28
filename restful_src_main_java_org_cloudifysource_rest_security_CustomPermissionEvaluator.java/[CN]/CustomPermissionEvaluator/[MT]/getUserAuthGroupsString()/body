@@ -1,4 +1,9 @@
 {
   Collection<String> userAuthGroups=getUserAuthGroups();
-  return Arrays.toString(userAuthGroups.toArray(new String[0]));
+  StringBuilder builder=new StringBuilder();
+  for (  String authGroup : userAuthGroups) {
+    builder.append(authGroup);
+    builder.append(',');
+  }
+  return builder.substring(0,builder.toString().length() - 1);
 }
