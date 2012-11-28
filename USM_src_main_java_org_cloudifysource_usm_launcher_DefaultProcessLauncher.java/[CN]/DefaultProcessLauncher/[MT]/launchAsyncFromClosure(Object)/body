@@ -1,6 +1,6 @@
 {
   final Callable<?> closure=(Callable<?>)arg;
-  Object retval=null;
+  Object retval;
   try {
     retval=closure.call();
   }

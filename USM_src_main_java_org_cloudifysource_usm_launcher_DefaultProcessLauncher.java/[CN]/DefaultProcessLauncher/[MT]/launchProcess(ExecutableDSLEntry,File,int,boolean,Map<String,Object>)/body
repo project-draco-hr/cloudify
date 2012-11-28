@@ -6,8 +6,7 @@
       if (logger.isLoggable(Level.FINE)) {
         logger.fine("Closure Parameters: " + paramsList.toString());
       }
-      final Object result=closure.call(paramsList.toArray());
-      return result;
+      return closure.call(paramsList.toArray());
     }
  catch (    final Exception e) {
       logger.log(Level.SEVERE,"A closure entry failed to execute: " + e.getMessage(),e);

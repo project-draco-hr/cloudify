@@ -7,18 +7,14 @@
     if (otherCommandLine == null) {
       otherCommandLine=getCommandLineFromValue(map.values().iterator().next());
     }
-    final List<String> alternativeCommandLine=createWindowsCommandLineFromLinux(otherCommandLine,workDir);
-    return alternativeCommandLine;
+    return createWindowsCommandLineFromLinux(otherCommandLine,workDir);
   }
- else {
-    List<String> otherCommandLine=null;
-    if (map.entrySet().size() > 1) {
-      otherCommandLine=lookUpCommandLineForOS(map,"Windows");
-    }
-    if (otherCommandLine == null) {
-      otherCommandLine=getCommandLineFromValue(map.values().iterator().next());
-    }
-    final List<String> alternativeCommandLine=createLinuxCommandLineFromWindows(otherCommandLine,workDir);
-    return alternativeCommandLine;
+  List<String> otherCommandLine=null;
+  if (map.entrySet().size() > 1) {
+    otherCommandLine=lookUpCommandLineForOS(map,"Windows");
   }
+  if (otherCommandLine == null) {
+    otherCommandLine=getCommandLineFromValue(map.values().iterator().next());
+  }
+  return createLinuxCommandLineFromWindows(otherCommandLine,workDir);
 }

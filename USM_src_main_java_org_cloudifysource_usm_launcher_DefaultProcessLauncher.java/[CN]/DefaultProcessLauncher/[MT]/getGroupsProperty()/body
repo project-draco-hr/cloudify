@@ -6,6 +6,5 @@
   if (groupsProperty == null) {
     groupsProperty="gigaspaces-" + PlatformVersion.getVersionNumber();
   }
-  groupsProperty=groupsProperty.replace("\"","");
-  return groupsProperty;
+  return groupsProperty.replace("\"","");
 }

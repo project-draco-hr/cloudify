@@ -16,7 +16,6 @@
     pb.redirectErrorStream(redirectErrorStream);
     final Map<String,String> env=createEnvironment();
     pb.environment().putAll(env);
-    Process proc;
     try {
       logger.fine("Parsed command line: " + commandLineParams);
       final String fileInitialMessage="Starting service process in working directory:'" + workingDir + "' "+ "at:'"+ new Date()+ "' with command:'"+ commandLineParams+ "'"+ System.getProperty("line.separator");
@@ -26,8 +25,7 @@
       if (errorFile != null) {
         appendMessageToFile(fileInitialMessage,errorFile);
       }
-      proc=pb.start();
-      return proc;
+      return pb.start();
     }
  catch (    final IOException e) {
       ex=new USMException("Failed to start process with command line: " + modifiedCommandLine,e);
