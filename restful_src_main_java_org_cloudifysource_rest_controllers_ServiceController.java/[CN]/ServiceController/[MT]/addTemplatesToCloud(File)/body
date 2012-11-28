@@ -8,16 +8,18 @@
   if (addedTempaltes.isEmpty()) {
     logger.log(Level.WARNING,"addTemplatesToCloud - Failed to add templates files from " + templatesFolder.getAbsolutePath());
   }
-  logger.log(Level.INFO,"addTemplatesToCloud - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
-  try {
-    File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
-    updateCloudTempaltesUploadPath(addedTempaltes,localTemplatesDir);
-  }
- catch (  IOException e) {
-    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + e.getMessage(),e);
-    for (    String tempalteName : addedTempaltes) {
-      cloud.getTemplates().remove(tempalteName);
-      failedToAddTemplates.put(tempalteName,e.getMessage());
+ else {
+    logger.log(Level.INFO,"addTemplatesToCloud - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+    try {
+      File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
+      updateCloudTempaltesUploadPath(addedTempaltes,localTemplatesDir);
+    }
+ catch (    IOException e) {
+      logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + e.getMessage(),e);
+      for (      String tempalteName : addedTempaltes) {
+        cloud.getTemplates().remove(tempalteName);
+        failedToAddTemplates.put(tempalteName,e.getMessage());
+      }
     }
   }
   Map<String,Object> resultMap=new HashMap<String,Object>();
