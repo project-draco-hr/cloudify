@@ -3,7 +3,7 @@
   CloudTemplatesReader reader=new CloudTemplatesReader();
   cloudTemplatesHolders=reader.readCloudTemplatesFromDirectory(templatesFolder);
   if (cloudTemplatesHolders.isEmpty()) {
-    throw new RestErrorException("no_template_files",templatesFolder.getAbsolutePath());
+    throw new RestErrorException("no_template_files","tempaltes folder missing tempaltes files.",templatesFolder.getAbsolutePath());
   }
   return cloudTemplatesHolders;
 }
