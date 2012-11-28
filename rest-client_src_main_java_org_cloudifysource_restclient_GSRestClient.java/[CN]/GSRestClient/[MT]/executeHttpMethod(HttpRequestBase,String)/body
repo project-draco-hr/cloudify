@@ -35,7 +35,7 @@
         }
       }
  catch (      final IOException e) {
-        throw new ErrorStatusException(e,"CLI_unable_to_parse_to_JSON",responseBody);
+        throw new ErrorStatusException(e,CloudifyErrorMessages.JSON_PARSE_ERROR.getName(),responseBody);
       }
     }
     responseBody=getResponseBody(response,httpMethod);

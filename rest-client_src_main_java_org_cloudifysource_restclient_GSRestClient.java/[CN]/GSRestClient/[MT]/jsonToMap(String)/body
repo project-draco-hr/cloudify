@@ -1,4 +1,9 @@
 {
-  final JavaType javaType=TypeFactory.type(Map.class);
-  return PROJECT_MAPPER.readValue(response,javaType);
+  try {
+    final JavaType javaType=TypeFactory.type(Map.class);
+    return PROJECT_MAPPER.readValue(response,javaType);
+  }
+ catch (  final IOException e) {
+    throw new ErrorStatusException(e,CloudifyErrorMessages.JSON_PARSE_ERROR.getName(),response);
+  }
 }
