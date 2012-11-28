@@ -2,7 +2,7 @@
   try {
     return GSRestClient.jsonToMap(attributes);
   }
- catch (  IOException e) {
-    throw new CLIStatusException("illegal_attribute_format",attributes);
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e.getReasonCode(),e.getArgs());
   }
 }
