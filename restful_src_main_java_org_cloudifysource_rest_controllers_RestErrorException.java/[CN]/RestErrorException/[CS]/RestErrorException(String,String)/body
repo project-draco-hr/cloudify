@@ -1,4 +1,0 @@
-{
-  super(errorDesc);
-  this.errorDescription=RestUtils.errorStatus(errorDesc,args);
-}
