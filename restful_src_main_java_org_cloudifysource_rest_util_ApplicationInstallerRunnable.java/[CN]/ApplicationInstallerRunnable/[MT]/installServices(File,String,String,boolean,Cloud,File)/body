@@ -16,13 +16,10 @@
     boolean found=false;
     try {
       File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
-      File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.PROPERTIES_FILE_SUFFIX,serviceDirectory);
-      if (servicePropertiesFile == null) {
-        servicePropertiesFile=new File(serviceDirectory,serviceName + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
-      }
-      File applicationOverridesFile=overridesFile;
-      if (applicationOverridesFile == null) {
-        applicationOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      File servicePropertiesFile=new File(serviceDirectory,serviceName + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
+      File actualOverridesFile=overridesFile;
+      if (actualOverridesFile == null) {
+        actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
       }
       File tempFile=File.createTempFile("__cloudify",".props");
       tempFile.deleteOnExit();
@@ -40,8 +37,8 @@
         appender.append("Service Properties File",servicePropertiesFile);
         servicePropertiesFile.delete();
       }
-      if (applicationOverridesFile != null && applicationOverridesFile.exists()) {
-        appender.append("Overrides properties file",applicationOverridesFile);
+      if (actualOverridesFile != null && actualOverridesFile.exists()) {
+        appender.append("Overrides properties file",actualOverridesFile);
       }
       appender.flush();
       FileUtils.copyFileToDirectory(finalPropsFile,serviceDirectory);
