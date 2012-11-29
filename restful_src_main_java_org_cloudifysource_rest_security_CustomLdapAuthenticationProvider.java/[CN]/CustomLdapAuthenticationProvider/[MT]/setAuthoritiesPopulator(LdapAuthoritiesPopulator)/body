@@ -1,0 +1,4 @@
+{
+  Assert.notNull(authoritiesPopulator,"An LdapAuthoritiesPopulator must be supplied");
+  this.authoritiesPopulator=authoritiesPopulator;
+}

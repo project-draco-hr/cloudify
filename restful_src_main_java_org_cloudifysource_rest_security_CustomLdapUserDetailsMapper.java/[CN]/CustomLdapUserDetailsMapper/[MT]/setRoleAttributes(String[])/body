@@ -1,0 +1,4 @@
+{
+  Assert.notNull(roleAttributes,"roleAttributes array cannot be null");
+  this.roleAttributes=roleAttributes;
+}

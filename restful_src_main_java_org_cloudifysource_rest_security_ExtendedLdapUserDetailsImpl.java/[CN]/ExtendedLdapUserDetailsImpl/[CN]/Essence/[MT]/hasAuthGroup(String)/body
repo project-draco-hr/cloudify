@@ -1,0 +1,8 @@
+{
+  for (  String authGroup : mutableAuthGroups) {
+    if (authGroup.equalsIgnoreCase(newAuthGroup)) {
+      return true;
+    }
+  }
+  return false;
+}

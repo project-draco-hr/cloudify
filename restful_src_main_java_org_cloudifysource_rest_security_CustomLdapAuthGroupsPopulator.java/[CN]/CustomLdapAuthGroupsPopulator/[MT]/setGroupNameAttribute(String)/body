@@ -1,0 +1,4 @@
+{
+  Assert.notNull(groupNameAttribute,"groupNameAttribute must not be null");
+  this.groupNameAttribute=groupNameAttribute;
+}

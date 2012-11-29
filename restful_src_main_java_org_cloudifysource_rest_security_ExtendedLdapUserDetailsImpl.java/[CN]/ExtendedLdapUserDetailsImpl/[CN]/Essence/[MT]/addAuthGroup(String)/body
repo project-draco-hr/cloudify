@@ -1,0 +1,5 @@
+{
+  if (!hasAuthGroup(authGroup)) {
+    mutableAuthGroups.add(authGroup);
+  }
+}

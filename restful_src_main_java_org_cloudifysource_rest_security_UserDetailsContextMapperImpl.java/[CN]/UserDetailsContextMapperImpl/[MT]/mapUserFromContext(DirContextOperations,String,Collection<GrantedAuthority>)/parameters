@@ -1,0 +1,3 @@
+DirContextOperations ctx
+String username
+Collection<GrantedAuthority> authority

@@ -1,0 +1,13 @@
+{
+  if (getGroupSearchBase() == null) {
+    return Collections.emptySet();
+  }
+  if (logger.isDebugEnabled()) {
+    logger.debug("Searching for authorization groups for user '" + username + "', DN = "+ "'"+ userDn+ "', with filter "+ groupSearchFilter+ " in search base '"+ getGroupSearchBase()+ "'");
+  }
+  Set<String> authGroups=ldapTemplate.searchForSingleAttributeValues(getGroupSearchBase(),groupSearchFilter,new String[]{userDn,username},groupNameAttribute);
+  if (logger.isDebugEnabled()) {
+    logger.debug("Authorization groups from search: " + authGroups);
+  }
+  return authGroups;
+}

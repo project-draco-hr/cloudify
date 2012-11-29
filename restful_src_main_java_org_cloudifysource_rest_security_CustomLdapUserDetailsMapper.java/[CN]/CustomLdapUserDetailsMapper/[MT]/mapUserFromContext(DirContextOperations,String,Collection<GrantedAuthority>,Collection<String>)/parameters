@@ -1,0 +1,4 @@
+DirContextOperations ctx
+String username
+Collection<GrantedAuthority> authorities
+Collection<String> authGroups

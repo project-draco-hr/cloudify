@@ -1,0 +1,5 @@
+{
+  this.setAuthenticator(authenticator);
+  this.setAuthoritiesPopulator(authoritiesPopulator);
+  this.setAuthGroupsPopulator(authGroupsPopulator);
+}

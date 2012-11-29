@@ -1,0 +1,4 @@
+{
+  mutableAuthGroups=new ArrayList<String>();
+  mutableAuthGroups.addAll(authGroups);
+}

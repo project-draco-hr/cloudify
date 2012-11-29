@@ -1,0 +1,11 @@
+{
+  setDn(copyMe.getDn());
+  setUsername(copyMe.getUsername());
+  setPassword(copyMe.getPassword());
+  setEnabled(copyMe.isEnabled());
+  setAccountNonExpired(copyMe.isAccountNonExpired());
+  setCredentialsNonExpired(copyMe.isCredentialsNonExpired());
+  setAccountNonLocked(copyMe.isAccountNonLocked());
+  setAuthorities(copyMe.getAuthorities());
+  setAuthGroups(copyMe.getAuthGroups());
+}

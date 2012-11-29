@@ -1,0 +1,34 @@
+{
+  Assert.isInstanceOf(UsernamePasswordAuthenticationToken.class,authentication,messages.getMessage("AbstractUserDetailsAuthenticationProvider.onlySupports","Only UsernamePasswordAuthenticationToken is supported"));
+  final UsernamePasswordAuthenticationToken userToken=(UsernamePasswordAuthenticationToken)authentication;
+  String username=userToken.getName();
+  String password=(String)authentication.getCredentials();
+  if (logger.isDebugEnabled()) {
+    logger.debug("Processing authentication request for user: " + username);
+  }
+  if (!StringUtils.hasLength(username)) {
+    throw new BadCredentialsException(messages.getMessage("LdapAuthenticationProvider.emptyUsername","Empty Username"));
+  }
+  Assert.notNull(password,"Null password was supplied in authentication token");
+  try {
+    DirContextOperations userData=getAuthenticator().authenticate(authentication);
+    Collection<GrantedAuthority> extraAuthorities=loadUserAuthorities(userData,username,password);
+    Collection<String> loadUserAuthGroups=loadUserAuthGroups(userData,username,password);
+    UserDetails user=userDetailsContextMapper.mapUserFromContext(userData,username,extraAuthorities,loadUserAuthGroups);
+    return createSuccessfulAuthentication(userToken,user);
+  }
+ catch (  PasswordPolicyException ppe) {
+    throw new LockedException(messages.getMessage(ppe.getStatus().getErrorCode(),ppe.getStatus().getDefaultMessage()));
+  }
+catch (  UsernameNotFoundException notFound) {
+    if (hideUserNotFoundExceptions) {
+      throw new BadCredentialsException(messages.getMessage("LdapAuthenticationProvider.badCredentials","Bad credentials"));
+    }
+ else {
+      throw notFound;
+    }
+  }
+catch (  NamingException ldapAccessFailure) {
+    throw new AuthenticationServiceException(ldapAccessFailure.getMessage(),ldapAccessFailure);
+  }
+}

@@ -1,0 +1,36 @@
+{
+  String dn=ctx.getNameInNamespace();
+  logger.debug("Mapping user details from context with DN: " + dn);
+  ExtendedLdapUserDetailsImpl.Essence essence=new ExtendedLdapUserDetailsImpl.Essence();
+  essence.setDn(dn);
+  Object passwordValue=ctx.getObjectAttribute(passwordAttributeName);
+  if (passwordValue != null) {
+    essence.setPassword(mapPassword(passwordValue));
+  }
+  essence.setUsername(username);
+  for (int i=0; (roleAttributes != null) && (i < roleAttributes.length); i++) {
+    String[] rolesForAttribute=ctx.getStringAttributes(roleAttributes[i]);
+    if (rolesForAttribute == null) {
+      logger.debug("Couldn't read role attribute '" + roleAttributes[i] + "' for user "+ dn);
+      continue;
+    }
+    for (int j=0; j < rolesForAttribute.length; j++) {
+      GrantedAuthority authority=createAuthority(rolesForAttribute[j]);
+      if (authority != null) {
+        essence.addAuthority(authority);
+      }
+    }
+  }
+  for (  GrantedAuthority authority : authorities) {
+    essence.addAuthority(authority);
+  }
+  for (  String authGroup : authGroups) {
+    essence.addAuthGroup(authGroup);
+  }
+  PasswordPolicyResponseControl ppolicy=(PasswordPolicyResponseControl)ctx.getObjectAttribute(PasswordPolicyControl.OID);
+  if (ppolicy != null) {
+    essence.setTimeBeforeExpiration(ppolicy.getTimeBeforeExpiration());
+    essence.setGraceLoginsRemaining(ppolicy.getGraceLoginsRemaining());
+  }
+  return essence.createUserDetails();
+}

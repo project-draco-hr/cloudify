@@ -1,0 +1,4 @@
+{
+  Assert.notNull(authenticator,"An LdapAuthenticator must be supplied");
+  this.authenticator=authenticator;
+}

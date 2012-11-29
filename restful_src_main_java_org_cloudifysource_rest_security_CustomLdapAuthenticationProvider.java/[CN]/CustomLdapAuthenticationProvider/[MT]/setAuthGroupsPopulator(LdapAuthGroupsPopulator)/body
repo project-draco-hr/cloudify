@@ -1,0 +1,4 @@
+{
+  Assert.notNull(authGroupsPopulator,"An LdapAuthGroupsPopulator must be supplied");
+  this.authGroupsPopulator=authGroupsPopulator;
+}

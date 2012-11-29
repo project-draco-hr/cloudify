@@ -1,0 +1,9 @@
+{
+  if (role instanceof String) {
+    if (convertToUpperCase) {
+      role=((String)role).toUpperCase();
+    }
+    return new GrantedAuthorityImpl(role.toString());
+  }
+  return null;
+}

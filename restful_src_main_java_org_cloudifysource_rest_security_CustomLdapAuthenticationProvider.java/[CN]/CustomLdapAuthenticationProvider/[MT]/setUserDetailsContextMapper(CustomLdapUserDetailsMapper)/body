@@ -1,0 +1,4 @@
+{
+  Assert.notNull(userDetailsContextMapper,"UserDetailsContextMapper must not be null");
+  this.userDetailsContextMapper=userDetailsContextMapper;
+}

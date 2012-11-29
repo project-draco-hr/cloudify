@@ -1,0 +1,10 @@
+{
+  String userDn=user.getNameInNamespace();
+  if (logger.isDebugEnabled()) {
+    logger.debug("Getting authorization groups for user " + userDn);
+  }
+  Set<String> authGroups=getAuthGroups(userDn,username);
+  List<String> result=new ArrayList<String>(authGroups.size());
+  result.addAll(authGroups);
+  return result;
+}

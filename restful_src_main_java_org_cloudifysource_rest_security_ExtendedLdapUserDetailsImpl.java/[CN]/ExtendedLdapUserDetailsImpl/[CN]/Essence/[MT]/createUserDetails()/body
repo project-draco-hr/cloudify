@@ -1,0 +1,10 @@
+{
+  Assert.notNull(instance,"Essence can only be used to create a single instance");
+  Assert.notNull(instance.username,"username must not be null");
+  Assert.notNull(instance.getDn(),"Distinguished name must not be null");
+  instance.authorities=Collections.unmodifiableList(mutableAuthorities);
+  instance.authGroups=Collections.unmodifiableList(mutableAuthGroups);
+  LdapUserDetails newInstance=instance;
+  instance=null;
+  return newInstance;
+}

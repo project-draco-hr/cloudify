@@ -1,0 +1,8 @@
+{
+  for (  GrantedAuthority authority : mutableAuthorities) {
+    if (authority.equals(newAuthority)) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,5 @@
+{
+  if (!hasAuthority(authority)) {
+    mutableAuthorities.add(authority);
+  }
+}

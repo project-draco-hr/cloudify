@@ -1,0 +1,4 @@
+{
+  mutableAuthorities=new ArrayList<GrantedAuthority>();
+  mutableAuthorities.addAll(authorities);
+}

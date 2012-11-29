@@ -1,0 +1,6 @@
+{
+  Assert.notNull(contextSource,"contextSource must not be null");
+  ldapTemplate=new SpringSecurityLdapTemplate(contextSource);
+  ldapTemplate.setSearchControls(searchControls);
+  setGroupSearchBase(groupSearchBase);
+}

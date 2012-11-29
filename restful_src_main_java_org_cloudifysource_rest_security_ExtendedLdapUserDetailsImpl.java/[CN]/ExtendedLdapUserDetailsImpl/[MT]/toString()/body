@@ -1,0 +1,43 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(super.toString()).append(": ");
+  sb.append("Username: ").append(this.username).append("; ");
+  sb.append("Password: [PROTECTED]; ");
+  sb.append("Enabled: ").append(this.enabled).append("; ");
+  sb.append("AccountNonExpired: ").append(this.accountNonExpired).append("; ");
+  sb.append("credentialsNonExpired: ").append(this.credentialsNonExpired).append("; ");
+  sb.append("AccountNonLocked: ").append(this.accountNonLocked).append("; ");
+  if (this.getAuthorities() != null) {
+    sb.append("Granted Authorities: ");
+    boolean first=true;
+    for (    Object authority : this.getAuthorities()) {
+      if (first) {
+        first=false;
+      }
+ else {
+        sb.append(", ");
+      }
+      sb.append(authority.toString());
+    }
+  }
+ else {
+    sb.append("Not granted any authorities");
+  }
+  if (this.getAuthGroups() != null) {
+    sb.append("Granted Authorization Groups: ");
+    boolean first=true;
+    for (    Object authGroup : this.getAuthGroups()) {
+      if (first) {
+        first=false;
+      }
+ else {
+        sb.append(", ");
+      }
+      sb.append(authGroup);
+    }
+  }
+ else {
+    sb.append("Not granted any authorization groups");
+  }
+  return sb.toString();
+}

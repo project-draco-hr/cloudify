@@ -1,0 +1,6 @@
+{
+  if (!(passwordValue instanceof String)) {
+    passwordValue=new String((byte[])passwordValue);
+  }
+  return (String)passwordValue;
+}
