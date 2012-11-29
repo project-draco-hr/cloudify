@@ -17,10 +17,7 @@
     copySecurityFiles(providerDirectory.getAbsolutePath());
   }
   File cloudFile=findCloudFile(providerDirectory);
-  File cloudPropertiesFile=DSLReader.findDefaultDSLFile(DSLUtils.PROPERTIES_FILE_SUFFIX,providerDirectory);
-  if (cloudPropertiesFile == null) {
-    cloudPropertiesFile=new File(providerDirectory.getAbsolutePath(),cloudProvider + "-cloud" + DSLUtils.PROPERTIES_FILE_SUFFIX);
-  }
+  File cloudPropertiesFile=new File(providerDirectory.getAbsolutePath(),cloudProvider + "-cloud" + DSLUtils.PROPERTIES_FILE_SUFFIX);
   File backupCloudPropertiesFile=new File(cloudPropertiesFile.getParentFile(),cloudPropertiesFile.getName() + ".backup");
   Cloud cloud=null;
   if (cloudOverrides == null) {
