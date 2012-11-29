@@ -1,6 +1,6 @@
 {
   if (!isConnected()) {
-    doConnect(user,password,url,isSecureConnection);
+    doConnect(user,password,url,sslUsed);
     this.connected=true;
   }
  else {

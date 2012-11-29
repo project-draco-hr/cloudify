@@ -1,7 +1,7 @@
 {
   URL urlObj;
   try {
-    urlObj=new URL(ShellUtils.getFormattedRestUrl(url,isSecureConnection));
+    urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
     client=new GSRestClient(user,password,urlObj,PlatformVersion.getVersionNumber());
     client.get(SERVICE_CONTROLLER_URL + "testrest");
   }
