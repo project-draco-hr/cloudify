@@ -10,3 +10,4 @@ GSAReservationId reservationId
 String templateName
 String securityProfile
 String keystorePassword
+String authGroups

@@ -1,0 +1,3 @@
+{
+  properties.putStringWrapperObject(AUTH_GROUPS_KEY,authGroups);
+}
