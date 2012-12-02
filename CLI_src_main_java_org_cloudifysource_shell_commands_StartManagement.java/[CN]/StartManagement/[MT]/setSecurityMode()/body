@@ -10,13 +10,13 @@
   if (StringUtils.isBlank(securityProfile)) {
     securityProfile=CloudifyConstants.SPRING_PROFILE_NON_SECURE;
   }
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SSL)) {
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
     File securityConfigFile=new File(defaultSecurityFilePath);
     if (!securityConfigFile.isFile()) {
       throw new IllegalArgumentException("Security configuration file not found on management server at the " + "expected location: " + defaultSecurityFilePath);
     }
   }
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SSL)) {
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
     File keystoreFile=new File(defaultKeystoreFilePath);
     if (!keystoreFile.isFile()) {
       throw new IllegalArgumentException("Keystore file not found on management server at the expected " + "location: " + defaultKeystoreFilePath);

@@ -13,7 +13,7 @@
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
   setSecurityMode();
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SSL)) {
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
     copySecurityFiles(providerDirectory.getAbsolutePath());
   }
   File cloudFile=findCloudFile(providerDirectory);

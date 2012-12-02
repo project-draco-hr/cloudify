@@ -9,7 +9,7 @@
     return getFormattedMessage("incorrect_java_home",Color.RED,javaHome);
   }
   setSecurityMode();
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SSL)) {
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
     copySecurityFiles();
   }
   final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
