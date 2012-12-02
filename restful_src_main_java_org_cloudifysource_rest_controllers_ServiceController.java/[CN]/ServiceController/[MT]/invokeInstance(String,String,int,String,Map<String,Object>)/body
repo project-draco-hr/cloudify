@@ -22,7 +22,9 @@
     final Future<?> future=pui.invoke(beanName,params);
     final Object invocationResult=future.get();
     final Object finalResult=postProcessInvocationResult(invocationResult,instanceName);
-    return successStatus(finalResult);
+    Map<String,Object> resultsMap=new HashMap<String,Object>();
+    resultsMap.put(finalResult.toString(),pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS));
+    return successStatus(resultsMap);
   }
  catch (  final Exception e) {
     logger.severe("Error invoking pu instance " + absolutePuName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName());
