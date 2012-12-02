@@ -3,21 +3,9 @@
     deployer=(ByonDeployer)context.getOrCreate("UNIQUE_BYON_DEPLOYER_ID",new Callable<Object>(){
       @SuppressWarnings("unchecked") @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
-        final ByonDeployer deployer=new ByonDeployer();
-        List<Map<String,String>> nodesList=null;
-        final Map<String,CloudTemplate> templatesMap=cloud.getTemplates();
-        for (        final String templateName : templatesMap.keySet()) {
-          final Map<String,Object> customSettings=cloud.getTemplates().get(templateName).getCustom();
-          if (customSettings != null) {
-            nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
-          }
-          if (nodesList == null) {
-            publishEvent(CloudifyErrorMessages.MISSING_NODES_LIST.getName(),templateName);
-            throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration for tempalte " + templateName + " - missing nodes list.");
-          }
-          deployer.addNodesList(templateName,templatesMap.get(templateName),nodesList);
-        }
-        return deployer;
+        final ByonDeployer newDeployer=new ByonDeployer();
+        addTempaltesToDeployer(newDeployer,cloud.getTemplates());
+        return newDeployer;
       }
     }
 );
@@ -25,6 +13,13 @@
  catch (  final Exception e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
     throw new IllegalStateException("Failed to create cloud deployer",e);
+  }
+  try {
+    updateDeployerTemplates(cloud);
+  }
+ catch (  Exception e) {
+    logger.log(Level.WARNING,"initDeployer - fialed to add tempaltes to deployer",e);
+    throw new IllegalStateException("Failed to update templates",e);
   }
   setCustomSettings(cloud);
 }

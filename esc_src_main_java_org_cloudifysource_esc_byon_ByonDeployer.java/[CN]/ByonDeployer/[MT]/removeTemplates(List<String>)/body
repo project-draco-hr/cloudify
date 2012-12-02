@@ -1,0 +1,12 @@
+{
+  for (  String templateName : redundantTempaltes) {
+    Map<String,List<CustomNode>> nodesMap=nodesListsByTemplates.get(templateName);
+    List<CustomNode> allocatedNodesList=nodesMap.get(NODES_LIST_ALLOCATED);
+    if (allocatedNodesList != null && !allocatedNodesList.isEmpty()) {
+      String errMsg="Failed to remove tempalte [" + templateName + "] from deployer, some nodes are still allocated: "+ allocatedNodesList;
+      logger.log(Level.WARNING,errMsg);
+      throw new CloudProvisioningException(errMsg);
+    }
+    nodesListsByTemplates.remove(templateName);
+  }
+}

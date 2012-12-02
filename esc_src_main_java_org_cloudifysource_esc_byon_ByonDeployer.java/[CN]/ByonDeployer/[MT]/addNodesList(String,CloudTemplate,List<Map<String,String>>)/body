@@ -1,6 +1,7 @@
 {
   final List<CustomNode> resolvedNodes=new ArrayList<CustomNode>();
   final List<CustomNode> unresolvedNodes=new ArrayList<CustomNode>();
+  logger.info("addNodesList: adding node list of " + templateName + " to ByonDeployer, node list: "+ nodesList);
   List<CustomNode> parsedNodes=parseCloudNodes(nodesList);
   parsedNodes=removeDuplicates(parsedNodes);
   for (  CustomNode node : parsedNodes) {
