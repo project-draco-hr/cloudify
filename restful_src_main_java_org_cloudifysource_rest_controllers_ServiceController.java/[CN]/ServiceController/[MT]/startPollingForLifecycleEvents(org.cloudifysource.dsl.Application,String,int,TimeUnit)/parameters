@@ -1,3 +1,4 @@
 org.cloudifysource.dsl.Application application
+String applicationName
 int timeout
 TimeUnit timeUnit

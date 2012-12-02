@@ -2,7 +2,7 @@
   final LifecycleEventsContainer lifecycleEventsContainer=new LifecycleEventsContainer();
   final UUID lifecycleEventsContainerUUID=UUID.randomUUID();
   lifecycleEventsContainer.setEventsSet(this.eventsSet);
-  final RestPollingRunnable restPollingRunnable=new RestPollingRunnable(application.getName(),timeout,timeUnit);
+  final RestPollingRunnable restPollingRunnable=new RestPollingRunnable(applicationName,timeout,timeUnit);
   for (  final Service service : application.getServices()) {
     restPollingRunnable.addService(service.getName(),service.getNumInstances());
   }
