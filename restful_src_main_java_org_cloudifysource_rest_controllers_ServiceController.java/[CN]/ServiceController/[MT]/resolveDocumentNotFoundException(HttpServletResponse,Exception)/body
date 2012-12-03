@@ -9,7 +9,6 @@
       logger.log(Level.INFO,e.getMessage(),e);
     }
  else {
-      message="{\"status\":\"error\", \"error\":\"" + e.getMessage() + "\"}";
       logger.log(Level.WARNING,"An unexpected error was thrown: " + e.getMessage(),e);
       Map<String,Object> restErrorMap=RestUtils.verboseErrorStatus(CloudifyErrorMessages.GENERAL_SERVER_ERROR.getName(),ExceptionUtils.getStackTrace(e),e.getMessage());
       message=new ObjectMapper().writeValueAsString(restErrorMap);
