@@ -2,5 +2,5 @@
   if (requestedAuthGroups.isEmpty()) {
     return true;
   }
-  return hasAnyAuthGroup(requestedAuthGroups);
+  return hasAnyAuthGroup(authentication,requestedAuthGroups);
 }

@@ -1,0 +1,13 @@
+{
+  boolean isPermitted=false;
+  Collection<String> userAuthGroups=getUserAuthGroups(authentication);
+  for (  String requestedAuthGroup : requestedAuthGroups) {
+    for (    String userAuthGroup : userAuthGroups) {
+      if (requestedAuthGroup.equalsIgnoreCase(userAuthGroup)) {
+        isPermitted=true;
+        break;
+      }
+    }
+  }
+  return isPermitted;
+}

@@ -12,7 +12,7 @@
     }
   }
  else   if (permissionName.equalsIgnoreCase(PERMISSION_TO_DEPLOY)) {
-    if (hasPermissionToDeploy(targetAuthGroups)) {
+    if (hasPermissionToDeploy(authentication,targetAuthGroups)) {
       permissionGranted=true;
       logger.log(Level.INFO,"Deploy permission granted for user " + authentication.getName());
     }
