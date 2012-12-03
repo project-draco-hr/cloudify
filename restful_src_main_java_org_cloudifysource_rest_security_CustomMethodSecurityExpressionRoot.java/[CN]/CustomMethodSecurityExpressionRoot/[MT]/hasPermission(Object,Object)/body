@@ -1,11 +1,13 @@
 {
   if (target == null) {
     StringBuilder authGroups=new StringBuilder();
-    for (    GrantedAuthority authority : authentication.getAuthorities()) {
-      if (authGroups.length() > 0) {
-        authGroups.append(", ");
+    if (authentication instanceof CustomAuthenticationToken) {
+      for (      String authGroup : ((CustomAuthenticationToken)authentication).getAuthGroups()) {
+        if (authGroups.length() > 0) {
+          authGroups.append(", ");
+        }
+        authGroups.append(authGroup);
       }
-      authGroups.append(authority.getAuthority());
     }
     target=authGroups.toString();
   }
