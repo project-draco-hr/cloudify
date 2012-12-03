@@ -2,11 +2,20 @@
   if (StringUtils.isBlank(SPRING_SECURITY_PROFILE) || SPRING_SECURITY_PROFILE.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
     return true;
   }
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Starting \"hasPermission\" for user: " + authentication.getName());
+    logger.finest("with roles: " + getUserRolesString(authentication));
+    logger.finest("and with authGroups: " + getUserAuthGroupsString(authentication));
+    logger.finest("requested permission: " + permission.toString());
+    logger.finest("on target authGroups: " + targetDomainObject.toString());
+  }
   boolean permissionGranted=false;
-  String permissionName, authGroupsString;
-  Collection<String> requestedAuthGroups, userAuthGroups;
+  String permissionName, targetAuthGroups;
   if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new AccessDeniedException("Anonymous user is not supported");
+  }
+  if (!(authentication instanceof CustomAuthenticationToken)) {
+    throw new AccessDeniedException("Authentication object type not supported");
   }
   if (permission != null && !(permission instanceof String)) {
     throw new AuthorizationServiceException("Failed to verify permissions, invalid permission object type: " + permission.getClass().getName());
@@ -22,52 +31,13 @@
     throw new AuthorizationServiceException("Failed to verify permissions, invalid authorization groups object" + " type: " + targetDomainObject.getClass().getName());
   }
   if (targetDomainObject == null) {
-    authGroupsString="";
+    targetAuthGroups="";
   }
  else {
-    authGroupsString=((String)targetDomainObject).trim();
+    targetAuthGroups=((String)targetDomainObject).trim();
   }
-  requestedAuthGroups=org.cloudifysource.esc.util.StringUtils.splitAndTrimString(authGroupsString,AUTH_GROUPS_DELIMITER);
-  userAuthGroups=getUserAuthGroups();
-  boolean relevantRoleFound=false;
-  if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
-    for (    String userAuthGroup : userAuthGroups) {
-      if (ROLE_CLOUDADMIN.equalsIgnoreCase(userAuthGroup) || ROLE_APPMANAGER.equalsIgnoreCase(userAuthGroup) || ROLE_VIEWER.equalsIgnoreCase(userAuthGroup)) {
-        relevantRoleFound=true;
-        break;
-      }
-    }
-  }
- else   if (permissionName.equalsIgnoreCase(PERMISSION_TO_DEPLOY)) {
-    for (    String userAuthGroup : userAuthGroups) {
-      if (ROLE_CLOUDADMIN.equalsIgnoreCase(userAuthGroup) || ROLE_APPMANAGER.equalsIgnoreCase(userAuthGroup)) {
-        relevantRoleFound=true;
-        break;
-      }
-    }
-  }
-  if (relevantRoleFound) {
-    if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
-      if (hasPermissionToView(requestedAuthGroups)) {
-        permissionGranted=true;
-        logger.log(Level.INFO,"View permission granted for user " + authentication.getName());
-      }
- else {
-        logger.log(Level.WARNING,"Insufficient permissions. User " + authentication.getName() + " is only "+ "permitted to view groups: "+ Arrays.toString(userAuthGroups.toArray(new String[0])));
-      }
-    }
- else     if (permissionName.equalsIgnoreCase(PERMISSION_TO_DEPLOY)) {
-      if (hasPermissionToDeploy(requestedAuthGroups)) {
-        permissionGranted=true;
-        logger.log(Level.INFO,"Deploy permission granted for user " + authentication.getName());
-      }
- else {
-        logger.log(Level.WARNING,"Insufficient permissions. User " + authentication.getName() + " is only "+ "permitted to deploy for groups: "+ Arrays.toString(userAuthGroups.toArray(new String[0])));
-      }
-    }
-  }
- else {
-    logger.log(Level.WARNING,"User " + authentication.getName() + " is missing the required roles, access is "+ "denied.");
+  if (hasRequiredRoles(authentication,permissionName) && hasAuthGroupAccess((CustomAuthenticationToken)authentication,targetAuthGroups,permissionName)) {
+    permissionGranted=true;
   }
   return permissionGranted;
 }

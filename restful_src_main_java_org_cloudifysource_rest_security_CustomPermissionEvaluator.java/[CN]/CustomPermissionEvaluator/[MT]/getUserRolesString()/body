@@ -1,0 +1,9 @@
+{
+  Collection<String> userRoles=getUserRoles();
+  StringBuilder builder=new StringBuilder();
+  for (  String role : userRoles) {
+    builder.append(role);
+    builder.append(',');
+  }
+  return builder.substring(0,builder.toString().length() - 1);
+}

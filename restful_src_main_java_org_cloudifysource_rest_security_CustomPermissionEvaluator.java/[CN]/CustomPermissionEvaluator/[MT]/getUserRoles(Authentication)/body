@@ -1,0 +1,7 @@
+{
+  Set<String> userRoles=new HashSet<String>();
+  for (  GrantedAuthority authority : authentication.getAuthorities()) {
+    userRoles.add(authority.getAuthority());
+  }
+  return userRoles;
+}

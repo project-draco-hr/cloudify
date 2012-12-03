@@ -1,6 +1,0 @@
-{
-  Object password=useAuthenticationRequestCredentials ? authentication.getCredentials() : user.getPassword();
-  UsernamePasswordAuthenticationToken result=new UsernamePasswordAuthenticationToken(user,password,user.getAuthorities());
-  result.setDetails(authentication.getDetails());
-  return result;
-}

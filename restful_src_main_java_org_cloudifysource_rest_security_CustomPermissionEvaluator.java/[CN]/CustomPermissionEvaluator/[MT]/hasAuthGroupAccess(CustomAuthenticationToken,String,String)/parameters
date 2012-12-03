@@ -1,0 +1,3 @@
+CustomAuthenticationToken authentication
+String targetAuthGroupsStr
+String permissionName

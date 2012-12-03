@@ -1,0 +1,24 @@
+{
+  boolean relevantRoleFound=false;
+  Collection<String> userRoles=getUserRoles(authentication);
+  if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
+    for (    String role : userRoles) {
+      if (ROLE_CLOUDADMIN.equalsIgnoreCase(role) || ROLE_APPMANAGER.equalsIgnoreCase(role) || ROLE_VIEWER.equalsIgnoreCase(role)) {
+        relevantRoleFound=true;
+        break;
+      }
+    }
+  }
+ else   if (permissionName.equalsIgnoreCase(PERMISSION_TO_DEPLOY)) {
+    for (    String role : userRoles) {
+      if (ROLE_CLOUDADMIN.equalsIgnoreCase(role) || ROLE_APPMANAGER.equalsIgnoreCase(role)) {
+        relevantRoleFound=true;
+        break;
+      }
+    }
+  }
+  if (!relevantRoleFound) {
+    logger.log(Level.WARNING,"User " + authentication.getName() + " is missing the required roles, access is "+ "denied.");
+  }
+  return relevantRoleFound;
+}

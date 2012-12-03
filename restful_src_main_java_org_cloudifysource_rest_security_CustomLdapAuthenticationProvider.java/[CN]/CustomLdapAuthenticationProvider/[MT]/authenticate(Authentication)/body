@@ -13,9 +13,9 @@
   try {
     DirContextOperations userData=getAuthenticator().authenticate(authentication);
     Collection<GrantedAuthority> extraAuthorities=loadUserAuthorities(userData,username,password);
-    Collection<String> loadUserAuthGroups=loadUserAuthGroups(userData,username,password);
-    UserDetails user=userDetailsContextMapper.mapUserFromContext(userData,username,extraAuthorities,loadUserAuthGroups);
-    return createSuccessfulAuthentication(userToken,user);
+    Collection<String> userAuthGroups=loadUserAuthGroups(userData,username,password);
+    ExtendedLdapUserDetailsImpl extendedUserDetails=userDetailsContextMapper.mapUserFromContext(userData,username,extraAuthorities,userAuthGroups);
+    return createSuccessfulAuthentication(userToken,extendedUserDetails);
   }
  catch (  PasswordPolicyException ppe) {
     throw new LockedException(messages.getMessage(ppe.getStatus().getErrorCode(),ppe.getStatus().getDefaultMessage()));

@@ -1,3 +1,6 @@
 {
-  return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+  if (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication)) {
+    return true;
+  }
+  return false;
 }

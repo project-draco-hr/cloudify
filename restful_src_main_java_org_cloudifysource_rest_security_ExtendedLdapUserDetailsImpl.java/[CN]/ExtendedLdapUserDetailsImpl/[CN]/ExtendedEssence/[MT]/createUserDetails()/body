@@ -4,7 +4,7 @@
   Assert.notNull(instance.getDn(),"Distinguished name must not be null");
   instance.authorities=Collections.unmodifiableList(mutableAuthorities);
   instance.authGroups=Collections.unmodifiableList(mutableAuthGroups);
-  LdapUserDetails newInstance=instance;
+  ExtendedLdapUserDetailsImpl newInstance=instance;
   instance=null;
   return newInstance;
 }

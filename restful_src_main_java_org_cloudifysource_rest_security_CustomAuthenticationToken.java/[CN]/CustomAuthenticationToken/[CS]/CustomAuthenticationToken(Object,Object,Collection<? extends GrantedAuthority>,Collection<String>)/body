@@ -1,0 +1,16 @@
+{
+  super(principal,credentials,authorities);
+  if (authGroups == null) {
+    this.authGroups=new ArrayList<String>();
+    return;
+  }
+  logger.finest("Setting auth groups " + Arrays.toString(authGroups.toArray()) + " for user.");
+  for (  String authGroup : authGroups) {
+    if (authGroup == null) {
+      throw new IllegalArgumentException("Authorization groups collection cannot contain any null elements");
+    }
+  }
+  ArrayList<String> temp=new ArrayList<String>(authGroups.size());
+  temp.addAll(authGroups);
+  this.authGroups=Collections.unmodifiableList(temp);
+}

@@ -1,2 +1,2 @@
 UsernamePasswordAuthenticationToken authentication
-UserDetails user
+ExtendedLdapUserDetailsImpl user

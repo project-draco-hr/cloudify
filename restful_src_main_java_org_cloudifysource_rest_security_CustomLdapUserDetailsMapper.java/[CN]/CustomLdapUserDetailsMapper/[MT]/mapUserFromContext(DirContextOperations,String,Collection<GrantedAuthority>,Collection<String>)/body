@@ -1,7 +1,7 @@
 {
   String dn=ctx.getNameInNamespace();
   logger.debug("Mapping user details from context with DN: " + dn);
-  ExtendedLdapUserDetailsImpl.Essence essence=new ExtendedLdapUserDetailsImpl.Essence();
+  ExtendedLdapUserDetailsImpl.ExtendedEssence essence=new ExtendedLdapUserDetailsImpl.ExtendedEssence();
   essence.setDn(dn);
   Object passwordValue=ctx.getObjectAttribute(passwordAttributeName);
   if (passwordValue != null) {
