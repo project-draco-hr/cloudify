@@ -4,6 +4,9 @@
     urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
     client=new GSRestClient(user,password,urlObj,PlatformVersion.getVersionNumber());
     client.get(SERVICE_CONTROLLER_URL + "testrest");
+    if (user != null || password != null) {
+      reconnect(user,password);
+    }
   }
  catch (  final MalformedURLException e) {
     throw new CLIStatusException("could_not_parse_url",url,e);
