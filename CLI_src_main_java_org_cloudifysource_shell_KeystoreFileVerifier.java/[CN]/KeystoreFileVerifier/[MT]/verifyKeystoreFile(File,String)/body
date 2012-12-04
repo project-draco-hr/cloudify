@@ -1,0 +1,21 @@
+{
+  try {
+    final KeyStore ks=KeyStore.getInstance(KeyStore.getDefaultType());
+    final char[] passwordBuffer=password.toCharArray();
+    final java.io.FileInputStream fis=new java.io.FileInputStream(keystoreFile);
+    ks.load(fis,passwordBuffer);
+    fis.close();
+  }
+ catch (  final IOException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.INVALID_KEYSTORE_FILE.getName(),e.getMessage());
+  }
+catch (  final KeyStoreException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.INVALID_KEYSTORE_FILE.getName(),e.getMessage());
+  }
+catch (  final NoSuchAlgorithmException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.INVALID_KEYSTORE_FILE.getName(),e.getMessage());
+  }
+catch (  final CertificateException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.INVALID_KEYSTORE_FILE.getName(),e.getMessage());
+  }
+}

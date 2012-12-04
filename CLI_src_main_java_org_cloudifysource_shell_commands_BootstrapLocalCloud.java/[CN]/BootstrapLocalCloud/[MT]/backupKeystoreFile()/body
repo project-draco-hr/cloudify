@@ -1,0 +1,5 @@
+{
+  final File defaultKeystoreFile=new File(DEFAULT_KEYSTORE_FILE_PATH);
+  final File backupKeystoreFile=new File(BACKUP_KEYSTORE_FILE_PATH);
+  backupExistingFile(defaultKeystoreFile,backupKeystoreFile);
+}

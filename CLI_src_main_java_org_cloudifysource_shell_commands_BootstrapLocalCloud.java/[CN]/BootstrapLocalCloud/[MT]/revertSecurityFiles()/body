@@ -1,0 +1,12 @@
+{
+  if (this.securityFileBackedup) {
+    final File defaultSecurityFile=new File(DEFAULT_SECURITY_FILE_PATH);
+    final File backupSecurityFile=new File(BACKUP_SECURITY_FILE_PATH);
+    revertSecurityFile(defaultSecurityFile,backupSecurityFile);
+  }
+  if (this.keystoreFileBackedup) {
+    final File defaultKeystoreFile=new File(DEFAULT_KEYSTORE_FILE_PATH);
+    final File backupKeystoreFile=new File(BACKUP_KEYSTORE_FILE_PATH);
+    revertSecurityFile(defaultKeystoreFile,backupKeystoreFile);
+  }
+}

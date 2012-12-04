@@ -1,0 +1,3 @@
+{
+  new KeystoreFileVerifier().verifyKeystoreFile(keystoreFile,password);
+}
