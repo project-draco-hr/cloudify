@@ -1,6 +1,6 @@
 {
   boolean permissionGranted=false;
-  if (authentication instanceof UsernamePasswordAuthenticationToken) {
+  if (!(authentication instanceof CustomAuthenticationToken)) {
     return true;
   }
   Collection<String> userAuthGroups=((CustomAuthenticationToken)authentication).getAuthGroups();

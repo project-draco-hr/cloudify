@@ -10,6 +10,12 @@
     throw new RestErrorException(ResponseConstants.CANNOT_UNINSTALL_MANAGEMENT_APP);
   }
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
+  if (pus.length > 0) {
+    if (permissionEvaluator != null) {
+      String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+      permissionEvaluator.verifyPermission(puAuthGroups,"deploy");
+    }
+  }
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
   FutureTask<Boolean> undeployTask=null;
