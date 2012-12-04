@@ -1,8 +1,6 @@
 {
   String uri="http://" + hostAddress + ":"+ puInstance.getJeeDetails().getPort()+ url;
   HttpDelete deleteMethod=new HttpDelete(uri);
-  logger.log(Level.INFO,"executeRestRequest - sending rest request to uri " + uri);
   DefaultHttpClient httpClient=new DefaultHttpClient();
-  RestUtils.executeHttpMethod(deleteMethod,RestUtils.RESPONSE_KEY,httpClient);
-  logger.log(Level.INFO,"executeRestRequest - successfully sent delete request to " + uri);
+  RestUtils.executeHttpMethod(deleteMethod,httpClient);
 }

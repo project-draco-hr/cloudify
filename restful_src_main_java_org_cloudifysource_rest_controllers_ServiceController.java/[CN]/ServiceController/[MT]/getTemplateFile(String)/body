@@ -3,7 +3,7 @@
   File templatesFolder=getTempaltesFolder();
   File[] templatesFolders=templatesFolder.listFiles();
   for (  final File templateFolder : templatesFolders) {
-    logger.log(Level.INFO,"Searching for template file " + templateFileName + " in "+ templateFolder.getAbsolutePath());
+    logger.log(Level.FINE,"Searching for template file " + templateFileName + " in "+ templateFolder.getAbsolutePath());
     File[] listFiles=templateFolder.listFiles(new FilenameFilter(){
       @Override public boolean accept(      final File dir,      final String name){
         return templateFileName.equals(name);

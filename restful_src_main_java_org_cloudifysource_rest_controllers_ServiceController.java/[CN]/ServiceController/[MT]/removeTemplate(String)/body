@@ -2,14 +2,14 @@
   if (cloud == null) {
     throw new RestErrorException("local_cloud_not_support_tempaltes_operations","remove-template");
   }
-  logger.log(Level.INFO,"removeTemplate - removing template " + templateName);
+  logger.log(Level.INFO,"[removeTemplate] - removing template " + templateName);
   List<String> successfullyRemoved=new LinkedList<String>();
   List<String> failedToRemoveHosts=new LinkedList<String>();
   removeTemplateFromRestInstances(templateName,successfullyRemoved,failedToRemoveHosts);
   if (!failedToRemoveHosts.isEmpty()) {
-    logger.log(Level.WARNING,"removeTemplate - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts+ ". Succeeded to remove the template from: "+ successfullyRemoved);
+    logger.log(Level.WARNING,"[removeTemplate] - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts+ ". Succeeded to remove the template from: "+ successfullyRemoved);
     throw new RestErrorException("failed_to_remove_template",templateName,failedToRemoveHosts.toString());
   }
-  logger.log(Level.INFO,"removeTemplate - Succeeded to remove template [" + templateName + "] from: "+ successfullyRemoved);
+  logger.log(Level.INFO,"[removeTemplate] - Succeeded to remove template [" + templateName + "] from: "+ successfullyRemoved);
   return successStatus();
 }

@@ -1,21 +1,21 @@
 {
-  logger.log(Level.INFO,"addTemplatesToCloud - Adding templates to cloud.");
+  logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
   List<CloudTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
-  logger.log(Level.INFO,"addTemplatesToCloud - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
+  logger.log(Level.FINE,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
   Map<String,String> failedToAddTemplates=new HashMap<String,String>();
   List<String> addedTempaltes=new LinkedList<String>();
   addTemplatesToCloudList(templatesFolder,cloudTemplatesHolders,addedTempaltes,failedToAddTemplates);
   if (addedTempaltes.isEmpty()) {
-    logger.log(Level.WARNING,"addTemplatesToCloud - Failed to add templates files from " + templatesFolder.getAbsolutePath());
+    logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates files from " + templatesFolder.getAbsolutePath());
   }
  else {
-    logger.log(Level.INFO,"addTemplatesToCloud - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+    logger.log(Level.FINE,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
     try {
       File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
       updateCloudTempaltesUploadPath(addedTempaltes,localTemplatesDir);
     }
  catch (    IOException e) {
-      logger.log(Level.WARNING,"addTemplatesToCloud - Failed to copy templates files, error: " + e.getMessage(),e);
+      logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
       for (      String tempalteName : addedTempaltes) {
         cloud.getTemplates().remove(tempalteName);
         failedToAddTemplates.put(tempalteName,e.getMessage());
@@ -26,8 +26,7 @@
   resultMap.put(FAILED_TO_ADD_TEMPLATES_KEY,failedToAddTemplates);
   resultMap.put(SUCCESSFULLY_ADDED_TEMPLATES_KEY,addedTempaltes);
   if (!failedToAddTemplates.isEmpty()) {
-    logger.log(Level.INFO,"addTemplatesToCloud - Failed to add the following templates: " + failedToAddTemplates.toString());
+    logger.log(Level.INFO,"[addTemplatesToCloud] - Failed to add the following templates: " + failedToAddTemplates.toString());
   }
-  logger.log(Level.INFO,"addTemplatesToCloud - Successfully added templates: " + addedTempaltes.toString());
   return resultMap;
 }

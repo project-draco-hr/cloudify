@@ -1,20 +1,20 @@
 {
-  logger.log(Level.INFO,"executeHttpMethod: executing http method: " + httpMethod.getMethod() + " to URI: "+ httpMethod.getURI());
+  logger.log(Level.FINE,"[executeHttpMethod] - executing http method: " + httpMethod.getMethod() + " to URI: "+ httpMethod.getURI());
   String responseBody;
   try {
     final HttpResponse response=httpClient.execute(httpMethod);
-    logger.log(Level.INFO,"executeHttpMethod: got response from " + httpMethod.getURI() + ". Response: "+ response);
+    logger.log(Level.FINE,"[executeHttpMethod]: got response from " + httpMethod.getURI() + ". Response: "+ response);
     final int statusCode=response.getStatusLine().getStatusCode();
     if (statusCode != CloudifyConstants.HTTP_STATUS_CODE_OK) {
       responseBody=getResponseBody(response,httpMethod);
-      logger.log(Level.INFO,"executeHttpMethod: got response with status " + statusCode + ". responseBody: "+ responseBody);
+      logger.log(Level.FINE,"[executeHttpMethod] - got response with status " + statusCode + ". responseBody: "+ responseBody);
       try {
         final Map<String,Object> errorMap=jsonToMap(responseBody);
         final String status=(String)errorMap.get(STATUS_KEY);
         if (ERROR.equals(status)) {
           final String reason=(String)errorMap.get(ERROR);
           @SuppressWarnings("unchecked") final List<String> reasonsArgs=(List<String>)errorMap.get(ERROR_ARGS);
-          logger.log(Level.INFO,"failed to execute rest request to " + httpMethod.getURI() + ", error: "+ reason+ ", error args: "+ reasonsArgs);
+          logger.log(Level.WARNING,"Failed to execute rest request to " + httpMethod.getURI() + ", error: "+ reason+ ", error args: "+ reasonsArgs);
           throw new RestErrorException(reason);
         }
       }
@@ -23,25 +23,24 @@
       }
       throw new RestErrorException("Failed to send http request to " + httpMethod.getURI().toString() + ", statusCode is is "+ statusCode);
     }
-    logger.log(Level.INFO,"executed rest request to " + httpMethod.getURI());
     Map<String,Object> responseMap;
     try {
       responseBody=getResponseBody(response,httpMethod);
-      logger.log(Level.INFO,"response body " + responseBody);
+      logger.log(Level.FINEST,"response body " + responseBody);
       responseMap=jsonToMap(responseBody);
     }
  catch (    final IOException e) {
-      logger.log(Level.INFO,"failed to read response from " + httpMethod.getURI() + ", error: "+ e);
+      logger.log(Level.WARNING,"Failed to read response from " + httpMethod.getURI() + ", error: "+ e);
       throw new RestErrorException("Failed to read response from " + httpMethod.getURI().toString() + ", got an IOException- "+ e.getMessage());
     }
-    return responseJsonKey != null ? responseMap.get(RESPONSE_KEY) : responseMap;
+    return responseMap.get(RESPONSE_KEY);
   }
  catch (  final ClientProtocolException e) {
-    logger.log(Level.INFO,"failed to execute rest request to " + httpMethod.getURI() + ", error: "+ e);
+    logger.log(Level.WARNING,"Failed to execute rest request to " + httpMethod.getURI() + ", error: "+ e);
     throw new RestErrorException("Failed to send http request to " + httpMethod.getURI().toString() + ", got ClientProtocolException- "+ e.getMessage());
   }
 catch (  IOException e1) {
-    logger.log(Level.INFO,"failed to execute rest request to " + httpMethod.getURI() + ", error: "+ e1);
+    logger.log(Level.WARNING,"Failed to execute rest request to " + httpMethod.getURI() + ", error: "+ e1);
     throw new RestErrorException("Failed to send http request to " + httpMethod.getURI().toString() + ", got IOException- "+ e1.getMessage());
   }
  finally {

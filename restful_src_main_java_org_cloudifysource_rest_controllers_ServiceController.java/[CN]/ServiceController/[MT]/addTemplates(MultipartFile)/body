@@ -2,7 +2,7 @@
   if (cloud == null) {
     throw new RestErrorException("local_cloud_not_support_tempaltes_operations","add-templates");
   }
-  logger.log(Level.INFO,"addTemplates - starting add templates.");
+  logger.log(Level.INFO,"[addTemplates] - starting add templates.");
   File loaclTemplatesZipFile=null;
   File unzippedTemplatesFolder=null;
   try {
@@ -13,10 +13,10 @@
     Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
     sendAddTempaltesToRestInstances(loaclTemplatesZipFile,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
     if (!failedToAddTemplatesByHost.isEmpty()) {
-      logger.log(Level.WARNING,"addTemplates - Failed to add the following tempaltes (by host): " + failedToAddTemplatesByHost + ".\nSuccessfully added templates (by host): "+ addedTemplatesByHost);
+      logger.log(Level.WARNING,"[addTemplates] - Failed to add the following tempaltes (by host): " + failedToAddTemplatesByHost + ".\nSuccessfully added templates (by host): "+ addedTemplatesByHost);
       throw new RestErrorException("failed_to_add_templates",failedToAddTemplatesByHost,addedTemplatesByHost);
     }
-    logger.log(Level.INFO,"addTemplates - Successfully added templates: " + addedTemplatesByHost.toString());
+    logger.log(Level.INFO,"[addTemplates] - Successfully added templates: " + addedTemplatesByHost.toString());
     return successStatus(expectedTemplates);
   }
   finally {

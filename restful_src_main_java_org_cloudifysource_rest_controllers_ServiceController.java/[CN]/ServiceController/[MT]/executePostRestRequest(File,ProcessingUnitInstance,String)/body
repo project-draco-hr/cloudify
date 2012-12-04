@@ -2,7 +2,6 @@
   String hostAddress=puInstance.getMachine().getHostAddress();
   String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
   String uri="http://" + hostAddress + ":"+ puInstance.getJeeDetails().getPort()+ url;
-  logger.log(Level.INFO,"executeRestRequest - sending rest request to uri " + uri);
   HttpPost postMethod=new HttpPost(uri);
   final MultipartEntity reqEntity=new MultipartEntity();
   reqEntity.addPart(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,new FileBody(templatesFolder));
@@ -11,12 +10,11 @@
   Map<String,Object> responseMap;
   DefaultHttpClient httpClient=new DefaultHttpClient();
   try {
-    response=RestUtils.executeHttpMethod(postMethod,RestUtils.RESPONSE_KEY,httpClient);
+    response=RestUtils.executeHttpMethod(postMethod,httpClient);
     responseMap=(Map<String,Object>)response;
   }
  catch (  ClassCastException e) {
     throw new RestErrorException("The response from host address " + host + " is not a map as expected. "+ "response: "+ response.toString()+ ".");
   }
-  logger.log(Level.INFO,"executeRestRequest - successfully sent post request to " + host);
   return responseMap;
 }
