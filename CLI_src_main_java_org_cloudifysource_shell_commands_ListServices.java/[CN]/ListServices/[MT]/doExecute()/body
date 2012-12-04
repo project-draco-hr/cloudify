@@ -3,6 +3,9 @@
   try {
     String applicationName=getCurrentApplicationName();
     applicationDescription=adminFacade.getServicesDescriptionList(applicationName);
+    if (applicationDescription == null) {
+      return "";
+    }
   }
  catch (  final CLIStatusException e) {
     if (getCurrentApplicationName().equalsIgnoreCase(CloudifyConstants.DEFAULT_APPLICATION_NAME) && CloudifyConstants.ERR_REASON_CODE_FAILED_TO_LOCATE_APP.equalsIgnoreCase(e.getReasonCode())) {

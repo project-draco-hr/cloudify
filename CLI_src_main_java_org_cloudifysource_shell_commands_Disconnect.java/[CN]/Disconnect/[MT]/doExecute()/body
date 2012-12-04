@@ -1,4 +1,6 @@
 {
   adminFacade.disconnect();
+  session.put(Constants.ACTIVE_APP,CloudifyConstants.DEFAULT_APPLICATION_NAME);
+  GigaShellMain.getInstance().setCurrentApplicationName(CloudifyConstants.DEFAULT_APPLICATION_NAME);
   return getFormattedMessage("disconnected_successfully",Color.GREEN);
 }
