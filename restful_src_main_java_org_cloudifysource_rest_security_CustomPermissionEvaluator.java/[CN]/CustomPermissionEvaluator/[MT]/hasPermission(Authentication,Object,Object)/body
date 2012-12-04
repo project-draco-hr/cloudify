@@ -14,8 +14,8 @@
   if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new AccessDeniedException("Anonymous user is not supported");
   }
-  if (!(authentication instanceof CustomAuthenticationToken)) {
-    throw new AccessDeniedException("Authentication object type not supported");
+  if (!(authentication instanceof CustomAuthenticationToken) && !(authentication instanceof UsernamePasswordAuthenticationToken)) {
+    throw new AccessDeniedException("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
   }
   if (permission != null && !(permission instanceof String)) {
     throw new AuthorizationServiceException("Failed to verify permissions, invalid permission object type: " + permission.getClass().getName());
@@ -36,7 +36,7 @@
  else {
     targetAuthGroups=((String)targetDomainObject).trim();
   }
-  if (hasRequiredRoles(authentication,permissionName) && hasAuthGroupAccess((CustomAuthenticationToken)authentication,targetAuthGroups,permissionName)) {
+  if (hasRequiredRoles(authentication,permissionName) && hasAuthGroupAccess(authentication,targetAuthGroups,permissionName)) {
     permissionGranted=true;
   }
   return permissionGranted;

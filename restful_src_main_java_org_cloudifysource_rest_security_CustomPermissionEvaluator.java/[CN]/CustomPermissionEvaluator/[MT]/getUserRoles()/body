@@ -1,14 +1,3 @@
 {
-  Set<String> userRoles=new HashSet<String>();
-  Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-    throw new AccessDeniedException("Anonymous user is not supported");
-  }
-  if (!(authentication instanceof CustomAuthenticationToken)) {
-    throw new AccessDeniedException("Authentication object type not supported");
-  }
-  for (  GrantedAuthority authority : authentication.getAuthorities()) {
-    userRoles.add(authority.getAuthority());
-  }
-  return userRoles;
+  return getUserRoles(SecurityContextHolder.getContext().getAuthentication());
 }

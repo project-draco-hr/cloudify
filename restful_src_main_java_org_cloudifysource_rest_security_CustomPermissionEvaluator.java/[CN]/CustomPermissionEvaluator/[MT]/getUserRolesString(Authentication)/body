@@ -1,15 +1,4 @@
 {
-  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-    throw new AccessDeniedException("Anonymous user is not supported");
-  }
-  if (!(authentication instanceof CustomAuthenticationToken)) {
-    throw new AccessDeniedException("Authentication object type not supported");
-  }
   Collection<String> userRoles=getUserRoles(authentication);
-  StringBuilder builder=new StringBuilder();
-  for (  String role : userRoles) {
-    builder.append(role);
-    builder.append(',');
-  }
-  return builder.substring(0,builder.toString().length() - 1);
+  return collectionToDelimitedString(userRoles,",");
 }

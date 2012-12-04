@@ -1,0 +1,13 @@
+{
+  String delimitedString;
+  StringBuilder builder=new StringBuilder();
+  for (  String item : collection) {
+    builder.append(item);
+    builder.append(delimiter);
+  }
+  delimitedString=builder.toString();
+  if (delimitedString.endsWith(delimiter)) {
+    delimitedString=delimitedString.substring(0,delimitedString.length() - delimiter.length());
+  }
+  return delimitedString;
+}

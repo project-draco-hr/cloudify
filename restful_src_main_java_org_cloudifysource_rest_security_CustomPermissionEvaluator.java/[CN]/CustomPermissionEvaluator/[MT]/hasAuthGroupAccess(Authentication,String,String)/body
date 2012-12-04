@@ -1,5 +1,8 @@
 {
   boolean permissionGranted=false;
+  if (authentication instanceof UsernamePasswordAuthenticationToken) {
+    return true;
+  }
   Collection<String> userAuthGroups=((CustomAuthenticationToken)authentication).getAuthGroups();
   Collection<String> targetAuthGroups=org.cloudifysource.esc.util.StringUtils.splitAndTrimString(targetAuthGroupsStr,AUTH_GROUPS_DELIMITER);
   if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {

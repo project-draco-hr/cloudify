@@ -1,5 +1,11 @@
 {
   Set<String> userRoles=new HashSet<String>();
+  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    throw new AccessDeniedException("Anonymous user is not supported");
+  }
+  if (!(authentication instanceof CustomAuthenticationToken) && !(authentication instanceof UsernamePasswordAuthenticationToken)) {
+    throw new AccessDeniedException("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
+  }
   for (  GrantedAuthority authority : authentication.getAuthorities()) {
     userRoles.add(authority.getAuthority());
   }
