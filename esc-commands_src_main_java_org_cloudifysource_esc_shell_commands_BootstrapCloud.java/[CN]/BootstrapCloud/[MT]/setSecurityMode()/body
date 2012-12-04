@@ -42,4 +42,7 @@
   if (StringUtils.isBlank(keystore) && StringUtils.isNotBlank(keystorePassword)) {
     throw new IllegalArgumentException("keystore is missing or empty");
   }
+  if (StringUtils.isNotBlank(keystore)) {
+    new KeystoreFileVerifier().verifyKeystoreFile(new File(keystore),keystorePassword);
+  }
 }
