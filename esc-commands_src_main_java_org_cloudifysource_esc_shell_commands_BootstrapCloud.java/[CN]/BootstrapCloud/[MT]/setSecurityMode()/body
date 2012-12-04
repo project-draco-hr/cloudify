@@ -27,7 +27,7 @@
       throw new IllegalArgumentException("'-keystore' is only valid when '-secured' is set");
     }
     if (StringUtils.isNotBlank(keystorePassword)) {
-      throw new IllegalArgumentException("'-keystorePassword' is only valid when '-secured' is set");
+      throw new IllegalArgumentException("'-keystore-password' is only valid when '-secured' is set");
     }
   }
   if (StringUtils.isNotBlank(username) && StringUtils.isBlank(password)) {
@@ -37,10 +37,13 @@
     throw new IllegalArgumentException("Username is missing or empty");
   }
   if (StringUtils.isNotBlank(keystore) && StringUtils.isBlank(keystorePassword)) {
-    throw new IllegalArgumentException("keystorePassword is missing or empty");
+    throw new IllegalArgumentException("Keystore password is missing or empty");
   }
   if (StringUtils.isBlank(keystore) && StringUtils.isNotBlank(keystorePassword)) {
-    throw new IllegalArgumentException("keystore is missing or empty");
+    throw new IllegalArgumentException("Keystore is missing or empty");
+  }
+  if (StringUtils.isNotBlank(keystore)) {
+    new KeystoreFileVerifier().verifyKeystoreFile(new File(keystore),keystorePassword);
   }
   if (StringUtils.isNotBlank(keystore)) {
     new KeystoreFileVerifier().verifyKeystoreFile(new File(keystore),keystorePassword);

@@ -8,7 +8,7 @@
     FileUtils.copyFile(securitySourceFile,securityTargetFile);
   }
  else {
-    throw new IllegalArgumentException("-securityfile is missing or empty");
+    throw new IllegalArgumentException("-security-file is missing or empty");
   }
   if (StringUtils.isNotBlank(keystore)) {
     File keystoreSourceFile=new File(keystore);
