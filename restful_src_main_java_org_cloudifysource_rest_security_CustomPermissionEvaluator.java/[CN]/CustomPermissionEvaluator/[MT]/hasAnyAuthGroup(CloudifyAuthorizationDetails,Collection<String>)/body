@@ -1,6 +1,6 @@
 {
   boolean isPermitted=false;
-  Collection<String> userAuthGroups=getUserAuthGroups(authentication);
+  Collection<String> userAuthGroups=authDetails.getAuthGroups();
   for (  String requestedAuthGroup : requestedAuthGroups) {
     for (    String userAuthGroup : userAuthGroups) {
       if (requestedAuthGroup.equalsIgnoreCase(userAuthGroup)) {

@@ -10,7 +10,9 @@
   }
   if (permissionEvaluator != null) {
     String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-    permissionEvaluator.verifyPermission(puAuthGroups,"deploy");
+    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
   final InternalProcessingUnitInstance pui=findInstanceById(pu,instanceId);
   if (pui == null) {

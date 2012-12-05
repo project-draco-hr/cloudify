@@ -1,0 +1,37 @@
+{
+  if (StringUtils.isBlank(SPRING_SECURITY_PROFILE) || SPRING_SECURITY_PROFILE.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
+    return true;
+  }
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Starting \"hasPermission\" for user: " + authDetails.getUsername());
+    logger.finest("with roles: " + collectionToDelimitedString(authDetails.getRoles(),","));
+    logger.finest("and with authGroups: " + collectionToDelimitedString(authDetails.getAuthGroups(),","));
+    logger.finest("requested permission: " + permission.toString());
+    logger.finest("on target authGroups: " + targetDomainObject.toString());
+  }
+  boolean permissionGranted=false;
+  String permissionName, targetAuthGroups;
+  if (permission != null && !(permission instanceof String)) {
+    throw new AuthorizationServiceException("Failed to verify permissions, invalid permission object type: " + permission.getClass().getName());
+  }
+  permissionName=(String)permission;
+  if (StringUtils.isBlank(permissionName)) {
+    throw new AuthorizationServiceException("Failed to verify permissions, missing permission name");
+  }
+  if (!permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW) && !permissionName.equalsIgnoreCase(PERMISSION_TO_DEPLOY)) {
+    throw new AuthorizationServiceException("Unsupported permission name: " + permissionName + ". valid permission names are: "+ PERMISSION_TO_VIEW+ ", "+ PERMISSION_TO_DEPLOY);
+  }
+  if (targetDomainObject != null && !(targetDomainObject instanceof String)) {
+    throw new AuthorizationServiceException("Failed to verify permissions, invalid authorization groups object" + " type: " + targetDomainObject.getClass().getName());
+  }
+  if (targetDomainObject == null) {
+    targetAuthGroups="";
+  }
+ else {
+    targetAuthGroups=((String)targetDomainObject).trim();
+  }
+  if (hasRequiredRoles(authDetails,permissionName) && hasAuthGroupAccess(authDetails,targetAuthGroups,permissionName)) {
+    permissionGranted=true;
+  }
+  return permissionGranted;
+}

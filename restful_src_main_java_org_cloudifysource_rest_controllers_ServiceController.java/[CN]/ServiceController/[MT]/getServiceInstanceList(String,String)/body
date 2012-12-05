@@ -4,13 +4,15 @@
     logger.finer("received request to list instances for service " + absolutePuName + " of application "+ applicationName);
   }
   final ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
-  if (permissionEvaluator != null) {
-    String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-    permissionEvaluator.verifyPermission(puAuthGroups,"view");
-  }
   if (pu == null) {
     logger.severe("Could not find service " + absolutePuName);
     return unavailableServiceError(absolutePuName);
+  }
+  if (permissionEvaluator != null) {
+    String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"view");
   }
   final Map<Integer,String> instanceMap=new HashMap<Integer,String>();
   final ProcessingUnitInstance[] instances=pu.getInstances();

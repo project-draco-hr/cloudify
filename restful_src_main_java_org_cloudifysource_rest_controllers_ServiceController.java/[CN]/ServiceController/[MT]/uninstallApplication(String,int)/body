@@ -1,5 +1,6 @@
 {
   final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+  final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
   final Application app=this.admin.getApplications().waitFor(applicationName,10,TimeUnit.SECONDS);
   if (app == null) {
     logger.log(Level.INFO,"Cannot uninstall application " + applicationName + " since it has not been discovered yet.");
@@ -13,7 +14,7 @@
   if (pus.length > 0) {
     if (permissionEvaluator != null) {
       String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-      permissionEvaluator.verifyPermission(puAuthGroups,"deploy");
+      permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
     }
   }
   final StringBuilder sb=new StringBuilder();
@@ -27,7 +28,7 @@
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
           if (permissionEvaluator != null) {
             String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-            permissionEvaluator.verifyPermission(authentication,puAuthGroups,"deploy");
+            permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
           }
           final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
           try {

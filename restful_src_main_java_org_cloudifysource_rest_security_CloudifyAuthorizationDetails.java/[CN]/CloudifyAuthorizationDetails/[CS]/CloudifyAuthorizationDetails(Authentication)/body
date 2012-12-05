@@ -1,0 +1,18 @@
+{
+  if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    throw new AccessDeniedException("Anonymous user is not supported");
+  }
+  if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
+    throw new AccessDeniedException("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
+  }
+  username=authentication.getName();
+  for (  GrantedAuthority authority : authentication.getAuthorities()) {
+    roles.add(authority.getAuthority());
+  }
+  if (authentication instanceof CustomAuthenticationToken) {
+    authGroups=((CustomAuthenticationToken)authentication).getAuthGroups();
+  }
+ else {
+    authGroups.addAll(roles);
+  }
+}

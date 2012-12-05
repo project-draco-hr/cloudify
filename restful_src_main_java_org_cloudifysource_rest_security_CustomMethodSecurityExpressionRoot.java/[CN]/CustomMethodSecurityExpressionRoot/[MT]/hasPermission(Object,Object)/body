@@ -9,6 +9,14 @@
         authGroups.append(authGroup);
       }
     }
+ else {
+      for (      GrantedAuthority authority : (authentication).getAuthorities()) {
+        if (authGroups.length() > 0) {
+          authGroups.append(", ");
+        }
+        authGroups.append(authority.getAuthority());
+      }
+    }
     target=authGroups.toString();
   }
   return permissionEvaluator.hasPermission(authentication,target,permission);

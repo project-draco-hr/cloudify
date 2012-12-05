@@ -1,2 +1,3 @@
+CloudifyAuthorizationDetails authDetails
 Object targetDomainObject
 Object permission

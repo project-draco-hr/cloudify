@@ -1,6 +1,6 @@
 {
   boolean relevantRoleFound=false;
-  Collection<String> userRoles=getUserRoles(authentication);
+  Collection<String> userRoles=authDetails.getRoles();
   if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
     for (    String role : userRoles) {
       if (ROLE_CLOUDADMIN.equalsIgnoreCase(role) || ROLE_APPMANAGER.equalsIgnoreCase(role) || ROLE_VIEWER.equalsIgnoreCase(role)) {
@@ -18,7 +18,7 @@
     }
   }
   if (!relevantRoleFound) {
-    logger.log(Level.WARNING,"User " + authentication.getName() + " is missing the required roles, access is "+ "denied.");
+    logger.log(Level.WARNING,"User " + authDetails.getUsername() + " is missing the required roles, access is "+ "denied.");
   }
   return relevantRoleFound;
 }

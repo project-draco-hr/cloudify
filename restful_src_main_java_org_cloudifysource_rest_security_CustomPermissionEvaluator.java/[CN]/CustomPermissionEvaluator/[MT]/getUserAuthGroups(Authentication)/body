@@ -1,13 +1,13 @@
 {
+  Collection<String> userAuthGroups;
   if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new AccessDeniedException("Anonymous user is not supported");
   }
-  if (!(authentication instanceof CustomAuthenticationToken)) {
-    return new ArrayList<String>();
-  }
-  Collection<String> userAuthGroups=new ArrayList<String>();
   if (authentication instanceof CustomAuthenticationToken) {
     userAuthGroups=((CustomAuthenticationToken)authentication).getAuthGroups();
+  }
+ else {
+    userAuthGroups=getUserRoles();
   }
   return userAuthGroups;
 }
