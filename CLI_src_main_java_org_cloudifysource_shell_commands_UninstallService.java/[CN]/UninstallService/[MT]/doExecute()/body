@@ -2,10 +2,6 @@
   if (!askUninstallConfirmationQuestion()) {
     return getFormattedMessage("uninstall_aborted");
   }
-  final Set<String> containerIdsOfService=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForService(getCurrentApplicationName(),serviceName);
-  if (verbose) {
-    logger.info("Found containers: " + containerIdsOfService);
-  }
   Map<String,String> undeployServiceResponse=adminFacade.undeploy(getCurrentApplicationName(),serviceName,timeoutInMinutes);
   String pollingID=undeployServiceResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
