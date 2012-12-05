@@ -5,10 +5,6 @@
   if (CloudifyConstants.MANAGEMENT_APPLICATION_NAME.equalsIgnoreCase(applicationName)) {
     throw new CLIStatusException("cannot_uninstall_management_application");
   }
-  if (verbose) {
-    final Set<String> containerIdsOfApplication=((RestAdminFacade)adminFacade).getGridServiceContainerUidsForApplication(applicationName);
-    logger.info("Containers running PUs of application " + applicationName + ":"+ containerIdsOfApplication);
-  }
   Map<String,String> uninstallApplicationResponse=this.adminFacade.uninstallApplication(this.applicationName,timeoutInMinutes);
   String pollingID=uninstallApplicationResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
   this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
