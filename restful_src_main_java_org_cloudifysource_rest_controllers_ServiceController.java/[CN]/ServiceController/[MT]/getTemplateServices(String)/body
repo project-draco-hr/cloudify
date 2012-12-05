@@ -1,0 +1,15 @@
+{
+  List<String> services=new LinkedList<String>();
+  ProcessingUnits processingUnits=admin.getProcessingUnits();
+  for (  ProcessingUnit processingUnit : processingUnits) {
+    ProcessingUnitInstance[] instances=processingUnit.getInstances();
+    for (    ProcessingUnitInstance processingUnitInstance : instances) {
+      Map<String,String> environmentVariables=processingUnitInstance.getMachine().getGridServiceAgent().getVirtualMachine().getDetails().getEnvironmentVariables();
+      final String serviceTemplateName=environmentVariables.get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
+      if (serviceTemplateName.equals(templateName)) {
+        services.add(processingUnitInstance.getName());
+      }
+    }
+  }
+  return services;
+}

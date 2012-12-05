@@ -28,6 +28,9 @@
       logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + tempalteFolder,e);
     }
   }
+ else {
+    CloudTemplatesReader.removeTemplateFiles(tempalteFolder,templateName);
+  }
   File templatesFolder=getTempaltesFolder();
   if (templatesFolder.list().length == 0) {
     tempalteFolder.delete();
