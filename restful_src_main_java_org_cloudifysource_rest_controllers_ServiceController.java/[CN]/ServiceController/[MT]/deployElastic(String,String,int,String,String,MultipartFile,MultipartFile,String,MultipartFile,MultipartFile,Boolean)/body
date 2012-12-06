@@ -30,6 +30,7 @@
       effectiveAuthGroups="";
     }
   }
+  final File localServiceOverridesFile=copyMultipartFileToLocalFile(serviceOverridesFile);
   String lifecycleEventsContainerID="";
   if (dest.renameTo(destFile)) {
     FileUtils.deleteQuietly(dest);
@@ -38,12 +39,12 @@
     if (cloudConfigurationFile != null) {
       cloudConfigurationContents=FileUtils.readFileToByteArray(cloudConfigurationFile);
     }
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing,cloudOverrides);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,destFile,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,cloudConfigurationContents,selfHealing.booleanValue(),localServiceOverridesFile,cloudOverrides);
     destFile.deleteOnExit();
   }
  else {
     logger.warning("Deployment file could not be renamed to the absolute pu name." + " Deploaying using the name " + dest.getName());
-    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing,cloudOverrides);
+    lifecycleEventsContainerID=deployElasticProcessingUnit(absolutePuName,applicationName,effectiveAuthGroups,zone,dest,props,actualTemplateName,false,timeout,TimeUnit.MINUTES,null,selfHealing.booleanValue(),localServiceOverridesFile,cloudOverrides);
     dest.deleteOnExit();
   }
   return successStatus(lifecycleEventsContainerID);

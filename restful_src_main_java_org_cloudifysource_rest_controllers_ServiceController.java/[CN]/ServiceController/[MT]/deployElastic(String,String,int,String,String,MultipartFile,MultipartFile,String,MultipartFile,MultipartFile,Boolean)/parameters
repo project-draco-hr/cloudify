@@ -6,5 +6,6 @@ String zone
 MultipartFile srcFile
 MultipartFile propsFile
 String authGroups
+MultipartFile serviceOverridesFile
 MultipartFile cloudOverridesFile
 Boolean selfHealing

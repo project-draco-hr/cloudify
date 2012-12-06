@@ -10,4 +10,5 @@ int timeout
 TimeUnit timeUnit
 byte[] serviceCloudConfigurationContents
 boolean selfHealing
+File overridesFile
 File cloudOverrides

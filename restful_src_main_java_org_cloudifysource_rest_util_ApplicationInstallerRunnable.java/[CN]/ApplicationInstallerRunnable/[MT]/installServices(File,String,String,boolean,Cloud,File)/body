@@ -18,39 +18,33 @@
       File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
       File serviceFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,serviceDirectory);
       final String serviceNameByServiceFile=serviceFile.getName().split("-")[0];
-      File servicePropertiesFile=new File(serviceDirectory,serviceNameByServiceFile + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX);
-      File actualOverridesFile=overridesFile;
-      if (actualOverridesFile == null) {
-        actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
-      }
-      File tempFile=File.createTempFile("__cloudify",".props");
-      tempFile.deleteOnExit();
-      String tempFileName=tempFile.getName();
-      tempFile.delete();
-      File uniqueFolder=new File(TEMP_FOLDER + File.separator + tempFileName);
-      uniqueFolder.mkdir();
-      File finalPropsFile=new File(uniqueFolder,servicePropertiesFile.getName());
-      finalPropsFile.deleteOnExit();
+      File finalPropsFile=File.createTempFile("finalPropsFile",".properties");
       FileAppender appender=new FileAppender(finalPropsFile);
       if (applicationPropertiesFile != null && applicationPropertiesFile.exists()) {
         appender.append("Application Properties File",applicationPropertiesFile);
       }
+      String propertiesFileName=serviceNameByServiceFile + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX;
+      File servicePropertiesFile=new File(serviceDirectory,propertiesFileName);
       if (servicePropertiesFile.exists()) {
         appender.append("Service Properties File",servicePropertiesFile);
         servicePropertiesFile.delete();
+      }
+      File actualOverridesFile=overridesFile;
+      if (actualOverridesFile == null) {
+        actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
       }
       if (actualOverridesFile != null && actualOverridesFile.exists()) {
         appender.append("Overrides properties file",actualOverridesFile);
       }
       appender.flush();
-      FileUtils.copyFileToDirectory(finalPropsFile,serviceDirectory);
+      FileUtils.copyFile(finalPropsFile,new File(serviceDirectory,propertiesFileName));
       finalPropsFile.delete();
       File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);
       final String templateName=service.getCompute() == null ? null : service.getCompute().getTemplate();
-      controller.deployElasticProcessingUnit(absolutePUName,applicationName,authGroups,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
+      controller.deployElasticProcessingUnit(absolutePUName,applicationName,authGroups,serviceName,packedFile,contextProperties,templateName,true,0,TimeUnit.SECONDS,serviceCloudConfigurationContents,selfHealing,null,cloudOverrides);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }
