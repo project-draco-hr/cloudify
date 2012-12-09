@@ -3,7 +3,7 @@
   Collection<String> userAuthGroups=authDetails.getAuthGroups();
   Collection<String> targetAuthGroups=org.cloudifysource.esc.util.StringUtils.splitAndTrimString(targetAuthGroupsStr,AUTH_GROUPS_DELIMITER);
   if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
-    if (hasPermissionToView(targetAuthGroups)) {
+    if (hasPermissionToView(authDetails,targetAuthGroups)) {
       permissionGranted=true;
       logger.log(Level.INFO,"View permission granted for user " + authDetails.getUsername());
     }
