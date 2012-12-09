@@ -1,0 +1,3 @@
+{
+  return (String)properties.getStringWrapperObject(AUTH_GROUPS_KEY,AUTH_GROUPS_DEFAULT);
+}

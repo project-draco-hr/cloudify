@@ -1,3 +1,3 @@
 {
-  return "InstallationDetails [privateIP=" + privateIp + ", publicIP="+ publicIp+ ", locator="+ locator+ ", connectToPrivateIP="+ connectedToPrivateIp+ ", cloudifyUrl="+ cloudifyUrl+ ", bindToPrivateIP="+ bindToPrivateIp+ ", username="+ username+ ", password=***"+ ", keyFile="+ keyFile+ ", localDir="+ localDir+ ", remoteDir="+ remoteDir+ ", isLus="+ isLus+ ", zones="+ zones+ ", extraRemoteEnvironmentVariables = "+ extraRemoteEnvironmentVariables+ "]";
+  return "InstallationDetails [privateIP=" + privateIp + ", publicIP="+ publicIp+ ", locator="+ locator+ ", connectToPrivateIP="+ connectedToPrivateIp+ ", cloudifyUrl="+ cloudifyUrl+ ", bindToPrivateIP="+ bindToPrivateIp+ ", username="+ username+ ", password=***"+ ", keyFile="+ keyFile+ ", localDir="+ localDir+ ", remoteDir="+ remoteDir+ ", isLus="+ isLus+ ", zones="+ zones+ ", extraRemoteEnvironmentVariables = "+ extraRemoteEnvironmentVariables+ ", authGroups=***]";
 }

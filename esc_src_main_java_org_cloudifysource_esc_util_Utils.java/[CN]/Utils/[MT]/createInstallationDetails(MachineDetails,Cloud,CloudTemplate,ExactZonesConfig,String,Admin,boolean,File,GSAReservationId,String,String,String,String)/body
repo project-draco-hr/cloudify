@@ -73,6 +73,9 @@
   details.setReservationId(reservationId);
   details.setTemplateName(templateName);
   details.setMachineId(md.getMachineId());
+  if (authGroups != null) {
+    details.setAuthGroups(authGroups);
+  }
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }
