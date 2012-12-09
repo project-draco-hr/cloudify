@@ -18,7 +18,7 @@
       throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
     }
 catch (    final RestException e) {
-      throw new CLIStatusException("cant_find_service_for_app",serviceName,applicationName);
+      throw new CLIStatusException(e,"cant_find_service_for_app",serviceName,applicationName);
     }
   }
   return containerUids;

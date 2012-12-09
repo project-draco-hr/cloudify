@@ -1,0 +1,9 @@
+{
+  final String url=SERVICE_CONTROLLER_URL + "application/install/permissions";
+  try {
+    client.get(url);
+  }
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}
