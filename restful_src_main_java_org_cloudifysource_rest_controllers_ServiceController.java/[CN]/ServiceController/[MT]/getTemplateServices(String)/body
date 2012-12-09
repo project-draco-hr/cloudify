@@ -2,13 +2,10 @@
   List<String> services=new LinkedList<String>();
   ProcessingUnits processingUnits=admin.getProcessingUnits();
   for (  ProcessingUnit processingUnit : processingUnits) {
-    ProcessingUnitInstance[] instances=processingUnit.getInstances();
-    for (    ProcessingUnitInstance processingUnitInstance : instances) {
-      Map<String,String> environmentVariables=processingUnitInstance.getMachine().getGridServiceAgent().getVirtualMachine().getDetails().getEnvironmentVariables();
-      final String serviceTemplateName=environmentVariables.get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
-      if (serviceTemplateName.equals(templateName)) {
-        services.add(processingUnitInstance.getName());
-      }
+    Properties puProps=processingUnit.getBeanLevelProperties().getContextProperties();
+    final String puTempalteName=puProps.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
+    if (puTempalteName != null && puTempalteName.equals(templateName)) {
+      services.add(processingUnit.getName());
     }
   }
   return services;

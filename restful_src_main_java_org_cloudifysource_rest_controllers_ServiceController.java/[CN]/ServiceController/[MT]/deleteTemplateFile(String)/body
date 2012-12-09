@@ -18,7 +18,7 @@
   }
   logger.log(Level.FINE,"[deleteTemplateFile] - Successfully deleted template file [" + templatesPath + "].");
   File tempalteFolder=templateFile.getParentFile();
-  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX,tempalteFolder);
+  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,tempalteFolder);
   if (templatesFiles == null || templatesFiles.length == 0) {
     try {
       logger.log(Level.FINE,"[deleteTemplateFile] - tempaltes folder is empty, deleting the folder [" + templatesPath + "].");

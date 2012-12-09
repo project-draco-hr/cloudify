@@ -1,5 +1,5 @@
 {
-  final String templateFileName=templateName + DSLUtils.TEMPLATES_DSL_FILE_NAME_SUFFIX;
+  final String templateFileName=templateName + DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX;
   File templatesFolder=getTempaltesFolder();
   File[] templatesFolders=templatesFolder.listFiles();
   for (  final File templateFolder : templatesFolders) {
