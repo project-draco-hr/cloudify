@@ -59,6 +59,12 @@
       FileUtils.copyFile(backupCloudPropertiesFile,cloudPropertiesFile);
       backupCloudPropertiesFile.delete();
     }
+    try {
+      revertSecurityFiles(providerDirectory.getAbsolutePath());
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to revert security files before finishing bootstrap-cloud command",e);
+    }
     installer.close();
     restoreLoggingLevel();
   }

@@ -4,8 +4,15 @@
     if (!securitySourceFile.isFile()) {
       throw new Exception("Security configuration file not found: " + securityFilePath);
     }
-    File securityTargetFile=new File(providerDirectory,OVERRIDES_FOLDER + PATH_SEPARATOR + "spring-security.xml");
-    FileUtils.copyFile(securitySourceFile,securityTargetFile);
+    File defaultSecurityFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_SECURITY_FILE_PATH);
+    File backupSecurityFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_PATH);
+    if (!(securitySourceFile.getCanonicalFile().equals(defaultSecurityFile.getCanonicalFile()))) {
+      if (defaultSecurityFile.exists()) {
+        FileUtils.copyFile(defaultSecurityFile,backupSecurityFile);
+      }
+      this.securityFileCopied=true;
+      FileUtils.copyFile(securitySourceFile,defaultSecurityFile);
+    }
   }
  else {
     throw new IllegalArgumentException("-security-file is missing or empty");
@@ -15,7 +22,13 @@
     if (!keystoreSourceFile.isFile()) {
       throw new Exception("Keystore file not found: " + keystore);
     }
-    File keystoreTargetFile=new File(providerDirectory,OVERRIDES_FOLDER + PATH_SEPARATOR + "keystore");
-    FileUtils.copyFile(keystoreSourceFile,keystoreTargetFile);
+    final File defaultKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_KEYSTORE_FILE_PATH);
+    if (!(keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreFile.getCanonicalFile()))) {
+      if (defaultKeystoreFile.exists()) {
+        FileUtils.copyFile(keystoreSourceFile,defaultKeystoreFile);
+      }
+      this.keystoreFileCopied=true;
+      FileUtils.copyFile(keystoreSourceFile,defaultKeystoreFile);
+    }
   }
 }

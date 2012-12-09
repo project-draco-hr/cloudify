@@ -1,0 +1,20 @@
+{
+  File securityConfigFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_SECURITY_FILE_PATH);
+  File backupSecurityConfigFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_PATH);
+  if (backupSecurityConfigFile.exists()) {
+    FileUtils.copyFile(backupSecurityConfigFile,securityConfigFile);
+    deleteFile(backupSecurityConfigFile);
+  }
+ else   if (this.securityFileCopied) {
+    deleteFile(securityConfigFile);
+  }
+  File keystoreFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_KEYSTORE_FILE_PATH);
+  File backupKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_KEYSTORE_FILE_PATH);
+  if (backupKeystoreFile.exists()) {
+    FileUtils.copyFile(backupKeystoreFile,keystoreFile);
+    deleteFile(backupKeystoreFile);
+  }
+ else   if (this.keystoreFileCopied) {
+    deleteFile(keystoreFile);
+  }
+}
