@@ -1,0 +1,6 @@
+{
+  if (admin.getApplications().getNames().containsKey(applicationName)) {
+    throw new RestErrorException(ResponseConstants.APPLICATION_NAME_IS_ALREADY_IN_USE,applicationName);
+  }
+  return successStatus();
+}

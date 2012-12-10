@@ -1,5 +1,5 @@
 {
-  final String url=SERVICE_CONTROLLER_URL + "application/install/permissions";
+  final String url=SERVICE_CONTROLLER_URL + "application/" + applicationName+ "/install/permissions";
   try {
     client.get(url);
   }
