@@ -1,0 +1,10 @@
+{
+  boolean hasAdminRole=false;
+  for (  String role : roles) {
+    if (ROLE_CLOUDADMIN.equalsIgnoreCase(role)) {
+      hasAdminRole=true;
+      break;
+    }
+  }
+  return hasAdminRole;
+}
