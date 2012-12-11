@@ -1,6 +1,6 @@
 String applicationName
-String authGroups
 String serviceName
+String authGroups
 String[] agentZones
 File srcFile
 Properties contextProperties
