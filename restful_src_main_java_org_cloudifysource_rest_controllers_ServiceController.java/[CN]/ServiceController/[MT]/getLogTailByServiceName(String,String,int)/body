@@ -6,10 +6,9 @@
     logger.severe("Could not find service " + absolutePuName);
     return unavailableServiceError(absolutePuName);
   }
-  String instanceLogTail;
   for (  final ProcessingUnitInstance processingUnitInstance : processingUnit) {
-    stringBuilder.append("service instance id #" + processingUnitInstance.getInstanceId() + System.getProperty("line.separator"));
-    instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
+    stringBuilder.append("service instance id #").append(processingUnitInstance.getInstanceId()).append(System.getProperty("line.separator"));
+    String instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
     stringBuilder.append(instanceLogTail);
   }
   return successStatus(stringBuilder.toString());

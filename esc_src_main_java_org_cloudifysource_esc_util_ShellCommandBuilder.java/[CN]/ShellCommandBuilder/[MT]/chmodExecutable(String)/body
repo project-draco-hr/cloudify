@@ -1,7 +1,7 @@
 {
 switch (this.mode) {
 case SSH:
-    sb.append("chmod +x " + path);
+    sb.append("chmod +x ").append(path);
   separate();
 break;
 default :
