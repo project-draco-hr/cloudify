@@ -15,10 +15,10 @@
         throw e;
       }
 catch (      final TimeoutException e) {
-        logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
+        logger.fine("Failed to uninstall applications. Shut down of management machines will continue");
       }
 catch (      final CLIException e) {
-        logger.fine("Failed to uninstall applications. Shut down of managememnt machines will continue");
+        logger.fine("Failed to uninstall applications. Shut down of management machines will continue");
       }
     }
  else {

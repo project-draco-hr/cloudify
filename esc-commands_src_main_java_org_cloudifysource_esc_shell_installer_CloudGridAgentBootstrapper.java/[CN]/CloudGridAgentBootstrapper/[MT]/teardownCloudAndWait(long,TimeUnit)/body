@@ -1,6 +1,6 @@
 {
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   createProvisioningDriver();
-  ShellUtils.checkNotNull("providerDirectory",providerDirecotry);
+  ShellUtils.checkNotNull("providerDirectory",providerDirectory);
   destroyManagementServers(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
 }
