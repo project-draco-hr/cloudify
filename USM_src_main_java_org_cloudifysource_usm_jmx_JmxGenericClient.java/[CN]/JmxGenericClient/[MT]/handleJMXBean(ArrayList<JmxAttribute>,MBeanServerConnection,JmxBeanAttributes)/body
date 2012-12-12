@@ -3,9 +3,8 @@
   final String[] attributeNames=t.getAttributeNames();
   try {
     final AttributeList vals=mbsc.getAttributes(beanName,attributeNames);
-    @SuppressWarnings("rawtypes") final Iterator it=vals.iterator();
-    while (it.hasNext()) {
-      final Attribute att=(Attribute)it.next();
+    for (    Object val : vals) {
+      final Attribute att=(Attribute)val;
       if (att.getValue() instanceof Exception) {
         logger.log(Level.WARNING,"Failed to read JMX attribute: " + att.getName() + " in bean: "+ t.getObjectName(),att.getValue());
       }

@@ -1,12 +1,10 @@
 {
-  JMXServiceURL jmxUrl;
   try {
-    jmxUrl=new JMXServiceURL(String.format(JMX_URL_FORMAT,host,port));
+    return new JMXServiceURL(String.format(JMX_URL_FORMAT,host,port));
   }
  catch (  final MalformedURLException e) {
     final String msg="Failed to create JMXServiceURL for " + host + ","+ port+ ". Error: "+ e;
     logger.severe(msg);
     throw new IllegalArgumentException("Failed to initialize JMX Service URL: " + String.format(JMX_URL_FORMAT,host,port),e);
   }
-  return jmxUrl;
 }
