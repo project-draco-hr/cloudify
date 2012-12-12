@@ -2,31 +2,31 @@
   long currentTimeInMillis=System.currentTimeMillis();
   long lockTimeout=endTime - currentTimeInMillis - ESTIMATED_TIME_TO_START_VM;
   if (lockTimeout < 0) {
-    throw new MicrosoftAzureException("aborted request to provision virtual machine. " + "the timeout is less then the estimated time to provision the machine");
+    throw new MicrosoftAzureException("Aborted request to provision virtual machine. " + "The timeout is less then the estimated time to provision the machine");
   }
-  logger.fine("[" + Thread.currentThread().getName() + "] - waiting for pending request lock...");
+  logger.fine(getThreadIdentity() + "Waiting for pending request lock for lock " + pendingRequest.hashCode());
   boolean lockAcquired=pendingRequest.tryLock(lockTimeout,TimeUnit.MILLISECONDS);
   String serviceName=null;
   Deployment deployment=null;
   if (lockAcquired) {
-    logger.fine("[" + Thread.currentThread().getName() + "] - lock acquired");
-    logger.fine("[" + Thread.currentThread().getName() + "] - executing a request to provision a new virtual machine");
+    logger.fine(getThreadIdentity() + "Lock acquired : " + pendingRequest.hashCode());
+    logger.fine(getThreadIdentity() + "Executing a request to provision a new virtual machine");
     try {
       serviceName=createCloudService(deplyomentDesc.getAffinityGroup(),endTime);
       deplyomentDesc.setHostedServiceName(serviceName);
       deplyomentDesc.setDeploymentName(serviceName);
       deployment=requestBodyBuilder.buildDeployment(deplyomentDesc);
       String xmlRequest=MicrosoftAzureModelUtils.marshall(deployment,false);
-      logger.fine("[" + Thread.currentThread().getName() + "] - "+ "launching virtual machine : "+ deplyomentDesc.getRoleName());
+      logger.fine(getThreadIdentity() + "Launching virtual machine : " + deplyomentDesc.getRoleName());
       ClientResponse response=doPost("/services/hostedservices/" + serviceName + "/deployments",xmlRequest);
       String requestId=extractRequestId(response);
       waitForRequestToFinish(requestId,endTime);
+      logger.fine(getThreadIdentity() + "About to release lock " + pendingRequest.hashCode());
       pendingRequest.unlock();
-      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
     }
  catch (    final Exception e) {
+      logger.fine(getThreadIdentity() + "A failure occured : about to release lock " + pendingRequest.hashCode());
       pendingRequest.unlock();
-      logger.fine("[" + Thread.currentThread().getName() + "] - a failure occured : unlocking lock");
       if (e instanceof MicrosoftAzureException) {
         throw new MicrosoftAzureException(e);
       }
@@ -39,7 +39,7 @@
     }
   }
  else {
-    throw new TimeoutException("failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
+    throw new TimeoutException("Failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
   }
   Deployment deploymentResponse=waitForDeploymentStatus("Running",serviceName,deployment.getDeploymentSlot(),endTime);
   deploymentResponse=waitForRoleInstanceStatus("ReadyRole",serviceName,deployment.getDeploymentSlot(),endTime);

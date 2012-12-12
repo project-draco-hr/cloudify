@@ -1,23 +1,23 @@
 {
   long currentTimeInMillis=System.currentTimeMillis();
   long lockTimeout=endTime - currentTimeInMillis;
-  logger.fine("[" + Thread.currentThread().getName() + "] - waiting for pending request lock...");
+  logger.fine(getThreadIdentity() + "Waiting for pending request lock...");
   boolean lockAcquired=pendingRequest.tryLock(lockTimeout,TimeUnit.MILLISECONDS);
   if (lockAcquired) {
-    logger.fine("[" + Thread.currentThread().getName() + "] - lock acquired");
-    logger.fine("[" + Thread.currentThread().getName() + "] - executing a request to delete virtual machine");
+    logger.fine(getThreadIdentity() + "Lock acquired : " + pendingRequest.hashCode());
+    logger.fine(getThreadIdentity() + "Executing a request to delete virtual machine");
     try {
-      logger.fine("[" + Thread.currentThread().getName() + "] - deleting deployment of virtual machine from : "+ deploymentName);
+      logger.fine(getThreadIdentity() + "Deleting deployment of virtual machine from : " + deploymentName);
       ClientResponse response=doDelete("/services/hostedservices/" + hostedServiceName + "/deployments/"+ deploymentName);
       String requestId=extractRequestId(response);
       waitForRequestToFinish(requestId,endTime);
       pendingRequest.unlock();
-      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
+      logger.fine(getThreadIdentity() + "Lock unlcoked");
     }
  catch (    final Exception e) {
-      logger.warning("[" + Thread.currentThread().getName() + "] failed deleting deployment of virtual machine from : "+ deploymentName);
+      logger.warning(getThreadIdentity() + "Failed deleting deployment of virtual machine from : " + deploymentName);
+      logger.fine(getThreadIdentity() + "About to release lock " + pendingRequest.hashCode());
       pendingRequest.unlock();
-      logger.fine("[" + Thread.currentThread().getName() + "] - lock unlcoked");
       if (e instanceof MicrosoftAzureException) {
         throw new MicrosoftAzureException(e);
       }
@@ -31,6 +31,6 @@
     return true;
   }
  else {
-    throw new TimeoutException("failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
+    throw new TimeoutException("Failed to acquire lock for deleteDeployment request after + " + lockTimeout + " milliseconds");
   }
 }

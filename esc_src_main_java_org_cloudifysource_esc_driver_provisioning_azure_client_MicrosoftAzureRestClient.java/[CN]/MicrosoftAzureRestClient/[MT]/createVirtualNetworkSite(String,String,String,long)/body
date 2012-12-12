@@ -9,7 +9,7 @@
       virtualNetworkSites=new VirtualNetworkSites();
     }
   }
-  logger.fine("creating virtual network site : " + networkSiteName);
+  logger.fine("Creating virtual network site : " + networkSiteName);
   VirtualNetworkSite newSite=new VirtualNetworkSite();
   AddressSpace address=new AddressSpace();
   address.setAddressPrefix(addressSpace);
@@ -18,5 +18,5 @@
   newSite.setName(networkSiteName);
   virtualNetworkSites.getVirtualNetworkSites().add(newSite);
   setNetworkConfiguration(endTime,virtualNetworkSites);
-  logger.fine("created virtual network site : " + networkSiteName);
+  logger.fine("Created virtual network site : " + networkSiteName);
 }

@@ -1,0 +1,5 @@
+{
+  String threadName=Thread.currentThread().getName();
+  long threadId=Thread.currentThread().getId();
+  return "[" + threadName + "]"+ "["+ threadId+ "] - ";
+}

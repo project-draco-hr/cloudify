@@ -4,10 +4,10 @@
     logger.fine("Found an existing affinity group : " + affinityGroup);
     return;
   }
-  logger.fine("creating affinity group : " + affinityGroup);
+  logger.fine("Creating affinity group : " + affinityGroup);
   String xmlRequest=MicrosoftAzureModelUtils.marshall(createAffinityGroup,false);
   ClientResponse response=doPost("/affinitygroups",xmlRequest);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);
-  logger.fine("created affinity group : " + affinityGroup);
+  logger.fine("Created affinity group : " + affinityGroup);
 }

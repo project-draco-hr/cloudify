@@ -5,7 +5,7 @@
     checkForError(response);
   }
  catch (  TimeoutException e) {
-    logger.warning("Timed out while waiting for deployment details. this may cause a leaking node");
+    logger.warning("Timed out while waiting for deployment details. This may cause a leaking node");
     throw e;
   }
   String responseBody=response.getEntity(String.class);
