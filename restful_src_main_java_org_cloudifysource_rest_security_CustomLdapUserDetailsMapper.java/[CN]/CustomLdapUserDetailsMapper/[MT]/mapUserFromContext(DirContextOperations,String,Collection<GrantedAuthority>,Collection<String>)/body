@@ -15,8 +15,8 @@
       logger.fine("Couldn't read role attribute '" + roleAttributes[i] + "' for user "+ dn);
       continue;
     }
-    for (int j=0; j < rolesForAttribute.length; j++) {
-      GrantedAuthority authority=createAuthority(rolesForAttribute[j]);
+    for (    String roleForAttribute : rolesForAttribute) {
+      GrantedAuthority authority=createAuthority(roleForAttribute);
       if (authority != null) {
         essence.addAuthority(authority);
       }
