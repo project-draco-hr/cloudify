@@ -2,12 +2,22 @@
   if (StringUtils.isBlank(SPRING_SECURITY_PROFILE) || SPRING_SECURITY_PROFILE.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
     return true;
   }
-  if (logger.isLoggable(Level.FINEST)) {
-    logger.finest("Starting \"hasPermission\" for user: " + authDetails.getUsername());
-    logger.finest("with roles: " + collectionToDelimitedString(authDetails.getRoles(),","));
-    logger.finest("and with authGroups: " + collectionToDelimitedString(authDetails.getAuthGroups(),","));
-    logger.finest("requested permission: " + permission.toString());
-    logger.finest("on target authGroups: " + targetDomainObject.toString());
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Starting \"hasPermission\" for user: " + authDetails.getUsername());
+    if (authDetails.getRoles() == null) {
+      logger.fine("with roles: null,");
+    }
+ else {
+      logger.fine("with roles: " + collectionToDelimitedString(authDetails.getRoles(),","));
+    }
+    if (authDetails.getAuthGroups() == null) {
+      logger.fine("and with authGroups: null");
+    }
+ else {
+      logger.fine("and with authGroups: " + collectionToDelimitedString(authDetails.getAuthGroups(),","));
+    }
+    logger.fine("requested permission: " + permission.toString());
+    logger.fine("on target authGroups: " + targetDomainObject.toString());
   }
   boolean permissionGranted=false;
   String permissionName, targetAuthGroups;

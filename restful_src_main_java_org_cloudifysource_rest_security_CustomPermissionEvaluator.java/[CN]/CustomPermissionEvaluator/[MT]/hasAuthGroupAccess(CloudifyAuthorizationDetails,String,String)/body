@@ -1,7 +1,15 @@
 {
   boolean permissionGranted=false;
-  Collection<String> userAuthGroups=authDetails.getAuthGroups();
+  if (StringUtils.isBlank(targetAuthGroupsStr)) {
+    if (isLocalCloud()) {
+      return true;
+    }
+ else {
+      return (isCloudAdmin(authDetails.getRoles()));
+    }
+  }
   Collection<String> targetAuthGroups=org.cloudifysource.esc.util.StringUtils.splitAndTrimString(targetAuthGroupsStr,AUTH_GROUPS_DELIMITER);
+  Collection<String> userAuthGroups=authDetails.getAuthGroups();
   if (permissionName.equalsIgnoreCase(PERMISSION_TO_VIEW)) {
     if (hasPermissionToView(authDetails,targetAuthGroups)) {
       permissionGranted=true;

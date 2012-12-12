@@ -1,7 +1,7 @@
 {
   CustomMethodSecurityExpressionRoot rootObject=(CustomMethodSecurityExpressionRoot)ctx.getRootObject().getValue();
-  if (logger.isDebugEnabled()) {
-    logger.debug("Filtering with expression: " + filterExpression.getExpressionString());
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Filtering with expression: " + filterExpression.getExpressionString());
   }
   if (filterTarget instanceof Collection || filterTarget.getClass().isArray()) {
     return super.filter(filterTarget,filterExpression,ctx);

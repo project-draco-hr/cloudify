@@ -1,5 +1,6 @@
 {
   Assert.isInstanceOf(UsernamePasswordAuthenticationToken.class,authentication,messages.getMessage("AbstractUserDetailsAuthenticationProvider.onlySupports","Only UsernamePasswordAuthenticationToken is supported"));
+  logger.finest("CustomLdapAuthenticationProvider: authenticate");
   final UsernamePasswordAuthenticationToken userToken=(UsernamePasswordAuthenticationToken)authentication;
   String username=userToken.getName();
   String password=(String)authentication.getCredentials();

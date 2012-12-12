@@ -1,5 +1,6 @@
 {
   super(principal,credentials,authorities);
+  logger.finest("CustomAuthenticationToken : constructor");
   if (authGroups == null) {
     this.authGroups=new ArrayList<String>();
     return;

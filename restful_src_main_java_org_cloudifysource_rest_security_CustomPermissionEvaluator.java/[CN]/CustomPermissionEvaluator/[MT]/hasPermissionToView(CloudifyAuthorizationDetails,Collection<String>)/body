@@ -1,6 +1,3 @@
 {
-  if (requestedAuthGroups.isEmpty()) {
-    return (isCloudAdmin(authDetails.getRoles()));
-  }
   return hasAnyAuthGroup(authDetails,requestedAuthGroups);
 }

@@ -1,8 +1,10 @@
 {
   if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    logger.warning("Anonymous user is not supported");
     throw new AccessDeniedException("Anonymous user is not supported");
   }
   if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
+    logger.warning("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
     throw new AccessDeniedException("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
   }
   username=authentication.getName();

@@ -1,4 +1,5 @@
 {
+  logger.finest("CustomLdapAuthenticationProvider : constructor");
   this.setAuthenticator(authenticator);
   this.setAuthoritiesPopulator(authoritiesPopulator);
   this.setAuthGroupsPopulator(authGroupsPopulator);

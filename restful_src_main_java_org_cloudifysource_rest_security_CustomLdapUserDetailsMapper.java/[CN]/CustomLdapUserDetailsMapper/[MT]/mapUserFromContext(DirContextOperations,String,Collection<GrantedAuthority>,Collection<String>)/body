@@ -1,6 +1,7 @@
 {
   String dn=ctx.getNameInNamespace();
-  logger.debug("Mapping user details from context with DN: " + dn);
+  logger.finest("CustomLdapUserDetailsMapper: mapUserFromContext");
+  logger.fine("Mapping user details from context with DN: " + dn);
   ExtendedLdapUserDetailsImpl.ExtendedEssence essence=new ExtendedLdapUserDetailsImpl.ExtendedEssence();
   essence.setDn(dn);
   Object passwordValue=ctx.getObjectAttribute(passwordAttributeName);
@@ -11,7 +12,7 @@
   for (int i=0; (roleAttributes != null) && (i < roleAttributes.length); i++) {
     String[] rolesForAttribute=ctx.getStringAttributes(roleAttributes[i]);
     if (rolesForAttribute == null) {
-      logger.debug("Couldn't read role attribute '" + roleAttributes[i] + "' for user "+ dn);
+      logger.fine("Couldn't read role attribute '" + roleAttributes[i] + "' for user "+ dn);
       continue;
     }
     for (int j=0; j < rolesForAttribute.length; j++) {

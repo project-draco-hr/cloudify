@@ -1,4 +1,5 @@
 {
+  logger.finest("CustomLdapAuthenticationProvider : createSuccessfulAuthentication");
   Object password=useAuthenticationRequestCredentials ? authentication.getCredentials() : user.getPassword();
   CustomAuthenticationToken customAuthToken=new CustomAuthenticationToken(user,password,user.getAuthorities(),user.getAuthGroups());
   customAuthToken.setDetails(authentication.getDetails());

@@ -1,4 +1,4 @@
 {
-  logger.warn("Denying user " + authentication.getName() + " permission '"+ permission+ "' on object with Id '"+ targetId);
+  logger.fine("Denying user " + authentication.getName() + " permission '"+ permission+ "' on object with Id '"+ targetId);
   return false;
 }
