@@ -8,7 +8,6 @@
  catch (    ClientHandlerException e) {
       logger.warning("Caught an exception while executing GET with url " + url + ". Message :"+ e.getMessage());
       logger.warning("retrying request");
-      continue;
     }
   }
   if (response == null) {

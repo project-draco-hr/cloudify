@@ -1,6 +1,3 @@
 {
-  if (vmStatus.equals("FailedStartingRole") || vmStatus.equals("FailedStartingVM") || vmStatus.equals("UnresponsiveRole")|| vmStatus.equals("CyclingRole")) {
-    return true;
-  }
-  return false;
+  return (vmStatus.equals("FailedStartingRole") || vmStatus.equals("FailedStartingVM") || vmStatus.equals("UnresponsiveRole")|| vmStatus.equals("CyclingRole"));
 }
