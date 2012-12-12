@@ -6,7 +6,7 @@
       for (      final Method method : methods) {
         if (method.getName().startsWith("set") && (method.getParameterTypes().length == 1) && (method.getParameterTypes()[0].equals(obj.getClass()))) {
           try {
-            method.invoke(this.activeObject,new Object[]{obj});
+            method.invoke(this.activeObject,obj);
           }
  catch (          final Exception e) {
             logger.log(Level.SEVERE,"Failed to set " + name,e);

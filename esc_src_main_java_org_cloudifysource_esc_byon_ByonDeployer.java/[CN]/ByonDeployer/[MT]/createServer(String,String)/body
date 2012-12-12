@@ -55,6 +55,6 @@
   if (node == null) {
     throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
   }
-  ((CustomNodeImpl)node).setNodeName(serverName);
+  node.setNodeName(serverName);
   return node;
 }
