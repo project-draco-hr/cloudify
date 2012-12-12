@@ -81,5 +81,5 @@
       continuous=true;
     }
   }
-  return this.getFormattedMessage("application_installed_succesfully",Color.GREEN,applicationName);
+  return this.getFormattedMessage("application_installed_successfully",Color.GREEN,applicationName);
 }

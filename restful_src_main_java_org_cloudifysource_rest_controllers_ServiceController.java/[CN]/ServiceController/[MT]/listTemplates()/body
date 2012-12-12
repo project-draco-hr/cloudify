@@ -1,6 +1,6 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","list-templates");
+    throw new RestErrorException("local_cloud_not_support_templates_operations","list-templates");
   }
   return successStatus(cloud.getTemplates());
 }

@@ -1,6 +1,6 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","remove-template");
+    throw new RestErrorException("local_cloud_not_support_templates_operations","remove-template");
   }
   logger.log(Level.INFO,"[removeTemplate] - removing template " + templateName);
   final List<String> templateServices=getTemplateServices(templateName);

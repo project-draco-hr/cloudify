@@ -1,6 +1,6 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","add-templates");
+    throw new RestErrorException("local_cloud_not_support_templates_operations","add-templates");
   }
   logger.log(Level.INFO,"[addTemplates] - starting add templates.");
   File loaclTemplatesZipFile=null;

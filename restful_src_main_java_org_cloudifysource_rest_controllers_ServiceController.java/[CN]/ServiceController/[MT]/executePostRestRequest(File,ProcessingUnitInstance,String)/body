@@ -6,15 +6,12 @@
   final MultipartEntity reqEntity=new MultipartEntity();
   reqEntity.addPart(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,new FileBody(templatesFolder));
   postMethod.setEntity(reqEntity);
-  Object response=null;
-  Map<String,Object> responseMap;
   DefaultHttpClient httpClient=new DefaultHttpClient();
+  Object response=RestUtils.executeHttpMethod(postMethod,httpClient);
   try {
-    response=RestUtils.executeHttpMethod(postMethod,httpClient);
-    responseMap=(Map<String,Object>)response;
+    return (Map<String,Object>)response;
   }
  catch (  ClassCastException e) {
-    throw new RestErrorException("The response from host address " + host + " is not a map as expected. "+ "response: "+ response.toString()+ ".");
+    throw new RestErrorException("The response from host address " + host + " is not a map as expected. "+ "response: "+ response.toString()+ '.');
   }
-  return responseMap;
 }

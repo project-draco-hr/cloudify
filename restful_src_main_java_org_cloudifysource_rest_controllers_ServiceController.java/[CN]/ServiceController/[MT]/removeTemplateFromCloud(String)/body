@@ -3,7 +3,7 @@
   deleteTemplateFile(templateName);
   Map<String,CloudTemplate> cloudTemplates=cloud.getTemplates();
   if (!cloudTemplates.containsKey(templateName)) {
-    throw new RestErrorException("tamplate_not_exist",templateName);
+    throw new RestErrorException("template_not_exist",templateName);
   }
   cloudTemplates.remove(templateName);
 }
