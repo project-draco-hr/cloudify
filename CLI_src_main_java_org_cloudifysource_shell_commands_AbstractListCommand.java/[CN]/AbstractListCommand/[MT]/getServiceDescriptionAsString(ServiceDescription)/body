@@ -1,7 +1,6 @@
 {
   StringBuilder sb=new StringBuilder();
   String absolutePUName=ServiceUtils.getAbsolutePUName(serviceDescription.getApplicationName(),serviceDescription.getServiceName());
-  sb.append(ShellUtils.getBoldMessage(absolutePUName) + "  " + serviceDescription.getServiceState());
-  sb.append(" (" + serviceDescription.getInstanceCount() + "/"+ serviceDescription.getPlannedInstances()+ ")");
+  sb.append(ShellUtils.getBoldMessage(absolutePUName)).append("  ").append(serviceDescription.getServiceState()).append(" (").append(serviceDescription.getInstanceCount()).append('/').append(serviceDescription.getPlannedInstances()).append(')');
   return sb.toString();
 }
