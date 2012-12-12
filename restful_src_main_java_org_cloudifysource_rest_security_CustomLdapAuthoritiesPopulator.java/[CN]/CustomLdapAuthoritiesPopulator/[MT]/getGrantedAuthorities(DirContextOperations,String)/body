@@ -7,14 +7,16 @@
   if (logger.isDebugEnabled()) {
     logger.debug("Setting roles for user '" + username + "', DN = "+ "'"+ userDn+ " using attributes: "+ Arrays.toString(roleAttributes));
   }
-  for (int i=0; i < roleAttributes.length; i++) {
-    String[] rolesFromAttribute=user.getStringAttributes(roleAttributes[i]);
+  for (  String roleAttribute : roleAttributes) {
+    String[] rolesFromAttribute=user.getStringAttributes(roleAttribute);
     if (rolesFromAttribute == null) {
-      logger.debug("Couldn't read role attribute '" + roleAttributes[i] + "' for user "+ userDn);
+      if (logger.isDebugEnabled()) {
+        logger.debug("Couldn't read role attribute '" + roleAttribute + "' for user "+ userDn);
+      }
       continue;
     }
-    for (int j=0; j < rolesFromAttribute.length; j++) {
-      GrantedAuthority authority=new GrantedAuthorityImpl(rolesFromAttribute[j]);
+    for (    String roleFromAttribute : rolesFromAttribute) {
+      GrantedAuthority authority=new GrantedAuthorityImpl(roleFromAttribute);
       authorities.add(authority);
     }
   }
