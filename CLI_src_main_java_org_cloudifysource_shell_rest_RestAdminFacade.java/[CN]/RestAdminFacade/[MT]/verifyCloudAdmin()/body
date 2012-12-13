@@ -1,0 +1,8 @@
+{
+  try {
+    client.get(SERVICE_CONTROLLER_URL + "verifyCloudAdmin");
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+}

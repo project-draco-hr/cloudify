@@ -2,6 +2,12 @@
   if (!confirmTeardown()) {
     return getFormattedMessage("teardown_aborted");
   }
+  if (this.adminFacade != null) {
+    adminFacade.verifyCloudAdmin();
+  }
+ else {
+    ((AdminFacade)session.get(Constants.ADMIN_FACADE)).verifyCloudAdmin();
+  }
   CloudGridAgentBootstrapper installer=new CloudGridAgentBootstrapper();
   String pathSeparator=System.getProperty("file.separator");
   File providerDirectory=new File(ShellUtils.getCliDirectory(),"plugins" + pathSeparator + "esc"+ pathSeparator+ cloudProvider);
