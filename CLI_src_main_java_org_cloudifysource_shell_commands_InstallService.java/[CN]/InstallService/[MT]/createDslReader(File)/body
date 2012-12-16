@@ -1,9 +1,0 @@
-{
-  final DSLReader dslReader=new DSLReader();
-  dslReader.setDslFile(recipeFile);
-  dslReader.setWorkDir(recipeFile.getParentFile());
-  dslReader.setRunningInGSC(true);
-  dslReader.setOverridesFile(overrides);
-  dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
-  return dslReader;
-}

@@ -25,26 +25,18 @@
   }
   Service service=null;
   File projectDir=null;
+  File editSrcFile=srcFile;
   if (srcFile.getName().endsWith(".zip")) {
     projectDir=ServiceReader.extractProjectFile(srcFile);
     final File workingProjectDir=new File(projectDir,"ext");
     final String serviceFileName=propsFile.getProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME);
-    File serviceFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,workingProjectDir);
-    final String propertiesFileName=serviceFile.getName().split(".")[0] + DSLUtils.PROPERTIES_FILE_SUFFIX;
+    final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
     final File propertiesFile=new File(workingProjectDir,propertiesFileName);
-    if (propertiesFile.exists() || overridesFile != null) {
-      File finalPropsFile=File.createTempFile("finalPropsFile",".properties");
-      FileAppender appender=new FileAppender(finalPropsFile);
-      if (propertiesFile.exists()) {
-        appender.append("service proeprties file",propertiesFile);
-      }
-      if (overridesFile != null) {
-        appender.append("service overrides file",overridesFile);
-      }
-      appender.flush();
-      FileUtils.copyFile(finalPropsFile,propertiesFile);
-      finalPropsFile.delete();
-    }
+    FileAppender appender=new FileAppender("serviceFinalPropertiesFile.properties");
+    Map<File,String> filesToAppend=new HashMap<File,String>();
+    filesToAppend.put(propertiesFile,"service proeprties file");
+    filesToAppend.put(overridesFile,"service overrides file");
+    appender.appendAll(propertiesFile,filesToAppend);
     DSLServiceCompilationResult result;
     if (serviceFileName != null) {
       result=ServiceReader.getServiceFromFile(new File(workingProjectDir,serviceFileName),workingProjectDir);
@@ -53,6 +45,7 @@
       result=ServiceReader.getServiceFromDirectory(workingProjectDir);
     }
     service=result.getService();
+    editSrcFile=Packager.createZipFile("temp",projectDir);
   }
   validateTemplate(templateName);
   String[] agentZones;
@@ -63,13 +56,13 @@
     agentZones=new String[]{zone};
   }
   if (service == null) {
-    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,srcFile,propsFile,selfHealing,cloudOverrides);
+    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,editSrcFile,propsFile,selfHealing,cloudOverrides);
   }
  else   if (service.getLifecycle() != null) {
-    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,srcFile,propsFile,service,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
+    doDeploy(applicationName,serviceName,effectiveAuthGroups,templateName,agentZones,editSrcFile,propsFile,service,serviceCloudConfigurationContents,selfHealing,cloudOverrides);
   }
  else   if (service.getDataGrid() != null) {
-    deployDataGrid(applicationName,serviceName,effectiveAuthGroups,agentZones,srcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAware(),cloudOverrides);
+    deployDataGrid(applicationName,serviceName,effectiveAuthGroups,agentZones,editSrcFile,propsFile,service.getDataGrid(),templateName,service.isLocationAware(),cloudOverrides);
   }
  else   if (service.getStatelessProcessingUnit() != null) {
     deployStatelessProcessingUnitAndWait(applicationName,serviceName,effectiveAuthGroups,agentZones,new File(projectDir,"ext"),propsFile,service.getStatelessProcessingUnit(),templateName,service.getNumInstances(),service.isLocationAware(),cloudOverrides);

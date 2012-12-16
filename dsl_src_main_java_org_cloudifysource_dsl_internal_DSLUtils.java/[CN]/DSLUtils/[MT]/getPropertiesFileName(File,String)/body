@@ -1,0 +1,11 @@
+{
+  File dslFile=DSLReader.findDefaultDSLFile(fileNameSuffix,dslDirectory);
+  if (dslFile == null) {
+    throw new IllegalArgumentException("DslUtils.getPropertiesFileName - a file with the given suffix [" + fileNameSuffix + "] doesn't exist in "+ dslDirectory+ ".");
+  }
+  final String[] split=dslFile.getName().split("\\.");
+  if (split.length == 0) {
+    throw new IllegalArgumentException("DslUtils.getPropertiesFileName - file name [" + dslFile.getName() + "] doesn't contain '.'");
+  }
+  return split[0] + PROPERTIES_FILE_SUFFIX;
+}

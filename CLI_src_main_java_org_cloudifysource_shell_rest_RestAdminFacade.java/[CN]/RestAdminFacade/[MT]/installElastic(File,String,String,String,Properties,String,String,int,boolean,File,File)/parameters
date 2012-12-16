@@ -8,3 +8,4 @@ String authGroups
 int timeout
 boolean selfHealing
 File cloudOverrides
+File serviceOverrides

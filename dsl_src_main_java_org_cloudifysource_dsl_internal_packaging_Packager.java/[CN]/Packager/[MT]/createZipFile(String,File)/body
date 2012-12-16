@@ -1,5 +1,9 @@
 {
-  final File zipFile=File.createTempFile(zipFileName,".zip");
+  String shortName=zipFileName;
+  if (zipFileName.endsWith(".zip")) {
+    shortName=zipFileName.split("//.zip")[0];
+  }
+  final File zipFile=File.createTempFile(shortName,".zip");
   zipFile.deleteOnExit();
   ZipUtils.zip(packedDir,zipFile);
   logger.finer("zipped folder successfully to " + zipFile.getAbsolutePath());

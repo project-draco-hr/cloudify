@@ -15,30 +15,19 @@
     }
     boolean found=false;
     try {
+      FileAppender appender=new FileAppender("finalPropsFile.properties");
+      Map<File,String> filesToAppend=new HashMap<File,String>();
       File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
-      File serviceFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,serviceDirectory);
-      final String serviceNameByServiceFile=serviceFile.getName().split("-")[0];
-      File finalPropsFile=File.createTempFile("finalPropsFile",".properties");
-      FileAppender appender=new FileAppender(finalPropsFile);
-      if (applicationPropertiesFile != null && applicationPropertiesFile.exists()) {
-        appender.append("Application Properties File",applicationPropertiesFile);
-      }
-      String propertiesFileName=serviceNameByServiceFile + "-service" + DSLUtils.PROPERTIES_FILE_SUFFIX;
+      filesToAppend.put(applicationPropertiesFile,"Application Properties File");
+      String propertiesFileName=DSLUtils.getPropertiesFileName(serviceDirectory,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
       File servicePropertiesFile=new File(serviceDirectory,propertiesFileName);
-      if (servicePropertiesFile.exists()) {
-        appender.append("Service Properties File",servicePropertiesFile);
-        servicePropertiesFile.delete();
-      }
+      filesToAppend.put(servicePropertiesFile,"Service Properties File");
       File actualOverridesFile=overridesFile;
       if (actualOverridesFile == null) {
         actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
       }
-      if (actualOverridesFile != null && actualOverridesFile.exists()) {
-        appender.append("Overrides properties file",actualOverridesFile);
-      }
-      appender.flush();
-      FileUtils.copyFile(finalPropsFile,new File(serviceDirectory,propertiesFileName));
-      finalPropsFile.delete();
+      filesToAppend.put(actualOverridesFile,"Overrides Properties File");
+      appender.appendAll(servicePropertiesFile,filesToAppend);
       File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
