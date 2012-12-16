@@ -16,7 +16,7 @@
     boolean found=false;
     try {
       FileAppender appender=new FileAppender("finalPropsFile.properties");
-      Map<File,String> filesToAppend=new HashMap<File,String>();
+      LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
       File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
       filesToAppend.put(applicationPropertiesFile,"Application Properties File");
       String propertiesFileName=DSLUtils.getPropertiesFileName(serviceDirectory,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);

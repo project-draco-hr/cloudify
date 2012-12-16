@@ -3,4 +3,5 @@ String applicationName
 String authGroups
 int timeout
 boolean selfHealing
+File applicationOverrides
 File cloudOverrides

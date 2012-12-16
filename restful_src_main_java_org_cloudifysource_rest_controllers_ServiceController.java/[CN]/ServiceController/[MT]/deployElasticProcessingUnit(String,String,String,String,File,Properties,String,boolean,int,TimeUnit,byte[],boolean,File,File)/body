@@ -29,14 +29,17 @@
   if (srcFile.getName().endsWith(".zip")) {
     projectDir=ServiceReader.extractProjectFile(srcFile);
     final File workingProjectDir=new File(projectDir,"ext");
+    if (overridesFile != null) {
+      final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+      final File propertiesFile=new File(workingProjectDir,propertiesFileName);
+      FileAppender appender=new FileAppender("serviceFinalPropertiesFile.properties");
+      LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
+      filesToAppend.put(propertiesFile,"service proeprties file");
+      filesToAppend.put(overridesFile,"service overrides file");
+      appender.appendAll(propertiesFile,filesToAppend);
+      editSrcFile=Packager.createZipFile("temp",projectDir);
+    }
     final String serviceFileName=propsFile.getProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME);
-    final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
-    final File propertiesFile=new File(workingProjectDir,propertiesFileName);
-    FileAppender appender=new FileAppender("serviceFinalPropertiesFile.properties");
-    Map<File,String> filesToAppend=new HashMap<File,String>();
-    filesToAppend.put(propertiesFile,"service proeprties file");
-    filesToAppend.put(overridesFile,"service overrides file");
-    appender.appendAll(propertiesFile,filesToAppend);
     DSLServiceCompilationResult result;
     if (serviceFileName != null) {
       result=ServiceReader.getServiceFromFile(new File(workingProjectDir,serviceFileName),workingProjectDir);
@@ -45,7 +48,6 @@
       result=ServiceReader.getServiceFromDirectory(workingProjectDir);
     }
     service=result.getService();
-    editSrcFile=Packager.createZipFile("temp",projectDir);
   }
   validateTemplate(templateName);
   String[] agentZones;
