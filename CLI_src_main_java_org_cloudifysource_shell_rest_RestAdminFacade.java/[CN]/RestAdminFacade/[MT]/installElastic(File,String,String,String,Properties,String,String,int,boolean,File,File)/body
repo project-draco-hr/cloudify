@@ -1,0 +1,25 @@
+{
+  String response;
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/services/"+ serviceName+ "/timeout/"+ timeout+ "?zone="+ zone+ "&template="+ templateName+ "&selfHealing="+ Boolean.toString(selfHealing);
+  try {
+    Map<String,File> additionalFiles=new HashMap<String,File>();
+    additionalFiles.put("file",packedFile);
+    additionalFiles.put("cloudOverridesFile",cloudOverrides);
+    additionalFiles.put(CloudifyConstants.SERVICE_OVERRIDES_FILE_PARAM,serviceOverrides);
+    if (org.apache.commons.lang.StringUtils.isBlank(authGroups)) {
+      response=(String)client.postFiles(url,contextProperties,null,additionalFiles);
+    }
+ else {
+      Map<String,String> paramsMap=new HashMap<String,String>();
+      paramsMap.put("authGroups",authGroups);
+      response=(String)client.postFiles(url,contextProperties,paramsMap,additionalFiles);
+    }
+  }
+ catch (  final ErrorStatusException e) {
+    throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+  }
+catch (  final RestException e) {
+    throw new CLIException(e);
+  }
+  return response;
+}

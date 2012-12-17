@@ -1,3 +1,5 @@
 {
-  return postFile(relativeUrl,file,props,null,params);
+  Map<String,File> additionalFiles=new HashMap<String,File>();
+  additionalFiles.put("file",file);
+  return postFiles(relativeUrl,props,params,additionalFiles);
 }

@@ -1,4 +1,0 @@
-String relativeUrl
-File file
-File cloudOverrides
-Map<String,String> params

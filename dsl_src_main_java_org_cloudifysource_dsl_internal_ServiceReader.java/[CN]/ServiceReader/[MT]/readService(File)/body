@@ -3,7 +3,7 @@
     return getServiceFromFile(dslFileOrDir);
   }
  else   if (dslFileOrDir.isDirectory()) {
-    return ServiceReader.getServiceFromFile(null,dslFileOrDir,null,null,null,true).getService();
+    return getServiceFromFile(null,dslFileOrDir,null,null,null,true,null).getService();
   }
  else {
     throw new IllegalArgumentException(dslFileOrDir + " is neither a file nor a directory");

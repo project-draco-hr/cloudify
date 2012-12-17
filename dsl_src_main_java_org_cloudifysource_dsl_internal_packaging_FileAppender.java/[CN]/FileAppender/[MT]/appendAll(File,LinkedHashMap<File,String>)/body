@@ -1,0 +1,11 @@
+{
+  for (  Entry<File,String> fileEntry : filesToAppend.entrySet()) {
+    final File file=fileEntry.getKey();
+    if (file != null && file.exists()) {
+      append(fileEntry.getValue(),file);
+    }
+  }
+  flush();
+  FileUtils.copyFile(finalFile,dest);
+  finalFile.delete();
+}
