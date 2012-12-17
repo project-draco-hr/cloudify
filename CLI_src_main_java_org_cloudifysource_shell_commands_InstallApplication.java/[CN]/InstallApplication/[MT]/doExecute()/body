@@ -35,8 +35,7 @@
     if (cloudConfigurationZipFile != null) {
       additionalServiceFiles.add(cloudConfigurationZipFile);
     }
-    List<File> additionalApplicationFile=new LinkedList<File>();
-    zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
+    zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
   final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,overrides,cloudOverrides);
