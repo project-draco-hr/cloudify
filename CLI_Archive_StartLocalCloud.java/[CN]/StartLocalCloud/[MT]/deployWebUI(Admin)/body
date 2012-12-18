@@ -1,5 +1,5 @@
 {
-  final String webUIFileName="tools" + File.separator + "gs-webui"+ File.separator+ "gs-webui.war";
+  final String webUIFileName="tools" + File.separator + "gs-webui"+ File.separator+ "gs-webui-9.5.0-SNAPSHOT.war";
   File webUIFile=getGSFile(webUIFileName);
   this.adminFacade.installElastic(webUIFile,"management","web-ui","web-ui",null);
   ProcessingUnit pu=admin.getProcessingUnits().waitFor("web-ui",10,TimeUnit.SECONDS);
