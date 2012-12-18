@@ -31,7 +31,7 @@
       machineStoppedEvent.setHostAddress(machineIp);
       machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
       while (agent.isDiscovered()) {
-        Thread.sleep(DEFAULT_AGENT_DISCOVEREY_INTERVAL);
+        Thread.sleep(DEFAULT_AGENT_DISCOVERY_INTERVAL);
         if (System.currentTimeMillis() > endTime && agent.isDiscovered()) {
           if (failedToShutdownAgentException != null) {
             throw new ElasticGridServiceAgentProvisioningException("Machine is stopped but agent [" + agent.getUid() + "] is still discovered."+ "Failed to shutdown agent:"+ failedToShutdownAgentException.getMessage(),failedToShutdownAgentException);

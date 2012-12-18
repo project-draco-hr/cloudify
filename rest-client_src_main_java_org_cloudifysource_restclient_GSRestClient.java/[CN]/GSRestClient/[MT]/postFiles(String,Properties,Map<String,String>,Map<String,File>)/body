@@ -1,0 +1,32 @@
+{
+  final MultipartEntity reqEntity=new MultipartEntity();
+  File tempFile;
+  try {
+    tempFile=writeMapToFile(props);
+  }
+ catch (  final IOException e) {
+    throw new RestException(e);
+  }
+  final FileBody propsFile=new FileBody(tempFile);
+  reqEntity.addPart("props",propsFile);
+  if (params != null) {
+    try {
+      for (      Map.Entry<String,String> param : params.entrySet()) {
+        reqEntity.addPart(param.getKey(),new StringBody(param.getValue(),Charset.forName("UTF-8")));
+      }
+    }
+ catch (    final IOException e) {
+      throw new RestException(e);
+    }
+  }
+  for (  Entry<String,File> entry : additionalFiles.entrySet()) {
+    final File file=entry.getValue();
+    if (file != null) {
+      final FileBody bin=new FileBody(file);
+      reqEntity.addPart(entry.getKey(),bin);
+    }
+  }
+  final HttpPost httppost=new HttpPost(getFullUrl(relativeUrl));
+  httppost.setEntity(reqEntity);
+  return executeHttpMethod(httppost);
+}

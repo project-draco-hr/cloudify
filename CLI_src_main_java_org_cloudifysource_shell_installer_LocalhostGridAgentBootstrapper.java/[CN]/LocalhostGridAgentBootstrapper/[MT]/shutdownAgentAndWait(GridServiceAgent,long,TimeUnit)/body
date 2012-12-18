@@ -19,7 +19,7 @@
       if (!messagePublished) {
         final String shuttingDownAgentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_agent_teardown_localcloud");
         publishEvent(shuttingDownAgentMessage);
-        final String shuttingDownManagmentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_managment");
+        final String shuttingDownManagmentMessage=ShellUtils.getMessageBundle().getString("shutting_down_cloudify_management");
         publishEvent(shuttingDownManagmentMessage);
         messagePublished=true;
       }

@@ -1,9 +1,7 @@
 {
   HandlerExecutionChain chain=null;
   final Map<String,HandlerMapping> map=applicationContext.getBeansOfType(HandlerMapping.class);
-  final Iterator<HandlerMapping> itt=map.values().iterator();
-  while (itt.hasNext()) {
-    final HandlerMapping mapping=itt.next();
+  for (  HandlerMapping mapping : map.values()) {
     chain=mapping.getHandler(request);
     if (chain != null) {
       break;

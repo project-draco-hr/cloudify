@@ -13,7 +13,7 @@
     throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
   }
   CustomNode node=null;
-  if (freeNodesPool.size() > 0) {
+  if (!freeNodesPool.isEmpty()) {
     node=freeNodesPool.iterator().next();
     if (!allocatedNodesPool.contains(node)) {
       try {
@@ -36,30 +36,25 @@
     }
   }
  else {
-    if (invalidNodesPool.size() > 0) {
-      CustomNode currentNode=null;
-      final Iterator<CustomNode> nodesIterator=invalidNodesPool.iterator();
-      while (nodesIterator.hasNext()) {
-        currentNode=nodesIterator.next();
-        try {
-          String resolvedIP=IPUtils.resolveHostName(currentNode.getPrivateIP());
-          currentNode.setResolvedIP(resolvedIP);
-          IPUtils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
-          if (!allocatedNodesPool.contains(currentNode)) {
-            allocatedNodesPool.add(currentNode);
-          }
-          invalidNodesPool.remove(currentNode);
-          node=currentNode;
-          break;
+    for (    CustomNode currentNode : invalidNodesPool) {
+      try {
+        String resolvedIP=IPUtils.resolveHostName(currentNode.getPrivateIP());
+        currentNode.setResolvedIP(resolvedIP);
+        IPUtils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
+        if (!allocatedNodesPool.contains(currentNode)) {
+          allocatedNodesPool.add(currentNode);
         }
- catch (        final Exception ex) {
-        }
+        invalidNodesPool.remove(currentNode);
+        node=currentNode;
+        break;
+      }
+ catch (      final Exception ex) {
       }
     }
   }
   if (node == null) {
     throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
   }
-  ((CustomNodeImpl)node).setNodeName(serverName);
+  node.setNodeName(serverName);
   return node;
 }

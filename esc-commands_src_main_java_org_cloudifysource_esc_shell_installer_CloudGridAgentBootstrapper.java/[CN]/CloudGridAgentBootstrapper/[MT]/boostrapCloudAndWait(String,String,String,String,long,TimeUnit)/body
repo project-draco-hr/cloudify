@@ -6,7 +6,7 @@
     servers=provisioning.startManagementMachines(timeout,timeoutUnit);
   }
  catch (  final CloudProvisioningException e) {
-    throw new InstallerException("Failed to start managememnt servers. Reason: " + e.getMessage(),e);
+    throw new InstallerException("Failed to start management servers. Reason: " + e.getMessage(),e);
   }
 catch (  final TimeoutException e) {
     throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);

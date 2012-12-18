@@ -1,9 +1,3 @@
 {
-  if (service.getIsolationSLA() == null) {
-    return true;
-  }
-  if (service.getIsolationSLA().getDedicated() != null) {
-    return true;
-  }
-  return false;
+  return (service.getIsolationSLA() == null || service.getIsolationSLA().getDedicated() != null);
 }

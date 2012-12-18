@@ -1,11 +1,11 @@
 {
   if (cloud == null) {
-    throw new RestErrorException("local_cloud_not_support_tempaltes_operations","get-template");
+    throw new RestErrorException("local_cloud_not_support_templates_operations","get-template");
   }
   CloudTemplate cloudTemplate=cloud.getTemplates().get(templateName);
   if (cloudTemplate == null) {
     logger.log(Level.WARNING,"[getTemplate] - tempalte [" + templateName + "] not found. cloud tempaltes list: "+ cloud.getTemplates());
-    throw new RestErrorException("tamplate_not_exist",templateName);
+    throw new RestErrorException("template_not_exist",templateName);
   }
   return successStatus(cloudTemplate);
 }

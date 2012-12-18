@@ -35,14 +35,10 @@
     if (cloudConfigurationZipFile != null) {
       additionalServiceFiles.add(cloudConfigurationZipFile);
     }
-    List<File> additionalApplicationFile=new LinkedList<File>();
-    if (overrides != null) {
-      additionalApplicationFile.add(DSLReader.copyOverridesFile(overrides,dslReader.getDslName() + DSLUtils.APPLICATION_FILE_NAME_SUFFIX));
-    }
-    zipFile=Packager.packApplication(application,applicationFile,additionalApplicationFile,additionalServiceFiles);
+    zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,cloudOverrides);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,overrides,cloudOverrides);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     boolean delete=zipFile.delete();
@@ -81,5 +77,5 @@
       continuous=true;
     }
   }
-  return this.getFormattedMessage("application_installed_succesfully",Color.GREEN,applicationName);
+  return this.getFormattedMessage("application_installed_successfully",Color.GREEN,applicationName);
 }

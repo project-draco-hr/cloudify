@@ -10,5 +10,5 @@
   this.adminFacade.waitForLifecycleEvents(pollingID,timeoutInMinutes,TIMEOUT_ERROR_MESSAGE);
   session.put(Constants.ACTIVE_APP,"default");
   GigaShellMain.getInstance().setCurrentApplicationName("default");
-  return getFormattedMessage("application_uninstalled_succesfully",Color.GREEN,this.applicationName);
+  return getFormattedMessage("application_uninstalled_successfully",Color.GREEN,this.applicationName);
 }

@@ -1,11 +1,5 @@
 {
-  boolean objectsExist;
-  if (allMustExist) {
-    objectsExist=true;
-  }
- else {
-    objectsExist=false;
-  }
+  boolean objectsExist=allMustExist;
   if (!(fileTransferMode == FileTransferModes.SCP)) {
     throw new IOException("File resolving is currently not supported for this file transfer protocol (" + fileTransferMode + ")");
   }

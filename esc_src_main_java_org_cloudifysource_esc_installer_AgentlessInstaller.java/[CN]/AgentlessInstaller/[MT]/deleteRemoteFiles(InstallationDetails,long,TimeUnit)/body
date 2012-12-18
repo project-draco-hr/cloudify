@@ -5,8 +5,8 @@
   }
   final long end=System.currentTimeMillis() + unit.toMillis(timeout);
   final FileSystemOptions opts=new FileSystemOptions();
-  FileSystemManager createdManager=null;
-  String target=null;
+  FileSystemManager createdManager;
+  String target;
 switch (details.getFileTransferMode()) {
 case SCP:
     try {

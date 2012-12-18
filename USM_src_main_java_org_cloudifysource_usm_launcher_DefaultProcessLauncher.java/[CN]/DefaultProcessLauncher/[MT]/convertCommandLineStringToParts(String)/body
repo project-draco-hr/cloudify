@@ -1,8 +1,6 @@
 {
   final List<String> list=new LinkedList<String>();
   final String[] parts=commandLine.split(" ");
-  for (  final String part : parts) {
-    list.add(part);
-  }
+  Collections.addAll(list,parts);
   return list;
 }

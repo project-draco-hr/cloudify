@@ -1,7 +1,4 @@
 {
   StorageServices storageServices=listStorageServices();
-  if (storageServices.contains(storageAccouhtName)) {
-    return true;
-  }
-  return false;
+  return (storageServices.contains(storageAccouhtName));
 }

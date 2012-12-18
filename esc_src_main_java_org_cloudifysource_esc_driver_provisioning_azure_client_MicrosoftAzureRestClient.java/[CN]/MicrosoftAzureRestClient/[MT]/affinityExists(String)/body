@@ -1,7 +1,4 @@
 {
   AffinityGroups affinityGroups=listAffinityGroups();
-  if (affinityGroups.contains(affinityGroupName)) {
-    return true;
-  }
-  return false;
+  return (affinityGroups.contains(affinityGroupName));
 }

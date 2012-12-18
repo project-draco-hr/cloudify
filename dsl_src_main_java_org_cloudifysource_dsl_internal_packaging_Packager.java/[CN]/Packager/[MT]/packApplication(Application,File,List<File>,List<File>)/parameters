@@ -1,4 +1,0 @@
-Application application
-File applicationDir
-List<File> additionalApplicationFiles
-List<File> additionalServiceFiles

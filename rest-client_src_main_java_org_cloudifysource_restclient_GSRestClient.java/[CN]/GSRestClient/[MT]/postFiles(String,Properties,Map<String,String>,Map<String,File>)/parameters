@@ -1,0 +1,4 @@
+String relativeUrl
+Properties props
+Map<String,String> params
+Map<String,File> additionalFiles
