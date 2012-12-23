@@ -12,7 +12,12 @@
       if (!pathname.isFile()) {
         return false;
       }
-      return pathname.getName().startsWith("javac");
+      if (ServiceUtils.isWindows()) {
+        return pathname.getName().equals("javac.exe");
+      }
+ else {
+        return pathname.getName().equals("javac");
+      }
     }
   }
 );
