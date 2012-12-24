@@ -58,7 +58,7 @@
  catch (  CLIStatusException e) {
     String reasonCode=e.getReasonCode();
     if (reasonCode.equals("failed_to_add_templates")) {
-      throw new CLIStatusException(reasonCode,convertArgsToIndentJaon(e.getArgs()));
+      throw new CLIStatusException(reasonCode,convertArgsToIndentJason(e.getArgs()));
     }
  else     if (reasonCode.equals("failed_to_add_all_templates")) {
       if (e.getArgs().length > 0) {

@@ -6,7 +6,10 @@
     fileToPost.put(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,templatesFile);
     response=(List<String>)client.postFiles(url,fileToPost);
   }
- catch (  RestException e) {
+ catch (  ErrorStatusException es) {
+    throw new CLIStatusException(es,es.getReasonCode(),es.getArgs());
+  }
+catch (  RestException e) {
     throw new CLIException(e);
   }
   return response;
