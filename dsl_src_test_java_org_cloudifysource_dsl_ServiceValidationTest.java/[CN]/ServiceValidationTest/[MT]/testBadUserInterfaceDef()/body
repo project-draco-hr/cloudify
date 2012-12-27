@@ -1,0 +1,59 @@
+{
+  Service service=ServiceReader.readService(new File(SERVICE_WITH_VALID_USER_INTERFACE));
+  DSLValidationContext validationContext=new DSLValidationContext();
+  validationContext.setFilePath(SERVICE_WITH_VALID_USER_INTERFACE);
+  try {
+    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+  }
+ catch (  DSLValidationException e) {
+    fail("Validation of a valid User Interface object failed");
+  }
+  validationContext.setFilePath(SERVICE_WITH_INVALID_USER_INTERFACE);
+  UserInterface userInterface=service.getUserInterface();
+  List<Object> firstInvalidMetricList=new ArrayList<Object>();
+  firstInvalidMetricList.add(new Object());
+  userInterface.getMetricGroups().get(0).setMetrics(firstInvalidMetricList);
+  try {
+    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    fail("Validation of User Interface object is expected to fail");
+  }
+ catch (  DSLValidationException e) {
+  }
+  List<Object> secondInvalidMetricList=new ArrayList<Object>();
+  List<Object> invalidMetricListForm=new ArrayList<Object>();
+  invalidMetricListForm.add("metricName");
+  invalidMetricListForm.add("nonUnit instance type object");
+  secondInvalidMetricList.add(invalidMetricListForm);
+  userInterface.getMetricGroups().get(0).setMetrics(secondInvalidMetricList);
+  try {
+    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    fail("Validation of User Interface object is expected to fail");
+  }
+ catch (  DSLValidationException e) {
+  }
+  List<Object> thirdInvalidMetricList=new ArrayList<Object>();
+  invalidMetricListForm=new ArrayList<Object>();
+  invalidMetricListForm.add(new Object());
+  invalidMetricListForm.add(Unit.PERCENTAGE);
+  thirdInvalidMetricList.add(invalidMetricListForm);
+  userInterface.getMetricGroups().get(0).setMetrics(thirdInvalidMetricList);
+  try {
+    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    fail("Validation of User Interface object is expected to fail");
+  }
+ catch (  DSLValidationException e) {
+  }
+  List<Object> fourthInvalidMetricList=new ArrayList<Object>();
+  invalidMetricListForm=new ArrayList<Object>();
+  invalidMetricListForm.add("metricName");
+  invalidMetricListForm.add(Unit.PERCENTAGE);
+  invalidMetricListForm.add("some unrelatedString");
+  fourthInvalidMetricList.add(invalidMetricListForm);
+  userInterface.getMetricGroups().get(0).setMetrics(fourthInvalidMetricList);
+  try {
+    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    fail("Validation of User Interface object is expected to fail");
+  }
+ catch (  DSLValidationException e) {
+  }
+}

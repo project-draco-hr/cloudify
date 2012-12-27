@@ -1,0 +1,12 @@
+{
+  Service widgetlessServiceFile=ServiceReader.readService(new File(SERVICE_WITH_WIDGETS_FILE_PATH));
+  UserInterface convertedUserInterface=getConvertedObject(widgetlessServiceFile);
+  Assert.assertEquals("Expected number of metrics was not met." + " Found " + convertedUserInterface.getMetricGroups().size() + " expecting "+ NUMBER_OF_METRIC_GROUPS_AS_DEFINED_IN_GROOVY,convertedUserInterface.getMetricGroups().size(),NUMBER_OF_METRIC_GROUPS_AS_DEFINED_IN_GROOVY);
+  Assert.assertEquals("Expected number of widget groups was not met. " + " Found " + convertedUserInterface.getWidgetGroups().size() + " expecting "+ NOMBER_OF_NON_DEFAULT_WIDGET_GROUPS,convertedUserInterface.getWidgetGroups().size(),NOMBER_OF_NON_DEFAULT_WIDGET_GROUPS);
+  assertMetricOverrideNotUsed(convertedUserInterface);
+  for (  MetricGroup metricGroup : convertedUserInterface.getMetricGroups()) {
+    for (    Object metric : metricGroup.getMetrics()) {
+      Assert.assertTrue("Not all metrices in the converted UserInterface object are null",metric instanceof String);
+    }
+  }
+}

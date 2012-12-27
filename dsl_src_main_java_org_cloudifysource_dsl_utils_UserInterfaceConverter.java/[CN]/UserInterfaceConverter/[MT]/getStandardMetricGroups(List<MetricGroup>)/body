@@ -1,0 +1,19 @@
+{
+  List<MetricGroup> standardMetricGroups=new ArrayList<MetricGroup>();
+  for (  MetricGroup metricGroup : metricGroups) {
+    MetricGroup standardMetricGroup=new MetricGroup();
+    standardMetricGroup.setName(metricGroup.getName());
+    List<Object> standardMetricsList=new ArrayList<Object>();
+    for (    Object metric : metricGroup.getMetrics()) {
+      if (metric instanceof List<?>) {
+        standardMetricsList.add(((List)metric).get(0).toString());
+      }
+ else {
+        standardMetricsList.add(metric);
+      }
+    }
+    standardMetricGroup.setMetrics(standardMetricsList);
+    standardMetricGroups.add(standardMetricGroup);
+  }
+  return standardMetricGroups;
+}

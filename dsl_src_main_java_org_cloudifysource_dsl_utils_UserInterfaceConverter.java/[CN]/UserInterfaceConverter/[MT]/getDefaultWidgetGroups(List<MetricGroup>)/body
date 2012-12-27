@@ -1,0 +1,32 @@
+{
+  List<WidgetGroup> widgetGroups=new ArrayList<WidgetGroup>();
+  for (  MetricGroup metricGroup : metricGroups) {
+    for (    Object metric : metricGroup.getMetrics()) {
+      WidgetGroup widgetGroup=new WidgetGroup();
+      List<Widget> widgets=new ArrayList<Widget>();
+      String metricName;
+      Unit axisYUnit;
+      if (metric instanceof List<?>) {
+        List<Object> metricDef=(List<Object>)metric;
+        metricName=metricDef.get(0).toString();
+        axisYUnit=(Unit)metricDef.get(1);
+      }
+ else {
+        metricName=metric.toString();
+        axisYUnit=DEFAULT_AXIS_Y_UNIT;
+      }
+      BarLineChart chart=new BarLineChart();
+      chart.setAxisYUnit(axisYUnit);
+      chart.setMetric(metricName);
+      widgets.add(chart);
+      BalanceGauge gauge=new BalanceGauge();
+      gauge.setMetric(metricName);
+      widgets.add(gauge);
+      widgetGroup.setWidgets(widgets);
+      widgetGroup.setName(metricName + DEFAULT_WIDGET_GROUP_NAME);
+      widgetGroup.setTtile(metricName + DEFAULT_WIDGET_TITLE_NAME);
+      widgetGroups.add(widgetGroup);
+    }
+  }
+  return widgetGroups;
+}

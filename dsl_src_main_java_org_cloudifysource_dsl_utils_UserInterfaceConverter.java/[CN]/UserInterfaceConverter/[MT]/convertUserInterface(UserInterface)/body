@@ -1,0 +1,15 @@
+{
+  UserInterface userInterfaceObject=new UserInterface();
+  List<MetricGroup> metricGroups=userInterface.getMetricGroups();
+  List<WidgetGroup> widgetGroups=userInterface.getWidgetGroups();
+  if (metricGroups != null) {
+    if (widgetGroups == null) {
+      userInterfaceObject.setWidgetGroups(getDefaultWidgetGroups(metricGroups));
+    }
+ else {
+      userInterfaceObject.setWidgetGroups(widgetGroups);
+    }
+    userInterfaceObject.setMetricGroups(getStandardMetricGroups(metricGroups));
+  }
+  return userInterfaceObject;
+}

@@ -6,5 +6,7 @@
     return null;
   }
   final UserInterface ui=this.service.getUserInterface();
-  return new UIDetails(ui);
+  UserInterfaceConverter converter=new UserInterfaceConverter();
+  UserInterface convertUserInterface=converter.convertUserInterface(ui);
+  return new UIDetails(convertUserInterface);
 }

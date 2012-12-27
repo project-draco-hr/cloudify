@@ -1,0 +1,6 @@
+{
+  UserInterface ui=wigetlessServiceFile.getUserInterface();
+  UserInterfaceConverter converter=new UserInterfaceConverter();
+  UserInterface convertedUserInterface=converter.convertUserInterface(ui);
+  return convertedUserInterface;
+}
