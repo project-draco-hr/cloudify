@@ -1,0 +1,16 @@
+{
+  final CustomNodeImpl customNode=new CustomNodeImpl(PROVIDER_ID,serverName,ip,template.getUsername(),template.getPassword(),serverName);
+  try {
+    String resolvedIP=IPUtils.resolveHostName(customNode.getPrivateIP());
+    customNode.setResolvedIP(resolvedIP);
+    if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
+      customNode.setLoginPort(RemoteExecutionModes.WINRM.getPort());
+    }
+    IPUtils.validateConnection(customNode.getResolvedIP(),customNode.getLoginPort());
+  }
+ catch (  Exception e) {
+    logger.log(Level.INFO,"Failed to create server on " + customNode.getPrivateIP() + ", connection failed on port "+ customNode.getLoginPort(),e);
+    throw new CloudProvisioningException(e);
+  }
+  return createMachineDetails(customNode,template);
+}

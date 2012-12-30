@@ -1,0 +1,3 @@
+String serverName
+long endTime
+CloudTemplate template

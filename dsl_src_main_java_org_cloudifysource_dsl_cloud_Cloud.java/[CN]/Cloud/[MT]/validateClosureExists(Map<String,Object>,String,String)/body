@@ -1,0 +1,6 @@
+{
+  Object closure=customMap.get(key);
+  if (closure == null) {
+    throw new DSLValidationException("The " + key + " closure is missing in tempalte "+ tempalteName+ ".");
+  }
+}

@@ -1,0 +1,12 @@
+{
+  String ip;
+synchronized (mutex) {
+    ip=managementMachines.removeFirst();
+  }
+  MachineDetails machine=createMachine(serverName,template,ip);
+  if (System.currentTimeMillis() > endTime) {
+    throw new TimeoutException();
+  }
+  logger.info("Successfully started machine [" + ip + "]");
+  return machine;
+}

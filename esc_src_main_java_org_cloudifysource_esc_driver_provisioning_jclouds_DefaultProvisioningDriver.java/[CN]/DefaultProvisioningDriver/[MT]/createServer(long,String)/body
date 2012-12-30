@@ -1,3 +1,0 @@
-{
-  return createServer(end,groupName,null);
-}

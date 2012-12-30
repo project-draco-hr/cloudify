@@ -1,0 +1,21 @@
+{
+  publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
+  final CloudTemplate managementTemplate=this.cloud.getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
+  Map<String,Object> custom=managementTemplate.getCustom();
+  @SuppressWarnings("unchecked") Closure<List<String>> getNodesClosure=(Closure<List<String>>)custom.get(CloudifyConstants.DYNAMIC_BYON_START_MNG_MACHINES_KEY);
+  List<String> ips=getNodesClosure.call();
+  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  final int size=ips.size();
+  if (size != numberOfManagementMachines) {
+    throw new CloudProvisioningException("DynamicByonProvisioningDriver [startManagementMachines] - expected " + numberOfManagementMachines + " management machines, but got "+ size+ " machines.");
+  }
+synchronized (mutex) {
+    managementMachines.addAll(ips);
+  }
+  logger.info("Starting " + numberOfManagementMachines + " management machines.");
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  final MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
+  publishEvent(EVENT_MGMT_VMS_STARTED);
+  logger.info("Successfully added " + numberOfManagementMachines + " management machines: "+ ips);
+  return createdMachines;
+}

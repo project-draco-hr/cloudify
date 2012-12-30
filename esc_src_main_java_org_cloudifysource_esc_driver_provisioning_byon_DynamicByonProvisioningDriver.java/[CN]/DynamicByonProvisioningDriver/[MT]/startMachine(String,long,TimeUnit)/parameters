@@ -1,0 +1,3 @@
+String locationId
+long duration
+TimeUnit unit

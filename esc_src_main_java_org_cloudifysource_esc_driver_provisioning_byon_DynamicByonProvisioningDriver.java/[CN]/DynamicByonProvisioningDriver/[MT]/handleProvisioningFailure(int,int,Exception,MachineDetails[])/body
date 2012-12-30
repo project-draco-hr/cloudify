@@ -1,0 +1,5 @@
+{
+  logger.severe("Of the required " + numberOfManagementMachines + " management machines, "+ numberOfErrors+ " failed to start.");
+  publishEvent("prov_management_machines_failed",firstCreationException.getMessage());
+  throw new CloudProvisioningException("One or more managememnt machines failed. The first encountered error was: " + firstCreationException.getMessage(),firstCreationException);
+}
