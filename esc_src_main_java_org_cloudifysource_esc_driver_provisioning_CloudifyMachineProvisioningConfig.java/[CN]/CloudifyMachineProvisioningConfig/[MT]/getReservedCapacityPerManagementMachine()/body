@@ -1,4 +1,4 @@
 {
-  final List<CapacityRequirement> requirements=createRequirements(false);
+  final List<CapacityRequirement> requirements=createRequirements(true);
   return new CapacityRequirements(requirements.toArray(new CapacityRequirement[requirements.size()]));
 }

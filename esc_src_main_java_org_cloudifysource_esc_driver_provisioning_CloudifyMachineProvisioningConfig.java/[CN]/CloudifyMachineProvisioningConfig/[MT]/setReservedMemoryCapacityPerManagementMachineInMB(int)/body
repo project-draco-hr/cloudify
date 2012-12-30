@@ -1,0 +1,3 @@
+{
+  this.properties.putLong(RESERVED_MEMORY_CAPACITY_PER_MANAGEMENT_MACHINE_MEGABYTES_KEY,reservedInMB);
+}

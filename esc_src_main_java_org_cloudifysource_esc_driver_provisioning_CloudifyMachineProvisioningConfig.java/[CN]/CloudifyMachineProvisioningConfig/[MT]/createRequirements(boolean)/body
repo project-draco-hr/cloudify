@@ -1,0 +1,16 @@
+{
+  final List<CapacityRequirement> requirements=new ArrayList<CapacityRequirement>();
+  if (management) {
+    requirements.add(new MemoryCapacityRequirement(getReservedMemoryCapacityPerManagementMachineInMB()));
+  }
+ else {
+    requirements.add(new MemoryCapacityRequirement(getReservedMemoryCapacityPerMachineInMB()));
+  }
+  requirements.add(new CpuCapacityRequirement(getReservedCpuCapacityPerMachine()));
+  final Map<String,Long> reservedDriveCapacity=getReservedDriveCapacityPerMachineInMB();
+  for (  final Entry<String,Long> entry : reservedDriveCapacity.entrySet()) {
+    final String drive=entry.getKey();
+    requirements.add(new DriveCapacityRequirement(drive,entry.getValue()));
+  }
+  return requirements;
+}

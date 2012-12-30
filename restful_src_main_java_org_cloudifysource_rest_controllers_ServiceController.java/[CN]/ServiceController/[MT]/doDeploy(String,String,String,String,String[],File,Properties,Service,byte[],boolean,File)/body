@@ -59,10 +59,15 @@
     }
     final String locators=extractLocators(admin);
     config.setLocator(locators);
-    config.setDedicatedManagementMachines(true);
+    if (IsolationUtils.isUseManagement(service)) {
+      config.setDedicatedManagementMachines(false);
+    }
+ else {
+      config.setDedicatedManagementMachines(true);
+    }
     if (!dedicated) {
       if (IsolationUtils.isGlobal(service)) {
-        logger.info("public mode is on. will use public machine provisioning for " + serviceName + " deployment.");
+        logger.info("global mode is on. will use public machine provisioning for " + serviceName + " deployment.");
         setPublicMachineProvisioning(deployment,config);
       }
  else       if (IsolationUtils.isAppShared(service)) {
