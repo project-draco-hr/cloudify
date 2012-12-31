@@ -1,9 +1,0 @@
-{
-  if (!defaultFile.exists()) {
-    return;
-  }
-  if (backupFile.exists()) {
-    logger.info("Found existing file backup at: " + backupFile + ". Old backup will be overwritten.");
-  }
-  FileUtils.copyFile(defaultFile,backupFile);
-}

@@ -29,5 +29,5 @@
     logger.fine(message);
   }
   publishEvent(ShellUtils.getMessageBundle().getString("starting_cloudify_management"));
-  runCommand(command,args.toArray(new String[args.size()]),securityProfile,keystorePassword);
+  runCommand(command,args.toArray(new String[args.size()]),securityProfile,securityFilePath,keystoreFilePath,keystorePassword);
 }

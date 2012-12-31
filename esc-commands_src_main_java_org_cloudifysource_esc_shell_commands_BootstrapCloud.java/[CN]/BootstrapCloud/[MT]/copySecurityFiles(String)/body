@@ -4,8 +4,8 @@
     if (!securitySourceFile.isFile()) {
       throw new Exception("Security configuration file not found: " + securityFilePath);
     }
-    File defaultSecurityFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_SECURITY_FILE_PATH);
-    File backupSecurityFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_PATH);
+    File defaultSecurityFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
+    File backupSecurityFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_NAME);
     if (!(securitySourceFile.getCanonicalFile().equals(defaultSecurityFile.getCanonicalFile()))) {
       if (defaultSecurityFile.exists()) {
         FileUtils.copyFile(defaultSecurityFile,backupSecurityFile);
@@ -22,7 +22,7 @@
     if (!keystoreSourceFile.isFile()) {
       throw new Exception("Keystore file not found: " + keystore);
     }
-    final File defaultKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + DEFAULT_KEYSTORE_FILE_PATH);
+    final File defaultKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
     if (!(keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreFile.getCanonicalFile()))) {
       if (defaultKeystoreFile.exists()) {
         FileUtils.copyFile(keystoreSourceFile,defaultKeystoreFile);

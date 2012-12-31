@@ -1,5 +1,0 @@
-{
-  final File defaultSecurityFile=new File(DEFAULT_SECURITY_FILE_PATH);
-  final File backupSecurityFile=new File(BACKUP_SECURITY_FILE_PATH);
-  backupExistingFile(defaultSecurityFile,backupSecurityFile);
-}

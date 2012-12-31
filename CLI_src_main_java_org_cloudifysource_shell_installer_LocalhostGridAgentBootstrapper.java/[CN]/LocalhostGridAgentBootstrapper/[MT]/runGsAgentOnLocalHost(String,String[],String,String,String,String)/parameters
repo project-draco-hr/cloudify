@@ -1,4 +1,6 @@
 String name
 String[] gsAgentArguments
 String securityProfile
+String securityFilePath
+String keystoreFilePath
 String keystorePassword

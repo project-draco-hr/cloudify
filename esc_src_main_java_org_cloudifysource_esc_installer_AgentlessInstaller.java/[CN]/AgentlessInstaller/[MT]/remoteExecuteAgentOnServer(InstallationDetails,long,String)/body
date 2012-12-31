@@ -29,7 +29,9 @@
   if (details.getPassword() != null) {
     scb.exportVar("PASSWORD",details.getPassword());
   }
+  scb.exportVar(CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR,details.getRemoteDir() + "/" + CloudifyConstants.SECURITY_FILE_NAME);
   if (StringUtils.isNotBlank(details.getKeystorePassword())) {
+    scb.exportVar(CloudifyConstants.KEYSTORE_FILE_ENV_VAR,details.getRemoteDir() + "/" + CloudifyConstants.KEYSTORE_FILE_NAME);
     scb.exportVar(CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR,details.getKeystorePassword());
   }
   final Set<Entry<String,String>> entries=details.getExtraRemoteEnvironmentVariables().entrySet();

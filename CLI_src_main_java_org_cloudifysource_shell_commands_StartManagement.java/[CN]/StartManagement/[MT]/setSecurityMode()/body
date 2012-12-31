@@ -1,6 +1,4 @@
 {
-  String defaultSecurityFilePath=DEFAULT_SECURITY_FOLDER + PATH_SEPARATOR + "spring-security.xml";
-  String defaultKeystoreFilePath=DEFAULT_SECURITY_FOLDER + PATH_SEPARATOR + "keystore";
   if (StringUtils.isNotBlank(username) && StringUtils.isBlank(password)) {
     throw new IllegalArgumentException("Password is missing or empty");
   }
@@ -11,15 +9,15 @@
     securityProfile=CloudifyConstants.SPRING_PROFILE_NON_SECURE;
   }
   if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
-    File securityConfigFile=new File(defaultSecurityFilePath);
+    File securityConfigFile=new File(SPRING_SECURITY_CONFIG_FILE);
     if (!securityConfigFile.isFile()) {
-      throw new IllegalArgumentException("Security configuration file not found on management server at the " + "expected location: " + defaultSecurityFilePath);
+      throw new IllegalArgumentException("Security configuration file not found on management server at the " + "expected location: " + securityConfigFile.getCanonicalPath());
     }
   }
   if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
-    File keystoreFile=new File(defaultKeystoreFilePath);
+    File keystoreFile=new File(KEYSTORE_FILE);
     if (!keystoreFile.isFile()) {
-      throw new IllegalArgumentException("Keystore file not found on management server at the expected " + "location: " + defaultKeystoreFilePath);
+      throw new IllegalArgumentException("Keystore file not found on management server at the expected " + "location: " + keystoreFile.getCanonicalPath());
     }
   }
 }

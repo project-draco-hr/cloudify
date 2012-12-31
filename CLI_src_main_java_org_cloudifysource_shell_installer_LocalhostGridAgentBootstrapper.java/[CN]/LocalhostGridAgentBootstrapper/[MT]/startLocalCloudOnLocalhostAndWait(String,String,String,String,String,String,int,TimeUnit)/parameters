@@ -1,6 +1,8 @@
 String securityProfile
+String securityFilePath
 String username
 String password
+String keystoreFilePath
 String keystorePassword
 int timeout
 TimeUnit timeunit

@@ -19,7 +19,7 @@
       }
  catch (      final TimeoutException e) {
       }
-      runGsAgentOnLocalHost("agent and management processes",gsAgentArgs,securityProfile,keystorePassword);
+      runGsAgentOnLocalHost("agent and management processes",gsAgentArgs,securityProfile,securityFilePath,keystoreFilePath,keystorePassword);
       agent=waitForNewAgent(admin,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
     }
   finally {

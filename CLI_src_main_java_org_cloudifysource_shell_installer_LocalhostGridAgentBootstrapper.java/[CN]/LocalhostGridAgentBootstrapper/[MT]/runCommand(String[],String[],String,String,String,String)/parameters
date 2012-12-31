@@ -1,4 +1,6 @@
 String[] command
 String[] args
 String securityProfile
+String securityFilePath
+String keystoreFilePath
 String keystorePassword

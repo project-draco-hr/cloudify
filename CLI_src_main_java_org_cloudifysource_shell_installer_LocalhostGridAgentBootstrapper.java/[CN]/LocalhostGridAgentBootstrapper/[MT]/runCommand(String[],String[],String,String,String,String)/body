@@ -37,10 +37,16 @@
     environment.put("NIC_ADDR",nicAddress);
   }
   environment.put("RMI_OPTIONS","");
+  logger.fine("Setting env var " + CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR + " to: "+ securityProfile);
   environment.put(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,securityProfile);
   if (ShellUtils.isSecureConnection(securityProfile)) {
+    logger.fine("Setting env var " + CloudifyConstants.KEYSTORE_FILE_ENV_VAR + " to: "+ keystoreFilePath);
+    environment.put(CloudifyConstants.KEYSTORE_FILE_ENV_VAR,keystoreFilePath);
+    logger.fine("Setting env var " + CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR + " to: "+ keystorePassword);
     environment.put(CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR,keystorePassword);
   }
+  logger.fine("Setting env var " + CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR + " to: "+ securityFilePath);
+  environment.put(CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR,securityFilePath);
   if (isLocalCloud) {
     environment.put("COMPONENT_JAVA_OPTIONS",localCloudOptions);
     environment.put(CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID,"localcloud");

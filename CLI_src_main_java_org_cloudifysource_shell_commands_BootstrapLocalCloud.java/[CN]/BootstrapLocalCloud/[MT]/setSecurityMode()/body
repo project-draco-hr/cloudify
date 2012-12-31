@@ -1,6 +1,6 @@
 {
   if (secured) {
-    if (StringUtils.isNotBlank(keystore) && StringUtils.isNotBlank(keystorePassword)) {
+    if (StringUtils.isNotBlank(keystoreFilePath) && StringUtils.isNotBlank(keystorePassword)) {
       logger.info(getFormattedMessage(CloudifyErrorMessages.SETTING_SERVER_SECURITY_PROFILE.getName(),CloudifyConstants.SPRING_PROFILE_SECURE));
       securityProfile=CloudifyConstants.SPRING_PROFILE_SECURE;
     }
@@ -23,26 +23,29 @@
     if (StringUtils.isNotBlank(securityFilePath)) {
       throw new IllegalArgumentException("'-securityfile' is only valid when '-secured' is set");
     }
-    if (StringUtils.isNotBlank(keystore)) {
+    if (StringUtils.isNotBlank(keystoreFilePath)) {
       throw new IllegalArgumentException("'-keystore' is only valid when '-secured' is set");
     }
     if (StringUtils.isNotBlank(keystorePassword)) {
       throw new IllegalArgumentException("'-keystore-password' is only valid when '-secured' is set");
     }
   }
-  if (StringUtils.isNotBlank(username) && StringUtils.isBlank(password)) {
-    throw new IllegalArgumentException("Password is missing or empty");
+ else {
+    if (StringUtils.isNotBlank(username) && StringUtils.isBlank(password)) {
+      throw new IllegalArgumentException("Password is missing or empty");
+    }
+    if (StringUtils.isBlank(username) && StringUtils.isNotBlank(password)) {
+      throw new IllegalArgumentException("Username is missing or empty");
+    }
+    if (StringUtils.isNotBlank(keystoreFilePath) && StringUtils.isBlank(keystorePassword)) {
+      throw new IllegalArgumentException("Keystore password is missing or empty");
+    }
+    if (StringUtils.isBlank(keystoreFilePath) && StringUtils.isNotBlank(keystorePassword)) {
+      throw new IllegalArgumentException("Keystore is missing or empty");
+    }
+    if (StringUtils.isNotBlank(keystoreFilePath)) {
+      validateKeystoreFile(keystorePassword,new File(keystoreFilePath));
+    }
   }
-  if (StringUtils.isBlank(username) && StringUtils.isNotBlank(password)) {
-    throw new IllegalArgumentException("Username is missing or empty");
-  }
-  if (StringUtils.isNotBlank(keystore) && StringUtils.isBlank(keystorePassword)) {
-    throw new IllegalArgumentException("Keystore password is missing or empty");
-  }
-  if (StringUtils.isBlank(keystore) && StringUtils.isNotBlank(keystorePassword)) {
-    throw new IllegalArgumentException("Keystore is missing or empty");
-  }
-  if (StringUtils.isNotBlank(keystore)) {
-    validateKeystoreFile(keystorePassword,new File(keystore));
-  }
+  validateSecurityVars();
 }

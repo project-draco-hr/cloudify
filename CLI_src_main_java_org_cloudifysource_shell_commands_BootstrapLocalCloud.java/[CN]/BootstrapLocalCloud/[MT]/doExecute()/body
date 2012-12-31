@@ -10,9 +10,6 @@
       return getFormattedMessage("incorrect_java_home",Color.RED,javaHome);
     }
     setSecurityMode();
-    if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
-      copySecurityFiles();
-    }
     final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
     installer.setVerbose(verbose);
     installer.setLookupGroups(lookupGroups);
@@ -21,7 +18,7 @@
     installer.setWaitForWebui(true);
     installer.addListener(new CLILocalhostBootstrapperListener());
     installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-    installer.startLocalCloudOnLocalhostAndWait(securityProfile,username,password,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
+    installer.startLocalCloudOnLocalhostAndWait(securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
     return messages.getString("local_cloud_started");
   }
   finally {

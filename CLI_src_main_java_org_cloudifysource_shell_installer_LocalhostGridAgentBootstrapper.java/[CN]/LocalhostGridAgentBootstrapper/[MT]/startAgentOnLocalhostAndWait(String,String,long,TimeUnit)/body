@@ -12,7 +12,7 @@
     }
  catch (    final TimeoutException e) {
     }
-    runGsAgentOnLocalHost("agent",AGENT_ARGUMENTS,securityProfile,keystorePassword);
+    runGsAgentOnLocalHost("agent",AGENT_ARGUMENTS,securityProfile,"","",keystorePassword);
     waitForNewAgent(admin,timeout,timeunit);
   }
   finally {
