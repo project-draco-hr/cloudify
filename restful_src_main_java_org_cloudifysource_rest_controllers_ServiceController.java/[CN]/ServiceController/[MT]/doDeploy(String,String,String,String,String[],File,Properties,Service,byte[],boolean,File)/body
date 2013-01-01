@@ -65,9 +65,13 @@
  else {
       config.setDedicatedManagementMachines(true);
     }
-    if (!dedicated) {
+    if (dedicated) {
+      setDedicatedMachineProvisioning(deployment,config);
+    }
+ else {
       if (IsolationUtils.isGlobal(service)) {
         logger.info("global mode is on. will use public machine provisioning for " + serviceName + " deployment.");
+        logger.info("isolationSLA = " + service.getIsolationSLA());
         setPublicMachineProvisioning(deployment,config);
       }
  else       if (IsolationUtils.isAppShared(service)) {
@@ -81,9 +85,6 @@
         logger.info("tenant shared mode is on. will use shared machine provisioning for " + serviceName + " deployment. isolation id = "+ authGroups);
         setSharedMachineProvisioning(deployment,config,authGroups);
       }
-    }
- else {
-      setDedicatedMachineProvisioning(deployment,config);
     }
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (service == null || service.getScalingRules() == null) {

@@ -1,4 +1,6 @@
 {
   final List<CapacityRequirement> requirements=createRequirements(false);
-  return new CapacityRequirements(requirements.toArray(new CapacityRequirement[requirements.size()]));
+  CapacityRequirements capacityRequirements=new CapacityRequirements(requirements.toArray(new CapacityRequirement[requirements.size()]));
+  logger.info("Recieved request to specify reservedCapacityPerMachine, returning " + capacityRequirements);
+  return capacityRequirements;
 }

@@ -1,0 +1,3 @@
+{
+  return "AppSharedIsolationSLADescriptor [isolationId=" + getIsolationId() + ", instanceMemoryMB="+ getInstanceMemoryMB()+ ", instanceCpuCores="+ getInstanceCpuCores()+ ", useManagement="+ isUseManagement()+ "]";
+}
