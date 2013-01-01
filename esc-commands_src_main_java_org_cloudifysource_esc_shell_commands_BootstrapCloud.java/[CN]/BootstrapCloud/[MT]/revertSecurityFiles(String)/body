@@ -1,20 +1,4 @@
 {
-  File securityConfigFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
-  File backupSecurityConfigFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_NAME);
-  if (backupSecurityConfigFile.exists()) {
-    FileUtils.copyFile(backupSecurityConfigFile,securityConfigFile);
-    deleteFile(backupSecurityConfigFile);
-  }
- else   if (this.securityFileCopied) {
-    deleteFile(securityConfigFile);
-  }
-  File keystoreFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
-  File backupKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_KEYSTORE_FILE_NAME);
-  if (backupKeystoreFile.exists()) {
-    FileUtils.copyFile(backupKeystoreFile,keystoreFile);
-    deleteFile(backupKeystoreFile);
-  }
- else   if (this.keystoreFileCopied) {
-    deleteFile(keystoreFile);
-  }
+  restoreBackup(defaultSecurityTargetFile,securityFileCopied);
+  restoreBackup(defaultKeystoreTargetFile,keystoreFileCopied);
 }

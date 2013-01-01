@@ -12,10 +12,10 @@
  else {
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
+  defaultSecurityTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
+  defaultKeystoreTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
   setSecurityMode();
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE_NO_SSL) || securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_SECURE)) {
-    copySecurityFiles(providerDirectory.getAbsolutePath());
-  }
+  copySecurityFiles(providerDirectory.getAbsolutePath());
   File cloudFile=findCloudFile(providerDirectory);
   File cloudPropertiesFile=new File(providerDirectory,cloudFile.getName().split("\\.")[0] + DSLUtils.PROPERTIES_FILE_SUFFIX);
   File backupCloudPropertiesFile=new File(cloudPropertiesFile.getParentFile(),cloudPropertiesFile.getName() + ".backup");

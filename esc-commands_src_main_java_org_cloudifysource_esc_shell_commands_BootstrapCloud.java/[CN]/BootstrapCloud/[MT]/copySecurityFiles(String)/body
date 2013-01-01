@@ -1,34 +1,33 @@
 {
-  if (StringUtils.isNotBlank(securityFilePath)) {
-    File securitySourceFile=new File(securityFilePath);
-    if (!securitySourceFile.isFile()) {
-      throw new Exception("Security configuration file not found: " + securityFilePath);
-    }
-    File defaultSecurityFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
-    File backupSecurityFile=new File(providerDirectory + PATH_SEPARATOR + BACKUP_SECURITY_FILE_NAME);
-    if (!(securitySourceFile.getCanonicalFile().equals(defaultSecurityFile.getCanonicalFile()))) {
-      if (defaultSecurityFile.exists()) {
-        FileUtils.copyFile(defaultSecurityFile,backupSecurityFile);
-      }
-      this.securityFileCopied=true;
-      FileUtils.copyFile(securitySourceFile,defaultSecurityFile);
-    }
+  File defaultSecuritySourceFile=new File(DEFAULT_SECURITY_FILE_PATH);
+  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
+    copyFileAndBackup(defaultSecuritySourceFile,defaultSecurityTargetFile);
+    this.securityFileCopied=true;
   }
  else {
-    throw new IllegalArgumentException("-security-file is missing or empty");
-  }
-  if (StringUtils.isNotBlank(keystore)) {
-    File keystoreSourceFile=new File(keystore);
-    if (!keystoreSourceFile.isFile()) {
-      throw new Exception("Keystore file not found: " + keystore);
-    }
-    final File defaultKeystoreFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
-    if (!(keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreFile.getCanonicalFile()))) {
-      if (defaultKeystoreFile.exists()) {
-        FileUtils.copyFile(keystoreSourceFile,defaultKeystoreFile);
+    if (StringUtils.isNotBlank(securityFilePath)) {
+      File securitySourceFile=new File(securityFilePath);
+      if (!securitySourceFile.isFile()) {
+        throw new Exception("Security configuration file not found: " + securityFilePath);
       }
-      this.keystoreFileCopied=true;
-      FileUtils.copyFile(keystoreSourceFile,defaultKeystoreFile);
+      if (!(securitySourceFile.getCanonicalFile().equals(defaultSecurityTargetFile.getCanonicalFile()))) {
+        copyFileAndBackup(securitySourceFile,defaultSecurityTargetFile);
+        securityFileCopied=true;
+      }
+    }
+ else {
+      throw new IllegalArgumentException("-security-file is missing or empty");
+    }
+    if (StringUtils.isNotBlank(keystore)) {
+      File keystoreSourceFile=new File(keystore);
+      if (!keystoreSourceFile.isFile()) {
+        throw new Exception("Keystore file not found: " + keystore);
+      }
+      final File defaultKeystoreTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
+      if (!(keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreTargetFile.getCanonicalFile()))) {
+        copyFileAndBackup(keystoreSourceFile,defaultKeystoreTargetFile);
+        keystoreFileCopied=true;
+      }
     }
   }
 }

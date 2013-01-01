@@ -1,0 +1,7 @@
+{
+  if (targetFile.exists()) {
+    File backupFile=new File(targetFile.getCanonicalPath() + BACKUP_FILE_NAME_SUFFIX);
+    FileUtils.copyFile(targetFile,backupFile);
+  }
+  FileUtils.copyFile(sourceFile,targetFile);
+}
