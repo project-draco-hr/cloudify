@@ -1,0 +1,3 @@
+{
+  ServiceReader.readService(new File(APP_SHARED_PATH));
+}
