@@ -1,4 +1,4 @@
 {
-  sb.append(this.SEPARATOR);
+  sb.append(WinrmExecutor.SEPARATOR);
   return this;
 }

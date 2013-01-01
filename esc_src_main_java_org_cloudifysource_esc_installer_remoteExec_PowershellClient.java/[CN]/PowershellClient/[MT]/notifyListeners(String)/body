@@ -1,0 +1,5 @@
+{
+  for (  final PowerShellOutputListener listener : this.outputListeners) {
+    listener.onPowerShellOutput(line);
+  }
+}

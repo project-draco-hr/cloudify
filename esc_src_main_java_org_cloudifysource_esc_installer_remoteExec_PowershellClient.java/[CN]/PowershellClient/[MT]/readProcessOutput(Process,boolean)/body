@@ -8,17 +8,22 @@
       if (line == null) {
         break;
       }
-      installer.publishEvent("powershell_output_line",line);
+      if (notifyOnOutput) {
+        notifyListeners(line);
+      }
       logger.fine(line);
       sb.append(line).append(newline);
     }
   }
-  finally {
+ catch (  final IOException e) {
+    throw new PowershellClientException("Failed to read output of powershell process",e);
+  }
+ finally {
     try {
       reader.close();
     }
  catch (    final IOException e) {
-      logger.log(Level.SEVERE,"Error while closingprocess input stream: " + e.getMessage(),e);
+      logger.log(Level.SEVERE,"Error while closing process input stream: " + e.getMessage(),e);
     }
   }
   return sb.toString();

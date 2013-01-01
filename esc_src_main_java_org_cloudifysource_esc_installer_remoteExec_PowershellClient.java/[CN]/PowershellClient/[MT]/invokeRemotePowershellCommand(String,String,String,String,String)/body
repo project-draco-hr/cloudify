@@ -1,17 +1,18 @@
 {
+  checkPowershellInstalled();
   final List<String> fullCommand=getPowershellCommandLine(targetHost,username,password,command,localDir);
   final ProcessBuilder pb=new ProcessBuilder(fullCommand);
   pb.redirectErrorStream(true);
   try {
     final Process p=pb.start();
-    final String output=readProcessOutput(p);
+    final String output=readProcessOutput(p,true);
     final int exitCode=p.waitFor();
     if (exitCode != 0) {
-      throw new InstallerException("Remote installation failed with exit code: " + exitCode + ". Execution output: "+ output);
+      throw new PowershellClientException("Remote installation failed with exit code: " + exitCode + ". Execution output: "+ output);
     }
     return output;
   }
  catch (  final IOException e) {
-    throw new InstallerException("Failed to invoke remote installation: " + e.getMessage(),e);
+    throw new PowershellClientException("Failed to invoke remote installation: " + e.getMessage(),e);
   }
 }

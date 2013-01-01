@@ -1,0 +1,26 @@
+{
+  if (powerShellInstalled != null) {
+    if (powerShellInstalled.booleanValue()) {
+      return;
+    }
+    throw new PowershellClientException("powershell.exe is not on installed, or is not available on the system path. " + "Powershell is required on both client and server for Cloudify to work on Windows. ");
+  }
+  logger.fine("Checking if powershell is installed using: " + Arrays.toString(POWERSHELL_INSTALLED_COMMAND));
+  final ProcessBuilder pb=new ProcessBuilder(Arrays.asList(POWERSHELL_INSTALLED_COMMAND));
+  pb.redirectErrorStream(true);
+  Process p;
+  try {
+    p=pb.start();
+  }
+ catch (  final IOException e) {
+    throw new PowershellClientException("Failed to start powershell - it may not be installed",e);
+  }
+  final String output=readProcessOutput(p,false);
+  logger.fine("Finished reading output");
+  final int retval=p.waitFor();
+  logger.fine("Powershell installed command exit value: " + retval);
+  if (retval != 0) {
+    throw new PowershellClientException("powershell.exe is not on installed, or is not available on the system path. " + "Powershell is required on both client and server for Cloudify to work on Windows. " + "Execution result: "+ output);
+  }
+  powerShellInstalled=Boolean.TRUE;
+}
