@@ -18,7 +18,7 @@
       logger.finest("BeanUtils.setProperty(object=" + object + ",name="+ name+ ",value="+ convertedValue+ ",value.getClass()="+ convertedValue.getClass());
     }
     if (!PropertyUtils.isWriteable(object,name)) {
-      throw new IllegalArgumentException("Field " + name + " in object of type: "+ Bean.class.getName()+ " is not writable");
+      throw new IllegalArgumentException("Field " + name + " in object of type: "+ object.getClass().getName()+ " is not writable");
     }
     BeanUtils.setProperty(object,name,convertedValue);
   }
