@@ -1,0 +1,27 @@
+{
+  if (service == null) {
+    return;
+  }
+  if (isDedicated(service)) {
+    return;
+  }
+  String serviceTemplate=null;
+  if (service.getCompute() != null) {
+    serviceTemplate=service.getCompute().getTemplate();
+  }
+  if (serviceTemplate == null) {
+    serviceTemplate=cloud.getTemplates().entrySet().iterator().next().getKey();
+  }
+  int machineTemplateMemory=cloud.getTemplates().get(serviceTemplate).getMachineMemoryMB();
+  int reservedMachineMemory;
+  if (serviceTemplate.equals(cloud.getConfiguration().getManagementMachineTemplate())) {
+    reservedMachineMemory=cloud.getProvider().getReservedMemoryCapacityPerManagementMachineInMB();
+  }
+ else {
+    reservedMachineMemory=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
+  }
+  long instanceMemoryMB=getInstanceMemoryMB(service);
+  if (instanceMemoryMB > (machineTemplateMemory - reservedMachineMemory)) {
+    throw new IllegalStateException("Cannot install service " + service.getName() + " : Insufficient Memory -->"+ "The declared machine memory for template "+ serviceTemplate+ " is "+ machineTemplateMemory+ ". The reserved memory on the machine is "+ reservedMachineMemory+ ". The specified instance memory requirement is "+ instanceMemoryMB+ ";");
+  }
+}

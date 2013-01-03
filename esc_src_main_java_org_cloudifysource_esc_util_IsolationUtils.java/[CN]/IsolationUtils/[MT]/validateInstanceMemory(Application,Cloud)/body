@@ -1,0 +1,14 @@
+{
+  List<String> errorMessages=new ArrayList<String>();
+  for (  Service service : application.getServices()) {
+    try {
+      validateInstanceMemory(service,cloud);
+    }
+ catch (    IllegalStateException e) {
+      errorMessages.add(e.getMessage());
+    }
+  }
+  if (!errorMessages.isEmpty()) {
+    throw new IllegalStateException("Cannot install application " + application.getName() + "-->"+ StringUtils.join(errorMessages,","));
+  }
+}

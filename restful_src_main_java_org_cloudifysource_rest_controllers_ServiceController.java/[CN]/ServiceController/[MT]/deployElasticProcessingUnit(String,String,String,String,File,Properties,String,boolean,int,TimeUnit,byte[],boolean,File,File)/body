@@ -50,6 +50,7 @@
     service=result.getService();
   }
   validateTemplate(templateName);
+  IsolationUtils.validateInstanceMemory(service,cloud);
   String[] agentZones;
   if (isLocalCloud()) {
     agentZones=new String[]{zone,LOCALCLOUD_ZONE};
