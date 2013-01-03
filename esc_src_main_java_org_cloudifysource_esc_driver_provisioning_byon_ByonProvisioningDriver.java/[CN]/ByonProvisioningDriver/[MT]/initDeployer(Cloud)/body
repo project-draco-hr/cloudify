@@ -4,7 +4,7 @@
       @SuppressWarnings("unchecked") @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
         final ByonDeployer newDeployer=new ByonDeployer();
-        addTempaltesToDeployer(newDeployer,cloud.getTemplates());
+        addTemplatesToDeployer(newDeployer,cloud.getTemplates());
         return newDeployer;
       }
     }
@@ -18,7 +18,7 @@
     updateDeployerTemplates(cloud);
   }
  catch (  Exception e) {
-    logger.log(Level.WARNING,"initDeployer - fialed to add tempaltes to deployer",e);
+    logger.log(Level.WARNING,"initDeployer - fialed to add templates to deployer",e);
     throw new IllegalStateException("Failed to update templates",e);
   }
   setCustomSettings(cloud);

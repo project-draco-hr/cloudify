@@ -1,5 +1,5 @@
 {
-  List<String> tempaltesList=new LinkedList<String>();
-  tempaltesList.addAll(nodesListsByTemplates.keySet());
-  return tempaltesList;
+  List<String> templatesList=new LinkedList<String>();
+  templatesList.addAll(nodesListsByTemplates.keySet());
+  return templatesList;
 }

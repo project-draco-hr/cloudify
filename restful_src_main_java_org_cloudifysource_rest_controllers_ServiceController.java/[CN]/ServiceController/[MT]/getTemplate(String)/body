@@ -4,7 +4,7 @@
   }
   CloudTemplate cloudTemplate=cloud.getTemplates().get(templateName);
   if (cloudTemplate == null) {
-    logger.log(Level.WARNING,"[getTemplate] - tempalte [" + templateName + "] not found. cloud tempaltes list: "+ cloud.getTemplates());
+    logger.log(Level.WARNING,"[getTemplate] - template [" + templateName + "] not found. cloud templates list: "+ cloud.getTemplates());
     throw new RestErrorException("template_not_exist",templateName);
   }
   return successStatus(cloudTemplate);

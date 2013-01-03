@@ -3,8 +3,8 @@
   ProcessingUnits processingUnits=admin.getProcessingUnits();
   for (  ProcessingUnit processingUnit : processingUnits) {
     Properties puProps=processingUnit.getBeanLevelProperties().getContextProperties();
-    final String puTempalteName=puProps.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
-    if (puTempalteName != null && puTempalteName.equals(templateName)) {
+    final String puTemplateName=puProps.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
+    if (puTemplateName != null && puTemplateName.equals(templateName)) {
       services.add(processingUnit.getName());
     }
   }

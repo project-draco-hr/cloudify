@@ -1,6 +1,6 @@
 {
   ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
-  logger.log(Level.INFO,"[sendAddTempaltesToRestInstances] - sending templates folder to " + instances.length + " instances.");
+  logger.log(Level.INFO,"[sendAddTemplatesToRestInstances] - sending templates folder to " + instances.length + " instances.");
   for (  ProcessingUnitInstance puInstance : instances) {
     String hostAddress=puInstance.getMachine().getHostAddress();
     String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
@@ -9,10 +9,10 @@
       response=executePostRestRequest(templatesFolder,puInstance,"/service/templates/internal");
     }
  catch (    Exception e) {
-      logger.log(Level.WARNING,"[sendAddTempaltesToRestInstances] - failed to execute http request to " + host + ". Error: "+ e,e);
+      logger.log(Level.WARNING,"[sendAddTemplatesToRestInstances] - failed to execute http request to " + host + ". Error: "+ e,e);
       Map<String,String> expectedMap=new HashMap<String,String>();
-      for (      String expectedTempalte : expectedTemplates) {
-        expectedMap.put(expectedTempalte,e.getMessage());
+      for (      String expectedTemplate : expectedTemplates) {
+        expectedMap.put(expectedTemplate,e.getMessage());
       }
       failedToAddTemplatesByHost.put(host,expectedMap);
       continue;
@@ -26,8 +26,8 @@
       addedTemplatesByHost.put(host,addedTemplates);
     }
     if (!expectedTemplates.equals(addedTemplates)) {
-      logger.log(Level.WARNING,"[sendAddTempaltesToRestInstances] - failed to add templates to " + host + ", expected: "+ expectedTemplates.toString()+ ", actual: "+ addedTemplates.toString());
+      logger.log(Level.WARNING,"[sendAddTemplatesToRestInstances] - failed to add templates to " + host + ", expected: "+ expectedTemplates.toString()+ ", actual: "+ addedTemplates.toString());
     }
-    logger.log(Level.INFO,"[sendAddTempaltesToRestInstances] - successfully added " + addedTemplates.size() + " templates to "+ host+ ": "+ addedTemplates);
+    logger.log(Level.INFO,"[sendAddTemplatesToRestInstances] - successfully added " + addedTemplates.size() + " templates to "+ host+ ": "+ addedTemplates);
   }
 }

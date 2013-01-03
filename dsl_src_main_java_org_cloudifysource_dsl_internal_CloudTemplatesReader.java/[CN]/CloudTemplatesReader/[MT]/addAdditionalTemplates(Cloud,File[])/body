@@ -8,19 +8,19 @@
       additionalTemplates=readCloudTemplatesFromDirectory(folder);
     }
  catch (    DSLException e) {
-      logger.log(Level.WARNING,"addAdditionalTemplates - " + "Failed to read tempaltes from directory: " + folder.getAbsolutePath() + "Error: "+ e.getMessage());
+      logger.log(Level.WARNING,"addAdditionalTemplates - " + "Failed to read templates from directory: " + folder.getAbsolutePath() + "Error: "+ e.getMessage());
     }
     for (    CloudTemplateHolder holder : additionalTemplates) {
-      String tempalteName=holder.getName();
+      String templateName=holder.getName();
       Map<String,CloudTemplate> cloudTemplates=cloud.getTemplates();
-      if (cloudTemplates.containsKey(tempalteName)) {
-        logger.log(Level.WARNING,"addAdditionalTemplates - " + "template already exist: " + tempalteName);
+      if (cloudTemplates.containsKey(templateName)) {
+        logger.log(Level.WARNING,"addAdditionalTemplates - " + "template already exist: " + templateName);
         continue;
       }
       CloudTemplate cloudTemplate=holder.getCloudTemplate();
       String uploadAbsolutePath=new File(folder,cloudTemplate.getLocalDirectory()).getAbsolutePath();
       cloudTemplate.setAbsoluteUploadDir(uploadAbsolutePath);
-      cloudTemplates.put(tempalteName,cloudTemplate);
+      cloudTemplates.put(templateName,cloudTemplate);
       addedTemplates.add(cloudTemplate);
     }
   }

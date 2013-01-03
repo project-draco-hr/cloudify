@@ -1,5 +1,5 @@
 {
-  File templatesDirParent=getTempaltesFolder();
+  File templatesDirParent=getTemplatesFolder();
   String folderName="templates_" + lastTemplateFileNum.incrementAndGet();
   File copiedtemplatesFolder=new File(templatesDirParent,folderName);
   while (copiedtemplatesFolder.exists()) {

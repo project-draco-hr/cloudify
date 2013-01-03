@@ -1,5 +1,5 @@
 {
-  final File unzipFile=ServiceReader.createTempDir("tempaltes");
+  final File unzipFile=ServiceReader.createTempDir("templates");
   unzipFile.deleteOnExit();
   ZipUtils.unzip(zipFile,unzipFile);
   if (unzipFile.isFile()) {

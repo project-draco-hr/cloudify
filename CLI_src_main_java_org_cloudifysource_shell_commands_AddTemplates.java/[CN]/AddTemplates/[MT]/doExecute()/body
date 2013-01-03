@@ -1,7 +1,7 @@
 {
   String templatesFolderName=templatesFileOrDir.getName();
   String templatesPath=templatesFileOrDir.getAbsolutePath();
-  logger.info("Validating tempaltes folder and files: " + templatesPath);
+  logger.info("Validating template folder and files: " + templatesPath);
   if (!templatesFileOrDir.exists()) {
     throw new CLIStatusException("templates_file_not_found",templatesPath);
   }
@@ -51,9 +51,9 @@
     zipFile=Packager.createZipFile("templates",templatesFileOrDir);
   }
   logger.info("Adding " + numTemplatesInFolder + " templates to cloud.");
-  List<String> addedTempaltes;
+  List<String> addedTemplates;
   try {
-    addedTempaltes=adminFacade.addTempaltes(zipFile);
+    addedTemplates=adminFacade.addTemplates(zipFile);
   }
  catch (  CLIStatusException e) {
     String reasonCode=e.getReasonCode();
@@ -67,5 +67,5 @@
     }
     throw e;
   }
-  return getFormattedMessage("templates_added_successfully",Color.GREEN) + getFormatedAddedTemplateNamesList(addedTempaltes);
+  return getFormattedMessage("templates_added_successfully",Color.GREEN) + getFormatedAddedTemplateNamesList(addedTemplates);
 }

@@ -1,6 +1,6 @@
 {
   final String templateFileName=templateName + DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX;
-  File templatesFolder=getTempaltesFolder();
+  File templatesFolder=getTemplatesFolder();
   File[] templatesFolders=templatesFolder.listFiles();
   for (  final File templateFolder : templatesFolders) {
     logger.log(Level.FINE,"Searching for template file " + templateFileName + " in "+ templateFolder.getAbsolutePath());
@@ -12,11 +12,11 @@
 );
     int length=listFiles.length;
     if (length == 0) {
-      logger.log(Level.WARNING,"Didn't find tempalte file with name " + templateName + " at "+ templateFolder.getAbsolutePath());
+      logger.log(Level.WARNING,"Didn't find template file with name " + templateName + " at "+ templateFolder.getAbsolutePath());
       continue;
     }
     if (length > 1) {
-      logger.log(Level.WARNING,"Found " + length + " tempaltes files with name "+ templateName+ ": "+ Arrays.toString(listFiles)+ ". Returning the first one found.");
+      logger.log(Level.WARNING,"Found " + length + " templates files with name "+ templateName+ ": "+ Arrays.toString(listFiles)+ ". Returning the first one found.");
     }
     return listFiles[0];
   }

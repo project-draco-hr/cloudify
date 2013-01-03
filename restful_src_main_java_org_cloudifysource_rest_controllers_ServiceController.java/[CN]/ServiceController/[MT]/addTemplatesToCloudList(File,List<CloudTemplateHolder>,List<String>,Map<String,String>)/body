@@ -19,6 +19,6 @@
     }
     CloudTemplate cloudTemplate=holder.getCloudTemplate();
     cloud.getTemplates().put(templateName,cloudTemplate);
-    addedTempaltes.add(templateName);
+    addedTemplates.add(templateName);
   }
 }

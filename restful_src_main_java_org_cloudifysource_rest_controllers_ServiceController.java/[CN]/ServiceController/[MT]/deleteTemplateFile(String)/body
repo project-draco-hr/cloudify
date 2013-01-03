@@ -17,22 +17,22 @@
     throw new RestErrorException("failed_to_remove_template_file",templatesPath,"template file was not deleted.");
   }
   logger.log(Level.FINE,"[deleteTemplateFile] - Successfully deleted template file [" + templatesPath + "].");
-  File tempalteFolder=templateFile.getParentFile();
-  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,tempalteFolder);
+  File templateFolder=templateFile.getParentFile();
+  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,templateFolder);
   if (templatesFiles == null || templatesFiles.length == 0) {
     try {
-      logger.log(Level.FINE,"[deleteTemplateFile] - tempaltes folder is empty, deleting the folder [" + templatesPath + "].");
-      FileUtils.deleteDirectory(tempalteFolder);
+      logger.log(Level.FINE,"[deleteTemplateFile] - templates folder is empty, deleting the folder [" + templatesPath + "].");
+      FileUtils.deleteDirectory(templateFolder);
     }
  catch (    IOException e) {
-      logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + tempalteFolder,e);
+      logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + templateFolder,e);
     }
   }
  else {
-    CloudTemplatesReader.removeTemplateFiles(tempalteFolder,templateName);
+    CloudTemplatesReader.removeTemplateFiles(templateFolder,templateName);
   }
-  File templatesFolder=getTempaltesFolder();
+  File templatesFolder=getTemplatesFolder();
   if (templatesFolder.list().length == 0) {
-    tempalteFolder.delete();
+    templateFolder.delete();
   }
 }
