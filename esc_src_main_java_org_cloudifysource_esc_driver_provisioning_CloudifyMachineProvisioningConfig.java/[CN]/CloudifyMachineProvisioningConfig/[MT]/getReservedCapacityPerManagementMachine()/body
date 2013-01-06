@@ -1,5 +1,5 @@
 {
-  final List<CapacityRequirement> requirements=createRequirements(true);
+  final List<CapacityRequirement> requirements=createReservedCapacityPerMachine(true);
   CapacityRequirements capacityRequirements=new CapacityRequirements(requirements.toArray(new CapacityRequirement[requirements.size()]));
   return capacityRequirements;
 }
