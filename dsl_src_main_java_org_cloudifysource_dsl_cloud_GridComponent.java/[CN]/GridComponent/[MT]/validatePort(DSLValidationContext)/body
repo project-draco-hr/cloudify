@@ -1,0 +1,7 @@
+{
+  if (this.port != null) {
+    if (this.port <= 0) {
+      throw new DSLValidationException("Port must be set to a positive number." + " set " + this.port.toString());
+    }
+  }
+}

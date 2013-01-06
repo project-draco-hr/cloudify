@@ -1,0 +1,2 @@
+Integer configuredRestPort
+boolean isSecureConnection

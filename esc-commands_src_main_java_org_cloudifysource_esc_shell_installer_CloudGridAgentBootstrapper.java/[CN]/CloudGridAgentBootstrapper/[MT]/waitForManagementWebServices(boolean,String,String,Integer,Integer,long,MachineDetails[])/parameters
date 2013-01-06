@@ -1,0 +1,7 @@
+boolean isSecureConnection
+String username
+String password
+Integer restPort
+Integer webuiPort
+long end
+MachineDetails[] servers

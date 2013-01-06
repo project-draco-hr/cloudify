@@ -3,8 +3,8 @@
   webuiInstaller.setAdmin(agent.getAdmin());
   webuiInstaller.setVerbose(verbose);
   webuiInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
-  webuiInstaller.setMemory(WEBUI_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
-  webuiInstaller.setPort(WEBUI_PORT);
+  webuiInstaller.setMemory(getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR),MemoryUnit.MEGABYTES);
+  webuiInstaller.setPort(getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection));
   webuiInstaller.setWarFile(new File(WEBUI_FILE));
   webuiInstaller.setServiceName(WEBUI_NAME);
   webuiInstaller.setManagementZone(MANAGEMENT_ZONE);
@@ -30,8 +30,8 @@
   restInstaller.setAdmin(agent.getAdmin());
   restInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
   restInstaller.setVerbose(verbose);
-  restInstaller.setMemory(REST_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
-  restInstaller.setPort(REST_PORT);
+  restInstaller.setMemory(getWebServiceMemory(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR),MemoryUnit.MEGABYTES);
+  restInstaller.setPort(getWebservicePort(CloudifyConstants.REST_PORT_ENV_VAR,isSecureConnection));
   restInstaller.setUsername(username);
   restInstaller.setPassword(password);
   restInstaller.setWarFile(new File(REST_FILE));

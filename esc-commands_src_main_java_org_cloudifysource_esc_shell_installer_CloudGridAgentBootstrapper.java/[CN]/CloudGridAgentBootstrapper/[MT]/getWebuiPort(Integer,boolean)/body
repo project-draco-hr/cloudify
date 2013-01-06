@@ -1,0 +1,11 @@
+{
+  if (configuredWebuiPort != null) {
+    return configuredWebuiPort;
+  }
+  if (isSecureConnection) {
+    return CloudifyConstants.SECURE_WEBUI_PORT;
+  }
+ else {
+    return CloudifyConstants.DEFAULT_WEBUI_PORT;
+  }
+}

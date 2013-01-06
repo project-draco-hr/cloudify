@@ -4,7 +4,7 @@
   String managementIP=null;
   for (  final CustomNode server : allNodes) {
     try {
-      IPUtils.validateConnection(server.getPrivateIP(),CloudifyConstants.DEFAULT_REST_PORT);
+      IPUtils.validateConnection(server.getPrivateIP(),this.restPort);
       managementIP=server.getPrivateIP();
       break;
     }

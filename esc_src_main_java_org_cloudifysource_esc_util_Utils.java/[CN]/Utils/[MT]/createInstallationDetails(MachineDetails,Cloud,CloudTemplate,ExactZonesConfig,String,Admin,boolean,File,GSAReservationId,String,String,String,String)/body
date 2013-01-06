@@ -28,6 +28,16 @@
     details.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
     details.setSecurityProfile(securityProfile);
     details.setKeystorePassword(keystorePassword);
+    GridComponents componentsConfig=cloud.getConfiguration().getComponents();
+    details.setEsmCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getOrchestrator()));
+    details.setGsmCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getDeployer()));
+    details.setLusCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getDiscovery()));
+    details.setGsaCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getAgent()));
+    details.setGscCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getUsm()));
+    details.setRestPort(componentsConfig.getRest().getPort());
+    details.setWebuiPort(componentsConfig.getWebui().getPort());
+    details.setRestMaxMemory(componentsConfig.getRest().getMaxMemory());
+    details.setWebuiMaxMemory(componentsConfig.getWebui().getMaxMemory());
   }
  else {
     details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());

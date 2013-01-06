@@ -1,0 +1,16 @@
+{
+  for (  final MachineDetails server : servers) {
+    String ipAddress=null;
+    if (cloud.getConfiguration().isBootstrapManagementOnPublicIp()) {
+      ipAddress=server.getPublicAddress();
+    }
+ else {
+      ipAddress=server.getPrivateAddress();
+    }
+    final URL restAdminUrl=new URI(ShellUtils.getRestProtocol(isSecureConnection),null,ipAddress,restPort,null,null,null).toURL();
+    final URL webUIUrl=new URI(ShellUtils.getRestProtocol(isSecureConnection),null,ipAddress,webuiPort,null,null,null).toURL();
+    waitForConnection(username,password,restAdminUrl,isSecureConnection,CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+    logger.info("Rest service is available at: " + restAdminUrl + '.');
+    logger.info("Webui service is available at: " + webUIUrl + '.');
+  }
+}

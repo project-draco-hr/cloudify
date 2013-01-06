@@ -7,7 +7,7 @@
   final String commandString=StringUtils.collectionToDelimitedString(commandLine," ");
   final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
-  String localCloudOptions="-Xmx" + LOCALCLOUD_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
+  String localCloudOptions="-Xmx" + LOCALCLOUD_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
   String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
   if (gsaZones != null) {
     gsaJavaOptions+=" -D" + ZONES_PROPERTY + "="+ gsaZones;
@@ -15,8 +15,8 @@
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   }
-  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
-  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m"+ " -D"+ LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
   String esmJavaOptions="-Xmx" + ESM_MEMORY_IN_MB + "m"+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
@@ -33,6 +33,11 @@
     gscJavaOptions+=" " + disableMulticast;
     localCloudOptions+=" " + disableMulticast;
   }
+  gsaJavaOptions+=" " + environment.get("GSA_JAVA_OPTIONS");
+  lusJavaOptions+=" " + environment.get("LUS_JAVA_OPTIONS");
+  gsmJavaOptions+=" " + environment.get("GSM_JAVA_OPTIONS");
+  esmJavaOptions+=" " + environment.get("ESM_JAVA_OPTIONS");
+  gscJavaOptions+=" " + environment.get("GSC_JAVA_OPTIONS");
   if (nicAddress != null) {
     environment.put("NIC_ADDR",nicAddress);
   }

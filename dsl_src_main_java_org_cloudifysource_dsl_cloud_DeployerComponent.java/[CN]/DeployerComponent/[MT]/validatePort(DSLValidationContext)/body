@@ -1,0 +1,7 @@
+{
+  if (this.websterPort != null) {
+    if (this.websterPort <= 0) {
+      throw new DSLValidationException("Deployer http port must be set to a positive number." + " set " + this.websterPort.toString());
+    }
+  }
+}

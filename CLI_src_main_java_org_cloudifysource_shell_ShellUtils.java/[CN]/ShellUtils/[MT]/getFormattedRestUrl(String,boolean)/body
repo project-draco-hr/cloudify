@@ -12,7 +12,7 @@
   if (urlObj.getPort() == -1) {
     final StringBuilder urlSB=new StringBuilder(formattedURL);
     final int portIndex=formattedURL.indexOf("/",protocolPrefix.length() + 1);
-    urlSB.insert(portIndex,':' + ShellUtils.getRestPortAsString(isSecureConnection));
+    urlSB.insert(portIndex,':' + ShellUtils.getDefaultRestPortAsString(isSecureConnection));
     formattedURL=urlSB.toString();
     urlObj=new URL(formattedURL);
   }

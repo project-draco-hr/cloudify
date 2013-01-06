@@ -1,0 +1,8 @@
+{
+  if (port != null) {
+    this.restPort=port;
+  }
+ else {
+    this.restPort=CloudifyConstants.DEFAULT_REST_PORT;
+  }
+}

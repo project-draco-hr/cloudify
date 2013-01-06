@@ -34,6 +34,14 @@
     addObjectInitializerForClass(dslObjectInitializersByName,TenantSharedIsolationSLADescriptor.class);
     addObjectInitializerForClass(dslObjectInitializersByName,AppSharedIsolationSLADescriptor.class);
     addObjectInitializerForClass(dslObjectInitializersByName,DedicatedIsolationSLADescriptor.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,GridComponents.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,OrchestratorComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,DiscoveryComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,DeployerComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,WebuiComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,UsmComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,RestComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,AgentComponent.class);
   }
   return dslObjectInitializersByName;
 }
