@@ -1,6 +1,6 @@
 {
   String memoryString=System.getenv().get(memoryEnvironmentVar);
-  if (memoryString != null) {
+  if (org.apache.commons.lang.StringUtils.isNotBlank(memoryString)) {
     return Integer.parseInt(memoryString.substring(0,memoryString.length() - 1));
   }
  else {
