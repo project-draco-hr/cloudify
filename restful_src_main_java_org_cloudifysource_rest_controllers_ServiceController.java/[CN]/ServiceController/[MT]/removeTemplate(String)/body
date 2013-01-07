@@ -12,7 +12,11 @@
   List<String> failedToRemoveHosts=new LinkedList<String>();
   removeTemplateFromRestInstances(templateName,successfullyRemoved,failedToRemoveHosts);
   if (!failedToRemoveHosts.isEmpty()) {
-    logger.log(Level.WARNING,"[removeTemplate] - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts+ ". Succeeded to remove the template from: "+ successfullyRemoved);
+    String message="[removeTemplate] - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts;
+    if (!successfullyRemoved.isEmpty()) {
+      message+=". Succeeded to remove the template from: " + successfullyRemoved;
+    }
+    logger.log(Level.WARNING,message);
     throw new RestErrorException("failed_to_remove_template",templateName,failedToRemoveHosts.toString());
   }
   logger.log(Level.INFO,"[removeTemplate] - Succeeded to remove template [" + templateName + "] from: "+ successfullyRemoved);

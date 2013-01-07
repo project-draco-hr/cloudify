@@ -1,6 +1,5 @@
 {
-  String uri="http://" + hostAddress + ":"+ puInstance.getJeeDetails().getPort()+ url;
-  HttpDelete deleteMethod=new HttpDelete(uri);
-  DefaultHttpClient httpClient=new DefaultHttpClient();
-  RestUtils.executeHttpMethod(deleteMethod,httpClient);
+  String port=Integer.toString(puInstance.getJeeDetails().getPort());
+  GSRestClient restClient=createRestClient(hostAddress,port,"","");
+  restClient.delete(relativeUrl);
 }

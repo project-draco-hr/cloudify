@@ -6,9 +6,9 @@
     String hostAddress=puInstance.getMachine().getHostAddress();
     String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
     try {
-      executeDeleteRestRequest(puInstance,hostAddress,"/service/templates/" + templateName + "/internal");
+      executeDeleteRestRequest(puInstance,hostAddress,"/service/templates/internal/" + templateName);
     }
- catch (    RestErrorException e) {
+ catch (    Exception e) {
       failedToRemoveHosts.add(host);
       logger.log(Level.WARNING,"[removeTemplateFromRestInstances] - Failed to execute http request to " + host + ". Error: "+ e.getMessage(),e);
       continue;

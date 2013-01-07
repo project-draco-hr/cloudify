@@ -1,0 +1,8 @@
+{
+  if (isSecureConnection) {
+    return "https";
+  }
+ else {
+    return "http";
+  }
+}

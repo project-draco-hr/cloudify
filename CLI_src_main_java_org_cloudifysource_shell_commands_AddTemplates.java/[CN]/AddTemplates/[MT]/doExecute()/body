@@ -57,7 +57,7 @@
   }
  catch (  CLIStatusException e) {
     String reasonCode=e.getReasonCode();
-    if (reasonCode.equals("failed_to_add_templates")) {
+    if (reasonCode.equals(CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName()) || reasonCode.equals(CloudifyErrorMessages.PARTLY_FAILED_TO_ADD_TEMPLATES.getName())) {
       throw new CLIStatusException(reasonCode,convertArgsToIndentJason(e.getArgs()));
     }
  else     if (reasonCode.equals("failed_to_add_all_templates")) {
