@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("unexpected webui port property " + webui.getPort(),webui.getPort() == 8101);
+  Assert.assertTrue("unexpected webui min memory property " + webui.getMinMemory(),webui.getMinMemory().equals("64m"));
+  Assert.assertTrue("unexpected webui max memory property " + webui.getMaxMemory(),webui.getMaxMemory().equals("64m"));
+}

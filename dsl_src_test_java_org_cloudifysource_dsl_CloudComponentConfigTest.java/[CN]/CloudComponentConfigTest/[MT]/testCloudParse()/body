@@ -1,0 +1,11 @@
+{
+  Cloud cloud=ServiceReader.readCloud(new File(cloudFilePath));
+  GridComponents components=cloud.getConfiguration().getComponents();
+  validateAgentValues(components.getAgent());
+  validateDeployerValues(components.getDeployer());
+  validateDiscoveryValues(components.getDiscovery());
+  validateOrchestratorValues(components.getOrchestrator());
+  validateRestValues(components.getRest());
+  validateWebuiValues(components.getWebui());
+  validateUsmValues(components.getUsm());
+}

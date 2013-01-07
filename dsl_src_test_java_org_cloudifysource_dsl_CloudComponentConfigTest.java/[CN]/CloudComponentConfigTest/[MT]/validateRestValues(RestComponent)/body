@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("unexpected rest port property " + rest.getPort(),rest.getPort() == 8102);
+  Assert.assertTrue("unexpected rest min memory property " + rest.getMinMemory(),rest.getMinMemory().equals("64m"));
+  Assert.assertTrue("unexpected rest max memory property " + rest.getMaxMemory(),rest.getMaxMemory().equals("64m"));
+}

@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("unexpected orchestrator port property " + orchestrator.getPort(),orchestrator.getPort() == 7779);
+  Assert.assertTrue("unexpected orchestrator min memory property " + orchestrator.getMinMemory(),orchestrator.getMinMemory().equals("64m"));
+  Assert.assertTrue("unexpected orchestrator max memory property " + orchestrator.getMaxMemory(),orchestrator.getMaxMemory().equals("4096m"));
+}

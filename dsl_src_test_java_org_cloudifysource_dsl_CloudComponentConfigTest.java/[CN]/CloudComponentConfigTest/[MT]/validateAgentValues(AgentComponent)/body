@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("unexpected deployer port property " + agent.getPort(),agent.getPort() == 7777);
+  Assert.assertTrue("unexpected deployer min memory property " + agent.getMinMemory(),agent.getMinMemory().equals("32m"));
+  Assert.assertTrue("unexpected deployer max memory property " + agent.getMaxMemory(),agent.getMaxMemory().equals("128m"));
+}

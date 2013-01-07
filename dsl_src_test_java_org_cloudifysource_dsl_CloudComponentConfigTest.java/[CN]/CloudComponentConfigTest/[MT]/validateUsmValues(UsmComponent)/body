@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("unexpected usm port range property " + usm.getPortRange(),usm.getPortRange().equals("7000-7110"));
+  Assert.assertTrue("unexpected usm min memory property " + usm.getMinMemory(),usm.getMinMemory().equals("64m"));
+  Assert.assertTrue("unexpected usm max memory property " + usm.getMaxMemory(),usm.getMaxMemory().equals("1024m"));
+}

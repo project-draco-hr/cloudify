@@ -1,0 +1,6 @@
+{
+  Assert.assertTrue("unexpected deployer port property " + deployer.getPort(),deployer.getPort() == 7776);
+  Assert.assertTrue("unexpected deployer port property " + deployer.getPort(),deployer.getWebsterPort() == 8888);
+  Assert.assertTrue("unexpected deployer min memory property " + deployer.getMinMemory(),deployer.getMinMemory().equals("8m"));
+  Assert.assertTrue("unexpected deployer max memory property " + deployer.getMaxMemory(),deployer.getMaxMemory().equals("16m"));
+}
