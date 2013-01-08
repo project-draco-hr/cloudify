@@ -1,0 +1,8 @@
+{
+  final File serviceFile=new File(TEST_PARSING_RESOURCE_PATH3 + "serviceWithGrab-service.groovy");
+  final File serviceDir=serviceFile.getParentFile();
+  final Service service=ServiceReader.getServiceFromFile(serviceFile);
+  Assert.assertNotNull(service);
+  Assert.assertNotNull(service.getLifecycle());
+  Assert.assertEquals("Tomcat",service.getName());
+}
