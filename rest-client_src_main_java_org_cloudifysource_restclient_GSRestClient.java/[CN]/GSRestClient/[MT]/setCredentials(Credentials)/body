@@ -1,0 +1,3 @@
+{
+  httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY),credentials);
+}

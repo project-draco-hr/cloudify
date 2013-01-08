@@ -1,0 +1,17 @@
+{
+  this.url=url;
+  this.urlStr=createUrlStr();
+  if (isSSL()) {
+    httpClient=getSSLHttpClient();
+  }
+ else {
+    httpClient=new DefaultHttpClient();
+  }
+  httpClient.addRequestInterceptor(new HttpRequestInterceptor(){
+    @Override public void process(    HttpRequest request,    HttpContext context) throws HttpException, IOException {
+      request.addHeader(CloudifyConstants.REST_API_VERSION_HEADER,version);
+    }
+  }
+);
+  setCredentials(credentials);
+}
