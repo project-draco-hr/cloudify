@@ -16,6 +16,6 @@
   int reservedMachineMemory=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
   long instanceMemoryMB=getInstanceMemoryMB(service);
   if (instanceMemoryMB > (machineTemplateMemory - reservedMachineMemory)) {
-    throw new IllegalStateException("Cannot install service " + service.getName() + " : Insufficient Memory -->"+ "The declared machine memory for template "+ serviceTemplate+ " is "+ machineTemplateMemory+ ". The reserved memory on the machine is "+ reservedMachineMemory+ ". The specified instance memory requirement is "+ instanceMemoryMB+ ";");
+    throw new RestErrorException(CloudifyErrorMessages.INSUFFICIENT_MEMORY.getName(),"Cannot install service " + service.getName() + ". The requested meomry was "+ instanceMemoryMB+ ", while the machine memory is "+ machineTemplateMemory+ " and the reserved is "+ reservedMachineMemory);
   }
 }
