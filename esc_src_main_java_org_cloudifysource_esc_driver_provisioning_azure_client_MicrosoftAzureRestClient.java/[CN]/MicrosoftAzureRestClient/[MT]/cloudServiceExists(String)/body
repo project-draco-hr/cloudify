@@ -1,0 +1,4 @@
+{
+  HostedServices cloudServices=listHostedServices();
+  return (cloudServices.contains(cloudServiceName));
+}

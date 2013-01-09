@@ -1,0 +1,8 @@
+{
+  for (  HostedService service : hostedServices) {
+    if (service.getServiceName().equals(cloudServiceName)) {
+      return true;
+    }
+  }
+  return false;
+}

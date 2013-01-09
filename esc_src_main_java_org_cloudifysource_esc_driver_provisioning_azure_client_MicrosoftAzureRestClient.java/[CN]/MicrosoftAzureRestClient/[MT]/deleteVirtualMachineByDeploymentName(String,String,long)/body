@@ -13,7 +13,9 @@
         }
       }
     }
-    deleteDeployment(cloudServiceName,deploymentName,endTime);
+    if (cloudServiceExists(cloudServiceName)) {
+      deleteDeployment(cloudServiceName,deploymentName,endTime);
+    }
     if (diskName != null) {
       logger.fine("Deleting os disk : " + diskName + " that belonged to the virtual machine "+ roleName);
       deleteOSDisk(diskName,endTime);
