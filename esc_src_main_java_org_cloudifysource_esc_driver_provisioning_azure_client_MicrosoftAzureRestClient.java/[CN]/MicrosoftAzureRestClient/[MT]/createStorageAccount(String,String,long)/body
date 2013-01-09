@@ -1,7 +1,7 @@
 {
   CreateStorageServiceInput createStorageServiceInput=requestBodyBuilder.buildCreateStorageAccount(affinityGroup,storageAccountName);
   if (storageExists(storageAccountName)) {
-    logger.fine("Found an existing storage account : " + storageAccountName);
+    logger.info("Using an already existing storage account : " + storageAccountName);
     return;
   }
   logger.fine("Creating a storage account : " + storageAccountName);

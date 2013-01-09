@@ -16,7 +16,7 @@
     desc.setSize(size);
     desc.setStorageAccountName(storageAccountName);
     desc.setUserName(userName);
-    logger.info("Creating a virtual machine with details : " + desc);
+    logger.info("Launching a new virtual machine");
     roleAddressDetails=azureClient.createVirtualMachineDeployment(desc,endTime);
     machineDetails.setPrivateAddress(roleAddressDetails.getPrivateIp());
     machineDetails.setPublicAddress(roleAddressDetails.getPublicIp());
@@ -31,10 +31,10 @@
     return machineDetails;
   }
  catch (  final Exception e) {
-    logger.severe("Failed creating virtual machine properly : " + e.getMessage());
+    logger.fine("Failed creating virtual machine properly : " + e.getMessage());
     if (desc.getHostedServiceName() != null) {
       try {
-        azureClient.deleteVirtualMachineByDeploymentIfExists(desc.getHostedServiceName(),desc.getDeploymentName(),endTime + DEFAULT_SHUTDOWN_DURATION);
+        azureClient.deleteVirtualMachineByDeploymentNameIfExists(desc.getHostedServiceName(),desc.getDeploymentName(),endTime + DEFAULT_SHUTDOWN_DURATION);
       }
  catch (      final Exception e1) {
         if (e1 instanceof TimeoutException) {

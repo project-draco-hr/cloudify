@@ -5,14 +5,20 @@
     Future<MachineDetails> future=executorService.submit(task);
     results.add(future);
   }
-  List<Exception> exceptionsOnManagementStart=new ArrayList<Exception>();
+  List<Throwable> exceptionsOnManagementStart=new ArrayList<Throwable>();
   List<MachineDetails> managementMachinesDetails=new ArrayList<MachineDetails>();
   for (  Future<MachineDetails> future : results) {
     try {
       managementMachinesDetails.add(future.get());
     }
  catch (    final Exception e) {
-      exceptionsOnManagementStart.add(e);
+      if (e instanceof InterruptedException) {
+        exceptionsOnManagementStart.add(e);
+      }
+ else {
+        ExecutionException executionException=(ExecutionException)e;
+        exceptionsOnManagementStart.add(ExceptionUtils.getRootCause(executionException));
+      }
     }
   }
   if (exceptionsOnManagementStart.isEmpty()) {
@@ -20,12 +26,12 @@
   }
  else {
     if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("here are all the exception caught from all threads");
-      for (      Exception e : exceptionsOnManagementStart) {
-        logger.finest(ExceptionUtils.getFullStackTrace(e));
+      logger.finest("Here are all the exception caught from all threads");
+      for (      Throwable t : exceptionsOnManagementStart) {
+        logger.finest(ExceptionUtils.getFullStackTrace(t));
       }
     }
     stopManagementMachines();
-    throw new CloudProvisioningException("Failed starting management machines",exceptionsOnManagementStart.get(0));
+    throw new CloudProvisioningException(exceptionsOnManagementStart.get(0).getMessage(),exceptionsOnManagementStart.get(0));
   }
 }

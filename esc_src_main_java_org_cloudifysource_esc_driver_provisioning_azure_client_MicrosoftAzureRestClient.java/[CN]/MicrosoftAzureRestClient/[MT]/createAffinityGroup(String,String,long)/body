@@ -1,10 +1,10 @@
 {
   CreateAffinityGroup createAffinityGroup=requestBodyBuilder.buildCreateAffinity(affinityGroup,location);
   if (affinityExists(affinityGroup)) {
-    logger.fine("Found an existing affinity group : " + affinityGroup);
+    logger.info("Using an already existing affinity group : " + affinityGroup);
     return;
   }
-  logger.fine("Creating affinity group : " + affinityGroup);
+  logger.info("Creating affinity group : " + affinityGroup);
   String xmlRequest=MicrosoftAzureModelUtils.marshall(createAffinityGroup,false);
   ClientResponse response=doPost("/affinitygroups",xmlRequest);
   String requestId=extractRequestId(response);

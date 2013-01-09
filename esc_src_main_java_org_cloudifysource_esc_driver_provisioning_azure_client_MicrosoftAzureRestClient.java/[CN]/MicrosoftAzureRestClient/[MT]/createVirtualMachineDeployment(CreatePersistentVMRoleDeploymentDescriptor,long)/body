@@ -28,7 +28,7 @@
       logger.fine(getThreadIdentity() + "A failure occured : about to release lock " + pendingRequest.hashCode());
       pendingRequest.unlock();
       if (e instanceof MicrosoftAzureException) {
-        throw new MicrosoftAzureException(e);
+        throw (MicrosoftAzureException)e;
       }
       if (e instanceof TimeoutException) {
         throw new TimeoutException(e.getMessage());

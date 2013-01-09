@@ -1,7 +1,7 @@
 {
   VirtualNetworkSites virtualNetworkSites=listVirtualNetworkSites();
   if (virtualNetworkSites != null && virtualNetworkSites.contains(networkSiteName)) {
-    logger.fine("Found an existing virtual netowrk site : " + networkSiteName);
+    logger.info("Using an already existing virtual netowrk site : " + networkSiteName);
     return;
   }
  else {
@@ -9,7 +9,7 @@
       virtualNetworkSites=new VirtualNetworkSites();
     }
   }
-  logger.fine("Creating virtual network site : " + networkSiteName);
+  logger.info("Creating virtual network site : " + networkSiteName);
   VirtualNetworkSite newSite=new VirtualNetworkSite();
   AddressSpace address=new AddressSpace();
   address.setAddressPrefix(addressSpace);
