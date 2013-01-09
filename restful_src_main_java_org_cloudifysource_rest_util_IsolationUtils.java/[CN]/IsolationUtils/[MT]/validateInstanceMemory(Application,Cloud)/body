@@ -1,14 +1,5 @@
 {
-  List<String> errorMessages=new ArrayList<String>();
   for (  Service service : application.getServices()) {
-    try {
-      validateInstanceMemory(service,cloud);
-    }
- catch (    RestErrorException e) {
-      errorMessages.add(e.getMessage());
-    }
-  }
-  if (!errorMessages.isEmpty()) {
-    throw new RestErrorException(CloudifyErrorMessages.INSUFFICIENT_MEMORY.getName(),StringUtils.join(errorMessages,","));
+    validateInstanceMemory(service,cloud);
   }
 }
