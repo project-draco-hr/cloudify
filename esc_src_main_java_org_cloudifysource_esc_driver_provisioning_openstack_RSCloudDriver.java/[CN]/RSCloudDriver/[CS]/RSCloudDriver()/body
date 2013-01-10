@@ -2,5 +2,8 @@
   dbf=DocumentBuilderFactory.newInstance();
   dbf.setNamespaceAware(false);
   final ClientConfig config=new DefaultClientConfig();
-  this.client=Client.create(config);
+  Client httpClient=Client.create(config);
+  httpClient.setConnectTimeout(CloudifyConstants.DEFAULT_HTTP_CONNECTION_TIMEOUT);
+  httpClient.setReadTimeout(CloudifyConstants.DEFAULT_HTTP_READ_TIMEOUT);
+  this.client=httpClient;
 }

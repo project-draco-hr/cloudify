@@ -1,5 +1,8 @@
 {
   ClientConfig config=new DefaultClientConfig();
   config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,new HTTPSProperties(null,context));
-  return Client.create(config);
+  Client httpClient=Client.create(config);
+  httpClient.setConnectTimeout(CloudifyConstants.DEFAULT_HTTP_CONNECTION_TIMEOUT);
+  httpClient.setReadTimeout(CloudifyConstants.DEFAULT_HTTP_READ_TIMEOUT);
+  return httpClient;
 }
