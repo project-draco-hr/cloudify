@@ -1,4 +1,4 @@
 {
-  super(message);
+  super(status + " : " + message);
   this.status=status;
 }

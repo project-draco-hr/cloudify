@@ -3,6 +3,7 @@
   if (status != HTTP_OK && status != HTTP_CREATED && status != HTTP_ACCEPTED) {
     Error error=(Error)MicrosoftAzureModelUtils.unmarshall(response.getEntity(String.class));
     String errorMessage=error.getMessage();
-    throw new MicrosoftAzureException(String.valueOf(status),errorMessage);
+    String errorCode=error.getCode();
+    throw new MicrosoftAzureException(errorCode,errorMessage);
   }
 }

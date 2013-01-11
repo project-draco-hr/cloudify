@@ -8,8 +8,8 @@
       }
       if (status.equals(FAILED)) {
         String errorMessage=operation.getError().getMessage();
-        String errorStatus=operation.getStatus();
-        throw new MicrosoftAzureException(errorStatus,errorMessage);
+        String errorCode=operation.getError().getCode();
+        throw new MicrosoftAzureException(errorCode,errorMessage);
       }
     }
  else {
