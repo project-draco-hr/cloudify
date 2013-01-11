@@ -3,5 +3,6 @@
   ClientResponse response=doDelete("/services/storageservices/" + storageAccountName);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);
+  logger.info("Deleleted storage account : " + storageAccountName);
   return true;
 }

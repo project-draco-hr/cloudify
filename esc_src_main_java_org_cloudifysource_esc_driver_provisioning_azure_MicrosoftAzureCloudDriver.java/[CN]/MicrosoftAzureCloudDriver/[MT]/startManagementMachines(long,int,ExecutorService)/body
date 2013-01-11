@@ -17,7 +17,9 @@
       }
  else {
         ExecutionException executionException=(ExecutionException)e;
-        exceptionsOnManagementStart.add(ExceptionUtils.getRootCause(executionException));
+        Throwable rootCause=ExceptionUtils.getRootCause(executionException);
+        logger.warning(rootCause.getMessage());
+        exceptionsOnManagementStart.add(rootCause);
       }
     }
   }
@@ -31,7 +33,13 @@
         logger.finest(ExceptionUtils.getFullStackTrace(t));
       }
     }
-    stopManagementMachines();
+    try {
+      logger.warning("Failed to start management machines. cleaning up any services that might have already been started.");
+      stopManagementMachines();
+    }
+ catch (    CloudProvisioningException e) {
+      logger.warning("Failed to cleanup cloud services. Please shut them down manually or use the teardown-cloud command.");
+    }
     throw new CloudProvisioningException(exceptionsOnManagementStart.get(0).getMessage(),exceptionsOnManagementStart.get(0));
   }
 }

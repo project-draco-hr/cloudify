@@ -20,22 +20,29 @@
       }
     }
   }
-  List<Exception> exceptionOnStopMachines=new ArrayList<Exception>();
+  List<Throwable> exceptionOnStopMachines=new ArrayList<Throwable>();
   for (  Future<?> future : futures) {
     try {
       future.get();
     }
  catch (    final Exception e) {
-      exceptionOnStopMachines.add(e);
+      if (e instanceof InterruptedException) {
+        exceptionOnStopMachines.add(e);
+      }
+ else {
+        ExecutionException executionException=(ExecutionException)e;
+        Throwable rootCause=ExceptionUtils.getRootCause(executionException);
+        logger.warning(rootCause.getMessage());
+        exceptionOnStopMachines.add(rootCause);
+      }
     }
   }
   if (!(exceptionOnStopMachines.isEmpty())) {
     if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("here are all the exception caught from all threads");
-      for (      Exception e : exceptionOnStopMachines) {
+      for (      Throwable e : exceptionOnStopMachines) {
         logger.finest(ExceptionUtils.getFullStackTrace(e));
       }
     }
-    throw new CloudProvisioningException("Failed terminating management machines",exceptionOnStopMachines.get(0));
+    throw new CloudProvisioningException(exceptionOnStopMachines.get(0).getMessage(),exceptionOnStopMachines.get(0));
   }
 }
