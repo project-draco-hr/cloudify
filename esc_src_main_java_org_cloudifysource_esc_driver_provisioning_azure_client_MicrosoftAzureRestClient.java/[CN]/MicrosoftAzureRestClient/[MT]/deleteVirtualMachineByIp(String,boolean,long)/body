@@ -1,4 +1,5 @@
 {
   Deployment deployment=getDeploymentByIp(machineIp,isPrivateIp);
+  logger.fine("Deployment name for VM with ip " + machineIp + " is "+ deployment.getName());
   deleteVirtualMachineByDeploymentName(deployment.getHostedServiceName(),deployment.getName(),endTime);
 }
