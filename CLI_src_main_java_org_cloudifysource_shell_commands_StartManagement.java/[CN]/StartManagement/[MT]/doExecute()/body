@@ -3,18 +3,18 @@
   if (getTimeoutInMinutes() < 0) {
     throw new CLIException("-timeout cannot be negative");
   }
-  if (securityFilePath == null) {
-    throw new IllegalStateException("secuirtyFilePath cannot be null");
+  if (SPRING_SECURITY_CONFIG_FILE == null) {
+    throw new IllegalStateException("Environment variable " + CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR + " cannot be null");
   }
   if (securityProfile == null) {
-    throw new IllegalStateException("securityProfile cannot be null");
+    throw new IllegalStateException("Environment variable " + CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR + " cannot be null");
   }
-  if (!CloudifyConstants.SPRING_PROFILE_NON_SECURE.equals(securityProfile)) {
-    if (keystoreFilePath == null) {
-      throw new IllegalStateException("keystoreFilePath cannot be null when using security");
+  if (CloudifyConstants.SPRING_PROFILE_SECURE.equals(securityProfile)) {
+    if (KEYSTORE_FILE == null) {
+      throw new IllegalStateException("Environment variable " + CloudifyConstants.KEYSTORE_FILE_ENV_VAR + " cannot be null");
     }
-    if (keystorePassword == null) {
-      throw new IllegalStateException("keystorePassword cannot be null when using security");
+    if (KEYSTORE_PASSWORD == null) {
+      throw new IllegalStateException("Environment variable " + CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR + " cannot be null");
     }
   }
   setSecurityMode();
@@ -31,6 +31,6 @@
   installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);
-  installer.startManagementOnLocalhostAndWait(securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,getTimeoutInMinutes(),TimeUnit.MINUTES);
+  installer.startManagementOnLocalhostAndWait(securityProfile,SPRING_SECURITY_CONFIG_FILE,username,password,KEYSTORE_FILE,KEYSTORE_PASSWORD,getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Management started successfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }
