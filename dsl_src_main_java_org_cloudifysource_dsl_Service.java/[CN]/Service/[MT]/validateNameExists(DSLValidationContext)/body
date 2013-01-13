@@ -1,5 +1,0 @@
-{
-  if (StringUtils.isBlank(name)) {
-    throw new DSLValidationException("Service.validateNameExists: The service's name " + (name == null ? "is missing" : "is empty"));
-  }
-}

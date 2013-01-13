@@ -1,5 +1,0 @@
-{
-  if (StringUtils.isBlank(name)) {
-    throw new DSLValidationException("Application.validateNameExists: The application's name " + (name == null ? "is missing" : "is empty"));
-  }
-}

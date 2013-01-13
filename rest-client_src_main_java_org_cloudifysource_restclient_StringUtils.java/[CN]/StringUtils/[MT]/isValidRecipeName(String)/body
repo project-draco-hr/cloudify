@@ -1,0 +1,4 @@
+{
+  char[] invalidChars=new char[]{'{','}','[',']','(',')'};
+  return !org.apache.commons.lang.StringUtils.containsAny(name,invalidChars);
+}

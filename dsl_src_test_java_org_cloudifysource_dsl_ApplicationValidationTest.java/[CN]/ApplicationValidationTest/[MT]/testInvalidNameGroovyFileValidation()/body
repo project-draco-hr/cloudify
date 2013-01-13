@@ -1,0 +1,13 @@
+{
+  final File applicationFile=new File(APPLICATION_WITH_INVALID_NAME_GROOVY);
+  try {
+    ServiceReader.getApplicationFromFile(applicationFile).getApplication();
+    Assert.fail("Application name is invalid: " + INVALID_APP_NAME + ". IllegalArgumentException expected.");
+  }
+ catch (  final IllegalArgumentException e) {
+  }
+catch (  final Exception e) {
+    Assert.fail("Application name is invalid: " + INVALID_APP_NAME + ". IllegalArgumentException expected, "+ "but "+ e.getClass()+ " was thrown instead.");
+    e.printStackTrace();
+  }
+}

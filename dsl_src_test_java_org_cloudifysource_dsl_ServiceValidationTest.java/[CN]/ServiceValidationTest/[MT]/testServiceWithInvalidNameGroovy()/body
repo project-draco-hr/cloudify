@@ -1,0 +1,11 @@
+{
+  try {
+    ServiceReader.readService(new File(SERVICE_WITH_INVALID_NAME_GROOVY));
+    Assert.fail("Service name is invalid: " + INVALID_SERVICE_NAME + ". DSLValidationException expected.");
+  }
+ catch (  DSLValidationException e) {
+  }
+catch (  Exception e) {
+    Assert.fail("Service name is invalid: " + INVALID_SERVICE_NAME + ". DSLValidationException expected, "+ "but "+ e.getClass()+ " was thrown instead.");
+  }
+}

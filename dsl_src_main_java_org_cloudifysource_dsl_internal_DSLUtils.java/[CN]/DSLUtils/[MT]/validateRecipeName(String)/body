@@ -1,0 +1,6 @@
+{
+  char[] invalidChars=new char[]{'{','}','[',']','(',')'};
+  if (org.apache.commons.lang.StringUtils.containsAny(name,invalidChars)) {
+    throw new DSLValidationException("The name \"" + name + "\" contains one or more invalid characters: "+ "'(',')','[',']','{','}'");
+  }
+}

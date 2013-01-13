@@ -17,6 +17,9 @@
   if (StringUtils.isBlank(applicationName)) {
     applicationName=application.getName();
   }
+  if (!org.cloudifysource.restclient.StringUtils.isValidRecipeName(applicationName)) {
+    throw new CLIStatusException(CloudifyErrorMessages.APPLICATION_NAME_INVALID_CHARS.getName(),applicationName);
+  }
   if (adminFacade.getApplicationNamesList().contains(applicationName)) {
     throw new CLIStatusException("application_already_deployed",application.getName());
   }

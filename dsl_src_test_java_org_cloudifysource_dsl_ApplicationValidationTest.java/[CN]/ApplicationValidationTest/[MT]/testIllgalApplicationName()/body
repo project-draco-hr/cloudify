@@ -1,15 +1,22 @@
 {
   final Application app=new Application();
   try {
-    app.validateNameExists(new DSLValidationContext());
+    app.validateName(new DSLValidationContext());
     Assert.fail("An application without a name was successfully validated.");
   }
  catch (  final DSLValidationException e) {
   }
   app.setName(StringUtils.EMPTY);
   try {
-    app.validateNameExists(new DSLValidationContext());
+    app.validateName(new DSLValidationContext());
     Assert.fail("An application with an empty name was successfully validated.");
+  }
+ catch (  final DSLValidationException e) {
+  }
+  app.setName(INVALID_APP_NAME);
+  try {
+    app.validateName(new DSLValidationContext());
+    Assert.fail("An application with an invalid name was successfully validated: " + INVALID_APP_NAME);
   }
  catch (  final DSLValidationException e) {
   }
