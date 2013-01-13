@@ -18,7 +18,9 @@
     throw new InstallerException("Failed to create environment file",e);
   }
  finally {
-    FileUtils.deleteQuietly(environmentFile.getParentFile());
+    if (environmentFile != null) {
+      FileUtils.deleteQuietly(environmentFile.getParentFile());
+    }
   }
   publishEvent("launching_agent_on_node",targetHost);
   remoteExecuteAgentOnServer(details,end,targetHost);
