@@ -38,7 +38,8 @@
       stopManagementMachines();
     }
  catch (    CloudProvisioningException e) {
-      logger.warning("Failed to cleanup cloud services. Please shut them down manually or use the teardown-cloud command.");
+      logger.warning("Failed to cleanup some management services. Please shut them down manually or use the teardown-cloud command.");
+      logger.fine(ExceptionUtils.getFullStackTrace(e));
     }
     throw new CloudProvisioningException(exceptionsOnManagementStart.get(0).getMessage(),exceptionsOnManagementStart.get(0));
   }

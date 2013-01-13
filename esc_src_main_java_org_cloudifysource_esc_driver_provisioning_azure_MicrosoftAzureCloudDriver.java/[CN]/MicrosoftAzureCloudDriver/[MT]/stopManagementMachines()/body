@@ -9,50 +9,12 @@
   finally {
     if (!success) {
       if (cleanup) {
-        logger.warning("Failed to shutdown management machine. no cleanup attempt will be made.");
+        logger.warning("Failed to shutdown management machines. no cleanup attempt will be made.");
       }
     }
     service.shutdown();
   }
-  boolean deletedNetwork=false;
-  boolean deletedStorage=false;
-  Exception first=null;
   if (cleanup) {
-    try {
-      deletedNetwork=azureClient.deleteVirtualNetworkSite(networkName,endTime);
-    }
- catch (    final Exception e) {
-      first=e;
-      logger.warning("Failed deleting virtual network site " + networkName + " : "+ e.getMessage());
-      logger.fine(ExceptionUtils.getFullStackTrace(e));
-    }
-    try {
-      deletedStorage=azureClient.deleteStorageAccount(storageAccountName,endTime);
-    }
- catch (    final Exception e) {
-      if (first == null) {
-        first=e;
-      }
-      logger.warning("Failed deleting storage account " + storageAccountName + " : "+ e.getMessage());
-      logger.warning(ExceptionUtils.getFullStackTrace(e));
-    }
-    if (deletedNetwork && deletedStorage) {
-      try {
-        azureClient.deleteAffinityGroup(affinityGroup,endTime);
-      }
- catch (      final Exception e) {
-        if (first == null) {
-          first=e;
-        }
-        logger.warning("Failed deleting affinity group " + affinityGroup + " : "+ e.getMessage());
-        logger.fine(ExceptionUtils.getFullStackTrace(e));
-      }
-    }
- else {
-      logger.info("Not deleting affinity group since " + "either storage account or network site were not deleted.");
-    }
-    if (first != null) {
-      throw new CloudProvisioningException(first);
-    }
+    cleanup();
   }
 }

@@ -1,0 +1,4 @@
+{
+  VirtualNetworkSites sites=listVirtualNetworkSites();
+  return (sites.contains(virtualNetworkName));
+}

@@ -1,4 +1,7 @@
 {
+  if (!virtualNetworkExists(virtualNetworkSite)) {
+    return true;
+  }
   VirtualNetworkSites virtualNetworkSites=listVirtualNetworkSites();
   int index=0;
   for (int i=0; i < virtualNetworkSites.getVirtualNetworkSites().size(); i++) {
@@ -9,8 +12,8 @@
     }
   }
   virtualNetworkSites.getVirtualNetworkSites().remove(index);
-  logger.info("Deleteing virtual network site : " + virtualNetworkSite);
+  logger.info("Deleting virtual network site : " + virtualNetworkSite);
   setNetworkConfiguration(endTime,virtualNetworkSites);
-  logger.info("Deleted virtual network site : " + virtualNetworkSite);
+  logger.fine("Deleted virtual network site : " + virtualNetworkSite);
   return true;
 }

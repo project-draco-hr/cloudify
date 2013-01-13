@@ -2,10 +2,10 @@
   if (!storageExists(storageAccountName)) {
     return true;
   }
-  logger.info("Deleleting storage account : " + storageAccountName);
+  logger.info("Deleting storage account : " + storageAccountName);
   ClientResponse response=doDelete("/services/storageservices/" + storageAccountName);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);
-  logger.info("Deleleted storage account : " + storageAccountName);
+  logger.fine("Deleted storage account : " + storageAccountName);
   return true;
 }

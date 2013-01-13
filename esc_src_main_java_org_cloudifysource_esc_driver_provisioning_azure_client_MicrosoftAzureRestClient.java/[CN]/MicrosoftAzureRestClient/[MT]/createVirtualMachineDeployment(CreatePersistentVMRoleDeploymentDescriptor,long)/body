@@ -26,7 +26,6 @@
     }
  catch (    final Exception e) {
       logger.fine(getThreadIdentity() + "A failure occured : about to release lock " + pendingRequest.hashCode());
-      logger.warning("Failed to create a Virtual Machine : " + e.getMessage());
       if (serviceName != null) {
         try {
           deleteCloudService(serviceName,endTime);

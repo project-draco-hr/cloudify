@@ -27,11 +27,9 @@
     machineDetails.setRemoteDirectory(this.template.getRemoteDirectory());
     machineDetails.setRemotePassword(password);
     machineDetails.setRemoteUsername(userName);
-    logger.info("Virtual machine started and is ready for use : " + machineDetails);
     return machineDetails;
   }
  catch (  final Exception e) {
-    logger.info("Failed creating virtual machine properly : " + e.getMessage());
     throw new CloudProvisioningException(e);
   }
 }

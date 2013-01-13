@@ -6,5 +6,6 @@
   ClientResponse response=doDelete("/affinitygroups/" + affinityGroupName);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);
+  logger.fine("Deleted affinity group : " + affinityGroupName);
   return true;
 }
