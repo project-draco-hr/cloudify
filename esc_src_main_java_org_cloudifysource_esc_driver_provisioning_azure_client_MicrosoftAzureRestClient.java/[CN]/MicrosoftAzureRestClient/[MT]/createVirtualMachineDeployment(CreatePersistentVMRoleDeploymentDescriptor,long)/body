@@ -26,15 +26,25 @@
     }
  catch (    final Exception e) {
       logger.fine(getThreadIdentity() + "A failure occured : about to release lock " + pendingRequest.hashCode());
+      logger.warning("Failed to create a Virtual Machine : " + e.getMessage());
+      if (serviceName != null) {
+        try {
+          deleteCloudService(serviceName,endTime);
+        }
+ catch (        final Exception e1) {
+          logger.warning("Failed deleting cloud service " + serviceName + " : "+ e1.getMessage());
+          logger.finest(ExceptionUtils.getFullStackTrace(e1));
+        }
+      }
       pendingRequest.unlock();
       if (e instanceof MicrosoftAzureException) {
         throw (MicrosoftAzureException)e;
       }
       if (e instanceof TimeoutException) {
-        throw new TimeoutException(e.getMessage());
+        throw (TimeoutException)e;
       }
       if (e instanceof InterruptedException) {
-        throw new InterruptedException(e.getMessage());
+        throw (InterruptedException)e;
       }
     }
   }

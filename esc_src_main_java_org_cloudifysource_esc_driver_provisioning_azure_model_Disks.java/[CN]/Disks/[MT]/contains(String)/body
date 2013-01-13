@@ -1,0 +1,8 @@
+{
+  for (  Disk disk : disks) {
+    if (disk.getName().equals(diskName)) {
+      return true;
+    }
+  }
+  return false;
+}

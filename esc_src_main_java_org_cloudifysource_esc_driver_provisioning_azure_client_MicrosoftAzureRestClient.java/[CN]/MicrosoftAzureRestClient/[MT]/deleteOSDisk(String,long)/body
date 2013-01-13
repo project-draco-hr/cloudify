@@ -1,4 +1,7 @@
 {
+  if (!osDiskExists(diskName)) {
+    return true;
+  }
   ClientResponse response=doDelete("/services/disks/" + diskName);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);

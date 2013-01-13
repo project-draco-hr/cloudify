@@ -1,4 +1,7 @@
 {
+  if (!affinityExists(affinityGroupName)) {
+    return true;
+  }
   logger.info("Deleting affinity group : " + affinityGroupName);
   ClientResponse response=doDelete("/affinitygroups/" + affinityGroupName);
   String requestId=extractRequestId(response);

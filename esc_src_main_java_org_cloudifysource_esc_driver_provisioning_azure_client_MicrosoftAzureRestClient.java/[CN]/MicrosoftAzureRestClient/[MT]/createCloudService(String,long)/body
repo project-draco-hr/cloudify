@@ -13,13 +13,13 @@
  catch (  final Exception e) {
     logger.warning("Failed to create cloud service : " + e.getMessage());
     if (e instanceof MicrosoftAzureException) {
-      throw new MicrosoftAzureException(e);
+      throw (MicrosoftAzureException)e;
     }
     if (e instanceof TimeoutException) {
-      throw new TimeoutException(e.getMessage());
+      throw (TimeoutException)e;
     }
     if (e instanceof InterruptedException) {
-      throw new InterruptedException(e.getMessage());
+      throw (InterruptedException)e;
     }
   }
   return serviceName;

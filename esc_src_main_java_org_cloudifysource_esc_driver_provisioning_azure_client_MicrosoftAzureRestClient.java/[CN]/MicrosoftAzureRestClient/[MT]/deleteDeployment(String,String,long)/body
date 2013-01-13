@@ -22,10 +22,10 @@
         throw new MicrosoftAzureException(e);
       }
       if (e instanceof TimeoutException) {
-        throw new TimeoutException(e.getMessage());
+        throw (TimeoutException)e;
       }
       if (e instanceof InterruptedException) {
-        throw new InterruptedException(e.getMessage());
+        throw (InterruptedException)e;
       }
     }
     return true;

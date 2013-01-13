@@ -1,4 +1,7 @@
 {
+  if (!storageExists(storageAccountName)) {
+    return true;
+  }
   logger.info("Deleleting storage account : " + storageAccountName);
   ClientResponse response=doDelete("/services/storageservices/" + storageAccountName);
   String requestId=extractRequestId(response);

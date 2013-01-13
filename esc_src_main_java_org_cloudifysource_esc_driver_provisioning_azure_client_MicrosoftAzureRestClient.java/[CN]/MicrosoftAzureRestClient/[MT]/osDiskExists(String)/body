@@ -1,0 +1,4 @@
+{
+  Disks disks=listOSDisks();
+  return (disks.contains(osDiskName));
+}
