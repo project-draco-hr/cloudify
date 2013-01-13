@@ -15,6 +15,7 @@
     service.shutdown();
   }
   if (cleanup) {
+    logger.info("Cleaning up management services");
     cleanup();
   }
 }
