@@ -1,4 +1,0 @@
-long endTime
-AgentlessInstaller installer
-int numOfManagementMachines
-InstallationDetails[] installations

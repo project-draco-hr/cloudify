@@ -1,0 +1,15 @@
+{
+  File tempFile;
+  try {
+    tempFile=File.createTempFile("cloudify","tmp");
+  }
+ catch (  final IOException e) {
+    throw new IllegalStateException("Failed to create temp file",e);
+  }
+  FileUtils.deleteFileOrDirectory(tempFile);
+  final boolean created=tempFile.mkdirs();
+  if (!created) {
+    throw new IllegalStateException("Failed to create temp file " + tempFile);
+  }
+  return tempFile;
+}

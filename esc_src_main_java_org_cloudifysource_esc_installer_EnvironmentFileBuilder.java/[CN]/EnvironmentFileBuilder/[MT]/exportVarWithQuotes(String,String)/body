@@ -1,0 +1,4 @@
+{
+  final String actualValue=value != null ? quote(value) : "";
+  return this.exportVar(name,actualValue);
+}

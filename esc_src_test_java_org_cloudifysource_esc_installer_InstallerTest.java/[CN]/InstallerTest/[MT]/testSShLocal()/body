@@ -1,0 +1,30 @@
+{
+  AgentlessInstaller installer=new AgentlessInstaller();
+  InstallationDetails details=new InstallationDetails();
+  details.setAdmin(null);
+  details.setBindToPrivateIp(true);
+  details.setCloudFile(new File(System.getenv("CLOUDIFY_HOME") + "/tools/cli/plugins/esc/ec2/ec2-cloud.groovy"));
+  details.setCloudifyUrl("http://localhost:8090/cloudify/gigaspaces.zip");
+  details.setConnectedToPrivateIp(true);
+  details.setFileTransferMode(FileTransferModes.SFTP);
+  details.setLocalDir(System.getenv("CLOUDIFY_HOME") + "/tools/cli/plugins/esc/ec2/upload");
+  details.setLocator(null);
+  details.setLus(true);
+  details.setMachineId("TEST_NODE");
+  details.setRelativeLocalDir("upload");
+  details.setRemoteDir("/tmp/gs-files");
+  details.setRemoteExecutionMode(RemoteExecutionModes.SSH);
+  details.setReservationId(new GSAReservationId("TEST_ID"));
+  details.setScriptLanguage(ScriptLanguages.LINUX_SHELL);
+  details.setTemplateName("TEST_TEMPLATE");
+  details.setUsername(LINUX_USERNAME);
+  details.setPassword(LINUX_PASSWORD);
+  details.setPrivateIp("localhost");
+  installer.addListener(new AgentlessInstallerListener(){
+    @Override public void onInstallerEvent(    String eventName,    Object... args){
+      System.out.println("Event: " + eventName + ", Parameters: "+ Arrays.asList(args));
+    }
+  }
+);
+  installer.installOnMachineWithIP(details,5,TimeUnit.MINUTES);
+}

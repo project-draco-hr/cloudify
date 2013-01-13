@@ -7,6 +7,7 @@
   machineId=IOUtils.readString(in);
   fileTransferMode=FileTransferModes.valueOf(IOUtils.readString(in));
   remoteExecutionMode=RemoteExecutionModes.valueOf(IOUtils.readString(in));
+  this.scriptLangeuage=ScriptLanguages.valueOf(IOUtils.readString(in));
   remoteDirectory=IOUtils.readString(in);
   locationId=IOUtils.readString(in);
 }

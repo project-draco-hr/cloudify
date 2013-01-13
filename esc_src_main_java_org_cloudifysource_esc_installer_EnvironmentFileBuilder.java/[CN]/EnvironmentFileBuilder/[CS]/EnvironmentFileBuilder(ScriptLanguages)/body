@@ -1,0 +1,13 @@
+{
+  this.scriptLanguage=scriptLanguage;
+switch (scriptLanguage) {
+case LINUX_SHELL:
+    this.newline="\n";
+  break;
+case WINDOWS_BATCH:
+this.newline="\r\n";
+break;
+default :
+throw new UnsupportedOperationException("Unsupported script language: " + scriptLanguage);
+}
+}

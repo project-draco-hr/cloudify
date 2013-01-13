@@ -1,8 +1,0 @@
-String targetHost
-String command
-String username
-String password
-String keyFile
-long millisUntil
-TimeUnit milliseconds
-String localDir

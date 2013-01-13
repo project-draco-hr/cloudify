@@ -1,0 +1,4 @@
+String targetHost
+InstallationDetails details
+String scriptPath
+long endTimeMillis

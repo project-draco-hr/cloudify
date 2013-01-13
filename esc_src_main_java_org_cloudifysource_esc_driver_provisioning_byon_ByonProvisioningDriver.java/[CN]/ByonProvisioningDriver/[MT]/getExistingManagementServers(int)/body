@@ -12,7 +12,7 @@
     }
   }
   if (StringUtils.isNotBlank(managementIP)) {
-    Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount);
+    final Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount);
     try {
       final GridServiceManagers gsms=admin.getGridServiceManagers();
       for (      final GridServiceManager gsm : gsms) {

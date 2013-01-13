@@ -1,0 +1,4 @@
+InstallationDetails details
+File environmentFile
+long end
+String targetHost

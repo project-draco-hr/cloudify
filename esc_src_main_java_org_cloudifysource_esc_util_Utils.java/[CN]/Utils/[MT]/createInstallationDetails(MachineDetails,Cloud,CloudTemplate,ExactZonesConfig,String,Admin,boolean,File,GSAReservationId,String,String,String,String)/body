@@ -22,6 +22,7 @@
   details.setPassword(md.getRemotePassword());
   details.setRemoteExecutionMode(md.getRemoteExecutionMode());
   details.setFileTransferMode(md.getFileTransferMode());
+  details.setScriptLanguage(md.getScriptLangeuage());
   details.setCloudFile(cloudFile);
   details.setLus(isManagement);
   if (isManagement) {
@@ -74,7 +75,7 @@
     details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_INIT_COMMAND,quotedCommand);
   }
   final Set<Entry<String,String>> entries=template.getEnv().entrySet();
-  for (  Entry<String,String> entry : entries) {
+  for (  final Entry<String,String> entry : entries) {
     details.getExtraRemoteEnvironmentVariables().put(entry.getKey(),entry.getValue());
   }
   if (!org.apache.commons.lang.StringUtils.isBlank(template.getJavaUrl())) {
@@ -86,6 +87,7 @@
   if (authGroups != null) {
     details.setAuthGroups(authGroups);
   }
+  details.setDeleteRemoteDirectoryContents(md.isCleanRemoteDirectoryOnStart());
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }

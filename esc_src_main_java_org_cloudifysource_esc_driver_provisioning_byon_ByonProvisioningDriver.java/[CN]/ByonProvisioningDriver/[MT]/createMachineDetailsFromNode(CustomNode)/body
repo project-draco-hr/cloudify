@@ -1,12 +1,10 @@
 {
-  final MachineDetails md=new MachineDetails();
-  md.setAgentRunning(false);
-  md.setCloudifyInstalled(false);
-  md.setInstallationDirectory(null);
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final MachineDetails md=createMachineDetailsForTemplate(template);
   md.setMachineId(node.getId());
   md.setPrivateAddress(node.getPrivateIP());
   md.setPublicAddress(node.getPublicIP());
-  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  md.setCleanRemoteDirectoryOnStart(this.cleanRemoteDirectoryOnStart);
   if (!StringUtils.isBlank(node.getUsername()) && !StringUtils.isBlank(node.getCredential())) {
     md.setRemoteUsername(node.getUsername());
     md.setRemotePassword(node.getCredential());
@@ -16,12 +14,10 @@
     md.setRemotePassword(template.getPassword());
   }
  else {
-    String nodeStr=node.toString();
+    final String nodeStr=node.toString();
     logger.severe("Cloud node loading failed, missing credentials for server: " + nodeStr);
     publishEvent("prov_node_loading_failed",nodeStr);
     throw new CloudProvisioningException("Cloud node loading failed, missing credentials for server: " + nodeStr);
   }
-  md.setRemoteExecutionMode(template.getRemoteExecution());
-  md.setFileTransferMode(template.getFileTransfer());
   return md;
 }

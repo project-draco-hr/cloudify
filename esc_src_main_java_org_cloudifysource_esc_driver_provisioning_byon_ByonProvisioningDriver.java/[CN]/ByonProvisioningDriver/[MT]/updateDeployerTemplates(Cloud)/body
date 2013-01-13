@@ -1,20 +1,20 @@
 {
-  Map<String,CloudTemplate> cloudTemplatesMap=cloud.getTemplates();
-  List<String> cloudTemplateNames=new LinkedList<String>(cloudTemplatesMap.keySet());
-  List<String> deployerTemplateNames=deployer.getTemplatesList();
-  List<String> redundantTemplates=new LinkedList<String>(deployerTemplateNames);
+  final Map<String,CloudTemplate> cloudTemplatesMap=cloud.getTemplates();
+  final List<String> cloudTemplateNames=new LinkedList<String>(cloudTemplatesMap.keySet());
+  final List<String> deployerTemplateNames=deployer.getTemplatesList();
+  final List<String> redundantTemplates=new LinkedList<String>(deployerTemplateNames);
   redundantTemplates.removeAll(cloudTemplateNames);
   if (!redundantTemplates.isEmpty()) {
     logger.info("initDeployer - found redundant templates: " + redundantTemplates);
     deployer.removeTemplates(redundantTemplates);
   }
-  List<String> missingTemplates=new LinkedList<String>(cloudTemplateNames);
+  final List<String> missingTemplates=new LinkedList<String>(cloudTemplateNames);
   missingTemplates.removeAll(deployerTemplateNames);
   if (!missingTemplates.isEmpty()) {
     logger.info("initDeployer - found missing templates: " + missingTemplates);
-    Map<String,CloudTemplate> templatesMap=new HashMap<String,CloudTemplate>();
-    for (    String templateName : missingTemplates) {
-      CloudTemplate cloudTemplate=cloudTemplatesMap.get(templateName);
+    final Map<String,CloudTemplate> templatesMap=new HashMap<String,CloudTemplate>();
+    for (    final String templateName : missingTemplates) {
+      final CloudTemplate cloudTemplate=cloudTemplatesMap.get(templateName);
       templatesMap.put(templateName,cloudTemplate);
     }
     addTemplatesToDeployer(deployer,templatesMap);

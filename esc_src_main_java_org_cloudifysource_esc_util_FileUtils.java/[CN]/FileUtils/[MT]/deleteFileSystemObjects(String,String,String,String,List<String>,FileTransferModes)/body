@@ -1,5 +1,5 @@
 {
-  if (!(fileTransferMode == FileTransferModes.SCP)) {
+  if (!(fileTransferMode == FileTransferModes.SFTP)) {
     throw new IOException("File deletion is currently not supported for this file transfer protocol (" + fileTransferMode + ")");
   }
   final FileSystemOptions opts=new FileSystemOptions();

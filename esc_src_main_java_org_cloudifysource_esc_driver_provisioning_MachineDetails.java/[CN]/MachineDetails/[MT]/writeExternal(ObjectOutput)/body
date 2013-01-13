@@ -7,6 +7,7 @@
   IOUtils.writeString(out,machineId);
   IOUtils.writeString(out,fileTransferMode.name());
   IOUtils.writeString(out,remoteExecutionMode.name());
+  IOUtils.writeString(out,scriptLangeuage.name());
   IOUtils.writeString(out,remoteDirectory);
   IOUtils.writeString(out,locationId);
 }

@@ -1,8 +1,0 @@
-{
-  String configLocalDir=template.getLocalDirectory();
-  if (configLocalDir != null && !new File(configLocalDir).isAbsolute()) {
-    String envHomeDir=Environment.getHomeDirectory();
-    logger.fine("Assuming " + configLocalDir + " is in "+ envHomeDir);
-    template.setLocalDirectory(new File(envHomeDir,configLocalDir).getAbsolutePath());
-  }
-}

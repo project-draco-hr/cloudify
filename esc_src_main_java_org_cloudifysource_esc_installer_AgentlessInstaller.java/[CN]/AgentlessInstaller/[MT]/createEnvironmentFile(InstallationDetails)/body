@@ -1,0 +1,63 @@
+{
+  String remoteDirectory=details.getRemoteDir();
+  if (remoteDirectory.endsWith("/")) {
+    remoteDirectory=remoteDirectory.substring(0,remoteDirectory.length() - 1);
+  }
+  if (details.isLus()) {
+    remoteDirectory=remoteDirectory + "/" + details.getRelativeLocalDir();
+  }
+  String authGroups=null;
+  if (details.getAuthGroups() != null) {
+    authGroups=details.getAuthGroups();
+  }
+  final EnvironmentFileBuilder builder=new EnvironmentFileBuilder(details.getScriptLanguage()).exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isLus() ? "lus" : "agent").exportVar(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,details.getSecurityProfile()).exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.isBindToPrivateIp() ? details.getPrivateIp() : details.getPublicIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVarWithQuotes(CloudifyConstants.CLOUDIFY_LINK_ENV,details.getCloudifyUrl()).exportVarWithQuotes(CloudifyConstants.CLOUDIFY_OVERRIDES_LINK_ENV,details.getOverridesUrl()).exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.GIGASPACES_AUTH_GROUPS,authGroups).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,details.getPublicIp()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME,details.getTemplateName()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
+  if (details.getReservationId() != null) {
+    builder.exportVar(GSA_RESERVATION_ID_ENV,details.getReservationId().toString());
+  }
+  if (details.isLus()) {
+    String remotePath=details.getRemoteDir();
+    if (!remotePath.endsWith("/")) {
+      remotePath+="/";
+    }
+    builder.exportVar(CLOUD_FILE,remotePath + details.getCloudFile().getName());
+    logger.log(Level.FINE,"Setting ESM/GSM/LUS/GSA/GSC java options");
+    builder.exportVar("ESM_JAVA_OPTIONS",details.getEsmCommandlineArgs());
+    builder.exportVar("LUS_JAVA_OPTIONS",details.getLusCommandlineArgs());
+    builder.exportVar("GSM_JAVA_OPTIONS",details.getGsmCommandlineArgs());
+    builder.exportVar("GSA_JAVA_OPTIONS",details.getGsaCommandlineArgs());
+    builder.exportVar("GSC_JAVA_OPTIONS",details.getGscCommandlineArgs());
+    if (details.getRestPort() != null) {
+      builder.exportVar(CloudifyConstants.REST_PORT_ENV_VAR,details.getRestPort().toString());
+    }
+    if (details.getRestMaxMemory() != null) {
+      builder.exportVar(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR,details.getRestMaxMemory());
+    }
+    if (details.getWebuiPort() != null) {
+      builder.exportVar(CloudifyConstants.WEBUI_PORT_ENV_VAR,details.getWebuiPort().toString());
+    }
+    if (details.getWebuiMaxMemory() != null) {
+      builder.exportVar(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR,details.getWebuiMaxMemory());
+    }
+  }
+  if (details.getUsername() != null) {
+    builder.exportVar("USERNAME",details.getUsername());
+  }
+  if (details.getPassword() != null) {
+    builder.exportVar("PASSWORD",details.getPassword());
+  }
+  builder.exportVar(CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR,details.getRemoteDir() + "/" + CloudifyConstants.SECURITY_FILE_NAME);
+  if (StringUtils.isNotBlank(details.getKeystorePassword())) {
+    builder.exportVar(CloudifyConstants.KEYSTORE_FILE_ENV_VAR,details.getRemoteDir() + "/" + CloudifyConstants.KEYSTORE_FILE_NAME);
+    builder.exportVar(CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR,details.getKeystorePassword());
+  }
+  final Set<Entry<String,String>> entries=details.getExtraRemoteEnvironmentVariables().entrySet();
+  for (  final Entry<String,String> entry : entries) {
+    builder.exportVar(entry.getKey(),entry.getValue());
+  }
+  final String fileContents=builder.toString();
+  final File tempFolder=Utils.createTempFolder();
+  final File tempFile=new File(tempFolder,builder.getEnvironmentFileName());
+  tempFile.deleteOnExit();
+  FileUtils.writeStringToFile(tempFile,fileContents);
+  return tempFile;
+}

@@ -1,0 +1,4 @@
+long endTime
+NewAgentlessInstaller installer
+int numOfManagementMachines
+InstallationDetails[] installations

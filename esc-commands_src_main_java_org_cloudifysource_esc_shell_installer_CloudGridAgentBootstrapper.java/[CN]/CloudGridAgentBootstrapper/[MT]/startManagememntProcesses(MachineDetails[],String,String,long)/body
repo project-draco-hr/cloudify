@@ -1,5 +1,5 @@
 {
-  final AgentlessInstaller installer=new AgentlessInstaller();
+  final NewAgentlessInstaller installer=new NewAgentlessInstaller();
   installer.addListener(new CliAgentlessInstallerListener(this.verbose));
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
   final CloudTemplate template=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());

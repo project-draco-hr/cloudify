@@ -1,0 +1,9 @@
+{
+  final Set<String> excludedFiles=new HashSet<String>();
+  if (!details.isLus() && details.getManagementOnlyFiles() != null) {
+    excludedFiles.addAll(Arrays.asList(details.getManagementOnlyFiles()));
+  }
+  final FileTransfer fileTransfer=FileTransferFactory.getFileTrasnferProvider(details.getFileTransferMode());
+  fileTransfer.initialize(details,end);
+  fileTransfer.copyFiles(details,excludedFiles,Arrays.asList(environmentFile),end);
+}

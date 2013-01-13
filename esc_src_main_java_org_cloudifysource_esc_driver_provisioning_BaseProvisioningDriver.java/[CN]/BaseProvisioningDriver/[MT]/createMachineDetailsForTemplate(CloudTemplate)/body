@@ -1,0 +1,12 @@
+{
+  final MachineDetails md=new MachineDetails();
+  md.setAgentRunning(false);
+  md.setCloudifyInstalled(false);
+  md.setInstallationDirectory(null);
+  md.setRemoteUsername(template.getUsername());
+  md.setRemotePassword(template.getPassword());
+  md.setRemoteExecutionMode(template.getRemoteExecution());
+  md.setFileTransferMode(template.getFileTransfer());
+  md.setScriptLangeuage(template.getScriptLanguage());
+  return md;
+}

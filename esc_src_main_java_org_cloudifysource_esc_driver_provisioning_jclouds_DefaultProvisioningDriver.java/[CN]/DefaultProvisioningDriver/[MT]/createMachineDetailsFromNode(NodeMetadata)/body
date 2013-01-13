@@ -1,6 +1,6 @@
 {
-  final MachineDetails md=new MachineDetails();
-  md.setAgentRunning(false);
+  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final MachineDetails md=createMachineDetailsForTemplate(template);
   md.setCloudifyInstalled(false);
   md.setInstallationDirectory(null);
   md.setMachineId(node.getId());
@@ -10,7 +10,6 @@
   if (node.getPublicAddresses().size() > 0) {
     md.setPublicAddress(node.getPublicAddresses().iterator().next());
   }
-  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
   final String username=createMachineUsername(node,template);
   final String password=createMachinePassword(node,template);
   md.setRemoteUsername(username);

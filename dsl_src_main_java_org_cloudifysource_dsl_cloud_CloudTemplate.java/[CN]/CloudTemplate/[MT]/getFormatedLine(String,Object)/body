@@ -3,7 +3,7 @@
     return "";
   }
   if (obj instanceof Map) {
-    Map<?,?> map=(Map<?,?>)obj;
+    final Map<?,?> map=(Map<?,?>)obj;
     if (map.isEmpty()) {
       return "";
     }

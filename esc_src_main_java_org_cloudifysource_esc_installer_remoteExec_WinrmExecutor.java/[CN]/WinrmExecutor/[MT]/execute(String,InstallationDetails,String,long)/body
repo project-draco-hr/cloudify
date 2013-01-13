@@ -1,0 +1,16 @@
+{
+  final String fullCommand=normalizeCifsPath(scriptPath);
+  final PowershellClient client=new PowershellClient();
+  client.addOutputListener(new PowerShellOutputListener(){
+    @Override public void onPowerShellOutput(    final String line){
+      logger.info(line);
+    }
+  }
+);
+  try {
+    client.invokeRemotePowershellCommand(targetHost,fullCommand,details.getUsername(),details.getPassword(),details.getLocalDir());
+  }
+ catch (  final PowershellClientException e) {
+    throw new InstallerException("Failed to execute powershell remote command",e);
+  }
+}

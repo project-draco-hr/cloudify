@@ -1,8 +1,0 @@
-{
-  final File clientScriptFile=new File(localDir,POWERSHELL_CLIENT_SCRIPT);
-  if (!clientScriptFile.exists()) {
-    throw new FileNotFoundException("Could not find expected powershell client script in local directory. Was expecting file: " + clientScriptFile.getAbsolutePath());
-  }
-  final String[] commandLineParts={"powershell.exe","-inputformat","none","-File",clientScriptFile.getAbsolutePath(),"-target",target,"-password",quoteString(password),"-username",quoteString(username),"-command",quoteString(command)};
-  return Arrays.asList(commandLineParts);
-}

@@ -1,6 +1,6 @@
 {
   File keyFile=null;
-  String keyFileStr=template.getKeyFile();
+  final String keyFileStr=template.getKeyFile();
   if (StringUtils.isNotBlank(keyFileStr)) {
     keyFile=new File(keyFileStr);
     if (!keyFile.isAbsolute()) {
@@ -11,7 +11,7 @@
     }
   }
  else {
-    String remotePassword=machineDetails.getRemotePassword();
+    final String remotePassword=machineDetails.getRemotePassword();
     if (StringUtils.isNotBlank(remotePassword)) {
       if (CredentialUtils.isPrivateKeyCredential(remotePassword)) {
         logger.fine("Cloud has provided a key file for connections to new machines");

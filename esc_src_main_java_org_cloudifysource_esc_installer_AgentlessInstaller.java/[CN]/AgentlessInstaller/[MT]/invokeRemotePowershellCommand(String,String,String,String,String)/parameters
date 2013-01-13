@@ -1,5 +1,0 @@
-String targetHost
-String command
-String username
-String password
-String localDir

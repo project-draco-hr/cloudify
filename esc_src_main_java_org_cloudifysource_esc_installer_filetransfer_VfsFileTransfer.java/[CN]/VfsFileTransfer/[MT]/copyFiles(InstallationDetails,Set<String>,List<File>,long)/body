@@ -1,0 +1,57 @@
+{
+  logger.fine("Copying files to: " + host + " from local dir: "+ localDir.getName().getPath()+ " excluding "+ excludedFiles.toString());
+  try {
+    if (remoteDir.exists()) {
+      FileType type=remoteDir.getType();
+      if (!type.equals(FileType.FOLDER)) {
+        throw new InstallerException("The remote location: " + remoteDir.getName().getFriendlyURI() + " exists but is not a directory");
+      }
+      if (deleteRemoteDirectoryContents) {
+        logger.info("Deleting contents of remote directory: " + remoteDir.getName().getFriendlyURI());
+        remoteDir.delete(new FileDepthSelector(1,Integer.MAX_VALUE));
+      }
+      FileObject[] children=remoteDir.getChildren();
+      if (children.length > 0) {
+        throw new InstallerException("The remote directory: " + remoteDir.getName().getFriendlyURI() + " is not empty");
+      }
+    }
+    remoteDir.copyFrom(localDir,new FileSelector(){
+      @Override public boolean includeFile(      final FileSelectInfo fileInfo) throws Exception {
+        if (excludedFiles.contains(fileInfo.getFile().getName().getBaseName())) {
+          logger.fine(fileInfo.getFile().getName().getBaseName() + " excluded");
+          return false;
+        }
+        final FileObject remoteFile=fileSystemManager.resolveFile(remoteDir,localDir.getName().getRelativeName(fileInfo.getFile().getName()));
+        if (!remoteFile.exists()) {
+          logger.fine(fileInfo.getFile().getName().getBaseName() + " missing on server");
+          return true;
+        }
+        if (fileInfo.getFile().getType() == FileType.FILE) {
+          final long remoteSize=remoteFile.getContent().getSize();
+          final long localSize=fileInfo.getFile().getContent().getSize();
+          final boolean res=localSize != remoteSize;
+          if (res) {
+            logger.fine(fileInfo.getFile().getName().getBaseName() + " different on server");
+          }
+          return res;
+        }
+        return false;
+      }
+      @Override public boolean traverseDescendents(      final FileSelectInfo fileInfo) throws Exception {
+        return true;
+      }
+    }
+);
+    for (    final File file : additionalFiles) {
+      logger.fine("copying file: " + file.getAbsolutePath() + " to remote directory");
+      final FileObject fileObject=fileSystemManager.resolveFile("file:" + file.getAbsolutePath());
+      final FileObject remoteFile=remoteDir.resolveFile(file.getName());
+      remoteFile.copyFrom(fileObject,new AllFileSelector());
+    }
+    logger.fine("Copying files to: " + host + " completed.");
+  }
+ catch (  final FileSystemException e) {
+    throw new InstallerException("Failed to copy files to remote host " + host + ": "+ e.getMessage(),e);
+  }
+  checkTimeout(endTimeMillis);
+}

@@ -4,7 +4,7 @@
   }
   final Map<String,GridServiceAgent> agentsMap=admin.getGridServiceAgents().getHostAddress();
   GSA agent=null;
-  for (  Entry<String,GridServiceAgent> agentEntry : agentsMap.entrySet()) {
+  for (  final Entry<String,GridServiceAgent> agentEntry : agentsMap.entrySet()) {
     if (agentEntry.getKey().equalsIgnoreCase(ipAddress)) {
       agent=((InternalGridServiceAgent)agentEntry.getValue()).getGSA();
     }

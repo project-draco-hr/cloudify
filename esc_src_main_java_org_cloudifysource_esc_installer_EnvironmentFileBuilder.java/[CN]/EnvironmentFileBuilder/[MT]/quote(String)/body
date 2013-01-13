@@ -1,0 +1,10 @@
+{
+switch (this.scriptLanguage) {
+case LINUX_SHELL:
+    return "\"" + value + "\"";
+case WINDOWS_BATCH:
+  return value;
+default :
+throw new UnsupportedOperationException("Unexpected script language: " + this.scriptLanguage);
+}
+}

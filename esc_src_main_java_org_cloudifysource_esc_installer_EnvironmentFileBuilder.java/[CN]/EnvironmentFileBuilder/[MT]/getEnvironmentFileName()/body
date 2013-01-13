@@ -1,0 +1,10 @@
+{
+switch (this.scriptLanguage) {
+case LINUX_SHELL:
+    return "cloudify_env.sh";
+case WINDOWS_BATCH:
+  return "cloudify_env.bat";
+default :
+throw new UnsupportedOperationException("Unexpected script language: " + this.scriptLanguage);
+}
+}

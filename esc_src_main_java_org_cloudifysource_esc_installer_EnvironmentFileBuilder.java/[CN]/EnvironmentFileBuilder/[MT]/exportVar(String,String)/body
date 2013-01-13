@@ -1,0 +1,23 @@
+{
+  logger.fine("exporting var: " + name + " with value "+ value);
+  String actualValue=value;
+  if (value == null) {
+    actualValue="";
+  }
+switch (this.scriptLanguage) {
+case LINUX_SHELL:
+    sb.append("export ").append(name).append("=").append(actualValue);
+  break;
+case WINDOWS_BATCH:
+if (actualValue.startsWith("\"") && actualValue.endsWith("\"")) {
+  actualValue=actualValue.substring(1,actualValue.length() - 1);
+}
+final String normalizedValue=normalizeCifsPath(actualValue);
+sb.append("SET ").append(name).append("=").append(normalizedValue);
+break;
+default :
+throw new IllegalArgumentException("Unsupported script language: " + this.scriptLanguage);
+}
+sb.append(newline);
+return this;
+}

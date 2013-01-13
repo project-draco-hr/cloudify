@@ -1,4 +1,5 @@
 {
+  this.deleteRemoteDirectoryContents=details.isDeleteRemoteDirectoryContents();
   if (details.isConnectedToPrivateIp()) {
     host=details.getPrivateIp();
   }
@@ -10,8 +11,15 @@
   createTargetURI(details);
   final FileSystemManager mng=fileSystemManager;
   mng.setLogger(org.apache.commons.logging.LogFactory.getLog(logger.getName()));
+  String localDirPath=details.getLocalDir();
+  if (details.isLus()) {
+    if (details.getCloudFile() == null) {
+      throw new IllegalArgumentException("While bootstrapping a management machine, cloud file is null");
+    }
+    localDirPath=details.getCloudFile().getParentFile().getAbsolutePath();
+  }
   try {
-    localDir=mng.resolveFile("file:" + details.getLocalDir());
+    localDir=mng.resolveFile("file:" + localDirPath);
     remoteDir=mng.resolveFile(targetURI,opts);
   }
  catch (  final FileSystemException e) {

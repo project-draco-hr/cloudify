@@ -1,3 +1,0 @@
-{
-  deleteRemoteFiles(details,timeout,unit);
-}
