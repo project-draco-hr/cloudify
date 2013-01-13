@@ -1,4 +1,0 @@
-{
-  restoreBackup(defaultSecurityTargetFile,securityFileCopied);
-  restoreBackup(defaultKeystoreTargetFile,keystoreFileCopied);
-}

@@ -12,22 +12,22 @@
  else {
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
+  File tempFolder=createTempFolder();
+  logger.info("Copying provider directory to temporary folder --> " + tempFolder.getAbsolutePath());
+  FileUtils.copyDirectoryToDirectory(providerDirectory,tempFolder);
+  providerDirectory=new File(tempFolder,providerDirectory.getName());
   defaultSecurityTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
   defaultKeystoreTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
   setSecurityMode();
   copySecurityFiles(providerDirectory.getAbsolutePath());
   File cloudFile=findCloudFile(providerDirectory);
   File cloudPropertiesFile=new File(providerDirectory,cloudFile.getName().split("\\.")[0] + DSLUtils.PROPERTIES_FILE_SUFFIX);
-  File backupCloudPropertiesFile=new File(cloudPropertiesFile.getParentFile(),cloudPropertiesFile.getName() + ".backup");
   Cloud cloud=null;
   if (cloudOverrides == null) {
     cloud=ServiceReader.readCloud(cloudFile);
   }
  else {
     cloud=ServiceReader.readCloudFromDirectory(providerDirectory.getAbsolutePath(),FileUtils.readFileToString(cloudOverrides));
-    if (cloudPropertiesFile.exists()) {
-      FileUtils.copyFile(cloudPropertiesFile,backupCloudPropertiesFile);
-    }
     FileAppender appender=new FileAppender(cloudPropertiesFile);
     appender.append("Overrides File Properties",cloudOverrides);
     appender.flush();
@@ -55,16 +55,8 @@
     if (cloudOverrides != null) {
       cloudPropertiesFile.delete();
     }
-    if (backupCloudPropertiesFile.exists()) {
-      FileUtils.copyFile(backupCloudPropertiesFile,cloudPropertiesFile);
-      backupCloudPropertiesFile.delete();
-    }
-    try {
-      revertSecurityFiles(providerDirectory.getAbsolutePath());
-    }
- catch (    final Exception e) {
-      logger.log(Level.SEVERE,"Failed to revert security files before finishing bootstrap-cloud command",e);
-    }
+    logger.info("Deleting temp folder --> " + tempFolder.getAbsolutePath());
+    FileUtils.deleteDirectory(tempFolder);
     installer.close();
     restoreLoggingLevel();
   }
