@@ -3,16 +3,19 @@
   HostedServices cloudServices=listHostedServices();
   for (  HostedService hostedService : cloudServices) {
     String cloudServiceName=hostedService.getServiceName();
-    deployment=getHostedService(cloudServiceName,true).getDeployments().getDeployments().get(0);
-    String deploymentName=deployment.getName();
-    deployment=getDeploymentByDeploymentName(cloudServiceName,deploymentName);
-    String publicIp=getPublicIpFromDeployment(deployment);
-    String privateIp=getPrivateIpFromDeployment(deployment);
-    String ip=isPrivateIp ? privateIp : publicIp;
-    if (machineIp.equals(ip)) {
-      deployment.setHostedServiceName(cloudServiceName);
-      logger.info("Found a role with ip : " + machineIp);
-      return deployment;
+    Deployments deployments=getHostedService(cloudServiceName,true).getDeployments();
+    if (!deployments.getDeployments().isEmpty()) {
+      deployment=deployments.getDeployments().get(0);
+      String deploymentName=deployment.getName();
+      deployment=getDeploymentByDeploymentName(cloudServiceName,deploymentName);
+      String publicIp=getPublicIpFromDeployment(deployment);
+      String privateIp=getPrivateIpFromDeployment(deployment);
+      String ip=isPrivateIp ? privateIp : publicIp;
+      if (machineIp.equals(ip)) {
+        deployment.setHostedServiceName(cloudServiceName);
+        logger.info("Found a role with ip : " + machineIp);
+        return deployment;
+      }
     }
   }
   logger.info("Could not find any roles with ip :" + machineIp);
