@@ -1,5 +1,5 @@
 {
-  String protocol=getRestProtocol(IS_SECURE_CONNECTION);
+  String protocol=getRestProtocol(permissionEvaluator != null);
   String baseUrl=protocol + "://" + host+ ":"+ port;
   String versionName=PlatformVersion.getVersion() + "-Cloudify-" + PlatformVersion.getMilestone();
   return new GSRestClient(new UsernamePasswordCredentials(username,password),new URL(baseUrl),versionName);
