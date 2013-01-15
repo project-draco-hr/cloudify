@@ -13,7 +13,6 @@
     throw new CLIStatusException("cloud_driver_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
   File tempFolder=createTempFolder();
-  logger.info("Copying provider directory to temporary folder --> " + tempFolder.getAbsolutePath());
   FileUtils.copyDirectoryToDirectory(providerDirectory,tempFolder);
   providerDirectory=new File(tempFolder,providerDirectory.getName());
   defaultSecurityTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
@@ -55,7 +54,6 @@
     if (cloudOverrides != null) {
       cloudPropertiesFile.delete();
     }
-    logger.info("Deleting temp folder --> " + tempFolder.getAbsolutePath());
     FileUtils.deleteDirectory(tempFolder);
     installer.close();
     restoreLoggingLevel();
