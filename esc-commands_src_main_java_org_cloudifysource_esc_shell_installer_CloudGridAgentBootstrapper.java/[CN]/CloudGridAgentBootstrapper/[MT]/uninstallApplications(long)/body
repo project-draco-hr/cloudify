@@ -14,7 +14,7 @@
     }
   }
   for (  Map.Entry<String,String> entry : lifeCycleEventContainersIdsByApplicationName.entrySet()) {
-    logger.info("Waiting for application " + entry.getValue());
+    logger.info("Waiting for application " + entry.getValue() + " to uninstall.");
     adminFacade.waitForLifecycleEvents(entry.getKey(),minutesToEnd,CloudifyConstants.TIMEOUT_ERROR_MESSAGE);
   }
 }
