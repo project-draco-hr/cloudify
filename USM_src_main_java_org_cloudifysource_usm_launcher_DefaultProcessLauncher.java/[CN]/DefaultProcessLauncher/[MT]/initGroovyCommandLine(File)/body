@@ -17,6 +17,18 @@
   if (ServiceUtils.isWindows()) {
     modifyWindowsCommandLine(groovyCommandParams,workingDir);
   }
+  if (StringUtils.isNotBlank(System.getenv("RMI_OPTIONS"))) {
+    groovyCommandParams.add(System.getenv("RMI_OPTIONS"));
+  }
+  if (StringUtils.isNotBlank(System.getenv("LOOKUP_GROUPS_PROP"))) {
+    groovyCommandParams.add(System.getenv("LOOKUP_GROUPS_PROP"));
+  }
+  if (StringUtils.isNotBlank(System.getenv("LOOKUP_LOCATORS_PROP"))) {
+    groovyCommandParams.add(System.getenv("LOOKUP_LOCATORS_PROP"));
+  }
+  if (StringUtils.isNotBlank(System.getenv("GS_LOGGING_CONFIG_FILE_PROP"))) {
+    groovyCommandParams.add(System.getenv("GS_LOGGING_CONFIG_FILE_PROP"));
+  }
   String classPathEnv=System.getenv("CLASSPATH");
   if (classPathEnv == null) {
     classPathEnv="";

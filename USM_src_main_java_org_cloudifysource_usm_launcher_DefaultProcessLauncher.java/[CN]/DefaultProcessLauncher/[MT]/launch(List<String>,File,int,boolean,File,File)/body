@@ -6,7 +6,7 @@
     throw new IllegalArgumentException("If redirectError option is chosen, neither output file or error file can be set");
   }
   modifyCommandLine(commandLineParams,workingDir,outputFile,errorFile);
-  final String modifiedCommandLine=StringUtils.collectionToDelimitedString(commandLineParams," ");
+  final String modifiedCommandLine=org.springframework.util.StringUtils.collectionToDelimitedString(commandLineParams," ");
   this.commandLine=commandLineParams;
   int attempt=1;
   USMException ex=null;
