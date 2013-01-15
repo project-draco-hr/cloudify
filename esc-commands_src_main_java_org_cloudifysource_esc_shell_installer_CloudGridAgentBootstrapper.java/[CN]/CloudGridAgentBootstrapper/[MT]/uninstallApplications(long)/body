@@ -3,13 +3,18 @@
   final long startTime=System.currentTimeMillis();
   final long millisToEnd=end - startTime;
   final int minutesToEnd=(int)TimeUnit.MILLISECONDS.toMinutes(millisToEnd);
+  Map<String,String> lifeCycleEventContainersIdsByApplicationName=new HashMap<String,String>();
   if (applicationsList.size() > 0) {
     logger.info("Uninstalling the currently deployed applications");
     for (    final String application : applicationsList) {
       if (!application.equals(MANAGEMENT_APPLICATION)) {
-        adminFacade.uninstallApplication(application,minutesToEnd);
+        Map<String,String> uninstallApplicationResponse=adminFacade.uninstallApplication(application,minutesToEnd);
+        lifeCycleEventContainersIdsByApplicationName.put(uninstallApplicationResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID),application);
       }
     }
   }
-  waitForUninstallApplications(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  for (  Map.Entry<String,String> entry : lifeCycleEventContainersIdsByApplicationName.entrySet()) {
+    logger.info("Waiting for application " + entry.getValue());
+    adminFacade.waitForLifecycleEvents(entry.getKey(),minutesToEnd,CloudifyConstants.TIMEOUT_ERROR_MESSAGE);
+  }
 }
