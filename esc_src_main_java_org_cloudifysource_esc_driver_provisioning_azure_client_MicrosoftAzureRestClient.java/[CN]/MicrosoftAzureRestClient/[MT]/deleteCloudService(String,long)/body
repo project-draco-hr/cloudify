@@ -2,6 +2,7 @@
   if (!cloudServiceExists(cloudServiceName)) {
     return true;
   }
+  logger.fine("Deleting cloud service : " + cloudServiceName);
   ClientResponse response=doDelete("/services/hostedservices/" + cloudServiceName);
   String requestId=extractRequestId(response);
   waitForRequestToFinish(requestId,endTime);

@@ -19,6 +19,8 @@
     deleteCloudService(cloudServiceName,endTime);
   }
   if (diskName != null) {
+    logger.fine("Waiting for OS Disk " + diskName + " to detach from role "+ roleName);
+    waitForDiskToDetach(diskName,roleName,endTime);
     logger.info("Deleting OS Disk : " + diskName);
     deleteOSDisk(diskName,endTime);
   }
