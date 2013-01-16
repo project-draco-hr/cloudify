@@ -3,15 +3,5 @@
   if (message == null) {
     message=e.getReasonCode();
   }
-  if (e.getArgs() == null || e.getArgs().length == 0) {
-    return message;
-  }
- else {
-    if (verboseData == null) {
-      return MessageFormat.format(message,e.getArgs());
-    }
- else {
-      return MessageFormat.format(message,e.getArgs()) + ": " + verboseData;
-    }
-  }
+  return message;
 }
