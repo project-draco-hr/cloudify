@@ -17,7 +17,7 @@
     final Map<String,String> env=createEnvironment();
     pb.environment().putAll(env);
     try {
-      logger.fine("Parsed command line: " + commandLineParams);
+      logger.fine("Parsed command line: " + commandLineParams.toString());
       final String fileInitialMessage="Starting service process in working directory:'" + workingDir + "' "+ "at:'"+ new Date()+ "' with command:'"+ commandLineParams+ "'"+ System.getProperty("line.separator");
       if (outputFile != null) {
         appendMessageToFile(fileInitialMessage,outputFile);

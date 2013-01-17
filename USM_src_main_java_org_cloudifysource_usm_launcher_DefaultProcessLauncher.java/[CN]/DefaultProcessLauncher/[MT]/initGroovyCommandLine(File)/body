@@ -14,20 +14,14 @@
   }
   final ArrayList<String> groovyCommandParams=new ArrayList<String>();
   groovyCommandParams.add(groovyPath);
+  List<String> envVarsList=new ArrayList<String>();
+  envVarsList.add("LOOKUP_LOCATORS_PROP");
+  envVarsList.add("LOOKUP_GROUPS_PROP");
+  envVarsList.add("RMI_OPTIONS");
+  envVarsList.add("GS_LOGGING_CONFIG_FILE_PROP");
+  groovyCommandParams.addAll(convertEnvVarsToSysPropsList(envVarsList));
   if (ServiceUtils.isWindows()) {
     modifyWindowsCommandLine(groovyCommandParams,workingDir);
-  }
-  if (StringUtils.isNotBlank(System.getenv("RMI_OPTIONS"))) {
-    groovyCommandParams.add(System.getenv("RMI_OPTIONS"));
-  }
-  if (StringUtils.isNotBlank(System.getenv("LOOKUP_GROUPS_PROP"))) {
-    groovyCommandParams.add(System.getenv("LOOKUP_GROUPS_PROP"));
-  }
-  if (StringUtils.isNotBlank(System.getenv("LOOKUP_LOCATORS_PROP"))) {
-    groovyCommandParams.add(System.getenv("LOOKUP_LOCATORS_PROP"));
-  }
-  if (StringUtils.isNotBlank(System.getenv("GS_LOGGING_CONFIG_FILE_PROP"))) {
-    groovyCommandParams.add(System.getenv("GS_LOGGING_CONFIG_FILE_PROP"));
   }
   String classPathEnv=System.getenv("CLASSPATH");
   if (classPathEnv == null) {
@@ -36,5 +30,6 @@
   classPathEnv=classPathEnv + File.pathSeparator + sb.toString();
   logger.info("Setting ClassPath environment variable for child processes to: " + classPathEnv);
   this.groovyEnvironmentClassPath=classPathEnv;
+  logger.info("Setting groovyCommandParams to: " + groovyCommandParams);
   this.groovyCommandLinePrefixParams=groovyCommandParams;
 }

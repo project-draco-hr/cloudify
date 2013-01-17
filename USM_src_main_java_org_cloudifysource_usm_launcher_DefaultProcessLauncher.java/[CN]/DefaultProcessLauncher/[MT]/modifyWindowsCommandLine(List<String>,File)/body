@@ -14,4 +14,10 @@
       commandLineParams.add(i,WINDOWS_BATCH_FILE_PREFIX_PARAMS[i]);
     }
   }
+  ListIterator<String> commandIterator=commandLineParams.listIterator();
+  while (commandIterator.hasNext()) {
+    String param=commandIterator.next();
+    commandIterator.remove();
+    commandIterator.add(StringUtils.replace(param,"\"",""));
+  }
 }
