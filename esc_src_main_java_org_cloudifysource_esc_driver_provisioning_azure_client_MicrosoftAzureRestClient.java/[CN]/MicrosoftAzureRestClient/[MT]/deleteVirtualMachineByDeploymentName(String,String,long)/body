@@ -1,27 +1,20 @@
 {
   String diskName=null;
   String roleName=null;
-  Disks disks=listOSDisks();
-  for (  Disk disk : disks) {
-    AttachedTo attachedTo=disk.getAttachedTo();
-    if (attachedTo != null) {
-      if (cloudServiceName.equals(attachedTo.getHostedServiceName())) {
-        diskName=disk.getName();
-        roleName=attachedTo.getRoleName();
-        break;
-      }
-    }
+  Disk disk=getDiskByAttachedCloudService(cloudServiceName);
+  if (disk != null) {
+    diskName=disk.getName();
+    roleName=disk.getAttachedTo().getRoleName();
   }
-  if (cloudServiceExists(cloudServiceName)) {
-    logger.info("Deleting Virtual Machine " + deploymentName);
-    deleteDeployment(cloudServiceName,deploymentName,endTime);
-    logger.fine("Deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
-    deleteCloudService(cloudServiceName,endTime);
+ else {
+    throw new IllegalStateException("Disk cannot be null for an existing deployment " + deploymentName + " in cloud service "+ cloudServiceName);
   }
-  if (diskName != null) {
-    logger.fine("Waiting for OS Disk " + diskName + " to detach from role "+ roleName);
-    waitForDiskToDetach(diskName,roleName,endTime);
-    logger.info("Deleting OS Disk : " + diskName);
-    deleteOSDisk(diskName,endTime);
-  }
+  logger.info("Deleting Virtual Machine " + deploymentName);
+  deleteDeployment(cloudServiceName,deploymentName,endTime);
+  logger.fine("Deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
+  deleteCloudService(cloudServiceName,endTime);
+  logger.fine("Waiting for OS Disk " + diskName + " to detach from role "+ roleName);
+  waitForDiskToDetach(diskName,roleName,endTime);
+  logger.info("Deleting OS Disk : " + diskName);
+  deleteOSDisk(diskName,endTime);
 }

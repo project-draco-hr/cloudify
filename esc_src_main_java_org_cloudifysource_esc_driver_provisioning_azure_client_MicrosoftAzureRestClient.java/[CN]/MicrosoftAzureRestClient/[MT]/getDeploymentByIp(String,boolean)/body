@@ -13,7 +13,6 @@
       String ip=isPrivateIp ? privateIp : publicIp;
       if (machineIp.equals(ip)) {
         deployment.setHostedServiceName(cloudServiceName);
-        logger.info("Found a role with ip : " + machineIp);
         return deployment;
       }
     }

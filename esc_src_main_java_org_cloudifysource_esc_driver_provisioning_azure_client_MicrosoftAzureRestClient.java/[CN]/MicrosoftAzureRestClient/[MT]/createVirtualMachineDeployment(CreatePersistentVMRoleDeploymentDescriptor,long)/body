@@ -45,6 +45,7 @@
       if (e instanceof InterruptedException) {
         throw (InterruptedException)e;
       }
+      throw new MicrosoftAzureException(e);
     }
   }
  else {

@@ -1,0 +1,10 @@
+{
+  Disks disks=listOSDisks();
+  for (  Disk disk : disks) {
+    AttachedTo attachedTo=disk.getAttachedTo();
+    if ((attachedTo != null) && (attachedTo.getHostedServiceName().equals(cloudServiceName))) {
+      return disk;
+    }
+  }
+  return null;
+}
