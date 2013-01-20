@@ -1,5 +1,6 @@
 {
   if (!osDiskExists(diskName)) {
+    logger.info("OS Disk " + diskName + " does not exist");
     return true;
   }
   ClientResponse response=doDelete("/services/disks/" + diskName);

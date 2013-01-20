@@ -1,5 +1,6 @@
 {
   if (!cloudServiceExists(cloudServiceName)) {
+    logger.info("Cloud service " + cloudServiceName + " does not exist.");
     return true;
   }
   logger.fine("Deleting cloud service : " + cloudServiceName);

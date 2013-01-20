@@ -1,0 +1,9 @@
+{
+  HostedService service=getHostedService(cloudServiceName,true);
+  if ((service.getDeployments() != null) && (service.getDeployments().contains(deploymentName))) {
+    return true;
+  }
+ else {
+    return false;
+  }
+}

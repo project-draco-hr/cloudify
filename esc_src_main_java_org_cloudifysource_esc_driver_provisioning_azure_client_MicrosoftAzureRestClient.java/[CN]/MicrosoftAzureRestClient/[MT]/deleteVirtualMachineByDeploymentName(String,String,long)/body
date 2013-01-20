@@ -9,7 +9,7 @@
  else {
     throw new IllegalStateException("Disk cannot be null for an existing deployment " + deploymentName + " in cloud service "+ cloudServiceName);
   }
-  logger.info("Deleting Virtual Machine " + deploymentName);
+  logger.info("Deleting Virtual Machine " + roleName);
   deleteDeployment(cloudServiceName,deploymentName,endTime);
   logger.fine("Deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
   deleteCloudService(cloudServiceName,endTime);
