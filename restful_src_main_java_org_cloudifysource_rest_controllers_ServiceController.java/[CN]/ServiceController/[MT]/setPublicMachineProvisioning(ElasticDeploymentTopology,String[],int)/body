@@ -1,5 +1,6 @@
 {
   final DiscoveredMachineProvisioningConfig machineProvisioning=new DiscoveredMachineProvisioningConfigurer().reservedMemoryCapacityPerMachine(reservedMemoryCapacityPerMachineInMB,MemoryUnit.MEGABYTES).create();
+  machineProvisioning.setReservedMemoryCapacityPerManagementMachineInMB(reservedMemoryCapacityPerMachineInMB);
   machineProvisioning.setGridServiceAgentZones(agentZones);
   deployment.publicMachineProvisioning(machineProvisioning);
 }
