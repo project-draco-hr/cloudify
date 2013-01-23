@@ -1,0 +1,8 @@
+{
+  final File serviceFile=new File(TEST_PARSING_AMP_MERGE_RESOURCE_PATH3 + "/mapMerge/b/b-service.groovy");
+  final Service service=ServiceReader.getServiceFromFile(serviceFile);
+  Assert.assertNotNull(service);
+  Assert.assertNotNull(service.getLifecycle());
+  Assert.assertNotNull(service.getCustomCommands());
+  Assert.assertEquals(2,service.getCustomCommands().size());
+}

@@ -1,4 +1,7 @@
 {
+  if (arg == null) {
+    return null;
+  }
   if (arg instanceof Closure<?>) {
     return new ClosureExecutableEntry((Closure<?>)arg);
   }

@@ -10,7 +10,7 @@
   }
   DSLServiceCompilationResult result;
   try {
-    Object applicationProperties=getBinding().getVariables().get(DSLUtils.DSL_PROPERTIES);
+    final Object applicationProperties=getBinding().getVariables().get(DSLUtils.DSL_PROPERTIES);
     Map<String,Object> applicationPropertiesMap=null;
     if (applicationProperties != null) {
       if (applicationProperties instanceof Map) {

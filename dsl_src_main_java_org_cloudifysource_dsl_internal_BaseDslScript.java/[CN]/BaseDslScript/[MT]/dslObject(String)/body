@@ -13,7 +13,7 @@
   }
  else {
     if (data.isAllowInternalNode()) {
-      String parentElement=data.getParentElement();
+      final String parentElement=data.getParentElement();
       if (parentElement != null && !parentElement.isEmpty()) {
         final DSLObjectInitializerData parentType=getDSLInitializers().get(parentElement);
         if (parentType == null) {

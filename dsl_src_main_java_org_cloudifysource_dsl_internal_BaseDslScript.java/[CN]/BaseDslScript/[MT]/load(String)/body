@@ -15,7 +15,7 @@
   try {
     result=readExternalDSLFile(externalFile);
     if (result instanceof Closure<?>) {
-      Closure<?> closure=(Closure<?>)result;
+      final Closure<?> closure=(Closure<?>)result;
       closure.setDelegate(this);
       closure.setResolveStrategy(Closure.DELEGATE_ONLY);
     }

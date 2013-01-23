@@ -20,13 +20,25 @@
     if (!PropertyUtils.isWriteable(object,name)) {
       throw new IllegalArgumentException("Field " + name + " in object of type: "+ object.getClass().getName()+ " is not writable");
     }
-    BeanUtils.setProperty(object,name,convertedValue);
+    final Object currentValue=PropertyUtils.getProperty(object,name);
+    if (currentValue != null && currentValue instanceof Map<?,?> && value != null && value instanceof Map<?,?>) {
+      final Map<Object,Object> currentMap=(Map<Object,Object>)currentValue;
+      currentMap.putAll((Map<Object,Object>)value);
+    }
+ else     if (PropertyUtils.getPropertyType(object,name).isEnum() && value instanceof String) {
+      final Class enumClass=PropertyUtils.getPropertyType(object,name);
+      final Enum enumValue=Enum.valueOf(enumClass,(String)value);
+      BeanUtils.setProperty(object,name,enumValue);
+    }
+ else {
+      BeanUtils.setProperty(object,name,convertedValue);
+    }
   }
  catch (  final DSLValidationException e) {
     throw new DSLValidationRuntimeException(e);
   }
 catch (  final Exception e) {
-    throw new IllegalArgumentException("Failed   to set property " + name + " of Object "+ object+ " to value: "+ value,e);
+    throw new IllegalArgumentException("Failed to set property " + name + " of Object "+ object+ " to value: "+ value,e);
   }
   checkForApplicationServiceBlockNameParameter(name,value);
 }
