@@ -1,5 +1,5 @@
 {
-  logger.log(Level.FINE,"Invoking command: {0} on instance {1}",new Object[]{commandName,this.getInstanceID()});
+  logger.log(Level.FINE,"Invoking command: {0} on instance {1}",new Object[]{commandName,this.getInstanceId()});
   final Map<String,Object> paramsMap=new HashMap<String,Object>();
   paramsMap.put(CloudifyConstants.INVOCATION_PARAMETER_COMMAND_NAME,commandName);
   for (int i=0; i < params.length; i++) {
