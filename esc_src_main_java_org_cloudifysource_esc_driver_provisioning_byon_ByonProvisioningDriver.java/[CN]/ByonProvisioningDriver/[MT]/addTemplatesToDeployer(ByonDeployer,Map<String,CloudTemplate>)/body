@@ -4,7 +4,8 @@
   for (  final String templateName : templatesMap.keySet()) {
     final Map<String,Object> customSettings=cloud.getTemplates().get(templateName).getCustom();
     if (customSettings != null) {
-      nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);
+      final List<Map<Object,Object>> originalNodesList=(List<Map<Object,Object>>)customSettings.get(CLOUD_NODES_LIST);
+      nodesList=convertToStringMap(originalNodesList);
     }
     if (nodesList == null) {
       publishEvent(CloudifyErrorMessages.MISSING_NODES_LIST.getName(),templateName);

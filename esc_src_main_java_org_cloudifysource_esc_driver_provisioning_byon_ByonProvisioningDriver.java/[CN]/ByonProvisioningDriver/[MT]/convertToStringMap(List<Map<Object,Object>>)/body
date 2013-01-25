@@ -1,0 +1,13 @@
+{
+  List<Map<String,String>> nodesList;
+  nodesList=new LinkedList<Map<String,String>>();
+  for (  Map<Object,Object> originalMap : originalNodesList) {
+    Map<String,String> newMap=new LinkedHashMap<String,String>();
+    Set<Entry<Object,Object>> entries=originalMap.entrySet();
+    for (    Entry<Object,Object> entry : entries) {
+      newMap.put(entry.getKey().toString(),entry.getValue().toString());
+    }
+    nodesList.add(newMap);
+  }
+  return nodesList;
+}
