@@ -1,0 +1,9 @@
+{
+  for (  Map.Entry<String,Object> entry : model.entrySet()) {
+    Object value=entry.getValue();
+    if (!(value instanceof BindingResult)) {
+      return value;
+    }
+  }
+  return null;
+}

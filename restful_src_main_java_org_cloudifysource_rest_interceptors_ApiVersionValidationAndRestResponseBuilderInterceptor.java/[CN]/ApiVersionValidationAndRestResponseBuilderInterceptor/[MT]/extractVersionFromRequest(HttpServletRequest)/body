@@ -1,0 +1,4 @@
+{
+  String requestURIWithoutContextPath=request.getRequestURI().substring(request.getContextPath().length()).substring(1);
+  return requestURIWithoutContextPath.split("/")[0];
+}

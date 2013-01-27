@@ -1,0 +1,19 @@
+{
+  Object model=filterModel(modelAndView.getModel());
+  modelAndView.clear();
+  if (model instanceof Response<?>) {
+    String responseBodyStr=new ObjectMapper().writeValueAsString(model);
+    response.getOutputStream().write(responseBodyStr.getBytes());
+    response.getOutputStream().close();
+  }
+ else {
+    Response<Object> responseBodyObj=new Response<Object>();
+    responseBodyObj.setResponse(model);
+    responseBodyObj.setStatus("Success");
+    responseBodyObj.setMessage(messageSource.getMessage(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName(),new Object[]{},Locale.getDefault()));
+    responseBodyObj.setMessageId(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName());
+    String responseBodyStr=new ObjectMapper().writeValueAsString(responseBodyObj);
+    response.getOutputStream().write(responseBodyStr.getBytes());
+    response.getOutputStream().close();
+  }
+}

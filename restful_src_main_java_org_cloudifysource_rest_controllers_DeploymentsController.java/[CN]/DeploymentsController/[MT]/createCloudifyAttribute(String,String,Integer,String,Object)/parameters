@@ -1,0 +1,5 @@
+String applicationName
+String serviceName
+Integer instanceId
+String name
+Object value

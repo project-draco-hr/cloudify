@@ -1,0 +1,13 @@
+{
+  final InstanceCloudifyAttribute attribute=new InstanceCloudifyAttribute(appName,serviceName,instanceId,attributeName,null);
+  final InstanceCloudifyAttribute previousValue=gigaSpace.take(attribute);
+  final Object value=previousValue != null ? previousValue.getValue() : null;
+  DeleteServiceInstanceAttributeResponse deleteServiceInstanceAttributeResponse=new DeleteServiceInstanceAttributeResponse();
+  deleteServiceInstanceAttributeResponse.setAttributeName(attributeName);
+  deleteServiceInstanceAttributeResponse.setAttributeLastValue(value);
+  Response<DeleteServiceInstanceAttributeResponse> response=new Response<DeleteServiceInstanceAttributeResponse>();
+  response.setMessageId(CloudifyMessageKeys.ATTRIBUTE_DELETED_SUCCESSFULLY.getName());
+  response.setMessage(messageSource.getMessage(CloudifyMessageKeys.ATTRIBUTE_DELETED_SUCCESSFULLY.getName(),new Object[]{attributeName},Locale.getDefault()));
+  response.setResponse(deleteServiceInstanceAttributeResponse);
+  return response;
+}

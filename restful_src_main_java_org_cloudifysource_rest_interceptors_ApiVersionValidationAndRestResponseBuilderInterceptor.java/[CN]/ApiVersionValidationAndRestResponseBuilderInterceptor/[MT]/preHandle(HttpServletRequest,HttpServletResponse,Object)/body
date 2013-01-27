@@ -1,0 +1,7 @@
+{
+  String requestVersion=extractVersionFromRequest(request);
+  if (!CURRENT_API_VERSION.equalsIgnoreCase(requestVersion)) {
+    throw new RestErrorException(CloudifyErrorMessages.API_VERSION_MISMATCH.getName(),requestVersion,CURRENT_API_VERSION);
+  }
+  return true;
+}

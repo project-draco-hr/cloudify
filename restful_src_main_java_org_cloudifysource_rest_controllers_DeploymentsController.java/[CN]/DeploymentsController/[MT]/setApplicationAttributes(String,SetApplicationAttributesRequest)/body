@@ -1,0 +1,11 @@
+{
+  final AbstractCloudifyAttribute[] attributesToWrite=new AbstractCloudifyAttribute[attributesRequest.getAttributes().size()];
+  int i=0;
+  for (  final Entry<String,Object> attrEntry : attributesRequest.getAttributes().entrySet()) {
+    final AbstractCloudifyAttribute newAttr=createCloudifyAttribute(appName,null,null,attrEntry.getKey(),null);
+    gigaSpace.take(newAttr);
+    newAttr.setValue(attrEntry.getValue());
+    attributesToWrite[i++]=newAttr;
+  }
+  gigaSpace.writeMultiple(attributesToWrite,Lease.FOREVER,WriteModifiers.UPDATE_OR_WRITE);
+}
