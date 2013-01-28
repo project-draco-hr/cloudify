@@ -7,7 +7,7 @@
       String metricName;
       Unit axisYUnit;
       if (metric instanceof List<?>) {
-        List<Object> metricDef=(List<Object>)metric;
+        @SuppressWarnings("unchecked") List<Object> metricDef=(List<Object>)metric;
         metricName=metricDef.get(0).toString();
         axisYUnit=(Unit)metricDef.get(1);
       }

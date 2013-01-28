@@ -5,6 +5,7 @@ case CIFS:
 case SFTP:
   return new SftpFileTransfer();
 case SCP:
+return new ScpFileTransfer();
 default :
 throw new UnsupportedOperationException("Unsupported file transfer mode: " + mode);
 }

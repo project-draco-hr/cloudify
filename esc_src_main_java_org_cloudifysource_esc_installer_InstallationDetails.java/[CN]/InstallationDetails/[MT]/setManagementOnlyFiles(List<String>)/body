@@ -1,3 +1,7 @@
 {
-  this.managementOnlyFiles=managementOnlyFiles.toArray(new String[managementOnlyFiles.size()]);
+  this.managementOnlyFiles=new String[managementOnlyFiles.size()];
+  int i=0;
+  for (  String string : managementOnlyFiles) {
+    this.managementOnlyFiles[i]=string.replace("\\","/");
+  }
 }

@@ -1,5 +1,0 @@
-{
-  super();
-  this.success=success;
-  this.response=response;
-}

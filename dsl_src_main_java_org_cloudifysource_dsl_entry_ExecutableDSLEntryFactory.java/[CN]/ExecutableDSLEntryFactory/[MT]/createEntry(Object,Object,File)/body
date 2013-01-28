@@ -7,7 +7,6 @@
   }
   if (arg instanceof String) {
     final StringExecutableEntry stringExecutableEntry=new StringExecutableEntry((String)arg);
-    validateStringEntry(stringExecutableEntry,workDirectory);
     return stringExecutableEntry;
   }
  else   if (arg instanceof GString) {

@@ -12,7 +12,7 @@
   final FileSystemManager mng=fileSystemManager;
   mng.setLogger(org.apache.commons.logging.LogFactory.getLog(logger.getName()));
   String localDirPath=details.getLocalDir();
-  if (details.isLus()) {
+  if (details.isManagement()) {
     if (details.getCloudFile() == null) {
       throw new IllegalArgumentException("While bootstrapping a management machine, cloud file is null");
     }

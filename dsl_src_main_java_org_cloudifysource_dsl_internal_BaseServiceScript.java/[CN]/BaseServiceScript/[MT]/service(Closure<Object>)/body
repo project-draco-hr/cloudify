@@ -1,5 +1,0 @@
-{
-  this.service=new Service();
-  swapActiveObject(closure,service);
-  return service;
-}

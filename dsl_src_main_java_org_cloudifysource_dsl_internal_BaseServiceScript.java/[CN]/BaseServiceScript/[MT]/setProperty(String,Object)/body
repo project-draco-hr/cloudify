@@ -1,6 +1,0 @@
-{
-  DSLEntryResult result=methodMissingImpl(name,value);
-  if (!result.isSuccess()) {
-    super.setProperty(name,value);
-  }
-}

@@ -1,6 +1,0 @@
-{
-  final ServiceLifecycle sl=new ServiceLifecycle();
-  swapActiveObject(closure,sl);
-  this.service.setLifecycle(sl);
-  return sl;
-}

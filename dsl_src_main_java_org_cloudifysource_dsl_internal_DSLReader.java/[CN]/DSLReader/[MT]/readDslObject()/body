@@ -30,12 +30,19 @@
     clusterInfoToUseInGsc=new ClusterInfo(null,1,0,1,0);
   }
   if (this.createServiceContext) {
+    String canonicalPath=null;
+    try {
+      canonicalPath=workDir.getCanonicalPath();
+    }
+ catch (    IOException e) {
+      throw new DSLException("Failed to get canonical path of work directory: " + workDir + ". Error was: "+ e.getMessage(),e);
+    }
     if (this.context == null) {
       if (isRunningInGSC) {
-        this.context=new ServiceContextImpl(clusterInfoToUseInGsc,workDir.getAbsolutePath());
+        this.context=new ServiceContextImpl(clusterInfoToUseInGsc,canonicalPath);
       }
  else {
-        this.context=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0),workDir.getAbsolutePath());
+        this.context=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0),canonicalPath);
       }
     }
   }

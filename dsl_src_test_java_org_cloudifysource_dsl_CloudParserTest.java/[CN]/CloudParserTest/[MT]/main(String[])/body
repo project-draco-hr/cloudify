@@ -1,0 +1,9 @@
+{
+  final org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(SIMPLE_CLOUD_PATH));
+  System.out.println(cloud.getCustom().get("GStringKey").getClass().getName());
+  BeanMap bm=new BeanMap(cloud.getCustom());
+  Set keys=bm.keySet();
+  for (  Object object : keys) {
+    System.out.println(object);
+  }
+}

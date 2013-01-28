@@ -2,7 +2,7 @@
   DSLReader dslReader=new DSLReader();
   dslReader.setDslFile(templateFile);
   dslReader.setCreateServiceContext(false);
-  Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
+  @SuppressWarnings("unchecked") Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
   if (cloudTemplateMap.isEmpty()) {
     throw new DSLException("The file " + templateFile + " evaluates to an empty map.");
   }

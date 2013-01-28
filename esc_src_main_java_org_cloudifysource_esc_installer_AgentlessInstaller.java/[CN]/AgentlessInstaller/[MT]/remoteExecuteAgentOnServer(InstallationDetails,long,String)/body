@@ -4,7 +4,7 @@
   if (remoteDirectory.endsWith("/")) {
     remoteDirectory=remoteDirectory.substring(0,remoteDirectory.length() - 1);
   }
-  if (details.isLus()) {
+  if (details.isManagement()) {
     remoteDirectory=remoteDirectory + "/" + details.getRelativeLocalDir();
   }
   final String scriptPath=remoteDirectory + "/" + scriptFileName;
