@@ -1,0 +1,8 @@
+{
+  if (this.deleteRemoteDirectoryContents) {
+    return MessageFormat.format(CREATE_REMOTE_DIRECTORY_WITH_DELETE,details.getRemoteDir());
+  }
+ else {
+    return MessageFormat.format(CREATE_REMOTE_DIRECTORY,details.getRemoteDir());
+  }
+}

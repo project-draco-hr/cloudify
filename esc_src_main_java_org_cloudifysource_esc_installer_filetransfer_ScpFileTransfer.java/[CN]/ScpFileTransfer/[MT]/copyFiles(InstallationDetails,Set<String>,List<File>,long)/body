@@ -1,0 +1,84 @@
+{
+  final SSHClient ssh=new SSHClient();
+  ssh.addHostKeyVerifier(new PromiscuousVerifier());
+  try {
+    ssh.connect(host);
+  }
+ catch (  final IOException e) {
+    throw new InstallerException("Failed to connect to host: " + host + ": "+ e.getMessage(),e);
+  }
+  try {
+    try {
+      if (!StringUtils.isEmpty(details.getKeyFile())) {
+        final File keyFile=new File(details.getKeyFile());
+        if (!keyFile.exists() || !keyFile.isFile()) {
+          throw new InstallerException("Expected to find key file at: " + keyFile.getAbsolutePath());
+        }
+        ssh.authPublickey(details.getUsername(),keyFile.getAbsolutePath());
+      }
+ else       if (!StringUtils.isEmpty(details.getPassword())) {
+        ssh.authPassword(details.getUsername(),details.getPassword());
+      }
+ else {
+        ssh.auth(details.getUsername(),new AuthNone());
+      }
+    }
+ catch (    final TransportException e) {
+      throw new InstallerException("Failed to authenticate to remote server: " + e.getMessage(),e);
+    }
+catch (    final UserAuthException e) {
+      throw new InstallerException("Failed to authenticate to remote server: " + e.getMessage(),e);
+    }
+    createRemoteDirectory(details,endTimeMillis,ssh);
+    final SCPFileTransfer transfer=ssh.newSCPFileTransfer();
+    try {
+      final SCPUploadClient uploadClient=transfer.newSCPUploadClient();
+      final File localDirectory=new File(this.localDirPath);
+      final String localDirectoryPath=localDirectory.getCanonicalPath();
+      uploadClient.setUploadFilter(new LocalFileFilter(){
+        @Override public boolean accept(        final LocalSourceFile originalFile){
+          final FileSystemFile file=(FileSystemFile)originalFile;
+          final File localFile=file.getFile();
+          String localFilePath;
+          try {
+            localFilePath=localFile.getCanonicalPath();
+          }
+ catch (          final IOException e) {
+            throw new IllegalStateException("Failed to get canonical path of: " + localFile,e);
+          }
+          if (!localFilePath.startsWith(localDirectoryPath)) {
+            throw new IllegalStateException("Upload candidate file: " + localFilePath + " is not a descendant of local directory: "+ localDirectoryPath);
+          }
+          String relativePath=localFilePath.substring(localDirectoryPath.length());
+          if (relativePath.startsWith(File.separator)) {
+            relativePath=relativePath.substring(1);
+          }
+          relativePath=relativePath.replace("\\","/");
+          if (excludedFiles.contains(relativePath)) {
+            return false;
+          }
+          return true;
+        }
+      }
+);
+      File[] files=localDirectory.listFiles();
+      for (      File file : files) {
+        uploadClient.copy(new FileSystemFile(file),details.getRemoteDir());
+      }
+      for (      File file : additionalFiles) {
+        transfer.upload(new FileSystemFile(file),details.getRemoteDir());
+      }
+    }
+ catch (    final IOException e) {
+      throw new InstallerException("Failed to upload files to remote server: " + e.getMessage(),e);
+    }
+  }
+  finally {
+    try {
+      ssh.disconnect();
+    }
+ catch (    final IOException e) {
+      logger.log(Level.WARNING,"Failed to disconnect ssh session",e);
+    }
+  }
+}

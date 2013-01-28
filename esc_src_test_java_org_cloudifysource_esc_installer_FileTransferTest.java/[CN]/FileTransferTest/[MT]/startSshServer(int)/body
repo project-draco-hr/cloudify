@@ -1,0 +1,47 @@
+{
+  boolean error=false;
+  System.err.println("Starting SSHD on port " + port);
+  SshServer sshd=SshServer.setUpDefaultServer();
+  sshd.setPort(port);
+  if (SecurityUtils.isBouncyCastleRegistered()) {
+    sshd.setKeyPairProvider(new PEMGeneratorHostKeyProvider("key.pem"));
+  }
+ else {
+    sshd.setKeyPairProvider(new SimpleGeneratorHostKeyProvider("key.ser"));
+  }
+  if (OsUtils.isUNIX()) {
+    sshd.setShellFactory(new ProcessShellFactory(new String[]{"/bin/sh","-i","-l"},EnumSet.of(ProcessShellFactory.TtyOptions.ONlCr)));
+  }
+ else {
+    sshd.setShellFactory(new ProcessShellFactory(new String[]{"cmd.exe "},EnumSet.of(ProcessShellFactory.TtyOptions.Echo,ProcessShellFactory.TtyOptions.ICrNl,ProcessShellFactory.TtyOptions.ONlCr)));
+  }
+  sshd.setPasswordAuthenticator(new PasswordAuthenticator(){
+    @Override public boolean authenticate(    String username,    String password,    ServerSession session){
+      return username != null && username.equals(password);
+    }
+  }
+);
+  sshd.setPublickeyAuthenticator(new PublickeyAuthenticator(){
+    @Override public boolean authenticate(    String username,    PublicKey key,    ServerSession session){
+      return true;
+    }
+  }
+);
+  sshd.setForwardingFilter(new ForwardingFilter(){
+    @Override public boolean canForwardAgent(    ServerSession session){
+      return true;
+    }
+    @Override public boolean canForwardX11(    ServerSession session){
+      return true;
+    }
+    @Override public boolean canListen(    InetSocketAddress address,    ServerSession session){
+      return true;
+    }
+    @Override public boolean canConnect(    InetSocketAddress address,    ServerSession session){
+      return true;
+    }
+  }
+);
+  sshd.start();
+  return sshd;
+}

@@ -1,0 +1,3 @@
+InstallationDetails details
+long endTimeMillis
+SSHClient ssh

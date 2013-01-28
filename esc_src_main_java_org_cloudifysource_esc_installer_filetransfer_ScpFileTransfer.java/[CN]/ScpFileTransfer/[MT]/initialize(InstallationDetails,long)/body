@@ -1,0 +1,16 @@
+{
+  this.deleteRemoteDirectoryContents=details.isDeleteRemoteDirectoryContents();
+  if (details.isConnectedToPrivateIp()) {
+    host=details.getPrivateIp();
+  }
+ else {
+    host=details.getPublicIp();
+  }
+  localDirPath=details.getLocalDir();
+  if (details.isManagement()) {
+    if (details.getCloudFile() == null) {
+      throw new IllegalArgumentException("While bootstrapping a management machine, cloud file is null");
+    }
+    localDirPath=details.getCloudFile().getParentFile().getAbsolutePath();
+  }
+}

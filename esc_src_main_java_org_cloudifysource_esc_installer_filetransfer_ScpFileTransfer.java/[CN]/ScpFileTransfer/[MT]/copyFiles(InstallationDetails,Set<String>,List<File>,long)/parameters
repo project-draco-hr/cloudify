@@ -1,0 +1,4 @@
+InstallationDetails details
+Set<String> excludedFiles
+List<File> additionalFiles
+long endTimeMillis

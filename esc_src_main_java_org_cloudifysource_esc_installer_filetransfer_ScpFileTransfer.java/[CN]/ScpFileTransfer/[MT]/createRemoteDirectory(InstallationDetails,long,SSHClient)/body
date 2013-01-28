@@ -1,0 +1,37 @@
+{
+  Session session=null;
+  try {
+    session=ssh.startSession();
+    session.allocateDefaultPTY();
+    final long timeout=endTimeMillis - System.currentTimeMillis();
+    String commandString=createCommandString(details);
+    Command command=session.exec(commandString);
+    final String commandOutput=IOUtils.readFully(command.getInputStream()).toString();
+    command.join((int)timeout,TimeUnit.MILLISECONDS);
+    Integer exitStatus=command.getExitStatus();
+    if (exitStatus == null) {
+      throw new InstallerException("Remote command to create directory did not return");
+    }
+ else {
+      if (exitStatus != 0) {
+        throw new InstallerException("Failed to create remote directory: " + details.getRemoteDir() + ". Command output was: "+ commandOutput);
+      }
+    }
+  }
+ catch (  IOException e) {
+    throw new InstallerException("Failed to create remote directory: " + details.getRemoteDir() + ". Error was: "+ e.getMessage(),e);
+  }
+ finally {
+    if (session != null) {
+      try {
+        session.close();
+      }
+ catch (      TransportException e) {
+        logger.log(Level.WARNING,"Failed to close ssh session while creating remote directory",e);
+      }
+catch (      ConnectionException e) {
+        logger.log(Level.WARNING,"Failed to close ssh session while creating remote directory",e);
+      }
+    }
+  }
+}
