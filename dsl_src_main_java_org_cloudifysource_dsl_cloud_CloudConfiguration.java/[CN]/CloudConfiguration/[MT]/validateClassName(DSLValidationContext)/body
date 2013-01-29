@@ -1,0 +1,5 @@
+{
+  if (!className.matches("(\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*\\.)+\\p{javaJavaIdentifi??????erStart}\\p{javaJavaIdentifierPart}*")) {
+    throw new DSLValidationException("Invalid cloud configuration class name \"" + className + "\"");
+  }
+}

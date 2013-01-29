@@ -1,0 +1,8 @@
+{
+  try {
+    new java.net.URI(cloudifyUrl);
+  }
+ catch (  URISyntaxException e) {
+    throw new DSLValidationException("Invalid cloudify url: \"" + cloudifyUrl + "\"");
+  }
+}
