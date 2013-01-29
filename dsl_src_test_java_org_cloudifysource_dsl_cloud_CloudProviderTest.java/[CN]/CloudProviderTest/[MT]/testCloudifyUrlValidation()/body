@@ -1,0 +1,9 @@
+{
+  try {
+    ServiceReader.readCloud(new File(INVALID_URL_PATH));
+    assertTrue("The Cloudify url is invalid yet no error was thrown",false);
+  }
+ catch (  final Throwable e) {
+    assertTrue("The Cloudify url is invalid yet no relevant error was thrown. Error was: " + e.getMessage(),e.getMessage().contains("Invalid cloudify url"));
+  }
+}

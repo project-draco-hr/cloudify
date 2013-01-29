@@ -1,5 +1,5 @@
 {
-  if (!provider.matches("[Ec][Cc]2|[Rr]ackspace|[Aa]zure|[Bb]yon|[Hh][Pp]|[Oo]penstack")) {
+  if (!provider.matches("aws-ec2|[Rr]ackspace|[Aa]zure|[Bb]yon|[Dd]ynamic-[Bb]yon|[Hh][Pp]|[Oo]penstack")) {
     throw new DSLValidationException("Provider \"" + provider + "\" is not supported");
   }
 }

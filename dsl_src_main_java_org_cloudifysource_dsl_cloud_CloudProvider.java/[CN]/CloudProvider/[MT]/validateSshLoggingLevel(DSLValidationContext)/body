@@ -1,5 +1,5 @@
 {
   if (!sshLoggingLevel.matches("INFO|FINE|WARNING|DEBUG")) {
-    throw new DSLValidationException("sshLoggingLevel \"" + sshLoggingLevel + "\" is invalid, "+ "supported values are: INFO, FINE, WARNING, DEBUG");
+    throw new DSLValidationException("sshLoggingLevel \"" + sshLoggingLevel + "\" is invalid, "+ "supported values are: INFO, FINE, FINER, FINEST, WARNING, DEBUG");
   }
 }
