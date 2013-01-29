@@ -3,7 +3,7 @@
   for (  final StopDetector detector : this.stopDetectors) {
     try {
       if (detector.isServiceStopped()) {
-        logger.info("Stop detection - sevice has stopped!");
+        logger.info("Stop detection - service has stopped!");
         return true;
       }
     }

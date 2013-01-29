@@ -1,4 +1,4 @@
 {
   this.verbose=verbose;
-  sshOutputFilter=sshOutputLogger.getFilter();
+  sshOutputFilter=SSH_OUTPUT_LOGGER.getFilter();
 }
