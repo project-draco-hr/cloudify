@@ -1,8 +1,7 @@
 {
-  try {
-    new java.net.URI(cloudifyUrl);
-  }
- catch (  URISyntaxException e) {
+  String[] schema={"http"};
+  UrlValidator urlValidator=new UrlValidator(schema);
+  if (!urlValidator.isValid(cloudifyUrl)) {
     throw new DSLValidationException("Invalid cloudify url: \"" + cloudifyUrl + "\"");
   }
 }
