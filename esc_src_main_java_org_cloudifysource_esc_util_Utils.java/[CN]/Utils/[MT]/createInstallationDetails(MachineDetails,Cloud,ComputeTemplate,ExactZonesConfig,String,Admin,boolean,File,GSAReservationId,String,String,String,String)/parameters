@@ -1,0 +1,13 @@
+MachineDetails md
+Cloud cloud
+ComputeTemplate template
+ExactZonesConfig zones
+String lookupLocatorsString
+Admin admin
+boolean isManagement
+File cloudFile
+GSAReservationId reservationId
+String templateName
+String securityProfile
+String keystorePassword
+String authGroups

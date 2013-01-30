@@ -1,11 +1,11 @@
 {
   if (CloudifyConstants.DYNAMIC_BYON_NAME.equals(name)) {
     String managementMachineTemplateName=configuration.getManagementMachineTemplate();
-    CloudTemplate managementMachineTemplate=templates.get(managementMachineTemplateName);
+    ComputeTemplate managementMachineTemplate=templates.get(managementMachineTemplateName);
     Map<String,Object> mngTemplateCustom=managementMachineTemplate.getCustom();
     validateClosureExists(mngTemplateCustom,CloudifyConstants.DYNAMIC_BYON_START_MNG_MACHINES_KEY,managementMachineTemplateName);
     validateClosureExists(mngTemplateCustom,CloudifyConstants.DYNAMIC_BYON_STOP_MNG_MACHINES_KEY,managementMachineTemplateName);
-    for (    Entry<String,CloudTemplate> templateEntry : templates.entrySet()) {
+    for (    Entry<String,ComputeTemplate> templateEntry : templates.entrySet()) {
       final String templateName=templateEntry.getKey();
       Map<String,Object> templateCustom=templateEntry.getValue().getCustom();
       validateClosureExists(templateCustom,CloudifyConstants.DYNAMIC_BYON_START_MACHINE_KEY,templateName);

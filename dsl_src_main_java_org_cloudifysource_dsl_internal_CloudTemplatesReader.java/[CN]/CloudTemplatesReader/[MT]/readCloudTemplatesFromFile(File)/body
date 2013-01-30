@@ -2,7 +2,7 @@
   DSLReader dslReader=new DSLReader();
   dslReader.setDslFile(templateFile);
   dslReader.setCreateServiceContext(false);
-  @SuppressWarnings("unchecked") Map<String,CloudTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
+  @SuppressWarnings("unchecked") Map<String,ComputeTemplate> cloudTemplateMap=dslReader.readDslEntity(Map.class);
   if (cloudTemplateMap.isEmpty()) {
     throw new DSLException("The file " + templateFile + " evaluates to an empty map.");
   }
@@ -11,7 +11,7 @@
     throw new DSLException("Too many templates in one groovy file: " + templateFile + " declares "+ size+ " templates, only "+ DSLUtils.MAX_TEMPLATES_PER_FILE+ " allowed.");
   }
   List<CloudTemplateHolder> cloudTemplateHolders=new ArrayList<CloudTemplateHolder>(cloudTemplateMap.size());
-  for (  Entry<String,CloudTemplate> entry : cloudTemplateMap.entrySet()) {
+  for (  Entry<String,ComputeTemplate> entry : cloudTemplateMap.entrySet()) {
     CloudTemplateHolder holder=new CloudTemplateHolder();
     holder.setName(entry.getKey());
     holder.setCloudTemplate(entry.getValue());

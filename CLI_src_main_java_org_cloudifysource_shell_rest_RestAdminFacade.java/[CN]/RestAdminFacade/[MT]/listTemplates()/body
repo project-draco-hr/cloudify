@@ -1,11 +1,11 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "templates";
-  final Map<String,CloudTemplate> response=new HashMap<String,CloudTemplate>();
+  Map<String,ComputeTemplate> response=new HashMap<String,ComputeTemplate>();
   try {
-    final Map<String,Object> responseMap=(Map<String,Object>)client.get(url);
-    for (    final Entry<String,Object> entry : responseMap.entrySet()) {
-      final ObjectMapper mapper=new ObjectMapper();
-      final CloudTemplate convertValue=mapper.convertValue(entry.getValue(),CloudTemplate.class);
+    Map<String,Object> responseMap=(Map<String,Object>)client.get(url);
+    for (    Entry<String,Object> entry : responseMap.entrySet()) {
+      ObjectMapper mapper=new ObjectMapper();
+      ComputeTemplate convertValue=mapper.convertValue(entry.getValue(),ComputeTemplate.class);
       response.put(entry.getKey(),convertValue);
     }
   }

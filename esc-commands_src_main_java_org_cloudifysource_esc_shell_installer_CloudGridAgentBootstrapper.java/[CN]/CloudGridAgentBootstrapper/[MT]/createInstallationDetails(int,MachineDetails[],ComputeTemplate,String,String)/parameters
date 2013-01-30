@@ -1,0 +1,5 @@
+int numOfManagementMachines
+MachineDetails[] machineDetails
+ComputeTemplate template
+String securityProfile
+String keystorePassword

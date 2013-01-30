@@ -2,14 +2,14 @@
   Cloud cloud=ServiceReader.readCloud(new File(DYNAMIC_BYON_CLOUD_PATH));
   assertNotNull(cloud);
   assertNotNull(cloud.getProvider());
-  final Map<String,CloudTemplate> templates=cloud.getTemplates();
+  final Map<String,ComputeTemplate> templates=cloud.getTemplates();
   assertNotNull(templates);
   assertNotNull(cloud.getUser());
   final CloudConfiguration configuration=cloud.getConfiguration();
   assertNotNull(configuration);
   String managementMachineTemplate=configuration.getManagementMachineTemplate();
   assertNotNull(managementMachineTemplate);
-  final CloudTemplate managementTemplate=templates.get(managementMachineTemplate);
+  final ComputeTemplate managementTemplate=templates.get(managementMachineTemplate);
   assertNotNull(managementTemplate);
   assertEquals("org.cloudifysource.esc.driver.provisioning.byon.DynamicByonProvisioningDriver",configuration.getClassName());
   Map<String,Object> custom=managementTemplate.getCustom();

@@ -17,7 +17,7 @@
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
     }
-    final CloudTemplate cloudTemplate=holder.getCloudTemplate();
+    ComputeTemplate cloudTemplate=holder.getCloudTemplate();
     cloud.getTemplates().put(templateName,cloudTemplate);
     addedTemplates.add(templateName);
   }

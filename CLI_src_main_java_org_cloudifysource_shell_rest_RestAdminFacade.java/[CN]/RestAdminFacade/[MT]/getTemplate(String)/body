@@ -1,10 +1,10 @@
 {
   final String url=SERVICE_CONTROLLER_URL + "templates/" + templateName;
-  CloudTemplate response;
+  ComputeTemplate response;
   try {
     final Object result=client.get(url);
     final ObjectMapper mapper=new ObjectMapper();
-    response=mapper.convertValue(result,CloudTemplate.class);
+    response=mapper.convertValue(result,ComputeTemplate.class);
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
