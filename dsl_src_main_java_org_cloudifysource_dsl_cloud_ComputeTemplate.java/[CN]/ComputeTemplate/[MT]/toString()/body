@@ -1,0 +1,3 @@
+{
+  return "CloudTemplate [imageId=" + imageId + ", machineMemoryMB="+ machineMemoryMB+ ", hardwareId="+ hardwareId+ ", locationId="+ locationId+ ", numberOfCores="+ numberOfCores+ ", options="+ options+ ", overrides="+ overrides+ ", custom="+ custom+ "]";
+}

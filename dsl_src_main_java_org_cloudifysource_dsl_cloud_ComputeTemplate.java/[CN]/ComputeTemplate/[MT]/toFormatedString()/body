@@ -1,0 +1,27 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  sb.append("{");
+  sb.append(CloudifyConstants.NEW_LINE);
+  sb.append(getFormatedLine("imageId",imageId));
+  sb.append(getFormatedLine("hardwareId",hardwareId));
+  sb.append(getFormatedLine("locationId",locationId));
+  sb.append(getFormatedLine("localDirectory",localDirectory));
+  sb.append(getFormatedLine("keyFile",keyFile));
+  sb.append(getFormatedLine("numberOfCores",numberOfCores));
+  sb.append(getFormatedLine("options",options));
+  sb.append(getFormatedLine("overrides",overrides));
+  sb.append(getFormatedLine("custom",custom));
+  sb.append(getFormatedLine("fileTransfer",fileTransfer));
+  sb.append(getFormatedLine("remoteExecution",remoteExecution));
+  sb.append(getFormatedLine("username",username));
+  sb.append(getFormatedLine("password",password));
+  sb.append(getFormatedLine("remoteDirectory",remoteDirectory));
+  sb.append(getFormatedLine("privileged",privileged));
+  sb.append(getFormatedLine("initializationCommand",initializationCommand));
+  sb.append(getFormatedLine("javaUrl",javaUrl));
+  sb.append(getFormatedLine("absoluteUploadDir",absoluteUploadDir));
+  sb.append(getFormatedLine("env ",env));
+  sb.append(getFormatedLine("machineMemoryMB",machineMemoryMB));
+  final String str=sb.substring(0,sb.lastIndexOf(","));
+  return str + CloudifyConstants.NEW_LINE + "}";
+}

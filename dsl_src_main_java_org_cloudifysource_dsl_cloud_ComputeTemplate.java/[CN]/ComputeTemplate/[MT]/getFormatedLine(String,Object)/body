@@ -1,0 +1,12 @@
+{
+  if (obj == null) {
+    return "";
+  }
+  if (obj instanceof Map) {
+    final Map<?,?> map=(Map<?,?>)obj;
+    if (map.isEmpty()) {
+      return "";
+    }
+  }
+  return CloudifyConstants.TAB_CHAR + objName + " = "+ obj.toString()+ ","+ CloudifyConstants.NEW_LINE;
+}
