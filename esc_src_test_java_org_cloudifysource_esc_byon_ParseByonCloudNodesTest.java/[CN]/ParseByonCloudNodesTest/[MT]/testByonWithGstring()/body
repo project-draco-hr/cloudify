@@ -4,11 +4,11 @@
   validateCloud(cloud);
   ByonProvisioningDriver driver=new ByonProvisioningDriver();
   driver.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
-  driver.setConfig(cloud,cloud.getTemplates().keySet().iterator().next(),true,"test");
+  driver.setConfig(cloud,cloud.getCloudCompute().getTemplates().keySet().iterator().next(),true,"test");
   Cloud modifiedCloud=driver.getCloud();
   validateCloud(modifiedCloud);
   ByonDeployer deployer=driver.getDeployer();
-  Set<CustomNode> nodes=deployer.getAllNodesByTemplateName(cloud.getTemplates().keySet().iterator().next());
+  Set<CustomNode> nodes=deployer.getAllNodesByTemplateName(cloud.getCloudCompute().getTemplates().keySet().iterator().next());
   Assert.assertNotNull(nodes);
   Assert.assertEquals(1,nodes.size());
   CustomNode node=nodes.iterator().next();

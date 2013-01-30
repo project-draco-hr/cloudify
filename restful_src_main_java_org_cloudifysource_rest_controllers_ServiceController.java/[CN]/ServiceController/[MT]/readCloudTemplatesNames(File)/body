@@ -1,7 +1,7 @@
 {
-  final List<CloudTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
-  final List<String> cloudTemplateNames=new LinkedList<String>();
-  for (  final CloudTemplateHolder cloudTemplateHolder : cloudTemplatesHolders) {
+  List<ComputeTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
+  List<String> cloudTemplateNames=new LinkedList<String>();
+  for (  ComputeTemplateHolder cloudTemplateHolder : cloudTemplatesHolders) {
     cloudTemplateNames.add(cloudTemplateHolder.getName());
   }
   return cloudTemplateNames;

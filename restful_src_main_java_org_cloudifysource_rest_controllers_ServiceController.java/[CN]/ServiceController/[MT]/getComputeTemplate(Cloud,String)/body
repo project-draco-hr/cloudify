@@ -1,10 +1,10 @@
 {
   if (templateName == null) {
-    final Entry<String,ComputeTemplate> entry=cloud.getTemplates().entrySet().iterator().next();
+    final Entry<String,ComputeTemplate> entry=cloud.getCloudCompute().getTemplates().entrySet().iterator().next();
     logger.warning("Service does not specify template name! Defaulting to template: " + entry.getKey());
     return entry.getValue();
   }
-  final ComputeTemplate template=cloud.getTemplates().get(templateName);
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
   if (template == null) {
     throw new IllegalArgumentException("Could not find compute template: " + templateName);
   }

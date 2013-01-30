@@ -1,6 +1,6 @@
 {
   logger.fine("Creating JClouds context deployer with user: " + cloud.getUser().getUser());
-  final ComputeTemplate cloudTemplate=cloud.getTemplates().get(cloudTemplateName);
+  final ComputeTemplate cloudTemplate=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
   logger.fine("Cloud Template: " + cloudTemplateName + ". Details: "+ cloudTemplate);
   final Properties props=new Properties();
   props.putAll(cloudTemplate.getOverrides());

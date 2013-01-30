@@ -1,7 +1,7 @@
 {
   Assert.assertNotNull(cloud);
-  Assert.assertTrue(cloud.getTemplates().size() == 1);
-  ComputeTemplate template=cloud.getTemplates().values().iterator().next();
+  Assert.assertTrue(cloud.getCloudCompute().getTemplates().size() == 1);
+  ComputeTemplate template=cloud.getCloudCompute().getTemplates().values().iterator().next();
   Assert.assertNotNull(template.getCustom());
   List<Object> list=(List<Object>)template.getCustom().get("nodesList");
   Assert.assertTrue(list.size() == 1);

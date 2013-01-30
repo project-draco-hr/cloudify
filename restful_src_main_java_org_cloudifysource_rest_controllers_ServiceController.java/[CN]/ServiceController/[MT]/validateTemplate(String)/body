@@ -2,7 +2,7 @@
   if (cloud == null) {
     return;
   }
-  final ComputeTemplate template=cloud.getTemplates().get(templateName);
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
   if (template == null) {
     throw new RestErrorException(CloudifyErrorMessages.MISSING_TEMPLATE.getName(),templateName);
   }

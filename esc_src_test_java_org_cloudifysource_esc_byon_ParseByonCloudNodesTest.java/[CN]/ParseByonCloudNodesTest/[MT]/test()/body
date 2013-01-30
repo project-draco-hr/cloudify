@@ -6,9 +6,9 @@
     System.out.println("Creating BYON deployer");
     final ByonDeployer deployer=new ByonDeployer();
     List<Map<String,String>> nodesList=null;
-    final Map<String,ComputeTemplate> templatesMap=cloud.getTemplates();
+    final Map<String,ComputeTemplate> templatesMap=cloud.getCloudCompute().getTemplates();
     for (    final String templateName : templatesMap.keySet()) {
-      final Map<String,Object> customSettings=cloud.getTemplates().get(templateName).getCustom();
+      final Map<String,Object> customSettings=cloud.getCloudCompute().getTemplates().get(templateName).getCustom();
       Assert.assertNotNull("Custom settings not found for template " + templateName,customSettings);
       if (customSettings != null) {
         nodesList=(List<Map<String,String>>)customSettings.get(CLOUD_NODES_LIST);

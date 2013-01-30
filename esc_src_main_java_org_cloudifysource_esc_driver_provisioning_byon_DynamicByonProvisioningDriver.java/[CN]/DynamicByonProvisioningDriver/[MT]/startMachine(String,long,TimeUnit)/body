@@ -1,6 +1,6 @@
 {
   String currnentId=PROVIDER_ID + "{" + idCounter.getAndIncrement()+ "}";
-  final ComputeTemplate template=cloud.getTemplates().get(cloudTemplateName);
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
   Map<String,Object> custom=template.getCustom();
   Closure<String> getNodeClosure=(Closure<String>)custom.get(CloudifyConstants.DYNAMIC_BYON_START_MACHINE_KEY);
   String ip=getNodeClosure.call();

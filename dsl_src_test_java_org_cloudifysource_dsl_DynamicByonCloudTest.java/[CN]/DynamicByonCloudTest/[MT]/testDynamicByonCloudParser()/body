@@ -2,7 +2,7 @@
   Cloud cloud=ServiceReader.readCloud(new File(DYNAMIC_BYON_CLOUD_PATH));
   assertNotNull(cloud);
   assertNotNull(cloud.getProvider());
-  final Map<String,ComputeTemplate> templates=cloud.getTemplates();
+  final Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
   assertNotNull(templates);
   assertNotNull(cloud.getUser());
   final CloudConfiguration configuration=cloud.getConfiguration();

@@ -1,3 +1,3 @@
 {
-  return "Cloud [name=" + name + ", provider="+ provider+ ", user="+ user+ ", configuration="+ configuration+ ", templates="+ templates+ ", custom="+ custom+ "]";
+  return "Cloud [name=" + name + ", provider="+ provider+ ", user="+ user+ ", configuration="+ configuration+ ", cloudCompute="+ cloudCompute+ ", custom="+ custom+ "]";
 }

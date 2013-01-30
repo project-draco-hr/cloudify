@@ -1,5 +1,5 @@
 {
-  final Map<String,ComputeTemplate> cloudTemplatesMap=cloud.getTemplates();
+  final Map<String,ComputeTemplate> cloudTemplatesMap=cloud.getCloudCompute().getTemplates();
   final List<String> cloudTemplateNames=new LinkedList<String>(cloudTemplatesMap.keySet());
   final List<String> deployerTemplateNames=deployer.getTemplatesList();
   final List<String> redundantTemplates=new LinkedList<String>(deployerTemplateNames);

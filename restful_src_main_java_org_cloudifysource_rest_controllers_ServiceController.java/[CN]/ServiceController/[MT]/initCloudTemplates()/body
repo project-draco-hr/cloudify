@@ -6,7 +6,7 @@
     return;
   }
   File[] listFiles=additionalTemplatesFolder.listFiles();
-  CloudTemplatesReader reader=new CloudTemplatesReader();
+  ComputeTemplatesReader reader=new ComputeTemplatesReader();
   List<ComputeTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
   logger.info("initCloudTemplates - Added the following templates: " + addedTemplates);
   lastTemplateFileNum.addAndGet(listFiles.length);

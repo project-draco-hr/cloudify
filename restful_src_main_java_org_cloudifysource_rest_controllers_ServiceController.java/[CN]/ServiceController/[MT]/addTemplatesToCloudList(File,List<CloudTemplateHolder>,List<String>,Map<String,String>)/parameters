@@ -1,4 +1,0 @@
-File templatesFolder
-List<CloudTemplateHolder> cloudTemplates
-List<String> addedTemplates
-Map<String,String> failedToAddTemplates

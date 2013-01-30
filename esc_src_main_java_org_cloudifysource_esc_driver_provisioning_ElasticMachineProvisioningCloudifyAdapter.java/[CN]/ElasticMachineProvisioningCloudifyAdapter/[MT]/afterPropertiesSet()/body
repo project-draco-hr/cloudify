@@ -13,7 +13,7 @@
       throw new BeanConfigurationException("Cloud template was not set!");
     }
     addTemplatesToCloud(new File(cloudConfigDirectoryPath));
-    final ComputeTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
+    final ComputeTemplate cloudTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
     if (cloudTemplate == null) {
       throw new BeanConfigurationException("The provided cloud template name: " + this.cloudTemplateName + " was not found in the cloud configuration");
     }

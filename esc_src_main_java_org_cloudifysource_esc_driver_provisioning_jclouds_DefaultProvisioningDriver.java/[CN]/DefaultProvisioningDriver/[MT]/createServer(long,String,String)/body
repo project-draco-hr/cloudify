@@ -1,5 +1,5 @@
 {
-  final ComputeTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final ComputeTemplate cloudTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   String locationId;
   if (locationIdOverride == null) {
     locationId=cloudTemplate.getLocationId();

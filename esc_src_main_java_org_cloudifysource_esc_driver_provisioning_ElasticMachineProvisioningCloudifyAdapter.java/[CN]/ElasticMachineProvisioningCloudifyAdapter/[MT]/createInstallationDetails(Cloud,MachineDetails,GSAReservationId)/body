@@ -1,5 +1,5 @@
 {
-  final ComputeTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   final ExactZonesConfigurer configurer=new ExactZonesConfigurer().addZones(config.getGridServiceAgentZones().getZones());
   if (!StringUtils.isBlank(md.getLocationId())) {
     configurer.addZone(CLOUD_ZONE_PREFIX + md.getLocationId());
