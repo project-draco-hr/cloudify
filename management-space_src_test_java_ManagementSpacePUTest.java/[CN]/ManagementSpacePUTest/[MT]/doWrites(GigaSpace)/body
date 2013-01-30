@@ -1,0 +1,7 @@
+{
+  gigaSpace.write(globalCloudifyAttribute);
+  gigaSpace.write(applicationCloudifyAttribute);
+  gigaSpace.write(serviceCloudifyAttribute);
+  gigaSpace.write(instanceCloudifyAttribute);
+  gigaSpace.write(cloudConfigurationHolder);
+}

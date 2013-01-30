@@ -1,0 +1,23 @@
+{
+  String activeProfiles=persistent ? CloudifyConstants.SPRING_PROFILE_PERSISTENT : CloudifyConstants.SPRING_PROFILE_NON_PERSISTENT;
+  System.setProperty(SPRING_ACTIVE_PROFILES_PROP,activeProfiles);
+  final ClassPathXmlApplicationContext context=createSpringContextContext();
+  context.refresh();
+  try {
+    IJSpace space=context.getBean(IJSpace.class);
+    GigaSpace gigaSpace=new GigaSpaceConfigurer(space).create();
+    doWrites(gigaSpace);
+  }
+  finally {
+    context.close();
+  }
+  context.refresh();
+  try {
+    IJSpace space=context.getBean(IJSpace.class);
+    GigaSpace gigaSpace=new GigaSpaceConfigurer(space).create();
+    doReadsAndAsserts(gigaSpace,persistent);
+  }
+  finally {
+    context.close();
+  }
+}

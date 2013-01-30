@@ -1,0 +1,43 @@
+{
+  GlobalCloudifyAttribute global=gigaSpace.read(new GlobalCloudifyAttribute());
+  ApplicationCloudifyAttribute application=gigaSpace.read(new ApplicationCloudifyAttribute());
+  ServiceCloudifyAttribute service=gigaSpace.read(new ServiceCloudifyAttribute());
+  InstanceCloudifyAttribute instance=gigaSpace.read(new InstanceCloudifyAttribute());
+  CloudConfigurationHolder cloudConfig=gigaSpace.read(new CloudConfigurationHolder());
+  if (persistent) {
+    Assert.assertNotNull(global);
+    Assert.assertNotNull(application);
+    Assert.assertNotNull(service);
+    Assert.assertNotNull(instance);
+    Assert.assertNotNull(cloudConfig);
+    Assert.assertEquals(globalCloudifyAttribute.getApplicationName(),global.getApplicationName());
+    Assert.assertEquals(globalCloudifyAttribute.getKey(),global.getKey());
+    Assert.assertEquals(globalCloudifyAttribute.getUid(),global.getUid());
+    Assert.assertEquals(globalCloudifyAttribute.getValue(),global.getValue());
+    Assert.assertEquals(applicationCloudifyAttribute.getApplicationName(),application.getApplicationName());
+    Assert.assertEquals(applicationCloudifyAttribute.getKey(),application.getKey());
+    Assert.assertEquals(applicationCloudifyAttribute.getUid(),application.getUid());
+    Assert.assertEquals(applicationCloudifyAttribute.getValue(),application.getValue());
+    Assert.assertEquals(serviceCloudifyAttribute.getApplicationName(),service.getApplicationName());
+    Assert.assertEquals(serviceCloudifyAttribute.getKey(),service.getKey());
+    Assert.assertEquals(serviceCloudifyAttribute.getUid(),service.getUid());
+    Assert.assertEquals(serviceCloudifyAttribute.getValue(),service.getValue());
+    Assert.assertEquals(serviceCloudifyAttribute.getServiceName(),service.getServiceName());
+    Assert.assertEquals(instanceCloudifyAttribute.getApplicationName(),instance.getApplicationName());
+    Assert.assertEquals(instanceCloudifyAttribute.getKey(),instance.getKey());
+    Assert.assertEquals(instanceCloudifyAttribute.getUid(),instance.getUid());
+    Assert.assertEquals(instanceCloudifyAttribute.getValue(),instance.getValue());
+    Assert.assertEquals(instanceCloudifyAttribute.getServiceName(),instance.getServiceName());
+    Assert.assertEquals(instanceCloudifyAttribute.getInstanceId(),instance.getInstanceId());
+    Assert.assertEquals(cloudConfigurationHolder.getId(),cloudConfig.getId());
+    Assert.assertEquals(cloudConfigurationHolder.getCloudConfigurationFilePath(),cloudConfig.getCloudConfigurationFilePath());
+    Assert.assertEquals(cloudConfigurationHolder.getCloudConfiguration(),cloudConfig.getCloudConfiguration());
+  }
+ else {
+    Assert.assertNull(global);
+    Assert.assertNull(application);
+    Assert.assertNull(service);
+    Assert.assertNull(instance);
+    Assert.assertNull(cloudConfig);
+  }
+}

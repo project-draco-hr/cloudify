@@ -1,0 +1,12 @@
+{
+  File tempStorageFile=File.createTempFile("management-space-test","");
+  final boolean refreshNow=false;
+  final ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext(new String[]{MANAGEMENT_SPACE_PU_XML},refreshNow);
+  PropertyPlaceholderConfigurer propertyConfigurer=new PropertyPlaceholderConfigurer();
+  Properties properties=new Properties();
+  properties.setProperty("space.name","management-space");
+  properties.setProperty("space.storage.path",tempStorageFile.getAbsolutePath().replace('\\','/'));
+  propertyConfigurer.setProperties(properties);
+  context.addBeanFactoryPostProcessor(propertyConfigurer);
+  return context;
+}
