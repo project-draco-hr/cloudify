@@ -6,7 +6,14 @@
       Node node=getNode(id,token);
       nodes.add(node);
     }
- catch (    OpenstackException e) {
+ catch (    UniformInterfaceException e) {
+      if (e.getResponse().getStatus() == HTTP_NOT_FOUND) {
+      }
+ else {
+        throw e;
+      }
+    }
+catch (    OpenstackException e) {
     }
   }
   return nodes;
