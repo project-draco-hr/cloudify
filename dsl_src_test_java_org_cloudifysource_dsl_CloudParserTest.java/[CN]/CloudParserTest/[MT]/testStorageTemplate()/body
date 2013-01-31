@@ -1,0 +1,7 @@
+{
+  final Cloud cloud=ServiceReader.readCloud(new File(SIMPLE_CLOUD_PATH));
+  Assert.assertNotNull(cloud.getCloudStorage());
+  Assert.assertNotNull(cloud.getCloudStorage().getTemplates());
+  Assert.assertNotNull(cloud.getCloudStorage().getTemplates().get("SMALL_BLOCK"));
+  Assert.assertEquals(5,cloud.getCloudStorage().getTemplates().get("SMALL_BLOCK").getSize());
+}
