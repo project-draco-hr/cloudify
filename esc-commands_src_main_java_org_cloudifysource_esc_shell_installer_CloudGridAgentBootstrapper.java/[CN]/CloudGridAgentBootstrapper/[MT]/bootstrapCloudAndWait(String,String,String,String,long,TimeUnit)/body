@@ -1,7 +1,17 @@
 {
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   createProvisioningDriver();
-  final MachineDetails[] servers=getOrCreateManagementServers(timeout,timeoutUnit);
+  MachineDetails[] servers;
+  try {
+    servers=provisioning.startManagementMachines(timeout,timeoutUnit);
+  }
+ catch (  final CloudProvisioningException e) {
+    final CLIStatusException cliStatusException=new CLIStatusException(e,CloudifyErrorMessages.CLOUD_API_ERROR.getName(),e.getMessage());
+    throw cliStatusException;
+  }
+catch (  final TimeoutException e) {
+    throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
+  }
   try {
     if (logger.isLoggable(Level.FINE)) {
       for (      final MachineDetails server : servers) {
