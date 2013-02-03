@@ -1,0 +1,8 @@
+{
+  if (!this.runningInGSC) {
+    if (this.clusterInfo == null) {
+      throw new IllegalStateException("ClusterInfo field is null while running in test mode!");
+    }
+    this.clusterInfo.setName(ServiceUtils.getAbsolutePUName(CloudifyConstants.DEFAULT_APPLICATION_NAME,this.usmLifecycleBean.getConfiguration().getService().getName()));
+  }
+}

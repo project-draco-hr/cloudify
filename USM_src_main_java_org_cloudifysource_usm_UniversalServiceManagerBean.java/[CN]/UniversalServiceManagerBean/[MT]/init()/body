@@ -1,4 +1,5 @@
 {
+  initServiceName();
   initMonitorsCache();
   initUniqueFileName();
   initCustomProperties();

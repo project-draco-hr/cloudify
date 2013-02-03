@@ -14,7 +14,7 @@
   }
   final ArrayList<String> groovyCommandParams=new ArrayList<String>();
   groovyCommandParams.add(groovyPath);
-  List<String> envVarsList=new ArrayList<String>();
+  final List<String> envVarsList=new ArrayList<String>();
   envVarsList.add("LOOKUP_LOCATORS_PROP");
   envVarsList.add("LOOKUP_GROUPS_PROP");
   envVarsList.add("RMI_OPTIONS");
