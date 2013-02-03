@@ -54,7 +54,7 @@
   tempFile.deleteOnExit();
   FileUtils.writeStringToFile(tempFile,fileContents);
   if (logger.isLoggable(Level.FINE)) {
-    logger.fine("Created environment file with contents: " + fileContents);
+    logger.fine("Created environment file with the following contents: " + fileContents);
   }
   return tempFile;
 }

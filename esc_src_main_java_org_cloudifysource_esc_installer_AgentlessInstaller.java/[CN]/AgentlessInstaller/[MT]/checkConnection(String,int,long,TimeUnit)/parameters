@@ -1,4 +1,0 @@
-String ip
-int port
-long timeout
-TimeUnit unit

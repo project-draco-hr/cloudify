@@ -1,0 +1,8 @@
+{
+  if (installerConfiguration.getRemoteExecutionPort() == CloudTemplateInstallerConfiguration.DEFAULT_PORT) {
+    return mode.getDefaultPort();
+  }
+ else {
+    return installerConfiguration.getRemoteExecutionPort();
+  }
+}

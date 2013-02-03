@@ -4,7 +4,7 @@
     String resolvedIP=IPUtils.resolveHostName(customNode.getPrivateIP());
     customNode.setResolvedIP(resolvedIP);
     if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
-      customNode.setLoginPort(RemoteExecutionModes.WINRM.getPort());
+      customNode.setLoginPort(RemoteExecutionModes.WINRM.getDefaultPort());
     }
     IPUtils.validateConnection(customNode.getResolvedIP(),customNode.getLoginPort());
   }

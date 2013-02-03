@@ -4,14 +4,14 @@
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
   cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
-  ZonesConfig defaultZones=config.getGridServiceAgentZones();
+  final ZonesConfig defaultZones=config.getGridServiceAgentZones();
   logger.fine("default zones = " + defaultZones.getZones());
   if (!defaultZones.isSatisfiedBy(zones)) {
     throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
   }
   String locationId=null;
   logger.fine("searching for cloud specific zone");
-  for (  String zone : zones.getZones()) {
+  for (  final String zone : zones.getZones()) {
     logger.fine("current zone = " + zone);
     if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
       logger.fine("found a zone with " + CLOUD_ZONE_PREFIX + " prefix : "+ zone);
@@ -24,16 +24,19 @@
       }
     }
   }
-  MachineStartRequestedCloudifyEvent machineStartEvent=new MachineStartRequestedCloudifyEvent();
+  final MachineStartRequestedCloudifyEvent machineStartEvent=new MachineStartRequestedCloudifyEvent();
   machineStartEvent.setTemplateName(cloudTemplateName);
   machineStartEvent.setLocationId(locationId);
   machineEventListener.elasticMachineProvisioningProgressChanged(machineStartEvent);
   try {
+    final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
     if (locationId == null) {
-      final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
       locationId=template.getLocationId();
     }
     machineDetails=provisionMachine(locationId,duration,unit);
+    if (machineDetails != null && machineDetails.getInstallerConfigutation() == null) {
+      machineDetails.setInstallerConfigutation(template.getInstaller());
+    }
   }
  catch (  final Exception e) {
     throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
@@ -49,11 +52,11 @@
   if (machineIp == null) {
     throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
   }
-  MachineStartedCloudifyEvent machineStartedEvent=new MachineStartedCloudifyEvent();
+  final MachineStartedCloudifyEvent machineStartedEvent=new MachineStartedCloudifyEvent();
   machineStartedEvent.setMachineDetails(machineDetails);
   machineStartedEvent.setHostAddress(machineIp);
   machineEventListener.elasticMachineProvisioningProgressChanged(machineStartedEvent);
-  GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
+  final GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
   agentStartEvent.setHostAddress(machineIp);
   agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
   try {

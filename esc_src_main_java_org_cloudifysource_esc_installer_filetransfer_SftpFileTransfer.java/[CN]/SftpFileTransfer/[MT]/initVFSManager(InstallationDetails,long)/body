@@ -9,7 +9,7 @@
         SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(opts,(String)preferredAuthenticationMethods);
       }
  else {
-        throw new IllegalArgumentException("Was expecting a string value for custom data field '" + CloudifyConstants.INSTALLER_CUSTOM_DATA_SFTP_PREFERRED_AUTHENTICATION_METHODS_KEY + "', got a; "+ preferredAuthenticationMethods.getClass().getName());
+        throw new IllegalArgumentException("Was expecti`ng a string value for custom data field '" + CloudifyConstants.INSTALLER_CUSTOM_DATA_SFTP_PREFERRED_AUTHENTICATION_METHODS_KEY + "', got a; "+ preferredAuthenticationMethods.getClass().getName());
       }
     }
     final String keyFile=details.getKeyFile();
@@ -20,7 +20,7 @@
       }
       SftpFileSystemConfigBuilder.getInstance().setIdentities(opts,new File[]{temp});
     }
-    SftpFileSystemConfigBuilder.getInstance().setTimeout(opts,SFTP_DISCONNECT_DETECTION_TIMEOUT_MILLIS);
+    SftpFileSystemConfigBuilder.getInstance().setTimeout(opts,installerConfiguration.getFileTransferConnectionTimeoutMillis());
     this.fileSystemManager=VFS.getManager();
   }
  catch (  final FileSystemException e) {

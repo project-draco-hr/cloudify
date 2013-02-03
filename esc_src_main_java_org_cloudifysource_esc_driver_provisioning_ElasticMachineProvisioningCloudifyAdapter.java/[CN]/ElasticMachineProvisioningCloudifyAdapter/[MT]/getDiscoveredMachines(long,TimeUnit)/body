@@ -1,8 +1,8 @@
 {
-  List<GridServiceAgent> result=new ArrayList<GridServiceAgent>();
-  GridServiceAgent[] agents=this.originalESMAdmin.getGridServiceAgents().getAgents();
-  for (  GridServiceAgent agent : agents) {
-    String template=agent.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
+  final List<GridServiceAgent> result=new ArrayList<GridServiceAgent>();
+  final GridServiceAgent[] agents=this.originalESMAdmin.getGridServiceAgents().getAgents();
+  for (  final GridServiceAgent agent : agents) {
+    final String template=agent.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
     if (template != null) {
       if (template.equals(this.cloudTemplateName)) {
         result.add(agent);

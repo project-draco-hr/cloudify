@@ -1,0 +1,51 @@
+{
+  final int port=Utils.getRemoteExecutionPort(details.getInstallerConfiguration(),RemoteExecutionModes.SSH);
+  final String fullCommand="chmod +x " + scriptPath + ";"+ scriptPath;
+  SSHClient sshClient=Utils.createSSHClient(details,targetHost,port);
+  Session session=null;
+  try {
+    session=sshClient.startSession();
+    session.allocateDefaultPTY();
+    Command cmd=session.exec(fullCommand);
+    BufferedReader reader=new BufferedReader(new InputStreamReader(cmd.getInputStream()));
+    StringBuilder sb=new StringBuilder();
+    while (System.currentTimeMillis() < endTimeMillis) {
+      String line=reader.readLine();
+      if (line == null) {
+        break;
+      }
+      logger.fine(line);
+      installer.publishEvent("ssh_output_line",line);
+      sb.append(line).append(NEWLINE);
+    }
+    Integer exitCode=cmd.getExitStatus();
+    if (exitCode == null) {
+      throw new InstallerException("Remote command returned a null exit code!");
+    }
+    if (exitCode == 0) {
+      return;
+    }
+ else {
+      throw new InstallerException("Command exited with abnormal exit code: " + exitCode + ". Command output was: "+ sb.toString());
+    }
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+ finally {
+    if (session != null) {
+      try {
+        session.close();
+      }
+ catch (      IOException e) {
+        logger.log(Level.WARNING,"Failed to close ssh session: " + e.getMessage(),e);
+      }
+    }
+    try {
+      sshClient.close();
+    }
+ catch (    IOException e) {
+      logger.log(Level.WARNING,"Failed to close ssh client: " + e.getMessage(),e);
+    }
+  }
+}

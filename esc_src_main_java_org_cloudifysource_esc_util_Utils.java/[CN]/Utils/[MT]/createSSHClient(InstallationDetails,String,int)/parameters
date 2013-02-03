@@ -1,0 +1,3 @@
+InstallationDetails details
+String host
+int port
