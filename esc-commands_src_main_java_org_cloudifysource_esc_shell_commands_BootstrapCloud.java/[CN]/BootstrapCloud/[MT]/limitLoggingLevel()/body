@@ -1,7 +1,7 @@
 {
   if (!this.verbose) {
     loggerStates.clear();
-    for (    String loggerName : NON_VERBOSE_LOGGERS) {
+    for (    final String loggerName : NON_VERBOSE_LOGGERS) {
       final Logger provisioningLogger=Logger.getLogger(loggerName);
       final Level logLevelBefore=provisioningLogger.getLevel();
       provisioningLogger.setLevel(Level.WARNING);

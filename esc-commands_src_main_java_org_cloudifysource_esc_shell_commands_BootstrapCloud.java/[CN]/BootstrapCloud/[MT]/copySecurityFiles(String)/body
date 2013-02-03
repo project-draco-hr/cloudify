@@ -1,15 +1,15 @@
 {
-  File defaultSecuritySourceFile=new File(DEFAULT_SECURITY_FILE_PATH);
+  final File defaultSecuritySourceFile=new File(DEFAULT_SECURITY_FILE_PATH);
   if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
     FileUtils.copyFile(defaultSecuritySourceFile,defaultSecurityTargetFile);
   }
  else {
     if (StringUtils.isNotBlank(securityFilePath)) {
-      File securitySourceFile=new File(securityFilePath);
+      final File securitySourceFile=new File(securityFilePath);
       if (!securitySourceFile.isFile()) {
         throw new Exception("Security configuration file not found: " + securityFilePath);
       }
-      if (!(securitySourceFile.getCanonicalFile().equals(defaultSecurityTargetFile.getCanonicalFile()))) {
+      if (!securitySourceFile.getCanonicalFile().equals(defaultSecurityTargetFile.getCanonicalFile())) {
         FileUtils.copyFile(securitySourceFile,defaultSecurityTargetFile);
       }
     }
@@ -17,12 +17,12 @@
       throw new IllegalArgumentException("-security-file is missing or empty");
     }
     if (StringUtils.isNotBlank(keystore)) {
-      File keystoreSourceFile=new File(keystore);
+      final File keystoreSourceFile=new File(keystore);
       if (!keystoreSourceFile.isFile()) {
         throw new Exception("Keystore file not found: " + keystore);
       }
       final File defaultKeystoreTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
-      if (!(keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreTargetFile.getCanonicalFile()))) {
+      if (!keystoreSourceFile.getCanonicalFile().equals(defaultKeystoreTargetFile.getCanonicalFile())) {
         FileUtils.copyFile(keystoreSourceFile,defaultKeystoreTargetFile);
       }
     }

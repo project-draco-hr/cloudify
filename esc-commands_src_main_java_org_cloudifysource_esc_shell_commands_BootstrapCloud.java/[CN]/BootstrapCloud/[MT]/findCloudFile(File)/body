@@ -2,7 +2,7 @@
   if (!providerDirectory.exists() || !providerDirectory.isDirectory()) {
     throw new FileNotFoundException("Could not find cloud provider directory: " + providerDirectory);
   }
-  File[] cloudFiles=providerDirectory.listFiles(new FilenameFilter(){
+  final File[] cloudFiles=providerDirectory.listFiles(new FilenameFilter(){
     @Override public boolean accept(    final File dir,    final String name){
       return name.endsWith("-cloud.groovy");
     }

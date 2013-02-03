@@ -1,8 +1,8 @@
 {
   if (!verbose) {
-    Set<Entry<String,Level>> entries=loggerStates.entrySet();
-    for (    Entry<String,Level> entry : entries) {
-      Logger provisioningLogger=Logger.getLogger(entry.getKey());
+    final Set<Entry<String,Level>> entries=loggerStates.entrySet();
+    for (    final Entry<String,Level> entry : entries) {
+      final Logger provisioningLogger=Logger.getLogger(entry.getKey());
       provisioningLogger.setLevel(entry.getValue());
     }
   }
