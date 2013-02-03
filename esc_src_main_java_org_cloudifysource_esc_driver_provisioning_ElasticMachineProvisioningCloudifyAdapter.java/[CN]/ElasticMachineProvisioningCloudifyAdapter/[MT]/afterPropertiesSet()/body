@@ -6,7 +6,7 @@
     throw new IllegalArgumentException("Cloud configuration directory was not set!");
   }
   try {
-    String cloudOverridesPerService=config.getCloudOverridesPerService();
+    final String cloudOverridesPerService=config.getCloudOverridesPerService();
     this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectoryPath,cloudOverridesPerService);
     this.cloudTemplateName=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME);
     if (this.cloudTemplateName == null) {
@@ -20,8 +20,8 @@
     logger.info("Remote Directory is: " + cloudTemplate.getRemoteDirectory());
     if (cloudTemplate.getFileTransfer() == FileTransferModes.CIFS) {
       logger.info("Windows machine - modifying local directory location");
-      String remoteDirName=cloudTemplate.getRemoteDirectory();
-      String windowsLocalDirPath=getWindowsLocalDirPath(remoteDirName,cloudTemplate.getLocalDirectory());
+      final String remoteDirName=cloudTemplate.getRemoteDirectory();
+      final String windowsLocalDirPath=getWindowsLocalDirPath(remoteDirName,cloudTemplate.getLocalDirectory());
       logger.info("Modified local dir name is: " + windowsLocalDirPath);
       cloudTemplate.setLocalDirectory(windowsLocalDirPath);
     }

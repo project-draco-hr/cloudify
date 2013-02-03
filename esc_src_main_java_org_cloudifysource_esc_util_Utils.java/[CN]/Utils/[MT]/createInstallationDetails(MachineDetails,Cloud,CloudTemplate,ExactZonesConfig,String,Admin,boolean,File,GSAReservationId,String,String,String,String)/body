@@ -25,14 +25,14 @@
   details.setScriptLanguage(md.getScriptLangeuage());
   details.setCloudFile(cloudFile);
   details.setManagement(isManagement);
-  GridComponents componentsConfig=cloud.getConfiguration().getComponents();
+  final GridComponents componentsConfig=cloud.getConfiguration().getComponents();
   if (isManagement) {
     details.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
     details.setSecurityProfile(securityProfile);
     details.setKeystorePassword(keystorePassword);
-    String esmCommandlineArgs=ConfigUtils.getEsmCommandlineArgs(componentsConfig.getOrchestrator());
-    String lusCommandlineArgs=ConfigUtils.getLusCommandlineArgs(componentsConfig.getDiscovery());
-    String gsmCommandlineArgs=ConfigUtils.getGsmCommandlineArgs(componentsConfig.getDeployer(),componentsConfig.getDiscovery());
+    final String esmCommandlineArgs=ConfigUtils.getEsmCommandlineArgs(componentsConfig.getOrchestrator());
+    final String lusCommandlineArgs=ConfigUtils.getLusCommandlineArgs(componentsConfig.getDiscovery());
+    final String gsmCommandlineArgs=ConfigUtils.getGsmCommandlineArgs(componentsConfig.getDeployer(),componentsConfig.getDiscovery());
     details.setEsmCommandlineArgs('"' + esmCommandlineArgs + '"');
     details.setLusCommandlineArgs('"' + lusCommandlineArgs + '"');
     details.setGsmCommandlineArgs('"' + gsmCommandlineArgs + '"');
@@ -91,6 +91,7 @@
     details.setAuthGroups(authGroups);
   }
   details.setDeleteRemoteDirectoryContents(md.isCleanRemoteDirectoryOnStart());
+  details.setInstallerConfiguration(md.getInstallerConfigutation());
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }

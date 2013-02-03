@@ -1,0 +1,13 @@
+{
+  Exception lastException=null;
+  while (System.currentTimeMillis() < endTime) {
+    try {
+      return InetAddress.getByName(ip);
+    }
+ catch (    final IOException e) {
+      lastException=e;
+    }
+    Thread.sleep(installerConfiguration.getConnectionTestIntervalMillis());
+  }
+  throw new InstallerException("Failed to resolve installation target: " + ip,lastException);
+}

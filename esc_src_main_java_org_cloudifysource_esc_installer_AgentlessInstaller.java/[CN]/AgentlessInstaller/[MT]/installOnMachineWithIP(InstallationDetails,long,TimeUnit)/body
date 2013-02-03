@@ -5,9 +5,9 @@
   }
   logger.fine("Executing agentless installer with the following details:\n" + details.toString());
   final String targetHost=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
-  final int port=details.getFileTransferMode().getDefaultPort();
+  final int port=Utils.getFileTransferPort(details.getInstallerConfiguration(),details.getFileTransferMode());
   publishEvent("attempting_to_access_vm",targetHost);
-  checkConnection(targetHost,port,CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  checkConnection(targetHost,port,details.getInstallerConfiguration(),CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
   File environmentFile=null;
   try {
     environmentFile=createEnvironmentFile(details);

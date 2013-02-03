@@ -8,7 +8,7 @@
   final MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
   if (existingManagementServers.length > 0) {
     logger.info("Found existing servers matching the name: " + managementMachinePrefix);
-    for (    MachineDetails machineDetails : existingManagementServers) {
+    for (    final MachineDetails machineDetails : existingManagementServers) {
       final String existingManagementServerDescription=createManagementServerDescription(machineDetails);
       logger.info(existingManagementServerDescription);
     }

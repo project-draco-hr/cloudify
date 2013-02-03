@@ -1,0 +1,20 @@
+{
+  FileSystemException lastException=null;
+  for (int i=0; i < installerConfiguration.getFileTransferRetries(); ++i) {
+    try {
+      final FileObject targetDirectory=mng.resolveFile(target,opts);
+      logger.fine("Remote directory resolved successfully.");
+      return targetDirectory;
+    }
+ catch (    final FileSystemException fse) {
+      logger.fine("Attempt number: " + (i + 1) + " to reslve remote directory failed."+ " This may be a temporary issue while remote machine is starting up.");
+      try {
+        Thread.sleep(installerConfiguration.getFileTransferConnectionRetryIntervalMillis());
+      }
+ catch (      final InterruptedException e) {
+      }
+      lastException=fse;
+    }
+  }
+  throw lastException;
+}

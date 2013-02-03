@@ -1,0 +1,8 @@
+{
+  if (installerConfiguration.getFileTransferPort() == CloudTemplateInstallerConfiguration.DEFAULT_PORT) {
+    return mode.getDefaultPort();
+  }
+ else {
+    return installerConfiguration.getFileTransferPort();
+  }
+}

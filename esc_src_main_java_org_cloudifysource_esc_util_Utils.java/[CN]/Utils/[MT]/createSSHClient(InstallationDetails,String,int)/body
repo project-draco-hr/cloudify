@@ -1,0 +1,37 @@
+{
+  final SSHClient ssh=new SSHClient();
+  ssh.addHostKeyVerifier(new PromiscuousVerifier());
+  try {
+    ssh.connect(host,port);
+  }
+ catch (  final IOException e) {
+    throw new InstallerException("Failed to connect to host: " + host + ": "+ e.getMessage(),e);
+  }
+  try {
+    if (!org.apache.commons.lang.StringUtils.isEmpty(details.getKeyFile())) {
+      final File keyFile=new File(details.getKeyFile());
+      if (!keyFile.exists() || !keyFile.isFile()) {
+        throw new InstallerException("Expected to find key file at: " + keyFile.getAbsolutePath());
+      }
+      ssh.authPublickey(details.getUsername(),keyFile.getAbsolutePath());
+    }
+ else     if (!org.apache.commons.lang.StringUtils.isEmpty(details.getPassword())) {
+      ssh.authPassword(details.getUsername(),details.getPassword());
+    }
+ else {
+      ssh.auth(details.getUsername(),new AuthNone());
+    }
+  }
+ catch (  final IOException e) {
+    try {
+      if (ssh != null) {
+        ssh.close();
+      }
+    }
+ catch (    final IOException e1) {
+      logger.log(Level.WARNING,"Failed to close ssh client after encountering an exception: " + e.getMessage(),e);
+    }
+    throw new InstallerException("Failed to authenticate to remote server: " + e.getMessage(),e);
+  }
+  return ssh;
+}

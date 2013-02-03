@@ -8,7 +8,7 @@
     try {
       node.setResolvedIP(IPUtils.resolveHostName(node.getPrivateIP()));
       if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
-        node.setLoginPort(RemoteExecutionModes.WINRM.getPort());
+        node.setLoginPort(RemoteExecutionModes.WINRM.getDefaultPort());
       }
       IPUtils.validateConnection(node.getResolvedIP(),node.getLoginPort());
       resolvedNodes.add(node);

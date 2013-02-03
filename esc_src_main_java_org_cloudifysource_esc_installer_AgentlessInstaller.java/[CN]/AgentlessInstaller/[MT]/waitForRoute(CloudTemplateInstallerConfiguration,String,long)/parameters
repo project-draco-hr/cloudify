@@ -1,0 +1,3 @@
+CloudTemplateInstallerConfiguration installerConfiguration
+String ip
+long endTime

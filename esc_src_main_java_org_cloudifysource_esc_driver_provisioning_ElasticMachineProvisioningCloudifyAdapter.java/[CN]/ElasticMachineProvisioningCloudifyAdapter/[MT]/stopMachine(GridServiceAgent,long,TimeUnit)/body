@@ -2,7 +2,7 @@
   final String machineIp=agent.getMachine().getHostAddress();
   Exception failedToShutdownAgentException=null;
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
-  GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
+  final GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
   agentStopEvent.setHostAddress(machineIp);
   agentStopEvent.setAgentUid(agent.getUid());
   agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStopEvent);
@@ -10,7 +10,7 @@
   try {
     agent.shutdown();
     logger.fine("Agent on host: " + machineIp + " successfully shut down");
-    GridServiceAgentStoppedEvent agentStoppedEvent=new GridServiceAgentStoppedEvent();
+    final GridServiceAgentStoppedEvent agentStoppedEvent=new GridServiceAgentStoppedEvent();
     agentStoppedEvent.setHostAddress(machineIp);
     agentStoppedEvent.setAgentUid(agent.getUid());
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStoppedEvent);
@@ -20,14 +20,14 @@
     logger.log(Level.FINE,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of machine.",e);
   }
   try {
-    MachineStopRequestedEvent machineStopEvent=new MachineStopRequestedEvent();
+    final MachineStopRequestedEvent machineStopEvent=new MachineStopRequestedEvent();
     machineStopEvent.setHostAddress(machineIp);
     machineEventListener.elasticMachineProvisioningProgressChanged(machineStopEvent);
     logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
     final boolean shutdownSuccesfull=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
     logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownSuccesfull);
     if (shutdownSuccesfull) {
-      MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
+      final MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
       machineStoppedEvent.setHostAddress(machineIp);
       machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
       while (agent.isDiscovered()) {

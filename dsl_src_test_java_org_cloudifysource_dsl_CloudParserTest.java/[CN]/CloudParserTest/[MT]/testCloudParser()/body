@@ -6,5 +6,5 @@
   assertNotNull(cloud.getUser());
   assertNotNull(cloud.getTemplates().size() == 1);
   assertNotNull(cloud.getTemplates().get("SMALL_LINUX"));
-  Assert.assertEquals(FileTransferModes.CIFS,cloud.getTemplates().get("SMALL_LINUX").getFileTransfer());
+  assertEquals(FileTransferModes.CIFS,cloud.getTemplates().get("SMALL_LINUX").getFileTransfer());
 }

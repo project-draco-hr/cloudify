@@ -1,4 +1,5 @@
 {
+  this.installerConfiguration=details.getInstallerConfiguration();
   this.deleteRemoteDirectoryContents=details.isDeleteRemoteDirectoryContents();
   if (details.isConnectedToPrivateIp()) {
     host=details.getPrivateIp();
@@ -20,7 +21,7 @@
   }
   try {
     localDir=mng.resolveFile("file:" + localDirPath);
-    remoteDir=mng.resolveFile(targetURI,opts);
+    remoteDir=resolveTargetDirectory(opts,targetURI,mng);
   }
  catch (  final FileSystemException e) {
     throw new InstallerException("Failed to set up file transfer: " + e.getMessage(),e);

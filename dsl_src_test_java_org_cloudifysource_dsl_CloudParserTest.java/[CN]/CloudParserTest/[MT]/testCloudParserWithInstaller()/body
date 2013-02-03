@@ -1,0 +1,14 @@
+{
+  final org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(INSTALLER_CLOUD_PATH));
+  assertNotNull(cloud);
+  assertNotNull(cloud.getTemplates());
+  assertNotNull(cloud.getTemplates().size() == 1);
+  assertNotNull(cloud.getTemplates().get("SMALL_LINUX"));
+  CloudTemplate template=cloud.getTemplates().values().iterator().next();
+  assertNotNull(template);
+  assertNotNull(template.getInstaller());
+  CloudTemplateInstallerConfiguration installer=template.getInstaller();
+  assertEquals(5000,installer.getConnectionTestConnectTimeoutMillis());
+  assertEquals(5000,installer.getConnectionTestIntervalMillis());
+  assertEquals(5,installer.getFileTransferRetries());
+}

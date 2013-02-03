@@ -42,6 +42,7 @@
     addObjectInitializerForClass(dslObjectInitializersByName,UsmComponent.class);
     addObjectInitializerForClass(dslObjectInitializersByName,RestComponent.class);
     addObjectInitializerForClass(dslObjectInitializersByName,AgentComponent.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplateInstallerConfiguration.class);
   }
   return dslObjectInitializersByName;
 }

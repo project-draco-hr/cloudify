@@ -1,0 +1,28 @@
+{
+  final long end=System.currentTimeMillis() + unit.toMillis(timeout);
+  final InetAddress inetAddress=waitForRoute(installerConfiguration,ip,Math.min(end,System.currentTimeMillis() + installerConfiguration.getConnectionTestRouteResolutionTimeoutMillis()));
+  final InetSocketAddress socketAddress=new InetSocketAddress(inetAddress,port);
+  logger.fine("Checking connection to: " + socketAddress);
+  while (System.currentTimeMillis() + installerConfiguration.getConnectionTestIntervalMillis() < end) {
+    Thread.sleep(installerConfiguration.getConnectionTestIntervalMillis());
+    final Socket sock=new Socket();
+    try {
+      sock.connect(socketAddress,installerConfiguration.getConnectionTestConnectTimeoutMillis());
+      return;
+    }
+ catch (    final IOException e) {
+      logger.log(Level.FINE,"Checking connection to: " + socketAddress,e);
+    }
+ finally {
+      if (sock != null) {
+        try {
+          sock.close();
+        }
+ catch (        final IOException e) {
+          logger.fine("Failed to close socket");
+        }
+      }
+    }
+  }
+  throw new TimeoutException("Failed connecting to " + ip + ":"+ port);
+}

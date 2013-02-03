@@ -1,7 +1,0 @@
-{
-  final CloudTemplate template=new CloudTemplate();
-  final Class enumClass=PropertyUtils.getPropertyType(template,"fileTransfer");
-  System.out.println(enumClass.isEnum());
-  final Enum val=Enum.valueOf(enumClass,"SCP");
-  System.out.println(val);
-}

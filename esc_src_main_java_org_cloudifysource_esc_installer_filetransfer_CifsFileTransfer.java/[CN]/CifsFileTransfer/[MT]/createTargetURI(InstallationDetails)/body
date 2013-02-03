@@ -1,6 +1,7 @@
 {
+  final int port=Utils.getFileTransferPort(this.installerConfiguration,FileTransferModes.CIFS);
   try {
-    targetURI=new java.net.URI("smb",details.getUsername() + ":" + details.getPassword(),host,CIFS_PORT,details.getRemoteDir(),null,null).toASCIIString();
+    targetURI=new java.net.URI("smb",details.getUsername() + ":" + details.getPassword(),host,port,details.getRemoteDir(),null,null).toASCIIString();
   }
  catch (  final URISyntaxException e) {
     throw new InstallerException("Failed to initialize file transfer: " + e.getMessage(),e);
