@@ -1,12 +1,14 @@
 {
-  List<String> sysPropsList=new ArrayList<String>();
+  final List<String> sysPropsList=new ArrayList<String>();
   String envVarValue;
-  for (  String envVarName : envVarsList) {
+  for (  final String envVarName : envVarsList) {
     envVarValue=System.getenv(envVarName);
-    String[] sysProps=envVarValue.split("-D");
-    for (    String sysProp : sysProps) {
-      if (StringUtils.isNotBlank(sysProp)) {
-        sysPropsList.add("-D" + sysProp.trim());
+    if (envVarValue != null) {
+      final String[] sysProps=envVarValue.split("-D");
+      for (      final String sysProp : sysProps) {
+        if (StringUtils.isNotBlank(sysProp)) {
+          sysPropsList.add("-D" + sysProp.trim());
+        }
       }
     }
   }

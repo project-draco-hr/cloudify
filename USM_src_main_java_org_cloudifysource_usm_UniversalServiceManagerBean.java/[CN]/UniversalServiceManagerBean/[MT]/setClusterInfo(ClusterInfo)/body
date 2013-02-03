@@ -1,4 +1,5 @@
 {
   this.instanceId=clusterInfo.getInstanceId();
   this.clusterName=clusterInfo.getName();
+  this.clusterInfo=clusterInfo;
 }

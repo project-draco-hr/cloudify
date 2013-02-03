@@ -4,7 +4,7 @@
     for (    final String key : logFileMap.keySet()) {
       if (logFileMap.get(key).wasModified()) {
         final String lines=logFileMap.get(key).readLines();
-        final String seporatedLines[]=lineSplitPattern.split(lines);
+        final String[] seporatedLines=lineSplitPattern.split(lines);
         for (        final String line : seporatedLines) {
           handler.handleLine(key,line);
         }

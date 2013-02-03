@@ -17,7 +17,7 @@
       map.put(CloudifyConstants.USM_ENV_SERVICE_NAME,fullServiceName.getServiceName());
     }
  else {
-      logger.warning("PU Name in ClusterInfo is null. " + "If running in the IntegratedProcessingUnitContainer, this is normal. " + "Using 'USM' instead");
+      logger.warning("PU Name in ClusterInfo is null. " + "This should never happen as of 2.5.0");
       map.put(CloudifyConstants.USM_ENV_CLUSTER_NAME,ServiceUtils.getAbsolutePUName(CloudifyConstants.DEFAULT_APPLICATION_NAME,"USM"));
       map.put(CloudifyConstants.USM_ENV_APPLICATION_NAME,CloudifyConstants.DEFAULT_APPLICATION_NAME);
       map.put(CloudifyConstants.USM_ENV_SERVICE_NAME,"USM");
