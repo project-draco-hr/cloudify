@@ -6,7 +6,7 @@
     servers=provisioning.startManagementMachines(timeout,timeoutUnit);
   }
  catch (  final CloudProvisioningException e) {
-    CLIStatusException cliStatusException=new CLIStatusException(e,CloudifyErrorMessages.CLOUD_API_ERROR.getName(),e.getMessage());
+    final CLIStatusException cliStatusException=new CLIStatusException(e,CloudifyErrorMessages.CLOUD_API_ERROR.getName(),e.getMessage());
     throw cliStatusException;
   }
 catch (  final TimeoutException e) {
@@ -21,13 +21,14 @@ catch (  final TimeoutException e) {
         logServerDetails(server);
       }
     }
+    validateServers(servers);
     if (servers[0].isAgentRunning()) {
       throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. " + "Please shut them down before continuing");
     }
     startManagememntProcesses(servers,securityProfile,keystorePassword,end);
     if (!isNoWebServices()) {
-      Integer restPort=getRestPort(cloud.getConfiguration().getComponents().getRest().getPort(),ShellUtils.isSecureConnection(securityProfile));
-      Integer webuiPort=getWebuiPort(cloud.getConfiguration().getComponents().getWebui().getPort(),ShellUtils.isSecureConnection(securityProfile));
+      final Integer restPort=getRestPort(cloud.getConfiguration().getComponents().getRest().getPort(),ShellUtils.isSecureConnection(securityProfile));
+      final Integer webuiPort=getWebuiPort(cloud.getConfiguration().getComponents().getWebui().getPort(),ShellUtils.isSecureConnection(securityProfile));
       waitForManagementWebServices(ShellUtils.isSecureConnection(securityProfile),username,password,restPort,webuiPort,end,servers);
     }
   }

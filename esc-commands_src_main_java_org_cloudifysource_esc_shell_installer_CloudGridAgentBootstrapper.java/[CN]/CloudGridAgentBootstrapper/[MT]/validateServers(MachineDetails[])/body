@@ -1,0 +1,17 @@
+{
+  if (servers.length != this.cloud.getProvider().getNumberOfManagementMachines()) {
+    throw new CLIException("Bootstrap required " + this.cloud.getProvider().getNumberOfManagementMachines() + " machines, but recieved "+ servers.length);
+  }
+  for (  final MachineDetails machineDetails : servers) {
+    if (this.cloud.getConfiguration().isBootstrapManagementOnPublicIp()) {
+      if (machineDetails.getPublicAddress() == null) {
+        throw new CLIException("Missing a public address which is required for bootstrap in node with ID: " + machineDetails.getMachineId());
+      }
+    }
+ else {
+      if (machineDetails.getPrivateAddress() == null) {
+        throw new CLIException("Missing a private address which is required for bootstrap in node with ID: " + machineDetails.getMachineId());
+      }
+    }
+  }
+}
