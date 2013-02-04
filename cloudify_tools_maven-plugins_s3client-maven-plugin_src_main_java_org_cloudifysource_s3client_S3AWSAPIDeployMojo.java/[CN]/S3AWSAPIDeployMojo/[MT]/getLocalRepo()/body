@@ -1,0 +1,5 @@
+{
+  String localRepoProp=System.getProperty("maven.repo.local");
+  if (localRepoProp != null)   return localRepoProp;
+  return System.getProperty("user.home") + "/.m2/repository";
+}
