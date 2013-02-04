@@ -1,0 +1,19 @@
+{
+  BlobStoreContext context=null;
+  try {
+    getLog().info("Using aws-sdk-java");
+    AWSCredentials awsCredentials=new BasicAWSCredentials(user,key);
+    AmazonS3 s3=new AmazonS3Client(awsCredentials);
+    String path=project.getGroupId().replace(".","/") + "/" + project.getArtifactId()+ "/"+ project.getVersion();
+    File source=new File(getLocalRepo() + "/" + path);
+    uploadFile(s3,source,path);
+  }
+ catch (  Exception e) {
+    throw new MojoFailureException("Failed put operation",e);
+  }
+ finally {
+    if (context != null) {
+      context.close();
+    }
+  }
+}
