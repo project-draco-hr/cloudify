@@ -1,0 +1,3 @@
+String managementIP
+int expectedGsmCount
+Integer lusPort

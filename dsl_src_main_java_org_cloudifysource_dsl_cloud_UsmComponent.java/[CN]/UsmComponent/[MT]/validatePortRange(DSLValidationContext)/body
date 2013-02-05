@@ -1,0 +1,17 @@
+{
+  if (StringUtils.isEmpty(this.portRange)) {
+    throw new DSLValidationException("LRMI port can't be null");
+  }
+  String[] range=portRange.split("-");
+  if (range.length != 2) {
+    throw new DSLValidationException("LRMI port range should be set as '<START_PORT>-<END_PORT>'");
+  }
+  try {
+    if (parseInt(range[0]) <= 1024 || parseInt(range[1]) <= 1024 || parseInt(range[0]) > 65535 || parseInt(range[1]) > 65535) {
+      throw new DSLValidationException("LRMI port range must be set to a range between 1024 and 65535");
+    }
+  }
+ catch (  NumberFormatException e) {
+    throw new DSLValidationException("LRMI port range must be set to a range between 1024 and 65535");
+  }
+}

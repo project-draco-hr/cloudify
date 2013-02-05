@@ -1,0 +1,5 @@
+{
+  this.setMaxMemory(CloudifyConstants.DEFAULT_WEBUI_MAX_MEMORY);
+  this.setMinMemory(CloudifyConstants.DEFAULT_WEBUI_MIN_MEMORY);
+  this.setPort(CloudifyConstants.DEFAULT_WEBUI_PORT);
+}

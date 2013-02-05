@@ -1,0 +1,6 @@
+{
+  String esmCommandLineArgs="";
+  esmCommandLineArgs+=getComponentMemoryArgs(esm.getMaxMemory(),esm.getMinMemory());
+  esmCommandLineArgs+=getComponentRmiArgs(esm.getPort().toString());
+  return esmCommandLineArgs;
+}

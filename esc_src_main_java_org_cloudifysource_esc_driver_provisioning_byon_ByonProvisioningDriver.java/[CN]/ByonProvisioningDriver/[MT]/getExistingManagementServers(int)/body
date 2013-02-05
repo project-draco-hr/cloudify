@@ -12,7 +12,8 @@
     }
   }
   if (StringUtils.isNotBlank(managementIP)) {
-    final Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount);
+    Integer discoveryPort=getLusPort();
+    final Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount,discoveryPort);
     try {
       final GridServiceManagers gsms=admin.getGridServiceManagers();
       for (      final GridServiceManager gsm : gsms) {

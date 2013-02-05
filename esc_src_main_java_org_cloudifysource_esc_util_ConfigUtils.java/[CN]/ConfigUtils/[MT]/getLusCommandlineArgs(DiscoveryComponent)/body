@@ -1,0 +1,10 @@
+{
+  String lusCommandLineArgs="";
+  Integer discoveryPort=discovery.getDiscoveryPort();
+  if (discoveryPort != null) {
+    lusCommandLineArgs+=" -D" + CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY + "="+ discoveryPort;
+  }
+  lusCommandLineArgs+=getComponentMemoryArgs(discovery.getMaxMemory(),discovery.getMinMemory());
+  lusCommandLineArgs+=getComponentRmiArgs(discovery.getPort().toString());
+  return lusCommandLineArgs;
+}

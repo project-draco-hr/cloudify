@@ -1,0 +1,6 @@
+{
+  this.setMaxMemory(CloudifyConstants.DEFAULT_LUS_MAX_MEMORY);
+  this.setMinMemory(CloudifyConstants.DEFAULT_LUS_MIN_MEMORY);
+  this.setDiscoveryPort(CloudifyConstants.DEFAULT_LUS_PORT);
+  this.setPort(CloudifyConstants.DEFAULT_LUS_LRMI_PORT);
+}

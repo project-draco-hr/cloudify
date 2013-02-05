@@ -1,0 +1,5 @@
+{
+  this.setMaxMemory(CloudifyConstants.DEFAULT_REST_MAX_MEMORY);
+  this.setMinMemory(CloudifyConstants.DEFAULT_REST_MIN_MEMORY);
+  this.setPort(CloudifyConstants.DEFAULT_REST_PORT);
+}

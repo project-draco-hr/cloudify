@@ -1,12 +1,16 @@
 {
+  long memory;
   String memoryString=System.getenv().get(memoryEnvironmentVar);
   if (org.apache.commons.lang.StringUtils.isNotBlank(memoryString)) {
-    return Integer.parseInt(memoryString.substring(0,memoryString.length() - 1));
+    memory=getMemoryFromMemoryString(memoryString);
   }
  else {
     if (memoryEnvironmentVar.equals(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR)) {
-      return REST_MEMORY_IN_MB;
+      memory=getMemoryFromMemoryString(CloudifyConstants.DEFAULT_REST_MAX_MEMORY);
+    }
+ else {
+      memory=getMemoryFromMemoryString(CloudifyConstants.DEFAULT_REST_MIN_MEMORY);
     }
   }
-  return WEBUI_MEMORY_IN_MB;
+  return memory;
 }

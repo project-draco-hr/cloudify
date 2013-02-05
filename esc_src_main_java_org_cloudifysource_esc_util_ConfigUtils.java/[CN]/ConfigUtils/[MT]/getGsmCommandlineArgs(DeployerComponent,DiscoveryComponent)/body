@@ -1,0 +1,13 @@
+{
+  String gsmCommandLineArgs="";
+  Integer websterPort=deployer.getWebsterPort();
+  if (websterPort != null) {
+    gsmCommandLineArgs+=" -D" + CloudifyConstants.GSM_HTTP_PORT_CONTEXT_PROPERTY + "="+ websterPort;
+  }
+  if (discovery.getDiscoveryPort() != null) {
+    gsmCommandLineArgs+=" -D" + CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY + "="+ discovery.getDiscoveryPort();
+  }
+  gsmCommandLineArgs+=getComponentMemoryArgs(deployer.getMaxMemory(),deployer.getMinMemory());
+  gsmCommandLineArgs+=getComponentRmiArgs(deployer.getPort().toString());
+  return gsmCommandLineArgs;
+}

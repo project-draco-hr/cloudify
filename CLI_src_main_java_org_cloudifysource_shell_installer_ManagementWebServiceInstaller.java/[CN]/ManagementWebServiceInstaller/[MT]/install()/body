@@ -2,7 +2,7 @@
   if (agentZone == null) {
     throw new IllegalStateException("Management services must be installed on management zone");
   }
-  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(getGSFile(warFile)).memoryCapacityPerContainer(memoryInMB,MemoryUnit.MEGABYTES).name(serviceName).sharedMachineProvisioning("public",new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(agentZone).reservedMemoryCapacityPerMachine(RESERVED_MEMORY_IN_MB,MemoryUnit.MEGABYTES).create()).scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create());
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(getGSFile(warFile)).memoryCapacityPerContainer(memoryInMB,MemoryUnit.MEGABYTES).name(serviceName).sharedMachineProvisioning("public",new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(agentZone).reservedMemoryCapacityPerMachine(RESERVED_MEMORY_IN_MB,MemoryUnit.MEGABYTES).create()).scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create()).addCommandLineArgument(this.lrmiCommandLineArgument);
   for (  final Entry<Object,Object> prop : getContextProperties().entrySet()) {
     deployment.addContextProperty(prop.getKey().toString(),prop.getValue().toString());
   }

@@ -1,6 +1,7 @@
 {
   if (admin == null) {
-    admin=Utils.getAdminObject(ipAddress,expectedGsmCount);
+    Integer discoveryPort=getLusPort();
+    admin=Utils.getAdminObject(ipAddress,expectedGsmCount,discoveryPort);
   }
   final Map<String,GridServiceAgent> agentsMap=admin.getGridServiceAgents().getHostAddress();
   GSA agent=null;

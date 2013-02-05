@@ -1,0 +1,7 @@
+{
+  String rmiCommandlineArgs="";
+  if (rmiPort != null) {
+    rmiCommandlineArgs+=" -D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ rmiPort;
+  }
+  return rmiCommandlineArgs;
+}

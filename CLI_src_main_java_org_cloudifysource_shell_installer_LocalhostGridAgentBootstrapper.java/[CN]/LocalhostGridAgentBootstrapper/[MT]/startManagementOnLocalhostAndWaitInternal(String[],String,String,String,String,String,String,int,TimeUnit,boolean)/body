@@ -35,16 +35,18 @@
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
       if (!noManagementSpace) {
         final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
+        String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
         managementSpaceInstaller=new ManagementSpaceServiceInstaller();
         managementSpaceInstaller.setAdmin(agent.getAdmin());
         managementSpaceInstaller.setVerbose(verbose);
         managementSpaceInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
-        managementSpaceInstaller.setMemory(MANAGEMENT_SPACE_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
+        managementSpaceInstaller.setMemory(CloudifyConstants.MANAGEMENT_SPACE_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
         managementSpaceInstaller.setServiceName(MANAGEMENT_SPACE_NAME);
         managementSpaceInstaller.setManagementZone(MANAGEMENT_ZONE);
         managementSpaceInstaller.setHighlyAvailable(highlyAvailable);
         managementSpaceInstaller.addListeners(this.eventsListenersList);
         managementSpaceInstaller.setIsLocalCloud(isLocalCloud);
+        managementSpaceInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
         try {
           managementSpaceInstaller.installSpace();
           waitForManagementServices.add(managementSpaceInstaller);
