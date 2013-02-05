@@ -1,0 +1,5 @@
+{
+  this.setMaxMemory(CloudifyConstants.DEFAULT_GSC_MAX_MEMORY);
+  this.setMinMemory(CloudifyConstants.DEFAULT_GSC_MIN_MEMORY);
+  this.setPortRange(CloudifyConstants.DEFAULT_GSC_LRMI_PORT_RANGE);
+}

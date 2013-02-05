@@ -1,16 +1,20 @@
 {
+  String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
+  long webuiMemory=getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR);
+  int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
   final ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
   webuiInstaller.setAdmin(agent.getAdmin());
   webuiInstaller.setVerbose(verbose);
   webuiInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
-  webuiInstaller.setMemory(getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR),MemoryUnit.MEGABYTES);
-  webuiInstaller.setPort(getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection));
+  webuiInstaller.setMemory(webuiMemory,MemoryUnit.MEGABYTES);
+  webuiInstaller.setPort(webuiPort);
   webuiInstaller.setWarFile(new File(WEBUI_FILE));
   webuiInstaller.setServiceName(WEBUI_NAME);
   webuiInstaller.setManagementZone(MANAGEMENT_ZONE);
   webuiInstaller.addListeners(this.eventsListenersList);
   webuiInstaller.setIsLocalCloud(isLocalCloud);
   webuiInstaller.setIsSecureConnection(isSecureConnection);
+  webuiInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
   try {
     webuiInstaller.installWebService();
   }
@@ -26,12 +30,14 @@
  else {
     webuiInstaller.logServiceLocation();
   }
+  int restPort=getWebservicePort(CloudifyConstants.REST_PORT_ENV_VAR,isSecureConnection);
+  long webServiceMemory=getWebServiceMemory(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR);
   final ManagementWebServiceInstaller restInstaller=new ManagementWebServiceInstaller();
   restInstaller.setAdmin(agent.getAdmin());
   restInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
   restInstaller.setVerbose(verbose);
-  restInstaller.setMemory(getWebServiceMemory(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR),MemoryUnit.MEGABYTES);
-  restInstaller.setPort(getWebservicePort(CloudifyConstants.REST_PORT_ENV_VAR,isSecureConnection));
+  restInstaller.setMemory(webServiceMemory,MemoryUnit.MEGABYTES);
+  restInstaller.setPort(restPort);
   restInstaller.setUsername(username);
   restInstaller.setPassword(password);
   restInstaller.setWarFile(new File(REST_FILE));
@@ -42,6 +48,7 @@
   restInstaller.addListeners(this.eventsListenersList);
   restInstaller.setIsLocalCloud(isLocalCloud);
   restInstaller.setIsSecureConnection(isSecureConnection);
+  restInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
   try {
     restInstaller.installWebService();
   }

@@ -1,2 +1,8 @@
 {
+  if (this.maxMemory == null || this.maxMemory.length() <= 1 || this.maxMemory.endsWith("m") || !StringUtils.isNumeric(this.maxMemory.substring(0,this.maxMemory.length() - 1))) {
+    throw new DSLValidationException("Illegal memory property: " + this.maxMemory + " Memory property should be defined as '<NUMBER>m'.");
+  }
+  if (this.minMemory == null || this.minMemory.length() <= 1 || this.minMemory.endsWith("m") || !StringUtils.isNumeric(this.minMemory.substring(0,this.minMemory.length() - 1))) {
+    throw new DSLValidationException("Illegal memory property: " + this.minMemory + " Memory property should be defined as '<NUMBER>m'.");
+  }
 }

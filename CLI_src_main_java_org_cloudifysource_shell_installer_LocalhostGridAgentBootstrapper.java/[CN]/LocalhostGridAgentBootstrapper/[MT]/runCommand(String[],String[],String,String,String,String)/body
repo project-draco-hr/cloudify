@@ -7,17 +7,17 @@
   final String commandString=StringUtils.collectionToDelimitedString(commandLine," ");
   final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
-  String localCloudOptions="-Xmx" + LOCALCLOUD_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
-  String gsaJavaOptions="-Xmx" + GSA_MEMORY_IN_MB + "m";
+  String localCloudOptions="-Xmx" + CloudifyConstants.DEFAULT_LOCALCLOUD_GSA_GSM_ESM_LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
+  String gsaJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_AGENT_MAX_MEMORY;
   if (gsaZones != null) {
     gsaJavaOptions+=" -D" + ZONES_PROPERTY + "="+ gsaZones;
   }
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   }
-  String lusJavaOptions="-Xmx" + LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
-  String gsmJavaOptions="-Xmx" + GSM_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
-  String esmJavaOptions="-Xmx" + ESM_MEMORY_IN_MB + "m"+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  String lusJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_LUS_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  String gsmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  String esmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_ESM_MAX_MEMORY + " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
   if (lookupGroups != null) {
@@ -53,6 +53,7 @@
   logger.fine("Setting env var " + CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR + " to: "+ securityFilePath);
   environment.put(CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR,securityFilePath);
   if (isLocalCloud) {
+    logger.fine("Setting env vars COMPONENT_JAVA_OPTIONS: " + localCloudOptions);
     environment.put("COMPONENT_JAVA_OPTIONS",localCloudOptions);
     environment.put(CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID,"localcloud");
     environment.put(CloudifyConstants.GIGASPACES_CLOUD_IMAGE_ID,"localcloud");
@@ -64,6 +65,7 @@
     }
   }
  else {
+    logger.fine("Setting env vars " + "GSA_JAVA_OPTIONS: gsaJavaOptions" + gsaJavaOptions + "; LUS_JAVA_OPTIONS: "+ lusJavaOptions+ "; GSM_JAVA_OPTIONS: "+ gsmJavaOptions+ "; ESM_JAVA_OPTIONS: "+ esmJavaOptions+ "; GSC_JAVA_OPTIONS: "+ gscJavaOptions);
     environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
     environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);
     environment.put("GSM_JAVA_OPTIONS",gsmJavaOptions);

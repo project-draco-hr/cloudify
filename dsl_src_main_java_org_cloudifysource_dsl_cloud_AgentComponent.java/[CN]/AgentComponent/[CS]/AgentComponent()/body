@@ -1,0 +1,5 @@
+{
+  this.setMaxMemory(CloudifyConstants.DEFAULT_AGENT_MAX_MEMORY);
+  this.setMinMemory(CloudifyConstants.DEFAULT_AGENT_MIN_MEMORY);
+  this.setPort(CloudifyConstants.DEFAULT_AGENT_LRMI_PORT);
+}

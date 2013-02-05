@@ -1,0 +1,7 @@
+{
+  Integer discoveryPort=cloud.getConfiguration().getComponents().getDiscovery().getDiscoveryPort();
+  if (discoveryPort == null) {
+    discoveryPort=CloudifyConstants.DEFAULT_LUS_PORT;
+  }
+  return discoveryPort;
+}

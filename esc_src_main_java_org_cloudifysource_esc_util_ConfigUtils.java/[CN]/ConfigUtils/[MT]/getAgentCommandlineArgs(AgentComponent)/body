@@ -1,0 +1,7 @@
+{
+  String agentCommandLineArgs="";
+  Integer agentPort=agent.getPort();
+  agentCommandLineArgs+=getComponentMemoryArgs(agent.getMaxMemory(),agent.getMinMemory());
+  agentCommandLineArgs+=getComponentRmiArgs(agentPort.toString());
+  return agentCommandLineArgs;
+}

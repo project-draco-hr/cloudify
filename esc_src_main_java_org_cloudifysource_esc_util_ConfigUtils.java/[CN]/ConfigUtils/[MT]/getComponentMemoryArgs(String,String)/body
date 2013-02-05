@@ -1,0 +1,10 @@
+{
+  String memoryCommandLineArgs="";
+  if (maxMemory != null) {
+    memoryCommandLineArgs+=" -Xmx" + maxMemory;
+  }
+  if (minMemory != null) {
+    memoryCommandLineArgs+=" -Xms" + minMemory;
+  }
+  return memoryCommandLineArgs;
+}

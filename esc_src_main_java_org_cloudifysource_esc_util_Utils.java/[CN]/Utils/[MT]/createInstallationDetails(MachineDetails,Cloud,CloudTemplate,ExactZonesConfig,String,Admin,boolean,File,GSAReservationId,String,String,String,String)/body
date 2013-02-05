@@ -25,16 +25,18 @@
   details.setScriptLanguage(md.getScriptLangeuage());
   details.setCloudFile(cloudFile);
   details.setManagement(isManagement);
+  GridComponents componentsConfig=cloud.getConfiguration().getComponents();
   if (isManagement) {
     details.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
     details.setSecurityProfile(securityProfile);
     details.setKeystorePassword(keystorePassword);
-    GridComponents componentsConfig=cloud.getConfiguration().getComponents();
-    details.setEsmCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getOrchestrator()));
-    details.setGsmCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getDeployer()));
-    details.setLusCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getDiscovery()));
-    details.setGsaCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getAgent()));
-    details.setGscCommandlineArgs(Utils.getGridComponentCommandlineArgs(componentsConfig.getUsm()));
+    String esmCommandlineArgs=ConfigUtils.getEsmCommandlineArgs(componentsConfig.getOrchestrator());
+    String lusCommandlineArgs=ConfigUtils.getLusCommandlineArgs(componentsConfig.getDiscovery());
+    String gsmCommandlineArgs=ConfigUtils.getGsmCommandlineArgs(componentsConfig.getDeployer(),componentsConfig.getDiscovery());
+    details.setEsmCommandlineArgs('"' + esmCommandlineArgs + '"');
+    details.setLusCommandlineArgs('"' + lusCommandlineArgs + '"');
+    details.setGsmCommandlineArgs('"' + gsmCommandlineArgs + '"');
+    details.setGscLrmiPortRange(componentsConfig.getUsm().getPortRange());
     details.setRestPort(componentsConfig.getRest().getPort());
     details.setWebuiPort(componentsConfig.getWebui().getPort());
     details.setRestMaxMemory(componentsConfig.getRest().getMaxMemory());
@@ -43,6 +45,7 @@
  else {
     details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   }
+  details.setGsaCommandlineArgs('"' + ConfigUtils.getAgentCommandlineArgs(componentsConfig.getAgent()) + '"');
   final Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
   for (  final Entry<String,Object> entry : customEntries) {
     if (entry.getKey().startsWith("installer.")) {
