@@ -4,7 +4,7 @@
     getLog().info("Using aws-sdk-java");
     AWSCredentials awsCredentials=new BasicAWSCredentials(user,key);
     AmazonS3 s3=new AmazonS3Client(awsCredentials);
-    uploadFile(s3,source,target);
+    uploadFile(s3,source,null,target);
   }
  catch (  Exception e) {
     throw new MojoFailureException("Failed put operation",e);
