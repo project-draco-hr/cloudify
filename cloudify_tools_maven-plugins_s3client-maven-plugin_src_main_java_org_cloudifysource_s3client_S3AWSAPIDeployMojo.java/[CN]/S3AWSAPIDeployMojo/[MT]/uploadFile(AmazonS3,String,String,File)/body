@@ -1,12 +1,12 @@
 {
   if (source.isDirectory()) {
     for (    File f : source.listFiles()) {
-      uploadFile(s3,new File(source.getPath() + "/" + f.getName()),f.getName(),target + "/" + f.getName());
+      uploadFile(s3,container,target + "/" + f.getName(),new File(source.getPath() + "/" + f.getName()));
     }
   }
  else {
     getLog().info("Processing " + source + ", upload size is: "+ (source).length()+ ". Target: "+ target);
-    s3.putObject(new PutObjectRequest(target,fileName,source).withCannedAcl(CannedAccessControlList.PublicRead));
+    s3.putObject(new PutObjectRequest(container,target,source).withCannedAcl(CannedAccessControlList.PublicRead));
     getLog().info("Upload of " + source + " was ended successfully");
   }
 }
