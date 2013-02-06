@@ -4,8 +4,11 @@
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
-  final String managementMachinePrefix=this.serverNamePrefix;
-  final MachineDetails[] existingManagementServers=getExistingManagementServers(managementMachinePrefix);
+  final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
+  if (StringUtils.isBlank(managementMachinePrefix)) {
+    throw new CloudProvisioningException("The management group name is missing - can't locate existing servers!");
+  }
+  final MachineDetails[] existingManagementServers=getExistingManagementServers();
   if (existingManagementServers.length > 0) {
     logger.info("Found existing servers matching the name: " + managementMachinePrefix);
     for (    final MachineDetails machineDetails : existingManagementServers) {

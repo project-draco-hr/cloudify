@@ -1,0 +1,31 @@
+{
+  final String managementMachinePrefix=this.serverNamePrefix;
+  Set<? extends NodeMetadata> existingManagementServers=null;
+  try {
+    existingManagementServers=this.deployer.getServers(new Predicate<ComputeMetadata>(){
+      @Override public boolean apply(      final ComputeMetadata input){
+        final NodeMetadata node=(NodeMetadata)input;
+        if (node.getGroup() == null) {
+          return false;
+        }
+        if (node.getStatus() == NodeMetadata.Status.RUNNING || node.getStatus() == NodeMetadata.Status.PENDING) {
+          return node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
+        }
+        return false;
+      }
+    }
+);
+  }
+ catch (  final Exception e) {
+    throw new CloudProvisioningException("Failed to read existing management servers: " + e.getMessage(),e);
+  }
+  final MachineDetails[] result=new MachineDetails[existingManagementServers.size()];
+  int i=0;
+  for (  final NodeMetadata node : existingManagementServers) {
+    result[i]=createMachineDetailsFromNode(node);
+    result[i].setAgentRunning(true);
+    result[i].setCloudifyInstalled(true);
+    i++;
+  }
+  return result;
+}

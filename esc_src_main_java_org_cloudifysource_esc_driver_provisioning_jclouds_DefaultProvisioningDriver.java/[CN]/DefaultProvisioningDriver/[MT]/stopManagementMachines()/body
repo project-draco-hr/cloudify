@@ -1,6 +1,6 @@
 {
   initDeployer(this.cloud);
-  final MachineDetails[] managementServers=getExistingManagementServers(this.serverNamePrefix);
+  final MachineDetails[] managementServers=getExistingManagementServers();
   if (managementServers.length == 0) {
     throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.serverNamePrefix + ")");
   }
