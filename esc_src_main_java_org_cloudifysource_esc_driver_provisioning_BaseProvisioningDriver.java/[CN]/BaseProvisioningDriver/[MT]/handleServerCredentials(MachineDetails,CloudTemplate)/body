@@ -19,7 +19,7 @@
           keyFile=File.createTempFile("gs-esm-key",".pem");
           keyFile.deleteOnExit();
           FileUtils.write(keyFile,remotePassword);
-          template.setKeyFile(keyFile.getAbsolutePath());
+          machineDetails.setKeyFile(keyFile);
         }
  catch (        final IOException e) {
           throw new CloudProvisioningException("Failed to create a temporary " + "file for cloud server's key file",e);

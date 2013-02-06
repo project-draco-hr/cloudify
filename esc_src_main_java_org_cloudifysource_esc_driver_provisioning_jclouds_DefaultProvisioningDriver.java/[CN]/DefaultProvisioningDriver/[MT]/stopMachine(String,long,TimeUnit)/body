@@ -1,26 +1,17 @@
 {
   boolean stopResult=false;
   logger.info("Stop Machine - machineIp: " + serverIp);
-  final Long previousRequest=stoppingMachines.get(serverIp);
-  if (previousRequest != null && System.currentTimeMillis() - previousRequest < MULTIPLE_SHUTDOWN_REQUEST_IGNORE_TIMEOUT) {
-    logger.fine("Machine " + serverIp + " is already stopping. Ignoring this shutdown request");
-    stopResult=false;
+  logger.info("Looking up cloud server with IP: " + serverIp);
+  final NodeMetadata server=deployer.getServerWithIP(serverIp);
+  if (server != null) {
+    logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to complete");
+    deployer.shutdownMachineAndWait(server.getId(),unit,duration);
+    logger.info("Server: " + server.getId() + " shutdown has finished.");
+    stopResult=true;
   }
  else {
-    stoppingMachines.put(serverIp,System.currentTimeMillis());
-    logger.info("Scale IN -- " + serverIp + " --");
-    logger.info("Looking up cloud server with IP: " + serverIp);
-    final NodeMetadata server=deployer.getServerWithIP(serverIp);
-    if (server != null) {
-      logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to complete");
-      deployer.shutdownMachineAndWait(server.getId(),unit,duration);
-      logger.info("Server: " + server.getId() + " shutdown has finished.");
-      stopResult=true;
-    }
- else {
-      logger.log(Level.SEVERE,"Recieved scale in request for machine with ip " + serverIp + " but this IP could not be found in the Cloud server list");
-      stopResult=false;
-    }
+    logger.log(Level.SEVERE,"Recieved scale in request for machine with ip " + serverIp + " but this IP could not be found in the Cloud server list");
+    stopResult=false;
   }
   return stopResult;
 }
