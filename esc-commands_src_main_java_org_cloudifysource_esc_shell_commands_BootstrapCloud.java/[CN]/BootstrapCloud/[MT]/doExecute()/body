@@ -44,6 +44,7 @@
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
   installer.setNoWebServices(noWebServices);
+  installer.setUseExisting(this.useExistingManagers);
   limitLoggingLevel();
   logger.info(getFormattedMessage("bootstrapping_cloud",getCloudProvider()));
   try {
