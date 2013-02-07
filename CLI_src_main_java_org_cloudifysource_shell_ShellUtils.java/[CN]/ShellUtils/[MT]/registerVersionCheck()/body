@@ -4,7 +4,7 @@
     dos=new DataOutputStream(new FileOutputStream(VERSION_CHECK_FILE));
     dos.writeLong(System.currentTimeMillis());
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     logger.log(Level.FINE,"failed to write last checked version timestamp file",e);
   }
  finally {
@@ -12,7 +12,7 @@
       try {
         dos.close();
       }
- catch (      IOException e) {
+ catch (      final IOException e) {
       }
     }
   }

@@ -5,7 +5,7 @@
     session.getConsole().print(confirmationQuestion + " ");
     session.getConsole().flush();
     char responseChar='\0';
-    StringBuilder responseBuffer=new StringBuilder();
+    final StringBuilder responseBuffer=new StringBuilder();
     while (true) {
       responseChar=(char)session.getKeyboard().read();
       if (responseChar == '\u007F') {
@@ -24,7 +24,7 @@
       }
       session.getConsole().flush();
     }
-    String responseStr=responseBuffer.toString().trim();
+    final String responseStr=responseBuffer.toString().trim();
     return "y".equalsIgnoreCase(responseStr) || "yes".equalsIgnoreCase(responseStr);
   }
   return true;
