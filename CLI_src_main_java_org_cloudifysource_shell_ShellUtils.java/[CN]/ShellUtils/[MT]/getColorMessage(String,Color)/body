@@ -1,4 +1,4 @@
 {
-  String formattedMessage=Ansi.ansi().fg(color).a(message).toString();
+  final String formattedMessage=Ansi.ansi().fg(color).a(message).toString();
   return formattedMessage + FIRST_ESC_CHAR + SECOND_ESC_CHAR+ '0'+ COMMAND_CHAR;
 }

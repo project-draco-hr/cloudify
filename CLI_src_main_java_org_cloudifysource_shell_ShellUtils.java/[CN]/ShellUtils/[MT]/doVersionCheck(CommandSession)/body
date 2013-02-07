@@ -3,8 +3,8 @@
   if (currentBuildStr.contains("-")) {
     currentBuildStr=currentBuildStr.substring(0,currentBuildStr.indexOf("-"));
   }
-  int currentVersion=Integer.parseInt(currentBuildStr);
-  int latestBuild=getLatestBuildNumber(currentVersion);
+  final int currentVersion=Integer.parseInt(currentBuildStr);
+  final int latestBuild=getLatestBuildNumber(currentVersion);
   String message;
   if (latestBuild == -1) {
     message=ShellUtils.getFormattedMessage("could_not_get_version");

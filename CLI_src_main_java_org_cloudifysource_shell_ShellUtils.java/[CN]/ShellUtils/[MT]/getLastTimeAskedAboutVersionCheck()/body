@@ -6,7 +6,7 @@
       dis=new DataInputStream(new FileInputStream(VERSION_CHECK_FILE));
       lastVersionCheckTS=dis.readLong();
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       logger.log(Level.FINE,"failed to read last checked version timestamp file",e);
     }
  finally {
@@ -14,7 +14,7 @@
         try {
           dis.close();
         }
- catch (        IOException e) {
+ catch (        final IOException e) {
         }
       }
     }

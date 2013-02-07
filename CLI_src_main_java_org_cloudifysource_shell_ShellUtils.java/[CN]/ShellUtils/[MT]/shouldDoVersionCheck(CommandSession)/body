@@ -3,15 +3,15 @@
   if (!interactive) {
     return false;
   }
-  long lastAskedTS=getLastTimeAskedAboutVersionCheck();
+  final long lastAskedTS=getLastTimeAskedAboutVersionCheck();
   try {
-    if (lastAskedTS <= (System.currentTimeMillis() - TWO_WEEKS_IN_MILLIS)) {
-      boolean userConfirms=ShellUtils.promptUser(session,"version_check_confirmation");
+    if (lastAskedTS <= System.currentTimeMillis() - TWO_WEEKS_IN_MILLIS) {
+      final boolean userConfirms=ShellUtils.promptUser(session,"version_check_confirmation");
       registerVersionCheck();
       return userConfirms;
     }
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     logger.log(Level.FINE,"Failed to prompt user",e);
   }
   return false;

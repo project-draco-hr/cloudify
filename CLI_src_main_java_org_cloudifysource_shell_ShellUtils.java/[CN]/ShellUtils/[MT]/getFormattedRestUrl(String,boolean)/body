@@ -3,7 +3,7 @@
   if (!formattedURL.endsWith("/")) {
     formattedURL=formattedURL + '/';
   }
-  String protocolPrefix=ShellUtils.getRestProtocol(isSecureConnection) + "://";
+  final String protocolPrefix=ShellUtils.getRestProtocol(isSecureConnection) + "://";
   if (!formattedURL.startsWith("http://") && !formattedURL.startsWith("https://")) {
     formattedURL=protocolPrefix + formattedURL;
   }

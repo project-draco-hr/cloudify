@@ -1,18 +1,35 @@
 {
+  final HttpClient client=new DefaultHttpClient();
+  HttpParams params=client.getParams();
+  HttpConnectionParams.setConnectionTimeout(params,VERSION_CHECK_READ_TIMEOUT);
+  HttpConnectionParams.setSoTimeout(params,VERSION_CHECK_READ_TIMEOUT);
+  final String url="http://www.gigaspaces.com/downloadgen/latest-cloudify-version?build=" + currentVersion;
+  final HttpGet httpMethod=new HttpGet(url);
+  String responseBody=null;
   try {
-    HttpComponentsClientHttpRequestFactory requestFactory=new HttpComponentsClientHttpRequestFactory();
-    requestFactory.setReadTimeout(VERSION_CHECK_READ_TIMEOUT);
-    RestTemplate template=new RestTemplate(requestFactory);
-    String versionStr=template.getForObject("http://www.gigaspaces.com/downloadgen/latest-cloudify-version?build=" + currentVersion,String.class);
-    logger.fine("Latest cloudify version is " + versionStr);
-    return Integer.parseInt(versionStr);
+    final HttpResponse response=client.execute(httpMethod);
+    final StatusLine statusLine=response.getStatusLine();
+    final int statusCode=statusLine.getStatusCode();
+    if (statusCode != CloudifyConstants.HTTP_STATUS_CODE_OK) {
+      logger.log(Level.FINE,"Could not get version from server - status code: " + statusCode);
+      return -1;
+    }
+    final HttpEntity entity=response.getEntity();
+    if (entity == null) {
+      logger.log(Level.FINE,"Missing response entity in version check");
+      return -1;
+    }
+    final InputStream instream=entity.getContent();
+    responseBody=StringUtils.getStringFromStream(instream);
+    logger.fine("Latest cloudify version is " + responseBody);
+    return Integer.parseInt(responseBody);
   }
- catch (  RestClientException e) {
-    logger.log(Level.FINE,"Could not get version from server",e);
+ catch (  final NumberFormatException e) {
+    logger.fine("Get version response is not a number: " + responseBody);
     return -1;
   }
-catch (  NumberFormatException e) {
-    logger.fine("Get version response is not a number");
+catch (  final IOException e) {
+    logger.fine("Failed to get latest version: " + e.getMessage());
     return -1;
   }
 }
