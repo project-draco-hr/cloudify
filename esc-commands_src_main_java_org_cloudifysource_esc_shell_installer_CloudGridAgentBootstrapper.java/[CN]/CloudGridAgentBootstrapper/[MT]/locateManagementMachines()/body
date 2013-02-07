@@ -1,0 +1,22 @@
+{
+  if (provisioning instanceof ManagementLocator) {
+    final ManagementLocator locator=(ManagementLocator)provisioning;
+    MachineDetails[] mds;
+    try {
+      mds=locator.getExistingManagementServers();
+    }
+ catch (    final CloudProvisioningException e) {
+      throw new CLIStatusException(e,CloudifyErrorMessages.MANAGEMENT_SERVERS_FAILED_TO_READ.getName(),e.getMessage());
+    }
+    if (mds.length == 0) {
+      throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NOT_LOCATED.getName());
+    }
+    if (mds.length != this.cloud.getProvider().getNumberOfManagementMachines()) {
+      throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NUMBER_NOT_MATCH.getName(),cloud.getProvider().getNumberOfManagementMachines(),mds.length);
+    }
+    return mds;
+  }
+ else {
+    throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_LOCATOR_NOT_SUPPORTED.getName(),this.cloud.getName());
+  }
+}
