@@ -1,5 +1,5 @@
 {
-  Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+  final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
   if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     throw new RestErrorException(FAILED_TO_LOGIN);
   }

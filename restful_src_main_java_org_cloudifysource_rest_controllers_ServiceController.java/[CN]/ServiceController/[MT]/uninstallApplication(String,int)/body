@@ -13,7 +13,7 @@
   if (pus.length > 0) {
     if (permissionEvaluator != null) {
       final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
-      String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+      final String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
       permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
     }
   }
@@ -28,7 +28,7 @@
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
           if (permissionEvaluator != null) {
             final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
-            String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+            final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
             permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
           }
           final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);

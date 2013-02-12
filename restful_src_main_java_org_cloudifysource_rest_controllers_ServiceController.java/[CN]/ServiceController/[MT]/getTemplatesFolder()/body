@@ -1,5 +1,5 @@
 {
-  File templatesFolder=new File(cloudConfigurationDir,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
+  final File templatesFolder=new File(cloudConfigurationDir,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
   if (!cloudConfigurationDir.exists()) {
     templatesFolder.mkdir();
   }
