@@ -1,7 +1,7 @@
 {
-  for (  CloudTemplateHolder holder : cloudTemplates) {
-    String templateName=holder.getName();
-    String originalTemplateFileName=holder.getTemplateFileName();
+  for (  final CloudTemplateHolder holder : cloudTemplates) {
+    final String templateName=holder.getName();
+    final String originalTemplateFileName=holder.getTemplateFileName();
     if (cloud.getTemplates().containsKey(templateName)) {
       logger.log(Level.WARNING,"[addTemplatesToCloudList] - Template already exists: " + templateName);
       failedToAddTemplates.put(templateName,"template already exists");
@@ -11,13 +11,13 @@
     try {
       renameTemplateFileIfNeeded(templatesFolder,holder);
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       logger.log(Level.WARNING,"[addTemplatesToCloudList] - Failed to rename template's file, template: " + templateName + ", error: "+ e.getMessage(),e);
       failedToAddTemplates.put(templateName,"failed to rename template's file. error: " + e.getMessage());
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
     }
-    CloudTemplate cloudTemplate=holder.getCloudTemplate();
+    final CloudTemplate cloudTemplate=holder.getCloudTemplate();
     cloud.getTemplates().put(templateName,cloudTemplate);
     addedTemplates.add(templateName);
   }

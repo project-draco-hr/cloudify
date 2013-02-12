@@ -8,8 +8,8 @@
     logger.log(Level.WARNING,"[removeTemplate] - failed to remove template [" + templateName + "]. The template is being used by "+ templateServices.size()+ " services: "+ templateServices);
     throw new RestErrorException(CloudifyErrorMessages.TEMPLATE_IN_USE.getName(),templateName,templateServices);
   }
-  List<String> successfullyRemoved=new LinkedList<String>();
-  List<String> failedToRemoveHosts=new LinkedList<String>();
+  final List<String> successfullyRemoved=new LinkedList<String>();
+  final List<String> failedToRemoveHosts=new LinkedList<String>();
   removeTemplateFromRestInstances(templateName,successfullyRemoved,failedToRemoveHosts);
   if (!failedToRemoveHosts.isEmpty()) {
     String message="[removeTemplate] - failed to remove template [" + templateName + "] from: "+ failedToRemoveHosts;

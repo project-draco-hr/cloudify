@@ -8,9 +8,9 @@
   try {
     loaclTemplatesZipFile=copyMultipartFileToLocalFile(templatesFolder);
     unzippedTemplatesFolder=new CloudTemplatesReader().unzipCloudTemplatesFolder(loaclTemplatesZipFile);
-    List<String> expectedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder);
-    Map<String,Map<String,String>> failedToAddTemplatesByHost=new HashMap<String,Map<String,String>>();
-    Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
+    final List<String> expectedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder);
+    final Map<String,Map<String,String>> failedToAddTemplatesByHost=new HashMap<String,Map<String,String>>();
+    final Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();
     sendAddTemplatesToRestInstances(loaclTemplatesZipFile,expectedTemplates,addedTemplatesByHost,failedToAddTemplatesByHost);
     if (!failedToAddTemplatesByHost.isEmpty()) {
       if (addedTemplatesByHost.isEmpty()) {
