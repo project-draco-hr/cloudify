@@ -1,0 +1,8 @@
+{
+  if (details == null) {
+    return UNDEFINED_DETAILS;
+  }
+ else {
+    return details;
+  }
+}
