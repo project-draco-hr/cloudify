@@ -1,0 +1,4 @@
+{
+  createProvisioningDriver();
+  return locateManagementMachines();
+}

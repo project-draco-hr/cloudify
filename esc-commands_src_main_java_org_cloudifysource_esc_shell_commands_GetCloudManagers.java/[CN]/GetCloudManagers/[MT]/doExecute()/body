@@ -1,9 +1,4 @@
 {
-  if (this.existingManagersFile != null) {
-    if (!this.existingManagersFile.exists() || !this.existingManagersFile.isFile()) {
-      throw new CLIStatusException(CloudifyErrorMessages.FILE_NOT_EXISTS.getName(),this.existingManagersFile.getAbsolutePath());
-    }
-  }
   if (cloudOverrides != null) {
     if (cloudOverrides.length() >= TEN_K) {
       throw new CLIStatusException(CloudifyErrorMessages.CLOUD_OVERRIDES_TO_LONG.getName());
@@ -11,7 +6,7 @@
   }
   final RecipePathResolver pathResolver=new RecipePathResolver();
   File providerDirectory=null;
-  if (pathResolver.resolveCloud(new File(getCloudProvider()))) {
+  if (pathResolver.resolveCloud(this.getCloudProvider())) {
     providerDirectory=pathResolver.getResolved();
   }
  else {
@@ -20,10 +15,6 @@
   final File tempFolder=createTempFolder();
   FileUtils.copyDirectoryToDirectory(providerDirectory,tempFolder);
   providerDirectory=new File(tempFolder,providerDirectory.getName());
-  defaultSecurityTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.SECURITY_FILE_NAME);
-  defaultKeystoreTargetFile=new File(providerDirectory + PATH_SEPARATOR + CloudifyConstants.KEYSTORE_FILE_NAME);
-  setSecurityMode();
-  copySecurityFiles(providerDirectory.getAbsolutePath());
   final File cloudFile=findCloudFile(providerDirectory);
   final File cloudPropertiesFile=new File(providerDirectory,cloudFile.getName().split("\\.")[0] + DSLUtils.PROPERTIES_FILE_SUFFIX);
   Cloud cloud=null;
@@ -44,18 +35,21 @@
  else {
     installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   }
-  installer.setProgressInSeconds(PROGRESS_INTERVAL_SECONDS);
   installer.setVerbose(verbose);
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
-  installer.setNoWebServices(noWebServices);
-  installer.setUseExisting(this.useExistingManagers);
-  installer.setExistingManagersFile(this.existingManagersFile);
-  limitLoggingLevel();
-  logger.info(getFormattedMessage("bootstrapping_cloud",getCloudProvider()));
   try {
-    installer.bootstrapCloudAndWait(securityProfile,username,password,keystorePassword,getTimeoutInMinutes(),TimeUnit.MINUTES);
-    return getFormattedMessage("cloud_started_successfully",getCloudProvider());
+    MachineDetails[] managers=installer.getCloudManagers();
+    if (managers.length == 0) {
+      return getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_NOT_LOCATED.getName());
+    }
+    final StringBuilder sb=new StringBuilder();
+    final String newline=System.getProperty("line.separator");
+    for (    MachineDetails manager : managers) {
+      sb.append(getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_DETAILS.getName(),normalizeDetailsString(manager.getMachineId()),normalizeDetailsString(manager.getPrivateAddress()),normalizeDetailsString(manager.getPublicAddress())));
+      sb.append(newline);
+    }
+    return sb.toString();
   }
   finally {
     if (cloudOverrides != null) {
@@ -63,6 +57,5 @@
     }
     FileUtils.deleteDirectory(tempFolder);
     installer.close();
-    restoreLoggingLevel();
   }
 }
