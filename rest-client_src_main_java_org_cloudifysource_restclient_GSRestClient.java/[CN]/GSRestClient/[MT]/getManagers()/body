@@ -1,0 +1,20 @@
+{
+  Object retval=get("service/controllers");
+  List<Object> list=(List<Object>)retval;
+  List<ControllerDetails> result=new ArrayList<ControllerDetails>(list.size());
+  for (  Object object : list) {
+    Map<String,Object> map=(Map<String,Object>)object;
+    ControllerDetails details=new ControllerDetails();
+    try {
+      BeanUtils.populate(details,map);
+    }
+ catch (    IllegalAccessException e) {
+      throw new IllegalStateException("Error while reading response from server: " + e.getMessage(),e);
+    }
+catch (    InvocationTargetException e) {
+      throw new IllegalStateException("Error while reading response from server: " + e.getMessage(),e);
+    }
+    result.add(details);
+  }
+  return result;
+}
