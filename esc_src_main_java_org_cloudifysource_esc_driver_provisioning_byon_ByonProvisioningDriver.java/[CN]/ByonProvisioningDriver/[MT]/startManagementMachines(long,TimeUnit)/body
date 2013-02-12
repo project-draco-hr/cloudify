@@ -4,24 +4,9 @@
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("DefaultCloudProvisioning: startMachine - management == " + management);
-  try {
-    final Set<CustomNode> managementServers=getExistingManagementServers(0);
-    if (managementServers != null && !managementServers.isEmpty()) {
-      final MachineDetails[] managementMachines=new MachineDetails[managementServers.size()];
-      int i=0;
-      for (      final CustomNode node : managementServers) {
-        managementMachines[i]=createMachineDetailsFromNode(node);
-        managementMachines[i].setAgentRunning(true);
-        managementMachines[i].setCloudifyInstalled(true);
-        i++;
-      }
-      logger.info("Found existing management servers (" + Arrays.toString(managementMachines) + ")");
-      return managementMachines;
-    }
-  }
- catch (  final InterruptedException e) {
-    publishEvent("prov_management_lookup_failed");
-    throw new CloudProvisioningException("Failed to lookup existing manahement servers.",e);
+  final MachineDetails[] mds=findManagementInAdmin();
+  if (mds.length != 0) {
+    return mds;
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
   final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();

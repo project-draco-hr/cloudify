@@ -1,0 +1,72 @@
+{
+  if (this.getExistingManagersFile() != null) {
+    if (getExistingManagersFile().exists() && !getExistingManagersFile().isFile()) {
+      throw new IllegalArgumentException("Expected " + this.getExistingManagersFile() + " to be a file");
+    }
+  }
+  if (this.adminFacade == null) {
+    adminFacade=(AdminFacade)session.get(Constants.ADMIN_FACADE);
+  }
+  if (adminFacade.isConnected()) {
+    adminFacade.verifyCloudAdmin();
+  }
+ else {
+    throw new CLIException(getFormattedMessage(CloudifyErrorMessages.REST_NOT_CONNECTED.getName()));
+  }
+  final List<ControllerDetails> managers=adminFacade.shutdownManagers();
+  final StringBuilder sb=new StringBuilder();
+  boolean first=true;
+  for (  final ControllerDetails managerDetails : managers) {
+    if (first) {
+      first=false;
+    }
+ else {
+      sb.append(", ");
+    }
+    if (managerDetails.isBootstrapToPublicIp()) {
+      sb.append(managerDetails.getPublicIp());
+    }
+ else {
+      sb.append(managerDetails.getPrivateIp());
+    }
+  }
+  final String managerIPs=sb.toString();
+  logger.fine("Shutting down: " + managerIPs);
+  System.out.println(getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_WAITING_FOR_SHUTDOWN.getName(),managerIPs));
+  if (this.existingManagersFile != null) {
+    final ObjectMapper mapper=new ObjectMapper();
+    final String managersAsString=mapper.writeValueAsString(managers);
+    FileUtils.writeStringToFile(existingManagersFile,managersAsString);
+  }
+  final CLIEventsDisplayer displayer=new CLIEventsDisplayer();
+  final RestAdminFacade rest=(RestAdminFacade)this.adminFacade;
+  final URL url=rest.getUrl();
+  final int port=url.getPort();
+  final Set<ControllerDetails> managersStillUp=new HashSet<ControllerDetails>();
+  managersStillUp.addAll(managers);
+  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(1);
+  while (System.currentTimeMillis() < endTime) {
+    Thread.sleep(POLLING_INTERVAL);
+    boolean found=false;
+    final Iterator<ControllerDetails> iterator=managersStillUp.iterator();
+    while (iterator.hasNext()) {
+      final ControllerDetails manager=iterator.next();
+      final String host=manager.isBootstrapToPublicIp() ? manager.getPublicIp() : manager.getPrivateIp();
+      if (ServiceUtils.isPortFree(host,port)) {
+        iterator.remove();
+        final String msg=getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_MANAGER_DOWN.getName(),host);
+        displayer.printEvent(msg);
+        found=true;
+      }
+    }
+    if (!found) {
+      displayer.printNoChange();
+    }
+ else {
+      if (managersStillUp.isEmpty()) {
+        return getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_SHUTDOWN_SUCCESS.getName());
+      }
+    }
+  }
+  throw new CLIException(getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_SHUTDOWN_FAIL.getName()));
+}

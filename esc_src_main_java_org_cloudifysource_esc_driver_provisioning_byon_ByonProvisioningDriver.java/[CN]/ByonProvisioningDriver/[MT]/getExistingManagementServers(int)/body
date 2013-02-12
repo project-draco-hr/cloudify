@@ -12,10 +12,11 @@
     }
   }
   if (StringUtils.isNotBlank(managementIP)) {
-    Integer discoveryPort=getLusPort();
+    final Integer discoveryPort=getLusPort();
     final Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount,discoveryPort);
     try {
       final GridServiceManagers gsms=admin.getGridServiceManagers();
+      gsms.waitForAtLeastOne(MANAGEMENT_LOCATION_TIMEOUT,TimeUnit.SECONDS);
       for (      final GridServiceManager gsm : gsms) {
         final CustomNode managementServer=deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
         if (managementServer != null) {

@@ -1,0 +1,8 @@
+{
+  try {
+    return findManagementInAdmin();
+  }
+ catch (  final TimeoutException e) {
+    throw new CloudProvisioningException(e);
+  }
+}
