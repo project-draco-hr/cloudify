@@ -1,8 +1,7 @@
 {
-  URL urlObj;
   try {
-    urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
-    client=new GSRestClient(user,password,urlObj,PlatformVersion.getVersionNumber());
+    this.urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
+    client=new GSRestClient(user,password,getUrl(),PlatformVersion.getVersionNumber());
     client.get(SERVICE_CONTROLLER_URL + "testrest");
     if (user != null || password != null) {
       reconnect(user,password);

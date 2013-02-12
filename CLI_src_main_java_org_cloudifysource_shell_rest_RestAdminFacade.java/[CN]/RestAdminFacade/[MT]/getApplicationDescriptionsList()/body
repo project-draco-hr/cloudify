@@ -1,10 +1,10 @@
 {
-  List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
+  final List<ApplicationDescription> applicationDescriptionList=new ArrayList<ApplicationDescription>();
   try {
-    List<Object> objectsList=(List<Object>)client.get("/service/applications/description");
-    ObjectMapper map=new ObjectMapper();
-    for (    Object object : objectsList) {
-      ApplicationDescription applicationDescription=map.convertValue(object,ApplicationDescription.class);
+    final List<Object> objectsList=(List<Object>)client.get("/service/applications/description");
+    final ObjectMapper map=new ObjectMapper();
+    for (    final Object object : objectsList) {
+      final ApplicationDescription applicationDescription=map.convertValue(object,ApplicationDescription.class);
       applicationDescriptionList.add(applicationDescription);
     }
   }

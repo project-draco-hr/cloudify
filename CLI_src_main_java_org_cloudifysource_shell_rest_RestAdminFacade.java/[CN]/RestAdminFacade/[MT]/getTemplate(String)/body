@@ -2,11 +2,11 @@
   final String url=SERVICE_CONTROLLER_URL + "templates/" + templateName;
   CloudTemplate response;
   try {
-    Object result=client.get(url);
-    ObjectMapper mapper=new ObjectMapper();
+    final Object result=client.get(url);
+    final ObjectMapper mapper=new ObjectMapper();
     response=mapper.convertValue(result,CloudTemplate.class);
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
   return response;

@@ -4,9 +4,9 @@
     if (applicationDescriptionList == null || applicationDescriptionList.isEmpty()) {
       return null;
     }
-    ObjectMapper map=new ObjectMapper();
-    Object descriptionObject=applicationDescriptionList.get(0);
-    ApplicationDescription applicationDescription=map.convertValue(descriptionObject,ApplicationDescription.class);
+    final ObjectMapper map=new ObjectMapper();
+    final Object descriptionObject=applicationDescriptionList.get(0);
+    final ApplicationDescription applicationDescription=map.convertValue(descriptionObject,ApplicationDescription.class);
     return applicationDescription;
   }
  catch (  final ErrorStatusException ese) {

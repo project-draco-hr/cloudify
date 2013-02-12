@@ -2,14 +2,14 @@
   final String url=SERVICE_CONTROLLER_URL + "templates";
   List<String> response;
   try {
-    Map<String,File> fileToPost=new HashMap<String,File>();
+    final Map<String,File> fileToPost=new HashMap<String,File>();
     fileToPost.put(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,templatesFile);
     response=(List<String>)client.postFiles(url,fileToPost);
   }
- catch (  ErrorStatusException es) {
+ catch (  final ErrorStatusException es) {
     throw new CLIStatusException(es,es.getReasonCode(),es.getArgs());
   }
-catch (  RestException e) {
+catch (  final RestException e) {
     throw new CLIException(e);
   }
   return response;

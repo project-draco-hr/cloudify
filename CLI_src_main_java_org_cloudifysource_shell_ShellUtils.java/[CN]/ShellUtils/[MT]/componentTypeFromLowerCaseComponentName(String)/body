@@ -1,8 +1,0 @@
-{
-  try {
-    return ComponentType.valueOf(lowerCaseComponentName.toUpperCase());
-  }
- catch (  final IllegalArgumentException e) {
-    throw new CLIStatusException("unknown_component_type",lowerCaseComponentName,e);
-  }
-}

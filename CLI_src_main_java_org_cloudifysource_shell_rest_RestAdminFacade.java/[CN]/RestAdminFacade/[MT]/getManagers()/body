@@ -1,0 +1,8 @@
+{
+  try {
+    return client.getManagers();
+  }
+ catch (  ErrorStatusException e) {
+    throw new CLIStatusException(e);
+  }
+}

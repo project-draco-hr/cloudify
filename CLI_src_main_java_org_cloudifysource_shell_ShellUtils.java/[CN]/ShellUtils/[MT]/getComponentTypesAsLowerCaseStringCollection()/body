@@ -1,8 +1,0 @@
-{
-  final ComponentType[] componentTypes=ComponentType.values();
-  final ArrayList<String> componentTypesAsString=new ArrayList<String>(componentTypes.length);
-  for (  final ComponentType type : componentTypes) {
-    componentTypesAsString.add(type.toString().toLowerCase());
-  }
-  return componentTypesAsString;
-}
