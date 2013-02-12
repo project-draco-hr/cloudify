@@ -1,6 +1,6 @@
 {
   try {
-    Map<String,String> resultsMap=(Map<String,String>)client.get("/service/applications");
+    final Map<String,String> resultsMap=(Map<String,String>)client.get("/service/applications");
     return new ArrayList<String>(resultsMap.keySet());
   }
  catch (  final ErrorStatusException e) {

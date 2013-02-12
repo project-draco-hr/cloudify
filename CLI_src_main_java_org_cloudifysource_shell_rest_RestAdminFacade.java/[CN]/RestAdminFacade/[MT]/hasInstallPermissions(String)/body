@@ -3,7 +3,7 @@
   try {
     client.get(url);
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
   }
 }
