@@ -29,9 +29,8 @@
   machineStartEvent.setLocationId(locationId);
   machineEventListener.elasticMachineProvisioningProgressChanged(machineStartEvent);
   try {
-    final CloudTemplate template=cloud.getTemplates().get(this.cloudTemplateName);
+    final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
     if (locationId == null) {
-      final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
       locationId=template.getLocationId();
     }
     machineDetails=provisionMachine(locationId,duration,unit);
