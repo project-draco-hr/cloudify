@@ -1,0 +1,13 @@
+{
+  NodeMetadata nodeMetadata=getNodeMetadata(ip);
+  Hardware nodeHardware=nodeMetadata.getHardware();
+  List<? extends org.jclouds.compute.domain.Volume> machineVolumes=nodeHardware.getVolumes();
+  Set<String> machineVolumeIds=new HashSet<String>();
+  for (  org.jclouds.compute.domain.Volume machineVolume : machineVolumes) {
+    String id=machineVolume.getId();
+    if (!StringUtils.isEmpty(id)) {
+      machineVolumeIds.add(machineVolume.getId());
+    }
+  }
+  return machineVolumeIds;
+}

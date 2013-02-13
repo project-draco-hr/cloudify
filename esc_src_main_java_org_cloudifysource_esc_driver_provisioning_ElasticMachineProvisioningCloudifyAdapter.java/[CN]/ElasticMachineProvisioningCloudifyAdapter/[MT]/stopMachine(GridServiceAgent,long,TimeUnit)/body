@@ -1,7 +1,15 @@
 {
-  final String machineIp=agent.getMachine().getHostAddress();
-  Exception failedToShutdownAgentException=null;
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  final String machineIp=agent.getMachine().getHostAddress();
+  try {
+    if (isStorageTemplateUsed()) {
+      handleVolumeOnStopMachine(machineIp,duration,unit);
+    }
+  }
+ catch (  StorageProvisioningException e) {
+    logger.log(Level.SEVERE,"Failed detaching volume from machine with ip: " + machineIp + ". There may still be leaking volumes.",e);
+  }
+  Exception failedToShutdownAgentException=null;
   final GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
   agentStopEvent.setHostAddress(machineIp);
   agentStopEvent.setAgentUid(agent.getUid());
@@ -24,9 +32,9 @@
     machineStopEvent.setHostAddress(machineIp);
     machineEventListener.elasticMachineProvisioningProgressChanged(machineStopEvent);
     logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
-    final boolean shutdownSuccesfull=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
-    logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownSuccesfull);
-    if (shutdownSuccesfull) {
+    final boolean shutdownSuccessful=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
+    logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownSuccessful);
+    if (shutdownSuccessful) {
       final MachineStoppedEvent machineStoppedEvent=new MachineStoppedEvent();
       machineStoppedEvent.setHostAddress(machineIp);
       machineEventListener.elasticMachineProvisioningProgressChanged(machineStoppedEvent);
@@ -40,7 +48,7 @@
         }
       }
     }
-    return shutdownSuccesfull;
+    return shutdownSuccessful;
   }
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed with error: "+ e.getMessage(),e);

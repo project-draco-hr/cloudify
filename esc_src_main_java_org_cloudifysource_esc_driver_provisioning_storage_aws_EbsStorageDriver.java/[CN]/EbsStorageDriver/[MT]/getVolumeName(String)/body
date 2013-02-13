@@ -1,0 +1,20 @@
+{
+  String volumeNameTag="";
+  try {
+    TagApi tagApi=getTagsApi();
+    logger.info("filtering tags using volumeId " + volumeId);
+    FluentIterable<Tag> filter=tagApi.filter(new TagFilterBuilder().resourceId(volumeId).build());
+    ImmutableList<Tag> immutableList=filter.toImmutableList();
+    for (    Tag tag : immutableList) {
+      if (tag.getKey().equals(NAME_TAG_KEY)) {
+        volumeNameTag=tag.getValue().get();
+        break;
+      }
+    }
+    return volumeNameTag;
+  }
+ catch (  Exception e) {
+    logger.warning("failed getting volume name. Reason: " + e.getMessage());
+    throw new StorageProvisioningException("failed getting volume name. Reason: " + e.getMessage(),e);
+  }
+}

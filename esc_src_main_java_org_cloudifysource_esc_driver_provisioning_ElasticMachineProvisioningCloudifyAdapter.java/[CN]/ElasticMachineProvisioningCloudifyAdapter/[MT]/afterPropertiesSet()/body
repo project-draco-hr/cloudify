@@ -37,6 +37,14 @@
       }
       handleServiceCloudConfiguration();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName);
+      this.storageTemplateName=config.getStorageTemplateName();
+      if (isStorageTemplateUsed()) {
+        logger.info("creating storage provisioning driver.");
+        this.storageProvisioning=(StorageProvisioningDriver)Class.forName(this.cloud.getConfiguration().getStorageClassName()).newInstance();
+        this.storageProvisioning.setComputeContext(cloudifyProvisioning.getComputeContext());
+        this.storageProvisioning.setConfig(cloud,this.cloudTemplateName,this.storageTemplateName);
+        logger.info("storage provisioning driver created successfully.");
+      }
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);

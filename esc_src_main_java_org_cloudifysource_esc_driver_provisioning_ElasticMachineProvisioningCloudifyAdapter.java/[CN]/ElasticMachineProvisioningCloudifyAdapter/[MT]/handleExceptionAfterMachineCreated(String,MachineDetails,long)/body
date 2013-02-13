@@ -14,6 +14,14 @@
       }
     }
     logger.info("Stopping machine " + machineDetails.getPrivateAddress() + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
+    try {
+      if (isStorageTemplateUsed()) {
+        handleVolumeOnStopMachine(machineIp,end,TimeUnit.MILLISECONDS);
+      }
+    }
+ catch (    StorageProvisioningException e) {
+      logger.log(Level.SEVERE,"Failed detaching volume from machine with ip: " + machineIp + ". There may still be leaking volumes.",e);
+    }
     this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
   }
  catch (  final Exception e) {

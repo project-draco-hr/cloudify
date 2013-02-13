@@ -1,0 +1,12 @@
+{
+  String availabilityZone=volume.getAvailabilityZone();
+  String id=volume.getId();
+  int size=volume.getSize();
+  String volumeName=getVolumeName(id);
+  VolumeDetails volumeDetails=new VolumeDetails();
+  volumeDetails.setLocation(availabilityZone);
+  volumeDetails.setId(id);
+  volumeDetails.setSize(size);
+  volumeDetails.setName(volumeName);
+  return volumeDetails;
+}

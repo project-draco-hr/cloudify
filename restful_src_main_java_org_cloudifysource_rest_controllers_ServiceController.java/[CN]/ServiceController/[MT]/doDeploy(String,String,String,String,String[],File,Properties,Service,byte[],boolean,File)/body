@@ -42,7 +42,7 @@
       cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
     }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),service.getStorage().getTemplate());
     config.setAuthGroups(authGroups);
     if (cloudOverrides != null) {
       if (logger.isLoggable(Level.FINE)) {

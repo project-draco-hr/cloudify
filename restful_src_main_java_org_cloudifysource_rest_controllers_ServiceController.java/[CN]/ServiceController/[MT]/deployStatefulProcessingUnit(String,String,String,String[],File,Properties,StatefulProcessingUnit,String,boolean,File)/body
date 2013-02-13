@@ -19,7 +19,7 @@
  else {
     final ComputeTemplate template=getComputeTemplate(cloud,templateName);
     validateAndPrepareStatefulSla(serviceName,puConfig.getSla(),cloud,template);
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),null);
     config.setAuthGroups(authGroups);
     if (cloudOverrides != null) {
       config.setCloudOverridesPerService(cloudOverrides);

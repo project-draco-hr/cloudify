@@ -1,0 +1,3 @@
+{
+  this.deleteOnExit=deleteOnExit;
+}

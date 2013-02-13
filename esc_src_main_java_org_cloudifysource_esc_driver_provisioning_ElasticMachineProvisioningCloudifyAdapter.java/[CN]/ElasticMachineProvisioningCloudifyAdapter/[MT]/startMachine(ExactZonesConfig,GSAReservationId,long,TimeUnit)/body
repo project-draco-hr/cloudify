@@ -62,6 +62,26 @@
   agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
   try {
     checkForProvisioningTimeout(end,machineDetails);
+    if (isStorageTemplateUsed()) {
+      String machineLocation=machineDetails.getLocationId();
+      VolumeDetails volumeDetails=startNewStorageVolume(machineLocation,end);
+      try {
+        attachStorageVolumeToMachine(machineIp,volumeDetails,end);
+      }
+ catch (      Exception e) {
+        logger.log(Level.WARNING,"Failed attaching volume. Error was " + e.getMessage(),e);
+        handleVolumeAttachException(volumeDetails);
+        throw new StorageProvisioningException(e);
+      }
+      StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(this.storageTemplateName);
+      String formatType=storageTemplate.getFileSystemType();
+      String mountPath=storageTemplate.getPath();
+      String deviceName=storageTemplate.getDeviceName();
+      machineDetails.setStorageVolumeAttached(true);
+      machineDetails.setStorageDeviceName(deviceName);
+      machineDetails.setStorageFormatType(formatType);
+      machineDetails.setStorageMountPath(mountPath);
+    }
     if (machineDetails.isAgentRunning()) {
       logger.info("Machine provisioning provided a machine and indicated that an agent is already running");
     }
@@ -104,5 +124,11 @@ catch (  final InterruptedException e) {
     logger.info(ExceptionUtils.getFullStackTrace(e));
     handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
     throw e;
+  }
+catch (  StorageProvisioningException e) {
+    logger.info("StorageProvisioningException occurred, " + e.getMessage());
+    logger.info(ExceptionUtils.getFullStackTrace(e));
+    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    throw new ElasticMachineProvisioningException("Storage exception thrown",e);
   }
 }

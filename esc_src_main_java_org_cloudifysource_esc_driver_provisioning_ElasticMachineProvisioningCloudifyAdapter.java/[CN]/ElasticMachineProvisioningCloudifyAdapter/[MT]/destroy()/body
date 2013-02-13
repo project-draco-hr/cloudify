@@ -1,3 +1,6 @@
 {
   this.cloudifyProvisioning.close();
+  if (isStorageTemplateUsed()) {
+    this.storageProvisioning.close();
+  }
 }
