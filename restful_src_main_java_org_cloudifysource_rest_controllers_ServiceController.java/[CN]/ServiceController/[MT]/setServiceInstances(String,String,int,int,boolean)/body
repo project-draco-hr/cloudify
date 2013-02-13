@@ -28,8 +28,9 @@
     }
   }
  else {
-    final CloudTemplate template=getComputeTemplate(cloud,templateName);
-    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
+    final Map<String,String> properties=((InternalProcessingUnit)pu).getElasticProperties();
+    final GridServiceContainerConfig gscConfig=new GridServiceContainerConfig(properties);
+    final long cloudExternalProcessMemoryInMB=gscConfig.getMaximumMemoryCapacityInMB();
     pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),0,locationAware,true));
   }
   logger.log(Level.INFO,"Starting to poll for lifecycle events.");
