@@ -4,7 +4,7 @@
   assertNotNull(cloud.getCloudCompute().getTemplates());
   assertNotNull(cloud.getCloudCompute().getTemplates().size() == 1);
   assertNotNull(cloud.getCloudCompute().getTemplates().get("SMALL_LINUX"));
-  org.cloudifysource.dsl.cloud.ComputeTemplate template=cloud.getCloudCompute().getTemplates().values().iterator().next();
+  ComputeTemplate template=cloud.getCloudCompute().getTemplates().values().iterator().next();
   assertNotNull(template);
   assertNotNull(template.getInstaller());
   CloudTemplateInstallerConfiguration installer=template.getInstaller();
