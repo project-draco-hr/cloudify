@@ -1,7 +1,7 @@
 {
   try {
     ServiceReader.readCloud(new File(SIMPLE_BAD_CLOUD_PATH));
-    Assert.fail("Cloud parsing should not be succesfull " + "since the templates are located under the cloud section");
+    Assert.fail("Cloud parsing should not be successful " + "since the templates are located under the cloud section");
   }
  catch (  IllegalArgumentException e) {
   }
