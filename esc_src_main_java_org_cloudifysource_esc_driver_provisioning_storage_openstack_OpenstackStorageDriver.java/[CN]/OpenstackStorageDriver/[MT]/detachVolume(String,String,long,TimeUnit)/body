@@ -1,0 +1,11 @@
+{
+  NodeMetadata node=deployer.getServerWithIP(machineIp);
+  if (node == null) {
+    throw new StorageProvisioningException("Failed to detach volume " + volumeId + " from server "+ machineIp+ ". Server not found.");
+  }
+  if (volumeAttachmentApi.isPresent()) {
+    volumeAttachmentApi.get().detachVolumeFromServer(volumeId,machineIp);
+  }
+ else {
+  }
+}

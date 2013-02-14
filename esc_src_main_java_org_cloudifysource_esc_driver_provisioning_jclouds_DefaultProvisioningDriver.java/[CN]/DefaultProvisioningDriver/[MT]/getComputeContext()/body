@@ -1,3 +1,7 @@
 {
-  return this.deployer.getContext();
+  ComputeServiceContext computeContext=null;
+  if (deployer != null) {
+    computeContext=deployer.getContext();
+  }
+  return computeContext;
 }

@@ -1,0 +1,18 @@
+{
+  if (!volumeApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to list all volumes.");
+  }
+  Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
+  FluentIterable<? extends Volume> volumesList=volumeApi.get().list();
+  if (volumesList != null) {
+    for (    Volume volume : volumesList) {
+      VolumeDetails details=new VolumeDetails();
+      details.setId(volume.getId());
+      details.setName(volume.getName());
+      details.setSize(volume.getSize());
+      details.setLocation(volume.getZone());
+      volumeDetailsSet.add(details);
+    }
+  }
+  return volumeDetailsSet;
+}

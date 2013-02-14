@@ -1,0 +1,3 @@
+String location
+long duration
+TimeUnit timeUnit

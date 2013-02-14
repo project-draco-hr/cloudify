@@ -1,0 +1,17 @@
+{
+  if (deployer != null) {
+    return deployer;
+  }
+  try {
+    logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
+    final StorageTemplate storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
+    final Properties props=new Properties();
+    props.putAll(storageTemplate.getOptions());
+    deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+  }
+ catch (  final Exception e) {
+    publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
+    throw new IllegalStateException("Failed to create cloud Deployer",e);
+  }
+  return deployer;
+}

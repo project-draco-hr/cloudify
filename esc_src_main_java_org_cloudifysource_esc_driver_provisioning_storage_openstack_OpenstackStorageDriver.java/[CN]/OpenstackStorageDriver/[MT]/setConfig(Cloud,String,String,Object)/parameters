@@ -1,0 +1,4 @@
+Cloud cloud
+String computeTemplateName
+String storageTemplateName
+Object computeContextObj
