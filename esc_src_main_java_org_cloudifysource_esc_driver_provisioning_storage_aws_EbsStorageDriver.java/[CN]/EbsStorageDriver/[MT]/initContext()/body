@@ -1,16 +1,17 @@
 {
-  if (this.context == null) {
-    String userName=cloud.getUser().getUser();
-    String apiKey=cloud.getUser().getApiKey();
-    String cloudProvider=cloud.getProvider().getProvider();
-    try {
-      logger.fine("Creating JClouds context with user: " + userName);
-      ContextBuilder contextBuilder=ContextBuilder.newBuilder(cloudProvider);
-      contextBuilder.credentials(userName,apiKey);
-      this.context=contextBuilder.buildView(ComputeServiceContext.class);
-    }
- catch (    Exception e) {
-      throw new IllegalStateException("Failed creating cloud native context. Reason: " + e.getMessage(),e);
-    }
+  if (this.context != null) {
+    return;
+  }
+  String userName=cloud.getUser().getUser();
+  String apiKey=cloud.getUser().getApiKey();
+  String cloudProvider=cloud.getProvider().getProvider();
+  try {
+    logger.fine("Creating compute context with user: " + userName);
+    ContextBuilder contextBuilder=ContextBuilder.newBuilder(cloudProvider);
+    contextBuilder.credentials(userName,apiKey);
+    this.context=contextBuilder.buildView(ComputeServiceContext.class);
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException("Failed creating cloud native context. Reason: " + e.getMessage(),e);
   }
 }
