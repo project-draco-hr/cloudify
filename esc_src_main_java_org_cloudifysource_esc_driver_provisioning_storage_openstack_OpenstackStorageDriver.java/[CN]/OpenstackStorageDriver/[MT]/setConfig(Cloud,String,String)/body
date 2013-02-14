@@ -1,6 +1,5 @@
 {
   logger.fine("Initializing storage provisioning on Openstack. Using template: " + storageTemplateName);
-  setComputeContext(computeContextObj);
   this.cloud=cloud;
   publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
   initDeployer(cloud,storageTemplateName);

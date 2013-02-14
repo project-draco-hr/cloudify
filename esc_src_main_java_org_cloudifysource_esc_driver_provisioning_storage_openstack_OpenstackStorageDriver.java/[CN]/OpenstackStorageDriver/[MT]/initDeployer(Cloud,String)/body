@@ -6,7 +6,7 @@
     logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
     final StorageTemplate storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
     final Properties props=new Properties();
-    props.putAll(storageTemplate.getOptions());
+    props.putAll(storageTemplate.getCustom());
     deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
   }
  catch (  final Exception e) {

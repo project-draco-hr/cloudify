@@ -6,7 +6,7 @@
   }
   volumeAttachmentApi=novaContext.getApi().getVolumeAttachmentExtensionForZone(node.getLocation().getParent().getId());
   if (volumeAttachmentApi.isPresent()) {
-    volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getId(),storageTemplate.getOptions().get(StorageTemplate.OPTION_ATTACHMENT_DEVICE_PATH).toString());
+    volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getId(),storageTemplate.getDeviceName());
   }
  else {
   }
