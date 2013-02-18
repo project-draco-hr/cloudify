@@ -1,7 +1,0 @@
-{
-  if (!volumeApi.isPresent()) {
-    throw new StorageProvisioningException("Failed to get volume by id " + volumeId + ", APIs not "+ "available.");
-  }
-  final Volume volume=volumeApi.get().get(volumeId);
-  return volume;
-}

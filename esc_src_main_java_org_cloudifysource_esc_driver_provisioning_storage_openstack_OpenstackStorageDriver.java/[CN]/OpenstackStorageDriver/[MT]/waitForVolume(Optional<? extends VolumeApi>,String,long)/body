@@ -1,7 +1,7 @@
 {
   VolumeDetails volumeDetails=new VolumeDetails();
   if (!volumeApi.isPresent()) {
-    throw new StorageProvisioningException("Failed to provision storage volume on Openstack. ");
+    throw new StorageProvisioningException("Failed to get volume status, Openstack API is not initialized.");
   }
   while (true) {
     final Volume volume=volumeApi.get().get(volumeId);

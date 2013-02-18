@@ -1,8 +1,0 @@
-{
-  if (!volumeApi.isPresent()) {
-    throw new IllegalArgumentException("invalid volume id " + volumeId);
-  }
-  if (!volumeApi.get().delete(volumeId)) {
-    logger.log(Level.WARNING,"Error while deleting volume: " + volumeId + ".It may be leaking.");
-  }
-}

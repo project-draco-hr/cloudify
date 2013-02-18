@@ -13,7 +13,7 @@
       boolean deleteOnExit=storageTemplate.isDeleteOnExit();
       if (deleteOnExit) {
         logger.info("deleting volume with id " + id);
-        this.storageProvisioning.deleteVolume(id,duration,unit);
+        this.storageProvisioning.deleteVolume("",id,duration,unit);
       }
     }
   }
