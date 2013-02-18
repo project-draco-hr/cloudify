@@ -1,6 +1,5 @@
 {
   long timeout=end - System.currentTimeMillis();
-  ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   VolumeDetails volumeDetails=this.storageProvisioning.createVolume(machineLocation,timeout,TimeUnit.MILLISECONDS);
   return volumeDetails;
 }
