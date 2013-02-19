@@ -1,0 +1,4 @@
+{
+  validateNotWindows();
+  remoteStorageProvisioningDriver.deleteVolume(serviceContext.getLocationId(),volumeId);
+}

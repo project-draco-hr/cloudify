@@ -1,6 +1,0 @@
-{
-  HashMap<String,String> tagsMap=new HashMap<String,String>();
-  String volumeName=this.storageTemplate.getNamePrefix() + "_" + System.currentTimeMillis();
-  tagsMap.put(NAME_TAG_KEY,volumeName);
-  return tagsMap;
-}

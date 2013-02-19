@@ -1,0 +1,5 @@
+{
+  if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+    throw new UnsupportedOperationException("Windows OS is not supported for Storage API");
+  }
+}

@@ -1,0 +1,4 @@
+{
+  final String envVar=System.getenv(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVILEGED);
+  return Boolean.valueOf(envVar);
+}

@@ -1,0 +1,6 @@
+{
+  if (storageFacade == null) {
+    this.storageFacade=getRemoteStorage();
+  }
+  return storageFacade;
+}

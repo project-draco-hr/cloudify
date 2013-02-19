@@ -1,4 +1,4 @@
 {
   long timeout=end - System.currentTimeMillis();
-  this.storageProvisioning.attachVolume(volumeId,machineIp,timeout,TimeUnit.MILLISECONDS);
+  this.storageProvisioning.attachVolume(volumeId,cloud.getCloudStorage().getTemplates().get(storageTemplateName).getDeviceName(),machineIp,timeout,TimeUnit.MILLISECONDS);
 }

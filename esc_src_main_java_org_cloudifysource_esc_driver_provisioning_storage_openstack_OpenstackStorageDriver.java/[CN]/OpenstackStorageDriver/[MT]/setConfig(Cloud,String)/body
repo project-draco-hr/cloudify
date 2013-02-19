@@ -1,0 +1,8 @@
+{
+  this.cloud=cloud;
+  logger.fine("Initializing storage provisioning on Openstack");
+  publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  initDeployer(cloud,computeTemplateName);
+  publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  novaContext=this.computeContext.unwrap();
+}

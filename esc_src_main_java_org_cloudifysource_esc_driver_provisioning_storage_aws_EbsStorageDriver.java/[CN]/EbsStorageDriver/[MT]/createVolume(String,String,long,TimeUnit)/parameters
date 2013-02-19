@@ -1,0 +1,4 @@
+String templateName
+String availabilityZone
+long duration
+TimeUnit timeUnit

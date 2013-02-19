@@ -1,0 +1,8 @@
+{
+  try {
+    storageProvisioningDriver.deleteVolume(location,volumeId,DEFAULT_STORAGE_OPERATION_TIMEOUT,TimeUnit.MILLISECONDS);
+  }
+ catch (  final Exception e) {
+    throw new RemoteStorageOperationException("Failed deleting volume with id " + volumeId,e);
+  }
+}
