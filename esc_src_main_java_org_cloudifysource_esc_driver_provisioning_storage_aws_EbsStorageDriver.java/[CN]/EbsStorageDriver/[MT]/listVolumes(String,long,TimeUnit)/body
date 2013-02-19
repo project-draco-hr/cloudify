@@ -1,19 +1,12 @@
 {
   Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
   Set<String> machineVolumeIds=getMachineVolumeIds(ip);
-  Set<Volume> allVolumes;
-  try {
-    logger.fine("listing all volumes on machine with ip " + ip);
-    allVolumes=this.ebsClient.describeVolumesInRegion((String)null,(String[])null);
-  }
- catch (  Exception e) {
-    throw new StorageProvisioningException("Failed listing volumes. Reason: " + e.getMessage(),e);
-  }
-  for (  Volume volume : allVolumes) {
+  logger.fine("listing all volumes on machine with ip " + ip);
+  Set<VolumeDetails> allVolumes=listAllVolumes();
+  for (  VolumeDetails volume : allVolumes) {
     String volumeId=volume.getId();
     if (machineVolumeIds.contains(volumeId)) {
-      VolumeDetails volumeDetails=createVolumeDetails(volume);
-      volumeDetailsSet.add(volumeDetails);
+      volumeDetailsSet.add(volume);
     }
   }
   return volumeDetailsSet;

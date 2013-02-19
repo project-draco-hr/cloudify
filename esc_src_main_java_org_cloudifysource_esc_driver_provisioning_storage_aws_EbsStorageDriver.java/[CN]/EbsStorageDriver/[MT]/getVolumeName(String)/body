@@ -2,7 +2,7 @@
   String volumeNameTag="";
   try {
     TagApi tagApi=getTagsApi();
-    logger.info("filtering tags using volumeId " + volumeId);
+    logger.fine("filtering tags using volumeId " + volumeId + " to find the 'Name' tag");
     FluentIterable<Tag> filter=tagApi.filter(new TagFilterBuilder().resourceId(volumeId).build());
     ImmutableList<Tag> immutableList=filter.toImmutableList();
     for (    Tag tag : immutableList) {

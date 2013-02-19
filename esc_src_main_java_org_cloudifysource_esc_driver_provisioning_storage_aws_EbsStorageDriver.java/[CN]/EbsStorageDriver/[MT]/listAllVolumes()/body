@@ -1,0 +1,13 @@
+{
+  Set<VolumeDetails> volumeDetails=new HashSet<VolumeDetails>();
+  try {
+    Set<Volume> allVolumes=this.ebsClient.describeVolumesInRegion((String)null,(String[])null);
+    for (    Volume volume : allVolumes) {
+      volumeDetails.add(createVolumeDetails(volume));
+    }
+  }
+ catch (  Exception e) {
+    throw new StorageProvisioningException("Failed listing volumes. Reason: " + e.getMessage(),e);
+  }
+  return volumeDetails;
+}
