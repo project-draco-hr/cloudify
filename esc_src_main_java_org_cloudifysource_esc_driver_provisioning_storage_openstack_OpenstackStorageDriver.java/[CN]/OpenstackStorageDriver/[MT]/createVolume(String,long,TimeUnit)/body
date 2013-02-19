@@ -11,7 +11,7 @@
   }
   String volumeName=storageTemplate.getNamePrefix() + System.currentTimeMillis();
   CreateVolumeOptions options=CreateVolumeOptions.Builder.name(volumeName).description(VOLUME_DESCRIPTION).availabilityZone(getStorageZone());
-  volume=volumeApi.get().create(1,options);
+  volume=volumeApi.get().create(storageTemplate.getSize(),options);
   try {
     volumeDetails=waitForVolume(volumeApi,volume.getId(),endTime);
   }
