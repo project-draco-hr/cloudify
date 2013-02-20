@@ -1,4 +1,7 @@
 {
+  if (this.useExistingManagers || this.existingManagersFile != null) {
+    return;
+  }
   try {
     provisioning.stopManagementMachines();
   }
