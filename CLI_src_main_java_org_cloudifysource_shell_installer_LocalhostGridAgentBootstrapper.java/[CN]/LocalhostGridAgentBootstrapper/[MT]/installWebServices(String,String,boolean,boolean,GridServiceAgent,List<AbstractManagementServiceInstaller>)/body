@@ -1,7 +1,7 @@
 {
-  String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
-  long webuiMemory=getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR);
-  int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
+  final String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
+  final long webuiMemory=getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR);
+  final int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
   final ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
   webuiInstaller.setAdmin(agent.getAdmin());
   webuiInstaller.setVerbose(verbose);
@@ -30,8 +30,8 @@
  else {
     webuiInstaller.logServiceLocation();
   }
-  int restPort=getWebservicePort(CloudifyConstants.REST_PORT_ENV_VAR,isSecureConnection);
-  long webServiceMemory=getWebServiceMemory(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR);
+  final int restPort=getWebservicePort(CloudifyConstants.REST_PORT_ENV_VAR,isSecureConnection);
+  final long webServiceMemory=getWebServiceMemory(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR);
   final ManagementWebServiceInstaller restInstaller=new ManagementWebServiceInstaller();
   restInstaller.setAdmin(agent.getAdmin());
   restInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);

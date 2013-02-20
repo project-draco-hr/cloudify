@@ -1,0 +1,7 @@
+{
+  final File puFile=new File(Environment.getHomeDirectory() + "/tools/management-space/management-space.jar");
+  if (!puFile.exists() || !puFile.isFile()) {
+    throw new IllegalStateException("Expected to find management space jar file at: " + puFile.getAbsolutePath());
+  }
+  return puFile;
+}

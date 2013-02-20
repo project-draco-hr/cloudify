@@ -1,13 +1,13 @@
 {
   createConditionLatch(timeout,timeunit).waitFor(new ConditionLatch.Predicate(){
-    boolean messagePublished=false;
+    private boolean messagePublished=false;
     /** 
  * {@inheritDoc}
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       logger.fine("Waiting for " + serviceName + " service.");
       if (!messagePublished) {
-        String message=ShellUtils.getMessageBundle().getString("starting_management_web_service");
+        final String message=ShellUtils.getMessageBundle().getString("starting_management_web_service");
         publishEvent(MessageFormat.format(message,serviceName.toUpperCase()));
         messagePublished=true;
       }
@@ -30,7 +30,7 @@
 );
   final URL url=getWebProcessingUnitURL(agent,getProcessingUnit(),isSecureConnection);
   final String serviceNameCapital=StringUtils.capitalize(serviceName);
-  String returnMessage=ShellUtils.getMessageBundle().getString("web_service_available_at");
+  final String returnMessage=ShellUtils.getMessageBundle().getString("web_service_available_at");
   logger.fine(returnMessage);
   publishEvent(MessageFormat.format(returnMessage,serviceNameCapital,url));
   return url;

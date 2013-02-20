@@ -17,6 +17,13 @@
   }
   String lusJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_LUS_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gsmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  if (!this.isLocalCloud) {
+    final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
+    if (persistentStoragePath != null) {
+      final String gsmStoragePath=persistentStoragePath + "/gsm";
+      gsmJavaOptions=gsmJavaOptions + " com.gs.persistency.logDirectory=" + gsmStoragePath;
+    }
+  }
   String esmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_ESM_MAX_MEMORY + " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
@@ -42,8 +49,9 @@
     environment.put("NIC_ADDR",nicAddress);
   }
   environment.put("RMI_OPTIONS","");
-  logger.fine("Setting env var " + CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR + " to: "+ securityProfile);
-  environment.put(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,securityProfile);
+  final String springProfiles=createSpringProfilesList(securityProfile);
+  logger.fine("Setting env var " + CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR + " to: "+ springProfiles);
+  environment.put(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,springProfiles);
   if (ShellUtils.isSecureConnection(securityProfile)) {
     logger.fine("Setting env var " + CloudifyConstants.KEYSTORE_FILE_ENV_VAR + " to: "+ keystoreFilePath);
     environment.put(CloudifyConstants.KEYSTORE_FILE_ENV_VAR,keystoreFilePath);

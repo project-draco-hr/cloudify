@@ -1,5 +1,5 @@
 {
-  for (  LocalhostBootstrapperListener listener : listeners) {
+  for (  final LocalhostBootstrapperListener listener : listeners) {
     this.eventsListenersList.add(listener);
   }
 }

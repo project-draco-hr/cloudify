@@ -1,5 +1,5 @@
 {
-  String port=System.getenv().get(portEnvVriable);
+  final String port=System.getenv().get(portEnvVriable);
   if (org.apache.commons.lang.StringUtils.isNotBlank(port)) {
     return Integer.parseInt(port);
   }

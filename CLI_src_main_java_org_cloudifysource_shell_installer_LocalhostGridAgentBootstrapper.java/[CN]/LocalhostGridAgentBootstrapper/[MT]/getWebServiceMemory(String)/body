@@ -1,6 +1,6 @@
 {
   long memory;
-  String memoryString=System.getenv().get(memoryEnvironmentVar);
+  final String memoryString=System.getenv().get(memoryEnvironmentVar);
   if (org.apache.commons.lang.StringUtils.isNotBlank(memoryString)) {
     memory=getMemoryFromMemoryString(memoryString);
   }

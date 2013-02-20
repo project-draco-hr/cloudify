@@ -1,0 +1,8 @@
+{
+  final Properties props=super.getContextProperties();
+  if (this.persistentStoragePath != null) {
+    props.setProperty("space.storage.path",this.persistentStoragePath);
+  }
+  props.setProperty("space.name",this.serviceName);
+  return props;
+}

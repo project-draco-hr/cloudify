@@ -35,7 +35,7 @@
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
       if (!noManagementSpace) {
         final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
-        String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
+        final String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
         managementSpaceInstaller=new ManagementSpaceServiceInstaller();
         managementSpaceInstaller.setAdmin(agent.getAdmin());
         managementSpaceInstaller.setVerbose(verbose);
@@ -47,6 +47,13 @@
         managementSpaceInstaller.addListeners(this.eventsListenersList);
         managementSpaceInstaller.setIsLocalCloud(isLocalCloud);
         managementSpaceInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
+        if (!this.isLocalCloud) {
+          final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
+          if (persistentStoragePath != null) {
+            final String spaceStoragePath=persistentStoragePath + "/management-space/db.h2";
+            managementSpaceInstaller.setPersistentStoragePath(spaceStoragePath);
+          }
+        }
         try {
           managementSpaceInstaller.installSpace();
           waitForManagementServices.add(managementSpaceInstaller);
