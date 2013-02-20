@@ -23,8 +23,6 @@
   int i=0;
   for (  final NodeMetadata node : existingManagementServers) {
     result[i]=createMachineDetailsFromNode(node);
-    result[i].setAgentRunning(true);
-    result[i].setCloudifyInstalled(true);
     i++;
   }
   return result;

@@ -1,0 +1,5 @@
+{
+  final String securityProfile=details.getSecurityProfile();
+  final String storageProfile=(details.isPersistent() ? CloudifyConstants.PERSISTENCE_PROFILE_PERSISTENT : CloudifyConstants.PERSISTENCE_PROFILE_TRANSIENT);
+  return securityProfile + "," + storageProfile;
+}
