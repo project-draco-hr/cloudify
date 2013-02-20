@@ -1,5 +1,5 @@
 {
-  String activeProfiles=persistent ? CloudifyConstants.SPRING_PROFILE_PERSISTENT : CloudifyConstants.SPRING_PROFILE_NON_PERSISTENT;
+  String activeProfiles=persistent ? CloudifyConstants.PERSISTENCE_PROFILE_PERSISTENT : CloudifyConstants.PERSISTENCE_PROFILE_TRANSIENT;
   System.setProperty(SPRING_ACTIVE_PROFILES_PROP,activeProfiles);
   final ClassPathXmlApplicationContext context=createSpringContextContext();
   context.refresh();
