@@ -1,5 +1,7 @@
 {
-  setStorageTemplateName(storageTemplateName);
+  if (!StringUtils.isEmpty(storageTemplateName)) {
+    setStorageTemplateName(storageTemplateName);
+  }
   setMinimumNumberOfCpuCoresPerMachine(template.getNumberOfCores());
   setReservedMemoryCapacityPerMachineInMB(cloud.getProvider().getReservedMemoryCapacityPerMachineInMB());
   setReservedMemoryCapacityPerManagementMachineInMB(cloud.getProvider().getReservedMemoryCapacityPerManagementMachineInMB());
