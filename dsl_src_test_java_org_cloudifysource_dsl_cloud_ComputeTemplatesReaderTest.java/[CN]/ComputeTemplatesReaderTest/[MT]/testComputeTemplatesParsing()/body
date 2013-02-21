@@ -1,0 +1,6 @@
+{
+  ComputeTemplatesReader reader=new ComputeTemplatesReader();
+  List<ComputeTemplateHolder> cloudTemplatesHolders=reader.readCloudTemplatesFromFile(new File(TEMPLATES_PATH));
+  Assert.assertEquals(1,cloudTemplatesHolders.size());
+  Assert.assertNotNull(cloudTemplatesHolders.get(0).getCloudTemplate());
+}
