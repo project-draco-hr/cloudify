@@ -6,14 +6,15 @@
   }
   Volume volume=null;
   try {
-    logger.log(Level.FINE,"creating new volume in availability zone " + availabilityZone + " of size "+ size);
+    logger.fine("creating new volume in availability zone " + availabilityZone + " of size "+ size);
     volume=this.ebsClient.createVolumeInAvailabilityZone(availabilityZone,size);
     String volumeId=volume.getId();
+    logger.fine("Waiting for volume to become available.");
+    waitForVolumeToReachStatus(Status.AVAILABLE,end,volumeId);
     logger.fine("naming created volume with id " + volumeId);
     TagApi tagApi=getTagsApi();
     Map<String,String> tagsMap=createTagsMap();
     tagApi.applyToResources(tagsMap,Arrays.asList(volumeId));
-    waitForVolumeToReachStatus(Status.AVAILABLE,end,volumeId);
     logger.fine("Volume created successfully. volume id is: " + volumeId);
   }
  catch (  Exception e) {

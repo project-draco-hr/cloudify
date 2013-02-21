@@ -2,7 +2,7 @@
   Set<Volume> volumes;
   while (System.currentTimeMillis() < end) {
     try {
-      volumes=this.ebsClient.describeVolumesInRegion(null,volumeId);
+      volumes=this.ebsClient.describeVolumesInRegion(this.region,volumeId);
     }
  catch (    Exception e) {
       throw new StorageProvisioningException("Failed getting volume description." + " Reason: " + e.getMessage(),e);
