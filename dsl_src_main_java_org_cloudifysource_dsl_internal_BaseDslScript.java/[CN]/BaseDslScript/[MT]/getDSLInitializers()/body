@@ -14,9 +14,13 @@
     addObjectInitializerForClass(dslObjectInitializersByName,Cloud.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudProvider.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudUser.class);
-    addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplate.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ComputeTemplate.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,CloudCompute.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudConfiguration.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,CloudStorage.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StorageTemplate.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,StorageDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Sla.class);
     dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,true,true,"service"));

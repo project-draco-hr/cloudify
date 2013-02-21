@@ -1,0 +1,106 @@
+{
+  final InstallationDetails details=new InstallationDetails();
+  details.setBindToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
+  details.setLocalDir(template.getAbsoluteUploadDir());
+  details.setRelativeLocalDir(template.getLocalDirectory());
+  final String remoteDir=template.getRemoteDirectory();
+  details.setRemoteDir(remoteDir);
+  final List<String> managementOnlyFiles=new ArrayList<String>(cloud.getProvider().getManagementOnlyFiles());
+  if (template.getKeyFile() != null && isManagement) {
+    managementOnlyFiles.add(template.getKeyFile());
+  }
+  details.setManagementOnlyFiles(managementOnlyFiles);
+  details.setZones(StringUtils.collectionToCommaDelimitedString(zones.getZones()));
+  details.setPrivateIp(md.getPrivateAddress());
+  details.setPublicIp(md.getPublicAddress());
+  details.setLocator(lookupLocatorsString);
+  details.setCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  details.setOverridesUrl(cloud.getProvider().getCloudifyOverridesUrl());
+  details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
+  details.setAdmin(admin);
+  details.setUsername(md.getRemoteUsername());
+  details.setPassword(md.getRemotePassword());
+  details.setRemoteExecutionMode(md.getRemoteExecutionMode());
+  details.setFileTransferMode(md.getFileTransferMode());
+  details.setScriptLanguage(md.getScriptLangeuage());
+  details.setCloudFile(cloudFile);
+  details.setManagement(isManagement);
+  final GridComponents componentsConfig=cloud.getConfiguration().getComponents();
+  if (isManagement) {
+    details.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
+    details.setSecurityProfile(securityProfile);
+    details.setKeystorePassword(keystorePassword);
+    final String esmCommandlineArgs=ConfigUtils.getEsmCommandlineArgs(componentsConfig.getOrchestrator());
+    final String lusCommandlineArgs=ConfigUtils.getLusCommandlineArgs(componentsConfig.getDiscovery());
+    final String gsmCommandlineArgs=ConfigUtils.getGsmCommandlineArgs(componentsConfig.getDeployer(),componentsConfig.getDiscovery());
+    details.setEsmCommandlineArgs('"' + esmCommandlineArgs + '"');
+    details.setLusCommandlineArgs('"' + lusCommandlineArgs + '"');
+    details.setGsmCommandlineArgs('"' + gsmCommandlineArgs + '"');
+    details.setGscLrmiPortRange(componentsConfig.getUsm().getPortRange());
+    details.setRestPort(componentsConfig.getRest().getPort());
+    details.setWebuiPort(componentsConfig.getWebui().getPort());
+    details.setRestMaxMemory(componentsConfig.getRest().getMaxMemory());
+    details.setWebuiMaxMemory(componentsConfig.getWebui().getMaxMemory());
+  }
+ else {
+    details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
+  }
+  details.setGsaCommandlineArgs('"' + ConfigUtils.getAgentCommandlineArgs(componentsConfig.getAgent()) + '"');
+  final Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
+  for (  final Entry<String,Object> entry : customEntries) {
+    if (entry.getKey().startsWith("installer.")) {
+      details.getCustomData().put(entry.getKey(),entry.getValue());
+    }
+  }
+  if (md.getKeyFile() != null) {
+    details.setKeyFile(md.getKeyFile().getAbsolutePath());
+  }
+ else {
+    final String keyFileName=template.getKeyFile();
+    if (!org.apache.commons.lang.StringUtils.isBlank(keyFileName)) {
+      File keyFile=new File(keyFileName);
+      if (!keyFile.isAbsolute()) {
+        keyFile=new File(details.getLocalDir(),keyFileName);
+      }
+      if (!keyFile.isFile()) {
+        throw new FileNotFoundException("Could not find key file matching specified cloud configuration key file: " + template.getKeyFile() + ". Tried: "+ keyFile+ " but file does not exist");
+      }
+      details.setKeyFile(keyFile.getAbsolutePath());
+    }
+  }
+  if (template.getHardwareId() != null) {
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID,template.getHardwareId());
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.CLOUDIFY_CLOUD_HARDWARE_ID,template.getHardwareId());
+  }
+  if (template.getImageId() != null) {
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_CLOUD_IMAGE_ID,template.getImageId());
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.CLOUDIFY_CLOUD_IMAGE_ID,template.getImageId());
+  }
+  details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVILEGED,Boolean.toString(template.isPrivileged()));
+  if (!org.apache.commons.lang.StringUtils.isBlank(template.getInitializationCommand())) {
+    final String command=template.getInitializationCommand();
+    final String quotedCommand="\"" + command + "\"";
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_INIT_COMMAND,quotedCommand);
+  }
+  final Set<Entry<String,String>> entries=template.getEnv().entrySet();
+  for (  final Entry<String,String> entry : entries) {
+    details.getExtraRemoteEnvironmentVariables().put(entry.getKey(),entry.getValue());
+  }
+  if (!org.apache.commons.lang.StringUtils.isBlank(template.getJavaUrl())) {
+    details.getExtraRemoteEnvironmentVariables().put(CloudifyConstants.GIGASPACES_AGENT_ENV_JAVA_URL,template.getJavaUrl());
+  }
+  details.setReservationId(reservationId);
+  details.setTemplateName(templateName);
+  details.setMachineId(md.getMachineId());
+  if (authGroups != null) {
+    details.setAuthGroups(authGroups);
+  }
+  details.setDeleteRemoteDirectoryContents(md.isCleanRemoteDirectoryOnStart());
+  details.setStorageVolumeAttached(md.isStorageVolumeAttached());
+  details.setStorageFormatType(md.getStorageFormatType());
+  details.setStorageDeviceName(md.getStorageDeviceName());
+  details.setStorageMountPath(md.getStorageMountPath());
+  details.setInstallerConfiguration(md.getInstallerConfigutation());
+  logger.fine("Created InstallationDetails: " + details);
+  return details;
+}

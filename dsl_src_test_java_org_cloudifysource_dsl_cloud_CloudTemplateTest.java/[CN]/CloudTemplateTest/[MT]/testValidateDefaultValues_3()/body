@@ -1,5 +1,5 @@
 {
-  final CloudTemplate fixture=new CloudTemplate();
+  final ComputeTemplate fixture=new ComputeTemplate();
   fixture.setRemoteExecution(RemoteExecutionModes.SSH);
   fixture.setImageId("");
   fixture.setOptions(new HashMap());

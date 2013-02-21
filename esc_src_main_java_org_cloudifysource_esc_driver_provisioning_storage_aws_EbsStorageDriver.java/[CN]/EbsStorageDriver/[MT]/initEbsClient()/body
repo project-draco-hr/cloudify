@@ -1,0 +1,9 @@
+{
+  try {
+    ElasticBlockStoreClient ebsClient=EC2Client.class.cast(this.context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getElasticBlockStoreServices();
+    this.ebsClient=ebsClient;
+  }
+ catch (  Exception e) {
+    throw new IllegalStateException("Failed creating ebs client. Reason: " + e.getMessage(),e);
+  }
+}

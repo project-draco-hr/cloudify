@@ -13,20 +13,20 @@
       throw new BeanConfigurationException("Cloud template was not set!");
     }
     addTemplatesToCloud(new File(cloudConfigDirectoryPath));
-    final CloudTemplate cloudTemplate=this.cloud.getTemplates().get(this.cloudTemplateName);
-    if (cloudTemplate == null) {
+    final ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
+    if (computeTemplate == null) {
       throw new BeanConfigurationException("The provided cloud template name: " + this.cloudTemplateName + " was not found in the cloud configuration");
     }
-    logger.info("Remote Directory is: " + cloudTemplate.getRemoteDirectory());
-    if (cloudTemplate.getFileTransfer() == FileTransferModes.CIFS) {
+    logger.info("Remote Directory is: " + computeTemplate.getRemoteDirectory());
+    if (computeTemplate.getFileTransfer() == FileTransferModes.CIFS) {
       logger.info("Windows machine - modifying local directory location");
-      final String remoteDirName=cloudTemplate.getRemoteDirectory();
-      final String windowsLocalDirPath=getWindowsLocalDirPath(remoteDirName,cloudTemplate.getLocalDirectory());
+      final String remoteDirName=computeTemplate.getRemoteDirectory();
+      final String windowsLocalDirPath=getWindowsLocalDirPath(remoteDirName,computeTemplate.getLocalDirectory());
       logger.info("Modified local dir name is: " + windowsLocalDirPath);
-      cloudTemplate.setLocalDirectory(windowsLocalDirPath);
+      computeTemplate.setLocalDirectory(windowsLocalDirPath);
     }
  else {
-      cloudTemplate.setLocalDirectory(cloudTemplate.getRemoteDirectory());
+      computeTemplate.setLocalDirectory(computeTemplate.getRemoteDirectory());
     }
     try {
       this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
@@ -37,6 +37,21 @@
       }
       handleServiceCloudConfiguration();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName);
+      this.storageTemplateName=config.getStorageTemplateName();
+      if (isStorageTemplateUsed()) {
+        boolean privileged=computeTemplate.isPrivileged();
+        if (!privileged) {
+          logger.warning("Storage template defined but not running in privileged mode.");
+          throw new StorageProvisioningException("Storage mounting requires running in privileged mode." + " This should be defined in the cloud's compute template.");
+        }
+        logger.info("creating storage provisioning driver.");
+        this.storageProvisioning=(StorageProvisioningDriver)Class.forName(this.cloud.getConfiguration().getStorageClassName()).newInstance();
+        if (this.storageProvisioning instanceof BaseStorageDriver) {
+          ((BaseStorageDriver)this.storageProvisioning).setComputeContext(cloudifyProvisioning.getComputeContext());
+        }
+        this.storageProvisioning.setConfig(cloud,this.cloudTemplateName,this.storageTemplateName);
+        logger.info("storage provisioning driver created successfully.");
+      }
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);

@@ -1,0 +1,3 @@
+{
+  return this.properties.get(STORAGE_TEMPLATE_NAME);
+}

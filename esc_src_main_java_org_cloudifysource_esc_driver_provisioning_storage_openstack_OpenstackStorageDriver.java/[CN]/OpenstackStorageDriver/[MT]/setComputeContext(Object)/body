@@ -1,0 +1,10 @@
+{
+  if (computeContext != null) {
+    if (computeContext instanceof ComputeServiceContext) {
+      this.computeContext=(ComputeServiceContext)computeContext;
+    }
+ else {
+      throw new IllegalArgumentException("ComputeContext object is not instance of " + ComputeServiceContext.class.getName());
+    }
+  }
+}

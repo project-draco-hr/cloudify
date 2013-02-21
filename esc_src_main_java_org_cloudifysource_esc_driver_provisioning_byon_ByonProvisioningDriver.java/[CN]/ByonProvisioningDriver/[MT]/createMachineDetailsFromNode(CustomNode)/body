@@ -1,5 +1,5 @@
 {
-  final CloudTemplate template=this.cloud.getTemplates().get(this.cloudTemplateName);
+  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   final MachineDetails md=createMachineDetailsForTemplate(template);
   md.setMachineId(node.getId());
   md.setPrivateAddress(node.getPrivateIP());

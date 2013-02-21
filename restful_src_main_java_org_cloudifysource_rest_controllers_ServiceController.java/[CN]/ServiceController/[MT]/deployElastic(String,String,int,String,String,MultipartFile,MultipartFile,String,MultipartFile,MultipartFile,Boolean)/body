@@ -3,10 +3,10 @@
   String actualTemplateName=templateName;
   if (cloud != null) {
     if (templateName == null || templateName.length() == 0) {
-      if (cloud.getTemplates().isEmpty()) {
+      if (cloud.getCloudCompute().getTemplates().isEmpty()) {
         throw new IllegalStateException("Cloud configuration has no compute template defined!");
       }
-      actualTemplateName=cloud.getTemplates().keySet().iterator().next();
+      actualTemplateName=cloud.getCloudCompute().getTemplates().keySet().iterator().next();
       logger.warning("Compute Template name missing from service deployment request." + " Defaulting to first template: " + actualTemplateName);
     }
   }

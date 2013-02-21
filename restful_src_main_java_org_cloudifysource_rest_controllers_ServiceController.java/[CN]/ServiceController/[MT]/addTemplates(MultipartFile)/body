@@ -7,7 +7,7 @@
   File unzippedTemplatesFolder=null;
   try {
     loaclTemplatesZipFile=copyMultipartFileToLocalFile(templatesFolder);
-    unzippedTemplatesFolder=new CloudTemplatesReader().unzipCloudTemplatesFolder(loaclTemplatesZipFile);
+    unzippedTemplatesFolder=new ComputeTemplatesReader().unzipCloudTemplatesFolder(loaclTemplatesZipFile);
     final List<String> expectedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder);
     final Map<String,Map<String,String>> failedToAddTemplatesByHost=new HashMap<String,Map<String,String>>();
     final Map<String,List<String>> addedTemplatesByHost=new HashMap<String,List<String>>();

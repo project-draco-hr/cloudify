@@ -1,7 +1,7 @@
 {
   final ExecutorService executors=Executors.newFixedThreadPool(numberOfManagementMachines);
   @SuppressWarnings("unchecked") final Future<MachineDetails>[] futures=(Future<MachineDetails>[])new Future<?>[numberOfManagementMachines];
-  final CloudTemplate managementTemplate=this.cloud.getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
+  final ComputeTemplate managementTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
   try {
     for (int i=0; i < numberOfManagementMachines; i++) {
       final int index=i + 1;

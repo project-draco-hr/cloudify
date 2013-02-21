@@ -1,0 +1,3 @@
+String ip
+long duration
+TimeUnit timeUnit

@@ -1,5 +1,5 @@
 {
-  final Map<String,CloudTemplate> cloudTemplatesMap=cloud.getTemplates();
+  final Map<String,ComputeTemplate> cloudTemplatesMap=cloud.getCloudCompute().getTemplates();
   final List<String> cloudTemplateNames=new LinkedList<String>(cloudTemplatesMap.keySet());
   final List<String> deployerTemplateNames=deployer.getTemplatesList();
   final List<String> redundantTemplates=new LinkedList<String>(deployerTemplateNames);
@@ -12,9 +12,9 @@
   missingTemplates.removeAll(deployerTemplateNames);
   if (!missingTemplates.isEmpty()) {
     logger.info("initDeployer - found missing templates: " + missingTemplates);
-    final Map<String,CloudTemplate> templatesMap=new HashMap<String,CloudTemplate>();
+    final Map<String,ComputeTemplate> templatesMap=new HashMap<String,ComputeTemplate>();
     for (    final String templateName : missingTemplates) {
-      final CloudTemplate cloudTemplate=cloudTemplatesMap.get(templateName);
+      final ComputeTemplate cloudTemplate=cloudTemplatesMap.get(templateName);
       templatesMap.put(templateName,cloudTemplate);
     }
     addTemplatesToDeployer(deployer,templatesMap);

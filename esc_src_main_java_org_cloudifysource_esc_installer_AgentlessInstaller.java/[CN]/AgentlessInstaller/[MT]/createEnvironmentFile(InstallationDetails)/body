@@ -12,6 +12,12 @@
   }
   final String springProfiles=createSpringProfilesString(details);
   final EnvironmentFileBuilder builder=new EnvironmentFileBuilder(details.getScriptLanguage()).exportVar(LUS_IP_ADDRESS_ENV,details.getLocator()).exportVar(GSA_MODE_ENV,details.isManagement() ? "lus" : "agent").exportVar(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,springProfiles).exportVar(NO_WEB_SERVICES_ENV,details.isNoWebServices() ? "true" : "false").exportVar(MACHINE_IP_ADDRESS_ENV,details.isBindToPrivateIp() ? details.getPrivateIp() : details.getPublicIp()).exportVar(MACHINE_ZONES_ENV,details.getZones()).exportVarWithQuotes(CloudifyConstants.CLOUDIFY_LINK_ENV,details.getCloudifyUrl()).exportVarWithQuotes(CloudifyConstants.CLOUDIFY_OVERRIDES_LINK_ENV,details.getOverridesUrl()).exportVar(WORKING_HOME_DIRECTORY_ENV,remoteDirectory).exportVar(CloudifyConstants.GIGASPACES_AUTH_GROUPS,authGroups).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,details.getPublicIp()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME,details.getTemplateName()).exportVar(CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_CLOUD_MACHINE_ID,details.getMachineId()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,details.getPrivateIp()).exportVar(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,details.getPublicIp());
+  builder.exportVar(STORAGE_VOLUME_ATTACHED,Boolean.toString(details.isStorageVolumeAttached()));
+  if (details.isStorageVolumeAttached()) {
+    builder.exportVar(STORAGE_FORMAT_TYPE,details.getStorageFormatType());
+    builder.exportVar(STORAGE_DEVICE_NAME,details.getStorageDeviceName());
+    builder.exportVar(STORAGE_MOUNT_PATH,details.getStorageMountPath());
+  }
   if (details.getReservationId() != null) {
     builder.exportVar(GSA_RESERVATION_ID_ENV,details.getReservationId().toString());
   }

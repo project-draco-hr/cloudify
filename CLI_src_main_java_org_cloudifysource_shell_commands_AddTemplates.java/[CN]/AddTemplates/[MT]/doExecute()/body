@@ -7,7 +7,7 @@
   }
   int numTemplatesInFolder;
   File zipFile=templatesFileOrDir;
-  CloudTemplatesReader reader=new CloudTemplatesReader();
+  ComputeTemplatesReader reader=new ComputeTemplatesReader();
   if (templatesFileOrDir.isFile()) {
     if (templatesFolderName.endsWith(".zip") || templatesFolderName.endsWith(".jar")) {
       try {

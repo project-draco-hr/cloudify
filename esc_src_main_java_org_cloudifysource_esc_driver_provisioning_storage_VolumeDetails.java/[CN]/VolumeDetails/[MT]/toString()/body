@@ -1,0 +1,3 @@
+{
+  return "VolumeDetails [volumeId=" + id + ", name="+ name+ ", size="+ size+ ", location="+ location+ "]";
+}

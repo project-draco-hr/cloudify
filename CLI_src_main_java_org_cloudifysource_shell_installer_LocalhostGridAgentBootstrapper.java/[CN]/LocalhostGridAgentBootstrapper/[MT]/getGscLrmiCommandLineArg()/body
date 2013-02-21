@@ -1,6 +1,6 @@
 {
   String lrmiPortRangeCommandLineArgument="-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "=";
-  final String portRange=System.getenv().get(CloudifyConstants.GSC_LRMI_PORT_RANGE_ENVIRONMENT_VAR);
+  String portRange=System.getenv().get(CloudifyConstants.GSC_LRMI_PORT_RANGE_ENVIRONMENT_VAR);
   if (!org.apache.commons.lang.StringUtils.isEmpty(portRange)) {
     lrmiPortRangeCommandLineArgument+=portRange;
   }

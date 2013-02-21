@@ -1,0 +1,20 @@
+{
+  logger.info("detaching all volumes attachet to machine with ip: " + machineIp);
+  Set<VolumeDetails> attachedVolumes=this.storageProvisioning.listVolumes(machineIp,duration,unit);
+  StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(this.storageTemplateName);
+  for (  VolumeDetails volumeDetails : attachedVolumes) {
+    String id=volumeDetails.getId();
+    logger.info("getting volume name using volume id " + id);
+    String volumeName=this.storageProvisioning.getVolumeName(id);
+    String namePrefix=storageTemplate.getNamePrefix();
+    if (!StringUtils.isEmpty(volumeName) && volumeName.startsWith(namePrefix)) {
+      logger.info("detaching volume with id " + id + " from machine with ip: "+ machineIp);
+      this.storageProvisioning.detachVolume(id,machineIp,duration,unit);
+      boolean deleteOnExit=storageTemplate.isDeleteOnExit();
+      if (deleteOnExit) {
+        logger.info("deleting volume with id " + id);
+        this.storageProvisioning.deleteVolume("",id,duration,unit);
+      }
+    }
+  }
+}

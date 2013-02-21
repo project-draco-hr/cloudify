@@ -1,0 +1,2 @@
+ByonDeployer deployer
+Map<String,ComputeTemplate> templatesMap

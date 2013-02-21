@@ -1,0 +1,5 @@
+Cloud cloud
+ComputeTemplate template
+String cloudTemplateName
+String managementTemplateRemoteDirectory
+String storageTemplateName

@@ -1,0 +1,3 @@
+{
+  return (!StringUtils.isEmpty(this.storageTemplateName) && !this.storageTemplateName.equals("null"));
+}

@@ -1,0 +1,7 @@
+{
+  this.cloud=cloud;
+  this.computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
+  this.storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
+  this.initContext();
+  this.initEbsClient();
+}

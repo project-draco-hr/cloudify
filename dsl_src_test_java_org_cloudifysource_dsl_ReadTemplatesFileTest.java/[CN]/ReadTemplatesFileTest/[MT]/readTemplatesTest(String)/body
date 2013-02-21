@@ -1,10 +1,10 @@
 {
   try {
     File templatesFile=new File(folderName);
-    List<CloudTemplateHolder> cloudTemplatesFromFile=reader.readCloudTemplatesFromDirectory(templatesFile);
+    List<ComputeTemplateHolder> cloudTemplatesFromFile=reader.readCloudTemplatesFromDirectory(templatesFile);
     Assert.assertEquals(2,cloudTemplatesFromFile.size());
     List<String> names=new LinkedList<String>();
-    for (    CloudTemplateHolder cloudTemplateHolder : cloudTemplatesFromFile) {
+    for (    ComputeTemplateHolder cloudTemplateHolder : cloudTemplatesFromFile) {
       names.add(cloudTemplateHolder.getName());
     }
     Assert.assertTrue(names.contains("SMALL_LINUX"));

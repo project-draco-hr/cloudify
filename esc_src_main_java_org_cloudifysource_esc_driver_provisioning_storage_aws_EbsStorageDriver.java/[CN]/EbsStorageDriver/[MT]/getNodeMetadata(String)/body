@@ -1,0 +1,27 @@
+{
+  NodeMetadata node=null;
+  Set<? extends ComputeMetadata> nodesList;
+  ComputeService computeService;
+  try {
+    computeService=this.context.getComputeService();
+    nodesList=computeService.listNodes();
+  }
+ catch (  Exception e) {
+    logger.warning("Failed listing available nodes. Reason: " + e.getMessage());
+    throw new StorageProvisioningException("Failed listing available nodes. Reason: " + e.getMessage(),e);
+  }
+  logger.log(Level.FINE,"searching for node with matching ip " + ip + " in servers list");
+  for (  ComputeMetadata computeNode : nodesList) {
+    NodeMetadata nodeMetadata=computeService.getNodeMetadata(computeNode.getId());
+    if (nodeMetadata.getPrivateAddresses().contains(ip) || nodeMetadata.getPublicAddresses().contains(ip)) {
+      node=nodeMetadata;
+      break;
+    }
+  }
+  if (node == null) {
+    logger.warning("Could not find machine with matching ip: " + ip);
+    throw new IllegalStateException("Could not find machine with matching ip: " + ip);
+  }
+  logger.log(Level.FINE,"found node with matching ip. Node id is " + node.getId());
+  return node;
+}

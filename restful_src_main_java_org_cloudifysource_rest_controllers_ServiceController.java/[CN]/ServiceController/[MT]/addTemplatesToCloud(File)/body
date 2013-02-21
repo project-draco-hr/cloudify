@@ -1,6 +1,6 @@
 {
   logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
-  final List<CloudTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
+  final List<ComputeTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
   logger.log(Level.FINE,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
   final Map<String,String> failedToAddTemplates=new HashMap<String,String>();
   final List<String> addedTemplates=new LinkedList<String>();
@@ -17,7 +17,7 @@
  catch (    final IOException e) {
       logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
       for (      final String templateName : addedTemplates) {
-        cloud.getTemplates().remove(templateName);
+        cloud.getCloudCompute().getTemplates().remove(templateName);
         failedToAddTemplates.put(templateName,e.getMessage());
       }
     }

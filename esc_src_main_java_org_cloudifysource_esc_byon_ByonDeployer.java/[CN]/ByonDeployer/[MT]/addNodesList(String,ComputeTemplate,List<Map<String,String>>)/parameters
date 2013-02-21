@@ -1,0 +1,3 @@
+String templateName
+ComputeTemplate template
+List<Map<String,String>> nodesList

@@ -33,7 +33,7 @@
   }
  else {
     deployment.addCommandLineArgument("-Xmx" + cloud.getConfiguration().getComponents().getUsm().getMaxMemory()).addCommandLineArgument("-Xms" + cloud.getConfiguration().getComponents().getUsm().getMinMemory()).addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ cloud.getConfiguration().getComponents().getUsm().getPortRange());
-    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final ComputeTemplate template=getComputeTemplate(cloud,templateName);
     long cloudExternalProcessMemoryInMB=0;
     if (dedicated) {
       cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
@@ -42,7 +42,7 @@
       cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
     }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory());
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),service.getStorage().getTemplate());
     config.setAuthGroups(authGroups);
     if (cloudOverrides != null) {
       if (logger.isLoggable(Level.FINE)) {

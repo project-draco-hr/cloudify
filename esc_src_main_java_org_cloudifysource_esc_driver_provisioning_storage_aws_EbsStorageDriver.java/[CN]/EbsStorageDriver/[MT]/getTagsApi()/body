@@ -1,0 +1,3 @@
+{
+  return EC2Client.class.cast(this.context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getTagApiForRegion(null).get();
+}

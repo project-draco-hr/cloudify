@@ -1,0 +1,8 @@
+{
+  logger.fine("Initializing storage provisioning on Openstack. Using template: " + storageTemplateName);
+  publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  initDeployer(cloud,computeTemplateName,storageTemplateName);
+  publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  novaContext=this.computeContext.unwrap();
+  storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
+}

@@ -2,7 +2,7 @@
   final AgentlessInstaller installer=new AgentlessInstaller();
   installer.addListener(new CliAgentlessInstallerListener(this.verbose));
   Logger.getLogger(AgentlessInstaller.SSH_LOGGER_NAME).setLevel(Level.parse(cloud.getProvider().getSshLoggingLevel()));
-  final CloudTemplate template=cloud.getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
   final int numOfManagementMachines=machines.length;
   final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines,template,securityProfile,keystorePassword);
   int i=isNoWebServices() ? 0 : 1;

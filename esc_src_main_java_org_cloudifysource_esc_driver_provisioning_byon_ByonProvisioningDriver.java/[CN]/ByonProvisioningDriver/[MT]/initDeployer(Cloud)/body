@@ -4,7 +4,7 @@
       @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
         final ByonDeployer newDeployer=new ByonDeployer();
-        addTemplatesToDeployer(newDeployer,cloud.getTemplates());
+        addTemplatesToDeployer(newDeployer,cloud.getCloudCompute().getTemplates());
         return newDeployer;
       }
     }

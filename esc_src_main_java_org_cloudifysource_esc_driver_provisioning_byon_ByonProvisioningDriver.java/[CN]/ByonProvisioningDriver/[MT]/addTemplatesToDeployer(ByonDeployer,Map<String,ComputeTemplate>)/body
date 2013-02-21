@@ -1,0 +1,16 @@
+{
+  logger.info("addTempaltesToDeployer - adding the following tempaltes to the deployer: " + templatesMap.keySet());
+  List<Map<String,String>> nodesList=null;
+  for (  final String templateName : templatesMap.keySet()) {
+    final Map<String,Object> customSettings=cloud.getCloudCompute().getTemplates().get(templateName).getCustom();
+    if (customSettings != null) {
+      final List<Map<Object,Object>> originalNodesList=(List<Map<Object,Object>>)customSettings.get(CLOUD_NODES_LIST);
+      nodesList=convertToStringMap(originalNodesList);
+    }
+    if (nodesList == null) {
+      publishEvent(CloudifyErrorMessages.MISSING_NODES_LIST.getName(),templateName);
+      throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration for tempalte " + templateName + " - missing nodes list.");
+    }
+    deployer.addNodesList(templateName,templatesMap.get(templateName),nodesList);
+  }
+}

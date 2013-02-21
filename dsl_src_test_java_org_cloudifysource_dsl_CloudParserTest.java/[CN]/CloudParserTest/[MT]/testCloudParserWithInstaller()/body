@@ -1,10 +1,10 @@
 {
   final org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(INSTALLER_CLOUD_PATH));
   assertNotNull(cloud);
-  assertNotNull(cloud.getTemplates());
-  assertNotNull(cloud.getTemplates().size() == 1);
-  assertNotNull(cloud.getTemplates().get("SMALL_LINUX"));
-  CloudTemplate template=cloud.getTemplates().values().iterator().next();
+  assertNotNull(cloud.getCloudCompute().getTemplates());
+  assertNotNull(cloud.getCloudCompute().getTemplates().size() == 1);
+  assertNotNull(cloud.getCloudCompute().getTemplates().get("SMALL_LINUX"));
+  ComputeTemplate template=cloud.getCloudCompute().getTemplates().values().iterator().next();
   assertNotNull(template);
   assertNotNull(template.getInstaller());
   CloudTemplateInstallerConfiguration installer=template.getInstaller();

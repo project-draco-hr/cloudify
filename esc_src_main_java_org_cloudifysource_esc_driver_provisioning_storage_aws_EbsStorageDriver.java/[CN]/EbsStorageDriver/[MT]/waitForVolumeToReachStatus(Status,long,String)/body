@@ -1,0 +1,17 @@
+{
+  Set<Volume> volumes;
+  while (System.currentTimeMillis() < end) {
+    try {
+      volumes=this.ebsClient.describeVolumesInRegion(null,volumeId);
+    }
+ catch (    Exception e) {
+      throw new StorageProvisioningException("Failed getting volume description." + " Reason: " + e.getMessage(),e);
+    }
+    Volume volume=volumes.iterator().next();
+    Status volumeStatus=volume.getStatus();
+    if (volumeStatus.equals(status)) {
+      return;
+    }
+  }
+  throw new TimeoutException("Timed out waiting for storage status to become " + status.toString());
+}

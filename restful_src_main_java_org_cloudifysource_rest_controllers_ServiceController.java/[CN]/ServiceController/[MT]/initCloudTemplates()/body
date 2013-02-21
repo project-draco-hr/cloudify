@@ -5,9 +5,9 @@
     logger.info("initCloudTemplates - no templates to add from folder: " + additionalTemplatesFolder.getAbsolutePath());
     return;
   }
-  final File[] listFiles=additionalTemplatesFolder.listFiles();
-  final CloudTemplatesReader reader=new CloudTemplatesReader();
-  final List<CloudTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
+  File[] listFiles=additionalTemplatesFolder.listFiles();
+  ComputeTemplatesReader reader=new ComputeTemplatesReader();
+  List<ComputeTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
   logger.info("initCloudTemplates - Added the following templates: " + addedTemplates);
   lastTemplateFileNum.addAndGet(listFiles.length);
 }

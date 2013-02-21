@@ -1,0 +1,13 @@
+{
+  Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
+  Set<String> machineVolumeIds=getMachineVolumeIds(ip);
+  logger.fine("listing all volumes on machine with ip " + ip);
+  Set<VolumeDetails> allVolumes=listAllVolumes();
+  for (  VolumeDetails volume : allVolumes) {
+    String volumeId=volume.getId();
+    if (machineVolumeIds.contains(volumeId)) {
+      volumeDetailsSet.add(volume);
+    }
+  }
+  return volumeDetailsSet;
+}

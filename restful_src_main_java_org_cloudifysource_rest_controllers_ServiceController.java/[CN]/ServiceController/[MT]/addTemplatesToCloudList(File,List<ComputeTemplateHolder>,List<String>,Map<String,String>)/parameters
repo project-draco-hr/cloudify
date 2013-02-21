@@ -1,0 +1,4 @@
+File templatesFolder
+List<ComputeTemplateHolder> cloudTemplates
+List<String> addedTemplates
+Map<String,String> failedToAddTemplates
