@@ -1,4 +1,6 @@
 {
-  logger.info("initing tag api region with " + this.region);
-  return EC2Client.class.cast(this.context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getTagApiForRegion(this.region).get();
+  if (this.tagApi == null) {
+    this.tagApi=EC2Client.class.cast(this.context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getTagApiForRegion(this.region).get();
+  }
+  return this.tagApi;
 }

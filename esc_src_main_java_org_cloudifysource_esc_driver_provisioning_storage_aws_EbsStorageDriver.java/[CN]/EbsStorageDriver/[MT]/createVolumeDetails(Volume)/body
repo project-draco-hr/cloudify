@@ -2,7 +2,13 @@
   String availabilityZone=volume.getAvailabilityZone();
   String id=volume.getId();
   int size=volume.getSize();
-  String volumeName=getVolumeNameIgnoreException(id);
+  String volumeName="";
+  try {
+    volumeName=getVolumeName(id);
+  }
+ catch (  StorageProvisioningException e) {
+    logger.info("Could not obtain volume name for node with id: " + id + ". Reason: "+ e.getMessage());
+  }
   VolumeDetails volumeDetails=new VolumeDetails();
   volumeDetails.setLocation(availabilityZone);
   volumeDetails.setId(id);
