@@ -2,7 +2,8 @@
   Set<Volume> volumes;
   while (System.currentTimeMillis() < end) {
     try {
-      volumes=this.ebsClient.describeVolumesInRegion(null,volumeId);
+      volumes=this.ebsClient.describeVolumesInRegion(this.region,volumeId);
+      Thread.sleep(WAIT_FOR_STATUS_RETRY_INTERVAL_MILLIS);
     }
  catch (    Exception e) {
       throw new StorageProvisioningException("Failed getting volume description." + " Reason: " + e.getMessage(),e);

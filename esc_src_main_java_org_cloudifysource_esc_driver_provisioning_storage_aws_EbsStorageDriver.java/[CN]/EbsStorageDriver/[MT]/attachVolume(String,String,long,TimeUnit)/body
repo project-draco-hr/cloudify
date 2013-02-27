@@ -9,8 +9,7 @@
     String instanceId=nodeMetadata.getProviderId();
     logger.log(Level.FINE,"Attaching volume with id " + volumeId + " to machine instance with id "+ instanceId);
     String device=storageTemplate.getDeviceName();
-    String region=this.computeTemplate.getLocationId();
-    this.ebsClient.attachVolumeInRegion(region,volumeId,instanceId,device);
+    this.ebsClient.attachVolumeInRegion(this.region,volumeId,instanceId,device);
   }
  catch (  Exception e) {
     logger.warning("Failed attaching volume to machine. Reason: " + e.getMessage());
