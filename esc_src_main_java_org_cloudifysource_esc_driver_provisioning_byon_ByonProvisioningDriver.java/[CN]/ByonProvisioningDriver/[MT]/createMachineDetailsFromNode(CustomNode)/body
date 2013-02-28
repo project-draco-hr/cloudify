@@ -4,7 +4,6 @@
   md.setMachineId(node.getId());
   md.setPrivateAddress(node.getPrivateIP());
   md.setPublicAddress(node.getPublicIP());
-  md.setCleanRemoteDirectoryOnStart(this.cleanRemoteDirectoryOnStart);
   if (!StringUtils.isBlank(node.getUsername()) && !StringUtils.isBlank(node.getCredential())) {
     md.setRemoteUsername(node.getUsername());
     md.setRemotePassword(node.getCredential());

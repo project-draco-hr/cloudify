@@ -17,13 +17,17 @@
   }
   String lusJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_LUS_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gsmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  logger.info("CHECKING FOR GSM PERSISTENCE SETTINGS");
   if (!this.isLocalCloud) {
+    logger.info("ADDING GSM PERSISTENCE SETTINGS");
     final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
     if (persistentStoragePath != null) {
       final String gsmStoragePath=persistentStoragePath + "/gsm";
-      gsmJavaOptions=gsmJavaOptions + " com.gs.persistency.logDirectory=" + gsmStoragePath;
+      gsmJavaOptions=gsmJavaOptions + " -Dcom.gs.persistency.logDirectory=" + gsmStoragePath;
     }
   }
+  logger.info("GSM SETTINGS: " + gsmJavaOptions);
+  System.out.println("GSM SETTINGS: " + gsmJavaOptions);
   String esmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_ESM_MAX_MEMORY + " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
   String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
@@ -77,9 +81,15 @@
     environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
     environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);
     environment.put("GSM_JAVA_OPTIONS",gsmJavaOptions);
+    logger.info("SETTING GSM_JAVA_OPTIONS2");
+    environment.put("GSM_JAVA_OPTIONS2",gsmJavaOptions);
     environment.put("ESM_JAVA_OPTIONS",esmJavaOptions);
     environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
   }
+  logger.info("Starting agent with command: " + commandString);
+  logger.info("Staring agent with env: " + pb.environment());
+  System.out.println("Starting agent with command: " + commandString);
+  System.out.println("Staring agent with env: " + environment);
   try {
     logger.fine("Executing command: " + commandString);
     final Process proc=pb.start();

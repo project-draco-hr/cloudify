@@ -1,0 +1,21 @@
+{
+  String gsmCommandLineArgs="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ CloudifyConstants.DEFAULT_LUS_PORT+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  Integer websterPort=deployer.getWebsterPort();
+  if (websterPort != null) {
+    gsmCommandLineArgs+=" -D" + CloudifyConstants.GSM_HTTP_PORT_CONTEXT_PROPERTY + "="+ websterPort;
+  }
+  if (discovery.getDiscoveryPort() != null) {
+    gsmCommandLineArgs+=" -D" + CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY + "="+ discovery.getDiscoveryPort();
+  }
+  gsmCommandLineArgs+=getComponentMemoryArgs(deployer.getMaxMemory(),deployer.getMinMemory());
+  gsmCommandLineArgs+=getComponentRmiArgs(deployer.getPort().toString());
+  final String persistentStoragePath=cloud.getConfiguration().getPersistentStoragePath();
+  if (persistentStoragePath != null) {
+    final String gsmStoragePath=persistentStoragePath + "/gsm";
+    gsmCommandLineArgs=gsmCommandLineArgs + " -Dcom.gs.persistency.logDirectory=" + gsmStoragePath;
+  }
+  if (lookupLocatorsString != null) {
+    gsmCommandLineArgs+=" " + DISABLE_MULTICAST;
+  }
+  return gsmCommandLineArgs;
+}

@@ -8,5 +8,6 @@
   md.setRemoteExecutionMode(template.getRemoteExecution());
   md.setFileTransferMode(template.getFileTransfer());
   md.setScriptLangeuage(template.getScriptLanguage());
+  md.setCleanRemoteDirectoryOnStart(this.cleanRemoteDirectoryOnStart);
   return md;
 }

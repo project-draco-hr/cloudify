@@ -1,0 +1,17 @@
+{
+  final Map<String,Object> customSettings=cloud.getCustom();
+  if (customSettings != null) {
+    if (customSettings.containsKey(CloudifyConstants.CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START)) {
+      final Object cleanRemoteDirValue=customSettings.get(CloudifyConstants.CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START);
+      if (cleanRemoteDirValue instanceof Boolean) {
+        this.cleanRemoteDirectoryOnStart=(Boolean)cleanRemoteDirValue;
+      }
+ else       if (cleanRemoteDirValue instanceof String) {
+        this.cleanRemoteDirectoryOnStart=Boolean.parseBoolean((String)cleanRemoteDirValue);
+      }
+ else {
+        throw new IllegalArgumentException("Unexpected value for BYON property: " + CloudifyConstants.CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START + ". Was expecting a boolean or String, got: "+ cleanRemoteDirValue.getClass().getName());
+      }
+    }
+  }
+}

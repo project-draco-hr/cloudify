@@ -1,2 +1,4 @@
+Cloud cloud
+String lookupLocatorsString
 DeployerComponent deployer
 DiscoveryComponent discovery

@@ -16,17 +16,5 @@
         }
       }
     }
-    if (customSettings.containsKey(CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START)) {
-      final Object cleanRemoteDirValue=customSettings.get(CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START);
-      if (cleanRemoteDirValue instanceof Boolean) {
-        this.cleanRemoteDirectoryOnStart=(Boolean)cleanRemoteDirValue;
-      }
- else       if (cleanRemoteDirValue instanceof String) {
-        this.cleanRemoteDirectoryOnStart=Boolean.parseBoolean((String)cleanRemoteDirValue);
-      }
- else {
-        throw new IllegalArgumentException("Unexpected value for BYON property: " + CUSTOM_PROPERTY_CLEAN_REMOTE_DIR_ON_START + ". Was expecting a boolean or String, got: "+ cleanRemoteDirValue.getClass().getName());
-      }
-    }
   }
 }

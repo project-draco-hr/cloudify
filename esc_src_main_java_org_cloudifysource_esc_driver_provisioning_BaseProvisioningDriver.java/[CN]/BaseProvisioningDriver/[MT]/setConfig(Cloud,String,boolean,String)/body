@@ -18,4 +18,5 @@
     logger.warning("Prefix for machine name was not set. Using: " + prefix);
   }
   this.serverNamePrefix=prefix;
+  initCleanRemoteOnStart(cloud);
 }

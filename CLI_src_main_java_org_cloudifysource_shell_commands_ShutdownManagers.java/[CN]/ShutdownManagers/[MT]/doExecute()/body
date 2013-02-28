@@ -64,6 +64,7 @@
     }
  else {
       if (managersStillUp.isEmpty()) {
+        disconnect();
         return getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_SHUTDOWN_SUCCESS.getName());
       }
     }
