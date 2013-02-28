@@ -1,0 +1,13 @@
+{
+  Set<VolumeDetails> volumesList=new HashSet<VolumeDetails>();
+  try {
+    volumesList=this.storageProvisioning.listVolumes(machineIp,duration,unit);
+  }
+ catch (  StorageProvisioningException e) {
+    logger.log(Level.WARNING,"Failed listing all volumes attached to machine with ip " + machineIp,e);
+  }
+  StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(this.storageTemplateName);
+  String namePrefix=storageTemplate.getNamePrefix();
+  VolumeDetails attachedVolume=getVolumeWithNamePrefix(namePrefix,volumesList);
+  return attachedVolume;
+}
