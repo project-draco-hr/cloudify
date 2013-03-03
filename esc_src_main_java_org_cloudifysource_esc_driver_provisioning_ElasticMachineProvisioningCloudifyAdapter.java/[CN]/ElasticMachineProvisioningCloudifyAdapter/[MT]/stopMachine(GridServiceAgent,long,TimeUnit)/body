@@ -1,14 +1,6 @@
 {
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   final String machineIp=agent.getMachine().getHostAddress();
-  try {
-    if (isStorageTemplateUsed()) {
-      handleVolumeOnStopMachine(machineIp,duration,unit);
-    }
-  }
- catch (  StorageProvisioningException e) {
-    logger.log(Level.SEVERE,"Failed detaching volume from machine with ip: " + machineIp + ". There may still be leaking volumes.",e);
-  }
   Exception failedToShutdownAgentException=null;
   final GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
   agentStopEvent.setHostAddress(machineIp);
@@ -31,6 +23,12 @@
     final MachineStopRequestedEvent machineStopEvent=new MachineStopRequestedEvent();
     machineStopEvent.setHostAddress(machineIp);
     machineEventListener.elasticMachineProvisioningProgressChanged(machineStopEvent);
+    boolean storageTemplateUsed=isStorageTemplateUsed();
+    VolumeDetails attachedVolume=null;
+    if (storageTemplateUsed) {
+      logger.log(Level.INFO,"Getting attached volume details from machine with ip " + machineIp);
+      attachedVolume=getAttachedVolumeDetails(machineIp,duration,unit);
+    }
     logger.fine("Cloudify Adapter is shutting down machine with ip: " + machineIp);
     final boolean shutdownSuccessful=this.cloudifyProvisioning.stopMachine(machineIp,duration,unit);
     logger.fine("Shutdown result of machine: " + machineIp + " was: "+ shutdownSuccessful);
@@ -46,6 +44,14 @@
           }
           throw new ElasticGridServiceAgentProvisioningException("Machine is stopped but agent[" + agent.getUid() + "] is still discovered.");
         }
+      }
+    }
+    if (storageTemplateUsed) {
+      if (attachedVolume != null) {
+        handleVolumeOnStopMachine(attachedVolume,duration,unit);
+      }
+ else {
+        logger.log(Level.WARNING,"Could not find an attached volume on machine with ip " + machineIp);
       }
     }
     return shutdownSuccessful;

@@ -1,0 +1,19 @@
+{
+  VolumeDetails volume=null;
+  for (  VolumeDetails volumeDetails : attachedVolumes) {
+    String id=volumeDetails.getId();
+    logger.info("getting volume name using volume id " + id);
+    String volumeName="";
+    try {
+      volumeName=this.storageProvisioning.getVolumeName(id);
+    }
+ catch (    StorageProvisioningException e) {
+      logger.log(Level.INFO,"Failed getting name for volume with id " + id + ". Reason "+ e.getMessage(),e);
+    }
+    if (!StringUtils.isEmpty(volumeName) && volumeName.startsWith(namePrefix)) {
+      volume=volumeDetails;
+      break;
+    }
+  }
+  return volume;
+}
