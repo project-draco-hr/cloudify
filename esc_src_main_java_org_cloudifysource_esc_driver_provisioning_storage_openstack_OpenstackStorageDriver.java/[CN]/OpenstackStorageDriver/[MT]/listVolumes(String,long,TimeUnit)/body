@@ -14,7 +14,7 @@
     Volume volume;
     for (    VolumeAttachment attachment : volumesAttachmentsList) {
       VolumeDetails details=new VolumeDetails();
-      volume=getVolume(location,attachment.getVolumeId());
+      volume=getVolume(attachment.getVolumeId());
       details.setId(volume.getId());
       details.setName(volume.getName());
       details.setSize(volume.getSize());

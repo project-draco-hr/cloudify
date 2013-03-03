@@ -1,3 +1,12 @@
 {
-  return "";
+  String region=getRegionFromHardwareId(computeTemplate.getHardwareId());
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  if (!volumeApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to delete volume " + volumeId + ", Openstack API is not "+ "initialized.");
+  }
+  Volume volume=getVolume(volumeId);
+  if (volume == null) {
+    throw new StorageProvisioningException("Failed to get volume with id: " + volumeId + ", volume not found");
+  }
+  return volume.getName();
 }

@@ -1,0 +1,12 @@
+{
+  String region="";
+  logger.info("hardware id: " + hardwareId);
+  if (hardwareId.indexOf("/") == -1) {
+    logger.info("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
+  }
+  region=StringUtils.substringBefore(hardwareId,"/");
+  if (StringUtils.isBlank(region)) {
+    logger.info("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
+  }
+  return region;
+}

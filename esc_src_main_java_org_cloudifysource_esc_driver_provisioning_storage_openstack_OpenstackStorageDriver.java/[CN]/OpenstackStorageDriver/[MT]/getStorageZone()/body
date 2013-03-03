@@ -10,7 +10,7 @@
       }
     }
  else {
-      throw new IllegalArgumentException("Storate template custom property \"" + OPENSTACK_CUSTOM_VOLUME_ZONE + "\" must be of type String");
+      throw new IllegalArgumentException("Storate template custom property \"" + OPENSTACK_CUSTOM_VOLUME_ZONE + "\" is missing or not a String");
     }
   }
  else {

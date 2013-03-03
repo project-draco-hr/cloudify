@@ -1,13 +1,28 @@
 {
+  final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
   NodeMetadata node=deployer.getServerWithIP(machineIp);
   if (node == null) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + " from server "+ machineIp+ ". Server not found.");
   }
+  String region=getRegionFromHardwareId(computeTemplate.getHardwareId());
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
   Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi(node.getLocation().getParent().getId());
-  if (volumeAttachmentApi.isPresent()) {
-    volumeAttachmentApi.get().detachVolumeFromServer(volumeId,node.getProviderId());
-  }
- else {
+  if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + ", Openstack API is not initialized.");
+  }
+  volumeAttachmentApi.get().detachVolumeFromServer(volumeId,node.getProviderId());
+  try {
+    waitForVolumeToReachStatus(Volume.Status.AVAILABLE,volumeApi,volumeId,endTime);
+    logger.fine("Volume " + volumeId + " detached successfully from machine : "+ machineIp);
+  }
+ catch (  final Exception e) {
+    logger.log(Level.WARNING,"volume: " + volumeId + " failed to detach from machine "+ machineIp+ ". Error was: "+ e.getMessage(),e);
+    try {
+      attachVolume(region,volumeId,duration,timeUnit);
+    }
+ catch (    final Exception e2) {
+      logger.log(Level.WARNING,"Error while re-attaching volume: " + volumeId + ". Error was: "+ e.getMessage()+ ". It may be leaking.",e);
+    }
+    throw new StorageProvisioningException(e);
   }
 }
