@@ -4,9 +4,8 @@
   if (node == null) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + " from server "+ machineIp+ ". Server not found.");
   }
-  String region=getRegionFromHardwareId(computeTemplate.getHardwareId());
   Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
-  Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi(node.getLocation().getParent().getId());
+  Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi(region);
   if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + ", Openstack API is not initialized.");
   }
@@ -17,12 +16,6 @@
   }
  catch (  final Exception e) {
     logger.log(Level.WARNING,"volume: " + volumeId + " failed to detach from machine "+ machineIp+ ". Error was: "+ e.getMessage(),e);
-    try {
-      attachVolume(region,volumeId,duration,timeUnit);
-    }
- catch (    final Exception e2) {
-      logger.log(Level.WARNING,"Error while re-attaching volume: " + volumeId + ". Error was: "+ e.getMessage()+ ". It may be leaking.",e);
-    }
     throw new StorageProvisioningException(e);
   }
 }

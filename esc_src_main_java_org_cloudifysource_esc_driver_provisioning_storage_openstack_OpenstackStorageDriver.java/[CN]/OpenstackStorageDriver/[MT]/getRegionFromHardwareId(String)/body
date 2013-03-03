@@ -1,12 +1,14 @@
 {
   String region="";
-  logger.info("hardware id: " + hardwareId);
   if (hardwareId.indexOf("/") == -1) {
     logger.info("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
+    throw new IllegalArgumentException("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
   }
   region=StringUtils.substringBefore(hardwareId,"/");
   if (StringUtils.isBlank(region)) {
-    logger.info("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
+    logger.info("HardwareId " + hardwareId + " is missing the region name. It must be formatted "+ "as region / profile id");
+    throw new IllegalArgumentException("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
   }
+  logger.fine("region: " + region);
   return region;
 }

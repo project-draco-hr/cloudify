@@ -1,10 +1,7 @@
 {
   final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
   final VolumeDetails volumeDetails=new VolumeDetails();
-  final String region;
   Volume volume;
-  region=getRegionFromHardwareId(computeTemplate.getHardwareId());
-  logger.info("region: " + region);
   Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
   if (!volumeApi.isPresent()) {
     throw new StorageProvisioningException("Failed to create volume, Openstack API is not initialized.");

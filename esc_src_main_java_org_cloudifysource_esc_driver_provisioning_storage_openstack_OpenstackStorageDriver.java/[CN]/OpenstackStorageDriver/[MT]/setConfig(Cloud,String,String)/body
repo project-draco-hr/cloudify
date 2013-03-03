@@ -6,4 +6,5 @@
   novaContext=this.computeContext.unwrap();
   computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
   storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
+  region=getRegionFromHardwareId(computeTemplate.getHardwareId());
 }
