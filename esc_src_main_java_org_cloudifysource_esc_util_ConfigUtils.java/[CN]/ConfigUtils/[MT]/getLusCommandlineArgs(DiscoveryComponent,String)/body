@@ -1,5 +1,8 @@
 {
-  String lusCommandLineArgs="";
+  String lusCommandLineArgs="-Xmx" + CloudifyConstants.DEFAULT_LUS_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ CloudifyConstants.DEFAULT_LUS_PORT+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
+  if (lookupLocatorsString != null) {
+    lusCommandLineArgs+=" " + DISABLE_MULTICAST;
+  }
   Integer discoveryPort=discovery.getDiscoveryPort();
   if (discoveryPort != null) {
     lusCommandLineArgs+=" -D" + CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY + "="+ discoveryPort;
