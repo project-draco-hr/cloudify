@@ -48,7 +48,7 @@
     }
     if (storageTemplateUsed) {
       if (attachedVolume != null) {
-        handleVolumeOnStopMachine(attachedVolume,duration,unit);
+        handleVolumeOnStopMachine(attachedVolume.getId(),duration,unit);
       }
  else {
         logger.log(Level.WARNING,"Could not find an attached volume on machine with ip " + machineIp);

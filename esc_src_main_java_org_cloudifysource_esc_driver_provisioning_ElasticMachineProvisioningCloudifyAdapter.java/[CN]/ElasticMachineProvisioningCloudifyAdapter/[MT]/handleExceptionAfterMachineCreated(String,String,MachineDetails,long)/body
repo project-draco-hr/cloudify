@@ -1,5 +1,4 @@
 {
-  VolumeDetails attachedVolume=null;
   boolean storageTemplateUsed=isStorageTemplateUsed();
   try {
     boolean machineIpExists=machineIp != null && !machineIp.trim().isEmpty();
@@ -15,18 +14,13 @@
  catch (      final Exception e) {
         logger.log(Level.WARNING,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of "+ "machine.",e);
       }
-      if (storageTemplateUsed) {
-        logger.log(Level.INFO,"Getting attached volume details from machine with ip " + machineIp);
-        long timeout=end - System.currentTimeMillis();
-        attachedVolume=getAttachedVolumeDetails(machineIp,timeout,TimeUnit.MILLISECONDS);
-      }
     }
     logger.info("Stopping machine " + machineDetails.getPrivateAddress() + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
     this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
     if (storageTemplateUsed) {
-      if (machineIpExists && attachedVolume != null) {
+      if (!StringUtils.isEmpty(volumeId)) {
         long timeout=end - System.currentTimeMillis();
-        handleVolumeOnStopMachine(attachedVolume,timeout,TimeUnit.MILLISECONDS);
+        handleVolumeOnStopMachine(volumeId,timeout,TimeUnit.MILLISECONDS);
       }
  else {
         logger.log(Level.WARNING,"Failed detecting volume. Could not obtain volume details.");

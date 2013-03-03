@@ -59,11 +59,13 @@
   final GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
   agentStartEvent.setHostAddress(machineIp);
   agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
+  String volumeId=null;
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (isStorageTemplateUsed()) {
       String machineLocation=machineDetails.getLocationId();
       VolumeDetails volumeDetails=startNewStorageVolume(machineLocation,end);
+      volumeId=volumeDetails.getId();
       try {
         attachStorageVolumeToMachine(machineIp,volumeDetails,end);
       }
@@ -103,31 +105,31 @@
  catch (  final ElasticMachineProvisioningException e) {
     logger.info("ElasticMachineProvisioningException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw e;
   }
 catch (  final ElasticGridServiceAgentProvisioningException e) {
     logger.info("ElasticGridServiceAgentProvisioningException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw e;
   }
 catch (  final TimeoutException e) {
     logger.info("TimeoutException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw e;
   }
 catch (  final InterruptedException e) {
     logger.info("InterruptedException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw e;
   }
 catch (  StorageProvisioningException e) {
     logger.info("StorageProvisioningException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw new ElasticMachineProvisioningException("Storage exception thrown",e);
   }
 }

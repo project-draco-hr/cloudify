@@ -1,3 +1,4 @@
 String machineIp
+String volumeId
 MachineDetails machineDetails
 long end
