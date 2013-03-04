@@ -1,8 +1,5 @@
 {
   Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
-  if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
-    throw new StorageProvisioningException("Failed to list volumes, APIs not available.");
-  }
   NodeMetadata node=deployer.getServerWithIP(machineIp);
   if (node == null) {
     throw new StorageProvisioningException("Failed to list volumes attached to " + machineIp + ". Server not found");
@@ -12,13 +9,13 @@
   if (!volumeAttachmentApi.isPresent()) {
     throw new StorageProvisioningException("Failed to list volumes, Openstack API is not initialized.");
   }
-  FluentIterable<? extends VolumeAttachment> volumesAttachmentsList=volumeAttachmentApi.get().listAttachmentsOnServer(node.getId());
+  FluentIterable<? extends VolumeAttachment> volumesAttachmentsList=volumeAttachmentApi.get().listAttachmentsOnServer(node.getProviderId());
   volumeAttachmentApi.get().listAttachmentsOnServer(node.getProviderId());
   if (volumesAttachmentsList != null) {
     Volume volume;
     for (    VolumeAttachment attachment : volumesAttachmentsList) {
       VolumeDetails details=new VolumeDetails();
-      volume=getVolume(attachment.getVolumeId());
+      volume=getVolume(location,attachment.getVolumeId());
       details.setId(volume.getId());
       details.setName(volume.getName());
       details.setSize(volume.getSize());

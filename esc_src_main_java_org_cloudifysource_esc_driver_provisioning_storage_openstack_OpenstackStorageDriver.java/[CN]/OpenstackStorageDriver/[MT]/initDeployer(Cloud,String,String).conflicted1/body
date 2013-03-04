@@ -7,6 +7,7 @@
     final StorageTemplate storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
     final ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
     final Properties props=new Properties();
+    props.put(CREDENTIALS_TYPE_PROPERTY,CREDENTIALS_TYPE);
     props.putAll(storageTemplate.getCustom());
     props.putAll(computeTemplate.getOverrides());
     props.putAll(storageTemplate.getCustom());

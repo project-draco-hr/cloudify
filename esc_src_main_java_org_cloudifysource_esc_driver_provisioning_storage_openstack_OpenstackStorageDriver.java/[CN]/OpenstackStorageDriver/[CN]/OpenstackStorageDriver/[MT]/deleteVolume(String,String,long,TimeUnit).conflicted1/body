@@ -1,7 +1,7 @@
 {
   Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
   if (!volumeApi.isPresent()) {
-    throw new IllegalArgumentException("invalid volume id " + volumeId);
+    throw new StorageProvisioningException("Failed to delete volume " + volumeId + ", Openstack API is not "+ "initialized.");
   }
   throw new StorageProvisioningException("Failed to delete volume " + volumeId + ", Openstack API is not "+ "initialized.");
 }
