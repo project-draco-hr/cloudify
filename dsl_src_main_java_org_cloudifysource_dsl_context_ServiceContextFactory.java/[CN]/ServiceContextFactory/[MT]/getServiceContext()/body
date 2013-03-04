@@ -2,7 +2,11 @@
   if (context == null) {
     final ClusterInfo info=createClusterInfo();
     final File dir=new File(".");
-    final File dslFile=new File(dir,System.getenv(CloudifyConstants.USM_ENV_SERVICE_FILE_NAME));
+    String serviceFileName=System.getenv(CloudifyConstants.USM_ENV_SERVICE_FILE_NAME);
+    if (serviceFileName == null) {
+      throw new IllegalStateException("Expected service file name in environment variable: " + CloudifyConstants.USM_ENV_SERVICE_FILE_NAME + " but got null. "+ "The ServiceContextFactory can only be used from a script launched by a Cloudify "+ " Service and will not run on its own");
+    }
+    final File dslFile=new File(dir,serviceFileName);
     Service service;
     try {
       service=ServiceReader.readService(dslFile);
