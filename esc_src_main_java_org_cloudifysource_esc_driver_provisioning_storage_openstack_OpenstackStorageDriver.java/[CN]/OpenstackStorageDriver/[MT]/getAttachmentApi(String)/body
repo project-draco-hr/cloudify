@@ -2,5 +2,5 @@
   if (novaContext == null) {
     throw new IllegalStateException("Nova context is null");
   }
-  return novaContext.getApi().getVolumeAttachmentExtensionForZone(region);
+  return novaContext.getApi().getVolumeAttachmentExtensionForZone(location);
 }

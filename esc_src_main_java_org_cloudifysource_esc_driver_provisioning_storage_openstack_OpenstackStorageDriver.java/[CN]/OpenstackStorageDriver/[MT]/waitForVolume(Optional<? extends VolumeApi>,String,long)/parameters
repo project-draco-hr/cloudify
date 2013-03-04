@@ -1,4 +1,3 @@
-Volume.Status targetStatus
 Optional<? extends VolumeApi> volumeApi
 String volumeId
 long endTime

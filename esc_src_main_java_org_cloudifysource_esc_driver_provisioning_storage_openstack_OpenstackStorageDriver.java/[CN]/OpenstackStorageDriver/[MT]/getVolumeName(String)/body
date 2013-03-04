@@ -1,7 +1,3 @@
 {
-  Volume volume=getVolume(volumeId);
-  if (volume == null) {
-    throw new StorageProvisioningException("Failed to get volume with id: " + volumeId + ", volume not found");
-  }
-  return volume.getName();
+  return "";
 }
