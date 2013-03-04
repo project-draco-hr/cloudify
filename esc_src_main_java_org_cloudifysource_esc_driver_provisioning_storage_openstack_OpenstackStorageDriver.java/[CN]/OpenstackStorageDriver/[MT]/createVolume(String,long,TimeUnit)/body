@@ -2,7 +2,7 @@
   final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
   final VolumeDetails volumeDetails=new VolumeDetails();
   Volume volume;
-  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
   if (!volumeApi.isPresent()) {
     throw new StorageProvisioningException("Failed to create volume, Openstack API is not initialized.");
   }
@@ -24,7 +24,6 @@
  catch (  final Exception e) {
     logger.log(Level.WARNING,"volume: " + volume.getId() + " failed to start up correctly. Shutting it down."+ " Error was: "+ e.getMessage(),e);
     try {
-      deleteVolume(location,volume.getId(),duration,timeUnit);
       deleteVolume(region,volume.getId(),duration,timeUnit);
     }
  catch (    final Exception e2) {

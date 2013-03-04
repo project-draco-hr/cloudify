@@ -1,6 +1,6 @@
 {
   Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
-  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
   if (!volumeApi.isPresent()) {
     throw new StorageProvisioningException("Failed to list all volumes.");
   }

@@ -4,8 +4,8 @@
   if (node == null) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + " from server "+ machineIp+ ". Server not found.");
   }
-  Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi(region);
-  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi();
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
   if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
     throw new StorageProvisioningException("Failed to detach volume " + volumeId + ", Openstack API is not initialized.");
   }

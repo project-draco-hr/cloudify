@@ -1,5 +1,5 @@
 {
-  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
   if (!volumeApi.isPresent()) {
     throw new StorageProvisioningException("Failed to get volume by id " + volumeId + ", Openstack API is not "+ "initialized.");
   }
