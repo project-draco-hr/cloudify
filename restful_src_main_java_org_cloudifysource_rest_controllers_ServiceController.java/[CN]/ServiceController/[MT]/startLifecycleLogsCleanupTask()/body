@@ -1,6 +1,6 @@
 {
   this.lifecycleEventsCleaner.scheduleWithFixedDelay(new Runnable(){
-    @Override public void run(){
+    public void run(){
       if (lifecyclePollingThreadContainer != null) {
         final Iterator<Entry<UUID,RestPollingRunnable>> it=lifecyclePollingThreadContainer.entrySet().iterator();
         while (it.hasNext()) {

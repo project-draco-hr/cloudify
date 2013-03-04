@@ -5,7 +5,7 @@
   for (  final File templateFolder : templatesFolders) {
     logger.log(Level.FINE,"Searching for template file " + templateFileName + " in "+ templateFolder.getAbsolutePath());
     final File[] listFiles=templateFolder.listFiles(new FilenameFilter(){
-      @Override public boolean accept(      final File dir,      final String name){
+      public boolean accept(      final File dir,      final String name){
         return templateFileName.equals(name);
       }
     }
