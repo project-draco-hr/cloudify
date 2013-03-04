@@ -1,3 +1,7 @@
 {
-  return new CustomNodeImpl(PROVIDER_ID,nodeMap.get(CLOUD_NODE_ID).trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_ID).trim());
+  String nodeId=nodeMap.get(CLOUD_NODE_ID);
+  if (nodeId.contains("{")) {
+    nodeId=MessageFormat.format(nodeId,1);
+  }
+  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeId.trim());
 }
