@@ -14,8 +14,9 @@ if (actualValue.startsWith("\"") && actualValue.endsWith("\"")) {
 }
 String normalizedValue=normalizeCifsPath(actualValue);
 boolean includesAmpersand=false;
-if (normalizedValue.contains("&")) {
+if (normalizedValue.contains("&") || normalizedValue.contains("%")) {
 normalizedValue=normalizedValue.replace("&","^&");
+normalizedValue=normalizedValue.replace("%","%%");
 includesAmpersand=true;
 }
 if (includesAmpersand) {
