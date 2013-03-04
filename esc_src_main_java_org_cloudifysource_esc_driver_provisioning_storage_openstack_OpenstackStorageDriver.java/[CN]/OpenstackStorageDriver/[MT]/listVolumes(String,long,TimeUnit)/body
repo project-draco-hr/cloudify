@@ -10,12 +10,11 @@
     throw new StorageProvisioningException("Failed to list volumes, Openstack API is not initialized.");
   }
   FluentIterable<? extends VolumeAttachment> volumesAttachmentsList=volumeAttachmentApi.get().listAttachmentsOnServer(node.getProviderId());
-  volumeAttachmentApi.get().listAttachmentsOnServer(node.getProviderId());
   if (volumesAttachmentsList != null) {
     Volume volume;
     for (    VolumeAttachment attachment : volumesAttachmentsList) {
       VolumeDetails details=new VolumeDetails();
-      volume=getVolume(location,attachment.getVolumeId());
+      volume=getVolume(attachment.getVolumeId());
       details.setId(volume.getId());
       details.setName(volume.getName());
       details.setSize(volume.getSize());
