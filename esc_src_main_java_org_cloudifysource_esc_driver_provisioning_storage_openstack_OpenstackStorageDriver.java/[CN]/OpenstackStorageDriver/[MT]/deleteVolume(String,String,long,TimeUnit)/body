@@ -3,5 +3,7 @@
   if (!volumeApi.isPresent()) {
     throw new StorageProvisioningException("Failed to delete volume " + volumeId + ", Openstack API is not "+ "initialized.");
   }
-  throw new StorageProvisioningException("Failed to delete volume " + volumeId + ", Openstack API is not "+ "initialized.");
+  if (!volumeApi.get().delete(volumeId)) {
+    logger.log(Level.WARNING,"Error while deleting volume: " + volumeId + ".It may be leaking.");
+  }
 }

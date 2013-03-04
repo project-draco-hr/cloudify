@@ -1,2 +1,22 @@
 {
+  if (!volumeApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to get volume status, Openstack API is not initialized.");
+  }
+  logger.info("waiting for volume to reach status: " + targetStatus.toString());
+  while (true) {
+    final Volume volume=volumeApi.get().get(volumeId);
+    if (volume != null) {
+      Volume.Status volumeStatus=volume.getStatus();
+      if (volumeStatus == targetStatus) {
+        break;
+      }
+ else       if (volumeStatus == Volume.Status.ERROR) {
+        throw new StorageProvisioningException("Storage volume management encountered an error. " + "Volume id: " + volumeId);
+      }
+      if (System.currentTimeMillis() > endTime) {
+        throw new TimeoutException("timeout while waiting for volume to reach status \" " + targetStatus + "\". Current status is: "+ volume.getStatus());
+      }
+    }
+    Thread.sleep(VOLUME_POLLING_INTERVAL_MILLIS);
+  }
 }

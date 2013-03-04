@@ -1,0 +1,14 @@
+{
+  final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
+  NodeMetadata node=deployer.getServerWithIP(machineIp);
+  if (node == null) {
+    throw new StorageProvisioningException("Failed to attach volume " + volumeId + " to server. Server "+ "with ip: "+ machineIp+ " not found");
+  }
+  Optional<? extends VolumeAttachmentApi> volumeAttachmentApi=getAttachmentApi(region);
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi(region);
+  if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to attach volume " + volumeId + ", Openstack API is not initialized.");
+  }
+  logger.fine("Attaching volume on Openstack");
+  volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getProviderId(),storageTemplate.getDeviceName());
+}
