@@ -1,5 +1,5 @@
 {
-  ComputeTemplatesReader reader=new ComputeTemplatesReader();
+  CloudTemplatesReader reader=new CloudTemplatesReader();
   File localTemplatesFolder=reader.unzipCloudTemplatesFolder(copyMultipartFileToLocalFile(templatesFolder));
   try {
     logger.log(Level.INFO,"[addTemplatesInternal] - adding templates from templates folder: " + localTemplatesFolder.getAbsolutePath());

@@ -5,7 +5,7 @@
       throw new TimeoutException("Timed out waiting for Service " + serviceName + " deployment.");
     }
   }
- catch (  final ProcessingUnitAlreadyDeployedException e) {
+ catch (  ProcessingUnitAlreadyDeployedException e) {
     throw new RestErrorException(CloudifyErrorMessages.SERVICE_ALREADY_INSTALLED.getName(),serviceName);
   }
 }

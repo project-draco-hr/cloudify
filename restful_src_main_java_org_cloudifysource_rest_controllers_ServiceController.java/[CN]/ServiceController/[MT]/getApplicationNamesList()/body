@@ -3,12 +3,12 @@
     logger.finer("received request to list applications");
   }
   final Applications apps=admin.getApplications();
-  final Map<String,Object> resultsMap=new HashMap<String,Object>();
+  Map<String,Object> resultsMap=new HashMap<String,Object>();
   for (  final Application app : apps) {
     if (!app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
-      for (      final ProcessingUnit pu : app.getProcessingUnits().getProcessingUnits()) {
+      for (      ProcessingUnit pu : app.getProcessingUnits().getProcessingUnits()) {
         if (pu != null) {
-          final String authGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+          String authGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
           resultsMap.put(app.getName(),authGroups);
           break;
         }

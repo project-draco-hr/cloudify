@@ -1,7 +1,7 @@
 {
   logger.log(Level.INFO,"[removeTemplateFromCloud] - removing template [" + templateName + "] from cloud.");
   deleteTemplateFile(templateName);
-  Map<String,ComputeTemplate> cloudTemplates=cloud.getCloudCompute().getTemplates();
+  Map<String,CloudTemplate> cloudTemplates=cloud.getTemplates();
   if (!cloudTemplates.containsKey(templateName)) {
     throw new RestErrorException("template_not_exist",templateName);
   }

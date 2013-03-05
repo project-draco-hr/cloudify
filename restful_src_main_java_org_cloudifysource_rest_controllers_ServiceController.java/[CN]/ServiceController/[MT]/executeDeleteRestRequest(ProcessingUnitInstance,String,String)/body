@@ -1,5 +1,5 @@
 {
-  final String port=Integer.toString(puInstance.getJeeDetails().getPort());
-  final GSRestClient restClient=createRestClient(hostAddress,port,"","");
+  String port=Integer.toString(puInstance.getJeeDetails().getPort());
+  GSRestClient restClient=createRestClient(hostAddress,port,"","");
   restClient.delete(relativeUrl);
 }

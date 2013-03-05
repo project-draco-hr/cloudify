@@ -7,7 +7,7 @@
     logger.log(Level.FINE,"Polling task with UUID " + pollingTaskId.toString() + " is no longer active.");
   }
  else {
-    final RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(pollingTaskId);
+    RestPollingRunnable restPollingRunnable=lifecyclePollingThreadContainer.get(pollingTaskId);
     restPollingRunnable.setDeploymentExecutionException(e);
   }
 }

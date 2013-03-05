@@ -8,7 +8,7 @@
   }
   for (  final ProcessingUnitInstance processingUnitInstance : processingUnit) {
     stringBuilder.append("service instance id #").append(processingUnitInstance.getInstanceId()).append(System.getProperty("line.separator"));
-    final String instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
+    String instanceLogTail=getLogTailFromContainer(processingUnitInstance.getGridServiceContainer(),numLines);
     stringBuilder.append(instanceLogTail);
   }
   return successStatus(stringBuilder.toString());

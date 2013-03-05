@@ -2,7 +2,7 @@
   if (service == null) {
     return;
   }
-  final ComputeDetails compute=service.getCompute();
+  ComputeDetails compute=service.getCompute();
   String templateName=null;
   if (compute != null) {
     templateName=compute.getTemplate();

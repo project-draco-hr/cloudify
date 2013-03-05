@@ -6,9 +6,9 @@
     throw new RestErrorException(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
   }
   if (permissionEvaluator != null) {
-    final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
   final Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
@@ -28,9 +28,8 @@
     }
   }
  else {
-    final Map<String,String> properties=((InternalProcessingUnit)pu).getElasticProperties();
-    final GridServiceContainerConfig gscConfig=new GridServiceContainerConfig(properties);
-    final long cloudExternalProcessMemoryInMB=gscConfig.getMaximumMemoryCapacityInMB();
+    final CloudTemplate template=getComputeTemplate(cloud,templateName);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
     pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),0,locationAware,true));
   }
   logger.log(Level.INFO,"Starting to poll for lifecycle events.");

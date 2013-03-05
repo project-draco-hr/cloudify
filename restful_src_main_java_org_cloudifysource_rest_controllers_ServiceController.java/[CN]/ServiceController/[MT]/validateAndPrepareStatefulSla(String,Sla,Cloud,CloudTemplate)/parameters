@@ -1,4 +1,4 @@
 String serviceName
 Sla sla
 Cloud cloud
-ComputeTemplate template
+CloudTemplate template

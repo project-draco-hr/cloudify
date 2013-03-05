@@ -1,15 +1,15 @@
 {
-  final File templateFile=getTemplateFile(templateName);
+  File templateFile=getTemplateFile(templateName);
   if (templateFile == null) {
     throw new RestErrorException("failed_to_remove_template_file",templateName,"template file doesn't exist");
   }
-  final String templatesPath=templateFile.getAbsolutePath();
+  String templatesPath=templateFile.getAbsolutePath();
   logger.log(Level.FINE,"[deleteTemplateFile] - removing template file " + templatesPath);
   boolean deleted=false;
   try {
     deleted=templateFile.delete();
   }
- catch (  final SecurityException e) {
+ catch (  SecurityException e) {
     logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to deleted template file " + templatesPath + ", Error: "+ e.getMessage(),e);
     throw new RestErrorException("failed_to_remove_template_file",templatesPath,e.getMessage());
   }
@@ -17,21 +17,21 @@
     throw new RestErrorException("failed_to_remove_template_file",templatesPath,"template file was not deleted.");
   }
   logger.log(Level.FINE,"[deleteTemplateFile] - Successfully deleted template file [" + templatesPath + "].");
-  final File templateFolder=templateFile.getParentFile();
-  final File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,templateFolder);
+  File templateFolder=templateFile.getParentFile();
+  File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,templateFolder);
   if (templatesFiles == null || templatesFiles.length == 0) {
     try {
       logger.log(Level.FINE,"[deleteTemplateFile] - templates folder is empty, deleting the folder [" + templatesPath + "].");
       FileUtils.deleteDirectory(templateFolder);
     }
- catch (    final IOException e) {
+ catch (    IOException e) {
       logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + templateFolder,e);
     }
   }
  else {
-    ComputeTemplatesReader.removeTemplateFiles(templateFolder,templateName);
+    CloudTemplatesReader.removeTemplateFiles(templateFolder,templateName);
   }
-  final File templatesFolder=getTemplatesFolder();
+  File templatesFolder=getTemplatesFolder();
   if (templatesFolder.list().length == 0) {
     templateFolder.delete();
   }

@@ -2,13 +2,13 @@
   logger.info("Loading cloud configuration");
   cloudConfigurationHolder=getCloudConfigurationFromManagementSpace();
   logger.info("Cloud Configuration: " + cloudConfigurationHolder);
-  final String cloudConfigurationFilePath=cloudConfigurationHolder.getCloudConfigurationFilePath();
+  String cloudConfigurationFilePath=cloudConfigurationHolder.getCloudConfigurationFilePath();
   if (cloudConfigurationFilePath == null) {
     return null;
   }
   Cloud cloudConfiguration=null;
   try {
-    final File cloudConfigurationFile=new File(cloudConfigurationFilePath);
+    File cloudConfigurationFile=new File(cloudConfigurationFilePath);
     cloudConfigurationDir=cloudConfigurationFile.getParentFile();
     cloudConfiguration=ServiceReader.readCloud(cloudConfigurationFile);
   }

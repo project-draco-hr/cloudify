@@ -8,7 +8,7 @@
   try {
     removeTemplateFromCloud(templateName);
   }
- catch (  final RestErrorException e) {
+ catch (  RestErrorException e) {
     logger.log(Level.WARNING,"[removeTemplateInternal] - failed to remove template [" + templateName + "]."+ " Error: "+ e.getMessage(),e);
     throw e;
   }

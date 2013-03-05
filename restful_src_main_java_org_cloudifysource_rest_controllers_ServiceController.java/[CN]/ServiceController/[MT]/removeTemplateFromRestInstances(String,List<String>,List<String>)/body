@@ -1,14 +1,14 @@
 {
-  final ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
-  final ProcessingUnitInstance[] instances=processingUnit.getInstances();
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
+  ProcessingUnitInstance[] instances=processingUnit.getInstances();
   logger.log(Level.INFO,"[removeTemplateFromRestInstances] - sending remove request to " + instances.length + " REST instances. Template's name is "+ templateName);
-  for (  final ProcessingUnitInstance puInstance : instances) {
-    final String hostAddress=puInstance.getMachine().getHostAddress();
-    final String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
+  for (  ProcessingUnitInstance puInstance : instances) {
+    String hostAddress=puInstance.getMachine().getHostAddress();
+    String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
     try {
       executeDeleteRestRequest(puInstance,hostAddress,"/service/templates/internal/" + templateName);
     }
- catch (    final Exception e) {
+ catch (    Exception e) {
       failedToRemoveHosts.add(host);
       logger.log(Level.WARNING,"[removeTemplateFromRestInstances] - Failed to execute http request to " + host + ". Error: "+ e.getMessage(),e);
       continue;

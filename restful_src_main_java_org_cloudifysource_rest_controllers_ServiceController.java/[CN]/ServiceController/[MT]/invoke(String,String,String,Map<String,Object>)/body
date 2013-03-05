@@ -9,9 +9,9 @@
     return unavailableServiceError(absolutePuName);
   }
   if (permissionEvaluator != null) {
-    final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
   final Map<String,Object> invocationResult=new HashMap<String,Object>();

@@ -1,6 +1,6 @@
 {
   final List<Service> services=application.getServices();
-  for (  final Service service : services) {
+  for (  Service service : services) {
     validateTemplate(service);
   }
 }

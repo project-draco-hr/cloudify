@@ -1,9 +1,9 @@
 {
   logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
-  final List<ComputeTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
+  List<CloudTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
   logger.log(Level.FINE,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
-  final Map<String,String> failedToAddTemplates=new HashMap<String,String>();
-  final List<String> addedTemplates=new LinkedList<String>();
+  Map<String,String> failedToAddTemplates=new HashMap<String,String>();
+  List<String> addedTemplates=new LinkedList<String>();
   addTemplatesToCloudList(templatesFolder,cloudTemplatesHolders,addedTemplates,failedToAddTemplates);
   if (addedTemplates.isEmpty()) {
     logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates files from " + templatesFolder.getAbsolutePath());
@@ -11,18 +11,18 @@
  else {
     logger.log(Level.FINE,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
     try {
-      final File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
+      File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
       updateCloudTemplatesUploadPath(addedTemplates,localTemplatesDir);
     }
- catch (    final IOException e) {
+ catch (    IOException e) {
       logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
-      for (      final String templateName : addedTemplates) {
-        cloud.getCloudCompute().getTemplates().remove(templateName);
+      for (      String templateName : addedTemplates) {
+        cloud.getTemplates().remove(templateName);
         failedToAddTemplates.put(templateName,e.getMessage());
       }
     }
   }
-  final Map<String,Object> resultMap=new HashMap<String,Object>();
+  Map<String,Object> resultMap=new HashMap<String,Object>();
   resultMap.put(FAILED_TO_ADD_TEMPLATES_KEY,failedToAddTemplates);
   resultMap.put(SUCCESSFULLY_ADDED_TEMPLATES_KEY,addedTemplates);
   if (!failedToAddTemplates.isEmpty()) {

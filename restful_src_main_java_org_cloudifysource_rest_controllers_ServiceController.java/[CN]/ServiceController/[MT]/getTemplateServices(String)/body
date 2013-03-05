@@ -1,8 +1,8 @@
 {
-  final List<String> services=new LinkedList<String>();
-  final ProcessingUnits processingUnits=admin.getProcessingUnits();
-  for (  final ProcessingUnit processingUnit : processingUnits) {
-    final Properties puProps=processingUnit.getBeanLevelProperties().getContextProperties();
+  List<String> services=new LinkedList<String>();
+  ProcessingUnits processingUnits=admin.getProcessingUnits();
+  for (  ProcessingUnit processingUnit : processingUnits) {
+    Properties puProps=processingUnit.getBeanLevelProperties().getContextProperties();
     final String puTemplateName=puProps.getProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE);
     if (puTemplateName != null && puTemplateName.equals(templateName)) {
       services.add(processingUnit.getName());

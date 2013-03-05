@@ -32,8 +32,8 @@
     if (overridesFile != null) {
       final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
       final File propertiesFile=new File(workingProjectDir,propertiesFileName);
-      final FileAppender appender=new FileAppender("serviceFinalPropertiesFile.properties");
-      final LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
+      FileAppender appender=new FileAppender("serviceFinalPropertiesFile.properties");
+      LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
       filesToAppend.put(propertiesFile,"service proeprties file");
       filesToAppend.put(overridesFile,"service overrides file");
       appender.appendAll(propertiesFile,filesToAppend);
@@ -52,7 +52,7 @@
   if (service != null) {
     if (IsolationUtils.isGlobal(service) && IsolationUtils.isUseManagement(service)) {
       final String managementMachineTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
-      final ComputeDetails compute=service.getCompute();
+      ComputeDetails compute=service.getCompute();
       if (compute != null) {
         if (compute.getTemplate() != null && !compute.getTemplate().isEmpty()) {
           if (!compute.getTemplate().equals(managementMachineTemplateName)) {

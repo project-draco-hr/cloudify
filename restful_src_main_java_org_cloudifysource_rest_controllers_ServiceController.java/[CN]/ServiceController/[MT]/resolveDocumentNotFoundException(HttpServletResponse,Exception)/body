@@ -10,7 +10,7 @@
     }
  else {
       logger.log(Level.WARNING,"An unexpected error was thrown: " + e.getMessage(),e);
-      final Map<String,Object> restErrorMap=RestUtils.verboseErrorStatus(CloudifyErrorMessages.GENERAL_SERVER_ERROR.getName(),ExceptionUtils.getStackTrace(e),e.getMessage());
+      Map<String,Object> restErrorMap=RestUtils.verboseErrorStatus(CloudifyErrorMessages.GENERAL_SERVER_ERROR.getName(),ExceptionUtils.getStackTrace(e),e.getMessage());
       message=new ObjectMapper().writeValueAsString(restErrorMap);
     }
     final ServletOutputStream outputStream=response.getOutputStream();

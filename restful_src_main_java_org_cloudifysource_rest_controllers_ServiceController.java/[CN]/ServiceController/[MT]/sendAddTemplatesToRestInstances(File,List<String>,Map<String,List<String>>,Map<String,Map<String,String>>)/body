@@ -1,27 +1,27 @@
 {
-  final ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
+  ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
   logger.log(Level.INFO,"[sendAddTemplatesToRestInstances] - sending templates folder to " + instances.length + " instances.");
-  for (  final ProcessingUnitInstance puInstance : instances) {
-    final String hostAddress=puInstance.getMachine().getHostAddress();
-    final String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
+  for (  ProcessingUnitInstance puInstance : instances) {
+    String hostAddress=puInstance.getMachine().getHostAddress();
+    String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
     Map<String,Object> response;
     try {
       response=executePostRestRequest(templatesFolder,puInstance,"/service/templates/internal");
     }
- catch (    final Exception e) {
+ catch (    Exception e) {
       logger.log(Level.WARNING,"[sendAddTemplatesToRestInstances] - failed to execute http request to " + host + ". Error: "+ e,e);
-      final Map<String,String> expectedMap=new HashMap<String,String>();
-      for (      final String expectedTemplate : expectedTemplates) {
+      Map<String,String> expectedMap=new HashMap<String,String>();
+      for (      String expectedTemplate : expectedTemplates) {
         expectedMap.put(expectedTemplate,e.getMessage());
       }
       failedToAddTemplatesByHost.put(host,expectedMap);
       continue;
     }
-    @SuppressWarnings("unchecked") final Map<String,String> failedMap=(Map<String,String>)response.get(FAILED_TO_ADD_TEMPLATES_KEY);
+    @SuppressWarnings("unchecked") Map<String,String> failedMap=(Map<String,String>)response.get(FAILED_TO_ADD_TEMPLATES_KEY);
     if (!failedMap.isEmpty()) {
       failedToAddTemplatesByHost.put(host,failedMap);
     }
-    @SuppressWarnings("unchecked") final List<String> addedTemplates=(List<String>)response.get(SUCCESSFULLY_ADDED_TEMPLATES_KEY);
+    @SuppressWarnings("unchecked") List<String> addedTemplates=(List<String>)response.get(SUCCESSFULLY_ADDED_TEMPLATES_KEY);
     if (!addedTemplates.isEmpty()) {
       addedTemplatesByHost.put(host,addedTemplates);
     }
