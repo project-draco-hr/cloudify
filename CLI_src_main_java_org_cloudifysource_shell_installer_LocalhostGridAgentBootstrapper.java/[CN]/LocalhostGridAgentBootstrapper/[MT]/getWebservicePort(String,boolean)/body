@@ -1,7 +1,29 @@
 {
-  String port=System.getenv().get(portEnvVriable);
-  if (org.apache.commons.lang.StringUtils.isNotBlank(port)) {
-    return Integer.parseInt(port);
+  int port;
+  if (isLocalCloud) {
+    if (portEnvVriable.equals(CloudifyConstants.WEBUI_PORT_ENV_VAR)) {
+      if (isSecureConnection) {
+        port=CloudifyConstants.SECURE_WEBUI_PORT;
+      }
+ else {
+        port=CloudifyConstants.DEFAULT_WEBUI_PORT;
+      }
+    }
+ else {
+      if (isSecureConnection) {
+        port=CloudifyConstants.SECURE_REST_PORT;
+      }
+ else {
+        port=CloudifyConstants.DEFAULT_REST_PORT;
+      }
+    }
   }
-  throw new IllegalStateException("Could not find web-service port variable in environment");
+ else {
+    String portAsString=System.getenv().get(portEnvVriable);
+    if (org.apache.commons.lang.StringUtils.isBlank(portAsString)) {
+      throw new IllegalStateException("Could not find web-service port variable in environment");
+    }
+    port=Integer.parseInt(portAsString);
+  }
+  return port;
 }

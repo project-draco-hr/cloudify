@@ -1,7 +1,18 @@
 {
-  final String memoryString=System.getenv().get(memoryEnvironmentVar);
-  if (org.apache.commons.lang.StringUtils.isNotBlank(memoryString)) {
-    return memoryString;
+  String memoryString;
+  if (isLocalCloud) {
+    if (memoryEnvironmentVar.equals(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR)) {
+      memoryString=LOCALCLOUD_REST_MEMORY;
+    }
+ else {
+      memoryString=LOCALCLOUD_WEBUI_MEMORY;
+    }
   }
-  throw new IllegalStateException("Could not find web-service memory capacity variable in environment.");
+ else {
+    memoryString=System.getenv().get(memoryEnvironmentVar);
+    if (org.apache.commons.lang.StringUtils.isBlank(memoryString)) {
+      throw new IllegalStateException("Could not find web-service memory capacity variable in environment.");
+    }
+  }
+  return memoryString;
 }
