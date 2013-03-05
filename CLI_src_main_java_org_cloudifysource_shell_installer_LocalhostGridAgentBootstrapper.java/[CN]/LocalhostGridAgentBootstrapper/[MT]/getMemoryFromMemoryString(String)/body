@@ -1,3 +1,0 @@
-{
-  return Long.parseLong(memoryString.substring(0,memoryString.length() - 1));
-}

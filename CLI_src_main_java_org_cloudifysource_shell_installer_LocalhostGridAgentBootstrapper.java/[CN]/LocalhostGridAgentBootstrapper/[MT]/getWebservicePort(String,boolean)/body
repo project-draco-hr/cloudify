@@ -3,20 +3,5 @@
   if (org.apache.commons.lang.StringUtils.isNotBlank(port)) {
     return Integer.parseInt(port);
   }
-  if (portEnvVriable.equals(CloudifyConstants.WEBUI_PORT_ENV_VAR)) {
-    if (isSecureConnection) {
-      return CloudifyConstants.SECURE_WEBUI_PORT;
-    }
- else {
-      return CloudifyConstants.DEFAULT_WEBUI_PORT;
-    }
-  }
- else {
-    if (isSecureConnection) {
-      return CloudifyConstants.SECURE_REST_PORT;
-    }
- else {
-      return CloudifyConstants.DEFAULT_REST_PORT;
-    }
-  }
+  throw new IllegalStateException("Could not find web-service port variable in environment");
 }

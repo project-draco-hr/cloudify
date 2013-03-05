@@ -1,3 +1,6 @@
 {
+  if (!isNumeric(number)) {
+    throw new DSLValidationException("port range must be a number. found " + number);
+  }
   return Integer.parseInt(number);
 }

@@ -8,17 +8,10 @@
   final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
   String localCloudOptions="-Xmx" + CloudifyConstants.DEFAULT_LOCALCLOUD_GSA_GSM_ESM_LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
-  String gsaJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_AGENT_MAX_MEMORY;
-  if (gsaZones != null) {
-    gsaJavaOptions+=" -D" + ZONES_PROPERTY + "="+ gsaZones;
-  }
+  String gsaJavaOptions="";
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   }
-  String lusJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_LUS_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
-  String gsmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
-  String esmJavaOptions="-Xmx" + CloudifyConstants.DEFAULT_ESM_MAX_MEMORY + " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE;
-  String gscJavaOptions="";
   final Map<String,String> environment=pb.environment();
   if (lookupGroups != null) {
     environment.put("LOOKUPGROUPS",lookupGroups);
@@ -26,22 +19,12 @@
   if (lookupLocators != null) {
     final String disableMulticast="-Dcom.gs.multicast.enabled=false";
     environment.put("LOOKUPLOCATORS",lookupLocators);
-    gsaJavaOptions+=" " + disableMulticast;
-    lusJavaOptions+=" " + disableMulticast;
-    gsmJavaOptions+=" " + disableMulticast;
-    esmJavaOptions+=" " + disableMulticast;
-    gscJavaOptions+=" " + disableMulticast;
     localCloudOptions+=" " + disableMulticast;
   }
-  gsaJavaOptions+=" " + environment.get("GSA_JAVA_OPTIONS") == null ? "" : environment.get("GSA_JAVA_OPTIONS");
-  lusJavaOptions+=" " + environment.get("LUS_JAVA_OPTIONS") == null ? "" : environment.get("LUS_JAVA_OPTIONS");
-  gsmJavaOptions+=" " + environment.get("GSM_JAVA_OPTIONS") == null ? "" : environment.get("GSM_JAVA_OPTIONS");
-  esmJavaOptions+=" " + environment.get("ESM_JAVA_OPTIONS") == null ? "" : environment.get("ESM_JAVA_OPTIONS");
-  gscJavaOptions+=" " + environment.get("GSC_JAVA_OPTIONS") == null ? "" : environment.get("GSC_JAVA_OPTIONS");
+  gsaJavaOptions+=environment.get("GSA_JAVA_OPTIONS") == null ? "" : " " + environment.get("GSA_JAVA_OPTIONS");
   if (nicAddress != null) {
     environment.put("NIC_ADDR",nicAddress);
   }
-  environment.put("RMI_OPTIONS","");
   final String springProfiles=createSpringProfilesList(securityProfile);
   logger.fine("Setting env var " + CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR + " to: "+ springProfiles);
   environment.put(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR,springProfiles);
@@ -66,12 +49,8 @@
     }
   }
  else {
-    logger.fine("Setting env vars " + "GSA_JAVA_OPTIONS: gsaJavaOptions" + gsaJavaOptions + "; LUS_JAVA_OPTIONS: "+ lusJavaOptions+ "; GSM_JAVA_OPTIONS: "+ gsmJavaOptions+ "; ESM_JAVA_OPTIONS: "+ esmJavaOptions+ "; GSC_JAVA_OPTIONS: "+ gscJavaOptions);
+    logger.fine("Setting env vars " + "GSA_JAVA_OPTIONS:" + gsaJavaOptions);
     environment.put("GSA_JAVA_OPTIONS",gsaJavaOptions);
-    environment.put("LUS_JAVA_OPTIONS",lusJavaOptions);
-    environment.put("GSM_JAVA_OPTIONS",gsmJavaOptions);
-    environment.put("ESM_JAVA_OPTIONS",esmJavaOptions);
-    environment.put("GSC_JAVA_OPTIONS",gscJavaOptions);
   }
   try {
     logger.fine("Executing command: " + commandString);
