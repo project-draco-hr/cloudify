@@ -4,5 +4,7 @@
   initDeployer(cloud,computeTemplateName,storageTemplateName);
   publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
   novaContext=this.computeContext.unwrap();
+  computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
   storageTemplate=cloud.getCloudStorage().getTemplates().get(storageTemplateName);
+  region=getRegionFromHardwareId(computeTemplate.getHardwareId());
 }

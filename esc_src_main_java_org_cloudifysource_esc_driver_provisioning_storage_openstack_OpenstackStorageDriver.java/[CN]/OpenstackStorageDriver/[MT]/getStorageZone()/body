@@ -2,19 +2,19 @@
   String zone;
   Map<String,Object> customSettings=storageTemplate.getCustom();
   if (customSettings != null) {
-    Object zoneObj=customSettings.get(OPENSTACK_VOLUME_ZONE);
+    Object zoneObj=customSettings.get(OPENSTACK_CUSTOM_VOLUME_ZONE);
     if (zoneObj instanceof String) {
       zone=(String)zoneObj;
       if (StringUtils.isBlank(zone)) {
-        throw new IllegalArgumentException("Storate template custom property is missing or empty: " + OPENSTACK_VOLUME_ZONE);
+        throw new IllegalArgumentException("Storate template custom property is missing or empty: " + OPENSTACK_CUSTOM_VOLUME_ZONE);
       }
     }
  else {
-      throw new IllegalArgumentException("Storate template custom property \"" + OPENSTACK_VOLUME_ZONE + "\" must be of type String");
+      throw new IllegalArgumentException("Storate template custom property \"" + OPENSTACK_CUSTOM_VOLUME_ZONE + "\" is missing or not a String");
     }
   }
  else {
-    throw new IllegalArgumentException("Storate template is missing a \"custom\" section with the required " + "property \"" + OPENSTACK_VOLUME_ZONE + "\"");
+    throw new IllegalArgumentException("Storate template is missing a \"custom\" section with the required " + "property \"" + OPENSTACK_CUSTOM_VOLUME_ZONE + "\"");
   }
   return zone;
 }
