@@ -1,0 +1,3 @@
+{
+  executeCommandLine("sudo umount -d -v -l " + device,timeoutInMillis);
+}

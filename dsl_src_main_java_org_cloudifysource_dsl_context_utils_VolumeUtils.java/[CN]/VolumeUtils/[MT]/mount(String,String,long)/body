@@ -1,0 +1,6 @@
+{
+  File devicePath=new File(USER_HOME,path);
+  devicePath.mkdirs();
+  executeCommandLine("sudo mount " + device + " "+ USER_HOME+ path,timeoutInMillis);
+  executeCommandLine("sudo chown " + USER_NAME + " "+ devicePath.getAbsolutePath(),TEN_SECONDS);
+}

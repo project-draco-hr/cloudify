@@ -1,0 +1,4 @@
+{
+  output.add(line);
+  logger.info(line);
+}

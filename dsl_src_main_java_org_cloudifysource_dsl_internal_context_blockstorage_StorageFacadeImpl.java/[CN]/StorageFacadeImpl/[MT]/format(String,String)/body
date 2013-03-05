@@ -1,0 +1,7 @@
+{
+  validateNotWindows();
+  if (!serviceContext.isPrivileged()) {
+    throw new IllegalStateException("Cannot format when not running in privileged mode");
+  }
+  VolumeUtils.format(device,fileSystem);
+}

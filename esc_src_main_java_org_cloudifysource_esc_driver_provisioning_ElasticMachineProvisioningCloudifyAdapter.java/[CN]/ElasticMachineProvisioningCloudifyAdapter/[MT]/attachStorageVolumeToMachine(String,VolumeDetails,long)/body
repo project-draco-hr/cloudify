@@ -1,5 +1,0 @@
-{
-  long timeout=end - System.currentTimeMillis();
-  String volumeId=volumeDetails.getId();
-  this.storageProvisioning.attachVolume(volumeId,machineIp,timeout,TimeUnit.MILLISECONDS);
-}

@@ -1,0 +1,8 @@
+{
+  if (port == null) {
+    throw new DSLValidationException("LRMI port can't be null");
+  }
+  if (port <= MIN_PORT || port > MAX_MEMORY) {
+    throw new DSLValidationException("port must be set to a positive integer between" + " 1024 and 65535. Instead found " + port);
+  }
+}

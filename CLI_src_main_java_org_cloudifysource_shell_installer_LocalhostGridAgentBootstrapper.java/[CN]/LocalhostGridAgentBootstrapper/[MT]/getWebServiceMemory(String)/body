@@ -1,16 +1,7 @@
 {
-  long memory;
   final String memoryString=System.getenv().get(memoryEnvironmentVar);
   if (org.apache.commons.lang.StringUtils.isNotBlank(memoryString)) {
-    memory=getMemoryFromMemoryString(memoryString);
+    return memoryString;
   }
- else {
-    if (memoryEnvironmentVar.equals(CloudifyConstants.REST_MAX_MEMORY_ENVIRONMENT_VAR)) {
-      memory=getMemoryFromMemoryString(CloudifyConstants.DEFAULT_REST_MAX_MEMORY);
-    }
- else {
-      memory=getMemoryFromMemoryString(CloudifyConstants.DEFAULT_REST_MIN_MEMORY);
-    }
-  }
-  return memory;
+  throw new IllegalStateException("Could not find web-service memory capacity variable in environment.");
 }

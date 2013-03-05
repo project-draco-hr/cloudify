@@ -1,0 +1,8 @@
+{
+  try {
+    storageProvisioningDriver.attachVolume(volumeId,device,ip,DEFAULT_STORAGE_OPERATION_TIMEOUT,TimeUnit.MILLISECONDS);
+  }
+ catch (  final Exception e) {
+    throw new RemoteStorageOperationException("Failed attaching volume with id " + volumeId + " to instance with ip "+ ip+ " : "+ e.getMessage(),e);
+  }
+}

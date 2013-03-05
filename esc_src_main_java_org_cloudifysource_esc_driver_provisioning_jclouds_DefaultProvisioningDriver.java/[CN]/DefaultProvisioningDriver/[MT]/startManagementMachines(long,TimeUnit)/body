@@ -10,12 +10,8 @@
   }
   final MachineDetails[] existingManagementServers=getExistingManagementServers();
   if (existingManagementServers.length > 0) {
-    logger.info("Found existing servers matching the name: " + managementMachinePrefix);
-    for (    final MachineDetails machineDetails : existingManagementServers) {
-      final String existingManagementServerDescription=createManagementServerDescription(machineDetails);
-      logger.info(existingManagementServerDescription);
-    }
-    return existingManagementServers;
+    final String serverDescriptions=createExistingServersDescription(managementMachinePrefix,existingManagementServers);
+    throw new CloudProvisioningException("Found existing servers matching group " + managementMachinePrefix + ": "+ serverDescriptions);
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
   final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();

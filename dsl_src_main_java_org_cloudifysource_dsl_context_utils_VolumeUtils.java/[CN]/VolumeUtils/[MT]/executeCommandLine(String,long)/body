@@ -1,0 +1,20 @@
+{
+  Executor executor=new DefaultExecutor();
+  executor.setExitValue(0);
+  ExecuteWatchdog watchdog=new ExecuteWatchdog(timeout);
+  executor.setWatchdog(watchdog);
+  ProcessOutputStream outAndErr=new ProcessOutputStream();
+  try {
+    PumpStreamHandler streamHandler=new PumpStreamHandler(outAndErr);
+    executor.setStreamHandler(streamHandler);
+    logger.info("Executing commandLine : '" + commandLine + "'");
+    executor.execute(CommandLine.parse(commandLine));
+    logger.info("Execution completed succesfully. Process output was : " + outAndErr.getOutput());
+  }
+ catch (  final Exception e) {
+    if (watchdog.killedProcess()) {
+      throw new TimeoutException("Timed out while executing commandLine : '" + commandLine + "'");
+    }
+    throw new LocalStorageOperationException("Failed executing commandLine : '" + commandLine + ". Process output was : "+ outAndErr.getOutput(),e);
+  }
+}

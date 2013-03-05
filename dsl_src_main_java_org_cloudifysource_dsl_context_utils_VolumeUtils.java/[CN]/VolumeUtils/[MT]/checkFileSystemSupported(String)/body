@@ -1,0 +1,20 @@
+{
+  FileSystem[] fileSystemList=null;
+  try {
+    Sigar sigar=SigarHolder.getSigar();
+    fileSystemList=sigar.getFileSystemList();
+  }
+ catch (  final SigarException e) {
+    throw new LocalStorageOperationException(e);
+  }
+  List<String> supportedFileSystems=new ArrayList<String>();
+  for (  FileSystem fs : fileSystemList) {
+    if (fileSystem.equalsIgnoreCase(fs.getSysTypeName())) {
+      return;
+    }
+ else {
+      supportedFileSystems.add(fs.getSysTypeName());
+    }
+  }
+  throw new LocalStorageOperationException("File system type " + fileSystem + " is not supported for the current operating system. Supported File Systems are : "+ StringUtils.join(supportedFileSystems,","));
+}

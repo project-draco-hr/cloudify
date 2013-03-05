@@ -1,0 +1,4 @@
+{
+  this.serviceContext=serviceContext;
+  this.remoteStorageProvisioningDriver=storageApi;
+}

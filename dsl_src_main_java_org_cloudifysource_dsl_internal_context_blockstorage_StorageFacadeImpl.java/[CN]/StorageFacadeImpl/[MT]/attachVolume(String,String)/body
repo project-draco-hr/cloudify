@@ -1,0 +1,10 @@
+{
+  validateNotWindows();
+  remoteStorageProvisioningDriver.attachVolume(volumeId,device,serviceContext.getBindedAddress());
+  try {
+    Thread.sleep(AFTER_ATTACH_TIMEOUT);
+  }
+ catch (  InterruptedException e) {
+    throw new LocalStorageOperationException(e);
+  }
+}

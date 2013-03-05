@@ -1,5 +1,0 @@
-{
-  if (this.portRange == null) {
-    throw new DSLValidationException("LRMI port range can't be null");
-  }
-}

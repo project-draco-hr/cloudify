@@ -1,0 +1,36 @@
+{
+  final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
+  final VolumeDetails volumeDetails=new VolumeDetails();
+  Volume volume;
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
+  if (!volumeApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to create volume, Openstack API is not initialized.");
+  }
+  if (computeContext == null) {
+    throw new StorageProvisioningException("Failed to create volume, compute context is not initialized.");
+  }
+  StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(templateName);
+  String volumeName=storageTemplate.getNamePrefix() + System.currentTimeMillis();
+  CreateVolumeOptions options=CreateVolumeOptions.Builder.name(volumeName).description(VOLUME_DESCRIPTION).availabilityZone(getStorageZone(templateName));
+  volume=volumeApi.get().create(storageTemplate.getSize(),options);
+  try {
+    waitForVolumeToReachStatus(Volume.Status.AVAILABLE,volumeApi,volume.getId(),endTime);
+    volume=volumeApi.get().get(volume.getId());
+    volumeDetails.setId(volume.getId());
+    volumeDetails.setName(volume.getName());
+    volumeDetails.setSize(volume.getSize());
+    volumeDetails.setLocation(volume.getZone());
+    logger.fine("Volume provisioned: " + volumeDetails.toString());
+  }
+ catch (  final Exception e) {
+    logger.log(Level.WARNING,"volume: " + volume.getId() + " failed to start up correctly. Shutting it down."+ " Error was: "+ e.getMessage(),e);
+    try {
+      deleteVolume(region,volume.getId(),duration,timeUnit);
+    }
+ catch (    final Exception e2) {
+      logger.log(Level.WARNING,"Error while deleting volume: " + volume.getId() + ". Error was: "+ e.getMessage()+ ". It may be leaking.",e);
+    }
+    throw new StorageProvisioningException(e);
+  }
+  return volumeDetails;
+}

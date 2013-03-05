@@ -64,16 +64,8 @@
     checkForProvisioningTimeout(end,machineDetails);
     if (isStorageTemplateUsed()) {
       String machineLocation=machineDetails.getLocationId();
-      VolumeDetails volumeDetails=startNewStorageVolume(machineLocation,end);
-      volumeId=volumeDetails.getId();
-      try {
-        attachStorageVolumeToMachine(machineIp,volumeDetails,end);
-      }
- catch (      Exception e) {
-        logger.log(Level.WARNING,"Failed attaching volume. Error was " + e.getMessage(),e);
-        handleVolumeAttachException(volumeDetails);
-        throw new StorageProvisioningException(e);
-      }
+      volumeId=startNewStorageVolume(machineLocation,end);
+      attachStorageVolumeToMachine(machineIp,volumeId,end);
       StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(this.storageTemplateName);
       String formatType=storageTemplate.getFileSystemType();
       String mountPath=storageTemplate.getPath();

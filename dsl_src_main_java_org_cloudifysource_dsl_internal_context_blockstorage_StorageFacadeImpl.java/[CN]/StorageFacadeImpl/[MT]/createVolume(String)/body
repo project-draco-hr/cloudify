@@ -1,0 +1,3 @@
+{
+  return remoteStorageProvisioningDriver.createVolume(templateName,serviceContext.getLocationId());
+}
