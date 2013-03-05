@@ -17,7 +17,13 @@
   final Map<Integer,String> instanceMap=new HashMap<Integer,String>();
   final ProcessingUnitInstance[] instances=pu.getInstances();
   for (  final ProcessingUnitInstance instance : instances) {
-    instanceMap.put(instance.getInstanceId(),instance.getVirtualMachine().getMachine().getHostName());
+    final String publicIp=instance.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP);
+    final String host=instance.getVirtualMachine().getMachine().getHostName();
+    String description=host;
+    if (publicIp != null) {
+      description+="/" + publicIp;
+    }
+    instanceMap.put(instance.getInstanceId(),description);
   }
   return successStatus(instanceMap);
 }
