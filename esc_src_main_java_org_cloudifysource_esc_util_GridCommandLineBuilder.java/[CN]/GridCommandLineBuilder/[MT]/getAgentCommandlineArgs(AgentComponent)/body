@@ -1,6 +1,5 @@
 {
-  String agentCommandLineArgs="-Xmx" + CloudifyConstants.DEFAULT_AGENT_MAX_MEMORY;
-  agentCommandLineArgs+=" -D" + ZONES_PROPERTY + "="+ MANAGEMENT_ZONE;
+  String agentCommandLineArgs="-D" + ZONES_PROPERTY + "="+ MANAGEMENT_ZONE;
   agentCommandLineArgs+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   agentCommandLineArgs+=" ";
   Integer agentPort=agent.getPort();

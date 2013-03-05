@@ -1,5 +1,5 @@
 {
-  String gsmCommandLineArgs="-Xmx" + CloudifyConstants.DEFAULT_GSM_MAX_MEMORY + " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ CloudifyConstants.DEFAULT_LUS_PORT+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
+  String gsmCommandLineArgs="-D" + CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY + "="+ CloudifyConstants.DEFAULT_LUS_PORT+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " -D"+ ZONES_PROPERTY+ "="+ MANAGEMENT_ZONE+ " "+ GSM_PENDING_REQUESTS_DELAY;
   Integer websterPort=deployer.getWebsterPort();
   if (websterPort != null) {
     gsmCommandLineArgs+=" -D" + CloudifyConstants.GSM_HTTP_PORT_CONTEXT_PROPERTY + "="+ websterPort;

@@ -1,6 +1,6 @@
 {
-  this.setMaxMemory(CloudifyConstants.DEFAULT_GSM_MAX_MEMORY);
-  this.setMinMemory(CloudifyConstants.DEFAULT_GSM_MIN_MEMORY);
-  this.setWebsterPort(CloudifyConstants.DEFAULT_GSM_WEBSTER_PORT);
-  this.setPort(CloudifyConstants.DEFAULT_GSM_LRMI_PORT);
+  this.setMaxMemory("128m");
+  this.setMinMemory("128m");
+  this.setWebsterPort(6666);
+  this.setPort(7000);
 }
