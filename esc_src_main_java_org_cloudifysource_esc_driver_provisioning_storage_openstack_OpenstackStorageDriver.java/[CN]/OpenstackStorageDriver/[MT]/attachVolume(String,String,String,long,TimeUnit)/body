@@ -10,7 +10,7 @@
     throw new StorageProvisioningException("Failed to attach volume " + volumeId + ", Openstack API is not initialized.");
   }
   logger.fine("Attaching volume on Openstack");
-  volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getProviderId(),storageTemplate.getDeviceName());
+  volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getProviderId(),device);
   try {
     waitForVolumeToReachStatus(Volume.Status.IN_USE,volumeApi,volumeId,endTime);
     logger.fine("Volume " + volumeId + " attached successfully to machine : "+ machineIp);
