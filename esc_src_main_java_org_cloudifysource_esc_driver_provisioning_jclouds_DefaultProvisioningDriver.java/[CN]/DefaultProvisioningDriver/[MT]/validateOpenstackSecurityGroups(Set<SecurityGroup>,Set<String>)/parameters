@@ -1,0 +1,2 @@
+Set<SecurityGroup> novaSecurityGroups
+Set<String> securityGroups

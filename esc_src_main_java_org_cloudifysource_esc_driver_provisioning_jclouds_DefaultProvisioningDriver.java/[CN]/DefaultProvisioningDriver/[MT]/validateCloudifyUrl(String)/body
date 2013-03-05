@@ -1,0 +1,16 @@
+{
+  DefaultHttpClient httpClient=new DefaultHttpClient();
+  final HttpHead httpMethod=new HttpHead(cloudifyUrl);
+  try {
+    HttpResponse response=httpClient.execute(httpMethod);
+    if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+      throw new CloudProvisioningException("Invalid cloudify URL: " + cloudifyUrl);
+    }
+  }
+ catch (  ClientProtocolException e) {
+    e.printStackTrace();
+  }
+catch (  IOException e) {
+    e.printStackTrace();
+  }
+}

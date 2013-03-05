@@ -1,0 +1,16 @@
+{
+  if (apiId.equalsIgnoreCase(EC2)) {
+    RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+    validateEc2SecurityGroups(unwrapped.getApi().getSecurityGroupServices(),securityGroupsByRegions);
+  }
+ else   if (apiId.equalsIgnoreCase(OPENSTACK)) {
+  }
+ else   if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
+    RestContext<CloudStackClient,CloudStackAsyncClient> unwrapped=computeServiceContext.unwrap();
+    validateCloudstackSecurityGroups(unwrapped.getApi().getSecurityGroupClient(),aggregateAllValues(securityGroupsByRegions));
+  }
+ else   if (apiId.equalsIgnoreCase(VCLOUD)) {
+  }
+ else {
+  }
+}

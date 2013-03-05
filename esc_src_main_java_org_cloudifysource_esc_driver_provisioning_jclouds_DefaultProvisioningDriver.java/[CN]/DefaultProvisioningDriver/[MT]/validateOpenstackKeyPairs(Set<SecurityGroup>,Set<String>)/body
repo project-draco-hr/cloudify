@@ -1,0 +1,21 @@
+{
+  Set<String> missingKeyPairs=new HashSet<String>();
+  for (  String securityGroupName : securityGroups) {
+    boolean groupFound=false;
+    for (    SecurityGroup novaSecurityGroup : novaSecurityGroups) {
+      if (novaSecurityGroup.getName().equals(securityGroupName)) {
+        groupFound=true;
+        break;
+      }
+    }
+    if (!groupFound) {
+      missingKeyPairs.add(securityGroupName);
+    }
+  }
+  if (missingKeyPairs.size() == 1) {
+    throw new CloudProvisioningException("Invalid key-pair name: " + missingKeyPairs.iterator().next());
+  }
+ else   if (missingKeyPairs.size() > 1) {
+    throw new CloudProvisioningException("Invalid key-pair names: " + Arrays.toString(missingKeyPairs.toArray()));
+  }
+}

@@ -1,0 +1,11 @@
+{
+  Set<String> supportedHardwareIds=new HashSet<String>();
+  for (  Hardware hardware : supportedHardwareProfiles) {
+    supportedHardwareIds.add(hardware.getId());
+  }
+  Set<String> missingHardwareIds=new HashSet<String>(usedHardwareIds);
+  missingHardwareIds.removeAll(supportedHardwareIds);
+  if (!missingHardwareIds.isEmpty()) {
+    throw new CloudProvisioningException("One or more of the hardware IDs are invalid: " + Arrays.toString(missingHardwareIds.toArray()));
+  }
+}

@@ -1,0 +1,18 @@
+{
+  Set<String> missingKeyPairs=new HashSet<String>();
+  for (  Entry<String,Set<String>> mapEntry : keyPairsByRegions.entrySet()) {
+    String region=mapEntry.getKey();
+    for (    String keyPairName : mapEntry.getValue()) {
+      Set<KeyPair> foundKeyPairs=ec2KeyPairClient.describeKeyPairsInRegion(region,keyPairName);
+      if (foundKeyPairs == null || foundKeyPairs.size() == 0 || foundKeyPairs.iterator().next() == null) {
+        missingKeyPairs.add(keyPairName);
+      }
+    }
+  }
+  if (missingKeyPairs.size() == 1) {
+    throw new CloudProvisioningException("Invalid key-pair name: " + missingKeyPairs.iterator().next());
+  }
+ else   if (missingKeyPairs.size() > 1) {
+    throw new CloudProvisioningException("Invalid key-pair names: " + Arrays.toString(missingKeyPairs.toArray()));
+  }
+}

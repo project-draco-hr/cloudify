@@ -1,0 +1,14 @@
+{
+  Set<String> missingKeyPairs=new HashSet<String>();
+  for (  String keyPairName : keyPairs) {
+    if (keyPairClient.getSSHKeyPair(keyPairName) == null) {
+      missingKeyPairs.add(keyPairName);
+    }
+  }
+  if (missingKeyPairs.size() == 1) {
+    throw new CloudProvisioningException("Invalid key-pair name: " + missingKeyPairs.iterator().next());
+  }
+ else   if (missingKeyPairs.size() > 1) {
+    throw new CloudProvisioningException("Invalid key-pair names: " + Arrays.toString(missingKeyPairs.toArray()));
+  }
+}

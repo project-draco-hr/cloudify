@@ -1,3 +1,5 @@
 {
-  deployer.close();
+  if (deployer != null) {
+    deployer.close();
+  }
 }

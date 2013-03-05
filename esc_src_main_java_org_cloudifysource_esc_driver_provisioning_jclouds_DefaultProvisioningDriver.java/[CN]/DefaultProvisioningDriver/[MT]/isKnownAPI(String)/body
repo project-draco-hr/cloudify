@@ -1,0 +1,7 @@
+{
+  boolean supported=false;
+  if (apiName.equalsIgnoreCase(EC2) || apiName.equalsIgnoreCase(VCLOUD) || apiName.equalsIgnoreCase(OPENSTACK)|| apiName.equalsIgnoreCase(CLOUDSTACK)) {
+    supported=true;
+  }
+  return supported;
+}

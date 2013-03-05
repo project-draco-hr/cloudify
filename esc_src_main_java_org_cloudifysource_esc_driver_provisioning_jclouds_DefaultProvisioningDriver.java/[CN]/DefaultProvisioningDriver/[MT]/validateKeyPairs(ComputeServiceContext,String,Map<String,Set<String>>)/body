@@ -1,0 +1,17 @@
+{
+  if (apiId.equalsIgnoreCase(EC2)) {
+    RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+    validateEc2KeyPairs(unwrapped.getApi().getKeyPairServices(),securityGroupsByRegions);
+  }
+ else   if (apiId.equalsIgnoreCase(OPENSTACK)) {
+    RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
+  }
+ else   if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
+    RestContext<CloudStackClient,CloudStackAsyncClient> unwrapped=computeServiceContext.unwrap();
+    validateCloudstackKeyPairs(unwrapped.getApi().getSSHKeyPairClient(),aggregateAllValues(securityGroupsByRegions));
+  }
+ else   if (apiId.equalsIgnoreCase(VCLOUD)) {
+  }
+ else {
+  }
+}

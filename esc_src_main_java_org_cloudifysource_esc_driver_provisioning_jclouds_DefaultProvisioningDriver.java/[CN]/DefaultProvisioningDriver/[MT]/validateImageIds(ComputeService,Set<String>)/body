@@ -1,0 +1,11 @@
+{
+  Set<String> missingImageIds=new HashSet<String>();
+  for (  String imageId : usedImageIds) {
+    if (computeService.getImage(imageId) == null) {
+      missingImageIds.add(imageId);
+    }
+  }
+  if (!missingImageIds.isEmpty()) {
+    throw new CloudProvisioningException("One or more of the image IDs are invalid: " + Arrays.toString(missingImageIds.toArray()));
+  }
+}
