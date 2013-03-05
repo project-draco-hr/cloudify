@@ -1,8 +1,10 @@
 {
+  final JavaType javaType=TypeFactory.type(Map.class);
+  final ObjectMapper mapper=new ObjectMapper();
   try {
-    return GSRestClient.jsonToMap(attributes);
+    return (Map<String,String>)mapper.readValue(attributes,javaType);
   }
- catch (  ErrorStatusException e) {
-    throw new CLIStatusException(e.getReasonCode(),e.getArgs());
+ catch (  IOException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.CLIENT_JSON_PARSE_ERROR.getName(),attributes,e.getMessage());
   }
 }
