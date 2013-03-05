@@ -1,4 +1,4 @@
-CloudTemplate serverTemplate
+ComputeTemplate serverTemplate
 String key
 String defaultValue
 boolean allowNull

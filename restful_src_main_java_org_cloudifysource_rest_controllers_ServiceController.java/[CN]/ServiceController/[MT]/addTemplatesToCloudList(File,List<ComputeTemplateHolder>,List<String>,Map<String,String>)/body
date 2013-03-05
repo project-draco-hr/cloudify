@@ -1,8 +1,8 @@
 {
-  for (  CloudTemplateHolder holder : cloudTemplates) {
+  for (  ComputeTemplateHolder holder : cloudTemplates) {
     String templateName=holder.getName();
     String originalTemplateFileName=holder.getTemplateFileName();
-    if (cloud.getTemplates().containsKey(templateName)) {
+    if (cloud.getCloudCompute().getTemplates().containsKey(templateName)) {
       logger.log(Level.WARNING,"[addTemplatesToCloudList] - Template already exists: " + templateName);
       failedToAddTemplates.put(templateName,"template already exists");
       new File(templatesFolder,originalTemplateFileName).delete();
@@ -17,8 +17,8 @@
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
     }
-    CloudTemplate cloudTemplate=holder.getCloudTemplate();
-    cloud.getTemplates().put(templateName,cloudTemplate);
+    ComputeTemplate cloudTemplate=holder.getCloudTemplate();
+    cloud.getCloudCompute().getTemplates().put(templateName,cloudTemplate);
     addedTemplates.add(templateName);
   }
 }

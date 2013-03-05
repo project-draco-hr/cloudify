@@ -3,12 +3,12 @@
   this.cloud=readCloud();
   if (cloud != null) {
     initCloudTemplates();
-    if (this.cloud.getTemplates().isEmpty()) {
+    if (this.cloud.getCloudCompute().getTemplates().isEmpty()) {
       throw new IllegalArgumentException("No templates defined in cloud configuration!");
     }
-    this.defaultTemplateName=this.cloud.getTemplates().keySet().iterator().next();
+    this.defaultTemplateName=this.cloud.getCloudCompute().getTemplates().keySet().iterator().next();
     logger.info("Setting default template name to: " + defaultTemplateName + ". This template will be used for services that do not specify an explicit template");
-    this.managementTemplate=this.cloud.getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
+    this.managementTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
   }
  else {
     logger.info("Service Controller is running in local cloud mode");
