@@ -1,0 +1,3 @@
+{
+  return getApplication(appName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
+}

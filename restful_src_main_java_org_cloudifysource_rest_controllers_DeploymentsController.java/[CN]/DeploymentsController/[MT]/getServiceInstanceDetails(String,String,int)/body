@@ -1,0 +1,24 @@
+{
+  ProcessingUnitInstance pui=getServiceInstance(appName,serviceName,instanceId);
+  org.openspaces.pu.service.ServiceDetails usmDetails=pui.getServiceDetailsByServiceId("USM");
+  Map<String,Object> puiAttributes=usmDetails.getAttributes();
+  final String privateIp=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP);
+  final String publicIp=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP);
+  final String hardwareId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID);
+  final String machineId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID);
+  final String imageId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_IMAGE_ID);
+  final String templateName=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
+  ServiceInstanceDetails sid=new ServiceInstanceDetails();
+  sid.setApplicationName(appName);
+  sid.setServiceName(serviceName);
+  sid.setServiceInstanceName(pui.getName());
+  sid.setHardwareId(hardwareId);
+  sid.setImageId(imageId);
+  sid.setInstanceId(instanceId);
+  sid.setMachineId(machineId);
+  sid.setPrivateIp(privateIp);
+  sid.setProcessDetails(puiAttributes);
+  sid.setPublicIp(publicIp);
+  sid.setTemplateName(templateName);
+  return sid;
+}

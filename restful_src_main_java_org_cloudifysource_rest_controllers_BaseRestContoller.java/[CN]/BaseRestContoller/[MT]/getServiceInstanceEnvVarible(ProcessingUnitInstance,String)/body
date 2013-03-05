@@ -1,0 +1,6 @@
+{
+  if (StringUtils.isNotBlank(variable)) {
+    return serviceInstance.getVirtualMachine().getDetails().getEnvironmentVariables().get(variable);
+  }
+  return null;
+}

@@ -7,7 +7,7 @@
   deleteServiceInstanceAttributeResponse.setAttributeLastValue(value);
   Response<DeleteServiceInstanceAttributeResponse> response=new Response<DeleteServiceInstanceAttributeResponse>();
   response.setMessageId(CloudifyMessageKeys.ATTRIBUTE_DELETED_SUCCESSFULLY.getName());
-  response.setMessage(messageSource.getMessage(CloudifyMessageKeys.ATTRIBUTE_DELETED_SUCCESSFULLY.getName(),new Object[]{attributeName},Locale.getDefault()));
+  response.setMessage(messageSource.getMessage(CloudifyMessageKeys.ATTRIBUTE_DELETED_SUCCESSFULLY.getName(),new Object[]{attributeName},Locale.US));
   response.setResponse(deleteServiceInstanceAttributeResponse);
   return response;
 }

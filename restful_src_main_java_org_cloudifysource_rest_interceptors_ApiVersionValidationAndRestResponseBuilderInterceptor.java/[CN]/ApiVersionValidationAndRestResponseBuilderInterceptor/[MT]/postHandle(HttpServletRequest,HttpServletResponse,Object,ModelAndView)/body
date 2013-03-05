@@ -10,7 +10,7 @@
     Response<Object> responseBodyObj=new Response<Object>();
     responseBodyObj.setResponse(model);
     responseBodyObj.setStatus("Success");
-    responseBodyObj.setMessage(messageSource.getMessage(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName(),new Object[]{},Locale.getDefault()));
+    responseBodyObj.setMessage(messageSource.getMessage(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName(),new Object[]{},Locale.US));
     responseBodyObj.setMessageId(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName());
     String responseBodyStr=new ObjectMapper().writeValueAsString(responseBodyObj);
     response.getOutputStream().write(responseBodyStr.getBytes());

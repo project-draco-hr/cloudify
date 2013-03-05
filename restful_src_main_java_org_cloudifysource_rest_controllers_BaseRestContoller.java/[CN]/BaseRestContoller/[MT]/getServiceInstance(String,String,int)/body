@@ -1,0 +1,5 @@
+{
+  Application application=getApplication(appName);
+  ProcessingUnit processingUnit=getService(application,appName,serviceName);
+  return getServiceInstance(processingUnit,instanceId);
+}

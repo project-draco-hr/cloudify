@@ -1,0 +1,4 @@
+{
+  Application application=getApplication(appName);
+  return getService(application,appName,serviceName);
+}
