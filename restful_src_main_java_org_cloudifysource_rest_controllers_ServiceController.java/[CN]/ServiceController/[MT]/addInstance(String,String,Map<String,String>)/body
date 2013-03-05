@@ -10,9 +10,9 @@
     return unavailableServiceError(absolutePuName);
   }
   if (permissionEvaluator != null) {
-    String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
-    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-    CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
   final int before=processingUnit.getNumberOfInstances();

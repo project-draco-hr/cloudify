@@ -1,10 +1,10 @@
 {
   Object response=null;
-  String hostAddress=puInstance.getMachine().getHostAddress();
-  String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
-  String port=Integer.toString(puInstance.getJeeDetails().getPort());
-  GSRestClient restClient=createRestClient(hostAddress,port,"","");
-  Map<String,File> fileMap=new HashMap<String,File>();
+  final String hostAddress=puInstance.getMachine().getHostAddress();
+  final String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
+  final String port=Integer.toString(puInstance.getJeeDetails().getPort());
+  final GSRestClient restClient=createRestClient(hostAddress,port,"","");
+  final Map<String,File> fileMap=new HashMap<String,File>();
   fileMap.put(CloudifyConstants.TEMPLATES_DIR_PARAM_NAME,templatesFolder);
   response=restClient.postFiles(relativeUrl,null,null,fileMap);
   if (!(response instanceof Map)) {

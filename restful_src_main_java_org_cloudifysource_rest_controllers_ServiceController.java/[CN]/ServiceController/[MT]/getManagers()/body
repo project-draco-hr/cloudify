@@ -1,0 +1,5 @@
+{
+  final ProcessingUnitInstance[] instances=getManagementInstances();
+  final ControllerDetails[] controllers=createControllerDetails(instances);
+  return successStatus(controllers);
+}

@@ -19,7 +19,7 @@
     final ComputeTemplate template=getComputeTemplate(cloud,templateName);
     validateAndPrepareStatefulSla(serviceName,dataGridConfig.getSla(),cloud,template);
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory(cloud,template);
-    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),"");
+    final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),null);
     config.setAuthGroups(authGroups);
     if (cloudOverrides != null) {
       config.setCloudOverridesPerService(cloudOverrides);

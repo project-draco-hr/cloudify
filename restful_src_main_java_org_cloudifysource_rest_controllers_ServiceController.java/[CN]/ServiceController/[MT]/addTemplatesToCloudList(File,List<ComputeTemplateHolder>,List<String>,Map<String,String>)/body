@@ -11,7 +11,7 @@
     try {
       renameTemplateFileIfNeeded(templatesFolder,holder);
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       logger.log(Level.WARNING,"[addTemplatesToCloudList] - Failed to rename template's file, template: " + templateName + ", error: "+ e.getMessage(),e);
       failedToAddTemplates.put(templateName,"failed to rename template's file. error: " + e.getMessage());
       new File(templatesFolder,originalTemplateFileName).delete();
