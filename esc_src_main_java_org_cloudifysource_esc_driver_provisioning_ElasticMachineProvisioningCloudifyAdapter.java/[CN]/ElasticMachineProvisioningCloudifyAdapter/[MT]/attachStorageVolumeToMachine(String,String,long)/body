@@ -1,4 +1,5 @@
 {
+  logger.log(Level.INFO,"Attaching volume with id " + volumeId + " to machine with ip "+ machineIp);
   long timeout=end - System.currentTimeMillis();
   this.storageProvisioning.attachVolume(volumeId,cloud.getCloudStorage().getTemplates().get(storageTemplateName).getDeviceName(),machineIp,timeout,TimeUnit.MILLISECONDS);
 }
