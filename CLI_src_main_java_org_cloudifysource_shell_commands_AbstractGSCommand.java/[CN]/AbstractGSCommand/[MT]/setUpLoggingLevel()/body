@@ -1,0 +1,10 @@
+{
+  final Handler handler=getConsoleHandler();
+  initDefaultLoggingLevel(handler);
+  if (this.verbose) {
+    handler.setLevel(defaultLoggingLevel);
+  }
+ else {
+    handler.setLevel(Level.WARNING);
+  }
+}

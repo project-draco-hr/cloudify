@@ -1,0 +1,5 @@
+{
+  if (defaultLoggingLevel == null) {
+    defaultLoggingLevel=handler.getLevel();
+  }
+}

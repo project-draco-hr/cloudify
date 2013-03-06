@@ -1,4 +1,5 @@
 {
+  setUpLoggingLevel();
   this.session=session;
   messages=ShellUtils.getMessageBundle();
   try {
