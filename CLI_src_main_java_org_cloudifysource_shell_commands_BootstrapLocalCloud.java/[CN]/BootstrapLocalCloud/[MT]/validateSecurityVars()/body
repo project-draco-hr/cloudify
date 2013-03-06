@@ -1,5 +1,5 @@
 {
-  if (securityProfile.equalsIgnoreCase(CloudifyConstants.SPRING_PROFILE_NON_SECURE)) {
+  if (!ShellUtils.isSecureConnection(securityProfile)) {
     securityFilePath=new File(DEFAULT_SECURITY_FILE_PATH).getCanonicalPath();
   }
  else {
