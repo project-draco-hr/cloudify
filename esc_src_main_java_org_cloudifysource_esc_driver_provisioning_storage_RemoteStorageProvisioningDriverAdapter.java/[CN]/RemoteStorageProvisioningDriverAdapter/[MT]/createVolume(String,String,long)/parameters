@@ -1,0 +1,3 @@
+String templateName
+String locationId
+long timeoutInMillis

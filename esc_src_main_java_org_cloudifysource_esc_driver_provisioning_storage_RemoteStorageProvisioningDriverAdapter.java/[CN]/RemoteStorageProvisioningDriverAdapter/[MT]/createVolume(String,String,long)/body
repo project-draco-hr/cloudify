@@ -1,0 +1,9 @@
+{
+  try {
+    VolumeDetails volumeDetails=storageProvisioningDriver.createVolume(templateName,locationId,timeoutInMillis,TimeUnit.MILLISECONDS);
+    return volumeDetails.getId();
+  }
+ catch (  final StorageProvisioningException e) {
+    throw new RemoteStorageOperationException("Failed creating volume in location " + locationId + " : "+ e.getMessage(),e);
+  }
+}
