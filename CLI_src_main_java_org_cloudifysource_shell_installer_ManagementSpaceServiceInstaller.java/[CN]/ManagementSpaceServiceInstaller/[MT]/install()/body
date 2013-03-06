@@ -4,14 +4,16 @@
   }
   final File puFile=getManagementSpacePUFile();
   final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(puFile).name(serviceName).memoryCapacityPerContainer(memoryInMB,MemoryUnit.MEGABYTES).highlyAvailable(highlyAvailable).numberOfPartitions(1).sharedMachineProvisioning("public",new DiscoveredMachineProvisioningConfigurer().addGridServiceAgentZone(agentZone).reservedMemoryCapacityPerMachine(RESERVED_MEMORY_IN_MB,MemoryUnit.MEGABYTES).create()).scale(new EagerScaleConfigurer().atMostOneContainerPerMachine().create()).addCommandLineArgument(this.lrmiCommandLineArgument);
-  if (this.persistentStoragePath != null) {
-    deployment.addCommandLineArgument("-Dspring.profiles.active=persistent");
-  }
   for (  final Entry<Object,Object> prop : getContextProperties().entrySet()) {
     deployment.addContextProperty(prop.getKey().toString(),prop.getValue().toString());
   }
   for (  final String requiredPUName : dependencies) {
     deployment.addDependencies(new ProcessingUnitDeploymentDependenciesConfigurer().dependsOnMinimumNumberOfDeployedInstancesPerPartition(requiredPUName,1).create());
   }
-  getGridServiceManager().deploy(deployment);
+  try {
+    getGridServiceManager().deploy(deployment);
+  }
+ catch (  final ProcessingUnitAlreadyDeployedException e) {
+    logger.warning("Deployment of management space failed because a Processing unit with the " + "same name already exists. If this error occured during recovery of management machines, " + "this error is normal and can be ignored.");
+  }
 }

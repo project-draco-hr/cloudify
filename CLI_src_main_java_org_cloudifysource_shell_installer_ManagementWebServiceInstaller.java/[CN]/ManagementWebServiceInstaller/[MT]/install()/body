@@ -9,5 +9,10 @@
   for (  final String requiredPUName : dependencies) {
     deployment.addDependencies(new ProcessingUnitDeploymentDependenciesConfigurer().dependsOnMinimumNumberOfDeployedInstancesPerPartition(requiredPUName,1).create());
   }
-  getGridServiceManager().deploy(deployment);
+  try {
+    getGridServiceManager().deploy(deployment);
+  }
+ catch (  final ProcessingUnitAlreadyDeployedException e) {
+    logger.warning("Deployment of " + serviceName + " failed because a Processing unit with the "+ "same name already exists. If this error occured during recovery of management machines, "+ "this error is normal and can be ignored.");
+  }
 }
