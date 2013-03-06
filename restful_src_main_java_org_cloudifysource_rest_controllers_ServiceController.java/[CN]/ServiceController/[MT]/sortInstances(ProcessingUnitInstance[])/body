@@ -1,0 +1,27 @@
+{
+  Sigar sigar=SigarHolder.getSigar();
+  final long myPid=sigar.getPid();
+  logger.fine("PID of current process is: " + myPid);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Original Order is: ");
+    for (    ProcessingUnitInstance instance : instances) {
+      logger.fine(instance.getMachine().getHostAddress());
+    }
+  }
+  Arrays.sort(instances,new Comparator<ProcessingUnitInstance>(){
+    @Override public int compare(    final ProcessingUnitInstance o1,    final ProcessingUnitInstance o2){
+      final long pid1=o1.getGridServiceContainer().getVirtualMachine().getDetails().getPid();
+      final long pid2=o2.getGridServiceContainer().getVirtualMachine().getDetails().getPid();
+      if (pid1 == myPid) {
+        return 1;
+      }
+ else       if (pid2 == myPid) {
+        return -1;
+      }
+ else {
+        return 0;
+      }
+    }
+  }
+);
+}

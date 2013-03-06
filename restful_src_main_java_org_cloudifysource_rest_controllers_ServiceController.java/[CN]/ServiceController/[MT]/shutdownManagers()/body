@@ -4,15 +4,8 @@
   }
   final ProcessingUnitInstance[] instances=getManagementInstances();
   final ControllerDetails[] controllers=createControllerDetails(instances);
-  final GridServiceAgent[] agents=new GridServiceAgent[instances.length];
-  for (int i=0; i < instances.length; i++) {
-    final ProcessingUnitInstance instance=instances[i];
-    final GridServiceAgent agent=instance.getGridServiceContainer().getGridServiceAgent();
-    if (agent == null) {
-      throw new IllegalStateException("Failed to find agent for management instance: " + instance.getProcessingUnitInstanceName());
-    }
-    agents[i]=agent;
-  }
+  logger.info("Controllers will be shut down in the following order: " + Arrays.toString(instances) + ". IP of current node is: "+ System.getenv("NIC_ADDR"));
+  final GridServiceAgent[] agents=getAgents(instances);
   final Map<String,Object> map=successStatus(controllers);
   new Thread(new Runnable(){
     @Override public void run(){

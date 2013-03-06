@@ -15,5 +15,10 @@
   if (instances.length != expectedManagers) {
     throw new RestErrorException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NUMBER_NOT_MATCH.getName(),expectedManagers,instances.length);
   }
+  sortInstances(instances);
+  logger.info("Shutdown Order is: ");
+  for (  ProcessingUnitInstance instance : instances) {
+    logger.info(instance.getMachine().getHostAddress());
+  }
   return instances;
 }
