@@ -44,7 +44,7 @@
   final int port=url.getPort();
   final Set<ControllerDetails> managersStillUp=new HashSet<ControllerDetails>();
   managersStillUp.addAll(managers);
-  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(1);
+  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(this.timeout);
   while (System.currentTimeMillis() < endTime) {
     Thread.sleep(POLLING_INTERVAL);
     boolean found=false;
