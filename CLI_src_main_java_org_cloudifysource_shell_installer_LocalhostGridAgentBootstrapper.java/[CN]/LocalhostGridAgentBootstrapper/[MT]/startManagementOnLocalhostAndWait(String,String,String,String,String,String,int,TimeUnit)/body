@@ -8,7 +8,6 @@
 catch (  final DSLException e) {
     throw new CLIException("Failed to read cloud file: " + e.getMessage(),e);
   }
-  setGridServiceAgentZone(MANAGEMENT_ZONE);
   setDefaultNicAddress();
   startManagementOnLocalhostAndWaitInternal(CLOUD_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeout,timeunit,false);
 }

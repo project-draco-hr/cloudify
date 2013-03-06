@@ -7,7 +7,7 @@
   final String commandString=StringUtils.collectionToDelimitedString(commandLine," ");
   final File filename=createScript(commandString);
   final ProcessBuilder pb=new ProcessBuilder().command(filename.getAbsolutePath()).directory(directory);
-  String localCloudOptions="-Xmx" + CloudifyConstants.DEFAULT_LOCALCLOUD_GSA_GSM_ESM_LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ gsaZones;
+  String localCloudOptions="-Xmx" + CloudifyConstants.DEFAULT_LOCALCLOUD_GSA_GSM_ESM_LUS_MEMORY_IN_MB + "m"+ " -D"+ CloudifyConstants.LUS_PORT_CONTEXT_PROPERTY+ "="+ lusPort+ " -D"+ GSM_EXCLUDE_GSC_ON_FAILED_INSTANCE+ "="+ GSM_EXCLUDE_GSC_ON_FAILED_INSTACE_BOOL+ " "+ GSM_PENDING_REQUESTS_DELAY+ " -D"+ ZONES_PROPERTY+ "="+ LOCALCLOUD_GSA_ZONES;
   String gsaJavaOptions="";
   if (autoShutdown) {
     gsaJavaOptions+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;

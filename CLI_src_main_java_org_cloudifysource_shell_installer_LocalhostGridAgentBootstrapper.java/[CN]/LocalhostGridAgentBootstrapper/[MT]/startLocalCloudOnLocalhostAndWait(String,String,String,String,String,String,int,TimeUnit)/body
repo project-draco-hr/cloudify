@@ -1,5 +1,4 @@
 {
-  setGridServiceAgentZone(LOCALCLOUD_GSA_ZONES);
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
   if (isWindows()) {
