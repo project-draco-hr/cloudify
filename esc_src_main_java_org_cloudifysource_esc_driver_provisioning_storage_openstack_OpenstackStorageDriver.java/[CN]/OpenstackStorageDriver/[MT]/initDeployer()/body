@@ -1,6 +1,6 @@
 {
   if (deployer != null) {
-    return deployer;
+    return;
   }
   try {
     logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
@@ -12,5 +12,4 @@
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
     throw new IllegalStateException("Failed to create cloud Deployer",e);
   }
-  return deployer;
 }
