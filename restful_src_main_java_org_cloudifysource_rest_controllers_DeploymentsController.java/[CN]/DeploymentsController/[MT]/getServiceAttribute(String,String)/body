@@ -1,3 +1,10 @@
 {
-  throwUnsupported();
+  getService(appName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of service " + ServiceUtils.getAbsolutePUName(appName,serviceName) + " of application "+ appName);
+  }
+  Map<String,Object> attributes=getAttributes(appName,serviceName,null);
+  GetServiceAttributesResponse sar=new GetServiceAttributesResponse();
+  sar.setAttributes(attributes);
+  return sar;
 }

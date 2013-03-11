@@ -1,0 +1,4 @@
+String appName
+String serviceName
+int timeout
+TimeUnit timeunit

@@ -1,0 +1,10 @@
+{
+  getApplication(appName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of application " + appName);
+  }
+  Map<String,Object> attributes=getAttributes(appName,null,null);
+  GetApplicationAttributesResponse aar=new GetApplicationAttributesResponse();
+  aar.setAttributes(attributes);
+  return aar;
+}

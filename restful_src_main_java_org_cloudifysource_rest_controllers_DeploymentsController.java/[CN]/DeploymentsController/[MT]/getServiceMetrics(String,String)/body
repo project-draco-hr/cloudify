@@ -1,3 +1,13 @@
 {
-  throwUnsupported();
+  List<ServiceInstanceMetricsData> serviceInstanceMetricsDatas=new ArrayList<ServiceInstanceMetricsData>();
+  ProcessingUnit service=getService(appName,serviceName);
+  for (  ProcessingUnitInstance serviceInstance : service.getInstances()) {
+    Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
+    serviceInstanceMetricsDatas.add(new ServiceInstanceMetricsData(serviceInstance.getInstanceId(),metrics));
+  }
+  ServiceMetricsResponse smr=new ServiceMetricsResponse();
+  smr.setAppName(appName);
+  smr.setServiceInstaceMetricsData(serviceInstanceMetricsDatas);
+  smr.setServiceName(serviceName);
+  return smr;
 }

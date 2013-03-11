@@ -1,0 +1,11 @@
+{
+  if (StringUtils.isBlank(attributeName)) {
+    throw new RestErrorException(CloudifyMessageKeys.EMPTY_ATTRIBUTE_NAME.getName());
+  }
+  final AbstractCloudifyAttribute attributeTemplate=createCloudifyAttribute(appName,serviceName,instanceId,attributeName,null);
+  final AbstractCloudifyAttribute previousValue=gigaSpace.take(attributeTemplate);
+  if (previousValue == null) {
+    throw new RestErrorException(CloudifyMessageKeys.NOT_EXIST_ATTRIBUTE.getName(),attributeName);
+  }
+  return previousValue != null ? previousValue.getValue() : null;
+}

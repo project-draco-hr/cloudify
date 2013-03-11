@@ -1,0 +1,7 @@
+{
+  ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor(ServiceUtils.getAbsolutePUName(appName,serviceName),timeout,timeunit);
+  if (processingUnit == null) {
+    throw new RestErrorException(CloudifyMessageKeys.SERVICE_WAIT_TIMEOUT.getName(),serviceName,timeout,timeunit);
+  }
+  return processingUnit;
+}

@@ -1,0 +1,4 @@
+String appName
+String serviceName
+Integer serviceInstance
+Map<String,Object> attributesMap

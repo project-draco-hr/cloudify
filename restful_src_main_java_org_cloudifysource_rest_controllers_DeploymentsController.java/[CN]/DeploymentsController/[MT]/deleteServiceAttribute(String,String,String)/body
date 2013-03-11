@@ -1,0 +1,10 @@
+{
+  getService(appName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to delete attribute " + attributeName + " of service "+ ServiceUtils.getAbsolutePUName(appName,serviceName)+ " of application "+ appName);
+  }
+  Object previous=deleteAttribute(appName,serviceName,null,attributeName);
+  DeleteServiceAttributeResponse sar=new DeleteServiceAttributeResponse();
+  sar.setPreviousValue(previous);
+  return sar;
+}

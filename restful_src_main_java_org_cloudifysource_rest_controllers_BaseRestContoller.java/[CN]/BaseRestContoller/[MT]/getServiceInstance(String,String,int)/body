@@ -1,5 +1,4 @@
 {
-  Application application=getApplication(appName);
-  ProcessingUnit processingUnit=getService(application,appName,serviceName);
+  ProcessingUnit processingUnit=getService(appName,serviceName);
   return getServiceInstance(processingUnit,instanceId);
 }

@@ -1,0 +1,10 @@
+{
+  getService(appName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of instance number " + instanceId + " of service "+ ServiceUtils.getAbsolutePUName(appName,serviceName)+ " of application "+ appName);
+  }
+  Map<String,Object> attributes=getAttributes(appName,serviceName,instanceId);
+  GetServiceInstanceAttributesResponse siar=new GetServiceInstanceAttributesResponse();
+  siar.setAttributes(attributes);
+  return siar;
+}

@@ -1,4 +1,3 @@
 {
-  Application application=getApplication(appName);
-  return getService(application,appName,serviceName);
+  return getService(appName,serviceName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
 }

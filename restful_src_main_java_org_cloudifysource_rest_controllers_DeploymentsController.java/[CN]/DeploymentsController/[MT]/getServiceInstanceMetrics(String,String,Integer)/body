@@ -1,0 +1,10 @@
+{
+  ProcessingUnitInstance serviceInstance=getServiceInstance(appName,serviceName,instanceId);
+  Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
+  ServiceInstanceMetricsData serviceInstanceMetricsData=new ServiceInstanceMetricsData(instanceId,metrics);
+  ServiceInstanceMetricsResponse simr=new ServiceInstanceMetricsResponse();
+  simr.setAppName(appName);
+  simr.setServiceName(serviceName);
+  simr.setServiceInstanceMetricsData(serviceInstanceMetricsData);
+  return simr;
+}
