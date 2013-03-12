@@ -34,7 +34,7 @@
       locationId=template.getLocationId();
     }
     machineDetails=provisionMachine(locationId,duration,unit);
-    if (machineDetails != null && machineDetails.getInstallerConfigutation() == null) {
+    if (machineDetails != null && machineDetails.getInstallerConfiguration() == null) {
       machineDetails.setInstallerConfigutation(template.getInstaller());
     }
   }
