@@ -28,7 +28,6 @@
   installer.setNoWebServices(noWebServices);
   installer.setNoManagementSpace(noManagementSpace);
   installer.setNotHighlyAvailableManagementSpace(isNotHAManagementSpace());
-  installer.setAutoShutdown(autoShutdown);
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);
   installer.startManagementOnLocalhostAndWait(securityProfile,SPRING_SECURITY_CONFIG_FILE,username,password,KEYSTORE_FILE,KEYSTORE_PASSWORD,getTimeoutInMinutes(),TimeUnit.MINUTES);

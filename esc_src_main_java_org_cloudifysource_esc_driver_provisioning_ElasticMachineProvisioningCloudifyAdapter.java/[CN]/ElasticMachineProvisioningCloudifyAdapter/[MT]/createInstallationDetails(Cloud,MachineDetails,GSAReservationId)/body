@@ -5,7 +5,7 @@
     configurer.addZone(CLOUD_ZONE_PREFIX + md.getLocationId());
   }
   final ExactZonesConfig zones=configurer.create();
-  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zones,lookupLocatorsString,this.originalESMAdmin,false,null,reservationId,cloudTemplateName,"","",config.getAuthGroups());
+  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zones,lookupLocatorsString,this.originalESMAdmin,false,null,reservationId,cloudTemplateName,"","",config.getAuthGroups(),false);
   logger.info("Created new Installation Details: " + details);
   return details;
 }

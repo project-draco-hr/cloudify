@@ -32,7 +32,7 @@
     details.setConnectedToPrivateIp(!cloud.getConfiguration().isBootstrapManagementOnPublicIp());
     details.setSecurityProfile(securityProfile);
     details.setKeystorePassword(keystorePassword);
-    final String esmCommandlineArgs=gridCommandBuilder.getEsmCommandlineArgs(componentsConfig.getOrchestrator());
+    final String esmCommandlineArgs=gridCommandBuilder.getEsmCommandlineArgs(componentsConfig.getOrchestrator(),rebootstrapping);
     final String lusCommandlineArgs=gridCommandBuilder.getLusCommandlineArgs(componentsConfig.getDiscovery(),lookupLocatorsString);
     final String gsmCommandlineArgs=gridCommandBuilder.getGsmCommandlineArgs(cloud,lookupLocatorsString,componentsConfig.getDeployer(),componentsConfig.getDiscovery());
     details.setEsmCommandlineArgs('"' + esmCommandlineArgs + '"');
@@ -103,7 +103,7 @@
   details.setStorageDeviceName(md.getStorageDeviceName());
   details.setStorageMountPath(md.getStorageMountPath());
   details.setPersistent(cloud.getConfiguration().getPersistentStoragePath() != null);
-  details.setInstallerConfiguration(md.getInstallerConfigutation());
+  details.setInstallerConfiguration(md.getInstallerConfiguration());
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }

@@ -11,3 +11,4 @@ String templateName
 String securityProfile
 String keystorePassword
 String authGroups
+boolean rebootstrapping
