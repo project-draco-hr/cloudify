@@ -9,8 +9,7 @@
       effectiveDeployer=validationDeployer;
       Map<String,Object> templateOverrides=template.getOverrides();
       if (templateOverrides != null && templateOverrides.size() > 0) {
-        templateOverrides.remove(ENDPOINT_OVERRIDE);
-        if (templateOverrides.size() > 0) {
+        if ((templateOverrides.containsKey(ENDPOINT_OVERRIDE) && templateOverrides.size() > 1) || (!templateOverrides.containsKey(ENDPOINT_OVERRIDE) && templateOverrides.size() > 0)) {
           publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_TEMPLATE_OVERRIDES.getName());
           try {
             final Properties props=new Properties();
