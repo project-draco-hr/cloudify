@@ -1,9 +1,0 @@
-{
-  Set<String> imageIds=new HashSet<String>();
-  Set<String> hardwareIds=new HashSet<String>();
-  Set<String> locationIds=new HashSet<String>();
-  parseComputeTemplates(imageIds,hardwareIds,locationIds);
-  validateImageIds(computeService,imageIds);
-  validateHardwareIds(computeService.listHardwareProfiles(),hardwareIds);
-  validateLocationIds(computeService.listAssignableLocations(),locationIds);
-}

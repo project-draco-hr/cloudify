@@ -1,6 +1,5 @@
 {
   JCloudsDeployer validationDeployer=null;
-  final ComputeService computeService;
   String providerName=cloud.getProvider().getProvider();
   publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_PROVIDER_OR_API_NAME.getName(),providerName);
   String apiId;
@@ -32,13 +31,11 @@
       properties.put(ENDPOINT_OVERRIDE,endpoint);
     }
     validationDeployer=new JCloudsDeployer(providerName,cloud.getUser().getUser(),cloud.getUser().getApiKey(),properties);
-    computeService=validationDeployer.getContext().getComputeService();
   }
  catch (  IOException e) {
     throw new CloudProvisioningException("Authentication to cloud failed");
   }
   try {
-    performBasicValidations(computeService);
     validateComputeTemplates(validationDeployer);
     validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
     if (StringUtils.isNotBlank(apiId) && isKnownAPI(apiId)) {
