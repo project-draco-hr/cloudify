@@ -1,0 +1,3 @@
+Set<String> imageIds
+Set<String> hardwareIds
+Set<String> locationIds

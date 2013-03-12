@@ -1,0 +1,2 @@
+NovaApi novaApi
+Map<String,Set<String>> keyPairsByRegions

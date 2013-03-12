@@ -3,9 +3,11 @@
   this.cloudTemplateName=cloudTemplateName;
   this.management=management;
   this.cloudName=cloud.getName();
-  publishEvent(EVENT_ATTEMPT_TO_VALIDATE_CLOUD_CONFIG,cloud.getProvider().getProvider());
-  validateCloudConfiguration();
-  publishEvent(EVENT_CLOUD_CONFIG_VALIDATED,cloud.getProvider().getProvider());
+  if (management) {
+    publishEvent(CloudifyErrorMessages.EVENT_ATTEMPT_TO_VALIDATE_CLOUD_CONFIG.getName());
+    validateCloudConfiguration();
+    publishEvent(CloudifyErrorMessages.EVENT_CLOUD_CONFIG_VALIDATED.getName());
+  }
   publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
   initDeployer(cloud);
   publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());

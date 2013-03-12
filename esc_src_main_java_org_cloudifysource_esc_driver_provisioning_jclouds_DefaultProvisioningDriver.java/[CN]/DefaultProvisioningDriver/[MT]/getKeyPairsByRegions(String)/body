@@ -1,0 +1,26 @@
+{
+  Map<String,Set<String>> keyPairsByRegions=new HashMap<String,Set<String>>();
+  for (  ComputeTemplate template : cloud.getCloudCompute().getTemplates().values()) {
+    String locationId=template.getLocationId();
+    if (StringUtils.isBlank(locationId)) {
+      locationId=defaultLocationId;
+    }
+    String keyPair=(String)template.getOptions().get("keyPairName");
+    if (keyPair == null) {
+      keyPair=(String)template.getOptions().get("keyPair");
+    }
+    if (StringUtils.isNotBlank(keyPair)) {
+      Set<String> keyPairsForRegion=keyPairsByRegions.get(locationId);
+      if (keyPairsForRegion == null) {
+        Set<String> keyPairNames=new HashSet<String>();
+        keyPairNames.add(keyPair);
+        keyPairsByRegions.put(locationId,keyPairNames);
+      }
+ else {
+        keyPairsForRegion.add(keyPair);
+        keyPairsByRegions.put(locationId,keyPairsForRegion);
+      }
+    }
+  }
+  return keyPairsByRegions;
+}

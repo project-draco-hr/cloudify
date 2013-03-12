@@ -1,0 +1,10 @@
+{
+  String defaultLocationId="";
+  try {
+    defaultLocationId=validationDeployer.getTemplate(null).getLocation().getId();
+  }
+ catch (  Exception e) {
+    logger.fine("Validating security groups, default location id is not found for this provider");
+  }
+  return defaultLocationId;
+}

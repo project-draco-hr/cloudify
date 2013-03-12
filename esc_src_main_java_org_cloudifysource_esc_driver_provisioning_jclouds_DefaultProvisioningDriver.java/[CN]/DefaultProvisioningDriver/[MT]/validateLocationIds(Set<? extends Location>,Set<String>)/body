@@ -1,4 +1,5 @@
 {
+  publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_LOCATIONS.getName());
   Set<String> supportedLocationIds=new HashSet<String>();
   for (  Location location : supportedLocations) {
     supportedLocationIds.add(location.getId());
@@ -6,6 +7,11 @@
   Set<String> missingLocationIds=new HashSet<String>(usedLocationIds);
   missingLocationIds.removeAll(supportedLocationIds);
   if (!missingLocationIds.isEmpty()) {
-    throw new CloudProvisioningException("One or more of the location IDs are invalid: " + Arrays.toString(missingLocationIds.toArray()));
+    if (missingLocationIds.size() == 1) {
+      throw new CloudProvisioningException("Invalid location ID: " + missingLocationIds.iterator().next());
+    }
+ else {
+      throw new CloudProvisioningException("Invalid location IDs: " + Arrays.toString(missingLocationIds.toArray()));
+    }
   }
 }

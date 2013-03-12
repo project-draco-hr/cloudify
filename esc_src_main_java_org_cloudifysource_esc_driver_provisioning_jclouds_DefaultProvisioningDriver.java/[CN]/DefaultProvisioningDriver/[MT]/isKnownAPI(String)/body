@@ -1,6 +1,6 @@
 {
   boolean supported=false;
-  if (apiName.equalsIgnoreCase(EC2) || apiName.equalsIgnoreCase(VCLOUD) || apiName.equalsIgnoreCase(OPENSTACK)|| apiName.equalsIgnoreCase(CLOUDSTACK)) {
+  if (apiName.equalsIgnoreCase(EC2_API) || apiName.equalsIgnoreCase(OPENSTACK_API)) {
     supported=true;
   }
   return supported;

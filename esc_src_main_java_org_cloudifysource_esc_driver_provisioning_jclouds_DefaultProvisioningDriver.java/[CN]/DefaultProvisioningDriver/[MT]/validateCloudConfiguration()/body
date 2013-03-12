@@ -2,87 +2,57 @@
   Set<String> imageIds=new HashSet<String>();
   Set<String> hardwareIds=new HashSet<String>();
   Set<String> locationIds=new HashSet<String>();
-  Map<String,Set<String>> securityGroupsByRegions=new HashMap<String,Set<String>>();
-  Map<String,Set<String>> keyPairsByRegions=new HashMap<String,Set<String>>();
-  JCloudsDeployer valiationDeployer;
-  ComputeServiceContext computeServiceContext;
+  JCloudsDeployer validationDeployer=null;
+  final ComputeService computeService;
+  String providerName=cloud.getProvider().getProvider();
+  publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_PROVIDER_OR_API_NAME.getName(),providerName);
   String apiId;
+  String endpoint=null;
+  boolean endpointRequired=false;
   try {
-    ProviderMetadata providerMetadata=Providers.withId(cloud.getProvider().getProvider());
+    ProviderMetadata providerMetadata=Providers.withId(providerName);
     ApiMetadata apiMetadata=providerMetadata.getApiMetadata();
     apiId=apiMetadata.getId();
   }
  catch (  NoSuchElementException e) {
-    throw new CloudProvisioningException("Provider not supported: " + cloud.getProvider().getProvider());
+    try {
+      ApiMetadata apiMetadata=Apis.withId(providerName);
+      apiId=apiMetadata.getId();
+      endpointRequired=true;
+      endpoint=getEndpoint();
+      if (StringUtils.isBlank(endpoint)) {
+        throw new CloudProvisioningException("Endpoint is missing");
+      }
+    }
+ catch (    NoSuchElementException ex) {
+      throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
+    }
   }
+  publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_CLOUD_CREDENTIALS.getName());
   try {
-    valiationDeployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),new Properties());
-    computeServiceContext=valiationDeployer.getContext();
+    Properties properties=new Properties();
+    if (endpointRequired) {
+      properties.put(ENDPOINT_OVERRIDE,endpoint);
+    }
+    validationDeployer=new JCloudsDeployer(providerName,cloud.getUser().getUser(),cloud.getUser().getApiKey(),properties);
+    computeService=validationDeployer.getContext().getComputeService();
   }
  catch (  IOException e) {
     throw new CloudProvisioningException("Authentication to cloud failed");
   }
-  for (  ComputeTemplate template : cloud.getCloudCompute().getTemplates().values()) {
-    String imageId=null;
-    String hardwareProfileId=null;
-    String locationId=null;
-    String region=null;
-    imageId=template.getImageId();
-    if (!StringUtils.isBlank(locationId)) {
-      imageIds.add(imageId);
-    }
- else {
-      throw new CloudProvisioningException("Invalid image - image id cannot be empty");
-    }
-    hardwareProfileId=template.getHardwareId();
-    if (!StringUtils.isBlank(locationId)) {
-      hardwareIds.add(hardwareProfileId);
-    }
- else {
-      throw new CloudProvisioningException("Invalid hardware profile - hardware id cannot be empty");
-    }
-    locationId=template.getLocationId();
-    if (!StringUtils.isBlank(locationId)) {
-      locationIds.add(template.getLocationId());
-    }
- else {
-      throw new CloudProvisioningException("Invalid location - location id cannot be empty");
-    }
-    Object securityGroupsArr=template.getOptions().get("securityGroups");
-    if (securityGroupsArr != null && securityGroupsArr instanceof String[]) {
-      Set<String> securityGroupNames=new HashSet<String>();
-      for (      String securityGroupName : (String[])securityGroupsArr) {
-        securityGroupNames.add(securityGroupName);
-      }
-      Set<String> groupsForRegion=securityGroupsByRegions.get(region);
-      if (groupsForRegion == null) {
-        securityGroupsByRegions.put(region,securityGroupNames);
-      }
- else {
-        groupsForRegion.addAll(securityGroupNames);
-        securityGroupsByRegions.put(region,groupsForRegion);
-      }
-    }
-    String keyPair=(String)template.getOptions().get("keyPair");
-    if (StringUtils.isNotBlank(keyPair)) {
-      Set<String> keyPairsForRegion=keyPairsByRegions.get(region);
-      if (keyPairsForRegion == null) {
-        Set<String> keyPairNames=new HashSet<String>();
-        keyPairNames.add(keyPair);
-        keyPairsByRegions.put(region,keyPairNames);
-      }
- else {
-        keyPairsForRegion.add(keyPair);
-        keyPairsByRegions.put(region,keyPairsForRegion);
-      }
+  try {
+    validateComputeTemplates(validationDeployer);
+    parseComputeTemplates(imageIds,hardwareIds,locationIds);
+    validateImageIds(computeService,imageIds);
+    validateHardwareIds(computeService.listHardwareProfiles(),hardwareIds);
+    validateLocationIds(computeService.listAssignableLocations(),locationIds);
+    validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+    if (StringUtils.isNotBlank(apiId) && isKnownAPI(apiId)) {
+      validateSecurityGroups(validationDeployer,apiId);
+      validateKeyPairs(validationDeployer,apiId);
     }
   }
-  validateImageIds(computeServiceContext.getComputeService(),imageIds);
-  validateHardwareIds(computeServiceContext.getComputeService().listHardwareProfiles(),hardwareIds);
-  validateLocationIds(computeServiceContext.getComputeService().listAssignableLocations(),locationIds);
-  validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
-  if (apiId != null && isKnownAPI(apiId)) {
-    validateSecurityGroups(computeServiceContext,apiId,securityGroupsByRegions);
-    validateKeyPairs(computeServiceContext,apiId,keyPairsByRegions);
+  finally {
+    validationDeployer.close();
   }
 }

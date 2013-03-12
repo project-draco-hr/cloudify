@@ -1,3 +1,0 @@
-ComputeServiceContext computeServiceContext
-String apiId
-Map<String,Set<String>> securityGroupsByRegions

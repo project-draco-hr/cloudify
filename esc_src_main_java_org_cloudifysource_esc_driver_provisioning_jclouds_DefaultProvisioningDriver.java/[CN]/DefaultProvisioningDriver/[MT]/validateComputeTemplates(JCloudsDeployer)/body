@@ -1,0 +1,36 @@
+{
+  JCloudsDeployer effectiveDeployer;
+  String templateName="";
+  try {
+    for (    Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
+      templateName=entry.getKey();
+      publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_TEMPLATE.getName(),templateName);
+      ComputeTemplate template=entry.getValue();
+      effectiveDeployer=validationDeployer;
+      Map<String,Object> templateOverrides=template.getOverrides();
+      if (templateOverrides != null && templateOverrides.size() > 0) {
+        templateOverrides.remove(ENDPOINT_OVERRIDE);
+        if (templateOverrides.size() > 0) {
+          publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_TEMPLATE_OVERRIDES.getName());
+          try {
+            final Properties props=new Properties();
+            props.putAll(template.getOverrides());
+            effectiveDeployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+          }
+ catch (          IOException e) {
+            throw new CloudProvisioningException("Authentication to cloud failed");
+          }
+        }
+      }
+      effectiveDeployer.setImageId(template.getImageId());
+      effectiveDeployer.setHardwareId(template.getHardwareId());
+      publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_IMAGE_ID.getName(),template.getImageId() == null ? "" : template.getImageId());
+      publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_HARDWARE_ID.getName(),template.getHardwareId() == null ? "" : template.getHardwareId());
+      publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_LOCATION_ID.getName(),template.getLocationId() == null ? "" : template.getLocationId());
+      effectiveDeployer.getTemplate(template.getLocationId());
+    }
+  }
+ catch (  Exception e) {
+    throw new CloudProvisioningException("Invalid configuration for template \"" + templateName + "\", "+ e.getMessage());
+  }
+}
