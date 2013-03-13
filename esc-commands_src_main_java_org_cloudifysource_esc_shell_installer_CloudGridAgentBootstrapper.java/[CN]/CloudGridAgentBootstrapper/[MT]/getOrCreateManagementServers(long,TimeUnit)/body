@@ -1,11 +1,19 @@
 {
+  MachineDetails[] servers;
   if (this.existingManagersFile != null) {
-    return locateManagementMachinesFromFile();
+    servers=locateManagementMachinesFromFile();
   }
  else   if (this.useExistingManagers) {
-    return locateManagementMachines();
+    servers=locateManagementMachines();
   }
  else {
-    return createManagementServers(timeout,timeoutUnit);
+    servers=createManagementServers(timeout,timeoutUnit);
   }
+  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
+  for (  MachineDetails machineDetails : servers) {
+    if (machineDetails.getInstallerConfiguration() == null) {
+      machineDetails.setInstallerConfigutation(template.getInstaller());
+    }
+  }
+  return servers;
 }
