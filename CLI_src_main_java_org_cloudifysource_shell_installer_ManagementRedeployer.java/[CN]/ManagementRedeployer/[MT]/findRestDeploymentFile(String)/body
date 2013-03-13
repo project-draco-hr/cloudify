@@ -1,0 +1,5 @@
+{
+  final String restSourcePath=cloudifyHome + "/tools/rest";
+  final File file=findWarFile(restSourcePath);
+  return file;
+}

@@ -1,0 +1,16 @@
+{
+  final File restSourceDir=new File(restSourcePath);
+  File[] files=restSourceDir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.endsWith(".war");
+    }
+  }
+);
+  if (files.length == 0) {
+    throw new IllegalStateException("Excepted to find a single war file in: " + restSourcePath + ", but found none");
+  }
+  if (files.length > 1) {
+    throw new IllegalStateException("Excepted to find a single war file in: " + restSourcePath + ", but found: "+ files);
+  }
+  return files[0];
+}

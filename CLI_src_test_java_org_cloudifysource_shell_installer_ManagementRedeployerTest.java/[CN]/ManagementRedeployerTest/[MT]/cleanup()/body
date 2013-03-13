@@ -1,0 +1,8 @@
+{
+  if (cloudifyHomeMockDir != null) {
+    FileUtils.deleteQuietly(cloudifyHomeMockDir);
+  }
+  if (persistenceMockDir != null) {
+    FileUtils.deleteQuietly(persistenceMockDir);
+  }
+}

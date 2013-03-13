@@ -1,0 +1,22 @@
+{
+  cloudifyHomeMockDir=File.createTempFile("ManagerRedeployTestHome","tst");
+  FileUtils.deleteQuietly(cloudifyHomeMockDir);
+  cloudifyHomeMockDir.mkdirs();
+  persistenceMockDir=File.createTempFile("ManagerRedeployTestDeploy","tst");
+  FileUtils.deleteQuietly(persistenceMockDir);
+  persistenceMockDir.mkdirs();
+  final File deployMockDir=new File(persistenceMockDir,"deploy");
+  deployMockDir.mkdirs();
+  File srcWarDir=new File("src/test/resources/sampleWar");
+  File srcWarDir2=new File("src/test/resources/sampleWar2");
+  FileUtils.copyDirectory(srcWarDir,new File(deployMockDir,CloudifyConstants.MANAGEMENT_REST_SERVICE_NAME));
+  FileUtils.copyDirectory(srcWarDir,new File(deployMockDir,CloudifyConstants.MANAGEMENT_WEBUI_SERVICE_NAME));
+  final File mockRestFile=new File(cloudifyHomeMockDir + "/tools/rest/rest.war");
+  mockRestFile.mkdirs();
+  mockRestFile.delete();
+  final File mockWebuiFile=new File(cloudifyHomeMockDir + "/tools/gs-webui/gs-webui-9.5.0-SNAPSHOT.war");
+  mockWebuiFile.mkdirs();
+  mockWebuiFile.delete();
+  ZipUtils.zip(srcWarDir2,mockRestFile);
+  ZipUtils.zip(srcWarDir2,mockWebuiFile);
+}

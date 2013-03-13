@@ -1,0 +1,8 @@
+{
+  final File tempFile=File.createTempFile("tempfile","temp");
+  tempFile.delete();
+  ManagementRedeployer fixture=new ManagementRedeployer();
+  fixture.run(tempFile.getAbsolutePath(),this.cloudifyHomeMockDir.getAbsolutePath());
+  Assert.assertTrue(!fixture.isRestRedeployed());
+  Assert.assertTrue(!fixture.isWebuiRedeployed());
+}

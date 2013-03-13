@@ -1,0 +1,5 @@
+{
+  final String restSourcePath=cloudifyHome + "/tools/gs-webui";
+  final File file=findWarFile(restSourcePath);
+  return file;
+}

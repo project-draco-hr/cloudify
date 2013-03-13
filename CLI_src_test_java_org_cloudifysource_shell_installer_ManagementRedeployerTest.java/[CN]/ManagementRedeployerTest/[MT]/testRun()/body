@@ -1,0 +1,12 @@
+{
+  final File restIndex2=new File(persistenceMockDir + "/deploy/" + CloudifyConstants.MANAGEMENT_REST_SERVICE_NAME+ "/index2.html");
+  final File webuiIndex2=new File(persistenceMockDir + "/deploy/" + CloudifyConstants.MANAGEMENT_WEBUI_SERVICE_NAME+ "/index2.html");
+  Assert.assertTrue(!restIndex2.exists());
+  Assert.assertTrue(!webuiIndex2.exists());
+  ManagementRedeployer fixture=new ManagementRedeployer();
+  fixture.run(this.persistenceMockDir.getAbsolutePath(),this.cloudifyHomeMockDir.getAbsolutePath());
+  Assert.assertTrue(restIndex2.exists());
+  Assert.assertTrue(webuiIndex2.exists());
+  Assert.assertTrue(fixture.isRestRedeployed());
+  Assert.assertTrue(fixture.isWebuiRedeployed());
+}

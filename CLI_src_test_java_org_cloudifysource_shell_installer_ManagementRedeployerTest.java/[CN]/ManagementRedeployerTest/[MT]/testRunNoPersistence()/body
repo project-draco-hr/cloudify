@@ -1,0 +1,6 @@
+{
+  ManagementRedeployer fixture=new ManagementRedeployer();
+  fixture.run(null,this.cloudifyHomeMockDir.getAbsolutePath());
+  Assert.assertTrue(!fixture.isRestRedeployed());
+  Assert.assertTrue(!fixture.isWebuiRedeployed());
+}

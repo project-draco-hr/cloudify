@@ -1,0 +1,5 @@
+{
+  FileUtils.deleteDirectory(targetDir);
+  targetDir.mkdirs();
+  ZipUtils.unzip(sourceFile,targetDir);
+}
