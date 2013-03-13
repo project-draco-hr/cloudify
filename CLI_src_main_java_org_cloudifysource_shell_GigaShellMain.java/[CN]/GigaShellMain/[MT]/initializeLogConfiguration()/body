@@ -8,4 +8,7 @@
       break;
     }
   }
+  for (  final String loggerName : BLOCKED_LOGGERS) {
+    Logger.getLogger(loggerName).setLevel(Level.WARNING);
+  }
 }
