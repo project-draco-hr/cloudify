@@ -1,7 +1,7 @@
 {
   publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_KEY_PAIRS.getName());
   ComputeServiceContext computeServiceContext=validationDeployer.getContext();
-  Map<String,Set<String>> keyPairsByRegions=getKeyPairsByRegions(getDefaultLocation(validationDeployer));
+  Map<String,Set<String>> keyPairsByRegions=getKeyPairsByRegions(apiId);
   if (apiId.equalsIgnoreCase(EC2_API)) {
     RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
     validateEc2KeyPairs(unwrapped.getApi().getKeyPairServices(),keyPairsByRegions);
@@ -11,8 +11,6 @@
     validateOpenstackKeyPairs(unwrapped.getApi(),keyPairsByRegions);
   }
  else   if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
-    RestContext<CloudStackClient,CloudStackAsyncClient> unwrapped=computeServiceContext.unwrap();
-    validateCloudstackKeyPairs(unwrapped.getApi().getSSHKeyPairClient(),aggregateAllValues(keyPairsByRegions));
   }
  else   if (apiId.equalsIgnoreCase(VCLOUD)) {
   }

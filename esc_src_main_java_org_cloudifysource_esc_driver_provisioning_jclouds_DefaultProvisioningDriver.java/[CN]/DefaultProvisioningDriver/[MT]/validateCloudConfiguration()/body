@@ -30,20 +30,21 @@
     if (endpointRequired) {
       properties.put(ENDPOINT_OVERRIDE,endpoint);
     }
-    validationDeployer=new JCloudsDeployer(providerName,cloud.getUser().getUser(),cloud.getUser().getApiKey(),properties);
-  }
- catch (  IOException e) {
-    throw new CloudProvisioningException("Authentication to cloud failed");
-  }
-  try {
-    validateComputeTemplates(validationDeployer);
+    try {
+      validationDeployer=new JCloudsDeployer(providerName,cloud.getUser().getUser(),cloud.getUser().getApiKey(),properties);
+    }
+ catch (    IOException e) {
+      closeDeployer(validationDeployer);
+      throw new CloudProvisioningException("Authentication to the cloud failed");
+    }
     validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
     if (StringUtils.isNotBlank(apiId) && isKnownAPI(apiId)) {
       validateSecurityGroups(validationDeployer,apiId);
       validateKeyPairs(validationDeployer,apiId);
     }
+    validateComputeTemplates(validationDeployer);
   }
   finally {
-    validationDeployer.close();
+    closeDeployer(validationDeployer);
   }
 }
