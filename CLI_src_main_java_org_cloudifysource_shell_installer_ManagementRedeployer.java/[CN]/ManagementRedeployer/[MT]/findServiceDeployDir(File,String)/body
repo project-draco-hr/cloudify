@@ -1,0 +1,12 @@
+{
+  File[] files=deployDir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.contains(serviceName);
+    }
+  }
+);
+  if (files.length != 1) {
+    throw new IllegalStateException("Expected to find 1 directory that contains '" + serviceName + "' in folder '"+ deployDir.getAbsolutePath()+ "'. but found : "+ files.length);
+  }
+  return files[0];
+}

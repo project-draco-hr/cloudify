@@ -13,8 +13,8 @@
   if (!deployDir.exists()) {
     return;
   }
-  final File restDir=new File(deployDir,CloudifyConstants.MANAGEMENT_REST_SERVICE_NAME);
-  final File webuiDir=new File(deployDir,CloudifyConstants.MANAGEMENT_WEBUI_SERVICE_NAME);
+  final File restDir=findServiceDeployDir(deployDir,CloudifyConstants.MANAGEMENT_REST_SERVICE_NAME);
+  final File webuiDir=findServiceDeployDir(deployDir,CloudifyConstants.MANAGEMENT_WEBUI_SERVICE_NAME);
   if (!restDir.exists() && !webuiDir.exists()) {
     return;
   }
