@@ -13,6 +13,9 @@
       logger.info("Found existing management servers (" + Arrays.toString(managementMachines) + ")");
       return managementMachines;
     }
+ else {
+      logger.warning("Failed locating existing management servers");
+    }
     return new MachineDetails[0];
   }
  catch (  final InterruptedException e) {
