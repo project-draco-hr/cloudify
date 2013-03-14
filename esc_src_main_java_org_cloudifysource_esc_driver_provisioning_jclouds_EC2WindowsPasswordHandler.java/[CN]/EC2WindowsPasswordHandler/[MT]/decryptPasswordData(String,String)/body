@@ -1,5 +1,5 @@
 {
-  final Crypto crypto=new BouncyCastleCrypto();
+  final Crypto crypto=new JCECrypto();
   final WindowsLoginCredentialsFromEncryptedData f=new WindowsLoginCredentialsFromEncryptedData(crypto);
   final LoginCredentials credentials=f.apply(EncryptedPasswordAndPrivateKey.builder().encryptedPassword(encryptedPassword).privateKey(key).build());
   return credentials;
