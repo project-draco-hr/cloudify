@@ -1,25 +1,9 @@
 {
-  final String persistencePath=cloud.getConfiguration().getPersistentStoragePath();
-  if (persistencePath == null) {
-    return;
+  ManagementRedeployer redeployer=new ManagementRedeployer();
+  try {
+    redeployer.run(cloud.getConfiguration().getPersistentStoragePath(),Environment.getHomeDirectory());
   }
-  final File persistenceDir=new File(persistencePath);
-  if (persistenceDir.exists() && !persistenceDir.isDirectory()) {
-    throw new IllegalStateException("The persistence location: " + persistencePath + " should either not exist or be a directory");
-  }
-  if (!persistenceDir.exists()) {
-    return;
-  }
-  final File deployDir=new File(persistenceDir,CloudifyConstants.PERSISTENCE_DIRECTORY_DEPLOY_RELATIVE_PATH);
-  if (!deployDir.exists()) {
-    return;
-  }
-  final File restDir=new File(deployDir,CloudifyConstants.MANAGEMENT_REST_SERVICE_NAME);
-  final File webuiDir=new File(deployDir,CloudifyConstants.MANAGEMENT_WEBUI_SERVICE_NAME);
-  if (!restDir.exists() && !webuiDir.exists()) {
-    return;
-  }
-  if (restDir.exists() ^ webuiDir.exists()) {
-    logger.warning("Found only one of the management service deployed: REST: " + restDir.exists() + ", Web-UI: "+ webuiDir.exists()+ ". "+ "This is not a normal deployment scenario. Please check for configuration problems. "+ "Only the deployed service will be installed");
+ catch (  final IOException e) {
+    throw new CLIException("Failed to redeploy management: " + e.getMessage(),e);
   }
 }
