@@ -1,7 +1,0 @@
-{
-  Set<String> securityGroupsSet=new HashSet<String>();
-  for (  Entry<String,Set<String>> entry : securityGroupsByRegions.entrySet()) {
-    securityGroupsSet.addAll(entry.getValue());
-  }
-  return securityGroupsSet;
-}

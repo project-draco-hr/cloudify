@@ -1,0 +1,3 @@
+ComputeTemplate template
+String apiId
+ComputeServiceContext computeServiceContext

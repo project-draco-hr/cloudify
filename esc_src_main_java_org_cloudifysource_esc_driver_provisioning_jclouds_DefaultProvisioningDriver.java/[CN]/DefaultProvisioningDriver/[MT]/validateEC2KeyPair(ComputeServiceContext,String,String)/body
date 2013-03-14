@@ -1,0 +1,8 @@
+{
+  RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+  KeyPairClient ec2KeyPairClient=unwrapped.getApi().getKeyPairServices();
+  Set<KeyPair> foundKeyPairs=ec2KeyPairClient.describeKeyPairsInRegion(locationId,keyPairName);
+  if (foundKeyPairs == null || foundKeyPairs.size() == 0 || foundKeyPairs.iterator().next() == null) {
+    throw new CloudProvisioningException("Invalid key-pair name: " + keyPairName);
+  }
+}

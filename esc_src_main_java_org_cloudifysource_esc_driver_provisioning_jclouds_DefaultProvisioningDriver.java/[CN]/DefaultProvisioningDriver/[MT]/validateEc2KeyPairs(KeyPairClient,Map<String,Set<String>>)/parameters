@@ -1,2 +1,0 @@
-KeyPairClient ec2KeyPairClient
-Map<String,Set<String>> keyPairsByRegions

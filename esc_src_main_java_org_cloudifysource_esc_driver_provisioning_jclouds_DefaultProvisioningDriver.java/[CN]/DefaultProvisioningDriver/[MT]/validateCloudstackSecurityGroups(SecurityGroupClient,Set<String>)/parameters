@@ -1,2 +1,0 @@
-SecurityGroupClient securityGroupClient
-Set<String> securityGroups

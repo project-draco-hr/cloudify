@@ -1,0 +1,16 @@
+{
+  org.jclouds.ec2.services.SecurityGroupClient ec2SecurityGroupsClient=ec2Client.getSecurityGroupServices();
+  Set<String> missingSecurityGroups=new HashSet<String>();
+  for (  String securityGroupName : securityGroupsInRegion) {
+    Set<org.jclouds.ec2.domain.SecurityGroup> foundGroups=ec2SecurityGroupsClient.describeSecurityGroupsInRegion(region,securityGroupName);
+    if (foundGroups == null || foundGroups.size() == 0 || foundGroups.iterator().next() == null) {
+      missingSecurityGroups.add(securityGroupName);
+    }
+  }
+  if (missingSecurityGroups.size() == 1) {
+    throw new CloudProvisioningException("Invalid security group name: " + missingSecurityGroups.iterator().next());
+  }
+ else   if (missingSecurityGroups.size() > 1) {
+    throw new CloudProvisioningException("Invalid security group names: " + Arrays.toString(missingSecurityGroups.toArray()));
+  }
+}

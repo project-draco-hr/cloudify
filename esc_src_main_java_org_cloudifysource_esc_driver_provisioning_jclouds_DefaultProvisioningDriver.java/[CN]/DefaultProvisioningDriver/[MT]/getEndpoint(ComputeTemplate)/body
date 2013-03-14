@@ -1,6 +1,5 @@
 {
   String endpoint=null;
-  ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
   Map<String,Object> templateOverrides=template.getOverrides();
   if (templateOverrides != null && templateOverrides.size() > 0) {
     endpoint=(String)templateOverrides.get(ENDPOINT_OVERRIDE);

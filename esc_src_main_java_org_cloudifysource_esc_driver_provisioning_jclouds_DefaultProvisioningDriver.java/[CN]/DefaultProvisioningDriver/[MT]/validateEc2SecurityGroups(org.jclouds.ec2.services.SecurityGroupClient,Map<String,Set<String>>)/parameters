@@ -1,2 +1,0 @@
-org.jclouds.ec2.services.SecurityGroupClient ec2SecurityGroupsClient
-Map<String,Set<String>> securityGroupsByRegions

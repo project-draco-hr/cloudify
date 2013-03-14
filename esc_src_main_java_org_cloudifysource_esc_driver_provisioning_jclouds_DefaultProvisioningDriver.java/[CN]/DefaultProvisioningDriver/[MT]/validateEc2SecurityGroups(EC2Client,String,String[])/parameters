@@ -1,0 +1,3 @@
+EC2Client ec2Client
+String region
+String[] securityGroupsInRegion

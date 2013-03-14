@@ -1,0 +1,3 @@
+ComputeServiceContext computeServiceContext
+String locationId
+String keyPairName

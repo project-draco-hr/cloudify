@@ -1,7 +1,7 @@
 {
   if (jcloudsDeployer != null) {
-    logger.info("Attempting to close cloud deployer");
+    logger.fine("Attempting to close cloud deployer");
     jcloudsDeployer.close();
-    logger.info("Cloud deployer closed");
+    logger.fine("Cloud deployer closed");
   }
 }

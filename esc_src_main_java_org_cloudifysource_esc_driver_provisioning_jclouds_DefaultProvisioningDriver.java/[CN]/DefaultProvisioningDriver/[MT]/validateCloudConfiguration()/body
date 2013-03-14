@@ -1,9 +1,7 @@
 {
-  JCloudsDeployer validationDeployer=null;
   String providerName=cloud.getProvider().getProvider();
   publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_PROVIDER_OR_API_NAME.getName(),providerName);
   String apiId;
-  String endpoint=null;
   boolean endpointRequired=false;
   try {
     ProviderMetadata providerMetadata=Providers.withId(providerName);
@@ -15,36 +13,11 @@
       ApiMetadata apiMetadata=Apis.withId(providerName);
       apiId=apiMetadata.getId();
       endpointRequired=true;
-      endpoint=getEndpoint();
-      if (StringUtils.isBlank(endpoint)) {
-        throw new CloudProvisioningException("Endpoint is missing");
-      }
     }
  catch (    NoSuchElementException ex) {
       throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
     }
   }
-  publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_CLOUD_CREDENTIALS.getName());
-  try {
-    Properties properties=new Properties();
-    if (endpointRequired) {
-      properties.put(ENDPOINT_OVERRIDE,endpoint);
-    }
-    try {
-      validationDeployer=new JCloudsDeployer(providerName,cloud.getUser().getUser(),cloud.getUser().getApiKey(),properties);
-    }
- catch (    IOException e) {
-      closeDeployer(validationDeployer);
-      throw new CloudProvisioningException("Authentication to the cloud failed");
-    }
-    validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
-    if (StringUtils.isNotBlank(apiId) && isKnownAPI(apiId)) {
-      validateSecurityGroups(validationDeployer,apiId);
-      validateKeyPairs(validationDeployer,apiId);
-    }
-    validateComputeTemplates(validationDeployer);
-  }
-  finally {
-    closeDeployer(validationDeployer);
-  }
+  validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  validateComputeTemplates(endpointRequired,apiId);
 }

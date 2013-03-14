@@ -1,0 +1,3 @@
+NovaApi novaApi
+String region
+String[] securityGroupsInRegion
