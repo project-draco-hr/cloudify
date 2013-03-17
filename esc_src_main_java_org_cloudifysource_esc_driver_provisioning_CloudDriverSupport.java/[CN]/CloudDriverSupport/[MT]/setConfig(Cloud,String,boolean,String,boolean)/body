@@ -5,6 +5,8 @@
   if (this.cloud.getCloudCompute().getTemplates().isEmpty()) {
     throw new IllegalArgumentException("No templates defined for this cloud");
   }
+  if (management && performValidation) {
+  }
   if (StringUtils.isBlank(this.templateName)) {
     this.template=this.cloud.getCloudCompute().getTemplates().values().iterator().next();
   }

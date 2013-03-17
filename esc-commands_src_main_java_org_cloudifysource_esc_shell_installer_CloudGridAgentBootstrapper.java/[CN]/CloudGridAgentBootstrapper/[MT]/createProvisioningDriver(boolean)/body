@@ -15,7 +15,7 @@ catch (  final Exception e) {
   provisioning.addListener(new CliProvisioningDriverListener());
   final String serviceName=null;
   try {
-    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName);
+    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName,performValidation);
   }
  catch (  CloudProvisioningException e) {
     throw new CLIException("Invalid configuration for cloud: " + cloud.getName() + ", "+ e.getMessage(),e);

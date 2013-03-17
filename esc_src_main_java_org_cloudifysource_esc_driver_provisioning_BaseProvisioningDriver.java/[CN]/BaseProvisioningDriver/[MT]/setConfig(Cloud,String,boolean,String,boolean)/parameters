@@ -2,3 +2,4 @@ Cloud cloud
 String cloudTemplateName
 boolean management
 String serviceName
+boolean performValidation

@@ -1,6 +1,6 @@
 {
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
-  createProvisioningDriver();
+  createProvisioningDriver(performValidation);
   final MachineDetails[] servers=getOrCreateManagementServers(timeout,timeoutUnit);
   try {
     if (logger.isLoggable(Level.FINE)) {

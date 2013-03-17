@@ -36,7 +36,7 @@
         contextAware.setProvisioningDriverClassContext(provisioningDriverContext);
       }
       handleServiceCloudConfiguration();
-      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName);
+      this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName,false);
       String storageClassName=this.cloud.getConfiguration().getStorageClassName();
       if (StringUtils.isNotBlank(storageClassName)) {
         logger.info("creating storage provisioning driver.");

@@ -3,7 +3,7 @@
   this.cloudTemplateName=cloudTemplateName;
   this.management=management;
   this.cloudName=cloud.getName();
-  if (management) {
+  if (management && performValidation) {
     publishEvent(CloudifyErrorMessages.EVENT_ATTEMPT_TO_VALIDATE_CLOUD_CONFIG.getName());
     validateCloudConfiguration();
     publishEvent(CloudifyErrorMessages.EVENT_CLOUD_CONFIG_VALIDATED.getName());

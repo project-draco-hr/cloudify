@@ -1,5 +1,5 @@
 {
-  super.setConfig(cloud,templateName,management,serviceName);
+  super.setConfig(cloud,templateName,management,serviceName,performValidations);
   if (this.management) {
     this.serverNamePrefix=this.cloud.getProvider().getManagementGroup();
   }

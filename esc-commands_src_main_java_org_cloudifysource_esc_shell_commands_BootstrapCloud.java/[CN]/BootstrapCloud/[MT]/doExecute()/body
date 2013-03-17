@@ -54,7 +54,7 @@
   limitLoggingLevel();
   logger.info(getFormattedMessage("bootstrapping_cloud",getCloudProvider()));
   try {
-    installer.bootstrapCloudAndWait(securityProfile,username,password,keystorePassword,getTimeoutInMinutes(),TimeUnit.MINUTES);
+    installer.bootstrapCloudAndWait(securityProfile,username,password,keystorePassword,!skipValidation,getTimeoutInMinutes(),TimeUnit.MINUTES);
     return getFormattedMessage("cloud_started_successfully",getCloudProvider());
   }
   finally {

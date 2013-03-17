@@ -2,5 +2,6 @@ String securityProfile
 String username
 String password
 String keystorePassword
+boolean performValidation
 long timeout
 TimeUnit timeoutUnit
