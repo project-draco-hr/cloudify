@@ -29,10 +29,10 @@
       }
  else {
       }
-      publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+      publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
     }
  catch (    Exception ex) {
-      publishEventEnd(" [Error] Invalid key-pair configuration");
+      publishEventEnd(false,VALIDATION_FAILURE_MESSAGE);
       throw new CloudProvisioningException("Invalid key-pair configuration: " + ex.getMessage(),ex);
     }
   }

@@ -18,11 +18,11 @@
         templateProps.putAll(templateOverrides);
         logger.fine("Creating a new cloud deployer");
         effectiveDeployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps);
-        publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+        publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
       }
  catch (      IOException e) {
         closeDeployer(effectiveDeployer);
-        publishEventEnd(" [Error] Authentication to the cloud failed");
+        publishEventEnd(false,VALIDATION_FAILURE_MESSAGE);
         throw new CloudProvisioningException("Authentication to the cloud failed");
       }
       effectiveDeployer.setImageId(template.getImageId());
@@ -31,17 +31,18 @@
       try {
         publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_IMAGE_HARDWARE_LOCATION_COMBINATION.getName(),template.getImageId() == null ? "" : template.getImageId(),template.getHardwareId() == null ? "" : template.getHardwareId(),template.getLocationId() == null ? "" : template.getLocationId());
         effectiveDeployer.getTemplate(template.getLocationId());
-        publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+        publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
       }
  catch (      Exception ex) {
-        publishEventEnd(" [Error] Invalid template configuration");
+        publishEventEnd(false,VALIDATION_FAILURE_MESSAGE);
         throw new CloudProvisioningException("Invalid template configuration: " + ex.getMessage(),ex);
       }
       if (isKnownAPI(apiId)) {
         validateSecurityGroupsForTemplate(template,apiId,effectiveDeployer.getContext());
         validateKeyPairForTemplate(template,apiId,effectiveDeployer.getContext());
       }
-      publishEvent(CloudifyErrorMessages.EVENT_TEMPLATE_VALIDATED.getName(),templateName);
+      publishOngoingEvent(CloudifyErrorMessages.EVENT_TEMPLATE_VALIDATED.getName(),templateName);
+      publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
       closeDeployer(effectiveDeployer);
     }
   }

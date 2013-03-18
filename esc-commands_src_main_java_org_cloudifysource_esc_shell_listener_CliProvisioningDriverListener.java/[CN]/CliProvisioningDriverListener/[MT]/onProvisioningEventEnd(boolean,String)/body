@@ -1,0 +1,13 @@
+{
+  CLIEventsDisplayer displayer=new CLIEventsDisplayer();
+  if (StringUtils.isNotBlank(message)) {
+    if (isSuccessful) {
+      displayer.printColoredMessage(message,Color.GREEN);
+    }
+ else {
+      displayer.printColoredMessage(message,Color.RED);
+    }
+    System.out.flush();
+    logger.log(Level.FINE,message);
+  }
+}

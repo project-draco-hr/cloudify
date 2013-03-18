@@ -7,17 +7,17 @@
     ProviderMetadata providerMetadata=Providers.withId(providerName);
     ApiMetadata apiMetadata=providerMetadata.getApiMetadata();
     apiId=apiMetadata.getId();
-    publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+    publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
   }
  catch (  NoSuchElementException e) {
     try {
       ApiMetadata apiMetadata=Apis.withId(providerName);
       apiId=apiMetadata.getId();
       endpointRequired=true;
-      publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+      publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
     }
  catch (    NoSuchElementException ex) {
-      publishEventEnd(" [Error] Provider not supported: " + providerName);
+      publishEventEnd(false,VALIDATION_FAILURE_MESSAGE);
       throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
     }
   }

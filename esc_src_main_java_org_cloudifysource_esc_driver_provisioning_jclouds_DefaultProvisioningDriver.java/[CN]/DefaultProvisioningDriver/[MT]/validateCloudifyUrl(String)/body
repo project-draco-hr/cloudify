@@ -9,10 +9,10 @@
     publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_CLOUDIFY_URL.getName(),effectiveUrl);
     HttpResponse response=httpClient.execute(httpMethod);
     if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-      publishEventEnd(" [Error] Provider not supported: ");
+      publishEventEnd(false,VALIDATION_FAILURE_MESSAGE);
       throw new CloudProvisioningException("Invalid cloudify URL: " + effectiveUrl);
     }
-    publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+    publishEventEnd(true,VALIDATION_SUCCESS_MESSAGE);
   }
  catch (  ClientProtocolException e) {
     System.out.println("Failed to validate Cloudify URL: " + effectiveUrl);
