@@ -1,0 +1,12 @@
+{
+  String result="";
+  if (strArray != null) {
+    for (    String item : strArray) {
+      if (result.length() > 0) {
+        result+=delimiter;
+      }
+      result+=item;
+    }
+  }
+  return result;
+}

@@ -1,0 +1,14 @@
+{
+  CLIEventsDisplayer displayer=new CLIEventsDisplayer();
+  if (StringUtils.isBlank(status)) {
+    return;
+  }
+  if (StringUtils.containsIgnoreCase(status,"ok")) {
+    displayer.printColoredMessage(status,Color.GREEN);
+  }
+ else {
+    displayer.printColoredMessage(status,Color.RED);
+  }
+  System.out.flush();
+  logger.log(Level.FINE,status);
+}

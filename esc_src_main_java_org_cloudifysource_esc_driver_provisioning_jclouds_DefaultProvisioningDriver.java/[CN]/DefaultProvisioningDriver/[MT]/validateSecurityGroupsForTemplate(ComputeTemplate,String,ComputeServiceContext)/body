@@ -6,24 +6,43 @@
   if (locationId == null) {
     throw new CloudProvisioningException("locationId is missing");
   }
-  Object securityGroupsArr=template.getOptions().get("securityGroupNames");
-  if (securityGroupsArr == null) {
-    securityGroupsArr=template.getOptions().get("securityGroups");
+  Object securityGroupsObj=template.getOptions().get("securityGroupNames");
+  if (securityGroupsObj == null) {
+    securityGroupsObj=template.getOptions().get("securityGroups");
   }
-  if (securityGroupsArr != null && securityGroupsArr instanceof String[]) {
-    if (apiId.equalsIgnoreCase(EC2_API)) {
-      RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
-      validateEc2SecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+  if (securityGroupsObj != null) {
+    if (!(securityGroupsObj instanceof String[])) {
+      throw new CloudProvisioningException("Invalid configuration: Security groups must of type String[]");
     }
- else     if (apiId.equalsIgnoreCase(OPENSTACK_API)) {
-      RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
-      validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
-    }
- else     if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
-    }
- else     if (apiId.equalsIgnoreCase(VCLOUD)) {
-    }
+    String[] securityGroupsArr=(String[])securityGroupsObj;
+    if (securityGroupsArr.length > 0) {
+      try {
+        if (securityGroupsArr.length == 1) {
+          publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_SECURITY_GROUP.getName(),securityGroupsArr[0]);
+        }
  else {
+          publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_SECURITY_GROUPS.getName(),org.cloudifysource.esc.util.StringUtils.arrayToString(securityGroupsArr,","));
+        }
+        if (apiId.equalsIgnoreCase(EC2_API)) {
+          RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+          validateEc2SecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+        }
+ else         if (apiId.equalsIgnoreCase(OPENSTACK_API)) {
+          RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
+          validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+        }
+ else         if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
+        }
+ else         if (apiId.equalsIgnoreCase(VCLOUD)) {
+        }
+ else {
+        }
+        publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+      }
+ catch (      Exception ex) {
+        publishEventEnd(" [Error] Invalid security groups configuration");
+        throw new CloudProvisioningException("Invalid security groups configuration: " + ex.getMessage(),ex);
+      }
     }
   }
 }

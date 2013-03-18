@@ -2,6 +2,7 @@
   JCloudsDeployer effectiveDeployer=null;
   String templateName="";
   try {
+    publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_ALL_TEMPLATES.getName());
     for (    Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
       templateName=entry.getKey();
       publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_TEMPLATE.getName(),templateName);
@@ -11,26 +12,33 @@
         throw new CloudProvisioningException("Endpoint is missing. Add a \"jclouds.endpoint\" entry in" + "the template's overrides section");
       }
       try {
-        publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_CLOUD_CREDENTIALS.getName());
+        publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_CLOUD_CREDENTIALS.getName());
         final Properties templateProps=new Properties();
         Map<String,Object> templateOverrides=template.getOverrides();
         templateProps.putAll(templateOverrides);
         logger.fine("Creating a new cloud deployer");
         effectiveDeployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps);
+        publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
       }
  catch (      IOException e) {
         closeDeployer(effectiveDeployer);
+        publishEventEnd(" [Error] Authentication to the cloud failed");
         throw new CloudProvisioningException("Authentication to the cloud failed");
       }
       effectiveDeployer.setImageId(template.getImageId());
       effectiveDeployer.setHardwareId(template.getHardwareId());
       effectiveDeployer.setExtraOptions(template.getOptions());
-      publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_IMAGE_HARDWARE_LOCATION_COMBINATION.getName(),template.getImageId() == null ? "" : template.getImageId(),template.getHardwareId() == null ? "" : template.getHardwareId(),template.getLocationId() == null ? "" : template.getLocationId());
-      effectiveDeployer.getTemplate(template.getLocationId());
+      try {
+        publishOngoingEvent(CloudifyErrorMessages.EVENT_VALIDATING_IMAGE_HARDWARE_LOCATION_COMBINATION.getName(),template.getImageId() == null ? "" : template.getImageId(),template.getHardwareId() == null ? "" : template.getHardwareId(),template.getLocationId() == null ? "" : template.getLocationId());
+        effectiveDeployer.getTemplate(template.getLocationId());
+        publishEventEnd(VALIDATION_SUCCESS_MESSAGE);
+      }
+ catch (      Exception ex) {
+        publishEventEnd(" [Error] Invalid template configuration");
+        throw new CloudProvisioningException("Invalid template configuration: " + ex.getMessage(),ex);
+      }
       if (isKnownAPI(apiId)) {
-        publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_SECURITY_GROUPS.getName());
         validateSecurityGroupsForTemplate(template,apiId,effectiveDeployer.getContext());
-        publishEvent(CloudifyErrorMessages.EVENT_VALIDATING_KEY_PAIRS.getName());
         validateKeyPairForTemplate(template,apiId,effectiveDeployer.getContext());
       }
       publishEvent(CloudifyErrorMessages.EVENT_TEMPLATE_VALIDATED.getName(),templateName);
