@@ -5,3 +5,6 @@ String authGroups
 int timeout
 boolean selfHealing
 File cloudOverrides
+boolean debugAll
+String debugEvents
+String debugModeString

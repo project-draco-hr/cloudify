@@ -15,12 +15,12 @@
     }
     boolean found=false;
     try {
-      FileAppender appender=new FileAppender("finalPropsFile.properties");
-      LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
-      File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      final FileAppender appender=new FileAppender("finalPropsFile.properties");
+      final LinkedHashMap<File,String> filesToAppend=new LinkedHashMap<File,String>();
+      final File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
       filesToAppend.put(applicationPropertiesFile,"Application Properties File");
-      String propertiesFileName=DSLUtils.getPropertiesFileName(serviceDirectory,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
-      File servicePropertiesFile=new File(serviceDirectory,propertiesFileName);
+      final String propertiesFileName=DSLUtils.getPropertiesFileName(serviceDirectory,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+      final File servicePropertiesFile=new File(serviceDirectory,propertiesFileName);
       filesToAppend.put(servicePropertiesFile,"Service Properties File");
       File actualOverridesFile=overridesFile;
       if (actualOverridesFile == null) {
@@ -28,7 +28,7 @@
       }
       filesToAppend.put(actualOverridesFile,"Overrides Properties File");
       appender.appendAll(servicePropertiesFile,filesToAppend);
-      File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
+      final File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
       logger.info("Deploying PU: " + absolutePUName + ". File: "+ packedFile+ ". Properties: "+ contextProperties);

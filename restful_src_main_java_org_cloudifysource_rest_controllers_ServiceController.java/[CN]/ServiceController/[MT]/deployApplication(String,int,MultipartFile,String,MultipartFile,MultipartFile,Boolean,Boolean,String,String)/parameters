@@ -5,3 +5,6 @@ String authGroups
 MultipartFile recipeOverridesFile
 MultipartFile cloudOverrides
 Boolean selfHealing
+Boolean debugAll
+String debugEvents
+String debugMode

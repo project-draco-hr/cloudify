@@ -15,7 +15,7 @@
   }
   final File applicationOverridesFile=copyMultipartFileToLocalFile(recipeOverridesFile);
   final File cloudOverridesFile=copyMultipartFileToLocalFile(cloudOverrides);
-  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,effectiveAuthGroups,timeout,actualSelfHealing,cloudOverridesFile);
+  final Object returnObject=doDeployApplication(applicationName,applicationFile,applicationOverridesFile,effectiveAuthGroups,timeout,actualSelfHealing,cloudOverridesFile,debugAll,debugEvents,debugMode);
   FileUtils.deleteQuietly(applicationOverridesFile);
   applicationFile.delete();
   return returnObject;

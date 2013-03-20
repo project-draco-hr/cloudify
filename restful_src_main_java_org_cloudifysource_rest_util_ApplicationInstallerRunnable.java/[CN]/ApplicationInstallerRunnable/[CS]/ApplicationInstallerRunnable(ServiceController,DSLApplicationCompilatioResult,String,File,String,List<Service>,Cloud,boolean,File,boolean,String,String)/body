@@ -9,4 +9,7 @@
   this.selfHealing=selfHealing;
   this.authGroups=authGroups;
   this.cloudOverrides=cloudOverrides;
+  this.debugAll=debugAll;
+  this.debugModeString=debugModeString;
+  this.debugEvents=debugEvents;
 }
