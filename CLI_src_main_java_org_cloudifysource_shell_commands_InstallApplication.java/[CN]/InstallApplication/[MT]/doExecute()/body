@@ -1,4 +1,10 @@
 {
+  try {
+    DebugUtils.validateDebugSettings(debugAll,debugEvents,debugModeString);
+  }
+ catch (  final DSLErrorMessageException e) {
+    throw new CLIStatusException(e.getErrorMessage().getName(),(Object[])e.getArgs());
+  }
   if (cloudOverrides != null) {
     if (cloudOverrides.length() >= TEN_K) {
       throw new CLIStatusException(CloudifyErrorMessages.CLOUD_OVERRIDES_TO_LONG.getName());
@@ -41,7 +47,7 @@
     zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,overrides,cloudOverrides);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,overrides,cloudOverrides,debugAll,debugEvents,debugModeString);
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
     boolean delete=zipFile.delete();

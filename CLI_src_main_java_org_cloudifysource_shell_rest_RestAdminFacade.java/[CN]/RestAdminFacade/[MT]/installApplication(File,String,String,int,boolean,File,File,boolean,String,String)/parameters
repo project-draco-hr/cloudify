@@ -5,3 +5,6 @@ int timeout
 boolean selfHealing
 File applicationOverrides
 File cloudOverrides
+boolean debugAll
+String debugEvents
+String debugMode

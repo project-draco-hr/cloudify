@@ -1,9 +1,9 @@
 {
   try {
-    List<ControllerDetails> controllers=this.client.shutdownManagers();
+    final List<ControllerDetails> controllers=this.client.shutdownManagers();
     return controllers;
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e);
   }
 }

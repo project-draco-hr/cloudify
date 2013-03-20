@@ -1,10 +1,16 @@
 {
+  try {
+    DebugUtils.validateDebugSettings(debugAll,debugEvents,debugModeString);
+  }
+ catch (  final DSLErrorMessageException e) {
+    throw new CLIStatusException(e,e.getErrorMessage().getName(),(Object[])e.getArgs());
+  }
   if (cloudOverrides != null) {
     if (cloudOverrides.length() >= TEN_K) {
       throw new CLIStatusException(CloudifyErrorMessages.CLOUD_OVERRIDES_TO_LONG.getName());
     }
   }
-  RecipePathResolver pathResolver=new RecipePathResolver();
+  final RecipePathResolver pathResolver=new RecipePathResolver();
   if (pathResolver.resolveService(recipe)) {
     recipe=pathResolver.getResolved();
   }

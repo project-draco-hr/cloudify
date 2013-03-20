@@ -15,5 +15,13 @@
     }
   }
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,Boolean.toString(service.isElastic()));
+  if (this.debugAll) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL,Boolean.TRUE.toString());
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,this.getDebugModeString());
+  }
+ else   if (this.debugEvents != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_EVENTS,this.debugEvents);
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,this.getDebugModeString());
+  }
   return contextProperties;
 }

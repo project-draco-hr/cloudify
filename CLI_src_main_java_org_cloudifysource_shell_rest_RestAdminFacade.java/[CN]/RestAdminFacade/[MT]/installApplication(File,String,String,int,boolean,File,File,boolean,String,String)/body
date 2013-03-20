@@ -1,5 +1,5 @@
 {
-  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/timeout/"+ timeout+ "?selfHealing="+ Boolean.toString(selfHealing);
+  final String url=SERVICE_CONTROLLER_URL + "applications/" + applicationName+ "/timeout/"+ timeout+ "?selfHealing="+ Boolean.toString(selfHealing)+ "&debugAll="+ Boolean.toString(debugAll)+ "&debugEvents="+ debugEvents+ "&debugMode="+ debugMode;
   final Map<String,File> filesToPost=new HashMap<String,File>();
   filesToPost.put("file",applicationFile);
   filesToPost.put(CloudifyConstants.CLOUD_OVERRIDES_FILE_PARAM,cloudOverrides);

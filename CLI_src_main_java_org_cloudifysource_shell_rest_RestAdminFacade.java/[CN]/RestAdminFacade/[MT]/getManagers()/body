@@ -2,7 +2,7 @@
   try {
     return client.getManagers();
   }
- catch (  ErrorStatusException e) {
+ catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e);
   }
 }
