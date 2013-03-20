@@ -1,32 +1,22 @@
 {
-  try {
-    new CloudifyLicenseVerifier().verifyLicense();
-    final String javaHome=System.getenv("JAVA_HOME");
-    if (javaHome == null || javaHome.trim().length() == 0) {
-      return messages.getString("missing_java_home");
-    }
-    final boolean javaHomeValid=isJavaHomeValid(javaHome);
-    if (!javaHomeValid) {
-      return getFormattedMessage("incorrect_java_home",Color.RED,javaHome);
-    }
-    setSecurityMode();
-    final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
-    installer.setVerbose(verbose);
-    installer.setLookupGroups(lookupGroups);
-    installer.setNicAddress(nicAddress);
-    installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
-    installer.setWaitForWebui(true);
-    installer.addListener(new CLILocalhostBootstrapperListener());
-    installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
-    installer.startLocalCloudOnLocalhostAndWait(securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
-    return messages.getString("local_cloud_started");
+  new CloudifyLicenseVerifier().verifyLicense();
+  final String javaHome=System.getenv("JAVA_HOME");
+  if (javaHome == null || javaHome.trim().length() == 0) {
+    return messages.getString("missing_java_home");
   }
-  finally {
-    try {
-      revertSecurityFiles();
-    }
- catch (    final Exception e) {
-      logger.log(Level.SEVERE,"Failed to revert security files before finishing bootstrap-localcloud command",e);
-    }
+  final boolean javaHomeValid=isJavaHomeValid(javaHome);
+  if (!javaHomeValid) {
+    return getFormattedMessage("incorrect_java_home",Color.RED,javaHome);
   }
+  setSecurityMode();
+  final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
+  installer.setVerbose(verbose);
+  installer.setLookupGroups(lookupGroups);
+  installer.setNicAddress(nicAddress);
+  installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
+  installer.setWaitForWebui(true);
+  installer.addListener(new CLILocalhostBootstrapperListener());
+  installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
+  installer.startLocalCloudOnLocalhostAndWait(securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
+  return messages.getString("local_cloud_started");
 }

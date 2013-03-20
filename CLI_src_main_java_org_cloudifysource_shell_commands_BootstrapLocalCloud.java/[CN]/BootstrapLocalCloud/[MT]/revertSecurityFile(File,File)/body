@@ -1,9 +1,0 @@
-{
-  if (backupFile.exists()) {
-    FileUtils.copyFile(backupFile,defaultFile);
-    FileUtils.deleteQuietly(backupFile);
-  }
- else {
-    FileUtils.deleteQuietly(defaultFile);
-  }
-}
