@@ -1,3 +1,0 @@
-{
-  return launchProcess(arg,workingDir,0,true,params);
-}

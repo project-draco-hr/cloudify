@@ -1,0 +1,48 @@
+{
+  if (outputFile == null && errorFile != null || outputFile != null && errorFile == null) {
+    throw new IllegalArgumentException("Both output and error files must be set, or none of them");
+  }
+  if (redirectErrorStream && (outputFile != null || errorFile != null)) {
+    throw new IllegalArgumentException("If redirectError option is chosen, neither output file or error file can be set");
+  }
+  List<String> modifiedCommandLineParams=null;
+  if (isDebugEvent(event)) {
+    logger.info("DEBUG BREAKPOINT!");
+    DebugHookInvoker dhi=new DebugHookInvoker();
+    final ClassLoader loader=this.configutaion.getDslClassLoader();
+    logger.info("DSL Class Loader is: " + loader);
+    modifiedCommandLineParams=dhi.setUpDebugHook(this.configutaion.getServiceContext(),commandLineParams,loader,this.debugMode);
+  }
+ else {
+    modifiedCommandLineParams=commandLineParams;
+  }
+  modifyCommandLine(modifiedCommandLineParams,workingDir,outputFile,errorFile);
+  final String modifiedCommandLine=org.springframework.util.StringUtils.collectionToDelimitedString(modifiedCommandLineParams," ");
+  this.commandLine=modifiedCommandLineParams;
+  int attempt=1;
+  USMException ex=null;
+  while (attempt <= retries + 1) {
+    final ProcessBuilder pb=new ProcessBuilder(modifiedCommandLineParams);
+    pb.directory(workingDir);
+    pb.redirectErrorStream(redirectErrorStream);
+    final Map<String,String> env=createEnvironment();
+    pb.environment().putAll(env);
+    try {
+      logger.fine("Parsed command line: " + commandLineParams.toString());
+      final String fileInitialMessage="Starting service process in working directory:'" + workingDir + "' "+ "at:'"+ new Date()+ "' with command:'"+ modifiedCommandLineParams+ "'"+ System.getProperty("line.separator");
+      if (outputFile != null) {
+        appendMessageToFile(fileInitialMessage,outputFile);
+      }
+      if (errorFile != null) {
+        appendMessageToFile(fileInitialMessage,errorFile);
+      }
+      return pb.start();
+    }
+ catch (    final IOException e) {
+      ex=new USMException("Failed to start process with command line: " + modifiedCommandLine,e);
+      logger.log(Level.SEVERE,"Process start attempt number " + attempt + " failed",ex);
+    }
+    ++attempt;
+  }
+  throw ex;
+}

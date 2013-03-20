@@ -1,0 +1,8 @@
+ExecutableDSLEntry arg
+File workingDir
+int retries
+boolean redirectErrorStream
+File outputFile
+File errorFile
+List<String> params
+LifecycleEvents event

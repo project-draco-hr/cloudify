@@ -5,7 +5,7 @@
   }
   return new LivenessDetector(){
     @Override public boolean isProcessAlive() throws USMException {
-      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
+      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir,LifecycleEvents.START_DETECTION).run();
       if (result.isSuccess()) {
         final Object retcode=result.getResult();
         if (retcode instanceof Boolean) {

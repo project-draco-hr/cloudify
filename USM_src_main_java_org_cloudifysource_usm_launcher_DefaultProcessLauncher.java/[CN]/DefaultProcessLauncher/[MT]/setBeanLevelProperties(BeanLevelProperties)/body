@@ -1,0 +1,32 @@
+{
+  Properties contextProperties=beanLevelProperties.getContextProperties();
+  final String debugAllString=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL);
+  final String debugEvents=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_EVENTS);
+  final String debugModeString=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE);
+  logger.info("Debug All: " + debugAllString + ", Debug events: "+ debugEvents+ ", Debug mode: "+ debugModeString);
+  if (debugAllString != null) {
+    this.debugAllEvents=Boolean.parseBoolean(debugAllString);
+  }
+  if (debugEvents != null) {
+    String[] parts=debugEvents.split(",");
+    final Set<LifecycleEvents> debugEventsSet=new HashSet<LifecycleEvents>();
+    for (    String part : parts) {
+      final String trimmedEventName=part.trim();
+      final LifecycleEvents event=LifecycleEvents.getEventByName(trimmedEventName);
+      if (event == null) {
+        logger.warning("Unknown event name passed in debug configuration: " + trimmedEventName);
+      }
+ else {
+        debugEventsSet.add(event);
+      }
+    }
+    this.debugEvents=debugEventsSet;
+  }
+  if (debugModeString != null) {
+    this.debugMode=DebugModes.nameOf(debugModeString);
+    if (this.debugMode == null) {
+      throw new IllegalArgumentException("Unknown debug mode: " + debugModeString);
+    }
+  }
+  logger.info("Debug event flags -- All: " + this.debugAllEvents + ", Events: "+ this.debugEvents+ ", Mode: "+ this.debugMode);
+}

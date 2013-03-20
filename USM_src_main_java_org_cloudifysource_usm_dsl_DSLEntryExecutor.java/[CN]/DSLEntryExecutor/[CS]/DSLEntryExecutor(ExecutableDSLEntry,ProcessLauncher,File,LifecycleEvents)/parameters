@@ -1,0 +1,4 @@
+ExecutableDSLEntry entry
+ProcessLauncher launcher
+File workDir
+LifecycleEvents event

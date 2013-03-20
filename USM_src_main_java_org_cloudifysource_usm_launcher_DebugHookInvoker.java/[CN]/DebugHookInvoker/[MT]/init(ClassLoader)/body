@@ -1,0 +1,18 @@
+{
+  if (initialized) {
+    return;
+  }
+  clazz=loader.loadClass("org.cloudifysource.debug.DebugHook");
+  Constructor<?>[] constructors=clazz.getConstructors();
+  constructor=null;
+  for (  Constructor<?> aconstructor : constructors) {
+    if (aconstructor.getParameterTypes().length == 2) {
+      constructor=aconstructor;
+      break;
+    }
+  }
+  if (constructor == null) {
+    throw new IllegalStateException("Could not find DebugHook with expected number of parameters");
+  }
+  debugMethod=clazz.getMethod("debug",List.class);
+}

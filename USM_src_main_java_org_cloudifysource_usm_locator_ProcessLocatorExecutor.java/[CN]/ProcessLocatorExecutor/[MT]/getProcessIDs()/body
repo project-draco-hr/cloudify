@@ -1,5 +1,5 @@
 {
-  final EventResult result=new DSLEntryExecutor(locator,launcher,puExtDir).run();
+  final EventResult result=new DSLEntryExecutor(locator,launcher,puExtDir,LifecycleEvents.PROCESS_LOCATOR).run();
   if (result.isSuccess()) {
     final Object retval=result.getResult();
     if (retval instanceof List<?>) {

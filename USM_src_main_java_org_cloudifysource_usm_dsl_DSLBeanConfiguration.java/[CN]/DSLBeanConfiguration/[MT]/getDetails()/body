@@ -11,7 +11,7 @@
         if (details instanceof Map<?,?>) {
           for (          final Map.Entry<String,Object> entry : ((Map<String,Object>)details).entrySet()) {
             if (entry.getValue() instanceof Closure) {
-              final EventResult value=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(entry.getValue(),"details",puExtDir),launcher,puExtDir).run();
+              final EventResult value=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(entry.getValue(),"details",puExtDir),launcher,puExtDir,LifecycleEvents.SERVICE_DETAILS).run();
               if (value.isSuccess()) {
                 returnMap.put(entry.getKey(),value.getResult());
               }
@@ -25,7 +25,7 @@
           }
         }
  else         if (details instanceof Closure) {
-          final EventResult result=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(details,"details",puExtDir),launcher,puExtDir).run();
+          final EventResult result=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(details,"details",puExtDir),launcher,puExtDir,LifecycleEvents.SERVICE_DETAILS).run();
           if (result.isSuccess()) {
             returnMap.putAll((Map<String,Object>)result.getResult());
           }

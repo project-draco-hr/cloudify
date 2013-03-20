@@ -14,5 +14,5 @@
   dslReader.setLoadUsmLib(false);
   logger.info("Loading Service configuration from DSL File");
   Service service=dslReader.readDslEntity(Service.class);
-  return new ServiceConfiguration(service,dslReader.getContext(),this.puExtDir,dslReader.getDslFile());
+  return new ServiceConfiguration(service,dslReader.getContext(),this.puExtDir,dslReader.getDslFile(),dslReader.getDSLClassLoader());
 }

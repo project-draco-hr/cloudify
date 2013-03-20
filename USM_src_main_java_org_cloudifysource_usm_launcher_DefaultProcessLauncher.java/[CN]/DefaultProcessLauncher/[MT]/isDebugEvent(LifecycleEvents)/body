@@ -1,0 +1,3 @@
+{
+  return ServiceUtils.isLinuxOrUnix() && (this.debugAllEvents || this.debugEvents.contains(event)) && !event.equals(LifecycleEvents.START);
+}

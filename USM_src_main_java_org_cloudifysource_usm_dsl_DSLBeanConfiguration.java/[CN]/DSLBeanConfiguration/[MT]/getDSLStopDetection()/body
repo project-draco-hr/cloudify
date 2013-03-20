@@ -10,7 +10,7 @@
       return 5;
     }
     @Override public boolean isServiceStopped() throws USMException {
-      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir).run();
+      final EventResult result=new DSLEntryExecutor(detector,launcher,puExtDir,LifecycleEvents.STOP_DETECTION).run();
       if (result.isSuccess()) {
         final Object retcode=result.getResult();
         if (retcode instanceof Boolean) {

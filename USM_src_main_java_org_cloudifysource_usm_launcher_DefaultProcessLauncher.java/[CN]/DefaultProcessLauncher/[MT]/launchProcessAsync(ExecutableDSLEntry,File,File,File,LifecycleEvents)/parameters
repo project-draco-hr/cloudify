@@ -1,0 +1,5 @@
+ExecutableDSLEntry arg
+File workingDir
+File outputFile
+File errorFile
+LifecycleEvents event

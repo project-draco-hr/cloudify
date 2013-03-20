@@ -1,3 +1,0 @@
-{
-  this(entry,launcher,workDir,new HashMap<String,Object>());
-}

@@ -1,0 +1,64 @@
+{
+  final List<String> paramsList=getParamsListFromMap(params);
+  if (arg.getEntryType() == ExecutableDSLEntryType.CLOSURE) {
+    final Closure<?> closure=((ClosureExecutableEntry)arg).getCommand();
+    try {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Closure Parameters: " + paramsList.toString());
+      }
+      return closure.call(paramsList.toArray());
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"A closure entry failed to execute: " + e.getMessage(),e);
+      throw new USMException("Failed to execute closure " + e.getMessage(),e);
+    }
+  }
+  final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,paramsList,event);
+  final BufferedReader reader=new BufferedReader(new InputStreamReader(proc.getInputStream()));
+  String line=null;
+  final StringBuilder sb=new StringBuilder();
+  final String newline=System.getProperty("line.separator");
+  logger.info("Command Output:");
+  try {
+    do {
+      if (line != null) {
+        sb.append(line).append(newline);
+        logger.info(line);
+      }
+      line=reader.readLine();
+    }
+ while (line != null);
+  }
+ catch (  final IOException ioe) {
+    throw new USMException("Failed to execute command: " + commandLine,ioe);
+  }
+ finally {
+    if (reader != null) {
+      try {
+        reader.close();
+      }
+ catch (      final IOException e) {
+      }
+    }
+  }
+  try {
+    final int exitValue=proc.waitFor();
+    logger.info("Command exited with value: " + exitValue);
+    if (exitValue != 0) {
+      logger.severe("Event lifecycle external process exited with abnormal status code: " + exitValue);
+      final String result=sb.toString();
+      final String exceptionReason=GroovyExceptionHandler.getExceptionString(result);
+      logger.log(Level.SEVERE,"Event lifecycle external process failed: " + result);
+      throw new USMException("Event lifecycle external process exited with abnormal status code: " + exitValue + " "+ exceptionReason);
+    }
+  }
+ catch (  final InterruptedException e) {
+    logger.warning("Interrupted while waiting for process to exit");
+  }
+  try {
+    Thread.sleep(POST_SYNC_PROCESS_SLEEP_INTERVAL);
+  }
+ catch (  final InterruptedException e) {
+  }
+  return sb.toString();
+}

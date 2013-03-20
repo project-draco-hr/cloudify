@@ -1,7 +1,0 @@
-{
-  if (arg.getEntryType() == ExecutableDSLEntryType.CLOSURE) {
-    return launchAsyncFromClosure(((ClosureExecutableEntry)arg).getCommand());
-  }
-  commandLine=getCommandLineFromArgument(arg,workingDir,params);
-  return this.launch(commandLine,workingDir,retries,redirectErrorStream,outputFile,errorFile);
-}

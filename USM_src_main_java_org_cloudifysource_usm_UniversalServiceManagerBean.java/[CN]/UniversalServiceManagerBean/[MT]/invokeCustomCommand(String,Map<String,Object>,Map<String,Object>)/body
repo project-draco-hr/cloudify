@@ -13,7 +13,7 @@
     if (logger.isLoggable(Level.FINE)) {
       logger.fine("Executing custom command: " + commandName + ". Custom command is: "+ customCommand);
     }
-    final EventResult executionResult=new DSLEntryExecutor(customCommand,this.getUsmLifecycleBean().getLauncher(),this.getPuExtDir(),namedArgs).run();
+    final EventResult executionResult=new DSLEntryExecutor(customCommand,this.getUsmLifecycleBean().getLauncher(),this.getPuExtDir(),namedArgs,LifecycleEvents.CUSTOM_COMMAND).run();
     result.put(CloudifyConstants.INVOCATION_RESPONSE_STATUS,executionResult.isSuccess());
     result.put(CloudifyConstants.INVOCATION_RESPONSE_EXCEPTION,executionResult.getException());
     result.put(CloudifyConstants.INVOCATION_RESPONSE_RESULT,executionResult.getResult());

@@ -1,6 +1,0 @@
-{
-  this.entry=entry;
-  this.launcher=launcher;
-  this.workDir=workDir;
-  this.params=params;
-}

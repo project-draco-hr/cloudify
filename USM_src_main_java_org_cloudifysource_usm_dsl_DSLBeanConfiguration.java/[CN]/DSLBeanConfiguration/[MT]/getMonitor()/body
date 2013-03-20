@@ -23,7 +23,7 @@
           final Object object=entryObject.getValue();
           EventResult result;
           try {
-            result=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(object,entryObject.getKey(),puExtDir),launcher,puExtDir).run();
+            result=new DSLEntryExecutor(ExecutableDSLEntryFactory.createEntry(object,entryObject.getKey(),puExtDir),launcher,puExtDir,LifecycleEvents.SERVICE_MONITORS).run();
           }
  catch (          final DSLValidationException e) {
             throw new MonitorException("Executable entry in monitor is invalid",e);

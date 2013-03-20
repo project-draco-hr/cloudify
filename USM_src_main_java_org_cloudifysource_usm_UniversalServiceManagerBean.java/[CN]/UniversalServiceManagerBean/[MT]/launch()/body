@@ -13,7 +13,7 @@ synchronized (this.stateMutex) {
       }
  else {
         try {
-          this.process=getUsmLifecycleBean().getLauncher().launchProcessAsync(startCommand,this.puExtDir,getOutputFile(),getErrorFile());
+          this.process=getUsmLifecycleBean().getLauncher().launchProcessAsync(startCommand,this.puExtDir,getOutputFile(),getErrorFile(),LifecycleEvents.START);
         }
  catch (        final USMException e) {
           getUsmLifecycleBean().logProcessStartFailureEvent(e.getMessage());

@@ -1,6 +1,0 @@
-List<String> commandLineParams
-File workingDir
-int retries
-boolean redirectErrorStream
-File outputFile
-File errorFile

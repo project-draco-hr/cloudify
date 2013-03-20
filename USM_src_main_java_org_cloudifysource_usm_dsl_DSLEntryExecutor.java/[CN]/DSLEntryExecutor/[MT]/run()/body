@@ -3,7 +3,7 @@
     return EventResult.SUCCESS;
   }
   try {
-    final Object result=launcher.launchProcess(entry,workDir,params);
+    final Object result=launcher.launchProcess(entry,workDir,params,event);
     return new EventResult(result);
   }
  catch (  final USMException e) {

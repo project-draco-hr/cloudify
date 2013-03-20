@@ -1,3 +1,0 @@
-{
-  return launchProcess(arg,workingDir,new HashMap<String,Object>());
-}

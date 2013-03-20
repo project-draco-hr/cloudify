@@ -1,0 +1,4 @@
+ServiceContext context
+List<String> command
+ClassLoader loader
+DebugModes mode

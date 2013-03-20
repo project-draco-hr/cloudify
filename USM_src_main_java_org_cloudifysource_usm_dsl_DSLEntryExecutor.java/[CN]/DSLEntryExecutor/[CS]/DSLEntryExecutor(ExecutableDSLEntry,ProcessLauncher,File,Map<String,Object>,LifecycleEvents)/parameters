@@ -1,0 +1,5 @@
+ExecutableDSLEntry entry
+ProcessLauncher launcher
+File workDir
+Map<String,Object> params
+LifecycleEvents event

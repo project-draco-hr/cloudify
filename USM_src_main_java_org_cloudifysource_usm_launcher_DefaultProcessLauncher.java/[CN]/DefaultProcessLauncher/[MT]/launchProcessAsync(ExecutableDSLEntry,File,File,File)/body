@@ -1,3 +1,0 @@
-{
-  return launchAsync(arg,workingDir,0,false,outputFile,errorFile,null);
-}
