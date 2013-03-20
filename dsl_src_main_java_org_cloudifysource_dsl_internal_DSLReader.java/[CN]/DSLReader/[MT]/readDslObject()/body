@@ -65,5 +65,6 @@
       this.context.initInIntegratedContainer((Service)result);
     }
   }
+  this.dslClassLoader=gs.getClassLoader();
   return result;
 }

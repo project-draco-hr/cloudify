@@ -1,0 +1,29 @@
+{
+  if (!debugAll && debugEvents == null) {
+    return;
+  }
+  if (debugAll && debugEvents != null) {
+    throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_EVENTS_AND_ALL_SET);
+  }
+  DebugModes mode=DebugModes.nameOf(debugModeString);
+  if (mode == null) {
+    throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_UNKNOWN_MODE,debugModeString,DebugModes.getNames().toString());
+  }
+  if (debugEvents != null) {
+    final String[] parts=debugEvents.split(",");
+    final Set<LifecycleEvents> debugEventsSet=new HashSet<LifecycleEvents>();
+    for (    final String part : parts) {
+      final String temp=part.trim();
+      final LifecycleEvents event=LifecycleEvents.getEventByName(temp);
+      if (event == null) {
+        throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_EVENT_UNKNOWN,part);
+      }
+ else       if (debugEventsSet.contains(event)) {
+        throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_EVENT_REPEATS,part);
+      }
+ else {
+        debugEventsSet.add(event);
+      }
+    }
+  }
+}

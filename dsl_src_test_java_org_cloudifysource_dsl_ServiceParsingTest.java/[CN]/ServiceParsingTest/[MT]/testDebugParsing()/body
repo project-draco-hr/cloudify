@@ -1,0 +1,4 @@
+{
+  final File testDebugPath=new File(TEST_PARSING_DEBUG);
+  final Service service=ServiceReader.getServiceFromDirectory(testDebugPath).getService();
+}

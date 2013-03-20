@@ -2,7 +2,8 @@
   final PropertyDescriptor descriptor=PropertyUtils.getPropertyDescriptor(object,name);
   final Class<?> propertyType=descriptor.getPropertyType();
   if (propertyType.equals(ExecutableDSLEntry.class)) {
-    return ExecutableDSLEntryFactory.createEntry(value,name,workDirectory);
+    ExecutableDSLEntry entry=ExecutableDSLEntryFactory.createEntry(value,name,workDirectory);
+    return entry;
   }
  else   if (propertyType.equals(ExecutableEntriesMap.class)) {
     return ExecutableDSLEntryFactory.createEntriesMap(value,name,workDirectory);
