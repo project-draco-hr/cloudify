@@ -1,4 +1,5 @@
 {
+  logger.fine("Waiting for volume '" + volumeId + "' to reach status "+ status);
   Set<Volume> volumes;
   while (System.currentTimeMillis() < end) {
     try {
@@ -12,6 +13,9 @@
     Status volumeStatus=volume.getStatus();
     if (volumeStatus.equals(status)) {
       return;
+    }
+ else {
+      logger.fine("volume[" + volumeId + "] is in status "+ volume.getStatus());
     }
   }
   throw new TimeoutException("Timed out waiting for storage status to become " + status.toString());
