@@ -1,5 +1,5 @@
 {
-  logger.info("Cloudify Adapter is starting a new machine with zones " + zones.getZones());
+  logger.info("Cloudify Adapter is starting a new machine with zones " + zones.getZones() + " and reservation id "+ reservationId);
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
@@ -40,7 +40,7 @@
     }
   }
  catch (  final Exception e) {
-    throw new ElasticMachineProvisioningException("Failed to provisiong machine: " + e.getMessage(),e);
+    throw new ElasticMachineProvisioningException("Failed to provision machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
   String machineIp;
@@ -80,12 +80,17 @@
       logger.info("Machine provisioning provided a machine and indicated that an agent is already running");
     }
  else {
-      logger.info("Cloudify Adapter is installing Cloudify on new machine");
+      logger.info("Cloudify Adapter is installing Cloudify agent with reservation id " + reservationId + " on "+ machineIp);
       installAndStartAgent(machineDetails,reservationId,end);
       checkForProvisioningTimeout(end,machineDetails);
     }
-    logger.info("Cloudify adapter is waiting for GSA to become available");
+    logger.info("Cloudify adapter is waiting for GSA with reservation id " + reservationId.toString() + " to become available");
     final GridServiceAgent gsa=waitForGsa(machineIp,end);
+    final GSAReservationId discoveredReservationId=((InternalGridServiceAgent)gsa).getReservationId();
+    logger.info("Discovered agent with reservation id " + discoveredReservationId);
+    if (!reservationId.equals(discoveredReservationId)) {
+      throw new IllegalStateException("Cloudify Adapter discovered the wrong agent. expected reservation id is " + reservationId + ". but actual was "+ discoveredReservationId);
+    }
     if (gsa == null) {
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
