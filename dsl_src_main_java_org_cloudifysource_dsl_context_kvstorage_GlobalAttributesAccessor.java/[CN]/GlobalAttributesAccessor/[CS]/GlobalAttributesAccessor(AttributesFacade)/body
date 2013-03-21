@@ -1,3 +1,3 @@
 {
-  super(attributesFacade,APPLICATION_NAME_STUB);
+  super(attributesFacade,null);
 }
