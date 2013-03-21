@@ -1,5 +1,7 @@
 {
+  logger.fine("Validating " + machineDetails + " after provisioning ");
   String machineIp;
+  logger.fine("Listing existing agents");
   GridServiceAgents gridServiceAgents=originalESMAdmin.getGridServiceAgents();
   for (  GridServiceAgent agent : gridServiceAgents) {
     if (cloud.getConfiguration().isConnectToPrivateIp()) {
@@ -8,6 +10,7 @@
  else {
       machineIp=machineDetails.getPublicAddress();
     }
+    logger.fine("Found agent " + agent.getUid() + " on host "+ agent.getMachine().getHostAddress());
     if (agent.getMachine().getHostAddress().equals(machineIp)) {
       throw new CloudProvisioningException("An existing agent with ip " + machineIp + " was discovered. this machine is invalid.");
     }
