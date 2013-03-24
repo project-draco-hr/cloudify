@@ -1,6 +1,6 @@
 {
   try {
-    DebugUtils.validateDebugSettings(debugAll,debugEvents,debugModeString);
+    DebugUtils.validateDebugSettings(debugAll,debugEvents,getDebugModeString());
   }
  catch (  final DSLErrorMessageException e) {
     throw new CLIStatusException(e.getErrorMessage().getName(),(Object[])e.getArgs());
@@ -10,7 +10,7 @@
       throw new CLIStatusException(CloudifyErrorMessages.CLOUD_OVERRIDES_TO_LONG.getName());
     }
   }
-  RecipePathResolver pathResolver=new RecipePathResolver();
+  final RecipePathResolver pathResolver=new RecipePathResolver();
   if (pathResolver.resolveApplication(applicationFile)) {
     applicationFile=pathResolver.getResolved();
   }
@@ -40,17 +40,17 @@
     }
   }
  else {
-    List<File> additionalServiceFiles=new LinkedList<File>();
+    final List<File> additionalServiceFiles=new LinkedList<File>();
     if (cloudConfigurationZipFile != null) {
       additionalServiceFiles.add(cloudConfigurationZipFile);
     }
     zipFile=Packager.packApplication(application,applicationFile,additionalServiceFiles);
   }
   logger.info("Uploading application " + applicationName);
-  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!disableSelfHealing,overrides,cloudOverrides,debugAll,debugEvents,debugModeString);
+  final Map<String,String> result=adminFacade.installApplication(zipFile,applicationName,authGroups,getTimeoutInMinutes(),!isDisableSelfHealing(),overrides,cloudOverrides,debugAll,debugEvents,getDebugModeString());
   final String serviceOrder=result.get(CloudifyConstants.SERVICE_ORDER);
   if (!applicationFile.isFile()) {
-    boolean delete=zipFile.delete();
+    final boolean delete=zipFile.delete();
     if (!delete) {
       logger.info("Failed to delete application file: " + zipFile.getAbsolutePath());
     }

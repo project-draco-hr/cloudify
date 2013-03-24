@@ -7,7 +7,7 @@
   }
   final File tempDir=File.createTempFile("__Cloudify_Cloud_configuration",".tmp");
   FileUtils.forceDelete(tempDir);
-  boolean mkdirs=tempDir.mkdirs();
+  final boolean mkdirs=tempDir.mkdirs();
   if (!mkdirs) {
     logger.info("Field to create temporary directory " + tempDir.getAbsolutePath());
   }

@@ -30,8 +30,8 @@
         additionFiles.add(cloudConfigurationZipFile);
       }
       File recipeFile=recipe;
-      if (serviceFileName != null) {
-        final File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + serviceFileName);
+      if (getServiceFileName() != null) {
+        final File fullPathToRecipe=new File(recipe.getAbsolutePath() + "/" + getServiceFileName());
         if (!fullPathToRecipe.exists()) {
           throw new CLIStatusException("service_file_doesnt_exist",fullPathToRecipe.getPath());
         }
@@ -59,8 +59,8 @@ catch (  final PackagingException e) {
   Properties props=null;
   if (service != null) {
     props=createServiceContextProperties(service);
-    if (serviceFileName != null) {
-      props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME,serviceFileName);
+    if (getServiceFileName() != null) {
+      props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_FILE_NAME,getServiceFileName());
     }
     if (serviceName == null || serviceName.isEmpty()) {
       serviceName=service.getName();

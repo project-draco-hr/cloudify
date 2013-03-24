@@ -2,7 +2,7 @@
   displayer.printEvent("CLOUDIFY LOCAL-CLOUD STARTED");
   displayer.printEvent("");
   displayer.printEvent("LOCAL-CLOUD INFO :");
-  for (  String eventString : localcloudInfoEvents) {
+  for (  final String eventString : localcloudInfoEvents) {
     displayer.printEvent(eventString);
   }
 }

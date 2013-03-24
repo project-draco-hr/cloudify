@@ -1,5 +1,5 @@
 {
-  List<Service> services=application.getServices();
+  final List<Service> services=application.getServices();
   logger.info("Application [" + applicationName + "] with "+ services.size()+ " services");
   for (  final Service service : services) {
     if (service.getDependsOn().isEmpty()) {

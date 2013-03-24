@@ -3,7 +3,7 @@
     displayer.printNoChange();
   }
  else {
-    Matcher matcher=pattern.matcher(event);
+    final Matcher matcher=pattern.matcher(event);
     if (matcher.find()) {
       if (event.contains("Webui")) {
         localcloudInfoEvents.add("\t\tCLOUDIFY MANAGEMENT\t" + matcher.group());
