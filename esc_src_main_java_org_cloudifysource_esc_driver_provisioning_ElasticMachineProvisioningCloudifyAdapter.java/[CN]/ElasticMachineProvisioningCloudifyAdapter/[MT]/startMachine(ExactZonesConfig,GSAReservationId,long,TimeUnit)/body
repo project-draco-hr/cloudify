@@ -86,13 +86,13 @@
     }
     logger.info("Cloudify adapter is waiting for GSA with reservation id " + reservationId + " to become available");
     final GridServiceAgent gsa=waitForGsa(machineIp,end);
+    if (gsa == null) {
+      throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
+    }
     final GSAReservationId discoveredReservationId=((InternalGridServiceAgent)gsa).getReservationId();
     logger.info("Discovered agent with reservation id " + discoveredReservationId);
     if (reservationId != null && !reservationId.equals(discoveredReservationId)) {
       throw new ElasticMachineProvisioningException("Cloudify Adapter discovered the wrong agent. expected reservation id is " + reservationId + ". but actual was "+ discoveredReservationId);
-    }
-    if (gsa == null) {
-      throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
     }
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartedEvent(machineIp,gsa.getUid()));
     if (gsa.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME) == null) {
