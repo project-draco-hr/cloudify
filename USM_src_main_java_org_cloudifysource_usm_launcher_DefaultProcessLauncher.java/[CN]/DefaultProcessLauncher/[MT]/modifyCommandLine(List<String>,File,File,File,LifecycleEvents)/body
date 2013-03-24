@@ -1,0 +1,22 @@
+{
+  modifyOSCommandLine(commandLineParams,workingDir);
+  if (commandLineParams.get(0).endsWith(".groovy")) {
+    modifyGroovyCommandLine(commandLineParams,workingDir);
+  }
+  modifyRedirectionCommandLine(commandLineParams,outputFile,errorFile);
+  if (ServiceUtils.isLinuxOrUnix()) {
+    if (isDebugEvent(event)) {
+      logger.info("Skipping linux command line modifications for debug event");
+    }
+ else {
+      logger.fine("Command before shell modification: " + commandLineParams);
+      final StringBuilder sb=new StringBuilder();
+      for (      final String param : commandLineParams) {
+        sb.append(param).append(" ");
+      }
+      commandLineParams.clear();
+      commandLineParams.addAll(Arrays.asList("nohup","sh","-c",sb.toString()));
+      logger.fine("Command after shell modification: " + commandLineParams);
+    }
+  }
+}

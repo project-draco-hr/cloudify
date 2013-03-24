@@ -6,17 +6,18 @@
     throw new IllegalArgumentException("If redirectError option is chosen, neither output file or error file can be set");
   }
   List<String> modifiedCommandLineParams=null;
+  modifiedCommandLineParams=commandLineParams;
   if (isDebugEvent(event)) {
+    modifyCommandLine(modifiedCommandLineParams,workingDir,outputFile,errorFile,event);
     logger.info("DEBUG BREAKPOINT!");
     DebugHookInvoker dhi=new DebugHookInvoker();
     final ClassLoader loader=this.configutaion.getDslClassLoader();
     logger.info("DSL Class Loader is: " + loader);
-    modifiedCommandLineParams=dhi.setUpDebugHook(this.configutaion.getServiceContext(),commandLineParams,loader,this.debugMode);
+    modifiedCommandLineParams=dhi.setUpDebugHook(this.configutaion.getServiceContext(),modifiedCommandLineParams,loader,this.debugMode);
   }
  else {
-    modifiedCommandLineParams=commandLineParams;
+    modifyCommandLine(modifiedCommandLineParams,workingDir,outputFile,errorFile,event);
   }
-  modifyCommandLine(modifiedCommandLineParams,workingDir,outputFile,errorFile);
   final String modifiedCommandLine=org.springframework.util.StringUtils.collectionToDelimitedString(modifiedCommandLineParams," ");
   this.commandLine=modifiedCommandLineParams;
   int attempt=1;
