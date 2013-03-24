@@ -3,7 +3,10 @@
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int maxMemoryCapacityInMB=puConfig.getSla().getMaxMemoryCapacity();
   final int reservedMemoryCapacityPerMachineInMB=256;
-  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,authGroups).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment().addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ cloud.getConfiguration().getComponents().getUsm().getPortRange());
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(jarFile).name(serviceName).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,authGroups).highlyAvailable(puConfig.getSla().getHighlyAvailable()).singleMachineDeployment();
+  if (cloud != null) {
+    deployment.addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ cloud.getConfiguration().getComponents().getUsm().getPortRange());
+  }
   setContextProperties(deployment,contextProperties);
   if (cloud == null) {
     verifyEsmExistsInCluster();
