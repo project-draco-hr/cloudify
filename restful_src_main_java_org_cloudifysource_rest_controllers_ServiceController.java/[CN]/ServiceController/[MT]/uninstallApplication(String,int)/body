@@ -20,7 +20,7 @@
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,applicationName);
   FutureTask<Boolean> undeployTask=null;
-  logger.log(Level.INFO,"Starting to poll for uninstall lifecycle events.");
+  logger.log(Level.INFO,"Starting to poll for" + applicationName + " uninstall lifecycle events.");
   if (uninstallOrder.size() > 0) {
     undeployTask=new FutureTask<Boolean>(new Runnable(){
       private final long startTime=System.currentTimeMillis();
