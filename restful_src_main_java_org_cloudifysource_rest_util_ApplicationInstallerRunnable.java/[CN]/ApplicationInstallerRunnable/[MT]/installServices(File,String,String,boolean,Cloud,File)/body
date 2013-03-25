@@ -1,5 +1,5 @@
 {
-  logger.info("Installing service for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
+  logger.info("Installing services for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
   for (  final Service service : services) {
     logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
     service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");

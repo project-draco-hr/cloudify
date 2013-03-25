@@ -2,7 +2,7 @@
   final File appDir=result.getApplicationDir();
   logger.fine("Installing application " + applicationName + " with the following services: "+ services);
   final boolean asyncInstallPossible=isAsyncInstallPossibleForApplication();
-  logger.info("async install setting: " + asyncInstallPossible);
+  logger.info("Async install setting is " + asyncInstallPossible);
   try {
     installServices(appDir,applicationName,authGroups,asyncInstallPossible,cloud,cloudOverrides);
     FileUtils.deleteDirectory(appDir);
