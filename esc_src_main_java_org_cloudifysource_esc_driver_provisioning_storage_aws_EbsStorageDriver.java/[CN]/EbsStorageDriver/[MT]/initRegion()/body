@@ -1,0 +1,12 @@
+{
+  String locationId=this.computeTemplate.getLocationId();
+  RestContext<EC2Client,EC2AsyncClient> unwrapped=this.context.unwrap();
+  try {
+    EC2Client ec2ClientApi=unwrapped.getApi();
+    this.region=JCloudsUtils.getEC2region(ec2ClientApi,locationId);
+  }
+ catch (  Exception e) {
+    logger.log(Level.WARNING,"Unable to determine region according to location id: " + locationId);
+    throw new IllegalStateException("Unable to determine region according to location id: " + locationId,e);
+  }
+}

@@ -1,7 +1,7 @@
 {
   this.cloud=cloud;
-  this.region=cloud.getCloudCompute().getTemplates().get(computeTemplateName).getLocationId();
   this.computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
   this.initContext();
+  this.initRegion();
   this.initEbsClient();
 }
