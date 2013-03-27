@@ -1,4 +1,5 @@
 {
+  String region=JCloudsUtils.getEC2region(ec2Client,locationId);
   org.jclouds.ec2.services.SecurityGroupClient ec2SecurityGroupsClient=ec2Client.getSecurityGroupServices();
   Set<String> missingSecurityGroups=new HashSet<String>();
   for (  String securityGroupName : securityGroupsInRegion) {

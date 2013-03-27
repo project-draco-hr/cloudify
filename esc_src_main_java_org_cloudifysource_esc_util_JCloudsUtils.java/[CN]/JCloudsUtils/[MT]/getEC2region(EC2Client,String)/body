@@ -1,0 +1,25 @@
+{
+  String region="";
+  Set<String> knownRegions=ec2Client.getConfiguredRegions();
+  if (knownRegions.contains(locationId)) {
+    region=locationId;
+  }
+ else {
+    AvailabilityZoneAndRegionClient locationClient=ec2Client.getAvailabilityZoneAndRegionServices();
+    for (    String knownRegion : knownRegions) {
+      for (      AvailabilityZoneInfo zoneInfo : locationClient.describeAvailabilityZonesInRegion(knownRegion)) {
+        if (zoneInfo.getZone().equalsIgnoreCase(locationId)) {
+          region=zoneInfo.getRegion();
+          break;
+        }
+      }
+      if (!StringUtils.isBlank(region)) {
+        break;
+      }
+    }
+  }
+  if (StringUtils.isBlank(region)) {
+    throw new CloudProvisioningException("Invalid region or availability zone: " + locationId);
+  }
+  return region;
+}
