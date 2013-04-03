@@ -1,0 +1,4 @@
+{
+  final InstanceCloudifyAttribute instanceAttributesTemplate=new InstanceCloudifyAttribute(applicationName,serviceName,instanceId,null,null);
+  gigaSpace.takeMultiple(instanceAttributesTemplate);
+}

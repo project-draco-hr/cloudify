@@ -14,6 +14,7 @@
   for (  final ProcessingUnitInstance instance : processingUnit.getInstances()) {
     if (instance.getInstanceId() == instanceId) {
       instance.decrement();
+      deleteServiceInstanceAttributes(applicationName,serviceName,instanceId);
       return successStatus();
     }
   }

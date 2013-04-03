@@ -13,7 +13,9 @@
   validateGsmState();
   final FutureTask<Boolean> undeployTask=new FutureTask<Boolean>(new Callable<Boolean>(){
     @Override public Boolean call() throws Exception {
-      return processingUnit.undeployAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+      boolean result=processingUnit.undeployAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+      deleteServiceAttributes(applicationName,serviceName);
+      return result;
     }
   }
 );

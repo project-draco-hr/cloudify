@@ -40,6 +40,9 @@
  else {
               logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
               processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MILLISECONDS);
+              final String serviceName=ServiceUtils.getApplicationServiceName(processingUnit.getName(),applicationName);
+              logger.info("Removing application service scope attributes for service " + serviceName);
+              deleteServiceAttributes(applicationName,serviceName);
             }
           }
  catch (          final Exception e) {
@@ -58,6 +61,8 @@
   if (errors.length() == 0) {
     final Map<String,Object> returnMap=new HashMap<String,Object>();
     returnMap.put(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID,lifecycleEventContainerID);
+    logger.info("Removing all application scope attributes for application " + applicationName);
+    deleteApplicationScopeAttributes(applicationName);
     return RestUtils.successStatus(returnMap);
   }
   throw new RestErrorException(errors);
