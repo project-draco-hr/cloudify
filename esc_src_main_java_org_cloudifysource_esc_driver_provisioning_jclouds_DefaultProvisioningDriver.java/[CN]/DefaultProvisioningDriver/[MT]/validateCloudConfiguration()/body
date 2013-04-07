@@ -21,6 +21,13 @@
       throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
     }
   }
-  validateCloudifyUrl(cloud.getProvider().getCloudifyUrl());
+  String cloudifyUrl=cloud.getProvider().getCloudifyUrl();
+  if (cloudifyUrl.endsWith(".zip") || cloudifyUrl.endsWith(".tar.gz")) {
+    validateCloudifyUrl(cloudifyUrl);
+  }
+ else {
+    validateCloudifyUrl(cloudifyUrl + ".zip");
+    validateCloudifyUrl(cloudifyUrl + ".tar.gz");
+  }
   validateComputeTemplates(endpointRequired,apiId);
 }
