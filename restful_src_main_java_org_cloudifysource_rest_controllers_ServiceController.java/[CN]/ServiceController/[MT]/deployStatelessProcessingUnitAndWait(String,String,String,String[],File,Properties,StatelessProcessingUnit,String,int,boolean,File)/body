@@ -3,6 +3,7 @@
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(jarFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,applicationName).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,authGroups).name(serviceName);
+  setSpringProfilesActive(deployment,puConfig.getSpringProfilesActive());
   if (cloud != null) {
     deployment.addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ cloud.getConfiguration().getComponents().getUsm().getPortRange());
   }
