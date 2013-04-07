@@ -11,7 +11,7 @@
   }
   logger.info("Deleting Virtual Machine " + roleName);
   deleteDeployment(cloudServiceName,deploymentName,endTime);
-  logger.fine("Deleteing cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
+  logger.fine("Deleting cloud service : " + cloudServiceName + " that was dedicated for virtual machine "+ roleName);
   deleteCloudService(cloudServiceName,endTime);
   logger.fine("Waiting for OS Disk " + diskName + " to detach from role "+ roleName);
   waitForDiskToDetach(diskName,roleName,endTime);

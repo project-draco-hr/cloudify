@@ -23,7 +23,7 @@
   }
   if (deletedNetwork && deletedStorage) {
     try {
-      deletedStorage=azureClient.deleteAffinityGroup(affinityGroup,endTime);
+      azureClient.deleteAffinityGroup(affinityGroup,endTime);
     }
  catch (    final Exception e) {
       if (first == null) {

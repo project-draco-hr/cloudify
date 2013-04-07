@@ -1,0 +1,19 @@
+{
+  try {
+    HostedServices hostedServices=azureClient.listHostedServices();
+    if (!hostedServices.getHostedServices().isEmpty()) {
+      logger.warning("Scanning for leaking nodes...");
+      for (      HostedService hostedService : hostedServices) {
+        HostedService serviceWithDeployments=azureClient.getHostedService(hostedService.getServiceName(),true);
+        Deployment deployment=serviceWithDeployments.getDeployments().getDeployments().get(0);
+        if (deployment != null) {
+          logger.info("Found : " + deployment.getRoleList().getRoles().get(0).getRoleName());
+        }
+      }
+      throw new CloudProvisioningException("There are still running instances, please shut them down and try again.");
+    }
+  }
+ catch (  final Exception e) {
+    logger.warning("Failed Retrieving running virtual machines : " + e.getMessage());
+  }
+}
