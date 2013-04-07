@@ -1,0 +1,50 @@
+{
+  Service service=getUsmLifecycleBean().getConfiguration().getService();
+  final String storageTemplateName=service.getStorage().getTemplate();
+  if (StringUtils.isNotBlank(storageTemplateName)) {
+    final ServiceVolume serviceVolume=getServiceVolumeFromSpace(service.getName());
+    final VolumeState volumeState=serviceVolume.getState();
+    final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
+    final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
+    final VolumeState newVolumeState;
+    try {
+switch (volumeState) {
+case ABSENT:
+{
+          final String id=storage.createVolume(storageTemplateName);
+          storage.attachVolume(id,storageTemplate.getDeviceName());
+          storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+          storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+          break;
+        }
+case CREATED:
+{
+        storage.attachVolume(serviceVolume.getId(),storageTemplate.getDeviceName());
+        storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+        storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+        break;
+      }
+case ATTACHED:
+{
+      storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+      storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+      break;
+    }
+case FORMATTED:
+{
+    storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+  }
+case MOUNTED:
+{
+  break;
+}
+}
+}
+ catch (final Exception e) {
+if (e instanceof TimeoutException) {
+throw (TimeoutException)e;
+}
+throw new USMException(e);
+}
+}
+}

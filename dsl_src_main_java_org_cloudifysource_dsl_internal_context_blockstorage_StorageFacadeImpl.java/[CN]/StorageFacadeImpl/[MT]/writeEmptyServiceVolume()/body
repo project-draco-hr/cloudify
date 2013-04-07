@@ -1,0 +1,4 @@
+{
+  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext.getInstanceId());
+  managementSpace.write(serviceVolume);
+}

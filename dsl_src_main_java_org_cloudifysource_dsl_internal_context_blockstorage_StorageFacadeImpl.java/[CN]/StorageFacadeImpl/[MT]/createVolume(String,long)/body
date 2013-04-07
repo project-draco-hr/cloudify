@@ -1,3 +1,6 @@
 {
-  return remoteStorageProvisioningDriver.createVolume(templateName,serviceContext.getLocationId(),timeoutInMillis);
+  String volumeId=remoteStorageProvisioningDriver.createVolume(templateName,serviceContext.getLocationId(),timeoutInMillis);
+  setVolumeId(volumeId);
+  changeVolumeState(VolumeState.CREATED);
+  return volumeId;
 }

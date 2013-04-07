@@ -1,0 +1,6 @@
+{
+  this.applicationName=applicationName;
+  this.serviceName=serviceName;
+  this.instanceId=instanceId;
+  this.serviceInstanceName=ServiceUtils.getFullServiceInstanceName(applicationName,serviceName,instanceId);
+}

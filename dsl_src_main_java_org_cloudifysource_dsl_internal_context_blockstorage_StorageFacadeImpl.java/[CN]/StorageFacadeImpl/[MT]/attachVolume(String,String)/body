@@ -1,6 +1,7 @@
 {
   validateNotWindows();
-  remoteStorageProvisioningDriver.attachVolume(volumeId,device,serviceContext.getBindedAddress());
+  remoteStorageProvisioningDriver.attachVolume(volumeId,device,serviceContext.getBindAddress());
+  changeVolumeState(VolumeState.ATTACHED);
   try {
     Thread.sleep(AFTER_ATTACH_TIMEOUT);
   }

@@ -1,4 +1,4 @@
 {
   validateNotWindows();
-  remoteStorageProvisioningDriver.detachVolume(volumeId,serviceContext.getBindedAddress());
+  remoteStorageProvisioningDriver.detachVolume(volumeId,serviceContext.getBindAddress());
 }

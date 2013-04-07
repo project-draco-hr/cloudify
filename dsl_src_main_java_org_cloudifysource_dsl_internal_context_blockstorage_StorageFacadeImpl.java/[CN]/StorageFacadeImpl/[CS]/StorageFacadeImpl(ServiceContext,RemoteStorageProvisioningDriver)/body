@@ -1,4 +1,6 @@
 {
   this.serviceContext=serviceContext;
   this.remoteStorageProvisioningDriver=storageApi;
+  this.managementSpace=serviceContext.getAttributes().getManagementSpace();
+  writeEmptyServiceVolume();
 }
