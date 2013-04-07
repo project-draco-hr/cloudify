@@ -1,28 +1,3 @@
 {
-  final ServiceInstanceImpl[] instances=this.getInstances();
-  final List<Future<Object>> futures=new ArrayList<Future<Object>>();
-  for (  final ServiceInstanceImpl instance : instances) {
-    final Future<Object> future=instance.invokeAsync(commandName,params);
-    futures.add(future);
-  }
-  final long start=System.currentTimeMillis();
-  final long end=start + DEFAULT_INVOKE_TIMEOUT;
-  Exception firstException=null;
-  final Object[] results=new Object[instances.length];
-  for (int i=0; i < results.length; i++) {
-    final Future<Object> future=futures.get(i);
-    try {
-      results[i]=future.get(end - System.currentTimeMillis(),TimeUnit.MILLISECONDS);
-    }
- catch (    final Exception e) {
-      results[i]=e;
-      if (firstException == null) {
-        firstException=e;
-      }
-    }
-  }
-  if (firstException != null) {
-    throw firstException;
-  }
-  return results;
+  return invoke(commandName,params,DEFAULT_INVOKE_TIMEOUT,TimeUnit.MILLISECONDS);
 }
