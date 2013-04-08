@@ -63,19 +63,6 @@
   String volumeId=null;
   try {
     checkForProvisioningTimeout(end,machineDetails);
-    if (isStorageTemplateUsed()) {
-      String machineLocation=machineDetails.getLocationId();
-      volumeId=startNewStorageVolume(machineLocation,end);
-      attachStorageVolumeToMachine(machineIp,volumeId,end);
-      StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(this.storageTemplateName);
-      String formatType=storageTemplate.getFileSystemType();
-      String mountPath=storageTemplate.getPath();
-      String deviceName=storageTemplate.getDeviceName();
-      machineDetails.setStorageVolumeAttached(true);
-      machineDetails.setStorageDeviceName(deviceName);
-      machineDetails.setStorageFormatType(formatType);
-      machineDetails.setStorageMountPath(mountPath);
-    }
     if (machineDetails.isAgentRunning()) {
       logger.info("Machine provisioning provided a machine and indicated that an agent is already running");
     }
@@ -123,11 +110,5 @@ catch (  final InterruptedException e) {
     logger.info(ExceptionUtils.getFullStackTrace(e));
     handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
     throw e;
-  }
-catch (  StorageProvisioningException e) {
-    logger.info("StorageProvisioningException occurred, " + e.getMessage());
-    logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
-    throw new ElasticMachineProvisioningException("Storage exception thrown",e);
   }
 }

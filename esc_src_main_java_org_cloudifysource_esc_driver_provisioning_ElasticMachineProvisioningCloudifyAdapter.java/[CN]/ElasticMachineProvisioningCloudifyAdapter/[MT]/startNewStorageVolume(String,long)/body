@@ -1,5 +1,0 @@
-{
-  long timeout=end - System.currentTimeMillis();
-  VolumeDetails volumeDetails=this.storageProvisioning.createVolume(storageTemplateName,machineLocation,timeout,TimeUnit.MILLISECONDS);
-  return volumeDetails.getId();
-}

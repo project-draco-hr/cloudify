@@ -16,18 +16,6 @@
     }
     logger.info("Stopping machine " + machineDetails.getPrivateAddress() + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
     this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
-    boolean storageTemplateUsed=isStorageTemplateUsed();
-    if (storageTemplateUsed) {
-      logger.info("deleting created storage volume");
-      if (!StringUtils.isEmpty(volumeId)) {
-        long timeout=end - System.currentTimeMillis();
-        logger.info("Deleting volume with id: " + volumeId);
-        this.storageProvisioning.deleteVolume("",volumeId,timeout,TimeUnit.MILLISECONDS);
-      }
- else {
-        logger.log(Level.INFO,"Storage volume was not found");
-      }
-    }
   }
  catch (  final Exception e) {
     logger.log(Level.WARNING,"Machine Provisioning failed. " + "An error was encountered while trying to shutdown the new machine ( " + machineDetails.toString() + "). Error was: "+ e.getMessage(),e);
