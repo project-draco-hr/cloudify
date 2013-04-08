@@ -1,0 +1,9 @@
+{
+  Set<String> scriptLanguages=getScriptLanguages();
+  if (scriptLanguages.contains(ScriptLanguages.LINUX_SHELL.toString())) {
+    validateUrl(baseCloudifyUrl + ".tar.gz");
+  }
+  if (scriptLanguages.contains(ScriptLanguages.WINDOWS_BATCH.toString())) {
+    validateUrl(baseCloudifyUrl + ".zip");
+  }
+}
