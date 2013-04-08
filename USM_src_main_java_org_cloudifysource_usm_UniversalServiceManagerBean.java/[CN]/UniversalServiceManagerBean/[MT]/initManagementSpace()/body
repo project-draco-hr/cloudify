@@ -1,0 +1,3 @@
+{
+  managementSpace=((AttributesFacadeImpl)getUsmLifecycleBean().getConfiguration().getServiceContext().getAttributes()).getManagementSpace();
+}

@@ -1,6 +1,5 @@
 {
   String volumeId=remoteStorageProvisioningDriver.createVolume(templateName,serviceContext.getLocationId());
-  setVolumeId(volumeId);
-  changeVolumeState(VolumeState.CREATED);
+  writeNewVolume(volumeId);
   return volumeId;
 }

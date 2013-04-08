@@ -1,4 +1,0 @@
-{
-  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext.getInstanceId());
-  managementSpace.change(serviceVolume,new ChangeSet().set("id",volumeId));
-}

@@ -3,7 +3,13 @@
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
     final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
-    final VolumeState volumeState=serviceVolume.getState();
+    VolumeState volumeState;
+    if (serviceVolume == null) {
+      volumeState=VolumeState.ABSENT;
+    }
+ else {
+      volumeState=serviceVolume.getState();
+    }
     final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
     final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
     try {
@@ -11,6 +17,8 @@ switch (volumeState) {
 case ABSENT:
 {
           final String id=storage.createVolume(storageTemplateName);
+          ServiceVolume newServiceVolume=managementSpace.readById(ServiceVolume.class,id);
+          managementSpace.change(newServiceVolume,new ChangeSet().set("dynamic",false));
           storage.attachVolume(id,storageTemplate.getDeviceName());
           storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
           storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());

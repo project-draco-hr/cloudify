@@ -18,6 +18,6 @@
       throw new AdminException("A service context could not be created as the Admin API could not find a lookup service " + "in the network, using groups: " + Arrays.toString(admin.getGroups()) + " and locators: "+ Arrays.toString(admin.getLocators()));
     }
   }
-  this.attributesFacade=new AttributesFacade(this,admin);
+  this.attributesFacade=new AttributesFacadeImpl(this,admin);
   initialized=true;
 }

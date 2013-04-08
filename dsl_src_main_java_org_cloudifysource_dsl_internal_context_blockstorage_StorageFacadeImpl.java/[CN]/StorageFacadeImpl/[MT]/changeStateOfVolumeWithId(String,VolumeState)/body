@@ -1,0 +1,5 @@
+{
+  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName());
+  serviceVolume.setId(volumeId);
+  managementSpace.change(serviceVolume,new ChangeSet().set("state",newState));
+}

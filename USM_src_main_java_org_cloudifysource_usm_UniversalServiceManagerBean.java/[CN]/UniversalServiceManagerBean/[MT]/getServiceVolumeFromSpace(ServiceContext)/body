@@ -1,3 +1,9 @@
 {
-  return null;
+  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName());
+  serviceVolume.setDynamic(false);
+  ServiceVolume[] serviceVolumes=managementSpace.readMultiple(serviceVolume);
+  if (serviceVolumes.length != 1) {
+    throw new IllegalStateException("Cannot have two static volumes for the same instance : " + ServiceUtils.getFullServiceInstanceName(serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext.getInstanceId()));
+  }
+  return serviceVolumes[0];
 }

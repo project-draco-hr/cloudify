@@ -4,5 +4,5 @@
     throw new IllegalStateException("Cannot mount when not running in privileged mode");
   }
   VolumeUtils.mount(device,path);
-  changeVolumeState(VolumeState.MOUNTED);
+  changeStateOfVolumeWithDevice(device,VolumeState.MOUNTED);
 }

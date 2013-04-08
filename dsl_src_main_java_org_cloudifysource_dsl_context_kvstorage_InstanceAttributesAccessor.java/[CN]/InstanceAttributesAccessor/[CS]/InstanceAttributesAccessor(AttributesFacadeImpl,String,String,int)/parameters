@@ -1,0 +1,4 @@
+AttributesFacadeImpl attributesFacade
+String applicationName
+String serviceName
+int instanceId

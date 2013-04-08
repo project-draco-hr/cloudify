@@ -18,6 +18,12 @@ synchronized (this.stateMutex) {
     if (this.runningInGSC) {
       deleteExtDirContents();
     }
+    try {
+      deAllocateStorage();
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to deallocate storage: " + e.getMessage(),e);
+    }
     USMUtils.shutdownAdmin();
   }
   try {

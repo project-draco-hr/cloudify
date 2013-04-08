@@ -3,14 +3,16 @@
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
     final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
+    if (serviceVolume == null) {
+      return;
+    }
     final VolumeState volumeState=serviceVolume.getState();
     final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
-    final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
     try {
 switch (volumeState) {
 case MOUNTED:
 {
-          storage.unmount(storageTemplate.getDeviceName());
+          storage.unmount(serviceVolume.getDevice());
           storage.detachVolume(serviceVolume.getId());
           storage.deleteVolume(serviceVolume.getId());
           break;
@@ -26,15 +28,11 @@ case DETACHED:
       storage.deleteVolume(serviceVolume.getId());
       break;
     }
-case ABSENT:
-{
-    break;
-  }
 }
 }
  catch (final Exception e) {
 if (e instanceof TimeoutException) {
-throw (TimeoutException)e;
+  throw (TimeoutException)e;
 }
 throw new USMException(e);
 }

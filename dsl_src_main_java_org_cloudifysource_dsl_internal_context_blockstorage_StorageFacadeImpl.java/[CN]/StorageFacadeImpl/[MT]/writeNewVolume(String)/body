@@ -1,0 +1,6 @@
+{
+  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName());
+  serviceVolume.setId(volumeId);
+  serviceVolume.setState(VolumeState.CREATED);
+  managementSpace.write(serviceVolume);
+}
