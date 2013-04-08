@@ -4,4 +4,5 @@
     throw new IllegalStateException("Cannot unmount when not running in privileged mode");
   }
   VolumeUtils.unmount(device);
+  changeVolumeState(VolumeState.UNMOUNTED);
 }

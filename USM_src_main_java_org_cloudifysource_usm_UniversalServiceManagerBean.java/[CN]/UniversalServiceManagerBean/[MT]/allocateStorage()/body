@@ -2,11 +2,10 @@
   Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
-    final ServiceVolume serviceVolume=getServiceVolumeFromSpace(service.getName());
+    final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
     final VolumeState volumeState=serviceVolume.getState();
     final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
     final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
-    final VolumeState newVolumeState;
     try {
 switch (volumeState) {
 case ABSENT:
