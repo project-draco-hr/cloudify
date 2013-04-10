@@ -3,6 +3,6 @@
   if (!serviceContext.isPrivileged()) {
     throw new IllegalStateException("Cannot unmount when not running in privileged mode");
   }
+  logger.info("Unmounting device " + device);
   VolumeUtils.unmount(device);
-  changeStateOfVolumeWithDevice(device,VolumeState.UNMOUNTED);
 }

@@ -3,6 +3,7 @@
   if (!serviceContext.isPrivileged()) {
     throw new IllegalStateException("Cannot mount when not running in privileged mode");
   }
+  logger.info("Mounting device " + device + " to mount point "+ path);
   VolumeUtils.mount(device,path,timeoutInMillis);
   changeStateOfVolumeWithDevice(device,VolumeState.MOUNTED);
 }

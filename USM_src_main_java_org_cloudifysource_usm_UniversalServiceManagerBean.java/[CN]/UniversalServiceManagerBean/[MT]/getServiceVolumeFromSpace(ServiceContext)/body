@@ -1,9 +1,9 @@
 {
-  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName());
+  ServiceVolume serviceVolume=new ServiceVolume();
+  serviceVolume.setApplicationName(serviceContext.getApplicationName());
+  serviceVolume.setServiceName(serviceContext.getServiceName());
+  serviceVolume.setIp(serviceContext.getBindAddress());
   serviceVolume.setDynamic(false);
-  ServiceVolume[] serviceVolumes=managementSpace.readMultiple(serviceVolume);
-  if (serviceVolumes.length != 1) {
-    throw new IllegalStateException("Cannot have two static volumes for the same instance : " + ServiceUtils.getFullServiceInstanceName(serviceContext.getApplicationName(),serviceContext.getServiceName(),serviceContext.getInstanceId()));
-  }
-  return serviceVolumes[0];
+  logger.info("Retrieving service volume from space for service context " + serviceContext + " . Using template : "+ serviceVolume);
+  return managementSpace.read(serviceVolume);
 }

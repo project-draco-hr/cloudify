@@ -1,0 +1,3 @@
+{
+  return "ServiceVolume{" + "applicationName='" + applicationName + '\''+ ", serviceName='"+ serviceName+ '\''+ ", state="+ state+ ", id='"+ id+ '\''+ ", device='"+ device+ '\''+ ", dynamic="+ dynamic+ '}';
+}

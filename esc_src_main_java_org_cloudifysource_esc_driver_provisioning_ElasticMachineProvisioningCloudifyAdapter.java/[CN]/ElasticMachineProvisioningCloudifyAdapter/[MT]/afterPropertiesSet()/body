@@ -42,10 +42,6 @@
         logger.info("creating storage provisioning driver.");
         this.storageProvisioning=(StorageProvisioningDriver)Class.forName(storageClassName).newInstance();
         this.storageTemplateName=config.getStorageTemplateName();
-        boolean privileged=computeTemplate.isPrivileged();
-        if (!privileged && isStorageTemplateUsed()) {
-          throw new StorageProvisioningException("Storage mounting requires running in privileged mode." + " This should be defined in the cloud's compute template.");
-        }
         if (this.storageProvisioning instanceof BaseStorageDriver) {
           ((BaseStorageDriver)this.storageProvisioning).setComputeContext(cloudifyProvisioning.getComputeContext());
         }

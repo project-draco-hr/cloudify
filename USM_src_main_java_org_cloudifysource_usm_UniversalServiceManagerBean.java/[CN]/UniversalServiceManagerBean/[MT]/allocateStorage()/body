@@ -2,52 +2,50 @@
   Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
-    final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
-    VolumeState volumeState;
-    if (serviceVolume == null) {
-      volumeState=VolumeState.ABSENT;
-    }
- else {
-      volumeState=serviceVolume.getState();
-    }
-    final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
-    final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
     try {
-switch (volumeState) {
-case ABSENT:
+      logger.info("Allocating static storage for service " + getUsmLifecycleBean().getConfiguration().getServiceContext());
+      final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
+      final StorageTemplate storageTemplate=storage.getTemplate(storageTemplateName);
+      final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
+      if (serviceVolume == null) {
+        logger.fine("service volume is null. this means it hasn't been created yet.");
+        final String id=storage.createVolume(storageTemplateName);
+        ServiceVolume newServiceVolume=managementSpace.readById(ServiceVolume.class,id);
+        logger.fine("Flagging service volume with id " + id + " to be static storage.");
+        managementSpace.change(newServiceVolume,new ChangeSet().set("dynamic",false));
+        storage.attachVolume(id,storageTemplate.getDeviceName());
+        storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+        storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+      }
+ else {
+        logger.fine("Detected an existing volume for this service upon allocation. found in state : " + serviceVolume.getState());
+switch (serviceVolume.getState()) {
+case CREATED:
 {
-          final String id=storage.createVolume(storageTemplateName);
-          ServiceVolume newServiceVolume=managementSpace.readById(ServiceVolume.class,id);
-          managementSpace.change(newServiceVolume,new ChangeSet().set("dynamic",false));
-          storage.attachVolume(id,storageTemplate.getDeviceName());
+            storage.attachVolume(serviceVolume.getId(),storageTemplate.getDeviceName());
+            storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+            storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+            break;
+          }
+case ATTACHED:
+{
           storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
           storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
           break;
         }
-case CREATED:
-{
-        storage.attachVolume(serviceVolume.getId(),storageTemplate.getDeviceName());
-        storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
-        storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-        break;
-      }
-case ATTACHED:
-{
-      storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
-      storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-      break;
-    }
 case FORMATTED:
 {
-    storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-  }
+        storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+      }
 case MOUNTED:
 {
-  break;
+      break;
+    }
 }
 }
 }
  catch (final Exception e) {
+deAllocateStorage();
 if (e instanceof TimeoutException) {
 throw (TimeoutException)e;
 }

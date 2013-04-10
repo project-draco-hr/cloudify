@@ -1,5 +1,6 @@
 {
-  ServiceVolume serviceVolume=new ServiceVolume(serviceContext.getApplicationName(),serviceContext.getServiceName());
+  ServiceVolume serviceVolume=new ServiceVolume();
   serviceVolume.setId(volumeId);
+  logger.fine("Changing state of volume with id " + volumeId + " to "+ newState);
   managementSpace.change(serviceVolume,new ChangeSet().set("state",newState));
 }

@@ -3,6 +3,7 @@
   if (!serviceContext.isPrivileged()) {
     throw new IllegalStateException("Cannot format when not running in privileged mode");
   }
+  logger.info("Formatting device " + device + " to File System "+ fileSystem);
   VolumeUtils.format(device,fileSystem,timeoutInMillis);
   changeStateOfVolumeWithDevice(device,VolumeState.FORMATTED);
 }

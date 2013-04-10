@@ -1,38 +1,63 @@
 {
   Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
+  final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
   if (StringUtils.isNotBlank(storageTemplateName)) {
-    final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
-    if (serviceVolume == null) {
-      return;
-    }
-    final VolumeState volumeState=serviceVolume.getState();
-    final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
     try {
-switch (volumeState) {
+      logger.info("De-Allocating static storage for service " + getUsmLifecycleBean().getConfiguration().getServiceContext());
+      final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
+      if (serviceVolume == null) {
+        logger.fine("Could not find a volume for this service in the management space. this probably means there was a problem during volume creation");
+      }
+ else {
+        logger.fine("Detected an existing volume for this service upon de-allocation. found in state : " + serviceVolume.getState());
+switch (serviceVolume.getState()) {
 case MOUNTED:
 {
-          storage.unmount(serviceVolume.getDevice());
+            storage.unmount(serviceVolume.getDevice());
+            logger.fine("Sleeping for 10 seconds...");
+            Thread.sleep(10 * 1000);
+            storage.detachVolume(serviceVolume.getId());
+            logger.fine("Sleeping for 10 seconds...");
+            Thread.sleep(10 * 1000);
+            storage.deleteVolume(serviceVolume.getId());
+            logger.fine("Sleeping for 10 seconds...");
+            Thread.sleep(10 * 1000);
+            break;
+          }
+case ATTACHED:
+{
           storage.detachVolume(serviceVolume.getId());
+          logger.fine("Sleeping for 10 seconds...");
+          Thread.sleep(10 * 1000);
           storage.deleteVolume(serviceVolume.getId());
+          logger.fine("Sleeping for 10 seconds...");
+          Thread.sleep(10 * 1000);
           break;
         }
-case UNMOUNTED:
+case FORMATTED:
 {
         storage.detachVolume(serviceVolume.getId());
+        logger.fine("Sleeping for 10 seconds...");
+        Thread.sleep(10 * 1000);
         storage.deleteVolume(serviceVolume.getId());
+        logger.fine("Sleeping for 10 seconds...");
+        Thread.sleep(10 * 1000);
         break;
       }
-case DETACHED:
+case CREATED:
 {
       storage.deleteVolume(serviceVolume.getId());
+      logger.fine("Sleeping for 10 seconds...");
+      Thread.sleep(10 * 1000);
       break;
     }
 }
 }
+}
  catch (final Exception e) {
 if (e instanceof TimeoutException) {
-  throw (TimeoutException)e;
+throw (TimeoutException)e;
 }
 throw new USMException(e);
 }

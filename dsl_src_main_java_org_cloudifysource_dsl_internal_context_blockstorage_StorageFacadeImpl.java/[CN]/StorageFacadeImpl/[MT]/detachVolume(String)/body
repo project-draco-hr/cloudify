@@ -1,5 +1,5 @@
 {
   validateNotWindows();
+  logger.info("Detaching volume with id " + volumeId);
   remoteStorageProvisioningDriver.detachVolume(volumeId,serviceContext.getBindAddress());
-  changeStateOfVolumeWithId(volumeId,VolumeState.DETACHED);
 }
