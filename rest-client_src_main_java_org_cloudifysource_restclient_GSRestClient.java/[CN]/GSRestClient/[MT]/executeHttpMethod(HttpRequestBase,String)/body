@@ -38,7 +38,7 @@
     return responseJsonKey != null ? responseMap.get(RESPONSE_KEY) : responseMap;
   }
  catch (  final IOException e) {
-    logger.log(Level.FINE,httpMethod.getURI() + MSG_REST_API_ERR,e);
+    logger.log(Level.INFO,httpMethod.getURI() + MSG_REST_API_ERR,e);
     throw new ErrorStatusException(e,REASON_CODE_COMM_ERR,httpMethod.getURI(),e.getMessage());
   }
  finally {

@@ -2,9 +2,11 @@
   this.url=url;
   this.urlStr=createUrlStr();
   if (isSSL()) {
+    logger.log(Level.INFO,"creating SSL client");
     httpClient=getSSLHttpClient();
   }
  else {
+    logger.log(Level.INFO,"creating default (not SSL) client");
     httpClient=new DefaultHttpClient();
   }
   httpClient.addRequestInterceptor(new HttpRequestInterceptor(){
