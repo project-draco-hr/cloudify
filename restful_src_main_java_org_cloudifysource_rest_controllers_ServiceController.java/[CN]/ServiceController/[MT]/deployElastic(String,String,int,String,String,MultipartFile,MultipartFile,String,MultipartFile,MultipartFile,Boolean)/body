@@ -1,6 +1,7 @@
 {
   logger.info("Deploying service " + ServiceUtils.getAbsolutePUName(applicationName,serviceName) + " with template: "+ templateName);
   String actualTemplateName=templateName;
+  validateGsmState();
   if (cloud != null) {
     if (templateName == null || templateName.length() == 0) {
       if (cloud.getCloudCompute().getTemplates().isEmpty()) {

@@ -5,6 +5,7 @@
   if (pu == null) {
     throw new RestErrorException(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
   }
+  validateGsmState();
   if (permissionEvaluator != null) {
     final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
     final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();

@@ -9,6 +9,7 @@
     logger.log(Level.INFO,"Cannot uninstall the Management application.");
     throw new RestErrorException(ResponseConstants.CANNOT_UNINSTALL_MANAGEMENT_APP);
   }
+  validateGsmState();
   final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
   if (pus.length > 0) {
     if (permissionEvaluator != null) {

@@ -15,6 +15,7 @@
     final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
+  validateGsmState();
   final int before=processingUnit.getNumberOfInstances();
   processingUnit.incrementInstance();
   final boolean result=processingUnit.waitFor(before + 1,timeout,TimeUnit.SECONDS);

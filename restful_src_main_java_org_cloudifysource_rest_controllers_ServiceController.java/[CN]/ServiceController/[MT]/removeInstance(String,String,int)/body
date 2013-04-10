@@ -10,6 +10,7 @@
     final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
+  validateGsmState();
   for (  final ProcessingUnitInstance instance : processingUnit.getInstances()) {
     if (instance.getInstanceId() == instanceId) {
       instance.decrement();
