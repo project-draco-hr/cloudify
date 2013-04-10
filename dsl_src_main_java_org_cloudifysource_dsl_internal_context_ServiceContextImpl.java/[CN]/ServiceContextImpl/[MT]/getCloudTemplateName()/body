@@ -1,4 +1,3 @@
 {
-  final String envVar=System.getenv(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
-  return envVar;
+  return System.getenv(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
 }

@@ -1,10 +1,9 @@
 {
-  ElasticServiceManager elasticServiceManager=null;
+  ElasticServiceManager elasticServiceManager;
   if (admin != null) {
     elasticServiceManager=admin.getElasticServiceManagers().waitForAtLeastOne();
     RemoteStorageProvisioningDriver storageApi=(RemoteStorageProvisioningDriver)((InternalElasticServiceManager)elasticServiceManager).getStorageApi(ServiceUtils.getAbsolutePUName(applicationName,serviceName));
-    StorageFacadeImpl storageFacadeImpl=new StorageFacadeImpl(this,storageApi);
-    return storageFacadeImpl;
+    return new StorageFacadeImpl(this,storageApi);
   }
   return null;
 }

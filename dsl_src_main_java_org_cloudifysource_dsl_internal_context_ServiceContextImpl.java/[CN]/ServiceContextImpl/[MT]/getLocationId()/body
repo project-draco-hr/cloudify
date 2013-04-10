@@ -1,4 +1,3 @@
 {
-  final String envVar=System.getenv(CloudifyConstants.CLOUDIFY_CLOUD_LOCATION_ID);
-  return envVar;
+  return System.getenv(CloudifyConstants.CLOUDIFY_CLOUD_LOCATION_ID);
 }
