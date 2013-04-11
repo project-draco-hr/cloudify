@@ -5,6 +5,7 @@
     nodes=createServersWithRetry(groupName,numberOfMachines,getTemplate(locationId));
   }
  catch (  final RunNodesException e) {
+    removeLeakingServersAfterCreationException(e);
     throw new InstallerException("Failed to start Cloud server with JClouds",e);
   }
   if (nodes.isEmpty()) {

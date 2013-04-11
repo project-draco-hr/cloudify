@@ -1,0 +1,24 @@
+{
+  if (!e.getSuccessfulNodes().isEmpty()) {
+    for (    NodeMetadata node : e.getSuccessfulNodes()) {
+      try {
+        logger.warning("JClouds Deployer is shutting down a server that failed to start properfly: " + node.getId());
+        shutdownMachine(node.getId());
+      }
+ catch (      Throwable t) {
+        logger.warning("Failed to shut down leaking server: " + node.getId());
+      }
+    }
+  }
+  if (!e.getNodeErrors().isEmpty()) {
+    for (    NodeMetadata node : e.getNodeErrors().keySet()) {
+      try {
+        logger.warning("JClouds Deployer is shutting down a server that failed to start properfly: " + node.getId());
+        shutdownMachine(node.getId());
+      }
+ catch (      Throwable t) {
+        logger.warning("Failed to shut down leaking server: " + node.getId());
+      }
+    }
+  }
+}

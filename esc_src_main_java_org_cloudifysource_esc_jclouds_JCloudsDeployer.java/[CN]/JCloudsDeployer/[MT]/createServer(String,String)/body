@@ -5,6 +5,7 @@
     nodes=createServersWithRetry(serverName,1,getTemplate(locationId));
   }
  catch (  final RunNodesException e) {
+    removeLeakingServersAfterCreationException(e);
     throw new InstallerException("Failed to start Cloud server",e);
   }
   if (nodes.isEmpty()) {
