@@ -1,4 +1,4 @@
 {
   this.storageProvisioningDriver=driver;
-  this.cloud=cloud;
+  this.storageTemplate=storageTemplate;
 }

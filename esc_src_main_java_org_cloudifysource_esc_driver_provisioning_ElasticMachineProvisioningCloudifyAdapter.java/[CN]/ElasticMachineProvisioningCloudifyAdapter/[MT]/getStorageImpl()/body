@@ -1,3 +1,3 @@
 {
-  return new RemoteStorageProvisioningDriverAdapter(storageProvisioning,cloud);
+  return new RemoteStorageProvisioningDriverAdapter(storageProvisioning,cloud.getCloudStorage().getTemplates().get(storageTemplateName));
 }
