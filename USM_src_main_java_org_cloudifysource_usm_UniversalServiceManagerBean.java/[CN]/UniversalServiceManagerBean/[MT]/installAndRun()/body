@@ -1,5 +1,6 @@
 {
   try {
+    allocateStorage();
     getUsmLifecycleBean().install();
     if (this.asyncInstall) {
       waitForDependencies();

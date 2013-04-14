@@ -6,7 +6,6 @@
   this.myPid=this.sigar.getPid();
   final boolean existingProcessFound=checkForPIDFile();
   initManagementSpace();
-  allocateStorage();
   initEvents();
   reset(existingProcessFound);
 }

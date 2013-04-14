@@ -7,7 +7,7 @@
       logger.info("De-Allocating static storage for service " + getUsmLifecycleBean().getConfiguration().getServiceContext());
       final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
       if (serviceVolume == null) {
-        logger.fine("Could not find a volume for this service in the management space. this probably means there was a problem during volume creation");
+        logger.fine("Could not find a volume for this service in the management space. this probably means there was a problem during volume creation, or it has already been de-allocated");
       }
  else {
         logger.fine("Detected an existing volume for this service upon de-allocation. found in state : " + serviceVolume.getState());

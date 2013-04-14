@@ -1,3 +1,9 @@
 {
+  try {
+    deAllocateStorage();
+  }
+ catch (  final Exception e) {
+    logger.warning("Failed to de-allocate storage volume : " + e.getMessage());
+  }
   this.shutdownUSMException=ex;
 }

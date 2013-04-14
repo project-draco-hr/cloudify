@@ -16,7 +16,7 @@
             }
  catch (            final Exception e) {
               logger.log(Level.SEVERE,"Asynchronous install failed with message: " + e.getMessage() + ". Instance will shut down",e);
-              shutdownUSMException=e;
+              markUSMAsFailed(e);
             }
           }
         }
