@@ -1,0 +1,13 @@
+{
+  try {
+    ServiceReader.readService(new File(MULTI_TENANT_WITH_STATIC_STORAGE));
+    Assert.fail("Multi-tenant with numInstances > 1 and static storage is illegal, DSLValidationException expected.");
+  }
+ catch (  DSLValidationException e) {
+    return;
+  }
+catch (  Exception e) {
+    Assert.fail("Multi-tenant with numInstances > 1 and static storage is defined but no DSLValidationException was thrown : " + e.getMessage());
+  }
+  Assert.fail("Multi-tenant with numInstances > 1 and static storage is defined but no DSLValidationException was thrown.");
+}

@@ -1,0 +1,5 @@
+{
+  if ((numInstances > 1) && (isMultitenant()) && getStorage().getTemplate() != null) {
+    throw new DSLValidationException("numInstances must be 1 when used in a Multi-tenant configuration with static storage defined.");
+  }
+}

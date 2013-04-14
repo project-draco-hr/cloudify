@@ -1,0 +1,12 @@
+{
+  IsolationSLA isolationSla=getIsolationSLA();
+  if (isolationSla != null) {
+    if (isolationSla.getDedicated() != null) {
+      return false;
+    }
+    return true;
+  }
+ else {
+    return false;
+  }
+}
