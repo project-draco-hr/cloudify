@@ -10,31 +10,40 @@
         logger.fine("Could not find a volume for this service in the management space. this probably means there was a problem during volume creation, or it has already been de-allocated");
       }
  else {
+        getUsmLifecycleBean().log("De-allocating storage");
         logger.fine("Detected an existing volume for this service upon de-allocation. found in state : " + serviceVolume.getState());
-        final boolean deleteStorage=storage.getTemplate(storageTemplateName).isDeleteOnExit();
+        StorageTemplate template=storage.getTemplate(storageTemplateName);
+        final boolean deleteStorage=template.isDeleteOnExit();
         logger.fine("Storage will be deleted = " + deleteStorage);
 switch (serviceVolume.getState()) {
 case MOUNTED:
 {
+            getUsmLifecycleBean().log("Unmounting volume from " + template.getPath());
             storage.unmount(serviceVolume.getDevice());
+            getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
             storage.detachVolume(serviceVolume.getId());
             if (deleteStorage) {
+              getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
               storage.deleteVolume(serviceVolume.getId());
             }
             break;
           }
 case ATTACHED:
 {
+          getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
           storage.detachVolume(serviceVolume.getId());
           if (deleteStorage) {
+            getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
             storage.deleteVolume(serviceVolume.getId());
           }
           break;
         }
 case FORMATTED:
 {
+        getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
         storage.detachVolume(serviceVolume.getId());
         if (deleteStorage) {
+          getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
           storage.deleteVolume(serviceVolume.getId());
         }
         break;
@@ -42,6 +51,7 @@ case FORMATTED:
 case CREATED:
 {
       if (deleteStorage) {
+        getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
         storage.deleteVolume(serviceVolume.getId());
       }
       break;
