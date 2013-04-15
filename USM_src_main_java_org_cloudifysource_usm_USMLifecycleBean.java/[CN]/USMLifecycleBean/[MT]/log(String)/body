@@ -1,6 +1,5 @@
 {
   if (eventLogger.isLoggable(Level.INFO)) {
-    logger.info("isLoggable = true");
     eventLogger.info(eventPrefix + message);
   }
 }
