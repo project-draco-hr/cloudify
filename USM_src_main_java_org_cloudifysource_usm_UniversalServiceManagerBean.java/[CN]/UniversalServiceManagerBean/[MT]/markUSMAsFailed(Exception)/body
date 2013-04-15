@@ -1,6 +1,6 @@
 {
   try {
-    deAllocateStorage();
+    deAllocateStorageSync();
   }
  catch (  final Exception e) {
     logger.warning("Failed to de-allocate storage volume : " + e.getMessage());

@@ -19,7 +19,7 @@ synchronized (this.stateMutex) {
       deleteExtDirContents();
     }
     try {
-      deAllocateStorage();
+      deAllocateStorageSync();
     }
  catch (    final Exception e) {
       logger.log(Level.SEVERE,"Failed to deallocate storage: " + e.getMessage(),e);
