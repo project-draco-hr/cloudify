@@ -45,7 +45,6 @@ case MOUNTED:
 }
 }
  catch (final Exception e) {
-deAllocateStorage();
 if (e instanceof TimeoutException) {
 throw (TimeoutException)e;
 }
