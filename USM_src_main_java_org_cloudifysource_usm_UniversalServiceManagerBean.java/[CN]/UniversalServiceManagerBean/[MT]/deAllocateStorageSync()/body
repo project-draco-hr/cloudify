@@ -1,5 +1,7 @@
 {
+  logger.warning("Waiting for de-allocation mutex to be released");
 synchronized (this.deallocationMutext) {
+    logger.fine("Acquired lock on de-allocation mutex[" + deallocationMutext.hashCode() + "]");
     deAllocateStorage();
   }
 }
