@@ -3,5 +3,5 @@
   if (nodeId.contains("{")) {
     nodeId=MessageFormat.format(nodeId,1);
   }
-  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeId.trim());
+  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),nodeId.trim());
 }

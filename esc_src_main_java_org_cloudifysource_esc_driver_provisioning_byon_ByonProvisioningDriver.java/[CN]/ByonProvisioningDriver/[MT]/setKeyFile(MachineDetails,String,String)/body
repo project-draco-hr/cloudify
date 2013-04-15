@@ -1,0 +1,10 @@
+{
+  File keyFile=new File(keyFileName);
+  if (!keyFile.isAbsolute()) {
+    keyFile=new File(parentFolder,keyFileName);
+  }
+  if (!keyFile.isFile()) {
+    throw new CloudProvisioningException("The specified key file could not be found: " + keyFile.getAbsolutePath());
+  }
+  md.setKeyFile(keyFile);
+}

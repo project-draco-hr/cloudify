@@ -1,8 +1,3 @@
 {
-  this.providerId=providerId;
-  this.id=id;
-  this.ipAddress=ipAddress;
-  this.username=username;
-  this.credential=credential;
-  this.nodeName=nodeName;
+  this(providerId,id,ipAddress,username,credential,keyFile,"");
 }

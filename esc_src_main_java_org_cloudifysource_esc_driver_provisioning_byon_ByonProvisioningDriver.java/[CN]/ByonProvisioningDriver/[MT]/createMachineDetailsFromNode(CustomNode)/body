@@ -4,11 +4,19 @@
   md.setMachineId(node.getId());
   md.setPrivateAddress(node.getPrivateIP());
   md.setPublicAddress(node.getPublicIP());
-  if (!StringUtils.isBlank(node.getUsername()) && !StringUtils.isBlank(node.getCredential())) {
+  if (StringUtils.isNotBlank(node.getUsername()) && StringUtils.isNotBlank(node.getKeyFile())) {
+    md.setRemoteUsername(node.getUsername());
+    setKeyFile(md,node.getKeyFile(),template.getAbsoluteUploadDir());
+  }
+ else   if (StringUtils.isNotBlank(node.getUsername()) && StringUtils.isNotBlank(node.getCredential())) {
     md.setRemoteUsername(node.getUsername());
     md.setRemotePassword(node.getCredential());
   }
- else   if (!StringUtils.isBlank(template.getUsername()) && !StringUtils.isBlank(template.getPassword())) {
+ else   if (StringUtils.isNotBlank(template.getUsername()) && StringUtils.isNotBlank(template.getKeyFile())) {
+    md.setRemoteUsername(template.getUsername());
+    setKeyFile(md,template.getKeyFile(),template.getAbsoluteUploadDir());
+  }
+ else   if (StringUtils.isNotBlank(template.getUsername()) && StringUtils.isNotBlank(template.getPassword())) {
     md.setRemoteUsername(template.getUsername());
     md.setRemotePassword(template.getPassword());
   }

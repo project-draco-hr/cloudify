@@ -3,4 +3,4 @@ String id
 String ipAddress
 String username
 String credential
-String nodeName
+String keyFile

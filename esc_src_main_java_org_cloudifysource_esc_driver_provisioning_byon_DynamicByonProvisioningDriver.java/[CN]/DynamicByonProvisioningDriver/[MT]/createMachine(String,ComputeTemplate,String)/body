@@ -1,5 +1,5 @@
 {
-  final CustomNodeImpl customNode=new CustomNodeImpl(PROVIDER_ID,serverName,ip,template.getUsername(),template.getPassword(),serverName);
+  final CustomNodeImpl customNode=new CustomNodeImpl(PROVIDER_ID,serverName,ip,template.getUsername(),template.getPassword(),template.getKeyFile(),serverName);
   try {
     String resolvedIP=IPUtils.resolveHostName(customNode.getPrivateIP());
     customNode.setResolvedIP(resolvedIP);
