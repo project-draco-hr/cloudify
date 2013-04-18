@@ -1,6 +1,5 @@
 {
   final String url=getFullUrl("admin/" + relativeUrl);
-  logger.finer(MSG_PERFORMING_HTTP_GET + url);
   final HttpGet httpMethod=new HttpGet(url);
   return readHttpAdminMethod(httpMethod);
 }
