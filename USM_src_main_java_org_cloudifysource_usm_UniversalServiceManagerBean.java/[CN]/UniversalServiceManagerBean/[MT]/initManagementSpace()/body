@@ -1,3 +1,5 @@
 {
-  managementSpace=((AttributesFacadeImpl)getUsmLifecycleBean().getConfiguration().getServiceContext().getAttributes()).getManagementSpace();
+  if (this.isRunningInGSC()) {
+    managementSpace=((AttributesFacadeImpl)getUsmLifecycleBean().getConfiguration().getServiceContext().getAttributes()).getManagementSpace();
+  }
 }
