@@ -1,6 +1,6 @@
 {
   final String url=getFullUrl(relativeUrl);
-  logger.fine(MSG_PERFORMING_HTTP_GET + url);
+  logger.log(Level.FINER,MSG_PERFORMING_HTTP_GET + url);
   final HttpGet httpMethod=new HttpGet(url);
   return executeHttpMethod(httpMethod,reponseJsonKey);
 }
