@@ -1,6 +1,5 @@
 {
   final String url=getFullUrl(ADMIN_REFLECTION_URL + relativeUrl);
-  logger.log(Level.FINER,MSG_PERFORMING_HTTP_GET + url);
   final HttpGet httpMethod=new HttpGet(url);
   InputStream instream=null;
   try {
