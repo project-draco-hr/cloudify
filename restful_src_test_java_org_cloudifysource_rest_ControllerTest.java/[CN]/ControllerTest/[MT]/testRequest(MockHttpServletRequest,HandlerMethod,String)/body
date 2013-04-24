@@ -1,0 +1,4 @@
+{
+  final MockHttpServletResponse response=testRequest(reqeust,expectedHandlerMethod);
+  Assert.assertEquals("Wrong response content: " + response.getContentAsString(),expectedResponseContent,response.getContentAsString());
+}

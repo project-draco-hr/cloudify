@@ -1,0 +1,5 @@
+{
+  final HashMap<RequestMethod,HandlerMethod> uriMap=controllerMapping.get(requestUri);
+  Assert.assertNotNull(uriMap);
+  return uriMap.get(requestMethod);
+}

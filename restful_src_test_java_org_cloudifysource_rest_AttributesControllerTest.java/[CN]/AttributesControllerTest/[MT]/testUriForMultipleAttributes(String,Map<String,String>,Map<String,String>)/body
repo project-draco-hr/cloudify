@@ -1,0 +1,10 @@
+{
+  System.out.println("testing uri: " + requestUri);
+  testGet(requestUri,"{}");
+  testPost(requestUri,convertToJson(attrInitialMap),"{\"status\":\"success\"}");
+  testPost(requestUri,convertToJson(attrUpdatedMap),"{\"status\":\"success\"}");
+  testGet(requestUri,convertToJson(attrUpdatedMap));
+  testDelete(requestUri,convertToJson(attrUpdatedMap));
+  testGet(requestUri,convertToJson(new HashMap<String,Object>()));
+  System.out.println("finished test for uri: " + requestUri);
+}

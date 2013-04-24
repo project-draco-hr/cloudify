@@ -1,0 +1,13 @@
+{
+  repo.resetTimeout(CLEANUP_TIMEOUT_SECONDS);
+  File file=new File(TEST_FILE_PATH);
+  final String dirName=putTest(file);
+  File uploadedFile=repo.get(dirName);
+  assertUploadedFile(file,uploadedFile);
+  Thread.sleep(repo.getCleanupTimeoutSeconds() * 2000);
+  final File restUploadDir=repo.getRestUploadDir();
+  Assert.assertNotNull(restUploadDir);
+  Assert.assertTrue(restUploadDir.isDirectory());
+  file=repo.get(dirName);
+  Assert.assertNull(file);
+}

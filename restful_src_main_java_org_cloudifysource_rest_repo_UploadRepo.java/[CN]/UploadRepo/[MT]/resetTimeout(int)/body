@@ -1,0 +1,4 @@
+{
+  this.setCleanupTimeoutSeconds(cleanupTimeoutSeconds);
+  reset();
+}

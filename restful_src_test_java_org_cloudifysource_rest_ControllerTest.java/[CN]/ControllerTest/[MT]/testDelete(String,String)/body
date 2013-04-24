@@ -1,0 +1,4 @@
+{
+  final MockHttpServletRequest reqeust=createMockDeleteRequest(requestUri);
+  testRequest(reqeust,getExpectedMethod(requestUri,RequestMethod.DELETE),expectedResponseContent);
+}

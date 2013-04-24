@@ -1,0 +1,7 @@
+{
+  restUploadDir=new File(baseDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
+  if (restUploadDir.exists()) {
+    FileUtils.deleteDirectory(restUploadDir);
+  }
+  restUploadDir.mkdirs();
+}

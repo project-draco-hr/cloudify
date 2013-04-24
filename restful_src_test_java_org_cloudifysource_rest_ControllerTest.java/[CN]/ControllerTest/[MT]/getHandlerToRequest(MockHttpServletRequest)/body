@@ -1,0 +1,14 @@
+{
+  HandlerExecutionChain chain=null;
+  final Map<String,HandlerMapping> map=applicationContext.getBeansOfType(HandlerMapping.class);
+  for (  final HandlerMapping mapping : map.values()) {
+    chain=mapping.getHandler(request);
+    if (chain != null) {
+      break;
+    }
+  }
+  if (chain == null) {
+    throw new InvalidParameterException("Unable to find handler for request URI: " + request.getRequestURI());
+  }
+  return chain.getHandler();
+}

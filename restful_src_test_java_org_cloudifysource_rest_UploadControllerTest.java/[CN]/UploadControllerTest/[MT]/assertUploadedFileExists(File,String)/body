@@ -1,0 +1,17 @@
+{
+  File tempDir=new File(System.getProperty("java.io.tmpdir"));
+  File uploadsFolder=new File(tempDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
+  Assert.assertNotNull(uploadsFolder);
+  File uploadedFileDir=new File(uploadsFolder,uploadKey);
+  Assert.assertNotNull(uploadedFileDir);
+  Assert.assertTrue(uploadedFileDir.exists());
+  Assert.assertTrue(uploadedFileDir.isDirectory());
+  Assert.assertTrue(uploadedFileDir.exists());
+  Assert.assertTrue(uploadedFileDir.isDirectory());
+  File uploadedFile=new File(uploadedFileDir,UPLOADED_FILE_NAME);
+  Assert.assertNotNull(uploadedFile);
+  Assert.assertTrue(uploadedFile.exists());
+  Assert.assertTrue(uploadedFile.isFile());
+  Assert.assertTrue(FileUtils.contentEquals(expectedFile,uploadedFile));
+  return uploadedFile;
+}

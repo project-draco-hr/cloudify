@@ -1,0 +1,5 @@
+{
+  HashMap<RequestMethod,HandlerMethod> hashMap=controllerMapping.get(requestUri);
+  Assert.assertNotNull(hashMap);
+  return hashMap.get(requestMethod);
+}

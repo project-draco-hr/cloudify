@@ -1,0 +1,4 @@
+{
+  final File file=repo.get(UUID.randomUUID().toString());
+  Assert.assertNull(file);
+}

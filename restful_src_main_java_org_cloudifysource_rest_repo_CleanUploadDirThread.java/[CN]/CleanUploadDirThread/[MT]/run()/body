@@ -1,0 +1,10 @@
+{
+  if (restUploadDir != null) {
+    File[] listFiles=restUploadDir.listFiles();
+    for (    File file : listFiles) {
+      if (System.currentTimeMillis() - file.lastModified() >= cleanupTimeoutMillis) {
+        FileUtils.deleteQuietly(file);
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  repo=new UploadRepo();
+  repo.init();
+}

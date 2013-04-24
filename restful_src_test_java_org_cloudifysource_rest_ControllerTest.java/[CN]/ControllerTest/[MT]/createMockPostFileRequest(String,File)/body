@@ -1,0 +1,8 @@
+{
+  MultipartFile multiFile=UploadRepoTest.createNewMultiFile(file);
+  MockMultipartHttpServletRequest request=new MockMultipartHttpServletRequest();
+  request.addFile(multiFile);
+  request.setMethod("POST");
+  request.setRequestURI(requestUri);
+  return request;
+}

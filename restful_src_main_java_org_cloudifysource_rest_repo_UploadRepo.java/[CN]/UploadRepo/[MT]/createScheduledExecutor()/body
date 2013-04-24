@@ -1,0 +1,5 @@
+{
+  final CleanUploadDirThread cleanupThread=new CleanUploadDirThread(restUploadDir,cleanupTimeoutSeconds * 1000);
+  executor=Executors.newSingleThreadScheduledExecutor();
+  executor.scheduleAtFixedRate(cleanupThread,0,cleanupTimeoutSeconds,TimeUnit.SECONDS);
+}

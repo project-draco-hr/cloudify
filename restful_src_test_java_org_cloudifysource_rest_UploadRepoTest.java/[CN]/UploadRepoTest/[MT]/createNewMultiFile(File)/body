@@ -1,0 +1,5 @@
+{
+  byte[] content=FileUtils.readFileToByteArray(file);
+  final MockMultipartFile mockMultipartFile=new MockMultipartFile(CloudifyConstants.UPLOAD_FILE_PARAM_NAME,file.getName(),"text/plain",content);
+  return mockMultipartFile;
+}

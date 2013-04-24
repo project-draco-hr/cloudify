@@ -1,0 +1,9 @@
+{
+  File file=new File(TEST_FILE_PATH);
+  String uploadKey=uploadFile(file);
+  File uploadedFile=assertUploadedFileExists(file,uploadKey);
+  String parentPath=uploadedFile.getParentFile().getAbsolutePath();
+  Thread.sleep(CLEANUP_TIMOUT_SECONDS * 2000);
+  File expectedToBeDeletedFolder=new File(parentPath);
+  Assert.assertFalse(expectedToBeDeletedFolder.exists());
+}

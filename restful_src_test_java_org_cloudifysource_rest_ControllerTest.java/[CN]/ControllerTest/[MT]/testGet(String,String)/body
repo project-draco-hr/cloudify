@@ -1,0 +1,4 @@
+{
+  final MockHttpServletRequest reqeust=createMockGetRequest(requestUri);
+  testRequest(reqeust,getExpectedMethod(requestUri,RequestMethod.GET),expectedResponseContent);
+}

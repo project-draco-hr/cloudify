@@ -1,0 +1,4 @@
+{
+  final MockHttpServletRequest reqeust=createMockPostRequest(requestUri,postContentAsJson);
+  testRequest(reqeust,getExpectedMethod(requestUri,RequestMethod.POST),expectedResponseContent);
+}

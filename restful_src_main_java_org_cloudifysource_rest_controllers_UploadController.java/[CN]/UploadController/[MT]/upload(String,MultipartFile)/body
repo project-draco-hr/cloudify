@@ -1,0 +1,24 @@
+{
+  String name=fileName;
+  if (fileName.isEmpty()) {
+    name=file.getOriginalFilename();
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to upload file " + name);
+  }
+  long size=file.getSize();
+  if (size > uploadSizeLimitBytes) {
+    throw new RestErrorException(CloudifyMessageKeys.FILE_SIZE_LIMIT_EXCEEDED.getName(),name,uploadSizeLimitBytes,size);
+  }
+  String uploadedFileDirName=null;
+  try {
+    uploadedFileDirName=uploadRepo.put(name,file);
+  }
+ catch (  IOException e) {
+    logger.warning("could not upload file " + name + " error was - "+ e.getMessage());
+    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_FAILED.getName(),name,e.getMessage());
+  }
+  UploadResponse response=new UploadResponse();
+  response.setUploadKey(uploadedFileDirName);
+  return response;
+}

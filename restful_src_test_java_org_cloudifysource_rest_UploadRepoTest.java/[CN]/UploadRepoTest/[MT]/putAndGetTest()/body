@@ -1,0 +1,10 @@
+{
+  final byte[] testFileContent={1,2,3};
+  File file=new File("testFile");
+  file.deleteOnExit();
+  FileUtils.writeByteArrayToFile(file,testFileContent);
+  final String dirName=putTest(file);
+  Assert.assertNotNull(dirName);
+  final File uploadedFile=repo.get(dirName);
+  assertUploadedFile(file,uploadedFile);
+}

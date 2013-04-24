@@ -1,0 +1,7 @@
+{
+  if (srcFile == null) {
+    return;
+  }
+  srcFile.transferTo(storedFile);
+  storedFile.deleteOnExit();
+}

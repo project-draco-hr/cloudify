@@ -1,0 +1,6 @@
+{
+  Assert.assertNotNull(uploadedFile);
+  Assert.assertTrue(uploadedFile.isFile());
+  Assert.assertEquals(expectedFile.getName(),uploadedFile.getName());
+  FileUtils.contentEquals(expectedFile,uploadedFile);
+}

@@ -1,0 +1,16 @@
+{
+  if (restUploadDir == null || !restUploadDir.exists()) {
+    return null;
+  }
+  final File[] files=restUploadDir.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.equals(uploadDirName);
+    }
+  }
+);
+  if (files != null && files.length > 0) {
+    final File dir=files[0];
+    return dir.listFiles()[0];
+  }
+  return null;
+}

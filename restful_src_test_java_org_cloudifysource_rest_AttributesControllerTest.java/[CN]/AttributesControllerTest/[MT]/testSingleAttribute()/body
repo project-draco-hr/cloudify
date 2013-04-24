@@ -1,0 +1,10 @@
+{
+  final Map<String,String> myInitialAttrMap=new HashMap<String,String>();
+  myInitialAttrMap.put("myInitialAttrMapKey","myInitialAttrMapValue");
+  final Map<String,String> myUpdatedAttrMap=new HashMap<String,String>();
+  myUpdatedAttrMap.put("myUpdatedAttrMapKey","myUpdatedAttrMapValue");
+  for (  final String requestUri : singleAttributeUris) {
+    testUriForSingleAttribute(requestUri,"myInitialAttrStringValue","myUpdatedAttrStringValue");
+    testUriForSingleAttribute(requestUri,myInitialAttrMap,myUpdatedAttrMap);
+  }
+}

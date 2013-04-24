@@ -1,0 +1,5 @@
+{
+  File file=new File(TEST_FILE_PATH);
+  String uploadKey=uploadFile(file);
+  assertUploadedFileExists(file,uploadKey);
+}

@@ -1,0 +1,15 @@
+{
+  final Map<String,Object> expectedMap=new HashMap<String,Object>();
+  expectedMap.put(ATTRIBUTE_NAME,null);
+  System.out.println("testing uri: " + requestUri);
+  testGet(requestUri,convertToJson(expectedMap));
+  testPost(requestUri,convertToJson(attrInitialValue),convertToJson(expectedMap));
+  expectedMap.put(ATTRIBUTE_NAME,attrInitialValue);
+  testPost(requestUri,convertToJson(attrUpdatedValue),convertToJson(expectedMap));
+  expectedMap.put(ATTRIBUTE_NAME,attrUpdatedValue);
+  testGet(requestUri,convertToJson(expectedMap));
+  testDelete(requestUri,convertToJson(expectedMap));
+  expectedMap.put(ATTRIBUTE_NAME,null);
+  testGet(requestUri,convertToJson(expectedMap));
+  System.out.println("finished test for uri: " + requestUri);
+}

@@ -1,0 +1,4 @@
+{
+  final MockHttpServletRequest reqeust=createMockPostFileRequest(requestUri,file);
+  return testRequest(reqeust,getExpectedMethod(requestUri,RequestMethod.POST));
+}

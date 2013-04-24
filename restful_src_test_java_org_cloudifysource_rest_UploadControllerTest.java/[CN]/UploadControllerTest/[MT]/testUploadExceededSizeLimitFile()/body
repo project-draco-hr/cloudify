@@ -1,0 +1,23 @@
+{
+  controller.setUploadSizeLimitBytes(UPLOAD_SIZE_LIMIT_BYTES);
+  File uploadFile=new File(TEST_FILE_PATH);
+  MockHttpServletResponse response=null;
+  long fileSize=uploadFile.length();
+  try {
+    response=testPostFile(UPLOAD_URI,uploadFile);
+    Assert.fail("Tring to upload a file of zise " + fileSize + "expected to failed. response "+ response.getContentAsString());
+  }
+ catch (  RestErrorException e) {
+    Map<String,Object> errorDescription=e.getErrorDescription();
+    String status=(String)errorDescription.get("status");
+    Assert.assertEquals("error",status);
+    String errorMsg=(String)errorDescription.get("error");
+    Assert.assertEquals(CloudifyMessageKeys.FILE_SIZE_LIMIT_EXCEEDED.getName(),errorMsg);
+    Object[] args=(Object[])errorDescription.get("error_args");
+    Object[] expectedArgs={UPLOADED_FILE_NAME,controller.getUploadSizeLimitBytes(),fileSize};
+    Assert.assertArrayEquals(expectedArgs,args);
+  }
+ finally {
+    controller.setUploadSizeLimitBytes(CloudifyConstants.DEFAULT_UPLOAD_SIZE_LIMIT_BYTES);
+  }
+}

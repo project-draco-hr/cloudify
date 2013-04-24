@@ -1,0 +1,3 @@
+{
+  handlerAdapter=applicationContext.getBean(RequestMappingHandlerAdapter.class);
+}
