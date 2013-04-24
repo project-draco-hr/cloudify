@@ -1,5 +1,5 @@
 {
-  final String fullCommand="chmod +x " + scriptPath + ";"+ scriptPath;
+  final String fullCommand=(details.getScriptLanguage() == ScriptLanguages.LINUX_SHELL ? "chmod +x " + scriptPath + ";"+ scriptPath : ("cmd.exe /c " + EnvironmentFileBuilder.normalizeCygwinPath(scriptPath)).replace("\\","\\\\"));
   try {
     Utils.executeSSHCommand(targetHost,fullCommand,details.getUsername(),details.getPassword(),details.getKeyFile(),endTimeMillis - System.currentTimeMillis(),TimeUnit.MILLISECONDS);
   }

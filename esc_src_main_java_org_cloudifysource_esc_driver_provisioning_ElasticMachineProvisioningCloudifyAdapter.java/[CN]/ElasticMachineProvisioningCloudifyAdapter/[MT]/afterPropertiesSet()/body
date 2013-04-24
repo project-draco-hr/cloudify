@@ -1,10 +1,6 @@
 {
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
-  final String cloudConfigDirectoryPath=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY);
-  if (cloudConfigDirectoryPath == null) {
-    logger.severe("Missing cloud configuration property. Properties are: " + this.properties);
-    throw new IllegalArgumentException("Cloud configuration directory was not set!");
-  }
+  final String cloudConfigDirectoryPath=findCloudConfigDirectoryPath();
   try {
     final String cloudOverridesPerService=config.getCloudOverridesPerService();
     this.cloud=ServiceReader.readCloudFromDirectory(cloudConfigDirectoryPath,cloudOverridesPerService);

@@ -1,10 +1,10 @@
 {
   final String scriptFileName;
-switch (details.getRemoteExecutionMode()) {
-case WINRM:
+switch (details.getScriptLanguage()) {
+case WINDOWS_BATCH:
     scriptFileName=POWERSHELL_STARTUP_SCRIPT_NAME;
   break;
-case SSH:
+case LINUX_SHELL:
 scriptFileName=LINUX_STARTUP_SCRIPT_NAME;
 break;
 default :

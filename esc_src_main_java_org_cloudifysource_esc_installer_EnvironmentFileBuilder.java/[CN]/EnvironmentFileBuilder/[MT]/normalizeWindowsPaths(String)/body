@@ -1,0 +1,5 @@
+{
+  final String cifsNormalized=normalizeCifsPath(original);
+  final String cygwinNormalized=normalizeCygwinPath(cifsNormalized);
+  return cygwinNormalized;
+}

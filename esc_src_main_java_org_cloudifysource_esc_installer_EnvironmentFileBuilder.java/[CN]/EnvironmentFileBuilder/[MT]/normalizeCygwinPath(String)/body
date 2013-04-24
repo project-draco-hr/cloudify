@@ -1,0 +1,12 @@
+{
+  if (str == null) {
+    return null;
+  }
+  if (!str.startsWith(CYGDRIVE)) {
+    return str;
+  }
+  final String pathWithoutCygdrive=str.substring(CYGDRIVE.length());
+  final String pathWithDriveLetter=pathWithoutCygdrive.replaceFirst("/",":/");
+  final String pathWithBackslash=pathWithDriveLetter.replace("/","\\");
+  return pathWithBackslash;
+}

@@ -5,6 +5,9 @@
   }
   logger.fine("Executing agentless installer with the following details:\n" + details.toString());
   final String targetHost=details.isConnectedToPrivateIp() ? details.getPrivateIp() : details.getPublicIp();
+  if (StringUtils.isBlank(targetHost)) {
+    throw new InstallerException("Target host is blank. Connect to private: " + details.isConnectedToPrivateIp() + ", Private IP: "+ details.getPrivateIp()+ ", Public IP: "+ details.getPublicIp()+ ". Details: "+ details);
+  }
   final int port=Utils.getFileTransferPort(details.getInstallerConfiguration(),details.getFileTransferMode());
   publishEvent("attempting_to_access_vm",targetHost);
   checkConnection(targetHost,port,details.getInstallerConfiguration(),CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);

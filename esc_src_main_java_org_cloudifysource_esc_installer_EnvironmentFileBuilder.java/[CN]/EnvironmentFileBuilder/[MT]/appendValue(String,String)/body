@@ -1,0 +1,10 @@
+{
+switch (this.scriptLanguage) {
+case LINUX_SHELL:
+    return "${" + name + "} "+ value;
+case WINDOWS_BATCH:
+  return "%" + name + "% "+ value;
+default :
+throw new IllegalArgumentException("Unsupported script language: " + this.scriptLanguage);
+}
+}
