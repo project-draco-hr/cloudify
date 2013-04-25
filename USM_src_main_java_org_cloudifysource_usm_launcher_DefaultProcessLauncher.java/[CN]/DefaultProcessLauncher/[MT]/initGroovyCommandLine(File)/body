@@ -18,7 +18,6 @@
   envVarsList.add("LOOKUP_LOCATORS_PROP");
   envVarsList.add("LOOKUP_GROUPS_PROP");
   envVarsList.add("RMI_OPTIONS");
-  envVarsList.add("GS_LOGGING_CONFIG_FILE_PROP");
   groovyCommandParams.addAll(convertEnvVarsToSysPropsList(envVarsList));
   if (ServiceUtils.isWindows()) {
     modifyWindowsCommandLine(groovyCommandParams,workingDir);
