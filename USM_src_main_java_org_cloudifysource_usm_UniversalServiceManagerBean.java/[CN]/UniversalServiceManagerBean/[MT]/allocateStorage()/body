@@ -27,32 +27,26 @@
         logger.fine("Detected an existing volume for this service upon allocation. found in state : " + serviceVolume.getState());
 switch (serviceVolume.getState()) {
 case CREATED:
-{
-            getUsmLifecycleBean().log("Attaching volume to device " + storageTemplate.getDeviceName());
-            storage.attachVolume(serviceVolume.getId(),storageTemplate.getDeviceName());
-            getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
-            storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
-            getUsmLifecycleBean().log("Mounting volume to " + storageTemplate.getPath());
-            storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-            break;
-          }
-case ATTACHED:
-{
           getUsmLifecycleBean().log("Attaching volume to device " + storageTemplate.getDeviceName());
-          storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
-          getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
-          storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-          break;
-        }
+        storage.attachVolume(serviceVolume.getId(),storageTemplate.getDeviceName());
+      getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
+    storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+  getUsmLifecycleBean().log("Mounting volume to " + storageTemplate.getPath());
+storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+break;
+case ATTACHED:
+getUsmLifecycleBean().log("Attaching volume to device " + storageTemplate.getDeviceName());
+storage.format(storageTemplate.getDeviceName(),storageTemplate.getFileSystemType());
+getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
+storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
+break;
 case FORMATTED:
-{
-        getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
-        storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
-      }
+getUsmLifecycleBean().log("Formatting volume to filesystem " + storageTemplate.getFileSystemType());
+storage.mount(storageTemplate.getDeviceName(),storageTemplate.getPath());
 case MOUNTED:
-{
-      break;
-    }
+break;
+default :
+throw new IllegalStateException("Unexpected state of service volume : " + serviceVolume.getState());
 }
 }
 }
