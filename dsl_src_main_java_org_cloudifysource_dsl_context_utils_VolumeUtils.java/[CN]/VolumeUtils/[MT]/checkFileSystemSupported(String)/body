@@ -1,5 +1,5 @@
 {
-  FileSystem[] fileSystemList=null;
+  FileSystem[] fileSystemList;
   try {
     Sigar sigar=SigarHolder.getSigar();
     fileSystemList=sigar.getFileSystemList();

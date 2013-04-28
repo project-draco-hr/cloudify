@@ -1,3 +1,3 @@
 {
-  executeCommandLine("sudo fsfreeze --freeze " + USER_HOME + path,FREEZE_TIMEOUT);
+  executeCommandLine("sudo fsfreeze --freeze " + path,FREEZE_TIMEOUT);
 }
