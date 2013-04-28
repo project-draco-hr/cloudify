@@ -22,7 +22,7 @@ synchronized (this.stateMutex) {
       deAllocateStorageSync();
     }
  catch (    final Exception e) {
-      getUsmLifecycleBean().log("Failed de-allocating storage volume. this may cause a leak : " + e.getMessage());
+      getUsmLifecycleBean().log("Failed de-allocating storage volume. this may cause a leak : " + ExceptionUtils.getRootCauseMessage(e));
       logger.log(Level.WARNING,"Failed to deallocate storage: " + e.getMessage(),e);
     }
     USMUtils.shutdownAdmin();

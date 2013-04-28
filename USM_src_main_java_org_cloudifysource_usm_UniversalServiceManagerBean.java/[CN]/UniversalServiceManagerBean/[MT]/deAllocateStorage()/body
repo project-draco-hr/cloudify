@@ -18,6 +18,8 @@
 switch (serviceVolume.getState()) {
 case MOUNTED:
 {
+            getUsmLifecycleBean().log("Freezing filesystem mounted on " + template.getPath());
+            storage.freezefs(template.getPath());
             getUsmLifecycleBean().log("Unmounting volume from " + template.getPath());
             storage.unmount(serviceVolume.getDevice());
             getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
