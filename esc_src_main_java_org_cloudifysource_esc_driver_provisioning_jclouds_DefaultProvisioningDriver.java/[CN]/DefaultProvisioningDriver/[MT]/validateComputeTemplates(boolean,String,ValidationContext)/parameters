@@ -1,0 +1,3 @@
+boolean endpointRequired
+String apiId
+ValidationContext validationContext

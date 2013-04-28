@@ -1,5 +1,0 @@
-{
-  for (  final ProvisioningDriverListener listener : this.eventsListenersList) {
-    listener.onProvisioningOngoingEvent(eventName,args);
-  }
-}

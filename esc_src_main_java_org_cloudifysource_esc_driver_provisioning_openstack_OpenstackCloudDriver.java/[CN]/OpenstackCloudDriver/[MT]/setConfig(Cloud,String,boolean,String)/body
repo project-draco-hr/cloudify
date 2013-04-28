@@ -1,0 +1,29 @@
+{
+  super.setConfig(cloud,templateName,management,serviceName);
+  if (this.management) {
+    this.serverNamePrefix=this.cloud.getProvider().getManagementGroup();
+  }
+ else {
+    this.serverNamePrefix=this.cloud.getProvider().getMachineNamePrefix();
+  }
+  this.tenant=(String)this.cloud.getCustom().get(OPENSTACK_TENANT);
+  if (tenant == null) {
+    throw new IllegalArgumentException("Custom field '" + OPENSTACK_TENANT + "' must be set");
+  }
+  this.pathPrefix="v1.1/" + tenant + "/";
+  this.endpoint=(String)this.cloud.getCustom().get(OPENSTACK_OPENSTACK_ENDPOINT);
+  if (this.endpoint == null) {
+    throw new IllegalArgumentException("Custom field '" + OPENSTACK_OPENSTACK_ENDPOINT + "' must be set");
+  }
+  this.service=client.resource(this.endpoint);
+  this.identityEndpoint=(String)this.cloud.getCustom().get(OPENSTACK_OPENSTACK_IDENTITY_ENDPOINT);
+  if (this.identityEndpoint == null) {
+    throw new IllegalArgumentException("Custom field '" + OPENSTACK_OPENSTACK_IDENTITY_ENDPOINT + "' must be set");
+  }
+  final String wireLog=(String)this.cloud.getCustom().get(OPENSTACK_WIRE_LOG);
+  if (wireLog != null) {
+    if (Boolean.parseBoolean(wireLog)) {
+      this.client.addFilter(new LoggingFilter(logger));
+    }
+  }
+}

@@ -1,0 +1,4 @@
+ComputeTemplate template
+String apiId
+ComputeServiceContext computeServiceContext
+ValidationContext validationContext

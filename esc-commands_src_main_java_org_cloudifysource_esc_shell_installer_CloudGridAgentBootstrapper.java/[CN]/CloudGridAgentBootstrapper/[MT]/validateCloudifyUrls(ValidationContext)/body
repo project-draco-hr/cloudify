@@ -1,0 +1,10 @@
+{
+  final String baseCloudifyUrl=cloud.getProvider().getCloudifyUrl();
+  Set<String> scriptLanguages=getScriptLanguages();
+  if (scriptLanguages.contains(ScriptLanguages.LINUX_SHELL.toString())) {
+    validateUrl(baseCloudifyUrl + ".tar.gz",validationContext);
+  }
+  if (scriptLanguages.contains(ScriptLanguages.WINDOWS_BATCH.toString())) {
+    validateUrl(baseCloudifyUrl + ".zip",validationContext);
+  }
+}

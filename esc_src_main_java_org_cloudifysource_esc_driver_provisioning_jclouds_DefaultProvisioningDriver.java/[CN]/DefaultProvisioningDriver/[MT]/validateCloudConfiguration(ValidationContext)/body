@@ -1,0 +1,25 @@
+{
+  String providerName=cloud.getProvider().getProvider();
+  String apiId;
+  boolean endpointRequired=false;
+  try {
+    validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_provider_or_api_name",providerName));
+    ProviderMetadata providerMetadata=Providers.withId(providerName);
+    ApiMetadata apiMetadata=providerMetadata.getApiMetadata();
+    apiId=apiMetadata.getId();
+    validationContext.validationEventEnd(ValidationResultType.OK);
+  }
+ catch (  NoSuchElementException e) {
+    try {
+      ApiMetadata apiMetadata=Apis.withId(providerName);
+      apiId=apiMetadata.getId();
+      endpointRequired=true;
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+ catch (    NoSuchElementException ex) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
+    }
+  }
+  validateComputeTemplates(endpointRequired,apiId,validationContext);
+}

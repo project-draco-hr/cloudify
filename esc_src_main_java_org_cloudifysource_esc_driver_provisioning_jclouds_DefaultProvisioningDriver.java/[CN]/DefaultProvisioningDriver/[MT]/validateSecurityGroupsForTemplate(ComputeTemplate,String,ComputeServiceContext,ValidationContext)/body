@@ -1,0 +1,49 @@
+{
+  String locationId=template.getLocationId();
+  if (StringUtils.isBlank(locationId) && apiId.equalsIgnoreCase(OPENSTACK_API)) {
+    locationId=getOpenstackLocationByHardwareId(template.getHardwareId());
+  }
+  if (locationId == null) {
+    throw new CloudProvisioningException("locationId is missing");
+  }
+  Object securityGroupsObj=template.getOptions().get("securityGroupNames");
+  if (securityGroupsObj == null) {
+    securityGroupsObj=template.getOptions().get("securityGroups");
+  }
+  if (securityGroupsObj != null) {
+    if (securityGroupsObj instanceof String[]) {
+      String[] securityGroupsArr=(String[])securityGroupsObj;
+      if (securityGroupsArr.length > 0) {
+        try {
+          if (securityGroupsArr.length == 1) {
+            validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_group",securityGroupsArr[0]));
+          }
+ else {
+            validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_groups",org.cloudifysource.esc.util.StringUtils.arrayToString(securityGroupsArr,", ")));
+          }
+          if (apiId.equalsIgnoreCase(EC2_API)) {
+            RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+            validateEc2SecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+          }
+ else           if (apiId.equalsIgnoreCase(OPENSTACK_API)) {
+            RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
+            validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+          }
+ else           if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
+          }
+ else           if (apiId.equalsIgnoreCase(VCLOUD)) {
+          }
+ else {
+          }
+          validationContext.validationEventEnd(ValidationResultType.OK);
+        }
+ catch (        Exception ex) {
+          validationContext.validationEventEnd(ValidationResultType.ERROR);
+          throw new CloudProvisioningException("Invalid security groups configuration: " + ex.getMessage(),ex);
+        }
+      }
+    }
+ else {
+    }
+  }
+}

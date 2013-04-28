@@ -1,0 +1,4 @@
+Cloud cloud
+String templateName
+boolean management
+String serviceName

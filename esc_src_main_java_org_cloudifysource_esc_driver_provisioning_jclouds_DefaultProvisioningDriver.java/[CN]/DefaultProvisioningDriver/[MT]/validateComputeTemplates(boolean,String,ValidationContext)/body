@@ -1,0 +1,58 @@
+{
+  JCloudsDeployer deployer=null;
+  String templateName="";
+  String imageId="";
+  String hardwareId="";
+  String locationId="";
+  try {
+    validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
+    for (    Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
+      templateName=entry.getKey();
+      validationContext.validationEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_template",templateName));
+      ComputeTemplate template=entry.getValue();
+      String endpoint=getEndpoint(template);
+      if (endpointRequired && StringUtils.isBlank(endpoint)) {
+        throw new CloudProvisioningException("Endpoint not defined. Please add a \"jclouds.endpoint\"" + " entry in the template's overrides section");
+      }
+      try {
+        validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_cloud_credentials"));
+        final Properties templateProps=new Properties();
+        Map<String,Object> templateOverrides=template.getOverrides();
+        templateProps.putAll(templateOverrides);
+        logger.fine("Creating a new cloud deployer");
+        deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps);
+        validationContext.validationEventEnd(ValidationResultType.OK);
+      }
+ catch (      IOException e) {
+        closeDeployer(deployer);
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException("Authentication to the cloud failed");
+      }
+      imageId=template.getImageId();
+      hardwareId=template.getHardwareId();
+      locationId=template.getLocationId();
+      deployer.setImageId(imageId);
+      deployer.setHardwareId(hardwareId);
+      deployer.setExtraOptions(template.getOptions());
+      try {
+        validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_image_hardware_location_combination",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId));
+        deployer.getTemplate(locationId);
+        validationContext.validationEventEnd(ValidationResultType.OK);
+      }
+ catch (      Exception ex) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException("Invalid template configuration: " + ex.getMessage(),ex);
+      }
+      if (isKnownAPI(apiId)) {
+        validateSecurityGroupsForTemplate(template,apiId,deployer.getContext(),validationContext);
+        validateKeyPairForTemplate(template,apiId,deployer.getContext(),validationContext);
+      }
+      validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("template_validated",templateName));
+      validationContext.validationEventEnd(ValidationResultType.OK);
+      closeDeployer(deployer);
+    }
+  }
+  finally {
+    closeDeployer(deployer);
+  }
+}

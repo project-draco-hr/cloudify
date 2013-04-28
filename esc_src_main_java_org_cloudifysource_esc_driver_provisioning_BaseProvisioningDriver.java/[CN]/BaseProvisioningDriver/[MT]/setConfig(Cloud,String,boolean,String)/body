@@ -1,0 +1,22 @@
+{
+  this.cloud=cloud;
+  this.cloudTemplateName=cloudTemplateName;
+  this.management=management;
+  this.cloudName=cloud.getName();
+  publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  initDeployer(cloud);
+  publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
+  logger.fine("Initializing Cloud Provisioning - management mode: " + management + ". Using template: "+ cloudTemplateName+ " with cloud: "+ cloudName);
+  String prefix=management ? cloud.getProvider().getManagementGroup() : cloud.getProvider().getMachineNamePrefix();
+  if (StringUtils.isBlank(prefix)) {
+    if (management) {
+      prefix=MANAGMENT_MACHINE_PREFIX;
+    }
+ else {
+      prefix=AGENT_MACHINE_PREFIX;
+    }
+    logger.warning("Prefix for machine name was not set. Using: " + prefix);
+  }
+  this.serverNamePrefix=prefix;
+  initCleanRemoteOnStart(cloud);
+}

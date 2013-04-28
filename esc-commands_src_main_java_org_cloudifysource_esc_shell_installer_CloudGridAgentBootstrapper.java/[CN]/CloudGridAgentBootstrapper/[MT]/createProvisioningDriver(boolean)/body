@@ -14,8 +14,17 @@ catch (  final Exception e) {
   }
   provisioning.addListener(new CliProvisioningDriverListener());
   final String serviceName=null;
+  ValidationContext validationContext=new ValidationContextImpl();
   try {
-    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName,performValidation);
+    if (performValidation) {
+      validateCloudifyUrls(validationContext);
+    }
+    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName);
+    if (performValidation && provisioning instanceof ProvisioningDriverBootstrapValidation) {
+      validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_VALIDATE_CLOUD_CONFIG.getName()));
+      ((ProvisioningDriverBootstrapValidation)provisioning).validateCloudConfiguration(validationContext);
+      validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_CLOUD_CONFIG_VALIDATED.getName()));
+    }
   }
  catch (  CloudProvisioningException e) {
     throw new CLIException(e.getMessage(),e);
