@@ -1,0 +1,10 @@
+{
+  String indentedMessage=message;
+  if (ValidationMessageType.GROUP_VALIDATION_MESSAGE == messageType) {
+    indentedMessage="- > " + indentedMessage;
+  }
+ else   if (ValidationMessageType.ENTRY_VALIDATION_MESSAGE == messageType) {
+    indentedMessage="-    > " + indentedMessage;
+  }
+  return message;
+}

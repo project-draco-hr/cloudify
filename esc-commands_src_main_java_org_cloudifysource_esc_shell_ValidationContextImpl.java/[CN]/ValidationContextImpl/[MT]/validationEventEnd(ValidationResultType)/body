@@ -1,0 +1,20 @@
+{
+  String formattedMessage;
+  Color messageColor;
+  if (validtionResultType == ValidationResultType.OK) {
+    messageColor=Color.GREEN;
+    formattedMessage=ShellUtils.getFormattedMessage(CloudifyErrorMessages.ONGOING_EVENT_SUCCEEDED.getName());
+  }
+ else   if (validtionResultType == ValidationResultType.WARNING) {
+    messageColor=Color.YELLOW;
+    formattedMessage=ShellUtils.getFormattedMessage(CloudifyErrorMessages.ONGOING_EVENT_WARNING.getName());
+  }
+ else {
+    messageColor=Color.RED;
+    formattedMessage=ShellUtils.getFormattedMessage(CloudifyErrorMessages.ONGOING_EVENT_FAILED.getName());
+  }
+  formattedMessage=" " + formattedMessage;
+  System.out.println(ShellUtils.getColorMessage(formattedMessage,messageColor));
+  System.out.flush();
+  logger.log(Level.FINE,formattedMessage);
+}
