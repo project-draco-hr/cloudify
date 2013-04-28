@@ -1,0 +1,16 @@
+{
+  if (!actualRecipeFolder.exists()) {
+    throw new CLIStatusException("service_file_doesnt_exist",actualRecipeFolder.getAbsolutePath(),this.serviceFileName);
+  }
+  if (actualRecipeFolder.isFile()) {
+    if (actualRecipeFolder.getName().endsWith(".zip") || actualRecipeFolder.getName().endsWith(".jar")) {
+      return actualRecipeFolder;
+    }
+    throw new CLIStatusException("not_jar_or_zip",actualRecipeFolder.getAbsolutePath(),this.serviceFileName);
+  }
+  File dslDirOrFile=actualRecipeFolder;
+  if (serviceFileName != null) {
+    dslDirOrFile=new File(dslDirOrFile,serviceFileName);
+  }
+  return doPack(dslDirOrFile);
+}

@@ -1,7 +1,15 @@
 {
+  final RecipePathResolver pathResolver=new RecipePathResolver();
+  File actualRecipeFolder=null;
+  if (pathResolver.resolveService(this.recipeFolder)) {
+    actualRecipeFolder=pathResolver.getResolved();
+  }
+ else {
+    throw new CLIStatusException("service_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
+  }
   File serviceFolder=null;
   try {
-    final File packagedRecipe=packageRecipe();
+    final File packagedRecipe=packageRecipe(actualRecipeFolder);
     serviceFolder=createServiceFolder(packagedRecipe);
     logger.info("Executing service in temporary folder: " + serviceFolder);
     isServiceLifecycleNotNull(serviceFolder);
