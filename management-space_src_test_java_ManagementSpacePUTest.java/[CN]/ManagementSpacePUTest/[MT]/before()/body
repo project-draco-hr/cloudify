@@ -1,0 +1,4 @@
+{
+  final String ip=java.net.InetAddress.getLocalHost().getHostAddress();
+  System.setProperty("java.rmi.server.hostname",ip);
+}
