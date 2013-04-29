@@ -1,3 +1,0 @@
-{
-  executeCommandLine("sudo fsfreeze --freeze " + path,FREEZE_TIMEOUT);
-}

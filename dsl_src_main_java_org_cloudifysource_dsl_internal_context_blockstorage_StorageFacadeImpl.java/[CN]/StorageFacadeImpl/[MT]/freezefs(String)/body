@@ -1,7 +1,0 @@
-{
-  validateNotWindows();
-  if (!serviceContext.isPrivileged()) {
-    throw new IllegalStateException("Cannot freezefs when not running in privileged mode");
-  }
-  VolumeUtils.freezefs(path);
-}

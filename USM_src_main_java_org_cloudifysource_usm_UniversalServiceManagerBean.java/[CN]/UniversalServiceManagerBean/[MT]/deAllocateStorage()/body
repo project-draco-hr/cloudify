@@ -17,16 +17,14 @@
         logger.fine("Storage will be deleted = " + deleteStorage);
 switch (serviceVolume.getState()) {
 case MOUNTED:
-          getUsmLifecycleBean().log("Freezing filesystem mounted on " + template.getPath());
-        storage.freezefs(template.getPath());
-      getUsmLifecycleBean().log("Unmounting volume from " + template.getPath());
-    storage.unmount(serviceVolume.getDevice());
-  getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
-storage.detachVolume(serviceVolume.getId());
-if (deleteStorage) {
-getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
-storage.deleteVolume(serviceVolume.getId());
-}
+          getUsmLifecycleBean().log("Unmounting volume from " + template.getPath());
+        storage.unmount(serviceVolume.getDevice());
+      getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
+    storage.detachVolume(serviceVolume.getId());
+  if (deleteStorage) {
+    getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
+    storage.deleteVolume(serviceVolume.getId());
+  }
 break;
 case ATTACHED:
 getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
