@@ -6,9 +6,9 @@
   if (StringUtils.isBlank(locationId)) {
     throw new CloudProvisioningException("locationId is missing");
   }
-  Object keyPairObj=(String)template.getOptions().get("keyPairName");
+  Object keyPairObj=template.getOptions().get("keyPairName");
   if (keyPairObj == null) {
-    keyPairObj=(String)template.getOptions().get("keyPair");
+    keyPairObj=template.getOptions().get("keyPair");
   }
   if (keyPairObj != null) {
     if (!(keyPairObj instanceof String)) {

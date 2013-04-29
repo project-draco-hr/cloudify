@@ -2,19 +2,26 @@
   NodeMetadata node=null;
   while (System.currentTimeMillis() < end) {
     node=deployer.getServerByID(id);
+    if (node == null) {
+      logger.fine("Server Status (" + id + ") Not Found, please wait...");
+      Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
+      break;
+    }
+ else {
 switch (node.getStatus()) {
 case RUNNING:
-      return node;
+        return node;
 case PENDING:
-    logger.fine("Server Status (" + id + ") still PENDING, please wait...");
-  Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
-break;
+      logger.fine("Server Status (" + id + ") still PENDING, please wait...");
+    Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
+  break;
 case TERMINATED:
 case ERROR:
 case UNRECOGNIZED:
 case SUSPENDED:
 default :
 throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + node.getStatus().toString() + " state. Node details: "+ node);
+}
 }
 }
 throw new TimeoutException("Node failed to reach RUNNING mode in time");

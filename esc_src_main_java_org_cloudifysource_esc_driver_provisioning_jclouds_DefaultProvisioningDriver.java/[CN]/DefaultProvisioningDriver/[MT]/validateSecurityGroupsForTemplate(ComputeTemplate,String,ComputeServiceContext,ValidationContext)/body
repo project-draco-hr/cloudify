@@ -23,11 +23,11 @@
           }
           if (apiId.equalsIgnoreCase(EC2_API)) {
             RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
-            validateEc2SecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+            validateEc2SecurityGroups(unwrapped.getApi(),locationId,securityGroupsArr);
           }
  else           if (apiId.equalsIgnoreCase(OPENSTACK_API)) {
             RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
-            validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,(String[])securityGroupsArr);
+            validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,securityGroupsArr);
           }
  else           if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
           }
