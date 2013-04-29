@@ -6,6 +6,7 @@
   tempDir.mkdirs();
   tempDir.deleteOnExit();
   File zipCopyFile=File.createTempFile("test",".zip",tempDir);
+  zipCopyFile.deleteOnExit();
   FileUtils.copyFile(uploadedFile,zipCopyFile);
   ZipUtils.unzip(zipCopyFile,tempDir);
   File unzippedFile=new File(tempDir,TEST_FILE_NAME);
@@ -14,4 +15,6 @@
   FileUtils.contentEquals(expectedFile,unzippedFile);
   ZipFile zipFile=new ZipFile(zipCopyFile);
   zipFile.close();
+  FileUtils.deleteQuietly(zipCopyFile);
+  FileUtils.deleteQuietly(tempDir);
 }
