@@ -1,10 +1,13 @@
 {
-  final byte[] testFileContent={1,2,3};
-  File file=new File("testFile");
-  file.deleteOnExit();
-  FileUtils.writeByteArrayToFile(file,testFileContent);
-  final String dirName=putTest(file);
+  File file=new File(TEST_FILE_PATH);
+  String dirName=null;
+  try {
+    dirName=putTest(file);
+  }
+ catch (  RestErrorException e) {
+    fail(e.getMessage());
+  }
   Assert.assertNotNull(dirName);
   final File uploadedFile=repo.get(dirName);
-  assertUploadedFile(file,uploadedFile);
+  assertUploadedFile(new File(TXT_EXTENSION_TEST_FILE_PATH),uploadedFile);
 }

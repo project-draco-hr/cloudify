@@ -4,7 +4,7 @@
   }
   final File[] files=restUploadDir.listFiles(new FilenameFilter(){
     @Override public boolean accept(    final File dir,    final String name){
-      return name.equals(uploadDirName);
+      return name.equals(key);
     }
   }
 );

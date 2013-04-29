@@ -1,0 +1,14 @@
+{
+  try {
+    final String dirName=putTest(new File(TXT_EXTENSION_TEST_FILE_PATH));
+    fail("Wrong file extension (" + TXT_EXTENSION_TEST_FILE_PATH + "), expected RestErrorException. "+ "Uploaded file's folder name is "+ dirName);
+  }
+ catch (  RestErrorException e) {
+  }
+  try {
+    final String dirName=putTest(new File(RAR_EXTENSION_TEST_FILE_PATH));
+    fail("Wrong file extension (" + RAR_EXTENSION_TEST_FILE_PATH + "), expected RestErrorException. "+ "Uploaded file's folder name is "+ dirName);
+  }
+ catch (  RestErrorException e) {
+  }
+}
