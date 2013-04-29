@@ -1,7 +1,6 @@
 {
   final List<CustomNode> resolvedNodes=new ArrayList<CustomNode>();
   final List<CustomNode> unresolvedNodes=new ArrayList<CustomNode>();
-  logger.info("addNodesList: adding node list of " + templateName + " to ByonDeployer, node list: "+ nodesList);
   List<CustomNode> parsedNodes=parseCloudNodes(nodesList);
   parsedNodes=removeDuplicates(parsedNodes);
   for (  CustomNode node : parsedNodes) {
@@ -21,5 +20,6 @@
   if (duplicateNodes.size() > 0) {
     throw new CloudProvisioningException("Failed to add nodes for template \"" + templateName + "\","+ " some IP addresses were already defined by a different template: "+ Arrays.toString(duplicateNodes.toArray()));
   }
+  logger.info("addNodesList: adding node list of " + templateName + " to ByonDeployer, node list: "+ parsedNodes);
   setInitialPoolsForTemplate(templateName,resolvedNodes,unresolvedNodes);
 }

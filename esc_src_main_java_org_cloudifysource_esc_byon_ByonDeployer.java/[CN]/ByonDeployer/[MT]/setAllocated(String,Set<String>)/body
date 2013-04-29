@@ -6,13 +6,20 @@
   final List<CustomNode> freeNodesPool=templateLists.get(NODES_LIST_FREE);
   final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
   for (  final String ipAddress : ipAddresses) {
+    logger.log(Level.INFO,"Looking for " + ipAddress + " in the pool of \"free\" machines");
     for (    final CustomNode node : freeNodesPool) {
-      if (StringUtils.isNotBlank(node.getResolvedIP()) && node.getResolvedIP().equalsIgnoreCase(ipAddress)) {
-        freeNodesPool.remove(node);
-        if (!allocatedNodesPool.contains(node)) {
-          allocatedNodesPool.add(node);
+      if (StringUtils.isNotBlank(node.getResolvedIP())) {
+        if (node.getResolvedIP().equalsIgnoreCase(ipAddress)) {
+          freeNodesPool.remove(node);
+          if (!allocatedNodesPool.contains(node)) {
+            allocatedNodesPool.add(node);
+          }
+          logger.log(Level.INFO,"Marking " + node.getPrivateIP() + " ("+ ipAddress+ ")"+ " as \"allocated\"");
+          break;
         }
-        break;
+      }
+ else {
+        logger.log(Level.INFO,"Host " + node.getPrivateIP() + " is not resolved to an IP address");
       }
     }
   }
