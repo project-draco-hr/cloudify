@@ -1,0 +1,3 @@
+{
+  return new ResourceDownloadFacadeImpl(new ResourceDownloader());
+}

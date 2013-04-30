@@ -1,0 +1,11 @@
+{
+  try {
+    rdf.get(DUMMY_RESOURCE_URL,RESOURCE_DESTINATION,false,hashUrl);
+    Assert.fail("File checksum verified. This is not suppose to happen.");
+  }
+ catch (  Exception e) {
+    if (!(e.getCause() instanceof ChecksumVerifierException)) {
+      Assert.fail("expecting failure due to checksum validation");
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  final File downloadedResourceFile=new File(DESTINATION_FOLDER,resourceFileName);
+  final File downloadedHashFile=new File(DESTINATION_FOLDER,hashFileName);
+  Assert.assertTrue("Resource file download failed",downloadedResourceFile.exists());
+  Assert.assertTrue("Hash file download failed",downloadedHashFile.exists());
+  final File originalResourceFile=new File(RESOURCE_FOLDER,resourceFileName);
+  final File originalHashFile=new File(RESOURCE_FOLDER,hashFileName);
+  Assert.assertTrue("Resource file was not downloaded properly",FileUtils.readFileToString(downloadedResourceFile).equals(FileUtils.readFileToString(originalResourceFile)));
+  Assert.assertTrue("Hash file was not downloaded properly",FileUtils.readFileToString(downloadedHashFile).equals(FileUtils.readFileToString(originalHashFile)));
+}

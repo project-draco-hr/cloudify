@@ -1,0 +1,38 @@
+{
+  final String hashFileName=this.hashFile.getName();
+  final String hashFileExt=getFileExtention(hashFileName);
+  final String checksumAlgorithm=ChecksumAlgorithm.toAlgorithm(hashFileExt);
+  if (checksumAlgorithm == null) {
+    throw new ChecksumVerifierException("Validation checksum method " + hashFileExt + " is not supported."+ " Hash file extention should match one of the following values: "+ ChecksumAlgorithm.names());
+  }
+  MessageDigest messageDigest;
+  try {
+    messageDigest=MessageDigest.getInstance(checksumAlgorithm);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    throw new ChecksumVerifierException("Algorithm " + checksumAlgorithm + " does not exist or is not supported.",e);
+  }
+  if (messageDigest == null) {
+    throw new ChecksumVerifierException("Unable to create Message Digest for algorithm " + checksumAlgorithm);
+  }
+  final byte[] buffer=new byte[(int)this.file.length()];
+  FileInputStream fis=null;
+  try {
+    fis=new FileInputStream(this.file);
+    fis.read(buffer);
+  }
+ catch (  FileNotFoundException e) {
+    logger.warning("Could not find file to digest.");
+    throw new IllegalStateException("Resource was not found.",e);
+  }
+catch (  IOException e) {
+    throw new ChecksumVerifierException("Failed calculating file hash.",e);
+  }
+ finally {
+    IOUtils.closeQuietly(fis);
+  }
+  messageDigest.reset();
+  messageDigest.update(buffer);
+  final byte[] digest=messageDigest.digest();
+  return Hex.encodeHexString(digest);
+}

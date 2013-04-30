@@ -1,0 +1,8 @@
+{
+  for (  ChecksumAlgorithm cs : ChecksumAlgorithm.values()) {
+    if (cs.getValue().replaceAll("-","").equalsIgnoreCase(ext)) {
+      return cs.getValue();
+    }
+  }
+  return null;
+}

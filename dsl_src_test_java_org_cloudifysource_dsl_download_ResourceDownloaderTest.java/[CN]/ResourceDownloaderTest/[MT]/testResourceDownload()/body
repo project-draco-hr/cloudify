@@ -1,0 +1,14 @@
+{
+  rdf.get(RESOURCE_URL,RESOURCE_DESTINATION);
+  cleanDownloadFolder();
+  assertDownloadSuccess(RESOURCE_URL + ".md5");
+  cleanDownloadFolder();
+  assertDownloadSuccess(RESOURCE_URL + ".sha1");
+  cleanDownloadFolder();
+  assertDownloadSuccess(RESOURCE_URL + ".sha256");
+  cleanDownloadFolder();
+  assertDownloadSuccess(RESOURCE_URL + ".sha384");
+  cleanDownloadFolder();
+  assertDownloadSuccess(RESOURCE_URL + ".sha512");
+  cleanDownloadFolder();
+}

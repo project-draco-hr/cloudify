@@ -1,0 +1,8 @@
+{
+  final URL resourceUrl=new File(RESOURCE_FOLDER).getAbsoluteFile().toURI().toURL();
+  final Resource resource=new FileResource(resourceUrl);
+  final ResourceHandler handler=new ResourceHandler();
+  handler.setBaseResource(resource);
+  server.setHandler(handler);
+  server.start();
+}

@@ -1,0 +1,16 @@
+{
+  final ChecksumVerifier cv=new ChecksumVerifier();
+  cv.setFile(this.resourceDest);
+  cv.setHashFile(checksumFile);
+  cv.setFormat(this.format);
+  try {
+    boolean result=cv.evaluate();
+    if (!result) {
+      throw new ResourceDownloadException("Failed verifing checksum.");
+    }
+  }
+ catch (  ChecksumVerifierException e) {
+    logger.warning("Failed verifing resource checksum. Reason: " + e.getMessage());
+    throw new ResourceDownloadException("Failed validating checksum.",e);
+  }
+}

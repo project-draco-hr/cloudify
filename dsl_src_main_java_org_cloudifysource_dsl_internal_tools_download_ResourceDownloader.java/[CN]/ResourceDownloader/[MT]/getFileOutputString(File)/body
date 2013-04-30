@@ -1,0 +1,10 @@
+{
+  destination.getParentFile().mkdirs();
+  try {
+    destination.createNewFile();
+    return new FileOutputStream(destination);
+  }
+ catch (  Exception e) {
+    throw new ResourceDownloadException("Failed opening stream to dest file " + destination.getAbsolutePath(),e);
+  }
+}

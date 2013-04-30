@@ -1,0 +1,6 @@
+{
+  final String urlAsString=url.toString();
+  final int slashIndex=urlAsString.lastIndexOf('/');
+  final String filename=urlAsString.substring(slashIndex + 1);
+  return filename;
+}

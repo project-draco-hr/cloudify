@@ -1,0 +1,17 @@
+{
+  final String resourceHash=calculateFileDigest();
+  String checksum;
+  logger.log(Level.FINE,"Checksum result for " + this.file.getPath() + " is "+ resourceHash);
+  checksum=readChecksum(this.hashFile);
+  if (StringUtils.isEmpty(checksum)) {
+    throw new ChecksumVerifierException("hash file does not contain any data");
+  }
+  if (StringUtils.isEmpty(resourceHash)) {
+    throw new ChecksumVerifierException("resource hash calculation failed. " + " This should not happen");
+  }
+  if (!checksum.equals(resourceHash)) {
+    throw new ChecksumVerifierException("checksum validation failed. File hash is " + resourceHash + " while checksum is "+ checksum);
+  }
+  logger.info("File verification completed successfully.");
+  return true;
+}

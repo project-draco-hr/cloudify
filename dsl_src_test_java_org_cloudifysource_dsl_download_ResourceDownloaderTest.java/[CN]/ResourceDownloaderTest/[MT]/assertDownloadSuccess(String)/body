@@ -1,0 +1,4 @@
+{
+  rdf.get(RESOURCE_URL,RESOURCE_DESTINATION,false,hashUrl);
+  assertFilesDownloaded("testResource.txt",getResourceName(hashUrl));
+}

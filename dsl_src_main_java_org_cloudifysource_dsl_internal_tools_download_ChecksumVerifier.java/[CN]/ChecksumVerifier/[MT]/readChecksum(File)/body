@@ -1,0 +1,21 @@
+{
+  BufferedReader br=null;
+  try {
+    br=new BufferedReader(new FileReader(checksumFile));
+    logger.fine("reading checksum from file " + checksumFile);
+    final Object[] result=format.parse(br.readLine());
+    if (result == null || result.length == 0 || result[0] == null) {
+      throw new ChecksumVerifierException("a checksum hash could not be found.");
+    }
+    return (String)result[0];
+  }
+ catch (  IOException e) {
+    throw new ChecksumVerifierException("Couldn't read checksum file " + checksumFile,e);
+  }
+catch (  ParseException e) {
+    throw new ChecksumVerifierException("Couldn't parse checksum file " + checksumFile,e);
+  }
+ finally {
+    IOUtils.closeQuietly(br);
+  }
+}

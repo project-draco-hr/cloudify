@@ -1,0 +1,6 @@
+String urlString
+String fileDest
+boolean skipExisting
+String hashUrl
+long timeout
+TimeUnit unit

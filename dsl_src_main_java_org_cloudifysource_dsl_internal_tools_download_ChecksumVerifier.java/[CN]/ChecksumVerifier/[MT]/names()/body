@@ -1,0 +1,7 @@
+{
+  List<String> algoNames=new ArrayList<String>();
+  for (  ChecksumAlgorithm algo : ChecksumAlgorithm.values()) {
+    algoNames.add(algo.name());
+  }
+  return algoNames;
+}

@@ -1,0 +1,5 @@
+{
+  logger.log(Level.INFO,"Starting download from " + urlString);
+  initRecourceDownloader(urlString,fileDest,skipExisting,hashUrl,timeout,unit);
+  start();
+}

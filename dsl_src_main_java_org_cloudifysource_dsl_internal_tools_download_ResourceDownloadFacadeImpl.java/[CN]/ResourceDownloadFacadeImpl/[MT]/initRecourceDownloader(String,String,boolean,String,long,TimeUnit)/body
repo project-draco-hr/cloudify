@@ -1,0 +1,19 @@
+{
+  URL downloadUrl=null;
+  URL hashDownloadUrl=null;
+  File fileDestination=new File(fileDest);
+  try {
+    downloadUrl=new URL(urlString);
+    if (hashUrl != null) {
+      hashDownloadUrl=new URL(hashUrl);
+    }
+  }
+ catch (  MalformedURLException e) {
+    throw new ResourceDownloadException("Failed initializing resource downloader.",e);
+  }
+  this.resourceDownloader.setUrl(downloadUrl);
+  this.resourceDownloader.setHashUrl(hashDownloadUrl);
+  this.resourceDownloader.setDestFile(fileDestination);
+  this.resourceDownloader.setTimeout(timeout,unit);
+  this.resourceDownloader.setSkipExisting(skipExisting);
+}

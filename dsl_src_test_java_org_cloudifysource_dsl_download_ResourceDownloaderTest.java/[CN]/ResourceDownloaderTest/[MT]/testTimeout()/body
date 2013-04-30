@@ -1,0 +1,11 @@
+{
+  try {
+    rdf.get(RESOURCE_URL,RESOURCE_DESTINATION,false,1,TimeUnit.MICROSECONDS);
+    Assert.fail("Expected timeout exception.");
+  }
+ catch (  TimeoutException e) {
+  }
+catch (  ResourceDownloadException e) {
+    Assert.fail("Expecting timeout exception. got " + e.getMessage());
+  }
+}

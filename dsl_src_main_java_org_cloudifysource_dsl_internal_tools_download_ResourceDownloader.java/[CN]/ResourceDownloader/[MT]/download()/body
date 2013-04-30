@@ -1,0 +1,25 @@
+{
+  if (this.resourceDest.exists() && this.skipExisting) {
+    logger.log(Level.INFO,"File already exists. " + this.resourceDest.getAbsolutePath() + " Skipping download.");
+    return;
+  }
+  for (int attempt=1; attempt <= this.numberOfRetries; attempt++) {
+    try {
+      getResource(this.resourceUrl,this.resourceDest);
+      if (this.hashUrl != null) {
+        String resourceName=getResourceName(this.hashUrl);
+        File checksumFile=new File(this.resourceDest.getParent(),resourceName);
+        getResource(this.hashUrl,checksumFile);
+        logger.log(Level.FINE,"Verifying resource checksum using checksum file " + checksumFile.getAbsolutePath());
+        verifyResourceChecksum(checksumFile);
+        return;
+      }
+    }
+ catch (    ResourceDownloadException e) {
+      logger.log(Level.WARNING,"Failed downloading resource on attempt " + attempt + ". Reason was "+ e.getMessage(),e);
+      if (attempt == numberOfRetries) {
+        throw e;
+      }
+    }
+  }
+}

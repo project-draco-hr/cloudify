@@ -1,0 +1,8 @@
+{
+  rdf.get(RESOURCE_URL,RESOURCE_DESTINATION,false,RESOURCE_URL + ".md5");
+  File downloadedResource=new File(DESTINATION_FOLDER,RESOURCE_NAME);
+  long lastModified=downloadedResource.lastModified();
+  rdf.get(RESOURCE_URL,RESOURCE_DESTINATION,true,RESOURCE_URL + ".md5");
+  Assert.assertTrue("File was modified but skip existing flag is true",downloadedResource.lastModified() == lastModified);
+  cleanDownloadFolder();
+}

@@ -1,0 +1,12 @@
+{
+  assertFormattedChecksumVerification("testResourceFormatted.txt.md5");
+  cleanDownloadFolder();
+  assertFormattedChecksumVerification("testResourceFormatted.txt.sha1");
+  cleanDownloadFolder();
+  assertFormattedChecksumVerification("testResourceFormatted.txt.sha256");
+  cleanDownloadFolder();
+  assertFormattedChecksumVerification("testResourceFormatted.txt.sha384");
+  cleanDownloadFolder();
+  assertFormattedChecksumVerification("testResourceFormatted.txt.sha512");
+  cleanDownloadFolder();
+}
