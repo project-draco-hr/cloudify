@@ -3,6 +3,6 @@
   final File resourceFile=new File(RESOURCE_FOLDER,RESOURCE_NAME);
   final File hashFile=new File(RESOURCE_FOLDER,hashFileName);
   downloader.setFormat(new MessageFormat("{0}"));
-  downloader.setDestFile(resourceFile);
+  downloader.setResourceDest(resourceFile);
   downloader.verifyResourceChecksum(hashFile);
 }
