@@ -5,6 +5,6 @@
   String region=JCloudsUtils.getEC2region(ec2Client,locationId);
   Set<KeyPair> foundKeyPairs=ec2KeyPairClient.describeKeyPairsInRegion(region,keyPairName);
   if (foundKeyPairs == null || foundKeyPairs.size() == 0 || foundKeyPairs.iterator().next() == null) {
-    throw new CloudProvisioningException("Invalid key-pair name: " + keyPairName);
+    throw new CloudProvisioningException("Key pair \"" + keyPairName + "\" is invalid or in the wrong availability zone");
   }
 }

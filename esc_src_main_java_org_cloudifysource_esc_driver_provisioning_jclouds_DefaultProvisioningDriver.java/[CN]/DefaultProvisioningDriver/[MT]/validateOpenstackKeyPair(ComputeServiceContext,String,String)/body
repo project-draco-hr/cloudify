@@ -3,6 +3,6 @@
   KeyPairApi keyPairApi=unwrapped.getApi().getKeyPairExtensionForZone(locationId).get();
   Predicate<org.jclouds.openstack.nova.v2_0.domain.KeyPair> keyPairNamePredicate=org.jclouds.openstack.nova.v2_0.predicates.KeyPairPredicates.nameEquals(keyPairName);
   if (!keyPairApi.list().anyMatch(keyPairNamePredicate)) {
-    throw new CloudProvisioningException("Invalid key-pair name: " + keyPairName);
+    throw new CloudProvisioningException("Key pair \"" + keyPairName + "\" is invalid or in the wrong availability zone");
   }
 }
