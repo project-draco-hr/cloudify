@@ -1,0 +1,14 @@
+{
+  String templateName=null;
+  final ComputeDetails compute=service.getCompute();
+  if (compute != null) {
+    templateName=compute.getTemplate();
+  }
+  if (templateName == null) {
+    if (IsolationUtils.isGlobal(service) && IsolationUtils.isUseManagement(service)) {
+      templateName=restConfig.getDefaultTemplateName();
+    }
+    templateName=restConfig.getDefaultTemplateName();
+  }
+  return templateName;
+}

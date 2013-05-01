@@ -3,8 +3,8 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to delete attributes " + attributeName + " of application "+ appName);
   }
-  Object previousValue=deleteAttribute(appName,null,null,attributeName);
-  DeleteApplicationAttributeResponse daar=new DeleteApplicationAttributeResponse();
+  final Object previousValue=deleteAttribute(appName,null,null,attributeName);
+  final DeleteApplicationAttributeResponse daar=new DeleteApplicationAttributeResponse();
   daar.setPreviousValue(previousValue);
   return daar;
 }

@@ -1,0 +1,11 @@
+{
+  final InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setAbsolutePuName(absolutePuName);
+  validationContext.setCloud(restConfig.getCloud());
+  validationContext.setRequest(request);
+  validationContext.setService(service);
+  validationContext.setTemplateName(templateName);
+  for (  final InstallServiceValidator validator : installServiceValidators) {
+    validator.validate(validationContext);
+  }
+}

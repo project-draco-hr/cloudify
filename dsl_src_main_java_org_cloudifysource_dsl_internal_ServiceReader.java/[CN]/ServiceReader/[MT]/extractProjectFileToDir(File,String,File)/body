@@ -1,0 +1,8 @@
+{
+  File destFolder=null;
+  destFolder=File.createTempFile(projectDirName,"",parentDir);
+  FileUtils.forceDelete(destFolder);
+  FileUtils.forceMkdir(destFolder);
+  ZipUtils.unzip(zipFile,destFolder);
+  return destFolder;
+}

@@ -1,0 +1,30 @@
+{
+  Cloud cloud=validationContext.getCloud();
+  if (cloud == null) {
+    return;
+  }
+  String templateName=validationContext.getTemplateName();
+  if (templateName == null) {
+    throw new RestErrorException(CloudifyMessageKeys.VALIDATOR_TEMPLATE_NAME_MISSING.getName());
+  }
+  Service service=validationContext.getService();
+  if (service == null) {
+    throw new RestErrorException(CloudifyMessageKeys.VALIDATOR_SERVICE_MISSING.getName());
+  }
+  final ComputeDetails compute=service.getCompute();
+  templateName=compute.getTemplate();
+  if (IsolationUtils.isGlobal(service) && IsolationUtils.isUseManagement(service)) {
+    final String managementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
+    if (compute != null) {
+      if (StringUtils.notEmpty(templateName)) {
+        if (!templateName.equals(managementTemplateName)) {
+          logger.warning("Installation of service " + service.getName() + " on a management machine "+ "will not be attempted since the specified template("+ templateName+ ")"+ " is different than the management machine template("+ managementTemplateName+ ")");
+        }
+      }
+    }
+  }
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
+  if (template == null) {
+    throw new RestErrorException(CloudifyMessageKeys.MISSING_TEMPLATE.getName(),templateName);
+  }
+}

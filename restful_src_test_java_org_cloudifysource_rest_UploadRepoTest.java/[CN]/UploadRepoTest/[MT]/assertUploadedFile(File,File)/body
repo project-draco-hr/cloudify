@@ -15,6 +15,5 @@
   FileUtils.contentEquals(expectedFile,unzippedFile);
   ZipFile zipFile=new ZipFile(zipCopyFile);
   zipFile.close();
-  FileUtils.deleteQuietly(zipCopyFile);
-  FileUtils.deleteQuietly(tempDir);
+  zipCopyFile.delete();
 }

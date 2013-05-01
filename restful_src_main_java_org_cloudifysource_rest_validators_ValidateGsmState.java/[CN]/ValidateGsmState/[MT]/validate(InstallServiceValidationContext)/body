@@ -1,0 +1,16 @@
+{
+  logger.info("Validating Gsm state.");
+  Cloud cloud=validationContext.getCloud();
+  if (cloud != null) {
+    String persistentStoragePath=cloud.getConfiguration().getPersistentStoragePath();
+    if (persistentStoragePath != null) {
+      int numManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
+      final boolean isGsmStateValid=admin.getGridServiceManagers().waitFor(numManagementMachines,10,TimeUnit.SECONDS);
+      if (!isGsmStateValid) {
+        int gsmCount=admin.getGridServiceManagers().getManagers().length;
+        logger.warning("Not all gsm instances are intact. Found " + gsmCount);
+        throw new RestErrorException(ResponseConstants.NOT_ALL_GSM_INSTANCES_RUNNING,numManagementMachines,gsmCount);
+      }
+    }
+  }
+}

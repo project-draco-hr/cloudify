@@ -1,11 +1,11 @@
 {
-  List<ServiceInstanceMetricsData> serviceInstanceMetricsDatas=new ArrayList<ServiceInstanceMetricsData>();
-  ProcessingUnit service=getService(appName,serviceName);
-  for (  ProcessingUnitInstance serviceInstance : service.getInstances()) {
-    Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
+  final List<ServiceInstanceMetricsData> serviceInstanceMetricsDatas=new ArrayList<ServiceInstanceMetricsData>();
+  final ProcessingUnit service=getService(appName,serviceName);
+  for (  final ProcessingUnitInstance serviceInstance : service.getInstances()) {
+    final Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
     serviceInstanceMetricsDatas.add(new ServiceInstanceMetricsData(serviceInstance.getInstanceId(),metrics));
   }
-  ServiceMetricsResponse smr=new ServiceMetricsResponse();
+  final ServiceMetricsResponse smr=new ServiceMetricsResponse();
   smr.setAppName(appName);
   smr.setServiceInstaceMetricsData(serviceInstanceMetricsDatas);
   smr.setServiceName(serviceName);

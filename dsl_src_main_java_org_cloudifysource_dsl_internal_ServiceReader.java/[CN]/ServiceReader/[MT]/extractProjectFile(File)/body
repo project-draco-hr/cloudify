@@ -1,8 +1,3 @@
 {
-  File destFolder=null;
-  destFolder=File.createTempFile("gs_usm_","");
-  FileUtils.forceDelete(destFolder);
-  FileUtils.forceMkdir(destFolder);
-  ZipUtils.unzip(projectZipFile,destFolder);
-  return destFolder;
+  return extractProjectFileToDir(projectZipFile,"gs_usm_",null);
 }
