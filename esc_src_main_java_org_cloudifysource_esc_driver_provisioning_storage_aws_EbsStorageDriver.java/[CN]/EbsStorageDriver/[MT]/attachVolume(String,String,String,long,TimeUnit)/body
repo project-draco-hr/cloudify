@@ -1,17 +1,12 @@
 {
   final long end=System.currentTimeMillis() + timeUnit.toMillis(duration);
-  Set<String> machineVolumeIds=getMachineVolumeIds(ip);
-  if (machineVolumeIds.contains(volumeId)) {
-    throw new StorageProvisioningException("Volume already attached to machine with ip " + ip);
-  }
-  NodeMetadata nodeMetadata=getNodeMetadata(ip);
+  NodeMetadata nodeMetadata=deployer.getServerWithIP(ip);
   try {
     String instanceId=nodeMetadata.getProviderId();
-    logger.log(Level.FINE,"Attaching volume with id " + volumeId + " to machine instance with id "+ instanceId);
+    logger.log(Level.FINE,"Attaching volume with id " + volumeId + " to machine with id "+ instanceId);
     this.ebsClient.attachVolumeInRegion(this.region,volumeId,instanceId,device);
   }
- catch (  Exception e) {
-    logger.warning("Failed attaching volume to machine. Reason: " + e.getMessage());
+ catch (  final Exception e) {
     throw new StorageProvisioningException("Failed attaching volume to machine. Reason: " + e.getMessage(),e);
   }
   waitForVolumeToReachStatus(Status.IN_USE,end,volumeId);

@@ -4,7 +4,7 @@
   try {
     waitForVolumeToReachStatus(Status.DELETING,end,volumeId);
   }
- catch (  StorageProvisioningException e) {
+ catch (  final StorageProvisioningException e) {
   }
   logger.fine("volume with id " + volumeId + " deleted successfully");
 }

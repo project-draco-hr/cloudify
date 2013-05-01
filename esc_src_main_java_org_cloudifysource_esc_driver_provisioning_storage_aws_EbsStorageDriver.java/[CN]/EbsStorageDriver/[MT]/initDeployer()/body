@@ -1,0 +1,3 @@
+{
+  this.deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),new Properties());
+}

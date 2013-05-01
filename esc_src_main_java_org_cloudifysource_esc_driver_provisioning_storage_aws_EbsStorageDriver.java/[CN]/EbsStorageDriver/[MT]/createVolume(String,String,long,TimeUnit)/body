@@ -7,18 +7,18 @@
   }
   Volume volume=null;
   try {
-    logger.fine("creating new volume in availability zone " + availabilityZone + " of size "+ size);
+    logger.fine("Creating new volume in availability zone " + availabilityZone + " of size "+ size);
     volume=this.ebsClient.createVolumeInAvailabilityZone(availabilityZone,size);
     String volumeId=volume.getId();
     logger.fine("Waiting for volume to become available.");
     waitForVolumeToReachStatus(Status.AVAILABLE,end,volumeId);
-    logger.fine("naming created volume with id " + volumeId);
+    logger.fine("Naming created volume with id " + volumeId);
     TagApi tagApi=getTagsApi();
     Map<String,String> tagsMap=createTagsMap(templateName);
     tagApi.applyToResources(tagsMap,Arrays.asList(volumeId));
     logger.fine("Volume created successfully. volume id is: " + volumeId);
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     if (volume != null) {
       handleExceptionAfterVolumeCreated(volume.getId());
     }
@@ -29,6 +29,5 @@
       throw new StorageProvisioningException("Failed creating volume of size " + size + " in availability zone. "+ availabilityZone+ "Reason: "+ e.getMessage(),e);
     }
   }
-  VolumeDetails volumeDetails=createVolumeDetails(volume);
-  return volumeDetails;
+  return createVolumeDetails(volume);
 }

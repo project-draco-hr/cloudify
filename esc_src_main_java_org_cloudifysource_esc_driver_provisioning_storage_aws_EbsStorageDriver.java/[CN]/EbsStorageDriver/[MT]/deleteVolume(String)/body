@@ -1,9 +1,9 @@
 {
   try {
-    logger.fine("deleting volume with id " + volumeId);
+    logger.fine("Deleting volume with id " + volumeId);
     this.ebsClient.deleteVolumeInRegion(this.region,volumeId);
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     logger.log(Level.WARNING,"Failed deleting volume with ID " + volumeId + " Reason: "+ e.getMessage());
     throw new StorageProvisioningException("Failed deleting volume with ID " + volumeId + " Reason: "+ e.getMessage(),e);
   }

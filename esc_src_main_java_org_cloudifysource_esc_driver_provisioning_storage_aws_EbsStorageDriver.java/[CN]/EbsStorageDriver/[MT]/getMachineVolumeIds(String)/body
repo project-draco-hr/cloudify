@@ -1,5 +1,5 @@
 {
-  NodeMetadata nodeMetadata=getNodeMetadata(ip);
+  NodeMetadata nodeMetadata=deployer.getServerWithIP(ip);
   Hardware nodeHardware=nodeMetadata.getHardware();
   List<? extends org.jclouds.compute.domain.Volume> machineVolumes=nodeHardware.getVolumes();
   Set<String> machineVolumeIds=new HashSet<String>();

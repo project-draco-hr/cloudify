@@ -1,27 +1,19 @@
 {
   final long end=System.currentTimeMillis() + timeUnit.toMillis(duration);
-  NodeMetadata nodeMetadata=getNodeMetadata(ip);
-  Set<VolumeDetails> listVolumes=listVolumes(ip,duration,timeUnit);
-  for (  VolumeDetails volumeDetails : listVolumes) {
-    if (volumeDetails.getId().equals(volumeId)) {
-      try {
-        logger.fine("Detaching volume with id " + volumeId + " from machine with id "+ nodeMetadata.getId());
-        this.ebsClient.detachVolumeInRegion(this.region,volumeId,false,DetachVolumeOptions.Builder.fromInstance(nodeMetadata.getProviderId()));
-      }
- catch (      Exception e) {
-        logger.log(Level.WARNING,"Failed detaching node with id " + volumeId + " Reason: "+ e.getMessage(),e);
-        throw new StorageProvisioningException("Failed detaching node with id " + volumeId + " Reason: "+ e.getMessage(),e);
-      }
-      try {
-        waitForVolumeToReachStatus(Status.AVAILABLE,end,volumeId);
-      }
- catch (      final TimeoutException e) {
-        logger.warning("Timed out while waiting for volume[" + volumeId + "] to "+ "become available after detachment. this may cause this volume to leak");
-        throw e;
-      }
-      return;
-    }
+  NodeMetadata nodeMetadata=deployer.getServerWithIP(ip);
+  try {
+    logger.fine("Detaching volume with id " + volumeId + " from machine with id "+ nodeMetadata.getId());
+    this.ebsClient.detachVolumeInRegion(this.region,volumeId,false,DetachVolumeOptions.Builder.fromInstance(nodeMetadata.getProviderId()));
   }
-  logger.warning("Volume with ID " + volumeId + " does not exist.");
-  throw new IllegalStateException("Volume with ID " + volumeId + " does not exist in elastic block store.");
+ catch (  Exception e) {
+    logger.log(Level.WARNING,"Failed detaching node with id " + volumeId + " Reason: "+ e.getMessage(),e);
+    throw new StorageProvisioningException("Failed detaching node with id " + volumeId + " Reason: "+ e.getMessage(),e);
+  }
+  try {
+    waitForVolumeToReachStatus(Status.AVAILABLE,end,volumeId);
+  }
+ catch (  final TimeoutException e) {
+    logger.warning("Timed out while waiting for volume[" + volumeId + "] to "+ "become available after detachment. this may cause this volume to leak");
+    throw e;
+  }
 }

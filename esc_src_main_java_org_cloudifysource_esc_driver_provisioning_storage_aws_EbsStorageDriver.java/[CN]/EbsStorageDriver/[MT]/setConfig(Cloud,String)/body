@@ -1,7 +1,13 @@
 {
   this.cloud=cloud;
   this.computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
-  this.initContext();
-  this.initRegion();
-  this.initEbsClient();
+  initContext();
+  initRegion();
+  initEbsClient();
+  try {
+    initDeployer();
+  }
+ catch (  IOException e) {
+    throw new RuntimeException("Failed initializing JCloudsDeployer : " + e.getMessage());
+  }
 }
