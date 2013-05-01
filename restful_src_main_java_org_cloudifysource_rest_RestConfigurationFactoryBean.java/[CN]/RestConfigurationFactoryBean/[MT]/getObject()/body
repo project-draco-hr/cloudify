@@ -1,0 +1,5 @@
+{
+  config=new RestConfiguration();
+  initRestConfiguration();
+  return config;
+}

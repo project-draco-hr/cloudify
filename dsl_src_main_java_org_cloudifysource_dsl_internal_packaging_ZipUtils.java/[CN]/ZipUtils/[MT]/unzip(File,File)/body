@@ -1,31 +1,36 @@
 {
   final ZipFile zfile=new ZipFile(zipfile);
-  final Enumeration<? extends ZipEntry> entries=zfile.entries();
-  while (entries.hasMoreElements()) {
-    final ZipEntry entry=entries.nextElement();
-    final File file=new File(directory,entry.getName());
-    if (entry.isDirectory()) {
-      final boolean mkdirs=file.mkdirs();
-      if (!mkdirs) {
-        zfile.close();
-        throw new IllegalStateException("cant create dir" + file.getAbsolutePath());
-      }
-    }
- else {
-      if (!file.getParentFile().exists()) {
-        final boolean mkdirs=file.getParentFile().mkdirs();
+  try {
+    final Enumeration<? extends ZipEntry> entries=zfile.entries();
+    while (entries.hasMoreElements()) {
+      final ZipEntry entry=entries.nextElement();
+      final File file=new File(directory,entry.getName());
+      if (entry.isDirectory()) {
+        final boolean mkdirs=file.mkdirs();
         if (!mkdirs) {
           zfile.close();
-          throw new IllegalStateException("cant create dir" + file.getParentFile().getAbsolutePath());
+          throw new IllegalStateException("cant create dir" + file.getAbsolutePath());
         }
       }
-      final InputStream in=zfile.getInputStream(entry);
-      try {
-        copy(in,file);
-      }
+ else {
+        if (!file.getParentFile().exists()) {
+          final boolean mkdirs=file.getParentFile().mkdirs();
+          if (!mkdirs) {
+            zfile.close();
+            throw new IllegalStateException("cant create dir" + file.getParentFile().getAbsolutePath());
+          }
+        }
+        final InputStream in=zfile.getInputStream(entry);
+        try {
+          copy(in,file);
+        }
   finally {
-        in.close();
+          in.close();
+        }
       }
     }
+  }
+  finally {
+    zfile.close();
   }
 }

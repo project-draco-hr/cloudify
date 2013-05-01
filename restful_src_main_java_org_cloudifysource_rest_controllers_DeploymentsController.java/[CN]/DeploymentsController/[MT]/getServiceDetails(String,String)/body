@@ -1,18 +1,18 @@
 {
-  Application application=admin.getApplications().waitFor(appName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
+  final Application application=admin.getApplications().waitFor(appName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
   if (application == null) {
     throw new RestErrorException(CloudifyMessageKeys.APPLICATION_WAIT_TIMEOUT.getName(),appName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
   }
-  ProcessingUnit processingUnit=application.getProcessingUnits().waitFor(ServiceUtils.getAbsolutePUName(appName,serviceName),DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
+  final ProcessingUnit processingUnit=application.getProcessingUnits().waitFor(ServiceUtils.getAbsolutePUName(appName,serviceName),DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
   if (processingUnit == null) {
     throw new RestErrorException(CloudifyMessageKeys.SERVICE_WAIT_TIMEOUT.getName(),serviceName,DEFAULT_ADMIN_WAITING_TIMEOUT,TimeUnit.SECONDS);
   }
-  ServiceDetails serviceDetails=new ServiceDetails();
+  final ServiceDetails serviceDetails=new ServiceDetails();
   serviceDetails.setName(serviceName);
   serviceDetails.setApplicationName(appName);
   serviceDetails.setNumberOfInstances(processingUnit.getInstances().length);
-  List<String> instanceNaems=new ArrayList<String>();
-  for (  ProcessingUnitInstance instance : processingUnit.getInstances()) {
+  final List<String> instanceNaems=new ArrayList<String>();
+  for (  final ProcessingUnitInstance instance : processingUnit.getInstances()) {
     instanceNaems.add(instance.getProcessingUnitInstanceName());
   }
   serviceDetails.setInstanceNames(instanceNaems);

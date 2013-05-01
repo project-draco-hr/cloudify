@@ -1,0 +1,4 @@
+Cloud cloud
+Service service
+boolean shouldFail
+CloudifyMessageKeys exceptionCause

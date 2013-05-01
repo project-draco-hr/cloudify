@@ -1,0 +1,21 @@
+{
+  logger.info("Initializing service controller cloud configuration");
+  Cloud cloud=readCloud();
+  if (cloud != null) {
+    initCloudTemplates();
+    CloudCompute cloudCompute=cloud.getCloudCompute();
+    if (cloudCompute.getTemplates().isEmpty()) {
+      throw new IllegalArgumentException("No templates defined in cloud configuration!");
+    }
+    String defaultTemplateName=cloudCompute.getTemplates().keySet().iterator().next();
+    logger.info("Setting default template name to: " + defaultTemplateName + ". This template will be used for services that do not specify an explicit template");
+    config.setDefaultTemplateName(defaultTemplateName);
+    String managementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
+    config.setManagementTemplateName(managementTemplateName);
+    config.setManagementTemplate(cloudCompute.getTemplates().get(managementTemplateName));
+    config.setCloud(cloud);
+  }
+ else {
+    logger.info("Service Controller is running in local cloud mode");
+  }
+}

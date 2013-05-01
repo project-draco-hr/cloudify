@@ -1,0 +1,7 @@
+{
+  ValidateInstallServiceRequest validator=new ValidateInstallServiceRequest();
+  if (optionalValidatorParam != null) {
+    validator.setOverrdiesMaxLength((Long)optionalValidatorParam);
+  }
+  return validator;
+}

@@ -1,0 +1,29 @@
+{
+  String serviceOverrides=request.getServiceOverrides();
+  if (StringUtils.notEmpty(serviceOverrides)) {
+    final File workingProjectDir=new File(serviceDir,"ext");
+    final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+    final File servicePropertiesFile=new File(workingProjectDir,propertiesFileName);
+    Properties serviceProperties=new Properties();
+    FileInputStream inStream;
+    try {
+      if (!servicePropertiesFile.exists()) {
+        servicePropertiesFile.createNewFile();
+      }
+      inStream=new FileInputStream(servicePropertiesFile);
+      serviceProperties.load(inStream);
+      String[] serviceOverridesProeprties=serviceOverrides.split(",");
+      for (      String keyValuePairStr : serviceOverridesProeprties) {
+        String[] keyValuePair=keyValuePairStr.split("=");
+        serviceProperties.setProperty(keyValuePair[0].trim(),keyValuePair[1].trim());
+      }
+      serviceProperties.store(new FileOutputStream(servicePropertiesFile),null);
+    }
+ catch (    FileNotFoundException e2) {
+      throw new RestErrorException("");
+    }
+catch (    IOException e) {
+      throw new RestErrorException("");
+    }
+  }
+}

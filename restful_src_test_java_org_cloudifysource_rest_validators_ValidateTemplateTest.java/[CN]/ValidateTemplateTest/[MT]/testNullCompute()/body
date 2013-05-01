@@ -1,0 +1,4 @@
+{
+  Service service=ServiceReader.readService(new File(NO_COMPUTE_SERVICE));
+  testValidator(null,service,false,null);
+}

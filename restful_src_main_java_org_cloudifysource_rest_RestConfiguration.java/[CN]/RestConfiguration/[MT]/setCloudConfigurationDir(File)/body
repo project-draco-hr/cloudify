@@ -1,0 +1,3 @@
+{
+  this.cloudConfigurationDir=cloudConfigurationDir;
+}

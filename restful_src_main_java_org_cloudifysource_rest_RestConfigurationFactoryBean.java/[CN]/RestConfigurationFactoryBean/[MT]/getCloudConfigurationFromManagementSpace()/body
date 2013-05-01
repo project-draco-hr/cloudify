@@ -1,0 +1,10 @@
+{
+  logger.info("Waiting for cloud configuration to become available in management space");
+  final CloudConfigurationHolder config=gigaSpace.read(new CloudConfigurationHolder(),1000 * 60);
+  if (config == null) {
+    final String msg="Could not find the expected Cloud Configuration Holder in Management space!";
+    logger.severe(msg);
+    throw new IllegalStateException(msg);
+  }
+  return config;
+}
