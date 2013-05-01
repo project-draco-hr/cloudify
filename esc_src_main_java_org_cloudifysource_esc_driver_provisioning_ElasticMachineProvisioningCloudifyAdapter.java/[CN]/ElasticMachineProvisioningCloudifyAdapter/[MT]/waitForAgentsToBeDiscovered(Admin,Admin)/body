@@ -1,0 +1,35 @@
+{
+  final long endTime=System.currentTimeMillis() + cloud.getConfiguration().getAdminLoadingTime() * MILLISECONDS_IN_SECOND;
+  boolean esmAdminOk=false;
+  final Map<String,GridServiceContainer> undiscoveredAgentsContianersPerProcessingUnitInstanceName=new HashMap<String,GridServiceContainer>();
+  while (System.currentTimeMillis() < endTime) {
+    if (!esmAdminOk) {
+      for (      ProcessingUnit pu : esmAdminInstance.getProcessingUnits()) {
+        for (        ProcessingUnitInstance instance : pu.getInstances()) {
+          GridServiceContainer container=instance.getGridServiceContainer();
+          if (container.getAgentId() != -1 && container.getGridServiceAgent() == null) {
+            undiscoveredAgentsContianersPerProcessingUnitInstanceName.put(instance.getProcessingUnitInstanceName(),container);
+          }
+        }
+      }
+      if (undiscoveredAgentsContianersPerProcessingUnitInstanceName.isEmpty()) {
+        esmAdminOk=true;
+      }
+ else {
+        logger.fine("Detected containers who's agent was not discovered yet");
+        logContainers(undiscoveredAgentsContianersPerProcessingUnitInstanceName);
+        logger.fine("Sleeping for 5 seconds");
+        Thread.sleep(5000);
+      }
+    }
+ else {
+      Set<String> esmAdminAgentUids=esmAdminInstance.getGridServiceAgents().getUids().keySet();
+      Set<String> globalAdminAgentUids=globalAdminInstance.getGridServiceAgents().getUids().keySet();
+      if (!esmAdminAgentUids.equals(globalAdminAgentUids)) {
+        logger.fine("Agents discovered by global admin instance are not " + "equal to the ones from the esm admin. Sleeping for 5 seconds");
+        Thread.sleep(5000);
+      }
+    }
+  }
+  throw new ElasticMachineProvisioningException("Cannot start a new machine when the admin has not been synced properly");
+}

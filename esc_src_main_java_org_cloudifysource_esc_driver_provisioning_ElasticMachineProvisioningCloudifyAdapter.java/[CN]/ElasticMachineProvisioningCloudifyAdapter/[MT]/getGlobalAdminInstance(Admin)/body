@@ -2,6 +2,7 @@
 synchronized (GLOBAL_ADMIN_MUTEX) {
     if (globalAdminInstance == null) {
       final AdminFactory factory=new AdminFactory();
+      factory.useDaemonThreads(true);
       for (      final String group : esmAdminInstance.getGroups()) {
         factory.addGroup(group);
       }
@@ -9,8 +10,7 @@ synchronized (GLOBAL_ADMIN_MUTEX) {
         factory.addLocator(locator.getHost() + ":" + locator.getPort());
       }
       globalAdminInstance=factory.createAdmin();
-      logger.info("waiting for admin object to sync: " + cloud.getConfiguration().getAdminLoadingTime() + " seconds");
-      Thread.sleep(cloud.getConfiguration().getAdminLoadingTime() * MILLISECONDS_IN_SECOND);
+      waitForAgentsToBeDiscovered(esmAdminInstance,globalAdminInstance);
     }
     return globalAdminInstance;
   }
