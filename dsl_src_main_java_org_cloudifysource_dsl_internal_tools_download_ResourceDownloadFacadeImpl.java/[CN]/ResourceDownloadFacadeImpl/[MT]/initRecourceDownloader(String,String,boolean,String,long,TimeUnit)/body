@@ -1,17 +1,22 @@
 {
   URL downloadUrl=null;
   URL hashDownloadUrl=null;
-  File fileDestination=new File(fileDest);
+  final File fileDestination=new File(fileDest);
   try {
     downloadUrl=new URL(urlString);
-    if (hashUrl != null) {
-      hashDownloadUrl=new URL(hashUrl);
-    }
   }
  catch (  MalformedURLException e) {
-    throw new ResourceDownloadException("Failed initializing resource downloader.",e);
+    throw new ResourceDownloadException("Failed constructing url " + urlString,e);
   }
-  long timeoutInMillis=unit.toMillis(timeout);
+  if (hashUrl != null) {
+    try {
+      hashDownloadUrl=new URL(hashUrl);
+    }
+ catch (    MalformedURLException e) {
+      throw new ResourceDownloadException("Failed constructing url " + hashUrl,e);
+    }
+  }
+  final long timeoutInMillis=unit.toMillis(timeout);
   this.resourceDownloader.setUrl(downloadUrl);
   this.resourceDownloader.setHashUrl(hashDownloadUrl);
   this.resourceDownloader.setResourceDest(fileDestination);
