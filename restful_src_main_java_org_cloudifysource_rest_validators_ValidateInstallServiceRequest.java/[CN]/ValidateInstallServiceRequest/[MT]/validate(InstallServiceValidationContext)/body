@@ -10,11 +10,11 @@
   }
   String cloudOverrides=request.getCloudOverrides();
   if (cloudOverrides.length() > overrdiesMaxLength) {
-    throw new RestErrorException(CloudifyMessageKeys.OVERRIDES_LENGTH_LIMIT_EXCEEDED.getName(),absolutePuName);
+    throw new RestErrorException(CloudifyMessageKeys.SERVICE_OVERRIDES_LENGTH_LIMIT_EXCEEDED.getName(),absolutePuName);
   }
   String serviceOverrides=request.getServiceOverrides();
   if (serviceOverrides.length() > overrdiesMaxLength) {
-    throw new RestErrorException(CloudifyMessageKeys.OVERRIDES_LENGTH_LIMIT_EXCEEDED.getName(),absolutePuName);
+    throw new RestErrorException(CloudifyMessageKeys.SERVICE_OVERRIDES_LENGTH_LIMIT_EXCEEDED.getName(),absolutePuName);
   }
   String authGroups=request.getAuthGroups();
 }

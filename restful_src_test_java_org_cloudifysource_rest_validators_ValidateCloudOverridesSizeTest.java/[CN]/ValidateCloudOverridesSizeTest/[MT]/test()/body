@@ -1,0 +1,12 @@
+{
+  validator.setCloudOverridesSizeLimit(CLOUD_OVERRIDES_TEST_SIZE_LIMIT_KB);
+  File cloudOverridesFile=new File(CLOUD_OVERRIDES_PATH);
+  cloudOverridesFile.createNewFile();
+  FileWriter writer=new FileWriter(cloudOverridesFile);
+  for (int i=0; i < CLOUD_OVERRIDES_TEST_SIZE_LIMIT_KB * 200; i++) {
+    writer.write("key" + i + "="+ i);
+  }
+  writer.close();
+  cloudOverridesFile.deleteOnExit();
+  testValidator(cloudOverridesFile,CloudifyMessageKeys.CLOUD_OVERRIDES_SIZE_LIMIT_EXCEEDED);
+}

@@ -1,0 +1,3 @@
+{
+  testValidator(null,cloud,service,templateName,null,true,exceptionCause);
+}
