@@ -1,9 +1,11 @@
 {
-  final InstallServiceValidator validator=getValidatorInstance(optionalValidatorParam);
+  final InstallServiceValidator validator=getValidatorInstance();
   InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
   validationContext.setRequest(request);
   validationContext.setCloud(cloud);
   validationContext.setService(service);
+  validationContext.setCloudConfiguration(cloudOverridesFile);
+  validationContext.setTemplateName(templateName);
   try {
     validator.validate(validationContext);
     if (shouldFail) {

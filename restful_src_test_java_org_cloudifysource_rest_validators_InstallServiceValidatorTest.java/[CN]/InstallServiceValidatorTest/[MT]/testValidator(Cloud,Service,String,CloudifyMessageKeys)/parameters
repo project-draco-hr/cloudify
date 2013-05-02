@@ -1,0 +1,4 @@
+Cloud cloud
+Service service
+String templateName
+CloudifyMessageKeys exceptionCause

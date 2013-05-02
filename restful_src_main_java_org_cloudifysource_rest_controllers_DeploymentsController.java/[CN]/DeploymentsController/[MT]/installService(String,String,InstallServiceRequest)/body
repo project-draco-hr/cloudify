@@ -9,7 +9,12 @@
     throw new RestErrorException("");
   }
   File editSrcFile=srcFile;
-  mergeOverridesWithProperties(request,serviceDir);
+  try {
+    mergeOverridesWithProperties(request,serviceDir);
+  }
+ catch (  IOException e2) {
+    throw new RestErrorException("");
+  }
   try {
     editSrcFile=Packager.createZipFile("temp",serviceDir);
   }
@@ -28,6 +33,15 @@ catch (  final PackagingException e) {
   }
   String templateName=getTempalteNameFromService(service);
   validateInstallService(absolutePuName,request,service,templateName);
+  String effectiveAuthGroups=request.getAuthGroups();
+  if (StringUtils.isBlank(effectiveAuthGroups)) {
+    if (permissionEvaluator != null) {
+      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
+    }
+ else {
+      effectiveAuthGroups="";
+    }
+  }
   InstallServiceResponse installServiceResponse=new InstallServiceResponse();
   String lifecycleEventContainerID="";
   installServiceResponse.setLifecycleEventContainerID(lifecycleEventContainerID);

@@ -1,29 +1,28 @@
 {
   String serviceOverrides=request.getServiceOverrides();
-  if (StringUtils.notEmpty(serviceOverrides)) {
+  File applicationProeprtiesFile=request.getApplicationPropertiesFile();
+  if (!StringUtils.isBlank(serviceOverrides) || applicationProeprtiesFile != null) {
     final File workingProjectDir=new File(serviceDir,"ext");
     final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
     final File servicePropertiesFile=new File(workingProjectDir,propertiesFileName);
-    Properties serviceProperties=new Properties();
-    FileInputStream inStream;
+    final File finalPropertiesFile=File.createTempFile("finalPropertiesFile",".properties");
     try {
-      if (!servicePropertiesFile.exists()) {
-        servicePropertiesFile.createNewFile();
+      FileAppender appender=new FileAppender(finalPropertiesFile);
+      if (applicationProeprtiesFile != null && applicationProeprtiesFile.exists()) {
+        appender.append("application proeprties file",applicationProeprtiesFile);
       }
-      inStream=new FileInputStream(servicePropertiesFile);
-      serviceProperties.load(inStream);
-      String[] serviceOverridesProeprties=serviceOverrides.split(",");
-      for (      String keyValuePairStr : serviceOverridesProeprties) {
-        String[] keyValuePair=keyValuePairStr.split("=");
-        serviceProperties.setProperty(keyValuePair[0].trim(),keyValuePair[1].trim());
+      if (servicePropertiesFile.exists()) {
+        appender.append("service proeprties file",servicePropertiesFile);
       }
-      serviceProperties.store(new FileOutputStream(servicePropertiesFile),null);
+      if (!StringUtils.isBlank(serviceOverrides)) {
+        serviceOverrides=serviceOverrides.replaceAll(",",FileAppender.LINE_SEPARATOR);
+        appender.append("service overrides file",serviceOverrides);
+      }
+      appender.flush();
+      FileUtils.copyFile(finalPropertiesFile,servicePropertiesFile);
     }
- catch (    FileNotFoundException e2) {
-      throw new RestErrorException("");
-    }
-catch (    IOException e) {
-      throw new RestErrorException("");
+  finally {
+      finalPropertiesFile.delete();
     }
   }
 }
