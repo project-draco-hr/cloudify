@@ -2,3 +2,4 @@ String absolutePuName
 InstallServiceRequest request
 Service service
 String templateName
+File cloudConfiguration
