@@ -6,33 +6,38 @@
     serviceDir=ServiceReader.extractProjectFileToDir(srcFile,absolutePuName,repo.getBaseDir());
   }
  catch (  final IOException e1) {
-    throw new RestErrorException("");
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_EXTRACT_PROJECT_FILE.getName(),absolutePuName);
   }
   File editSrcFile=srcFile;
   try {
     mergeOverridesWithProperties(request,serviceDir);
-  }
- catch (  IOException e2) {
-    throw new RestErrorException("");
-  }
-  try {
     editSrcFile=Packager.createZipFile("temp",serviceDir);
   }
- catch (  IOException e1) {
-    throw new RestErrorException("");
+ catch (  IOException e2) {
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_MERGE_OVERRIDES.getName(),absolutePuName);
   }
   Service service=null;
   try {
     service=ServiceReader.readService(editSrcFile);
   }
- catch (  final DSLException e) {
-    throw new RestErrorException("");
-  }
-catch (  final PackagingException e) {
-    throw new RestErrorException("");
+ catch (  final Exception e) {
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_READ_SERVICE.getName(),absolutePuName);
   }
   String templateName=getTempalteNameFromService(service);
-  validateInstallService(absolutePuName,request,service,templateName);
+  File file=repo.get(request.getCloudConfigurationUploadKey());
+  File serviceCloudConfigurationFile=null;
+  byte[] serviceCloudConfigurationContents=null;
+  try {
+    ZipUtils.unzip(file,repo.getBaseDir());
+    serviceCloudConfigurationFile=new File(repo.getBaseDir(),CloudifyConstants.SERVICE_CLOUD_CONFIGURATION_FILE_NAME);
+    if (serviceCloudConfigurationFile != null) {
+      serviceCloudConfigurationContents=FileUtils.readFileToByteArray(serviceCloudConfigurationFile);
+    }
+  }
+ catch (  IOException e) {
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_READ_SERVICE_CLOUD_CONFIGURATION.getName(),absolutePuName);
+  }
+  validateInstallService(absolutePuName,request,service,templateName,serviceCloudConfigurationFile);
   String effectiveAuthGroups=request.getAuthGroups();
   if (StringUtils.isBlank(effectiveAuthGroups)) {
     if (permissionEvaluator != null) {
