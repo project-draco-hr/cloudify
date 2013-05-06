@@ -1,5 +1,4 @@
 {
-  logger.info("Parsing cloud nodes from configuration file");
   final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
   for (  final Map<String,String> nodeMap : nodesMapList) {
     String nodeId=nodeMap.get(CLOUD_NODE_ID);
@@ -31,6 +30,5 @@
       throw new CloudProvisioningException(INVALID_HOSTS_ERR_MESSAGE);
     }
   }
-  logger.info("Parsed cloud nodes = " + StringUtils.join(cloudNodes,","));
   return cloudNodes;
 }
