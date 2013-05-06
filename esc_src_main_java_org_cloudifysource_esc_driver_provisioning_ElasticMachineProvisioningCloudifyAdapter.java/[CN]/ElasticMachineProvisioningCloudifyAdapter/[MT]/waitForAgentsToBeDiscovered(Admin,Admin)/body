@@ -1,33 +1,36 @@
 {
-  final long endTime=System.currentTimeMillis() + cloud.getConfiguration().getAdminLoadingTime() * MILLISECONDS_IN_SECOND;
+  final long endTime=System.currentTimeMillis() + cloud.getConfiguration().getAdminLoadingTimeInSeconds() * MILLISECONDS_IN_SECOND;
   boolean esmAdminOk=false;
-  final Map<String,GridServiceContainer> undiscoveredAgentsContianersPerProcessingUnitInstanceName=new HashMap<String,GridServiceContainer>();
+  Map<String,GridServiceContainer> undiscoveredAgentsContianersPerProcessingUnitInstanceName;
   while (System.currentTimeMillis() < endTime) {
     if (!esmAdminOk) {
-      for (      ProcessingUnit pu : esmAdminInstance.getProcessingUnits()) {
-        for (        ProcessingUnitInstance instance : pu.getInstances()) {
-          GridServiceContainer container=instance.getGridServiceContainer();
-          if (container.getAgentId() != -1 && container.getGridServiceAgent() == null) {
-            undiscoveredAgentsContianersPerProcessingUnitInstanceName.put(instance.getProcessingUnitInstanceName(),container);
-          }
-        }
-      }
+      undiscoveredAgentsContianersPerProcessingUnitInstanceName=getUndiscoveredAgentsContianersPerProcessingUnitInstanceName(esmAdminInstance);
       if (undiscoveredAgentsContianersPerProcessingUnitInstanceName.isEmpty()) {
         esmAdminOk=true;
       }
  else {
-        logger.fine("Detected containers who's agent was not discovered yet");
-        logContainers(undiscoveredAgentsContianersPerProcessingUnitInstanceName);
-        logger.fine("Sleeping for 5 seconds");
+        logger.info("Detected containers who's agent was not discovered yet : " + logContainers(undiscoveredAgentsContianersPerProcessingUnitInstanceName));
+        logger.info("Sleeping for 5 seconds");
         Thread.sleep(5000);
       }
     }
  else {
-      Set<String> esmAdminAgentUids=esmAdminInstance.getGridServiceAgents().getUids().keySet();
-      Set<String> globalAdminAgentUids=globalAdminInstance.getGridServiceAgents().getUids().keySet();
-      if (!esmAdminAgentUids.equals(globalAdminAgentUids)) {
-        logger.fine("Agents discovered by global admin instance are not " + "equal to the ones from the esm admin. Sleeping for 5 seconds");
-        Thread.sleep(5000);
+      Set<String> esmAdminAgentUids=new HashSet<String>(esmAdminInstance.getGridServiceAgents().getUids().keySet());
+      Set<String> globalAdminAgentUids=new HashSet<String>(globalAdminInstance.getGridServiceAgents().getUids().keySet());
+      if (globalAdminAgentUids.size() > esmAdminAgentUids.size()) {
+        globalAdminAgentUids.removeAll(esmAdminAgentUids);
+        throw new IllegalStateException("Detected agents that are discovered in the cloud driver admin but not in the esm admin : " + globalAdminAgentUids);
+      }
+ else {
+        esmAdminAgentUids.removeAll(globalAdminAgentUids);
+        if (esmAdminAgentUids.isEmpty()) {
+          logger.fine("Cloud driver admin has discovered all agents that were discovered by the esm admin. and nothing else. Machine provisioning may continue");
+          return;
+        }
+ else {
+          logger.info("Detected agents that are discovered in the esm admin but not in the cloud driver admin : " + esmAdminAgentUids + " . Sleeping for 5 seconds to wait for agent discovery");
+          Thread.sleep(5000);
+        }
       }
     }
   }
