@@ -1,0 +1,10 @@
+{
+  String[] chars=ip.split("\\.");
+  byte[] add=new byte[chars.length];
+  for (int j=0; j < chars.length; j++) {
+    add[j]=(byte)((int)Integer.valueOf(chars[j]));
+  }
+  InetAddress byAddress=InetAddress.getByAddress(add);
+  String hostName=byAddress.getHostName();
+  return hostName;
+}

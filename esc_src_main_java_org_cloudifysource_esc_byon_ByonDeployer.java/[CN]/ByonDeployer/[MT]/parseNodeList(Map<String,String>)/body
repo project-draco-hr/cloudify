@@ -5,9 +5,9 @@
   int index=1;
   String currnentId;
   final String nodeId=nodeMap.get(CLOUD_NODE_ID).trim();
-  final String ipList=nodeMap.get(CLOUD_NODE_HOST_LIST).trim();
-  final String[] ipsArr=ipList.split(",");
-  if (ipsArr.length > 1) {
+  final String hostsList=nodeMap.get(CLOUD_NODE_HOST_LIST).trim();
+  final String[] hosts=hostsList.split(",");
+  if (hosts.length > 1) {
     if (isIdTemplate(nodeId)) {
       useIdAsTemplate=true;
     }
@@ -15,8 +15,8 @@
       useIdAsPrefix=true;
     }
   }
-  for (  String ip : ipsArr) {
-    ip=ip.trim();
+  for (  String host : hosts) {
+    host=host.trim();
     if (useIdAsTemplate) {
       currnentId=MessageFormat.format(nodeId,index);
     }
@@ -26,7 +26,27 @@
  else {
       currnentId=nodeId;
     }
-    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),currnentId));
+    String ip="";
+    String hostName="";
+    if (IPUtils.validateIPAddress(host)) {
+      ip=host;
+      try {
+        hostName=IPUtils.resolveIpToHostName(host);
+      }
+ catch (      UnknownHostException e) {
+        logger.warning("Could not resolve ip to host name : " + host + " . this machine is not reachable");
+      }
+    }
+ else {
+      try {
+        ip=IPUtils.resolveHostNameToIp(host);
+      }
+ catch (      UnknownHostException e) {
+        logger.warning("Could not resolve host name to ip : " + host + " . this machine is not reachable");
+      }
+      hostName=host;
+    }
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,hostName,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),currnentId));
     index++;
   }
   return cloudNodes;

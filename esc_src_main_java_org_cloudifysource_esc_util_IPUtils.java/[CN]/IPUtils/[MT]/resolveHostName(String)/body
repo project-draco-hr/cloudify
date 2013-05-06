@@ -1,5 +1,0 @@
-{
-  InetAddress address=null;
-  address=InetAddress.getByName(hostName);
-  return address.getHostAddress();
-}

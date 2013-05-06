@@ -8,8 +8,8 @@
   for (  final String ipAddress : ipAddresses) {
     logger.log(Level.INFO,"Looking for " + ipAddress + " in the pool of \"free\" machines");
     for (    final CustomNode node : freeNodesPool) {
-      if (StringUtils.isNotBlank(node.getResolvedIP())) {
-        if (node.getResolvedIP().equalsIgnoreCase(ipAddress)) {
+      if (StringUtils.isNotBlank(node.getPrivateIP())) {
+        if (node.getPrivateIP().equalsIgnoreCase(ipAddress)) {
           freeNodesPool.remove(node);
           if (!allocatedNodesPool.contains(node)) {
             allocatedNodesPool.add(node);

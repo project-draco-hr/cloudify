@@ -1,0 +1,10 @@
+{
+  this.providerId=providerId;
+  this.id=id;
+  this.hostName=hostName;
+  this.privateIp=privateIp;
+  this.username=username;
+  this.credential=credential;
+  this.keyFile=keyFile;
+  this.nodeName=nodeName;
+}

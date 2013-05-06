@@ -1,6 +1,8 @@
 String providerId
 String id
-String ipAddress
+String privateIp
+String hostName
 String username
 String credential
 String keyFile
+String nodeName

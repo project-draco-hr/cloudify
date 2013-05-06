@@ -3,5 +3,26 @@
   if (nodeId.contains("{")) {
     nodeId=MessageFormat.format(nodeId,1);
   }
-  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),nodeMap.get(CLOUD_NODE_HOST_LIST).trim(),nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),nodeId.trim());
+  String host=nodeMap.get(CLOUD_NODE_HOST_LIST).trim();
+  String ip="";
+  String hostName="";
+  if (IPUtils.validateIPAddress(host)) {
+    ip=host;
+    try {
+      hostName=IPUtils.resolveIpToHostName(host);
+    }
+ catch (    UnknownHostException e) {
+      logger.warning("Could not resolve ip to host name : " + host + " . this machine is not reachable");
+    }
+  }
+ else {
+    try {
+      ip=IPUtils.resolveHostNameToIp(host);
+    }
+ catch (    UnknownHostException e) {
+      logger.warning("Could not resolve host name to ip : " + host + " . this machine is not reachable");
+    }
+    hostName=host;
+  }
+  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),ip,hostName,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),nodeId.trim());
 }

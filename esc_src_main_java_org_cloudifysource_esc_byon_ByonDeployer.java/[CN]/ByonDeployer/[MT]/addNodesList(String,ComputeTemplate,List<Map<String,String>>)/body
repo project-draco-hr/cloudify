@@ -5,11 +5,11 @@
   parsedNodes=removeDuplicates(parsedNodes);
   for (  CustomNode node : parsedNodes) {
     try {
-      node.setResolvedIP(IPUtils.resolveHostName(node.getPrivateIP()));
+      node.setPrivateIp(IPUtils.resolveHostNameToIp(node.getPrivateIP()));
       if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
         node.setLoginPort(RemoteExecutionModes.WINRM.getDefaultPort());
       }
-      IPUtils.validateConnection(node.getResolvedIP(),node.getLoginPort());
+      IPUtils.validateConnection(node.getPrivateIP(),node.getLoginPort());
       resolvedNodes.add(node);
     }
  catch (    final Exception ex) {

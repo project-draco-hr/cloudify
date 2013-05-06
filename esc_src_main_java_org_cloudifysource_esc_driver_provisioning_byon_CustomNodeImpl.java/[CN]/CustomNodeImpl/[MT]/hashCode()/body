@@ -1,11 +1,13 @@
 {
-  final int prime=31;
-  int result=7;
-  result=prime * result + getLoginPort();
-  result=prime * result + (getPrivateIP() == null ? 0 : getPrivateIP().hashCode());
-  result=prime * result + (getPublicIP() == null ? 0 : getPublicIP().hashCode());
-  result=prime * result + (providerId == null ? 0 : providerId.hashCode());
-  result=prime * result + (nodeName == null ? 0 : nodeName.hashCode());
-  result=prime * result + (group == null ? 0 : group.hashCode());
-  return (prime * result + (username == null ? 0 : username.hashCode()));
+  int result=providerId != null ? providerId.hashCode() : 0;
+  result=31 * result + (id != null ? id.hashCode() : 0);
+  result=31 * result + (privateIp != null ? privateIp.hashCode() : 0);
+  result=31 * result + (hostName != null ? hostName.hashCode() : 0);
+  result=31 * result + (nodeName != null ? nodeName.hashCode() : 0);
+  result=31 * result + (group != null ? group.hashCode() : 0);
+  result=31 * result + (username != null ? username.hashCode() : 0);
+  result=31 * result + (credential != null ? credential.hashCode() : 0);
+  result=31 * result + (keyFile != null ? keyFile.hashCode() : 0);
+  result=31 * result + loginPort;
+  return result;
 }

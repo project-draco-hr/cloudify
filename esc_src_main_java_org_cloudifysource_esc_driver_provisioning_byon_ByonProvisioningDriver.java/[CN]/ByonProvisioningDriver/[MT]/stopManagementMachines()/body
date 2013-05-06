@@ -9,7 +9,7 @@
   }
   for (  final CustomNode customNode : managementServers) {
     try {
-      stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getResolvedIP());
+      stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP());
     }
  catch (    final Exception e) {
       publishEvent("prov_failed_to_stop_management_machine");
