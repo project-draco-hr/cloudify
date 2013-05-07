@@ -17,16 +17,7 @@
     node=freeNodesPool.iterator().next();
     if (!allocatedNodesPool.contains(node)) {
       try {
-        String privateIP=node.getPrivateIP();
-        String hostName=node.getHostName();
-        if (StringUtils.isBlank(privateIP)) {
-          privateIP=IPUtils.resolveHostNameToIp(hostName);
-        }
-        if (StringUtils.isBlank(hostName)) {
-          hostName=IPUtils.resolveIpToHostName(privateIP);
-        }
-        node.setPrivateIp(privateIP);
-        node.setHostName(hostName);
+        node.resolve();
         IPUtils.validateConnection(node.getPrivateIP(),node.getLoginPort());
         allocatedNodesPool.add(node);
         freeNodesPool.remove(node);
@@ -46,8 +37,7 @@
  else {
     for (    CustomNode currentNode : invalidNodesPool) {
       try {
-        String resolvedIP=IPUtils.resolveHostNameToIp(currentNode.getPrivateIP());
-        currentNode.setPrivateIp(resolvedIP);
+        currentNode.resolve();
         IPUtils.validateConnection(currentNode.getPrivateIP(),currentNode.getLoginPort());
         if (!allocatedNodesPool.contains(currentNode)) {
           allocatedNodesPool.add(currentNode);

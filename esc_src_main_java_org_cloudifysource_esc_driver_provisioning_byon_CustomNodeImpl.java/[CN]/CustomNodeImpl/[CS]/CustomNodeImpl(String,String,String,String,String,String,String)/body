@@ -1,3 +1,0 @@
-{
-  this(providerId,id,privateIp,hostName,username,credential,keyFile,"");
-}

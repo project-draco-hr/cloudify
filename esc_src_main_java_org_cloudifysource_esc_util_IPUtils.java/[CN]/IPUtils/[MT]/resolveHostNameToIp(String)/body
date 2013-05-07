@@ -1,3 +1,14 @@
 {
-  return InetAddress.getByName(hostName).getHostAddress();
+  InetAddress byName=InetAddress.getByName(hostName);
+  try {
+    if (byName.isReachable(DEFAULT_CONNECTION_TIMEOUT * 1000)) {
+      return byName.getHostAddress();
+    }
+ else {
+      return null;
+    }
+  }
+ catch (  IOException e) {
+    return null;
+  }
 }

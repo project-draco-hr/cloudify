@@ -5,7 +5,7 @@
   parsedNodes=removeDuplicates(parsedNodes);
   for (  CustomNode node : parsedNodes) {
     try {
-      node.setPrivateIp(IPUtils.resolveHostNameToIp(node.getPrivateIP()));
+      node.resolve();
       if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
         node.setLoginPort(RemoteExecutionModes.WINRM.getDefaultPort());
       }

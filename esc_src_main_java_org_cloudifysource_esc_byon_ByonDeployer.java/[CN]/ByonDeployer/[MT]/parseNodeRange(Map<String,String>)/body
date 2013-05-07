@@ -35,14 +35,7 @@
  else {
       currnentId=nodeId;
     }
-    String hostName=null;
-    try {
-      hostName=IPUtils.resolveIpToHostName(ip);
-    }
- catch (    UnknownHostException e) {
-      logger.warning("Could not resolve ip to host name : " + ip + " . this machine is not reachable");
-    }
-    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,hostName,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),currnentId));
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,null,nodeMap.get(CLOUD_NODE_USERNAME),nodeMap.get(CLOUD_NODE_CREDENTIAL),nodeMap.get(CLOUD_NODE_KEY_FILE),currnentId));
     index++;
     ip=IPUtils.getNextIP(ip);
   }

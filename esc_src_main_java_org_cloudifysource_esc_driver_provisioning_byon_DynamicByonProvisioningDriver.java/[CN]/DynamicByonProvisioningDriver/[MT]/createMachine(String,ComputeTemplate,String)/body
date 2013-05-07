@@ -1,8 +1,7 @@
 {
-  final CustomNodeImpl customNode=new CustomNodeImpl(PROVIDER_ID,serverName,ip,template.getUsername(),template.getPassword(),template.getKeyFile(),serverName);
+  final CustomNodeImpl customNode=new CustomNodeImpl(PROVIDER_ID,serverName,ip,null,template.getUsername(),template.getPassword(),template.getKeyFile(),serverName);
   try {
-    String resolvedIP=IPUtils.resolveHostNameToIp(customNode.getPrivateIP());
-    customNode.setPrivateIp(resolvedIP);
+    customNode.resolve();
     if (template.getRemoteExecution() == RemoteExecutionModes.WINRM) {
       customNode.setLoginPort(RemoteExecutionModes.WINRM.getDefaultPort());
     }

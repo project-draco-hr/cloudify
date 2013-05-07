@@ -1,7 +1,0 @@
-String providerId
-String id
-String privateIp
-String hostName
-String username
-String credential
-String keyFile

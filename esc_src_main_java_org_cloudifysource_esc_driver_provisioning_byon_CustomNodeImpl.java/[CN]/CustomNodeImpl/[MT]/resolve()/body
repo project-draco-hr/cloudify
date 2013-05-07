@@ -1,0 +1,10 @@
+{
+  String hostName=getHostName();
+  String ip=getPrivateIp();
+  if (StringUtils.isBlank(ip)) {
+    setPrivateIp(IPUtils.resolveHostNameToIp(hostName));
+  }
+  if (StringUtils.isBlank(hostName)) {
+    setHostName(IPUtils.resolveIpToHostName(ip));
+  }
+}
