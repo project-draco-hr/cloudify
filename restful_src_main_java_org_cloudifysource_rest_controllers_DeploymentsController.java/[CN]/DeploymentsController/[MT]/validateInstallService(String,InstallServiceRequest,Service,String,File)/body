@@ -6,7 +6,7 @@
   validationContext.setService(service);
   validationContext.setTemplateName(templateName);
   validationContext.setCloudConfiguration(cloudConfiguration);
-  for (  final InstallServiceValidator validator : installServiceValidators) {
+  for (  final InstallServiceValidator validator : getInstallServiceValidators()) {
     validator.validate(validationContext);
   }
 }

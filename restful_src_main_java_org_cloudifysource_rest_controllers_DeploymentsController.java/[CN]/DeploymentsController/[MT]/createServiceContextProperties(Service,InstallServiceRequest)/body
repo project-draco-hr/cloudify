@@ -1,0 +1,32 @@
+{
+  final Properties contextProperties=new Properties();
+  if (service.getDependsOn() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,service.getDependsOn().toString());
+  }
+  if (service.getType() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE,service.getType());
+  }
+  if (service.getIcon() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,CloudifyConstants.SERVICE_EXTERNAL_FOLDER + service.getIcon());
+  }
+  if (service.getNetwork() != null) {
+    if (service.getNetwork().getProtocolDescription() != null) {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
+    }
+  }
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,Boolean.toString(service.isElastic()));
+  boolean debugAll=request.isDebugAll();
+  String debugMode=request.getDebugMode();
+  if (debugAll) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL,Boolean.TRUE.toString());
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,debugMode);
+  }
+ else {
+    String debugEvents=request.getDebugEvents();
+    if (debugEvents != null) {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_EVENTS,debugEvents);
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,debugMode);
+    }
+  }
+  return contextProperties;
+}

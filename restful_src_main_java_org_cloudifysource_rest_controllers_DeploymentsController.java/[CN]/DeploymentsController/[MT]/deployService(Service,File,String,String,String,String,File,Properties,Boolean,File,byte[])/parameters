@@ -1,0 +1,11 @@
+Service service
+File projectDir
+String applicationName
+String serviceName
+String effectiveAuthGroups
+String templateName
+File editSrcFile
+Properties propsFile
+Boolean selfHealing
+File cloudOverrides
+byte[] serviceCloudConfigurationContents

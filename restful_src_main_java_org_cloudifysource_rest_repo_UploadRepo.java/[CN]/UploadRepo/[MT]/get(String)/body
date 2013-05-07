@@ -1,5 +1,5 @@
 {
-  if (restUploadDir == null || !restUploadDir.exists()) {
+  if (key == null || restUploadDir == null || !restUploadDir.exists()) {
     return null;
   }
   final File[] files=restUploadDir.listFiles(new FilenameFilter(){

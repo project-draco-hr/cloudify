@@ -14,6 +14,7 @@
     config.setManagementTemplateName(managementTemplateName);
     config.setManagementTemplate(cloudCompute.getTemplates().get(managementTemplateName));
     config.setCloud(cloud);
+    config.setTemporaryFolderPath(CloudifyConstants.REST_FOLDER);
   }
  else {
     logger.info("Service Controller is running in local cloud mode");
