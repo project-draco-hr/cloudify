@@ -1,0 +1,5 @@
+{
+  final Future<Object> future=invokeAsync(commandName,params);
+  final Object result=future.get(timeout,unit);
+  return result;
+}

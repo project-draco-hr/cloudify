@@ -1,5 +1,3 @@
 {
-  final Future<Object> future=invokeAsync(commandName,params);
-  final Object result=future.get(1,TimeUnit.MINUTES);
-  return result;
+  return invoke(commandName,params,DEFAULT_TIMEOUT_IN_MINUTES,TimeUnit.MINUTES);
 }
