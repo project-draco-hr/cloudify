@@ -1,13 +1,15 @@
 {
-  if (!debugAll && debugEvents == null) {
+  if (!debugAll && StringUtils.isBlank(debugEvents)) {
     return;
   }
-  if (debugAll && debugEvents != null) {
+  if (debugAll && !StringUtils.isBlank(debugEvents)) {
     throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_EVENTS_AND_ALL_SET);
   }
-  DebugModes mode=DebugModes.nameOf(debugModeString);
-  if (mode == null) {
-    throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_UNKNOWN_MODE,debugModeString,DebugModes.getNames().toString());
+  if (debugModeString != null) {
+    DebugModes mode=DebugModes.nameOf(debugModeString);
+    if (mode == null) {
+      throw new DSLErrorMessageException(CloudifyErrorMessages.DEBUG_UNKNOWN_MODE,debugModeString,DebugModes.getNames().toString());
+    }
   }
   if (debugEvents != null) {
     final String[] parts=debugEvents.split(",");
