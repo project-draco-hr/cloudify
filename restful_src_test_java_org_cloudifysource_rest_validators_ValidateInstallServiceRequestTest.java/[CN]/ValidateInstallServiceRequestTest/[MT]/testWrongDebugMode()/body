@@ -1,0 +1,7 @@
+{
+  final InstallServiceRequest request=new InstallServiceRequest();
+  request.setUploadKey(UPLOAD_KEY);
+  request.setDebugAll(true);
+  request.setDebugMode(WRONG_DEBUG_MODE);
+  testValidator(request,CloudifyErrorMessages.DEBUG_UNKNOWN_MODE.getName());
+}

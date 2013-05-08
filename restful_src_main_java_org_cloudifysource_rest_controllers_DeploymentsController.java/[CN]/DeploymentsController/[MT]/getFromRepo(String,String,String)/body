@@ -1,0 +1,10 @@
+{
+  if (StringUtils.isBlank(uploadKey)) {
+    return null;
+  }
+  final File file=repo.get(uploadKey);
+  if (file == null) {
+    throw new RestErrorException(errorDesc,absolutePuName);
+  }
+  return file;
+}

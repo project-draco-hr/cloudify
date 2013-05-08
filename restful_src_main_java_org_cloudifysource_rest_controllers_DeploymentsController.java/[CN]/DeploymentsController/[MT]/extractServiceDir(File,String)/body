@@ -1,0 +1,13 @@
+{
+  File serviceDir=null;
+  try {
+    final File baseDir=new File(restConfig.getTemporaryFolderPath(),CloudifyConstants.EXTRACTED_FILES_FOLDER_NAME);
+    baseDir.mkdirs();
+    baseDir.deleteOnExit();
+    serviceDir=ServiceReader.extractProjectFileToDir(srcFile,absolutePuName,baseDir);
+  }
+ catch (  final IOException e1) {
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_EXTRACT_PROJECT_FILE.getName(),absolutePuName);
+  }
+  return serviceDir;
+}

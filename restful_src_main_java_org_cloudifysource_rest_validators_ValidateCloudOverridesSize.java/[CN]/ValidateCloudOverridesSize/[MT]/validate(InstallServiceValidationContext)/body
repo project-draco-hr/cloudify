@@ -1,8 +1,0 @@
-{
-  File cloudConfiguration=validationContext.getCloudConfiguration();
-  if (cloudConfiguration != null) {
-    if (cloudConfiguration.length() > getCloudOverridesSizeLimit()) {
-      throw new RestErrorException(CloudifyMessageKeys.CLOUD_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
-    }
-  }
-}

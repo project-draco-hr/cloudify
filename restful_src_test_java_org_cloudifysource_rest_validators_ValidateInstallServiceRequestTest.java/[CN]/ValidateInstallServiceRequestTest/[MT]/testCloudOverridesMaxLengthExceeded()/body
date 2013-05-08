@@ -1,5 +1,0 @@
-{
-  final InstallServiceRequest request=buildRequest(UPLOAD_KEY,CLOUD_CONFIG_UPLOAD_KEY,AUTH_GROUP,SELF_HEALING,"a = b",SERVICE_OVERRIDES);
-  validator.setOverrdiesMaxLength(OVERRIDES_MAX_LENGTH);
-  testValidator(request,CloudifyMessageKeys.SERVICE_OVERRIDES_LENGTH_LIMIT_EXCEEDED);
-}

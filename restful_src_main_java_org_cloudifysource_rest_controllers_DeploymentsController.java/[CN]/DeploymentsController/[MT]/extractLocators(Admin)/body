@@ -1,0 +1,11 @@
+{
+  final LookupLocator[] locatorsArray=admin.getLocators();
+  final StringBuilder locators=new StringBuilder();
+  for (  final LookupLocator locator : locatorsArray) {
+    locators.append(locator.getHost()).append(':').append(locator.getPort()).append(',');
+  }
+  if (locators.length() > 0) {
+    locators.setLength(locators.length() - 1);
+  }
+  return locators.toString();
+}

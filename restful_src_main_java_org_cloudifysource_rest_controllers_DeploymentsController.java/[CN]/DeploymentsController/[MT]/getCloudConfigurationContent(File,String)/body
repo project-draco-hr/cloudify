@@ -1,0 +1,12 @@
+{
+  byte[] serviceCloudConfigurationContents=null;
+  if (serviceCloudConfigurationFile != null) {
+    try {
+      serviceCloudConfigurationContents=FileUtils.readFileToByteArray(serviceCloudConfigurationFile);
+    }
+ catch (    final IOException e) {
+      throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_READ_SERVICE_CLOUD_CONFIGURATION.getName(),absolutePuName);
+    }
+  }
+  return serviceCloudConfigurationContents;
+}

@@ -1,6 +1,0 @@
-String uploadKey
-String cloudConfigUploadKey
-String authGroups
-boolean selfHealing
-String cloudOverrides
-String serviceOverrides

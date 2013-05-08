@@ -1,0 +1,6 @@
+{
+  if (restConfig.getAdmin().getGridServiceManagers().isEmpty()) {
+    throw new AdminException("Cannot locate Grid Service Manager");
+  }
+  return restConfig.getAdmin().getGridServiceManagers().iterator().next();
+}

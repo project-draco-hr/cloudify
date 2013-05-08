@@ -1,7 +1,0 @@
-InstallServiceRequest request
-Cloud cloud
-Service service
-String templateName
-File cloudOverridesFile
-boolean shouldFail
-CloudifyMessageKeys exceptionCause
