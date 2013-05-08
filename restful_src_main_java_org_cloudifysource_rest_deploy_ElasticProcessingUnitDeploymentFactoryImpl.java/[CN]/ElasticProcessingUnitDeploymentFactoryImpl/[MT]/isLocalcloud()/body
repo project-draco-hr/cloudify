@@ -1,0 +1,6 @@
+{
+  if (deploymentDetails.getCloud() == null) {
+    return true;
+  }
+  return false;
+}

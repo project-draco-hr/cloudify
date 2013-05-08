@@ -1,0 +1,23 @@
+{
+  ServiceProcessingUnit puConfig=deploymentDetails.getPuConfig();
+  final Sla statefulSla=puConfig.getSla();
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(deploymentDetails.getPackedFile());
+  addSharedDeploymentParameters(deployment);
+  final int containerMemoryInMB=statefulSla.getMemoryCapacityPerContainer();
+  final int maxMemoryCapacityInMB=statefulSla.getMaxMemoryCapacity();
+  deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").highlyAvailable(statefulSla.getHighlyAvailable()).singleMachineDeployment();
+  final int memoryCapacity=statefulSla.getMemoryCapacity();
+  if (isLocalcloud()) {
+    setLocalcloudMachineProvisioningConfig(deployment);
+    ManualCapacityScaleConfig manualScaleConfig=createManualScaleConfig(memoryCapacity);
+    deployment.scale(manualScaleConfig);
+  }
+ else {
+    prepareStatefulSla(statefulSla);
+    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
+    setDedicatedMachineProvisioning(deployment,config);
+    final ManualCapacityScaleConfig manualCapacityScaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(memoryCapacity,0,deploymentDetails.getService().isLocationAware(),true);
+    deployment.scale(manualCapacityScaleConfig);
+  }
+  return deployment;
+}

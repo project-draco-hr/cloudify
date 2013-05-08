@@ -1,0 +1,19 @@
+{
+  final int availableMemoryOnMachine=(int)calculateExternalProcessMemoryAccordingToMachineTemplate();
+  if (sla.getMemoryCapacityPerContainer() != null && sla.getMemoryCapacityPerContainer() > availableMemoryOnMachine) {
+    throw new IllegalStateException("memoryCapacityPerContainer SLA is larger than available memory on machine\n" + sla.getMemoryCapacityPerContainer() + " > "+ availableMemoryOnMachine);
+  }
+  if (sla.getMemoryCapacityPerContainer() == null) {
+    sla.setMemoryCapacityPerContainer(availableMemoryOnMachine);
+  }
+  final int minimumNumberOfContainers=sla.getHighlyAvailable() ? 2 : 1;
+  final int minMemoryInMB=minimumNumberOfContainers * sla.getMemoryCapacityPerContainer();
+  if (sla.getMemoryCapacity() == null || sla.getMemoryCapacity() < minMemoryInMB) {
+    logger.info("Setting memoryCapacity for service " + deploymentDetails.getAbsolutePUName() + " to minimum "+ minMemoryInMB+ "MB");
+    sla.setMemoryCapacity(minMemoryInMB);
+  }
+  if (sla.getMaxMemoryCapacity() == null || sla.getMaxMemoryCapacity() < sla.getMemoryCapacity()) {
+    logger.info("Setting maxMemoryCapacity for service " + deploymentDetails.getAbsolutePUName() + " to memoryCapacity "+ sla.getMemoryCapacity()+ "MB");
+    sla.setMaxMemoryCapacity(sla.getMemoryCapacity());
+  }
+}

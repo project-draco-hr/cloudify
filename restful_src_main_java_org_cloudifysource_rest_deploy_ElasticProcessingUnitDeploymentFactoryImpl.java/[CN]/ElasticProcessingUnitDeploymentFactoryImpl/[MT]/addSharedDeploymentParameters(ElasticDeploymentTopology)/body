@@ -1,0 +1,7 @@
+{
+  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentDetails.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentDetails.getAuthGroups()).name(deploymentDetails.getAbsolutePUName());
+  if (!isLocalcloud()) {
+    deployment.addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getPortRange()).addCommandLineArgument("-Xmx" + deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getMaxMemory()).addCommandLineArgument("-Xms" + deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getMinMemory());
+  }
+  setContextProperties(deployment,deploymentDetails.getContextProperties());
+}
