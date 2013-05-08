@@ -1,6 +1,6 @@
 {
   if (computeContext != null && !(computeContext instanceof AWSEC2ComputeServiceContext)) {
-    throw new StorageProvisioningException("jClouds context does not match storage driver. " + "expecting context of type: " + AWSEC2ComputeServiceContext.class.getName());
+    throw new StorageProvisioningException("JClouds context does not match storage driver. " + "expecting context of type: " + AWSEC2ComputeServiceContext.class.getName());
   }
   logger.fine("Setting compute context for storage driver");
   this.context=(AWSEC2ComputeServiceContext)computeContext;

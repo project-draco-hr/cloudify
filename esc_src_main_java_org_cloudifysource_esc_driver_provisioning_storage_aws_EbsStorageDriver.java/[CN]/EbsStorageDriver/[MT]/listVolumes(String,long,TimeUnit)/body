@@ -1,7 +1,7 @@
 {
   Set<VolumeDetails> volumeDetailsSet=new HashSet<VolumeDetails>();
   Set<String> machineVolumeIds=getMachineVolumeIds(ip);
-  logger.fine("listing all volumes on machine with ip " + ip);
+  logger.fine("Listing all volumes on machine with ip " + ip);
   Set<VolumeDetails> allVolumes=listAllVolumes();
   for (  VolumeDetails volume : allVolumes) {
     String volumeId=volume.getId();

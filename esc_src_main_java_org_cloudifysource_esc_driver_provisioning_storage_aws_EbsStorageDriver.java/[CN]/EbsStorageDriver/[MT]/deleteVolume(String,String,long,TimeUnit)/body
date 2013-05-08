@@ -6,5 +6,5 @@
   }
  catch (  final StorageProvisioningException e) {
   }
-  logger.fine("volume with id " + volumeId + " deleted successfully");
+  logger.fine("Volume with id " + volumeId + " deleted successfully");
 }

@@ -15,7 +15,7 @@
       return;
     }
  else {
-      logger.fine("volume[" + volumeId + "] is in status "+ volume.getStatus());
+      logger.fine("Volume[" + volumeId + "] is in status "+ volume.getStatus());
     }
   }
   throw new TimeoutException("Timed out waiting for storage status to become " + status.toString());
