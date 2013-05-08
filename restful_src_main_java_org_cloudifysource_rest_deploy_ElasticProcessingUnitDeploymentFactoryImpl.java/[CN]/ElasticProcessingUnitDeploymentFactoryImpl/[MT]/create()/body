@@ -1,3 +1,10 @@
 {
+  final Service service=deploymentDetails.getService();
+  if (service.getLifecycle() != null) {
+    return createElasticStatelessUsmDeployment();
+  }
+ else   if (service.getStatefulProcessingUnit() != null) {
+    return createStatefulProcessingUnit();
+  }
   return null;
 }

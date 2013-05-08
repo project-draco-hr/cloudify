@@ -16,6 +16,7 @@
   String cloudOverrides=deploymentDetails.getCloudOverrides();
   if (cloudOverrides != null) {
     logger.fine("Recieved request for installation of " + deploymentDetails.getAbsolutePUName() + " with cloud overrides parameters [ "+ cloudOverrides+ "]");
+    config.setCloudOverridesPerService(cloudOverrides);
   }
  else {
     logger.fine("No cloud overrides parameters were requested for the installation of " + deploymentDetails.getAbsolutePUName());
