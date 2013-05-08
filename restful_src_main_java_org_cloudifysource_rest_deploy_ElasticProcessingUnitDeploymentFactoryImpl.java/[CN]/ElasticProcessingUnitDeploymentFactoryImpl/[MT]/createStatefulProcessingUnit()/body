@@ -1,5 +1,5 @@
 {
-  ServiceProcessingUnit puConfig=deploymentDetails.getPuConfig();
+  ServiceProcessingUnit puConfig=deploymentDetails.getService().getStatefulProcessingUnit();
   final Sla statefulSla=puConfig.getSla();
   final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(deploymentDetails.getPackedFile());
   addSharedDeploymentParameters(deployment);

@@ -1,0 +1,21 @@
+{
+  final String absolutePUName=deploymentDetails.getAbsolutePUName();
+  final ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(absolutePUName);
+  final Sla puSla=deploymentDetails.getService().getDataGrid().getSla();
+  final int containerMemoryInMB=puSla.getMemoryCapacityPerContainer();
+  final int maxMemoryInMB=puSla.getMaxMemoryCapacity();
+  deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentDetails.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentDetails.getAuthGroups()).highlyAvailable(puSla.getHighlyAvailable()).singleMachineDeployment();
+  if (isLocalcloud()) {
+    setLocalcloudMachineProvisioningConfig(deployment);
+    deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(puSla.getMemoryCapacity(),MemoryUnit.MEGABYTES).create());
+  }
+ else {
+    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
+    setDedicatedMachineProvisioning(deployment,config);
+    prepareStatefulSla(puSla);
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemoryAccordingToMachineTemplate();
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)cloudExternalProcessMemoryInMB,0,deploymentDetails.getService().isLocationAware(),true);
+    deployment.scale(scaleConfig);
+  }
+}
