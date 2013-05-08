@@ -1,0 +1,15 @@
+{
+  String templateName=deploymentDetails.getTemplateName();
+  Cloud cloud=deploymentDetails.getCloud();
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
+  logger.info("Calculating external proc mem for template: " + template);
+  final int machineMemoryMB=template.getMachineMemoryMB();
+  final int reservedMemoryCapacityPerMachineInMB=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
+  final int safteyMargin=100;
+  final long cloudExternalProcessMemoryInMB=machineMemoryMB - reservedMemoryCapacityPerMachineInMB - safteyMargin;
+  if (cloudExternalProcessMemoryInMB <= 0) {
+    throw new IllegalStateException("Cloud template machineMemoryMB (" + machineMemoryMB + "MB) must be bigger than "+ "reservedMemoryCapacityPerMachineInMB+"+ safteyMargin+ " ("+ (reservedMemoryCapacityPerMachineInMB + safteyMargin)+ ")");
+  }
+  logger.fine("template.machineMemoryMB = " + template.getMachineMemoryMB() + "MB\n"+ "cloud.provider.reservedMemoryCapacityPerMachineInMB = "+ reservedMemoryCapacityPerMachineInMB+ "MB\n"+ "cloudExternalProcessMemoryInMB = "+ cloudExternalProcessMemoryInMB+ "MB"+ "cloudExternalProcessMemoryInMB = cloud.machineMemoryMB - "+ "cloud.reservedMemoryCapacityPerMachineInMB"+ " = "+ cloudExternalProcessMemoryInMB);
+  return cloudExternalProcessMemoryInMB;
+}

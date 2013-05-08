@@ -1,0 +1,6 @@
+{
+  final Set<Entry<Object,Object>> contextPropsEntries=contextProperties.entrySet();
+  for (  final Entry<Object,Object> entry : contextPropsEntries) {
+    deployment.addContextProperty((String)entry.getKey(),(String)entry.getValue());
+  }
+}

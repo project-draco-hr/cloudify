@@ -1,0 +1,50 @@
+{
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(deploymentDetails.getPackedFile());
+  addSharedDeploymentParameters(deployment);
+  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
+  if (!deploymentDetails.getInstallRequest().getSelfHealing()) {
+    deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
+  }
+  final int containerMemoryInMB=128;
+  deployment.addCommandLineArgument("-Xmx" + containerMemoryInMB + "m").addCommandLineArgument("-Xms" + containerMemoryInMB + "m");
+  final Service service=deploymentDetails.getService();
+  final boolean scalingRulesDefined=service.getScalingRules() == null;
+  if (!isLocalcloud()) {
+    boolean dedicated=IsolationUtils.isDedicated(service);
+    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
+    setIsolationConfig(deployment,dedicated,config);
+    long cloudExternalProcessMemoryInMB=0;
+    logger.info("setting deployment memory capacity for container according to isolation method");
+    if (dedicated) {
+      cloudExternalProcessMemoryInMB=calculateExternalProcessMemoryAccordingToMachineTemplate();
+    }
+ else {
+      cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
+    }
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    if (scalingRulesDefined) {
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentDetails.getAbsolutePUName(),service,(int)cloudExternalProcessMemoryInMB,service.isLocationAware(),dedicated);
+      deployment.scale(scaleConfig);
+    }
+ else {
+      final int totalMemoryInMB=calculateTotalMemoryInMB((int)cloudExternalProcessMemoryInMB);
+      final double totalCpuCores=calculateTotalCpuCores(service);
+      final ManualCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(totalMemoryInMB,totalCpuCores,service.isLocationAware(),dedicated);
+      deployment.scale(scaleConfig);
+    }
+  }
+ else {
+    setLocalcloudMachineProvisioningConfig(deployment);
+    final int externalProcessMemoryInMB=512;
+    deployment.memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    if (scalingRulesDefined) {
+      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentDetails.getAbsolutePUName(),service,externalProcessMemoryInMB,false,false);
+      deployment.scale(scaleConfig);
+    }
+ else {
+      final ManualCapacityScaleConfig scaleConfig=createManualScaleConfig(externalProcessMemoryInMB);
+      deployment.scale(scaleConfig);
+    }
+  }
+  return deployment;
+}

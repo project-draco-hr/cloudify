@@ -1,0 +1,11 @@
+{
+  File cloudConfigFile=deploymentDetails.getCloudConfigFile();
+  if (cloudConfigFile != null) {
+    try {
+      config.setServiceCloudConfiguration(FileUtils.readFileToByteArray(cloudConfigFile));
+    }
+ catch (    IOException e) {
+      e.printStackTrace();
+    }
+  }
+}

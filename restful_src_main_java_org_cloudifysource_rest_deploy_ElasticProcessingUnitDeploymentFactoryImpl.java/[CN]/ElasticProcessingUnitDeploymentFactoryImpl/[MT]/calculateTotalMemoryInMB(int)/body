@@ -1,0 +1,7 @@
+{
+  if (externalProcessMemoryInMB <= 0) {
+    throw new IllegalArgumentException("externalProcessMemoryInMB must be positive");
+  }
+  int numberOfInstances=deploymentDetails.getService().getNumInstances();
+  return externalProcessMemoryInMB * numberOfInstances;
+}
