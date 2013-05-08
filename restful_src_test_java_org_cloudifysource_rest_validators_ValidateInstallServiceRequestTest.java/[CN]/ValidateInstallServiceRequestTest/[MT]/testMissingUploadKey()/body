@@ -1,4 +1,4 @@
 {
-  final InstallServiceRequest request=buildRequest(null,CLOUD_CONFIG_UPLOAD_KEY,AUTH_GROUP,SELF_HEALING,CLOUD_OVERRIDES,SERVICE_OVERRIDES);
-  testValidator(request,CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING);
+  final InstallServiceRequest request=new InstallServiceRequest();
+  testValidator(request,CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
 }

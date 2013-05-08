@@ -1,5 +1,5 @@
 {
-  Cloud cloud=restConfig.getCloud();
+  final Cloud cloud=restConfig.getCloud();
   if (cloud == null) {
     return null;
   }

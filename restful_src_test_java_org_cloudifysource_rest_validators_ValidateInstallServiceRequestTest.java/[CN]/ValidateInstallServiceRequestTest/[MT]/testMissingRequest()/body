@@ -1,0 +1,3 @@
+{
+  testValidator(null,CloudifyMessageKeys.VALIDATOR_REQUEST_MISSING.getName());
+}

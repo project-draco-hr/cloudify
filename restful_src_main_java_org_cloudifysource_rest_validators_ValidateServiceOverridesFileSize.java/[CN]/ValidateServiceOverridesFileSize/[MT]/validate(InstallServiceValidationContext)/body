@@ -1,0 +1,8 @@
+{
+  File serviceOverridesFile=validationContext.getServiceOverridesFile();
+  if (serviceOverridesFile != null) {
+    if (serviceOverridesFile.length() > serviceOverridesFileSizeLimit) {
+      throw new RestErrorException(CloudifyMessageKeys.SERVICE_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName(),serviceOverridesFile.getAbsolutePath());
+    }
+  }
+}
