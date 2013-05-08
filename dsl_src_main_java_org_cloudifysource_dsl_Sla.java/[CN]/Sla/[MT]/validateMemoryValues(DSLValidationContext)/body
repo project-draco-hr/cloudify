@@ -1,0 +1,8 @@
+{
+  if (maxMemoryCapacity != null && memoryCapacity != null && maxMemoryCapacity < memoryCapacity) {
+    throw new DSLValidationException("Max memory capacity is smaller than the memory capacity." + maxMemoryCapacity + " < "+ memoryCapacity);
+  }
+  if (memoryCapacityPerContainer == null) {
+    throw new DSLValidationException("Cannot determine memoryCapacityPerContainer SLA");
+  }
+}
