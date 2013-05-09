@@ -1,5 +1,5 @@
 {
-  final int availableMemoryOnMachine=(int)calculateExternalProcessMemoryAccordingToMachineTemplate();
+  final int availableMemoryOnMachine=(int)calculateExternalProcessMemory();
   if (sla.getMemoryCapacityPerContainer() != null && sla.getMemoryCapacityPerContainer() > availableMemoryOnMachine) {
     throw new IllegalStateException("memoryCapacityPerContainer SLA is larger than available memory on machine\n" + sla.getMemoryCapacityPerContainer() + " > "+ availableMemoryOnMachine);
   }
@@ -9,11 +9,11 @@
   final int minimumNumberOfContainers=sla.getHighlyAvailable() ? 2 : 1;
   final int minMemoryInMB=minimumNumberOfContainers * sla.getMemoryCapacityPerContainer();
   if (sla.getMemoryCapacity() == null || sla.getMemoryCapacity() < minMemoryInMB) {
-    logger.info("Setting memoryCapacity for service " + deploymentDetails.getAbsolutePUName() + " to minimum "+ minMemoryInMB+ "MB");
+    logger.info("Setting memoryCapacity for service " + deploymentConfig.getAbsolutePUName() + " to minimum "+ minMemoryInMB+ "MB");
     sla.setMemoryCapacity(minMemoryInMB);
   }
   if (sla.getMaxMemoryCapacity() == null || sla.getMaxMemoryCapacity() < sla.getMemoryCapacity()) {
-    logger.info("Setting maxMemoryCapacity for service " + deploymentDetails.getAbsolutePUName() + " to memoryCapacity "+ sla.getMemoryCapacity()+ "MB");
+    logger.info("Setting maxMemoryCapacity for service " + deploymentConfig.getAbsolutePUName() + " to memoryCapacity "+ sla.getMemoryCapacity()+ "MB");
     sla.setMaxMemoryCapacity(sla.getMemoryCapacity());
   }
 }

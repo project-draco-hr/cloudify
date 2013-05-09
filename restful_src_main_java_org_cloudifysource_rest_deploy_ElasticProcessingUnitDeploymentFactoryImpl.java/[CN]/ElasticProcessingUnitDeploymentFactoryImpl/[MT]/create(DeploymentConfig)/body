@@ -1,5 +1,5 @@
 {
-  final Service service=deploymentDetails.getService();
+  final Service service=deploymentConfig.getService();
   if (service.getLifecycle() != null) {
     return createElasticStatelessUsmDeployment();
   }

@@ -1,5 +1,0 @@
-{
-  final int totalMemoryInMB=calculateTotalMemoryInMB(externalProcessMemoryInMB);
-  final ManualCapacityScaleConfig scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(totalMemoryInMB,MemoryUnit.MEGABYTES).create();
-  return scaleConfig;
-}

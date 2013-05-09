@@ -1,11 +1,5 @@
 {
-  if (service == null) {
-    return 0;
-  }
   final double instanceCpuCores=IsolationUtils.getInstanceCpuCores(service);
-  if (instanceCpuCores < 0) {
-    throw new IllegalArgumentException("instanceCpuCores must be positive");
-  }
   final int numberOfInstances=service.getNumInstances();
   return numberOfInstances * instanceCpuCores;
 }

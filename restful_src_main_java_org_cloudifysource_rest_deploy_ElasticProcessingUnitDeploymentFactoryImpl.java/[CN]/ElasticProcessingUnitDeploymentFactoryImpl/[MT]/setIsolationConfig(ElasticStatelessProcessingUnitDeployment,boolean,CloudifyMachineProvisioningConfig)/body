@@ -1,5 +1,5 @@
 {
-  final Service service=deploymentDetails.getService();
+  final Service service=deploymentConfig.getService();
   if (IsolationUtils.isUseManagement(service)) {
     config.setDedicatedManagementMachines(false);
   }
@@ -7,25 +7,25 @@
     config.setDedicatedManagementMachines(true);
   }
   if (dedicated) {
-    setDedicatedMachineProvisioning(deployment,config);
+    deployment.dedicatedMachineProvisioning(config);
   }
  else {
     if (IsolationUtils.isGlobal(service)) {
-      logger.info("global mode is on. will use public machine provisioning for " + deploymentDetails.getAbsolutePUName() + " deployment.");
+      logger.info("global mode is on. will use public machine provisioning for " + deploymentConfig.getAbsolutePUName() + " deployment.");
       logger.info("isolationSLA = " + service.getIsolationSLA());
       deployment.publicMachineProvisioning(config);
     }
  else     if (IsolationUtils.isAppShared(service)) {
-      final String applicationName=deploymentDetails.getApplicationName();
-      logger.info("app shared mode is on. will use shared machine provisioning for " + deploymentDetails.getAbsolutePUName() + " deployment. isolation id = "+ applicationName);
+      final String applicationName=deploymentConfig.getApplicationName();
+      logger.info("app shared mode is on. will use shared machine provisioning for " + deploymentConfig.getAbsolutePUName() + " deployment. isolation id = "+ applicationName);
       deployment.sharedMachineProvisioning(applicationName,config);
     }
  else     if (IsolationUtils.isTenantShared(service)) {
-      String authGroups=deploymentDetails.getAuthGroups();
+      String authGroups=deploymentConfig.getAuthGroups();
       if (authGroups == null) {
         throw new IllegalStateException("authGroups cannot be null when using tenant shared isolation");
       }
-      logger.info("tenant shared mode is on. will use shared machine provisioning for " + deploymentDetails.getAbsolutePUName() + " deployment. isolation id = "+ authGroups);
+      logger.info("tenant shared mode is on. will use shared machine provisioning for " + deploymentConfig.getAbsolutePUName() + " deployment. isolation id = "+ authGroups);
       deployment.sharedMachineProvisioning(authGroups,config);
     }
   }
