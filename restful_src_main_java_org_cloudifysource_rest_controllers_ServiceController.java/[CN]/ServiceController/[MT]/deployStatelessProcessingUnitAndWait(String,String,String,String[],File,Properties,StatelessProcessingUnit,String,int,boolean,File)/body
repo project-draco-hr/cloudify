@@ -1,4 +1,16 @@
 {
+  logger.info("applicationName: " + applicationName);
+  logger.info("absolutePUName: " + serviceName);
+  for (  Map.Entry<Object,Object> property : contextProperties.entrySet()) {
+    logger.info("context prop key: " + property.getKey() + " value "+ property.getValue());
+  }
+  logStatelessPU(puConfig);
+  logger.info("template name: " + templateName);
+  logger.info("numberOfInstances: " + numberOfInstances);
+  logger.info("locationAware: " + locationAware);
+  if (cloudOverride != null) {
+    logger.info("cloudOverrides: " + FileUtils.readFileToString(cloudOverride));
+  }
   final File jarFile=getJarFileFromDir(new File(puConfig.getBinaries()),extractedServiceFolder,serviceName);
   final int containerMemoryInMB=puConfig.getSla().getMemoryCapacityPerContainer();
   final int reservedMemoryCapacityPerMachineInMB=256;
