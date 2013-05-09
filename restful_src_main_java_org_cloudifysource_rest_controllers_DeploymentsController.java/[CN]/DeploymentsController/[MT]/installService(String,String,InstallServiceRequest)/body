@@ -20,6 +20,13 @@
     }
   }
   validateInstallService(absolutePuName,request,service,templateName,cloudOverridesFile,serviceOverridesFile,cloudConfigurationFile);
+  String cloudOverrides;
+  try {
+    cloudOverrides=FileUtils.readFileToString(cloudOverridesFile);
+  }
+ catch (  IOException e) {
+    throw new RestErrorException("failed reading cloud overrides file.",e);
+  }
   final DeploymentConfig deployConfig=new DeploymentConfig();
   final UUID deploymentID=UUID.randomUUID();
   deployConfig.setDeploymentId(deploymentID.toString());
@@ -28,13 +35,27 @@
   deployConfig.setAuthGroups(effectiveAuthGroups);
   deployConfig.setCloud(restConfig.getCloud());
   deployConfig.setCloudConfig(cloudConfigurationContents);
+  deployConfig.setCloudOverrides(cloudOverrides);
   deployConfig.setInstallRequest(request);
   final String locators=extractLocators(restConfig.getAdmin());
   deployConfig.setLocators(locators);
   deployConfig.setPackedFile(updatedPackedFile);
   deployConfig.setService(service);
   deployConfig.setTemplateName(templateName);
+  final ElasticDeploymentTopology deployment;
   final ElasticProcessingUnitDeploymentFactory fac=new ElasticProcessingUnitDeploymentFactoryImpl();
+  try {
+    deployment=fac.create(deployConfig);
+  }
+ catch (  ElasticDeploymentCreationException e) {
+    throw new RestErrorException("Failed creating deployment object.",e);
+  }
+  try {
+    deployAndWait(serviceName,deployment);
+  }
+ catch (  final TimeoutException e) {
+    throw new RestErrorException("Timed out waiting for deployment.",e);
+  }
   final InstallServiceResponse installServiceResponse=new InstallServiceResponse();
   if (!request.isApplicationInstall()) {
     startPollingForLifecycleEvents(deploymentID,service.getName(),appName,service.getNumInstances(),true,request.getTimeout(),request.getTimeUnit());

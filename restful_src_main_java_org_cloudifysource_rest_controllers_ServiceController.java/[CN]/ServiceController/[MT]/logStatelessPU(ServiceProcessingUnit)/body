@@ -1,6 +1,0 @@
-{
-  logger.info("HighlyAvailable: " + puConfig.getSla().getHighlyAvailable());
-  logger.info("maxMemCapacity: " + puConfig.getSla().getMaxMemoryCapacity());
-  logger.info("memoryCapacity: " + puConfig.getSla().getMemoryCapacity());
-  logger.info("MemoryCapacityPerContainer: " + puConfig.getSla().getMemoryCapacityPerContainer());
-}
