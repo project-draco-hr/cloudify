@@ -1,0 +1,17 @@
+{
+  final Logger logger=Logger.getLogger(BaseDslScript.class.getName());
+  final DSLLoggerHandler handler=new DSLLoggerHandler();
+  logger.addHandler(handler);
+  final File dir=new File(TEST_PARSING_RESOURCE_BASE + "logger");
+  final Service service=ServiceReader.getServiceFromDirectory(dir).getService();
+  Assert.assertNotNull(service);
+  Assert.assertTrue("Println logger not found",handler.getMessages().contains("println logger call"));
+  Assert.assertTrue("Print logger not found",handler.getMessages().contains("print logger call"));
+  Assert.assertTrue("Class println not found",handler.getMessages().contains("Test Class println"));
+  Assert.assertTrue("Class print not found",handler.getMessages().contains("Test Class print"));
+  Assert.assertFalse("preInstall event message appeared before expected",handler.getMessages().contains("This is the preInstall event"));
+  final ExecutableDSLEntry preInstall=service.getLifecycle().getPreInstall();
+  final ClosureExecutableEntry preInstallClosureEntry=(ClosureExecutableEntry)preInstall;
+  preInstallClosureEntry.getCommand().call();
+  Assert.assertTrue("preInstall event message not found",handler.getMessages().contains("This is the preInstall event"));
+}

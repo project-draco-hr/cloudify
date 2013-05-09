@@ -1,3 +1,0 @@
-{
-  events.addAll(Arrays.asList(debugEvents));
-}

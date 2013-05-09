@@ -1,10 +1,12 @@
 {
   Object result=null;
   if (this.dslContents == null) {
-    FileReader reader=null;
+    SequenceInputStream sis=null;
     try {
-      reader=new FileReader(dslFile);
-      result=gs.evaluate(reader,"dslEntity");
+      final FileInputStream fis=new FileInputStream(dslFile);
+      final ByteArrayInputStream bis=new ByteArrayInputStream(GROOVY_SERVICE_PREFIX.getBytes());
+      sis=new SequenceInputStream(bis,fis);
+      result=gs.evaluate(sis,"dslEntity");
     }
  catch (    final IOException e) {
       throw new IllegalStateException("The file " + dslFile + " could not be read",e);
@@ -19,9 +21,9 @@ catch (    final DSLValidationRuntimeException e) {
       throw e.getDSLValidationException();
     }
  finally {
-      if (reader != null) {
+      if (sis != null) {
         try {
-          reader.close();
+          sis.close();
         }
  catch (        final IOException e) {
         }
