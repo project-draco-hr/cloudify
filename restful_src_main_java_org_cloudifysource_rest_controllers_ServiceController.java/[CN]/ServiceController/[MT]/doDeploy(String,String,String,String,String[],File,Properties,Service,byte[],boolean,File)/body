@@ -5,6 +5,16 @@
     locationAware=service.isLocationAware();
     dedicated=IsolationUtils.isDedicated(service);
   }
+  logger.info("applicationName: " + applicationName);
+  logger.info("absolutePUName: " + serviceName);
+  for (  Map.Entry<Object,Object> property : contextProperties.entrySet()) {
+    logger.info("context prop key: " + property.getKey() + " value "+ property.getValue());
+  }
+  logger.info("template name: " + templateName);
+  logger.info("locationAware: " + locationAware);
+  if (cloudOverrides != null) {
+    logger.info("cloudOverrides: " + FileUtils.readFileToString(cloudOverrides));
+  }
   final int externalProcessMemoryInMB=512;
   final int containerMemoryInMB=128;
   final int reservedMemoryCapacityPerMachineInMB=256;

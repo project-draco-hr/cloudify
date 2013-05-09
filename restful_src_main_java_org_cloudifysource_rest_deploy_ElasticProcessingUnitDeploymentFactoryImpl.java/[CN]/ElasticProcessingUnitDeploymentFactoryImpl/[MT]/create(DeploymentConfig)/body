@@ -6,5 +6,13 @@
  else   if (service.getStatefulProcessingUnit() != null) {
     return createStatefulProcessingUnit();
   }
-  return null;
+ else   if (service.getStatelessProcessingUnit() != null || service.getMirrorProcessingUnit() != null) {
+    return createElasticStatelessPUDeployment();
+  }
+ else   if (service.getDataGrid() != null) {
+    return createElasticDatagridDeployment();
+  }
+ else {
+    throw new ElasticDeploymentCreationException("Unsupported service type");
+  }
 }

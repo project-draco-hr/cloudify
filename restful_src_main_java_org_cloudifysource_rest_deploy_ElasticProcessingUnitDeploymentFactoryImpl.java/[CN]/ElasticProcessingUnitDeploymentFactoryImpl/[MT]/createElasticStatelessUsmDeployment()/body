@@ -19,8 +19,13 @@
     }
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (scalingRulesDefined) {
-      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentConfig.getAbsolutePUName(),service,(int)cloudExternalProcessMemoryInMB,service.isLocationAware(),dedicated);
-      deployment.scale(scaleConfig);
+      try {
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentConfig.getAbsolutePUName(),service,(int)cloudExternalProcessMemoryInMB,service.isLocationAware(),dedicated);
+        deployment.scale(scaleConfig);
+      }
+ catch (      final Exception e) {
+        throw new ElasticDeploymentCreationException("Failed creating scale config.",e);
+      }
     }
  else {
       final int totalMemoryInMB=(int)cloudExternalProcessMemoryInMB * deploymentConfig.getService().getNumInstances();
@@ -33,8 +38,13 @@
     final int externalProcessMemoryInMB=512;
     deployment.memoryCapacityPerContainer(externalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (scalingRulesDefined) {
-      final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentConfig.getAbsolutePUName(),service,externalProcessMemoryInMB,false,false);
-      deployment.scale(scaleConfig);
+      try {
+        final AutomaticCapacityScaleConfig scaleConfig=ElasticScaleConfigFactory.createAutomaticCapacityScaleConfig(deploymentConfig.getAbsolutePUName(),service,externalProcessMemoryInMB,false,false);
+        deployment.scale(scaleConfig);
+      }
+ catch (      final Exception e) {
+        throw new ElasticDeploymentCreationException("Failed creating scale config.",e);
+      }
     }
  else {
       final int containerMemoryInMB=128;
