@@ -28,7 +28,6 @@
   deployConfig.setAuthGroups(effectiveAuthGroups);
   deployConfig.setCloud(restConfig.getCloud());
   deployConfig.setCloudConfig(cloudConfigurationContents);
-  deployConfig.setCloudOverrides(FileUtils.readFileToString(cloudOverridesFile));
   deployConfig.setInstallRequest(request);
   final String locators=extractLocators(restConfig.getAdmin());
   deployConfig.setLocators(locators);
@@ -36,8 +35,6 @@
   deployConfig.setService(service);
   deployConfig.setTemplateName(templateName);
   final ElasticProcessingUnitDeploymentFactory fac=new ElasticProcessingUnitDeploymentFactoryImpl();
-  final ElasticDeploymentTopology deployment=fac.create(deployConfig);
-  deployAndWait(serviceName,(ElasticSpaceDeployment)deployment);
   final InstallServiceResponse installServiceResponse=new InstallServiceResponse();
   if (!request.isApplicationInstall()) {
     startPollingForLifecycleEvents(deploymentID,service.getName(),appName,service.getNumInstances(),true,request.getTimeout(),request.getTimeUnit());
