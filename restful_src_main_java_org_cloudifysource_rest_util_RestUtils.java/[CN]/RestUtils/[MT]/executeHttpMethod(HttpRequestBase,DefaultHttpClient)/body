@@ -10,10 +10,10 @@
       logger.log(Level.FINE,"[executeHttpMethod] - got response with status " + statusCode + ". responseBody: "+ responseBody);
       try {
         final Map<String,Object> errorMap=jsonToMap(responseBody);
-        final String status=(String)errorMap.get(STATUS_KEY);
-        if (ERROR.equals(status)) {
-          final String reason=(String)errorMap.get(ERROR);
-          @SuppressWarnings("unchecked") final List<String> reasonsArgs=(List<String>)errorMap.get(ERROR_ARGS);
+        final String status=(String)errorMap.get(CloudifyConstants.STATUS_KEY);
+        if (CloudifyConstants.ERROR_STATUS.equals(status)) {
+          final String reason=(String)errorMap.get(CloudifyConstants.ERROR_STATUS);
+          @SuppressWarnings("unchecked") final List<String> reasonsArgs=(List<String>)errorMap.get(CloudifyConstants.ERROR_ARGS_KEY);
           logger.log(Level.WARNING,"Failed to execute rest request to " + httpMethod.getURI() + ", error: "+ reason+ ", error args: "+ reasonsArgs);
           throw new RestErrorException(reason);
         }
@@ -33,7 +33,7 @@
       logger.log(Level.WARNING,"Failed to read response from " + httpMethod.getURI() + ", error: "+ e);
       throw new RestErrorException("Failed to read response from " + httpMethod.getURI().toString() + ", got an IOException- "+ e.getMessage());
     }
-    return responseMap.get(RESPONSE_KEY);
+    return responseMap.get(CloudifyConstants.RESPONSE_KEY);
   }
  catch (  final ClientProtocolException e) {
     logger.log(Level.WARNING,"Failed to execute rest request to " + httpMethod.getURI() + ", error: "+ e);

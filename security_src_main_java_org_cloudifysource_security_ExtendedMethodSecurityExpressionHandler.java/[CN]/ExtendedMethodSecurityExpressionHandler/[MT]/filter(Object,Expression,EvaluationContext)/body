@@ -1,0 +1,38 @@
+{
+  CustomMethodSecurityExpressionRoot rootObject=(CustomMethodSecurityExpressionRoot)ctx.getRootObject().getValue();
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Filtering with expression: " + filterExpression.getExpressionString());
+  }
+  if (filterTarget instanceof Collection || filterTarget.getClass().isArray()) {
+    return super.filter(filterTarget,filterExpression,ctx);
+  }
+  if (filterTarget instanceof Map) {
+    @SuppressWarnings("unchecked") Map<String,Object> returnValue=(Map<String,Object>)filterTarget;
+    if (CloudifyConstants.SUCCESS_STATUS.equals(returnValue.get(CloudifyConstants.STATUS_KEY))) {
+      Object responseObject=returnValue.get(CloudifyConstants.RESPONSE_KEY);
+      if (responseObject instanceof Map) {
+        @SuppressWarnings("unchecked") Map<String,String> objectsMap=(Map<String,String>)responseObject;
+        for (        Map.Entry<String,String> entry : objectsMap.entrySet()) {
+          String filterObject=entry.getValue();
+          rootObject.setFilterObject(filterObject);
+          if (!ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
+            objectsMap.remove(entry);
+          }
+        }
+      }
+ else       if (responseObject instanceof List) {
+        @SuppressWarnings("unchecked") List<Object> objectsList=(List<Object>)responseObject;
+        for (        Object object : objectsList) {
+          if (object instanceof ApplicationDescription) {
+            rootObject.setFilterObject(((ApplicationDescription)object).getAuthGroups());
+            if (!ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
+              objectsList.remove(object);
+            }
+          }
+        }
+      }
+    }
+    return returnValue;
+  }
+  throw new IllegalArgumentException("Filter target must be a collection or array type, but was " + filterTarget);
+}

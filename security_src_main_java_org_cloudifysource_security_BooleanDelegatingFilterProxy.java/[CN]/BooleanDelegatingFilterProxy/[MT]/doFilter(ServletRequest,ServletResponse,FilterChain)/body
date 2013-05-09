@@ -1,0 +1,9 @@
+{
+  final String springSecurityProfile=System.getenv(SecurityConstants.SPRING_ACTIVE_PROFILE_ENV_VAR);
+  if (SecurityConstants.SPRING_PROFILE_SECURE.contains(springSecurityProfile)) {
+    super.doFilter(request,response,filterChain);
+  }
+ else {
+    filterChain.doFilter(request,response);
+  }
+}

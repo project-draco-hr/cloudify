@@ -1,3 +1,3 @@
 {
-  return newHashMap(mapEntry(STATUS_KEY,(Object)SUCCESS),mapEntry(RESPONSE_KEY,response));
+  return newHashMap(mapEntry(CloudifyConstants.STATUS_KEY,(Object)CloudifyConstants.SUCCESS_STATUS),mapEntry(CloudifyConstants.RESPONSE_KEY,response));
 }

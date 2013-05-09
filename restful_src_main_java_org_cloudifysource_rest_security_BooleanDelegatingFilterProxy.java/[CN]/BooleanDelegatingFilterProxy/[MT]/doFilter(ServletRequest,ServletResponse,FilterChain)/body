@@ -1,9 +1,0 @@
-{
-  final String springSecurityProfile=System.getenv(CloudifyConstants.SPRING_ACTIVE_PROFILE_ENV_VAR);
-  if (CloudifyConstants.SPRING_PROFILE_SECURE.contains(springSecurityProfile)) {
-    super.doFilter(request,response,filterChain);
-  }
- else {
-    filterChain.doFilter(request,response);
-  }
-}

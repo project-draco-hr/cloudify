@@ -1,3 +1,3 @@
 {
-  return newHashMap(mapEntry(STATUS_KEY,(Object)ERROR),mapEntry(ERROR,(Object)errorDesc));
+  return newHashMap(mapEntry(CloudifyConstants.STATUS_KEY,(Object)CloudifyConstants.ERROR_STATUS),mapEntry(CloudifyConstants.ERROR_STATUS,(Object)errorDesc));
 }
