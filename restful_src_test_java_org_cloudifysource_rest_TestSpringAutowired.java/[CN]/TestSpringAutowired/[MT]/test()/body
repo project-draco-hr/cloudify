@@ -1,0 +1,4 @@
+{
+  AttributesController controller=applicationContext.getBean(AttributesController.class);
+  System.out.println("controller test finished");
+}
