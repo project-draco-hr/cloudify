@@ -1,6 +1,6 @@
 {
-  String templateName=deploymentDetails.getTemplateName();
-  Cloud cloud=deploymentDetails.getCloud();
+  String templateName=deploymentConfig.getTemplateName();
+  Cloud cloud=deploymentConfig.getCloud();
   final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
   logger.info("Calculating external proc mem for template: " + template);
   final int machineMemoryMB=template.getMachineMemoryMB();

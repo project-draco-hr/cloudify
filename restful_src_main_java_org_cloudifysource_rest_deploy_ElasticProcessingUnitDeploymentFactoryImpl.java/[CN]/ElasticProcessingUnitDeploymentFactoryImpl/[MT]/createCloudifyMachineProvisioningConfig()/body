@@ -1,27 +1,27 @@
 {
-  final Cloud cloud=deploymentDetails.getCloud();
-  final String serviceTemplateName=deploymentDetails.getTemplateName();
+  final Cloud cloud=deploymentConfig.getCloud();
+  final String serviceTemplateName=deploymentConfig.getTemplateName();
   final String managementMachineTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
   final Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
   final ComputeTemplate serviceTemplate=templates.get(serviceTemplateName);
   final ComputeTemplate managementTemplate=templates.get(managementMachineTemplateName);
   String storageTemplate=null;
-  if (deploymentDetails.getService().getStorage() != null) {
-    storageTemplate=deploymentDetails.getService().getStorage().getTemplate();
+  if (deploymentConfig.getService().getStorage() != null) {
+    storageTemplate=deploymentConfig.getService().getStorage().getTemplate();
     logger.fine("Storage template " + storageTemplate + " is used with deployment");
   }
   logger.info("Creating cloud machine provisioning config. Template remote directory is: " + serviceTemplate.getRemoteDirectory());
-  final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(deploymentDetails.getCloud(),serviceTemplate,serviceTemplateName,managementTemplate.getRemoteDirectory(),storageTemplate);
-  config.setAuthGroups(deploymentDetails.getAuthGroups());
-  String cloudOverrides=deploymentDetails.getCloudOverrides();
+  final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,serviceTemplate,serviceTemplateName,managementTemplate.getRemoteDirectory(),storageTemplate);
+  config.setAuthGroups(deploymentConfig.getAuthGroups());
+  String cloudOverrides=deploymentConfig.getCloudOverrides();
   if (cloudOverrides != null) {
-    logger.fine("Recieved request for installation of " + deploymentDetails.getAbsolutePUName() + " with cloud overrides parameters [ "+ cloudOverrides+ "]");
+    logger.fine("Recieved request for installation of " + deploymentConfig.getAbsolutePUName() + " with cloud overrides parameters [ "+ cloudOverrides+ "]");
     config.setCloudOverridesPerService(cloudOverrides);
   }
  else {
-    logger.fine("No cloud overrides parameters were requested for the installation of " + deploymentDetails.getAbsolutePUName());
+    logger.fine("No cloud overrides parameters were requested for the installation of " + deploymentConfig.getAbsolutePUName());
   }
   addCloudConfigurationCostants(config);
-  config.setLocator(deploymentDetails.getLocators());
+  config.setLocator(deploymentConfig.getLocators());
   return config;
 }

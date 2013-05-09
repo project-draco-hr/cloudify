@@ -1,5 +1,5 @@
 {
-  final byte[] cloudConfig=deploymentDetails.getCloudConfig();
+  final byte[] cloudConfig=deploymentConfig.getCloudConfig();
   if (cloudConfig != null) {
     config.setServiceCloudConfiguration(cloudConfig);
   }

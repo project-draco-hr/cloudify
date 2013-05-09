@@ -1,23 +1,20 @@
 {
-  ServiceProcessingUnit puConfig=deploymentDetails.getService().getStatefulProcessingUnit();
+  ServiceProcessingUnit puConfig=deploymentConfig.getService().getStatefulProcessingUnit();
   final Sla statefulSla=puConfig.getSla();
-  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(deploymentDetails.getPackedFile());
+  prepareSla(statefulSla);
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(deploymentConfig.getPackedFile());
   addSharedDeploymentParameters(deployment);
   final int containerMemoryInMB=statefulSla.getMemoryCapacityPerContainer();
   final int maxMemoryCapacityInMB=statefulSla.getMaxMemoryCapacity();
   deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").highlyAvailable(statefulSla.getHighlyAvailable()).singleMachineDeployment();
+  ManualCapacityScaleConfig scaleConfig;
   final int memoryCapacity=statefulSla.getMemoryCapacity();
   if (isLocalcloud()) {
-    setLocalcloudMachineProvisioningConfig(deployment);
-    ManualCapacityScaleConfig manualScaleConfig=createManualScaleConfig(memoryCapacity);
-    deployment.scale(manualScaleConfig);
+    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create();
   }
  else {
-    prepareStatefulSla(statefulSla);
-    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
-    setDedicatedMachineProvisioning(deployment,config);
-    final ManualCapacityScaleConfig manualCapacityScaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(memoryCapacity,0,deploymentDetails.getService().isLocationAware(),true);
-    deployment.scale(manualCapacityScaleConfig);
+    scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(memoryCapacity,0,deploymentConfig.getService().isLocationAware(),true);
   }
+  deployment.scale(scaleConfig);
   return deployment;
 }

@@ -1,0 +1,21 @@
+{
+  final String absolutePUName=deploymentConfig.getAbsolutePUName();
+  final ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(absolutePUName);
+  addSharedDeploymentParameters(deployment);
+  final Sla puSla=deploymentConfig.getService().getDataGrid().getSla();
+  prepareSla(puSla);
+  final int containerMemoryInMB=puSla.getMemoryCapacityPerContainer();
+  final int maxMemoryInMB=puSla.getMaxMemoryCapacity();
+  deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).highlyAvailable(puSla.getHighlyAvailable()).singleMachineDeployment();
+  ManualCapacityScaleConfig scaleConfig;
+  if (isLocalcloud()) {
+    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create();
+  }
+ else {
+    final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory();
+    deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
+    scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)cloudExternalProcessMemoryInMB,0,deploymentConfig.getService().isLocationAware(),true);
+  }
+  deployment.scale(scaleConfig);
+  return deployment;
+}

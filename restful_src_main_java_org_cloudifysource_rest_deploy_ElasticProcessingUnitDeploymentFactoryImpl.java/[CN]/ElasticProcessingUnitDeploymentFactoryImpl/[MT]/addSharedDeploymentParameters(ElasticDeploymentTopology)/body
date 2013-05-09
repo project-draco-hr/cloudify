@@ -1,7 +1,14 @@
 {
-  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentDetails.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentDetails.getAuthGroups()).name(deploymentDetails.getAbsolutePUName());
+  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getAuthGroups()).name(deploymentConfig.getAbsolutePUName());
+  setContextProperties(deployment,deploymentConfig.getContextProperties());
+  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID,deploymentConfig.getDeploymentId());
   if (!isLocalcloud()) {
-    deployment.addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getPortRange()).addCommandLineArgument("-Xmx" + deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getMaxMemory()).addCommandLineArgument("-Xms" + deploymentDetails.getCloud().getConfiguration().getComponents().getUsm().getMinMemory());
+    logger.fine("setting lrmi bind ports and container memory context properties");
+    deployment.addCommandLineArgument("-D" + CloudifyConstants.LRMI_BIND_PORT_CONTEXT_PROPERTY + "="+ deploymentConfig.getCloud().getConfiguration().getComponents().getUsm().getPortRange()).addCommandLineArgument("-Xmx" + deploymentConfig.getCloud().getConfiguration().getComponents().getUsm().getMaxMemory()).addCommandLineArgument("-Xms" + deploymentConfig.getCloud().getConfiguration().getComponents().getUsm().getMinMemory());
+    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
+    deployment.dedicatedMachineProvisioning(config);
   }
-  setContextProperties(deployment,deploymentDetails.getContextProperties());
+ else {
+    setLocalcloudMachineProvisioningConfig(deployment);
+  }
 }
