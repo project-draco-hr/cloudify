@@ -1,17 +1,27 @@
 {
-  final Sla statelessSla=deploymentConfig.getService().getStatelessProcessingUnit().getSla();
+  final Service service=deploymentConfig.getService();
+  final StatelessProcessingUnit puConfig;
+  if (service.getStatelessProcessingUnit() != null) {
+    puConfig=service.getStatelessProcessingUnit();
+  }
+ else {
+    puConfig=service.getMirrorProcessingUnit();
+  }
+  final Sla statelessSla=puConfig.getSla();
   final int containerMemoryInMB=statelessSla.getMemoryCapacityPerContainer();
   prepareSla(statelessSla);
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(deploymentConfig.getPackedFile()).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES);
   addSharedDeploymentParameters(deployment);
+  addProcessingUnitContextProperties(deployment,puConfig.getContextProperties());
+  setSpringProfilesActive(deployment,puConfig.getSpringProfilesActive());
   ManualCapacityScaleConfig scaleConfig;
   if (isLocalcloud()) {
-    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create();
+    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * service.getNumInstances(),MemoryUnit.MEGABYTES).create();
   }
  else {
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory();
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
-    scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),0,deploymentConfig.getService().isLocationAware(),true);
+    scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(containerMemoryInMB * service.getNumInstances(),0,service.isLocationAware(),true);
   }
   deployment.scale(scaleConfig);
   return deployment;

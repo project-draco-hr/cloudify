@@ -2,7 +2,7 @@
   String templateName=deploymentConfig.getTemplateName();
   Cloud cloud=deploymentConfig.getCloud();
   final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
-  logger.info("Calculating external proc mem for template: " + template);
+  logger.fine("Calculating external proc mem for template: " + template);
   final int machineMemoryMB=template.getMachineMemoryMB();
   final int reservedMemoryCapacityPerMachineInMB=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
   final int safteyMargin=100;

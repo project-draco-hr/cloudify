@@ -2,7 +2,9 @@
   final String absolutePUName=deploymentConfig.getAbsolutePUName();
   final ElasticSpaceDeployment deployment=new ElasticSpaceDeployment(absolutePUName);
   addSharedDeploymentParameters(deployment);
-  final Sla puSla=deploymentConfig.getService().getDataGrid().getSla();
+  final DataGrid dataGrid=deploymentConfig.getService().getDataGrid();
+  addProcessingUnitContextProperties(deployment,dataGrid.getContextProperties());
+  final Sla puSla=dataGrid.getSla();
   prepareSla(puSla);
   final int containerMemoryInMB=puSla.getMemoryCapacityPerContainer();
   final int maxMemoryInMB=puSla.getMaxMemoryCapacity();

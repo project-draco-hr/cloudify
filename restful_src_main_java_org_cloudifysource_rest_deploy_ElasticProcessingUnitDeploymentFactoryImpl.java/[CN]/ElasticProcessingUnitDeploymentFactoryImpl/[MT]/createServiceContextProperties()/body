@@ -1,0 +1,29 @@
+{
+  final Properties contextProperties=new Properties();
+  Service service=deploymentConfig.getService();
+  if (service.getDependsOn() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,service.getDependsOn().toString());
+  }
+  if (service.getType() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE,service.getType());
+  }
+  if (service.getIcon() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_SERVICE_ICON,CloudifyConstants.SERVICE_EXTERNAL_FOLDER + service.getIcon());
+  }
+  if (service.getNetwork() != null) {
+    if (service.getNetwork().getProtocolDescription() != null) {
+      contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
+    }
+  }
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,Boolean.toString(service.isElastic()));
+  final InstallServiceRequest installRequest=deploymentConfig.getInstallRequest();
+  if (installRequest.isDebugAll()) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL,Boolean.TRUE.toString());
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,installRequest.getDebugMode());
+  }
+ else   if (installRequest.getDebugEvents() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_EVENTS,installRequest.getDebugEvents());
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,installRequest.getDebugMode());
+  }
+  return contextProperties;
+}

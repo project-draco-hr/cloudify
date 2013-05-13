@@ -1,0 +1,7 @@
+{
+  if (properties != null) {
+    for (    Entry<String,String> entry : properties.entrySet()) {
+      deployment.addContextProperty(entry.getKey(),entry.getValue());
+    }
+  }
+}

@@ -3,9 +3,7 @@
   final int reservedMemoryPerManagementMachineInMB=256;
   final DiscoveredMachineProvisioningConfig config=new DiscoveredMachineProvisioningConfigurer().reservedMemoryCapacityPerMachine(reservedMemoryPerMachineInMB,MemoryUnit.MEGABYTES).create();
   config.setReservedMemoryCapacityPerManagementMachineInMB(reservedMemoryPerManagementMachineInMB);
-  if (isLocalcloud()) {
-    String[] agentZones=new String[]{LOCALCLOUD_ZONE};
-    config.setGridServiceAgentZones(agentZones);
-  }
+  String[] agentZones=new String[]{LOCALCLOUD_ZONE};
+  config.setGridServiceAgentZones(agentZones);
   deployment.publicMachineProvisioning(config);
 }
