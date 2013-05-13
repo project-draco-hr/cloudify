@@ -12,7 +12,7 @@
   }
   logger.fine("Creating cloud machine provisioning config. Template remote directory is: " + serviceTemplate.getRemoteDirectory());
   final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,serviceTemplate,serviceTemplateName,managementTemplate.getRemoteDirectory(),storageTemplate);
-  config.setAuthGroups(deploymentConfig.getInstallRequest().getAuthGroups());
+  config.setAuthGroups(deploymentConfig.getAuthGroups());
   String cloudOverrides=deploymentConfig.getCloudOverrides();
   if (cloudOverrides != null) {
     logger.fine("Recieved request for installation of " + deploymentConfig.getAbsolutePUName() + " with cloud overrides parameters [ "+ cloudOverrides+ "]");

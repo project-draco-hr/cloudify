@@ -1,5 +1,5 @@
 {
-  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getInstallRequest().getAuthGroups()).name(deploymentConfig.getAbsolutePUName());
+  deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getAuthGroups()).name(deploymentConfig.getAbsolutePUName());
   final Properties contextProperties=createServiceContextProperties();
   setContextProperties(deployment,contextProperties);
   deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID,deploymentConfig.getDeploymentId());
