@@ -1,0 +1,6 @@
+{
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("container memory capacity should be set to 128",elasticProperties.get("container.memory-capacity").equals("128"));
+  final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
+  Assert.assertTrue("mirror-interval context property is ont set",contextProperties.get("com.gs.dummy").equals("value"));
+}

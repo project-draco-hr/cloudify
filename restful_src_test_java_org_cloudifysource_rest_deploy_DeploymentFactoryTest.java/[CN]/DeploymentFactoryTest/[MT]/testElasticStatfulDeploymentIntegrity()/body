@@ -1,0 +1,13 @@
+{
+  final Service service=ServiceReader.readService(new File(STATEFUL_SERVICE_FILE));
+  DeploymentConfig deploymentConfig=createDeploymentConfig(false,service);
+  ElasticStatefulProcessingUnitDeployment deployment=(ElasticStatefulProcessingUnitDeployment)deploymentFactory.create(deploymentConfig);
+  ElasticStatefulProcessingUnitConfig deploymentHolder=deployment.create();
+  assertSharedCloudDeploymentPropertiesSet(deploymentHolder);
+  assertStatefulDeploymentIntegrity(deploymentHolder);
+  deploymentConfig=createDeploymentConfig(true,service);
+  deployment=(ElasticStatefulProcessingUnitDeployment)deploymentFactory.create(deploymentConfig);
+  deploymentHolder=deployment.create();
+  assertSharedLocalcloudProperties(deploymentHolder);
+  assertStatefulLocalcloudProperties(deploymentHolder);
+}

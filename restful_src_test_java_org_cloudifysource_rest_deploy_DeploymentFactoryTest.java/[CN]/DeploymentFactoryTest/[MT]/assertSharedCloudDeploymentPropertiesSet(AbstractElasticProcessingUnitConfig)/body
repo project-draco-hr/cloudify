@@ -1,0 +1,32 @@
+{
+  String commandlineArgs=Arrays.toString(deploymentHolder.getCommandLineArguments());
+  Assert.assertTrue("container LRMI bind port property missing",commandlineArgs.contains("-Dcom.gs.transport_protocol.lrmi.bind-port=7010-7110"));
+  Assert.assertTrue("container max memory property missing",commandlineArgs.contains("-Xmx128m"));
+  Assert.assertTrue("container min memory property missing",commandlineArgs.contains("-Xms128m"));
+  Assert.assertTrue("shared isolation should be null",deploymentHolder.getSharedIsolation() == null);
+  final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
+  Assert.assertTrue("deployment ID context property not set",contextProperties.get("com.gs.cloudify.deployment-id").equals("deploymentID"));
+  Assert.assertTrue("authgroups context property not set",contextProperties.get("com.gs.deployment.auth.groups").equals("DUMMY_AUTHGROUPS"));
+  Assert.assertTrue("elastic context property not set",contextProperties.get("com.gs.service.elastic").equals("true"));
+  Assert.assertTrue("application name context property not set",contextProperties.get("com.gs.application").equals("default"));
+  Assert.assertTrue("debug mode context property not set",contextProperties.get("com.gs.service.debug.mode").equals("instead"));
+  Assert.assertTrue("debug all context property not set",contextProperties.get("com.gs.service.debug.all").equals("true"));
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("container command line argument is missing  bind protocol or memory settings",elasticProperties.get("container.commandline-arguments").equals("-Dcom.gs.transport_protocol.lrmi.bind-port=7010-7110 -Xmx128m -Xms128m"));
+  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
+  Assert.assertTrue("cpu capacity cores is expected to be equal to 0",scaleStrategy.getProperties().get("cpu-capacity-cores").equals("0.0"));
+  Assert.assertTrue("zones usage should be set to false",scaleStrategy.getProperties().get("enable-agent-zones-aware").equals("false"));
+  final ElasticMachineProvisioningConfig machineProvisioning=deploymentHolder.getMachineProvisioning();
+  Assert.assertTrue("reserved capacity for machine should be 1024MB",machineProvisioning.getReservedCapacityPerMachine().toString().equals("1024MB RAM"));
+  Assert.assertTrue("min number of CPU cores should be 1",machineProvisioning.getMinimumNumberOfCpuCoresPerMachine() == 1.0);
+  Assert.assertTrue("reserved memory for management should not be set",machineProvisioning.getReservedCapacityPerManagementMachine().toString().equals("0MB RAM"));
+  final Map<String,String> machineProps=machineProvisioning.getProperties();
+  Assert.assertTrue("locators value is missing",machineProps.get("locator").equals("locators"));
+  Assert.assertTrue("config directory dows not match template definition",machineProps.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY).equals("/home/ec2-user/gs-files"));
+  Assert.assertTrue("template name missing from machine provisioning props",machineProps.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_TEMPLATE_NAME).equals("SMALL_LINUX"));
+  Assert.assertTrue("reserved memory per management machine should not be set",machineProps.get("reserved-memory-capacity-per-management-machine-megabytes").equals("0"));
+  Assert.assertTrue("reserved memory per machine should be set to 1024",machineProps.get("reserved-memory-capacity-per-machine-megabytes").equals("1024"));
+  Assert.assertTrue("auth groups not set to in machine provisioning props",machineProps.get("auth-groups.value").equals("DUMMY_AUTHGROUPS"));
+  Assert.assertTrue("cloud overrides does not contain expected value",machineProps.get("cloud-overrides-per-service").equals("envVariable=DEFAULT_OVERRIDES_ENV_VARIABLE"));
+  Assert.assertTrue("cpu cores per machine should be set to 1.0",machineProps.get("number-of-cpu-cores-per-machine").equals("1.0"));
+}
