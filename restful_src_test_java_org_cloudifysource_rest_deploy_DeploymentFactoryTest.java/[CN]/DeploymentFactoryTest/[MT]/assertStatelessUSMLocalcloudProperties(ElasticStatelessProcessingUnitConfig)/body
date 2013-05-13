@@ -1,0 +1,4 @@
+{
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("container memory capacity should be set to 512",elasticProperties.get("container.memory-capacity").equals("512"));
+}

@@ -1,0 +1,22 @@
+{
+  Assert.assertTrue("shared isolation should be null",deploymentHolder.getSharedIsolation() == null);
+  final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
+  Assert.assertTrue("deployment ID context property not set",contextProperties.get("com.gs.cloudify.deployment-id").equals("deploymentID"));
+  Assert.assertTrue("authgroups context property not set",contextProperties.get("com.gs.deployment.auth.groups").equals("DUMMY_AUTHGROUPS"));
+  Assert.assertTrue("elastic context property not set",contextProperties.get("com.gs.service.elastic").equals("true"));
+  Assert.assertTrue("application name context property not set",contextProperties.get("com.gs.application").equals("default"));
+  Assert.assertTrue("debug mode context property not set",contextProperties.get("com.gs.service.debug.mode").equals("instead"));
+  Assert.assertTrue("debug all context property not set",contextProperties.get("com.gs.service.debug.all").equals("true"));
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("elastic isolation property should be set to true",elasticProperties.get("elastic-machine-isolation-public-id").equals("true"));
+  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
+  Assert.assertTrue("cpu capacity cores is expected to be equal to 0",scaleStrategy.getProperties().get("memory-capacity-megabytes").equals("128"));
+  ElasticMachineProvisioningConfig machineProvisioning=deploymentHolder.getMachineProvisioning();
+  Assert.assertTrue("reserved capacity for machine should be 1024MB",machineProvisioning.getReservedCapacityPerMachine().toString().equals("256MB RAM"));
+  Assert.assertTrue("min number of CPU cores should be 1",machineProvisioning.getMinimumNumberOfCpuCoresPerMachine() == 0.0);
+  Assert.assertTrue("reserved memory for management should not be set",machineProvisioning.getReservedCapacityPerManagementMachine().toString().equals("256MB RAM"));
+  Assert.assertTrue("reserved memory for management should not be set",machineProvisioning.getReservedCapacityPerMachine().toString().equals("256MB RAM"));
+  final Map<String,String> machineProps=machineProvisioning.getProperties();
+  Assert.assertTrue("reserved memory per management machine should not be set",machineProps.get("reserved-memory-capacity-per-management-machine-megabytes").equals("256"));
+  Assert.assertTrue("reserved memory per machine should be set to 1024",machineProps.get("reserved-memory-capacity-per-machine-megabytes").equals("256"));
+}

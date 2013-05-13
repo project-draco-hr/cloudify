@@ -1,0 +1,14 @@
+{
+  Assert.assertTrue("public isolation should be set to true",deploymentHolder.getPublicIsolationConfig());
+  final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
+  Assert.assertTrue("asyn install context property not set",contextProperties.get("com.gs.cloudify.async-install").equals("true"));
+  Assert.assertTrue("service type context property not set",contextProperties.get("com.gs.service.type").equals("WEB_SERVER"));
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("public isolation should be set to true",elasticProperties.get("elastic-machine-isolation-public-id").equals("true"));
+  Assert.assertTrue("container memory capacity should be set to 128MB",elasticProperties.get("container.memory-capacity").equals("128"));
+  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
+  Assert.assertTrue("scale stategy memory capacity in MB is expected to be 128",scaleStrategy.getProperties().get("memory-capacity-megabytes").equals("128"));
+  final ElasticMachineProvisioningConfig machineProvisioning=deploymentHolder.getMachineProvisioning();
+  final Map<String,String> machineProps=machineProvisioning.getProperties();
+  Assert.assertTrue("dedicated-management-machines should be set to true",machineProps.get("dedicated-management-machines").equals("true"));
+}

@@ -1,0 +1,11 @@
+{
+  final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
+  Assert.assertTrue("container memory capacity should be set to 476MB",elasticProperties.get("container.memory-capacity").equals("476"));
+  Assert.assertTrue("public isolation should be set to false",elasticProperties.get("elastic-machine-isolation-public-id").equals("false"));
+  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
+  Assert.assertTrue("one container per machine must be set to true",scaleStrategy.getProperties().get("at-most-one-container-per-machine").equals("true"));
+  final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
+  Assert.assertTrue("service type context property not set",contextProperties.get("com.gs.service.type").equals("UNDEFINED"));
+  Assert.assertFalse("public isolation should be set to false",deploymentHolder.getPublicIsolationConfig());
+  Assert.assertTrue("cluster-config.mirror-service.interval-opers",contextProperties.get("com.gs.dummy").equals("value"));
+}
