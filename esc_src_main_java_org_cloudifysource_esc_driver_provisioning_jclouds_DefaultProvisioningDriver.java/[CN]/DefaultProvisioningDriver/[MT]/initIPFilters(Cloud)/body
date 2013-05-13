@@ -1,0 +1,19 @@
+{
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
+  final String privateCidr=(String)template.getCustom().get(PRIVATE_IP_CIDR);
+  if (!StringUtils.isBlank(privateCidr)) {
+    this.privateSubnetInfo=new SubnetUtils(privateCidr).getInfo();
+  }
+  final String privateRegex=(String)template.getCustom().get(PRIVATE_IP_REGEX);
+  if (!StringUtils.isBlank(privateRegex)) {
+    this.privateIpPattern=Pattern.compile(privateRegex);
+  }
+  final String publicCidr=(String)template.getCustom().get(PUBLIC_IP_CIDR);
+  if (!StringUtils.isBlank(publicCidr)) {
+    this.publicSubnetInfo=new SubnetUtils(publicCidr).getInfo();
+  }
+  final String publicRegex=(String)template.getCustom().get(PUBLIC_IP_REGEX);
+  if (!StringUtils.isBlank(publicRegex)) {
+    this.publicIpPattern=Pattern.compile(publicRegex);
+  }
+}

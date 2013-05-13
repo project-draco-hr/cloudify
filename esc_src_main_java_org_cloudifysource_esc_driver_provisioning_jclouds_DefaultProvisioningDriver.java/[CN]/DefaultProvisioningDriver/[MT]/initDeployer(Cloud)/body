@@ -4,6 +4,7 @@
   }
   try {
     this.deployer=createDeployer(cloud);
+    initIPFilters(cloud);
   }
  catch (  final Exception e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());

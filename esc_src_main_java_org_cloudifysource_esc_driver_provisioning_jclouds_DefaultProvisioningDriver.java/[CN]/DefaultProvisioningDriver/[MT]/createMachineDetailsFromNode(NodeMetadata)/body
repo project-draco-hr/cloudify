@@ -4,12 +4,7 @@
   md.setCloudifyInstalled(false);
   md.setInstallationDirectory(null);
   md.setMachineId(node.getId());
-  if (node.getPrivateAddresses().size() > 0) {
-    md.setPrivateAddress(node.getPrivateAddresses().iterator().next());
-  }
-  if (node.getPublicAddresses().size() > 0) {
-    md.setPublicAddress(node.getPublicAddresses().iterator().next());
-  }
+  populateIPs(node,md,template);
   final String username=createMachineUsername(node,template);
   final String password=createMachinePassword(node,template);
   md.setRemoteUsername(username);
