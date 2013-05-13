@@ -1,0 +1,34 @@
+{
+  if (subnetInfo != null) {
+    for (    final String address : addresses) {
+      if (subnetInfo.isInRange(address)) {
+        return address;
+      }
+    }
+  }
+  if (regex != null) {
+    for (    final String address : addresses) {
+      if (regex.matcher(address).matches()) {
+        return address;
+      }
+    }
+  }
+  if (subnetInfo != null) {
+    for (    final String address : backupAddresses) {
+      if (subnetInfo.isInRange(address)) {
+        return address;
+      }
+    }
+  }
+  if (regex != null) {
+    for (    final String address : backupAddresses) {
+      if (regex.matcher(address).matches()) {
+        return address;
+      }
+    }
+  }
+  if (addresses.size() > 0) {
+    return addresses.iterator().next();
+  }
+  return null;
+}

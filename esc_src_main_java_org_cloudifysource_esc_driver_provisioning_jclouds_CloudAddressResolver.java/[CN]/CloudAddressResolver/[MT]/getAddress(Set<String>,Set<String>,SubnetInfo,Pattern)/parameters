@@ -1,0 +1,4 @@
+Set<String> addresses
+Set<String> backupAddresses
+SubnetInfo subnetInfo
+Pattern regex
