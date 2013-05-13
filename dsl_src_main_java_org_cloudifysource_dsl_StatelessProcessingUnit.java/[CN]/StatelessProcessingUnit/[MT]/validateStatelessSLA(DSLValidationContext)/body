@@ -1,0 +1,8 @@
+{
+  if (getSla().getMemoryCapacity() != null) {
+    throw new DSLValidationException("memoryCapacity SLA is not supported in this service");
+  }
+  if (getSla().getMaxMemoryCapacity() != null) {
+    throw new DSLValidationException("maxMemoryCapacity SLA is not supported in this service");
+  }
+}
