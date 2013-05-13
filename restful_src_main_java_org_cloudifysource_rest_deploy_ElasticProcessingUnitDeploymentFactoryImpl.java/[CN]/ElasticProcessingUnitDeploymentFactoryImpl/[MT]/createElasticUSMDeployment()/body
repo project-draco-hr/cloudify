@@ -6,9 +6,11 @@
     deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,"false");
   }
   final Service service=deploymentConfig.getService();
-  final boolean scalingRulesDefined=service.getScalingRules() == null;
+  final boolean scalingRulesDefined=service.getScalingRules() == null ? false : true;
   if (!isLocalcloud()) {
     boolean dedicated=IsolationUtils.isDedicated(service);
+    final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
+    setIsolationConfig(deployment,dedicated,config);
     long cloudExternalProcessMemoryInMB;
     logger.info("setting deployment memory capacity for container according to isolation method");
     if (dedicated) {

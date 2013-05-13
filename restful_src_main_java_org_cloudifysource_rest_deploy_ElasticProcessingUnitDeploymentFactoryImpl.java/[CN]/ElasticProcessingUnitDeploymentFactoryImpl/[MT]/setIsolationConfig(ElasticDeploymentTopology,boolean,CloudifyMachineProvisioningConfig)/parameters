@@ -1,3 +1,3 @@
-ElasticStatelessProcessingUnitDeployment deployment
+ElasticDeploymentTopology deployment
 boolean dedicated
 CloudifyMachineProvisioningConfig config

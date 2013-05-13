@@ -1,10 +1,11 @@
 {
   final Service service=deploymentConfig.getService();
+  this.deploymentConfig=deploymentConfig;
   if (service.getLifecycle() != null) {
-    return createElasticStatelessUsmDeployment();
+    return createElasticUSMDeployment();
   }
  else   if (service.getStatefulProcessingUnit() != null) {
-    return createStatefulProcessingUnit();
+    return createElasticStatefulProcessingUnit();
   }
  else   if (service.getStatelessProcessingUnit() != null || service.getMirrorProcessingUnit() != null) {
     return createElasticStatelessPUDeployment();

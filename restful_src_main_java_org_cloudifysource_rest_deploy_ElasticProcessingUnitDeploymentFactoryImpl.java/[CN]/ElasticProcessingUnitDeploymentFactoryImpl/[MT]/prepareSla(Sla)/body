@@ -1,4 +1,7 @@
 {
+  if (isLocalcloud()) {
+    return;
+  }
   final int availableMemoryOnMachine=(int)calculateExternalProcessMemory();
   if (sla.getMemoryCapacityPerContainer() != null && sla.getMemoryCapacityPerContainer() > availableMemoryOnMachine) {
     throw new IllegalStateException("memoryCapacityPerContainer SLA is larger than available memory on machine\n" + sla.getMemoryCapacityPerContainer() + " > "+ availableMemoryOnMachine);
