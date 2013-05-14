@@ -1,4 +1,0 @@
-{
-  deploymentFactory=new ElasticProcessingUnitDeploymentFactoryImpl();
-  cloud=ServiceReader.readCloud(new File(CLOUD_FILE));
-}
