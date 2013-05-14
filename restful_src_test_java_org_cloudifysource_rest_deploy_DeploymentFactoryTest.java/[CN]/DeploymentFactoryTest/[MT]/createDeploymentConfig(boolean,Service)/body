@@ -1,7 +1,6 @@
 {
   DeploymentConfig deploymentConfig=new DeploymentConfig();
   final InstallServiceRequest installRequest=new InstallServiceRequest();
-  installRequest.setAuthGroups("DUMMY_AUTHGROUPS");
   installRequest.setSelfHealing(true);
   installRequest.setDebugAll(true);
   deploymentConfig.setInstallRequest(installRequest);
@@ -20,5 +19,6 @@
   deploymentConfig.setPackedFile(new File("DUMMY_FILE"));
   deploymentConfig.setTemplateName("SMALL_LINUX");
   deploymentConfig.setCloudOverrides("envVariable=DEFAULT_OVERRIDES_ENV_VARIABLE");
+  deploymentConfig.setAuthGroups("DUMMY_AUTHGROUPS");
   return deploymentConfig;
 }
