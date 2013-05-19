@@ -12,24 +12,28 @@
       Object responseObject=returnValue.get(CloudifyConstants.RESPONSE_KEY);
       if (responseObject instanceof Map) {
         @SuppressWarnings("unchecked") Map<String,String> objectsMap=(Map<String,String>)responseObject;
+        Map<Object,String> retainMap=new HashMap<Object,String>();
         for (        Map.Entry<String,String> entry : objectsMap.entrySet()) {
           String filterObject=entry.getValue();
           rootObject.setFilterObject(filterObject);
-          if (!ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
-            objectsMap.remove(entry);
+          if (ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
+            retainMap.put(entry.getKey(),entry.getValue());
           }
         }
+        returnValue.put(CloudifyConstants.RESPONSE_KEY,retainMap);
       }
  else       if (responseObject instanceof List) {
         @SuppressWarnings("unchecked") List<Object> objectsList=(List<Object>)responseObject;
+        List<Object> retainList=new ArrayList<Object>();
         for (        Object object : objectsList) {
           if (object instanceof ApplicationDescription) {
             rootObject.setFilterObject(((ApplicationDescription)object).getAuthGroups());
-            if (!ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
-              objectsList.remove(object);
+            if (ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
+              retainList.add(object);
             }
           }
         }
+        returnValue.put(CloudifyConstants.RESPONSE_KEY,retainList);
       }
     }
     return returnValue;
