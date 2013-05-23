@@ -4,8 +4,6 @@
   }
   final GlobalCloudifyAttribute attribute=new GlobalCloudifyAttribute(attributeName,null);
   final GlobalCloudifyAttribute previousValue=gigaSpace.take(attribute);
-  final Object value=previousValue != null ? previousValue.getValue() : null;
-  final Map<String,Object> mapResult=new HashMap<String,Object>();
-  mapResult.put(attributeName,value);
+  final Map<String,Object> mapResult=createDeleteAttributeResponseMap(attributeName,previousValue);
   return mapResult;
 }

@@ -1,0 +1,12 @@
+{
+  final boolean found=(previousValue != null);
+  if (found) {
+    final Map<String,Object> mapResult=new HashMap<String,Object>();
+    final Object value=previousValue.getValue();
+    mapResult.put(attributeName,value);
+    return mapResult;
+  }
+ else {
+    throw new RestErrorException("attribute_not_found",attributeName);
+  }
+}

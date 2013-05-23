@@ -1,11 +1,16 @@
 {
   final String url=getRelativeUrlForAttributes(scope,applicationName);
-  for (  final String attributeName : attributeNames) {
+  for (int i=0; i < attributeNames.length; ++i) {
+    final String attributeName=attributeNames[i];
     try {
       client.delete(url + "/" + attributeName);
     }
  catch (    final ErrorStatusException e) {
-      throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());
+      if (i != 0) {
+        final String[] deletedAttributes=Arrays.copyOfRange(attributeNames,0,i);
+        logger.severe(ShellUtils.getFormattedMessage("attribute_not_deleted_some_deleted",attributeName,Arrays.toString(deletedAttributes)));
+      }
+      throw new CLIStatusException(e);
     }
   }
 }
