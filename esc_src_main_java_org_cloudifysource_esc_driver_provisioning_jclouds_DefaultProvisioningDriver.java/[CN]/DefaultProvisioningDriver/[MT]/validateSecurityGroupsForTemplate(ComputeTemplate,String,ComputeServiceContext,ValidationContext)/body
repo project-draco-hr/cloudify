@@ -37,9 +37,9 @@
           }
           validationContext.validationEventEnd(ValidationResultType.OK);
         }
- catch (        Exception ex) {
+ catch (        CloudProvisioningException ex) {
           validationContext.validationEventEnd(ValidationResultType.ERROR);
-          throw new CloudProvisioningException("Invalid security groups configuration: " + ex.getMessage(),ex);
+          throw ex;
         }
       }
     }

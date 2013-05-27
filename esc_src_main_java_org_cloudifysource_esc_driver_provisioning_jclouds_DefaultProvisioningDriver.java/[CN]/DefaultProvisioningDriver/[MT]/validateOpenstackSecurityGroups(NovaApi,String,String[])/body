@@ -8,9 +8,9 @@
     }
   }
   if (missingSecurityGroups.size() == 1) {
-    throw new CloudProvisioningException("Invalid security group name: " + missingSecurityGroups.iterator().next());
+    throw new CloudProvisioningException(getFormattedMessage("error_security_group_validation",missingSecurityGroups.iterator().next(),groovyFile,propertiesFile));
   }
  else   if (missingSecurityGroups.size() > 1) {
-    throw new CloudProvisioningException("Invalid security group names: " + Arrays.toString(missingSecurityGroups.toArray()));
+    throw new CloudProvisioningException(getFormattedMessage("error_security_groups_validation",Arrays.toString(missingSecurityGroups.toArray()),groovyFile,propertiesFile));
   }
 }

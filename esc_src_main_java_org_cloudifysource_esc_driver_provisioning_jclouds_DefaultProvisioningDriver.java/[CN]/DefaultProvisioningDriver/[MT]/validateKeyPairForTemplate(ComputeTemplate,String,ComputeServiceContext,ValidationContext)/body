@@ -32,9 +32,9 @@
         }
         validationContext.validationEventEnd(ValidationResultType.OK);
       }
- catch (      Exception ex) {
+ catch (      CloudProvisioningException ex) {
         validationContext.validationEventEnd(ValidationResultType.ERROR);
-        throw new CloudProvisioningException("Invalid key-pair configuration: " + ex.getMessage(),ex);
+        throw ex;
       }
     }
   }

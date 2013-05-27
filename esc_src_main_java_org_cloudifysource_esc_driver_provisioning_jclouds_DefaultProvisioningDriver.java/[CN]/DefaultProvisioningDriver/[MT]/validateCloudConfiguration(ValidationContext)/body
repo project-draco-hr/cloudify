@@ -1,5 +1,8 @@
 {
   String providerName=cloud.getProvider().getProvider();
+  cloudFolder=CLOUDS_FOLDER_PATH + FILE_SEPARATOR + cloud.getName();
+  groovyFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.groovy";
+  propertiesFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.properties";
   String apiId;
   boolean endpointRequired=false;
   try {
@@ -18,7 +21,7 @@
     }
  catch (    NoSuchElementException ex) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);
-      throw new CloudProvisioningException("Provider not supported: " + providerName,ex);
+      throw new CloudProvisioningException(getFormattedMessage("error_provider_or_api_name_validation",providerName,cloudFolder),ex);
     }
   }
   validateComputeTemplates(endpointRequired,apiId,validationContext);

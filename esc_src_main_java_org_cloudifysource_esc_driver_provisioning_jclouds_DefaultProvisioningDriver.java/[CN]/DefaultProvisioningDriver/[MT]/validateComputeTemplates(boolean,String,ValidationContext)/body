@@ -26,7 +26,7 @@
  catch (      IOException e) {
         closeDeployer(deployer);
         validationContext.validationEventEnd(ValidationResultType.ERROR);
-        throw new CloudProvisioningException("Authentication to the cloud failed");
+        throw new CloudProvisioningException(getFormattedMessage("error_cloud_credentials_validation",groovyFile,propertiesFile));
       }
       imageId=template.getImageId();
       hardwareId=template.getHardwareId();
@@ -41,7 +41,7 @@
       }
  catch (      Exception ex) {
         validationContext.validationEventEnd(ValidationResultType.ERROR);
-        throw new CloudProvisioningException("Invalid template configuration: " + ex.getMessage(),ex);
+        throw new CloudProvisioningException(getFormattedMessage("error_image_hardware_location_combination_validation",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId,groovyFile,propertiesFile),ex);
       }
       if (isKnownAPI(apiId)) {
         validateSecurityGroupsForTemplate(template,apiId,deployer.getContext(),validationContext);
