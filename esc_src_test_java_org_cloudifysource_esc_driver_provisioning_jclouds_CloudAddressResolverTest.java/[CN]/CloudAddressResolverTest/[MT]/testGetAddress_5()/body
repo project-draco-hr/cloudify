@@ -1,0 +1,9 @@
+{
+  final CloudAddressResolver fixture=new CloudAddressResolver();
+  final Set<String> addresses=new HashSet();
+  final Set<String> backupAddresses=new HashSet(Arrays.asList("10.4.12.1","10.4.13.12"));
+  final org.apache.commons.net.util.SubnetUtils.SubnetInfo subnetInfo=null;
+  final Pattern regex=Pattern.compile("10.4.13.*");
+  final String result=fixture.getAddress(addresses,backupAddresses,subnetInfo,regex);
+  assertEquals("10.4.13.12",result);
+}
