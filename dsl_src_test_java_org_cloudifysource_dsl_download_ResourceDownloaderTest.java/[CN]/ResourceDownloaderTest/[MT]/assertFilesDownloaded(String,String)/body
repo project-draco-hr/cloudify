@@ -3,6 +3,14 @@
   final File downloadedHashFile=new File(DESTINATION_FOLDER,hashFileName);
   Assert.assertTrue("Resource file download failed",downloadedResourceFile.exists());
   Assert.assertTrue("Hash file download failed",downloadedHashFile.exists());
+  final File destinationFolder=new File(DESTINATION_FOLDER);
+  File[] partFiles=destinationFolder.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.contains(".part.");
+    }
+  }
+);
+  Assert.assertEquals("Expected no part files to be found",0,partFiles.length);
   final File originalResourceFile=new File(RESOURCE_FOLDER,resourceFileName);
   final File originalHashFile=new File(RESOURCE_FOLDER,hashFileName);
   Assert.assertTrue("Resource file was not downloaded properly",FileUtils.readFileToString(downloadedResourceFile).equals(FileUtils.readFileToString(originalResourceFile)));

@@ -1,0 +1,8 @@
+{
+  File destinationParent=this.resourceDest.getParentFile();
+  if (!destinationParent.exists()) {
+    if (!destinationParent.mkdirs()) {
+      throw new ResourceDownloadException("Failed to create the required directories for destination: " + this.resourceDest);
+    }
+  }
+}

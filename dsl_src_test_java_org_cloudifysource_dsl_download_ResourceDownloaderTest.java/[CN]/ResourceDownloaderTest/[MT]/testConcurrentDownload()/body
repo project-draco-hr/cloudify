@@ -1,0 +1,28 @@
+{
+  for (int i=0; i < 10; ++i) {
+    cleanDownloadFolder();
+    ExecutorService pool=Executors.newFixedThreadPool(3);
+    try {
+      DownloadTask task1=new DownloadTask();
+      DownloadTask task2=new DownloadTask();
+      DownloadTask task3=new DownloadTask();
+      Future<Exception> future1=pool.submit(task1);
+      Future<Exception> future2=pool.submit(task2);
+      Future<Exception> future3=pool.submit(task3);
+      Exception e1=future1.get();
+      Exception e2=future2.get();
+      Exception e3=future3.get();
+      Assert.assertNull("concurrent download failed: " + e1,e1);
+      Assert.assertNull("concurrent download failed: " + e2,e2);
+      Assert.assertNull("concurrent download failed: " + e3,e3);
+      final File destinationFolder=new File(DESTINATION_FOLDER);
+      File[] files=destinationFolder.listFiles();
+      Assert.assertEquals("Expecting only one file",1,files.length);
+    }
+  finally {
+      pool.shutdown();
+      pool.awaitTermination(10,TimeUnit.SECONDS);
+      cleanDownloadFolder();
+    }
+  }
+}

@@ -1,4 +1,5 @@
 {
+  cleanDownloadFolder();
   rdf.get(RESOURCE_URL,RESOURCE_DESTINATION);
   cleanDownloadFolder();
   assertDownloadSuccess(RESOURCE_URL + ".md5");

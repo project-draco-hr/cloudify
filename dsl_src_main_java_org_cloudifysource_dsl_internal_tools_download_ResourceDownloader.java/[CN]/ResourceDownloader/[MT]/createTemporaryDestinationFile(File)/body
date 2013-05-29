@@ -1,0 +1,28 @@
+{
+  Exception lastException=null;
+  String temporaryFileName=null;
+  for (int i=0; i < TEMPORARY_FILE_CREATION_RETY_LIMIT; ++i) {
+    temporaryFileName=destination.getName() + ".part." + System.nanoTime();
+    if (i > 0) {
+      temporaryFileName+="_" + i;
+    }
+    final File file=new File(destination.getParentFile(),temporaryFileName);
+    try {
+      if (file.createNewFile()) {
+        return file;
+      }
+    }
+ catch (    IOException e) {
+      lastException=e;
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE,"Failed to create new file: " + file + ". Error was: "+ e.getMessage(),e);
+      }
+    }
+  }
+  if (lastException == null) {
+    throw new ResourceDownloadException("Failed to create temporary file : " + temporaryFileName);
+  }
+ else {
+    throw new ResourceDownloadException("Failed to create temporary file : " + temporaryFileName + ", last error was: "+ lastException.getMessage(),lastException);
+  }
+}

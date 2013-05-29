@@ -5,12 +5,15 @@
     logger.log(Level.WARNING,"connection input stream failed to initialize");
     throw new ResourceDownloadException("Failed getting " + this.resourceUrl + " to "+ destination.getAbsolutePath());
   }
-  final OutputStream os=getFileOutputString(destination);
+  final File temporaryDestination=createTemporaryDestinationFile(destination);
+  final OutputStream os=getFileOutputString(temporaryDestination);
   boolean finished=false;
   try {
     final byte[] buffer=new byte[BUFFER_SIZE];
     int length;
-    logger.info("Downloading " + downloadURL.toString() + " to "+ this.resourceDest);
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Downloading " + downloadURL.toString() + " to "+ this.resourceDest);
+    }
     while ((length=is.read(buffer)) >= 0) {
       os.write(buffer,0,length);
       if (end < System.currentTimeMillis()) {
@@ -28,7 +31,24 @@
     IOUtils.closeQuietly(is);
     if (!finished) {
       logger.log(Level.WARNING,"Download did not complete successfully. deleting file.");
-      destination.delete();
+      FileUtils.deleteQuietly(temporaryDestination);
+      FileUtils.deleteQuietly(destination);
+    }
+  }
+  if (finished) {
+    try {
+      FileUtils.copyFile(temporaryDestination,destination);
+    }
+ catch (    IOException e) {
+      if (destination.exists()) {
+        logger.warning("Failed to write downloaded file to destination: " + destination + ". Destination file already exists. "+ "This probably indicates a concurrent download of the same file.");
+      }
+ else {
+        throw new ResourceDownloadException("Failed to copy downloaded file to target location: " + e.getMessage(),e);
+      }
+    }
+ finally {
+      FileUtils.deleteQuietly(temporaryDestination);
     }
   }
 }

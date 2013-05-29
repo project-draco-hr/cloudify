@@ -3,6 +3,7 @@
     logger.log(Level.INFO,"File already exists. " + this.resourceDest.getAbsolutePath() + " Skipping download.");
     return;
   }
+  createDestinationDirectories();
   for (int attempt=1; attempt <= this.numberOfRetries; attempt++) {
     try {
       getResource(this.resourceUrl,this.resourceDest);
@@ -12,8 +13,8 @@
         getResource(this.hashUrl,checksumFile);
         logger.log(Level.FINE,"Verifying resource checksum using checksum file " + checksumFile.getAbsolutePath());
         verifyResourceChecksum(checksumFile);
-        return;
       }
+      return;
     }
  catch (    ResourceDownloadException e) {
       logger.log(Level.WARNING,"Failed downloading resource on attempt " + attempt + ". Reason was "+ e.getMessage());

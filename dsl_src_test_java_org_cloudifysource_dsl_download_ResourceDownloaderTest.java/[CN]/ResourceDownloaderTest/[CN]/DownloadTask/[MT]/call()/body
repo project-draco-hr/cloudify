@@ -1,0 +1,12 @@
+{
+  try {
+    rdf.get(RESOURCE_URL,RESOURCE_DESTINATION);
+  }
+ catch (  ResourceDownloadException e) {
+    return e;
+  }
+catch (  TimeoutException e) {
+    return e;
+  }
+  return null;
+}
