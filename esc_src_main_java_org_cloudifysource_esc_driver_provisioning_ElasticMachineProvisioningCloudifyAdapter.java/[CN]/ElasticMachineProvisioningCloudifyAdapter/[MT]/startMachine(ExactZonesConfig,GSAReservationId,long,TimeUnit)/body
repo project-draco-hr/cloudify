@@ -79,7 +79,7 @@
     final GSAReservationId discoveredReservationId=((InternalGridServiceAgent)gsa).getReservationId();
     logger.info("Discovered agent with reservation id " + discoveredReservationId);
     if (reservationId != null && !reservationId.equals(discoveredReservationId)) {
-      throw new ElasticMachineProvisioningException("Cloudify Adapter discovered the wrong agent. expected reservation id is " + reservationId + ". but actual was "+ discoveredReservationId);
+      throw new ElasticMachineProvisioningException("Cloudify Adapter discovered the wrong agent. " + "expected reservation id is " + reservationId + ". but actual was "+ discoveredReservationId);
     }
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartedEvent(machineIp,gsa.getUid()));
     if (gsa.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME) == null) {
