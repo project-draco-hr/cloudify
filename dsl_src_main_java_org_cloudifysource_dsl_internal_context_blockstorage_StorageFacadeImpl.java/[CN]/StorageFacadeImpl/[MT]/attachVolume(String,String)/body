@@ -1,7 +1,7 @@
 {
   validateNotWindows();
   logger.info("Attaching volume with id " + volumeId + " to device "+ device);
-  remoteStorageProvisioningDriver.attachVolume(volumeId,device,serviceContext.getBindAddress());
+  safeGetRemoteStorageProvisioningDriver().attachVolume(volumeId,device,serviceContext.getBindAddress());
   changeStateOfVolumeWithId(volumeId,VolumeState.ATTACHED);
   setDeviceForVolumeWithId(volumeId,device);
   try {

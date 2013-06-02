@@ -3,6 +3,14 @@
   if (admin != null) {
     elasticServiceManager=admin.getElasticServiceManagers().waitForAtLeastOne();
     RemoteStorageProvisioningDriver storageApi=(RemoteStorageProvisioningDriver)((InternalElasticServiceManager)elasticServiceManager).getStorageApi(ServiceUtils.getAbsolutePUName(applicationName,serviceName));
+    if (logger.isLoggable(Level.FINE)) {
+      if (storageApi == null) {
+        logger.fine("storageApi was not found");
+      }
+ else {
+        logger.fine("storageApi successfully located");
+      }
+    }
     return new StorageFacadeImpl(this,storageApi);
   }
   return null;

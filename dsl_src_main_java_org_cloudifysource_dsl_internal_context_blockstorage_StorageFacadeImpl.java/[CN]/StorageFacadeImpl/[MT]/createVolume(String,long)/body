@@ -1,6 +1,6 @@
 {
   logger.info("Creating volume for service " + serviceContext.getServiceName() + ". Using template : "+ templateName);
-  String volumeId=remoteStorageProvisioningDriver.createVolume(templateName,serviceContext.getLocationId(),timeoutInMillis);
+  String volumeId=safeGetRemoteStorageProvisioningDriver().createVolume(templateName,serviceContext.getLocationId(),timeoutInMillis);
   writeNewVolume(volumeId);
   return volumeId;
 }

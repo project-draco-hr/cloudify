@@ -1,0 +1,6 @@
+{
+  if (remoteStorageProvisioningDriver == null) {
+    throw new IllegalStateException("No storage provisioning driver configured, remote provisioning calls are not possible");
+  }
+  return remoteStorageProvisioningDriver;
+}
