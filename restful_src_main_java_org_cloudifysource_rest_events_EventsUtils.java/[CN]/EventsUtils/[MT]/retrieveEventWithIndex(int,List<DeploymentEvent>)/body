@@ -1,0 +1,8 @@
+{
+  for (  DeploymentEvent event1 : serviceDeploymentEvents) {
+    if (event1.getIndex() == i) {
+      return event1;
+    }
+  }
+  return null;
+}

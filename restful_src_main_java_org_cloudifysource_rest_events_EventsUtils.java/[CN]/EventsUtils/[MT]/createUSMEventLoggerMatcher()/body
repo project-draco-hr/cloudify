@@ -1,0 +1,6 @@
+{
+  final String regex=MessageFormat.format(USM_EVENT_LOGGER_NAME,new Object(){
+  }
+);
+  return regex(regex);
+}

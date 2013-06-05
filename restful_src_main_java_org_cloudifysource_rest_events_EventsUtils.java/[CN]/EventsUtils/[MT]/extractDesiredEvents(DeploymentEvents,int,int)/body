@@ -1,0 +1,11 @@
+{
+  DeploymentEvents desiredEvents=new DeploymentEvents();
+  for (int i=from; i <= to; i++) {
+    List<DeploymentEvent> serviceDeploymentEvents=events.getEvents();
+    DeploymentEvent serviceDeploymentEvent=retrieveEventWithIndex(i,serviceDeploymentEvents);
+    if (serviceDeploymentEvent != null) {
+      desiredEvents.getEvents().add(serviceDeploymentEvent);
+    }
+  }
+  return desiredEvents;
+}

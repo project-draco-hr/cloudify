@@ -1,0 +1,12 @@
+{
+  for (  ProcessingUnit pu : admin.getProcessingUnits()) {
+    if (isManagementService(pu)) {
+      continue;
+    }
+    final String puDeploymentId=(String)pu.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+    if (operationId.equals(puDeploymentId)) {
+      return true;
+    }
+  }
+  return false;
+}

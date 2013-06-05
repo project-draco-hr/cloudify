@@ -1,0 +1,10 @@
+{
+  Set<GridServiceContainer> containers=new HashSet<GridServiceContainer>();
+  Zone zone=pu.getAdmin().getZones().getByName(pu.getName());
+  if (zone != null) {
+    for (    GridServiceContainer container : zone.getGridServiceContainers()) {
+      containers.add(container);
+    }
+  }
+  return containers;
+}

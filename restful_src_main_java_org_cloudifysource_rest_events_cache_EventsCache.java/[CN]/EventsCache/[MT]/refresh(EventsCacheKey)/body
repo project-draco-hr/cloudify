@@ -1,0 +1,3 @@
+{
+  eventsLoadingCache.refresh(key);
+}

@@ -1,0 +1,12 @@
+{
+  this.matcherCache=CacheBuilder.newBuilder().build(new CacheLoader<LogEntryMatcherProviderKey,ContinuousLogEntryMatcher>(){
+    @Override public ContinuousLogEntryMatcher load(    final LogEntryMatcherProviderKey key) throws Exception {
+      logger.fine(EventsUtils.getThreadId() + "Loading matcher cache with matcher for key " + key);
+      LogEntryMatcher continuousMatcher=EventsUtils.createUSMEventLoggerMatcher();
+      LogEntryMatcher initialMatcher=EventsUtils.createUSMEventLoggerMatcher();
+      ;
+      return new ContinuousLogEntryMatcher(initialMatcher,continuousMatcher);
+    }
+  }
+);
+}

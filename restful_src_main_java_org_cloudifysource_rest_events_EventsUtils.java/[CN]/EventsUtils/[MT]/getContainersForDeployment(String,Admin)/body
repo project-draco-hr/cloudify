@@ -1,0 +1,14 @@
+{
+  Set<ProcessingUnit> processingUnitsForDeploymentId=new HashSet<ProcessingUnit>();
+  Set<GridServiceContainer> containers=new HashSet<GridServiceContainer>();
+  for (  ProcessingUnit pu : admin.getProcessingUnits()) {
+    String puDeploymentId=(String)pu.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+    if (deploymentId.equals(puDeploymentId)) {
+      processingUnitsForDeploymentId.add(pu);
+    }
+  }
+  for (  ProcessingUnit pu : processingUnitsForDeploymentId) {
+    containers.addAll(getContainersForProcessingUnit(pu));
+  }
+  return containers;
+}

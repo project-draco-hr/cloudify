@@ -1,0 +1,5 @@
+{
+  if (!eventsLoadingCache.asMap().containsKey(key)) {
+    eventsLoadingCache.asMap().put(key,value);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  EventsCacheValue eventsCacheValue=eventsLoadingCache.asMap().get(key);
+  DeploymentEvents events=eventsCacheValue.getEvents();
+  event.setIndex(eventsCacheValue.getLastEventIndex() + 1);
+  events.getEvents().add(event);
+}

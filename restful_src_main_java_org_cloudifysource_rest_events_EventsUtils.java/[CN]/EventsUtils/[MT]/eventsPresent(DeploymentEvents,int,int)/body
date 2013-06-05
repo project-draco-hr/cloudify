@@ -1,0 +1,9 @@
+{
+  for (int i=from; i <= to; i++) {
+    DeploymentEvent event=retrieveEventWithIndex(i,events.getEvents());
+    if (event == null) {
+      return false;
+    }
+  }
+  return true;
+}

@@ -1,0 +1,14 @@
+{
+  final EventsCacheLoader loader=new EventsCacheLoader(admin);
+  this.matcherProvider=loader.getMatcherProvider();
+  this.eventsLoadingCache=CacheBuilder.newBuilder().expireAfterAccess(CACHE_EXPIRATION_MINUTES,TimeUnit.MINUTES).removalListener(new RemovalListener<Object,Object>(){
+    @Override public void onRemoval(    final RemovalNotification<Object,Object> notification){
+      if (notification.wasEvicted()) {
+        logger.fine("Entry with key " + notification.getKey() + " was removed from cache.");
+        final EventsCacheKey key=(EventsCacheKey)notification.getKey();
+        matcherProvider.removeAll(key);
+      }
+    }
+  }
+).build(loader);
+}

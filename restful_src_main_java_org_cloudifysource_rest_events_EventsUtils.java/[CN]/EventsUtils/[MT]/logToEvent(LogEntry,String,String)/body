@@ -1,0 +1,8 @@
+{
+  String text=logEntry.getText();
+  String textWithoutLogger=text.split(" - ")[1];
+  String actualEvent=textWithoutLogger.substring(textWithoutLogger.indexOf(".") + 1);
+  DeploymentEvent event=new DeploymentEvent();
+  event.setDescription("[" + hostName + "/"+ hostAddress+ "] - "+ actualEvent);
+  return event;
+}

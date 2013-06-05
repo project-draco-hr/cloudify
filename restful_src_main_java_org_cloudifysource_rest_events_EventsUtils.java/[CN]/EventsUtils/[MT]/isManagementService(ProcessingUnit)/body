@@ -1,0 +1,4 @@
+{
+  final String applicationName=(String)pu.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME);
+  return CloudifyConstants.MANAGEMENT_APPLICATION_NAME.equals(applicationName);
+}

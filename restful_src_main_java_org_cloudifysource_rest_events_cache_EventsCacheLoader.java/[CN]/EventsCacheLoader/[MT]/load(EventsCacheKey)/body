@@ -1,0 +1,25 @@
+{
+  logger.fine(EventsUtils.getThreadId() + "Could not find events for key " + key+ " in cache. Loading from container logs...");
+  DeploymentEvents events=new DeploymentEvents();
+  Set<GridServiceContainer> containersForDeployment=EventsUtils.getContainersForDeployment(key.getOperationId(),admin);
+  if (containersForDeployment == null) {
+    throw new ResourceNotFoundException("Deployment with id " + key.getOperationId());
+  }
+  int index=0;
+  for (  GridServiceContainer container : containersForDeployment) {
+    LogEntryMatcherProviderKey logEntryMatcherProviderKey=createKey(container,key);
+    LogEntries logEntries=container.logEntries(matcherProvider.get(logEntryMatcherProviderKey));
+    for (    LogEntry logEntry : logEntries) {
+      if (logEntry.isLog()) {
+        DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
+        event.setIndex(index++);
+        events.getEvents().add(event);
+      }
+    }
+  }
+  EventsCacheValue value=new EventsCacheValue();
+  value.setLastEventIndex(index);
+  value.setEvents(events);
+  value.setLastRefreshedTimestamp(System.currentTimeMillis());
+  return value;
+}

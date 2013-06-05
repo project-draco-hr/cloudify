@@ -1,0 +1,8 @@
+{
+  System.out.println(EventsUtils.getThreadId() + "Removing matcher for key " + key);
+  for (  LogEntryMatcherProviderKey logMatcherKey : new HashSet<LogEntryMatcherProviderKey>(matcherCache.asMap().keySet())) {
+    if (logMatcherKey.getDeploymentId().equals(key.getOperationId())) {
+      matcherCache.asMap().remove(logMatcherKey);
+    }
+  }
+}

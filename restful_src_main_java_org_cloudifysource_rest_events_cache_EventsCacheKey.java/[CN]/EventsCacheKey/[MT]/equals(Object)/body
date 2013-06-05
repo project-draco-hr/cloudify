@@ -1,0 +1,13 @@
+{
+  if (this == o) {
+    return true;
+  }
+  if (o == null || getClass() != o.getClass()) {
+    return false;
+  }
+  EventsCacheKey that=(EventsCacheKey)o;
+  if (!operationId.equals(that.operationId)) {
+    return false;
+  }
+  return true;
+}

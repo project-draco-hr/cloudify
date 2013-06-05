@@ -1,0 +1,16 @@
+{
+  if (this == o) {
+    return true;
+  }
+  if (o == null || getClass() != o.getClass()) {
+    return false;
+  }
+  LogEntryMatcherProviderKey that=(LogEntryMatcherProviderKey)o;
+  if (!container.getUid().equals(that.container.getUid())) {
+    return false;
+  }
+  if (!deploymentId.equals(that.deploymentId)) {
+    return false;
+  }
+  return true;
+}

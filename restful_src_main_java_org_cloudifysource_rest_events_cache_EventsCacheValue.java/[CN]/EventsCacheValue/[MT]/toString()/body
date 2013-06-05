@@ -1,0 +1,3 @@
+{
+  return "EventsCacheValue{" + "events=" + events + ", lastRefreshedTimestamp="+ lastRefreshedTimestamp+ ", lastEventIndex="+ lastEventIndex+ ", mutex="+ mutex+ '}';
+}

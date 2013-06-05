@@ -1,0 +1,3 @@
+{
+  return "LogEntryMatcherProviderKey{" + "container=" + container + ", deploymentId='"+ deploymentId+ '\''+ '}';
+}
