@@ -1,6 +1,7 @@
 {
   Object model=filterModel(modelAndView.getModel());
   modelAndView.clear();
+  response.setContentType(MediaType.APPLICATION_JSON);
   if (model instanceof Response<?>) {
     String responseBodyStr=new ObjectMapper().writeValueAsString(model);
     response.getOutputStream().write(responseBodyStr.getBytes());

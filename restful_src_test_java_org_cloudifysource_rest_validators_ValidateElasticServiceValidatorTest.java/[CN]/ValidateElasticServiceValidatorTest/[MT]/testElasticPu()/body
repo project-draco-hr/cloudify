@@ -1,0 +1,15 @@
+{
+  ValidateElasticServiceValidator fixture=new ValidateElasticServiceValidator();
+  SetServiceInstancesValidationContext validationContext=new SetServiceInstancesValidationContext();
+  validationContext.setApplicationName("default");
+  validationContext.setServiceName("simple");
+  validationContext.setCloud(null);
+  ProcessingUnit mockedPu=Mockito.mock(ProcessingUnit.class);
+  BeanLevelProperties mockedBlp=Mockito.mock(BeanLevelProperties.class);
+  Properties props=new Properties();
+  props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,"true");
+  Mockito.when(mockedBlp.getContextProperties()).thenReturn(props);
+  Mockito.when(mockedPu.getBeanLevelProperties()).thenReturn(mockedBlp);
+  validationContext.setProcessingUnit(mockedPu);
+  fixture.validate(validationContext);
+}
