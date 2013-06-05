@@ -1,0 +1,8 @@
+{
+  final String url=versionedDeploymentControllerUrl + applicationName + "/services/"+ serviceName;
+  final Map<String,String> requestParams=new HashMap<String,String>();
+  requestParams.put(CloudifyConstants.REQ_PARAM_TIMEOUT_IN_MINUTES,String.valueOf(timeoutInMinutes));
+  return executor.delete(url,requestParams,new TypeReference<Response<UninstallServiceResponse>>(){
+  }
+);
+}

@@ -1,0 +1,9 @@
+{
+  if (request == null) {
+    throw new IllegalArgumentException("request may not be null");
+  }
+  final String setInstancesUrl=getFormattedUrl(SET_INSTANCES_URL_FORMAT,applicationName,serviceName);
+  executor.postObject(setInstancesUrl,request,new TypeReference<Response<Void>>(){
+  }
+);
+}

@@ -1,0 +1,3 @@
+String relativeUrl
+Map<String,String> params
+TypeReference<Response<T>> responseTypeReference

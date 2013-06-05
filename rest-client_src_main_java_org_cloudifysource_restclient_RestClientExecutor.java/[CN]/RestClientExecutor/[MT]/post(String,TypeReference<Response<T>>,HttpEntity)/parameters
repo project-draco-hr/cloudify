@@ -1,0 +1,3 @@
+String relativeUrl
+TypeReference<Response<T>> responseTypeReference
+HttpEntity entity

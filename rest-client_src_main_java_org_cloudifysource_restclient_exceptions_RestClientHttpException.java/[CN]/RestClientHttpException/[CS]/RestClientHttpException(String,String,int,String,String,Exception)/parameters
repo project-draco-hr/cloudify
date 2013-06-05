@@ -1,0 +1,6 @@
+String messageCode
+String messageFormattedText
+int statusCode
+String reasonPhrase
+String responseBody
+Exception exception

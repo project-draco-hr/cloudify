@@ -1,0 +1,4 @@
+String relativeUrl
+File fileToPost
+String partName
+TypeReference<Response<T>> responseTypeReference

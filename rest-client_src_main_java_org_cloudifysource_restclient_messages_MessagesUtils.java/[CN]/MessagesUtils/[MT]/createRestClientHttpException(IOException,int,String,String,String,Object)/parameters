@@ -1,0 +1,6 @@
+IOException exception
+int statusCode
+String reasonPhrase
+String responseBody
+String messageCode
+Object arguments

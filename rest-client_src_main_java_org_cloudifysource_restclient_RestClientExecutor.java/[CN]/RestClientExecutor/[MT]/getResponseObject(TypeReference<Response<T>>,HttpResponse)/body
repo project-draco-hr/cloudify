@@ -1,0 +1,12 @@
+{
+  final String responseBody=getResponseBody(httpResponse);
+  Response<T> response;
+  try {
+    response=new ObjectMapper().readValue(responseBody,typeReference);
+    return response.getResponse();
+  }
+ catch (  IOException e) {
+    StatusLine statusLine=httpResponse.getStatusLine();
+    throw MessagesUtils.createRestClientHttpException(e,statusLine.getStatusCode(),statusLine.getReasonPhrase(),responseBody,RestClientMessageKeys.HTTP_FAILURE.getName());
+  }
+}

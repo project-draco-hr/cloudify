@@ -1,0 +1,5 @@
+{
+  super(messageCode,messageFormattedText,statusCode,reasonPhrase,ExceptionUtils.getFullStackTrace(exception));
+  this.responseBody=responseBody;
+  this.exception=exception;
+}

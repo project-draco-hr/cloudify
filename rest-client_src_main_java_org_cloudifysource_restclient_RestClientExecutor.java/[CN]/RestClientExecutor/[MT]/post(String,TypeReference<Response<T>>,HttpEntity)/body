@@ -1,0 +1,8 @@
+{
+  final HttpPost postRequest=new HttpPost(getFullUrl(relativeUrl));
+  if (entity instanceof StringEntity) {
+    postRequest.setHeader(HttpHeaders.CONTENT_TYPE,"application/json");
+  }
+  postRequest.setEntity(entity);
+  return executeRequest(postRequest,responseTypeReference);
+}

@@ -1,0 +1,5 @@
+{
+  return executor.get(versionedDeploymentControllerUrl + "/" + appName+ "/service/"+ serviceName+ "/description",new TypeReference<Response<ServiceDescription>>(){
+  }
+);
+}

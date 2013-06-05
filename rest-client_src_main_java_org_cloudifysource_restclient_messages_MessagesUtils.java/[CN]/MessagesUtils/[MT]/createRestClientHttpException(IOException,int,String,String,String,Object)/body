@@ -1,0 +1,3 @@
+{
+  return new RestClientHttpException(messageCode,getFormattedMessage(messageCode,arguments),statusCode,reasonPhrase,responseBody,exception);
+}

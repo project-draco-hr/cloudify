@@ -1,0 +1,6 @@
+{
+  if (messageBundle == null) {
+    messageBundle=ResourceBundle.getBundle("MessagesBundle_RestClient",Locale.getDefault());
+  }
+  return messageBundle;
+}

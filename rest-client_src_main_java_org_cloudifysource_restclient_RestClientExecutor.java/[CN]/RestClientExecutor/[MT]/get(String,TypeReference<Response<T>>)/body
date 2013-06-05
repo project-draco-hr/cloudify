@@ -1,0 +1,5 @@
+{
+  String fullUrl=getFullUrl(relativeUrl);
+  final HttpGet getRequest=new HttpGet(fullUrl);
+  return executeRequest(getRequest,responseTypeReference);
+}

@@ -1,0 +1,6 @@
+{
+  final MultipartEntity multipartEntity=new MultipartEntity();
+  final FileBody fileBody=new FileBody(fileToPost);
+  multipartEntity.addPart(partName,fileBody);
+  return post(relativeUrl,responseTypeReference,multipartEntity);
+}

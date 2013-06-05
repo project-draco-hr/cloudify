@@ -1,0 +1,14 @@
+{
+  final String message=getMessageBundle().getString(messageCode);
+  if (message == null) {
+    logger.warning("Missing resource in messages resource bundle: " + messageCode);
+    return messageCode;
+  }
+  try {
+    return MessageFormat.format(message,arguments);
+  }
+ catch (  final IllegalArgumentException e) {
+    logger.warning("Failed to format message: " + messageCode + " with format: "+ message+ " and arguments: "+ Arrays.toString(arguments));
+    return messageCode;
+  }
+}

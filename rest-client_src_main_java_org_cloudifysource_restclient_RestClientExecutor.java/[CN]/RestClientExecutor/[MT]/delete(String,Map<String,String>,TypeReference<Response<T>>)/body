@@ -1,0 +1,16 @@
+{
+  URIBuilder builder;
+  try {
+    builder=new URIBuilder(getFullUrl(relativeUrl));
+  }
+ catch (  URISyntaxException e) {
+    throw MessagesUtils.createRestClientException(RestClientMessageKeys.INVALID_URL.getName(),e,getFullUrl(relativeUrl));
+  }
+  if (params != null) {
+    for (    final Map.Entry<String,String> entry : params.entrySet()) {
+      builder.addParameter(entry.getKey(),entry.getValue());
+    }
+  }
+  final HttpDelete deleteRequest=new HttpDelete(builder.toString());
+  return executeRequest(deleteRequest,responseTypeReference);
+}

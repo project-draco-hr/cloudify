@@ -1,0 +1,2 @@
+String relativeUrl
+TypeReference<Response<T>> responseTypeReference

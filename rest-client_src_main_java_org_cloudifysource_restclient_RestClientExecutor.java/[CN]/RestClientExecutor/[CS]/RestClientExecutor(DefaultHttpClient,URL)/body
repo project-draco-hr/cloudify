@@ -1,0 +1,7 @@
+{
+  this.httpClient=httpClient;
+  this.urlStr=url.toExternalForm();
+  if (!this.urlStr.endsWith(FORWARD_SLASH)) {
+    this.urlStr+=FORWARD_SLASH;
+  }
+}

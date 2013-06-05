@@ -1,0 +1,4 @@
+{
+  this.executor=createExecutor(url,apiVersion);
+  setCredentials(username,password);
+}

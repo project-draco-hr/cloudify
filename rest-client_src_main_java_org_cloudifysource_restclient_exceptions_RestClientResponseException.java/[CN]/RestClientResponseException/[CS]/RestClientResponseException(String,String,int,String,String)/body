@@ -1,0 +1,5 @@
+{
+  super(messageCode,messageFormattedText,verbose);
+  this.statusCode=statusCode;
+  this.reasonPhrase=reasonPhrase;
+}

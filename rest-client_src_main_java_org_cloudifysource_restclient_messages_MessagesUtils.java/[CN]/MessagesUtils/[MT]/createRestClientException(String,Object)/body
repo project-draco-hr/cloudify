@@ -1,0 +1,3 @@
+{
+  return new RestClientException(messageCode,getFormattedMessage(messageCode,arguments),null);
+}

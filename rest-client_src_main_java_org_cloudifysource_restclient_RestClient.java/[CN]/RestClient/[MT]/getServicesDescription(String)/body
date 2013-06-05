@@ -1,0 +1,5 @@
+{
+  return executor.get(versionedDeploymentControllerUrl + "/" + deploymentId+ "/description",new TypeReference<Response<List<ServiceDescription>>>(){
+  }
+);
+}

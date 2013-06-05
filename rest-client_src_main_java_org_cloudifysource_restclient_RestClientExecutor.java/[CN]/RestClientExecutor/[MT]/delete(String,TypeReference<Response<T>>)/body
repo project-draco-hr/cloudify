@@ -1,0 +1,4 @@
+{
+  final HttpDelete deleteRequest=new HttpDelete(getFullUrl(relativeUrl));
+  return executeRequest(deleteRequest,responseTypeReference);
+}

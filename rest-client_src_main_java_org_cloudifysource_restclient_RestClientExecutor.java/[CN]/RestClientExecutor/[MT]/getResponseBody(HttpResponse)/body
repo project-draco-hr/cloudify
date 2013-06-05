@@ -1,0 +1,24 @@
+{
+  InputStream instream=null;
+  try {
+    final HttpEntity entity=response.getEntity();
+    if (entity == null) {
+      return null;
+    }
+    instream=entity.getContent();
+    return StringUtils.getStringFromStream(instream);
+  }
+ catch (  IOException e) {
+    throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.READ_RESPONSE_BODY_FAILURE.getName(),e);
+  }
+ finally {
+    if (instream != null) {
+      try {
+        instream.close();
+      }
+ catch (      IOException e) {
+        logger.warning(e.getMessage());
+      }
+    }
+  }
+}

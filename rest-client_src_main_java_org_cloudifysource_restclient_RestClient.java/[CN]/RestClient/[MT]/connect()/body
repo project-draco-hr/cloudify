@@ -1,0 +1,5 @@
+{
+  executor.get(versionedDeploymentControllerUrl + "testrest",new TypeReference<Response<Void>>(){
+  }
+);
+}

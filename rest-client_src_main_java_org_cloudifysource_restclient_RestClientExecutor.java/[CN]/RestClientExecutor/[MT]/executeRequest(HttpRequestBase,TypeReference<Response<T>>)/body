@@ -1,0 +1,29 @@
+{
+  HttpResponse httpResponse=null;
+  try {
+    IOException lastException=null;
+    int numOfTrials=DEFAULT_TRIALS_NUM;
+    if (HttpGet.METHOD_NAME.equals(request.getMethod())) {
+      numOfTrials=GET_TRIALS_NUM;
+    }
+    for (int i=0; i < numOfTrials; i++) {
+      try {
+        httpResponse=httpClient.execute(request);
+        lastException=null;
+        break;
+      }
+ catch (      IOException e) {
+        logger.finer("Execute get request to " + request.getURI() + ". try number "+ (i + 1)+ " out of "+ GET_TRIALS_NUM+ ", error is "+ e.getMessage());
+        lastException=e;
+      }
+    }
+    if (lastException != null) {
+      throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.EXECUTION_FAILURE.getName(),lastException,request.getURI());
+    }
+    checkForError(httpResponse);
+    return getResponseObject(responseTypeReference,httpResponse);
+  }
+  finally {
+    request.abort();
+  }
+}

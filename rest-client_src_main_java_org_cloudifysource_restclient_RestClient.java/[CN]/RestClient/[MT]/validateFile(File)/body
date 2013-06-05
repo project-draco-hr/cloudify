@@ -1,0 +1,16 @@
+{
+  if (file == null) {
+    throw MessagesUtils.createRestClientException(RestClientMessageKeys.UPLOAD_FILE_MISSING.getName());
+  }
+  final String absolutePath=file.getAbsolutePath();
+  if (!file.exists()) {
+    throw MessagesUtils.createRestClientException(RestClientMessageKeys.UPLOAD_FILE_DOESNT_EXIST.getName(),absolutePath);
+  }
+  if (!file.isFile()) {
+    throw MessagesUtils.createRestClientException(RestClientMessageKeys.UPLOAD_FILE_NOT_FILE.getName(),absolutePath);
+  }
+  final long length=file.length();
+  if (length > CloudifyConstants.DEFAULT_UPLOAD_SIZE_LIMIT_BYTES) {
+    throw MessagesUtils.createRestClientException(RestClientMessageKeys.UPLOAD_FILE_SIZE_LIMIT_EXCEEDED.getName(),absolutePath,length,CloudifyConstants.DEFAULT_UPLOAD_SIZE_LIMIT_BYTES);
+  }
+}

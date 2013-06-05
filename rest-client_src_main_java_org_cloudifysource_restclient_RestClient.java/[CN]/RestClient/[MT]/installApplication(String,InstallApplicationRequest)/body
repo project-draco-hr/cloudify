@@ -1,0 +1,6 @@
+{
+  final String installApplicationUrl=versionedDeploymentControllerUrl + applicationName;
+  return executor.postObject(installApplicationUrl,request,new TypeReference<Response<InstallApplicationResponse>>(){
+  }
+);
+}
