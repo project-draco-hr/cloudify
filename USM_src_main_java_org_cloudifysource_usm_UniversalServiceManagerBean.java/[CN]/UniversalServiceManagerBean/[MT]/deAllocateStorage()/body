@@ -1,8 +1,8 @@
 {
   Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
-  final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
   if (StringUtils.isNotBlank(storageTemplateName)) {
+    final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
     try {
       logger.info("De-Allocating static storage for service " + getUsmLifecycleBean().getConfiguration().getServiceContext());
       final ServiceVolume serviceVolume=getServiceVolumeFromSpace(getUsmLifecycleBean().getConfiguration().getServiceContext());
