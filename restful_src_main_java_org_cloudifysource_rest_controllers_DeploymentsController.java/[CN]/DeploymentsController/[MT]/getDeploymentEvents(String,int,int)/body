@@ -1,0 +1,29 @@
+{
+  int actualTo=to;
+  if (to == -1) {
+    actualTo=from + MAX_NUMBER_OF_EVENTS;
+  }
+  EventsCacheKey key=new EventsCacheKey(deploymentId);
+  logger.fine(EventsUtils.getThreadId() + " Received request for events [" + from+ "]-["+ to+ "] . key : "+ key);
+  EventsCacheValue value;
+  try {
+    logger.fine(EventsUtils.getThreadId() + " Retrieving events from cache for key : " + key);
+    value=eventsCache.get(key);
+  }
+ catch (  final ExecutionException e) {
+    throw e.getCause();
+  }
+synchronized (value.getMutex()) {
+    if (!EventsUtils.eventsPresent(value.getEvents(),from,actualTo)) {
+      long now=System.currentTimeMillis();
+      if (now - value.getLastRefreshedTimestamp() > REFRESH_INTERVAL_MILLIS) {
+        logger.fine(EventsUtils.getThreadId() + " Some events are missing from cache. Refreshing...");
+        eventsCache.refresh(key);
+      }
+    }
+ else {
+      logger.fine(EventsUtils.getThreadId() + " Found all relevant events in cache.");
+    }
+    return EventsUtils.extractDesiredEvents(value.getEvents(),from,actualTo);
+  }
+}

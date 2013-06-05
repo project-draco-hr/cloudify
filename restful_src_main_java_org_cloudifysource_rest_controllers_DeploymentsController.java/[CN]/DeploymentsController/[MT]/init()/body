@@ -1,0 +1,3 @@
+{
+  this.eventsCache=new EventsCache(restConfig.getAdmin());
+}
