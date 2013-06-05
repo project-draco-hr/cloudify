@@ -1,5 +1,5 @@
 {
-  File file=new File(TEST_FILE_PATH);
+  File file=new File(TEST_FILE1_PATH);
   UploadResponse uploadResponse=uploadFile(file);
   String uploadKey=uploadResponse.getUploadKey();
   Assert.assertNotNull(uploadKey);

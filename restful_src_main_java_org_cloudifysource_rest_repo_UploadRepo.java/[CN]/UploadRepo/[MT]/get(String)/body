@@ -1,16 +1,35 @@
 {
-  if (key == null || restUploadDir == null || !restUploadDir.exists()) {
+  if (key == null) {
+    logger.finer("failed to get uploaded file, key is null.");
     return null;
   }
-  final File[] files=restUploadDir.listFiles(new FilenameFilter(){
-    @Override public boolean accept(    final File dir,    final String name){
-      return name.equals(key);
+  if (restUploadDir == null) {
+    logger.finer("failed to get uploaded file, key is " + key + ", upload directory is null.");
+    return null;
+  }
+  if (!restUploadDir.exists()) {
+    logger.finer("failed to get uploaded file. key is " + key + ", upload directory ["+ restUploadDir.getAbsolutePath()+ "] does not exist.");
+    return null;
+  }
+  logger.finer("Trying to get the uploaded file stored in a directory named - " + key + " (under "+ restUploadDir.getAbsolutePath()+ ").");
+  final File dir=new File(restUploadDir,key);
+  if (dir.exists()) {
+    if (!dir.isDirectory()) {
+      logger.finer("The file found is not a directory [" + dir.getAbsolutePath() + "].");
+      return null;
+    }
+    File[] listFiles=dir.listFiles();
+    if (listFiles.length > 0) {
+      File uploadedFile=listFiles[0];
+      logger.finer("Returning the found uploaded file [" + uploadedFile.getAbsolutePath() + "].");
+      return uploadedFile;
+    }
+ else {
+      logger.finer("The directory [" + dir.getAbsolutePath() + "] does not contain an uploaded file.");
     }
   }
-);
-  if (files != null && files.length > 0) {
-    final File dir=files[0];
-    return dir.listFiles()[0];
+ else {
+    logger.finer("No directory with name " + key + " was found at "+ restUploadDir.getAbsolutePath());
   }
   return null;
 }

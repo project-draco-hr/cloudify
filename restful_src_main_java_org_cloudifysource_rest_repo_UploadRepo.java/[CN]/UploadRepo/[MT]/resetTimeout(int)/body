@@ -1,4 +1,5 @@
 {
-  this.setCleanupTimeoutSeconds(cleanupTimeoutSeconds);
+  logger.finer("reset timeout to " + cleanupTimeoutMillis + " milliseconds.");
+  this.setCleanupTimeoutMillis(cleanupTimeoutMillis);
   reset();
 }

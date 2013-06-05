@@ -1,0 +1,9 @@
+{
+  File file=new File("notExist.zip");
+  try {
+    uploadFile(file);
+    Assert.fail();
+  }
+ catch (  FileNotFoundException e) {
+  }
+}

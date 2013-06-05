@@ -1,6 +1,6 @@
 {
-  repo.resetTimeout(CLEANUP_TIMEOUT_SECONDS);
-  File file=new File(TEST_FILE_PATH);
+  repo.resetTimeout(CLEANUP_TIMEOUT_MILLIS);
+  File file=new File(ZIP_FILE_PATH);
   String dirName=null;
   try {
     dirName=putTest(file);
@@ -9,8 +9,8 @@
     fail(e.getMessage());
   }
   File uploadedFile=repo.get(dirName);
-  assertUploadedFile(new File(TXT_EXTENSION_TEST_FILE_PATH),uploadedFile);
-  Thread.sleep(repo.getCleanupTimeoutSeconds() * 2000);
+  assertUploadedFile(uploadedFile);
+  Thread.sleep(repo.getCleanupTimeoutMillis() * 3);
   final File restUploadDir=repo.getRestUploadDir();
   Assert.assertNotNull(restUploadDir);
   Assert.assertTrue(restUploadDir.isDirectory());

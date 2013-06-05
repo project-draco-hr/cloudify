@@ -1,0 +1,17 @@
+{
+  Assert.assertNotNull(uploadedFile);
+  Assert.assertTrue(uploadedFile.isFile());
+  File unzippedFile=uploadedFile;
+  String name=uploadedFile.getName();
+  if (name.endsWith("zip")) {
+    File tempDir=new File(new File(CloudifyConstants.TEMP_FOLDER),"tempDir");
+    tempDir.mkdirs();
+    tempDir.deleteOnExit();
+    ZipUtils.unzip(uploadedFile,tempDir);
+    unzippedFile=new File(tempDir,TEST_FILE_NAME);
+    Assert.assertTrue(unzippedFile.exists());
+    unzippedFile.deleteOnExit();
+  }
+  Assert.assertEquals(TEST_FILE_NAME,unzippedFile.getName());
+  FileUtils.contentEquals(new File(TXT_FILE_PATH),unzippedFile);
+}

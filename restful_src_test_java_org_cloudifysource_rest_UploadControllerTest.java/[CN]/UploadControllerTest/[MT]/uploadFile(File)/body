@@ -1,7 +1,9 @@
 {
-  MockHttpServletResponse response=testPostFile(UPLOAD_URI,file);
-  Map<String,Object> responseMap=GSRestClient.jsonToMap(response.getContentAsString());
-  String uploadKey=(String)responseMap.get("uploadKey");
-  Assert.assertNotNull(uploadKey);
-  return uploadKey;
+  MockHttpServletResponse response=testPostFile(versionedUploadUri,file);
+  ObjectMapper objectMapper=new ObjectMapper();
+  Response<UploadResponse> readValue=objectMapper.readValue(response.getContentAsString(),new TypeReference<Response<UploadResponse>>(){
+  }
+);
+  UploadResponse uploadResponse=readValue.getResponse();
+  return uploadResponse;
 }

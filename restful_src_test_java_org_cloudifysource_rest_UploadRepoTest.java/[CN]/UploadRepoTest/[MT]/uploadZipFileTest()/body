@@ -1,0 +1,3 @@
+{
+  putAndGetTest(new File(ZIP_FILE_PATH));
+}
