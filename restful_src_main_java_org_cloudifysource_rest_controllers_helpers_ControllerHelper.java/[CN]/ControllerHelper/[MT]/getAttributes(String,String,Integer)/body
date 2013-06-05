@@ -1,0 +1,14 @@
+{
+  final AbstractCloudifyAttribute templateAttribute=createCloudifyAttribute(appName,serviceName,instanceId,null,null);
+  final AbstractCloudifyAttribute[] currAttributes=gigaSpace.readMultiple(templateAttribute);
+  Map<String,Object> attributes=new HashMap<String,Object>();
+  if (currAttributes == null) {
+    return attributes;
+  }
+  for (  AbstractCloudifyAttribute applicationCloudifyAttribute : currAttributes) {
+    if (applicationCloudifyAttribute.getValue() != null) {
+      attributes.put(applicationCloudifyAttribute.getKey(),applicationCloudifyAttribute.getValue().toString());
+    }
+  }
+  return attributes;
+}

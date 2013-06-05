@@ -1,0 +1,5 @@
+String appName
+String serviceName
+InstallServiceRequest request
+String deploymentID
+DeploymentFileHolder fileHolder

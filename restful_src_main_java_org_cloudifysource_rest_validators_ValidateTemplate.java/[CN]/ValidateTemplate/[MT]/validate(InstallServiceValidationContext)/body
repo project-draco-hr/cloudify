@@ -1,14 +1,5 @@
 {
   Cloud cloud=validationContext.getCloud();
-  if (cloud == null) {
-    return;
-  }
   String templateName=validationContext.getTemplateName();
-  if (templateName == null) {
-    throw new RestErrorException(CloudifyMessageKeys.VALIDATOR_TEMPLATE_NAME_MISSING.getName());
-  }
-  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
-  if (template == null) {
-    throw new RestErrorException(CloudifyMessageKeys.MISSING_TEMPLATE.getName(),templateName);
-  }
+  validateTemplate(templateName,cloud);
 }

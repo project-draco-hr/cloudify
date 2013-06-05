@@ -1,0 +1,7 @@
+{
+  Application application=admin.getApplications().getApplication(appName);
+  if (application == null) {
+    throw new ResourceNotFoundException(appName);
+  }
+  return application;
+}

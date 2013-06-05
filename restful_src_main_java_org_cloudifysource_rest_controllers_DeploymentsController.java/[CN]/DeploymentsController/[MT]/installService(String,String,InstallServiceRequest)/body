@@ -1,65 +1,15 @@
 {
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
-  final File packedFile=getFromRepo(request.getUploadKey(),"service packed file",absolutePuName);
-  final File serviceDir=extractServiceDir(packedFile,absolutePuName);
+  String uploadKey=request.getServiceFolderUploadKey();
+  if (StringUtils.isBlank(uploadKey)) {
+    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName(),absolutePuName);
+  }
+  final File packedFile=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
   final File serviceOverridesFile=getFromRepo(request.getServiceOverridesUploadKey(),CloudifyMessageKeys.WRONG_SERVICE_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
-  final File workingProjectDir=new File(serviceDir,"ext");
-  final File updatedPackedFile=updatePropertiesFile(request,serviceOverridesFile,serviceDir,absolutePuName,workingProjectDir,packedFile);
-  final Service service=readService(workingProjectDir,request.getServiceFileName(),absolutePuName);
-  final String templateName=getTempalteNameFromService(service);
-  final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
-  final byte[] cloudConfigurationContents=getCloudConfigurationContent(cloudConfigurationFile,absolutePuName);
-  final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
-  String effectiveAuthGroups=request.getAuthGroups();
-  if (StringUtils.isBlank(effectiveAuthGroups)) {
-    if (permissionEvaluator != null) {
-      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
-    }
- else {
-      effectiveAuthGroups="";
-    }
-  }
-  validateInstallService(absolutePuName,request,service,templateName,cloudOverridesFile,serviceOverridesFile,cloudConfigurationFile);
-  String cloudOverrides;
-  try {
-    cloudOverrides=FileUtils.readFileToString(cloudOverridesFile);
-  }
- catch (  IOException e) {
-    throw new RestErrorException("failed reading cloud overrides file.",e);
-  }
-  final DeploymentConfig deployConfig=new DeploymentConfig();
-  final UUID deploymentID=UUID.randomUUID();
-  deployConfig.setDeploymentId(deploymentID.toString());
-  deployConfig.setAbsolutePUName(absolutePuName);
-  deployConfig.setApplicationName(appName);
-  deployConfig.setCloud(restConfig.getCloud());
-  deployConfig.setCloudConfig(cloudConfigurationContents);
-  deployConfig.setCloudOverrides(cloudOverrides);
-  final String locators=extractLocators(restConfig.getAdmin());
-  deployConfig.setInstallRequest(request);
-  deployConfig.setLocators(locators);
-  deployConfig.setPackedFile(updatedPackedFile);
-  deployConfig.setService(service);
-  deployConfig.setTemplateName(templateName);
-  deployConfig.setAuthGroups(effectiveAuthGroups);
-  final ElasticDeploymentTopology deployment;
-  final ElasticProcessingUnitDeploymentFactory fac=new ElasticProcessingUnitDeploymentFactoryImpl();
-  try {
-    deployment=fac.create(deployConfig);
-  }
- catch (  ElasticDeploymentCreationException e) {
-    throw new RestErrorException("Failed creating deployment object.",e);
-  }
-  try {
-    deployAndWait(serviceName,deployment);
-  }
- catch (  final TimeoutException e) {
-    throw new RestErrorException("Timed out waiting for deployment.",e);
-  }
-  final InstallServiceResponse installServiceResponse=new InstallServiceResponse();
-  if (!request.isApplicationInstall()) {
-    startPollingForLifecycleEvents(deploymentID,service.getName(),appName,service.getNumInstances(),true,request.getTimeout(),request.getTimeUnit());
-  }
-  installServiceResponse.setDeploymentID(deploymentID.toString());
-  return installServiceResponse;
+  final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
+  fileHolder.setPackedFile(packedFile);
+  fileHolder.setServiceOverridesFile(serviceOverridesFile);
+  fileHolder.setApplicationPropertiesFile(null);
+  final String deploymentID=UUID.randomUUID().toString();
+  return installServiceInternal(appName,serviceName,request,deploymentID,fileHolder);
 }

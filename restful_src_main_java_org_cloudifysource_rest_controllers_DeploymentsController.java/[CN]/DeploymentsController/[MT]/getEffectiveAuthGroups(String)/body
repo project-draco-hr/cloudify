@@ -1,0 +1,12 @@
+{
+  String effectiveAuthGroups=authGroups;
+  if (StringUtils.isBlank(effectiveAuthGroups)) {
+    if (permissionEvaluator != null) {
+      effectiveAuthGroups=permissionEvaluator.getUserAuthGroupsString();
+    }
+ else {
+      effectiveAuthGroups="";
+    }
+  }
+  return effectiveAuthGroups;
+}

@@ -2,7 +2,16 @@
   StatefulProcessingUnit puConfig=deploymentConfig.getService().getStatefulProcessingUnit();
   final Sla statefulSla=puConfig.getSla();
   prepareSla(statefulSla);
-  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(deploymentConfig.getPackedFile());
+  final File packagedService=deploymentConfig.getPackedFile();
+  final String binaryFileName=deploymentConfig.getService().getStatelessProcessingUnit().getBinaries();
+  File binaryFile=null;
+  try {
+    binaryFile=getBinaryFromPackagedRecipe(packagedService,binaryFileName);
+  }
+ catch (  IOException e) {
+    throw new ElasticDeploymentCreationException("Failed to open packaged service file: " + e.getMessage(),e);
+  }
+  final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(binaryFile);
   addSharedDeploymentParameters(deployment);
   addProcessingUnitContextProperties(deployment,puConfig.getContextProperties());
   final int containerMemoryInMB=statefulSla.getMemoryCapacityPerContainer();

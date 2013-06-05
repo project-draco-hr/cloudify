@@ -1,0 +1,7 @@
+{
+  File resultFile=ZipUtils.unzipEntry(packagedService,"ext/" + binaryName,binaryName);
+  if (resultFile == null) {
+    throw new IllegalArgumentException("Missing file in packaged service: " + binaryName);
+  }
+  return resultFile;
+}

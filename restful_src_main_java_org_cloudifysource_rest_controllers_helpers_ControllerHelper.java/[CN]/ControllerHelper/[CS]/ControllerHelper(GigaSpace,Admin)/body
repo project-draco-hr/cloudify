@@ -1,0 +1,4 @@
+{
+  this.gigaSpace=gigaSpace;
+  this.admin=admin;
+}

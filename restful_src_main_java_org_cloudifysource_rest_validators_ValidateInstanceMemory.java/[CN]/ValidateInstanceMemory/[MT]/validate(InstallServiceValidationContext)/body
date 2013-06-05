@@ -18,6 +18,6 @@
   final int reservedMachineMemory=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
   final long instanceMemoryMB=IsolationUtils.getInstanceMemoryMB(service);
   if (instanceMemoryMB > machineTemplateMemory - reservedMachineMemory) {
-    throw new RestErrorException(CloudifyErrorMessages.INSUFFICIENT_MEMORY.getName(),service.getName(),instanceMemoryMB,machineTemplateMemory,reservedMachineMemory);
+    throw new RestErrorException(CloudifyMessageKeys.INSUFFICIENT_MEMORY.getName(),service.getName(),instanceMemoryMB,machineTemplateMemory,reservedMachineMemory);
   }
 }

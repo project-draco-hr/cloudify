@@ -1,12 +1,7 @@
 {
-  String absolutePuName=validationContext.getAbsolutePuName();
-  InstallServiceRequest request=validationContext.getRequest();
+  final InstallServiceRequest request=validationContext.getRequest();
   if (request == null) {
-    throw new RestErrorException(CloudifyMessageKeys.VALIDATOR_REQUEST_MISSING.getName(),absolutePuName);
-  }
-  String uploadKey=request.getUploadKey();
-  if (StringUtils.isBlank(uploadKey)) {
-    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName(),absolutePuName);
+    return;
   }
   boolean debugAll=request.isDebugAll();
   String debugEvents=request.getDebugEvents();

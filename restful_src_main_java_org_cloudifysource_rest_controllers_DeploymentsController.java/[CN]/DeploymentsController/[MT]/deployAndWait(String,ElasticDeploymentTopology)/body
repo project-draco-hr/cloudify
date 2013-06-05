@@ -2,15 +2,16 @@
   GridServiceManager gsm=getGridServiceManager();
   ProcessingUnit pu=null;
   if (deployment instanceof ElasticStatelessProcessingUnitDeployment) {
-    pu=gsm.deploy((ElasticStatelessProcessingUnitDeployment)deployment,60,TimeUnit.SECONDS);
+    pu=gsm.deploy((ElasticStatelessProcessingUnitDeployment)deployment,DEPLOYMENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
   }
  else   if (deployment instanceof ElasticStatefulProcessingUnitDeployment) {
-    pu=gsm.deploy((ElasticStatefulProcessingUnitDeployment)deployment,60,TimeUnit.SECONDS);
+    pu=gsm.deploy((ElasticStatefulProcessingUnitDeployment)deployment,DEPLOYMENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
   }
  else   if (deployment instanceof ElasticSpaceDeployment) {
-    pu=gsm.deploy((ElasticSpaceDeployment)deployment,60,TimeUnit.SECONDS);
+    pu=gsm.deploy((ElasticSpaceDeployment)deployment,DEPLOYMENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
   }
   if (pu == null) {
     throw new TimeoutException("Timed out waiting for Service " + serviceName + " deployment.");
   }
+  return pu;
 }

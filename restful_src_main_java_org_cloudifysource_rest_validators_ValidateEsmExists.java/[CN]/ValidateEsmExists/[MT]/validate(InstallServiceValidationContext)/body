@@ -2,6 +2,6 @@
   Admin admin=validationContext.getAdmin();
   final ElasticServiceManager esm=getESM(admin);
   if (esm == null) {
-    throw new IllegalStateException("Could not find an ESM in the cluster. Groups: " + Arrays.toString(admin.getGroups()));
+    throw new RestErrorException(CloudifyMessageKeys.ESM_MISSING.getName(),Arrays.toString(admin.getGroups()));
   }
 }

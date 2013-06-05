@@ -1,6 +1,0 @@
-InstallServiceRequest request
-File overridesFile
-File serviceDir
-String absolutePuName
-File workingProjectDir
-File srcFile

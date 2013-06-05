@@ -1,3 +1,4 @@
 {
   this.eventsCache=new EventsCache(restConfig.getAdmin());
+  this.controllerHelper=new ControllerHelper(gigaSpace,restConfig.getAdmin());
 }

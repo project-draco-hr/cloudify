@@ -49,8 +49,7 @@
       }
     }
  else {
-      final int containerMemoryInMB=128;
-      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create());
+      deployment.scale(new ManualCapacityScaleConfigurer().memoryCapacity(externalProcessMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create());
     }
   }
   return deployment;

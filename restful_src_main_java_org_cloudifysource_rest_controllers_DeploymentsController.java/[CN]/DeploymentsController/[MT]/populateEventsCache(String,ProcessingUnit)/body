@@ -1,0 +1,12 @@
+{
+  EventsCacheKey key=new EventsCacheKey(deploymentId);
+  EventsCacheValue value=eventsCache.getIfExists(key);
+  if (value == null) {
+    value=new EventsCacheValue();
+    value.getProcessingUnits().add(processingUnit);
+    eventsCache.put(key,value);
+  }
+ else {
+    value.getProcessingUnits().add(processingUnit);
+  }
+}

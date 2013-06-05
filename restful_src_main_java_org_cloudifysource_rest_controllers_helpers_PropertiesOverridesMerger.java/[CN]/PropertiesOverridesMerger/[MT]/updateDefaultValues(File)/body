@@ -1,0 +1,8 @@
+{
+  if (rePackFileName == null) {
+    rePackFileName=originPackedFile.getName();
+  }
+  if (rePackFolder == null) {
+    rePackFolder=new File(CloudifyConstants.REST_FOLDER + File.separator);
+  }
+}

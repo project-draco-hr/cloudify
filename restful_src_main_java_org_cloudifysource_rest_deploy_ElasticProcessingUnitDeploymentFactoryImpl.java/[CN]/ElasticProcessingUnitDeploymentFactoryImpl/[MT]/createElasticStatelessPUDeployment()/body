@@ -10,7 +10,16 @@
   final Sla statelessSla=puConfig.getSla();
   final int containerMemoryInMB=statelessSla.getMemoryCapacityPerContainer();
   prepareSla(statelessSla);
-  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(deploymentConfig.getPackedFile()).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES);
+  final File packagedService=deploymentConfig.getPackedFile();
+  final String binaryFileName=deploymentConfig.getService().getStatelessProcessingUnit().getBinaries();
+  File binaryFile=null;
+  try {
+    binaryFile=getBinaryFromPackagedRecipe(packagedService,binaryFileName);
+  }
+ catch (  IOException e) {
+    throw new ElasticDeploymentCreationException("Failed to open packaged service file: " + e.getMessage(),e);
+  }
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(binaryFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES);
   addSharedDeploymentParameters(deployment);
   addProcessingUnitContextProperties(deployment,puConfig.getContextProperties());
   setSpringProfilesActive(deployment,puConfig.getSpringProfilesActive());

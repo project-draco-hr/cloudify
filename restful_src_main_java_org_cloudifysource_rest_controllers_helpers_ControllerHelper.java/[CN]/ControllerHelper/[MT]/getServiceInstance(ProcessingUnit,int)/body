@@ -1,0 +1,13 @@
+{
+  ProcessingUnitInstance pui=null;
+  for (  ProcessingUnitInstance processingUnitInstance : processingUnit.getInstances()) {
+    if (processingUnitInstance.getInstanceId() == instanceId) {
+      pui=processingUnitInstance;
+      break;
+    }
+  }
+  if (pui == null) {
+    throw new ResourceNotFoundException(processingUnit.getName() + "[" + instanceId+ "]");
+  }
+  return pui;
+}

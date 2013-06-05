@@ -1,0 +1,65 @@
+{
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
+  final File serviceDir=extractServiceDir(fileHolder.getPackedFile(),absolutePuName);
+  final File workingProjectDir=new File(serviceDir,"ext");
+  final File servicePropertiesFile=extractServicePropertiesFile(workingProjectDir);
+  PropertiesOverridesMerger merger=new PropertiesOverridesMerger();
+  merger.setRePackFileName(absolutePuName);
+  merger.setRePackFolder(serviceDir);
+  merger.setDestMergeFile(servicePropertiesFile);
+  merger.setApplicationPropertiesFile(fileHolder.getApplicationPropertiesFile());
+  merger.setServicePropertiesFile(servicePropertiesFile);
+  merger.setOverridesFile(fileHolder.getServiceOverridesFile());
+  merger.setOriginPackedFile(fileHolder.getPackedFile());
+  File updatedPackedFile=merger.merge();
+  final Service service=readService(workingProjectDir,request.getServiceFileName(),absolutePuName);
+  final String templateName=getTempalteNameFromService(service);
+  final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
+  final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
+  final byte[] cloudConfigurationContents=getCloudConfigurationContent(cloudConfigurationFile,absolutePuName);
+  String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
+  request.setAuthGroups(effectiveAuthGroups);
+  validateInstallService(absolutePuName,request,service,templateName,cloudOverridesFile,fileHolder.getServiceOverridesFile(),cloudConfigurationFile);
+  String cloudOverrides=null;
+  try {
+    if (cloudOverridesFile != null) {
+      cloudOverrides=FileUtils.readFileToString(cloudOverridesFile);
+    }
+  }
+ catch (  IOException e) {
+    throw new RestErrorException("Failed reading cloud overrides file.",e);
+  }
+  final DeploymentConfig deployConfig=new DeploymentConfig();
+  final String locators=extractLocators(restConfig.getAdmin());
+  final Cloud cloud=restConfig.getCloud();
+  deployConfig.setCloudConfig(cloudConfigurationContents);
+  deployConfig.setDeploymentId(deploymentID);
+  deployConfig.setAuthGroups(effectiveAuthGroups);
+  deployConfig.setAbsolutePUName(absolutePuName);
+  deployConfig.setCloudOverrides(cloudOverrides);
+  deployConfig.setCloud(cloud);
+  deployConfig.setPackedFile(updatedPackedFile);
+  deployConfig.setTemplateName(templateName);
+  deployConfig.setApplicationName(appName);
+  deployConfig.setInstallRequest(request);
+  deployConfig.setLocators(locators);
+  deployConfig.setService(service);
+  final ElasticProcessingUnitDeploymentFactory fac=new ElasticProcessingUnitDeploymentFactoryImpl(this.restConfig);
+  final ElasticDeploymentTopology deployment;
+  try {
+    deployment=fac.create(deployConfig);
+  }
+ catch (  ElasticDeploymentCreationException e) {
+    throw new RestErrorException("Failed creating deployment object.",e);
+  }
+  try {
+    ProcessingUnit processingUnit=deployAndWait(serviceName,deployment);
+    populateEventsCache(deploymentID,processingUnit);
+  }
+ catch (  final TimeoutException e) {
+    throw new RestErrorException("Timed out waiting for deployment.",e);
+  }
+  final InstallServiceResponse installServiceResponse=new InstallServiceResponse();
+  installServiceResponse.setDeploymentID(deploymentID);
+  return installServiceResponse;
+}

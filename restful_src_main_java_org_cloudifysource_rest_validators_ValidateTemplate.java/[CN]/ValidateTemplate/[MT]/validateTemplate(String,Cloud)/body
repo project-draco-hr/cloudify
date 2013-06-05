@@ -1,0 +1,9 @@
+{
+  if (cloud == null || templateName == null) {
+    return;
+  }
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(templateName);
+  if (template == null) {
+    throw new RestErrorException(CloudifyMessageKeys.MISSING_TEMPLATE.getName(),templateName);
+  }
+}
