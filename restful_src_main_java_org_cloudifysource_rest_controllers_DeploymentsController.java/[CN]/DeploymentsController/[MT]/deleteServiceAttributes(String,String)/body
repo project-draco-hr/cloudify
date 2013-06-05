@@ -1,0 +1,5 @@
+{
+  deleteServiceInstanceAttributes(applicationName,serviceName,null);
+  final ServiceCloudifyAttribute serviceAttributeTemplate=new ServiceCloudifyAttribute(applicationName,serviceName,null,null);
+  gigaSpace.takeMultiple(serviceAttributeTemplate);
+}

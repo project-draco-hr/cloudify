@@ -1,0 +1,7 @@
+{
+  final UninstallServiceValidationContext validationContext=new UninstallServiceValidationContext();
+  validationContext.setCloud(restConfig.getCloud());
+  for (  final UninstallServiceValidator validator : uninstallServiceValidators) {
+    validator.validate(validationContext);
+  }
+}

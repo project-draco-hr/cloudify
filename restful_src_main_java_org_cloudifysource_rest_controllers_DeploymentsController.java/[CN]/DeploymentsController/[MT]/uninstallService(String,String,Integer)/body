@@ -1,0 +1,27 @@
+{
+  final ProcessingUnit processingUnit=controllerHelper.getService(appName,serviceName);
+  final String deploymentId=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+  if (permissionEvaluator != null) {
+    final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+  }
+  validateUninstallService();
+  populateEventsCache(deploymentId,processingUnit);
+  final FutureTask<Boolean> undeployTask=new FutureTask<Boolean>(new Callable<Boolean>(){
+    @Override public Boolean call() throws Exception {
+      boolean result=processingUnit.undeployAndWait(timeoutInMinutes,TimeUnit.MINUTES);
+      deleteServiceAttributes(appName,serviceName);
+      DeploymentEvent undeployFinishedEvent=new DeploymentEvent();
+      undeployFinishedEvent.setDescription(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT);
+      eventsCache.add(new EventsCacheKey(deploymentId),undeployFinishedEvent);
+      return result;
+    }
+  }
+);
+  serviceUndeployExecutor.execute(undeployTask);
+  final UninstallServiceResponse uninstallServiceResponse=new UninstallServiceResponse();
+  uninstallServiceResponse.setDeploymentID(deploymentId);
+  return uninstallServiceResponse;
+}
