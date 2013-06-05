@@ -9,8 +9,6 @@
   Assert.assertTrue("debug all context property not set",contextProperties.get("com.gs.service.debug.all").equals("true"));
   final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
   Assert.assertTrue("elastic isolation property should be set to true",elasticProperties.get("elastic-machine-isolation-public-id").equals("true"));
-  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
-  Assert.assertTrue("cpu capacity cores is expected to be equal to 0",scaleStrategy.getProperties().get("memory-capacity-megabytes").equals("128"));
   ElasticMachineProvisioningConfig machineProvisioning=deploymentHolder.getMachineProvisioning();
   Assert.assertTrue("reserved capacity for machine should be 1024MB",machineProvisioning.getReservedCapacityPerMachine().toString().equals("256MB RAM"));
   Assert.assertTrue("min number of CPU cores should be 1",machineProvisioning.getMinimumNumberOfCpuCoresPerMachine() == 0.0);

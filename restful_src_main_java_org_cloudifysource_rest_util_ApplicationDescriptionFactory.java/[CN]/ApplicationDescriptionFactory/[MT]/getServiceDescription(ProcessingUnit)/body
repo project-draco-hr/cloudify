@@ -1,0 +1,19 @@
+{
+  int plannedNumberOfInstances, numberOfServiceInstances;
+  DeploymentState serviceState;
+  plannedNumberOfInstances=getPlannedNumberOfInstances(processingUnit);
+  numberOfServiceInstances=getNumberOfServiceInstances(processingUnit);
+  List<InstanceDescription> serviceInstancesDescription=getServiceInstacesDescription(processingUnit);
+  serviceState=getServiceState(processingUnit,serviceInstancesDescription,numberOfServiceInstances,plannedNumberOfInstances);
+  String absolutePuName=processingUnit.getName();
+  logger.log(Level.FINE,"Service \"" + absolutePuName + "\" is in state: "+ serviceState);
+  ServiceDescription serviceDescription=new ServiceDescription();
+  serviceDescription.setPlannedInstances(plannedNumberOfInstances);
+  serviceDescription.setInstanceCount(numberOfServiceInstances);
+  String applicationName=processingUnit.getName().split("\\.")[1];
+  serviceDescription.setApplicationName(applicationName);
+  serviceDescription.setServiceName(ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
+  serviceDescription.setInstancesDescription(serviceInstancesDescription);
+  serviceDescription.setServiceState(serviceState);
+  return serviceDescription;
+}

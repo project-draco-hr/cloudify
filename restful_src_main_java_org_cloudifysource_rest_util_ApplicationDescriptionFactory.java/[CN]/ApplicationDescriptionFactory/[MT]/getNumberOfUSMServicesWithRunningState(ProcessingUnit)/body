@@ -1,0 +1,11 @@
+{
+  int puInstanceCounter=0;
+  if (processingUnit != null) {
+    for (    ProcessingUnitInstance pui : processingUnit) {
+      if (isUsmStateOfPuiRunning(pui)) {
+        puInstanceCounter++;
+      }
+    }
+  }
+  return puInstanceCounter;
+}

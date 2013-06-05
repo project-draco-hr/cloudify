@@ -1,0 +1,9 @@
+{
+  if (processingUnit != null) {
+    if (processingUnit.getType() == ProcessingUnitType.UNIVERSAL) {
+      return getNumberOfUSMServicesWithRunningState(processingUnit);
+    }
+    return processingUnit.getInstances().length;
+  }
+  return 0;
+}

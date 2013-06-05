@@ -1,5 +1,5 @@
 {
-  final ProcessingUnitInstance serviceInstance=getServiceInstance(appName,serviceName,instanceId);
+  final ProcessingUnitInstance serviceInstance=controllerHelper.getServiceInstance(appName,serviceName,instanceId);
   final Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
   final ServiceInstanceMetricsData serviceInstanceMetricsData=new ServiceInstanceMetricsData(instanceId,metrics);
   final ServiceInstanceMetricsResponse simr=new ServiceInstanceMetricsResponse();

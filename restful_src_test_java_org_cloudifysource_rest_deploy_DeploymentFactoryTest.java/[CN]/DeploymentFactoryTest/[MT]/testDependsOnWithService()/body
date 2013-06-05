@@ -1,0 +1,8 @@
+{
+  final Service service=ServiceReader.readService(new File(USM_SERVICE_FILE));
+  DeploymentConfig deploymentConfig=createDeploymentConfig(false,service);
+  ElasticStatelessProcessingUnitDeployment deployment=(ElasticStatelessProcessingUnitDeployment)deploymentFactory.create(deploymentConfig);
+  ElasticStatelessProcessingUnitConfig deploymentHolder=deployment.create();
+  String dependsOn=deploymentHolder.getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON);
+  Assert.assertEquals("[]",dependsOn);
+}

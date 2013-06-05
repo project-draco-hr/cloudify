@@ -1,6 +1,6 @@
 {
   String appAuthGroups="";
-  ProcessingUnit pu=application.getProcessingUnits().iterator().next();
+  final ProcessingUnit pu=application.getProcessingUnits().iterator().next();
   if (pu != null) {
     appAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
   }

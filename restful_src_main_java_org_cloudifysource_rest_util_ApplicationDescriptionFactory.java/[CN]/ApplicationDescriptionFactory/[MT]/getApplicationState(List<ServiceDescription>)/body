@@ -2,9 +2,9 @@
   logger.log(Level.FINE,"Determining services deployment state");
   boolean servicesStillInstalling=false;
   boolean atLeastOneServiceFailed=false;
-  for (  ServiceDescription serviceDescription : serviceDescriptionList) {
+  for (  final ServiceDescription serviceDescription : serviceDescriptionList) {
     logger.log(Level.FINE,"checking status for service " + serviceDescription.getServiceName());
-    if (serviceDescription.getServiceState() == DeploymentState.INSTALLING || serviceDescriptionList.isEmpty()) {
+    if (serviceDescription.getServiceState() == DeploymentState.IN_PROGRESS || serviceDescriptionList.isEmpty()) {
       servicesStillInstalling=true;
     }
     if (serviceDescription.getServiceState() == DeploymentState.FAILED) {
@@ -12,7 +12,7 @@
     }
   }
   if (servicesStillInstalling) {
-    return DeploymentState.INSTALLING;
+    return DeploymentState.IN_PROGRESS;
   }
   if (atLeastOneServiceFailed) {
     return DeploymentState.FAILED;

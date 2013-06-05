@@ -1,0 +1,4 @@
+ProcessingUnit processingUnit
+List<InstanceDescription> serviceInstancesStatus
+int numberOfServiceInstances
+int plannedNumberOfInstances

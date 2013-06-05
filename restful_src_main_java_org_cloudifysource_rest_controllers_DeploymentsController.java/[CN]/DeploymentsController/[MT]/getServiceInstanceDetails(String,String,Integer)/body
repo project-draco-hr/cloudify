@@ -1,13 +1,13 @@
 {
-  final ProcessingUnitInstance pui=getServiceInstance(appName,serviceName,instanceId);
+  final ProcessingUnitInstance pui=controllerHelper.getServiceInstance(appName,serviceName,instanceId);
   final org.openspaces.pu.service.ServiceDetails usmDetails=pui.getServiceDetailsByServiceId("USM");
   final Map<String,Object> puiAttributes=usmDetails.getAttributes();
-  final String privateIp=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP);
-  final String publicIp=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP);
-  final String hardwareId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID);
-  final String machineId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID);
-  final String imageId=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_IMAGE_ID);
-  final String templateName=getServiceInstanceEnvVarible(pui,CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
+  final String privateIp=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP);
+  final String publicIp=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP);
+  final String hardwareId=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_CLOUD_HARDWARE_ID);
+  final String machineId=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID);
+  final String imageId=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_CLOUD_IMAGE_ID);
+  final String templateName=controllerHelper.getServiceInstanceEnvVariable(pui,CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME);
   final ServiceInstanceDetails sid=new ServiceInstanceDetails();
   sid.setApplicationName(appName);
   sid.setServiceName(serviceName);

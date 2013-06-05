@@ -1,17 +1,17 @@
 {
-  ProcessingUnitInstanceStatistics statistics=pui.getStatistics();
+  final ProcessingUnitInstanceStatistics statistics=pui.getStatistics();
   if (statistics == null) {
     return null;
   }
-  Map<String,ServiceMonitors> puMonitors=statistics.getMonitors();
+  final Map<String,ServiceMonitors> puMonitors=statistics.getMonitors();
   if (puMonitors == null) {
     return null;
   }
-  ServiceMonitors serviceMonitors=puMonitors.get("USM");
+  final ServiceMonitors serviceMonitors=puMonitors.get("USM");
   if (serviceMonitors == null) {
     return null;
   }
-  Map<String,Object> monitors=serviceMonitors.getMonitors();
+  final Map<String,Object> monitors=serviceMonitors.getMonitors();
   if (monitors == null) {
     return null;
   }

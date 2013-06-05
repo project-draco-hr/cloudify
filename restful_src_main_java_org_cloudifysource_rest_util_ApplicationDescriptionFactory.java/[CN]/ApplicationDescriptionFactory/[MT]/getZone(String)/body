@@ -1,0 +1,8 @@
+{
+  Zone zone=null;
+  Zones zones=admin.getZones();
+  if (zones != null) {
+    zone=zones.getByName(zoneName);
+  }
+  return zone;
+}

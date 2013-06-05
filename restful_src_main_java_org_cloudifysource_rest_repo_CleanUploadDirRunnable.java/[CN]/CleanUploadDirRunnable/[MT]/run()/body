@@ -1,0 +1,15 @@
+{
+  logger.finest("cleaning all the folders in upload directory that are in the system more than " + cleanupTimeoutMillis + " millis.");
+  if (restUploadDir != null) {
+    File[] listFiles=restUploadDir.listFiles();
+    for (    File file : listFiles) {
+      if (System.currentTimeMillis() - file.lastModified() >= cleanupTimeoutMillis) {
+        logger.finer("delete folder " + file.getName());
+        FileUtils.deleteQuietly(file);
+      }
+ else {
+        logger.finest("Folder " + file.getName() + " was not deleted (in the system for "+ (System.currentTimeMillis() - file.lastModified())+ "millis).");
+      }
+    }
+  }
+}

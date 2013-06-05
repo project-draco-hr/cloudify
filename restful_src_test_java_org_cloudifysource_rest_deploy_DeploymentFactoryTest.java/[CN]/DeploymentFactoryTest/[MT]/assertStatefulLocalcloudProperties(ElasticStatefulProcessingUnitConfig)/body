@@ -4,4 +4,6 @@
   Assert.assertTrue("schema should be set to partitioned-sync2backup",elasticProperties.get("schema").equals("partitioned-sync2backup"));
   final Map<String,String> contextProperties=deploymentHolder.getContextProperties();
   Assert.assertTrue("mirror-interval context property is ont set",contextProperties.get("cluster-config.mirror-service.interval-opers").equals("1000"));
+  final ScaleStrategyConfig scaleStrategy=deploymentHolder.getScaleStrategy();
+  Assert.assertTrue("cpu capacity cores is expected to be equal to 0",scaleStrategy.getProperties().get("memory-capacity-megabytes").equals("128"));
 }

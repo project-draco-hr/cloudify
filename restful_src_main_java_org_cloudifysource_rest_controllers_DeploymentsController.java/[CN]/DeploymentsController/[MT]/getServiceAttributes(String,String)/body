@@ -1,0 +1,10 @@
+{
+  controllerHelper.getService(appName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of service " + ServiceUtils.getAbsolutePUName(appName,serviceName) + " of application "+ appName);
+  }
+  final Map<String,Object> attributes=controllerHelper.getAttributes(appName,serviceName,null);
+  final GetServiceAttributesResponse sar=new GetServiceAttributesResponse();
+  sar.setAttributes(attributes);
+  return sar;
+}

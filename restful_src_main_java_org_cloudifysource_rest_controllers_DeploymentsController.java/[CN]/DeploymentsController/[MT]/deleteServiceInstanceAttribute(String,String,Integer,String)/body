@@ -1,9 +1,9 @@
 {
-  getService(appName,serviceName);
+  controllerHelper.getService(appName,serviceName);
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to delete attribute " + attributeName + " of instance Id "+ instanceId+ " of service "+ ServiceUtils.getAbsolutePUName(appName,serviceName)+ " of application "+ appName);
   }
-  final Object previous=deleteAttribute(appName,serviceName,instanceId,attributeName);
+  final Object previous=controllerHelper.deleteAttribute(appName,serviceName,instanceId,attributeName);
   final DeleteServiceInstanceAttributeResponse siar=new DeleteServiceInstanceAttributeResponse();
   siar.setPreviousValue(previous);
   return siar;

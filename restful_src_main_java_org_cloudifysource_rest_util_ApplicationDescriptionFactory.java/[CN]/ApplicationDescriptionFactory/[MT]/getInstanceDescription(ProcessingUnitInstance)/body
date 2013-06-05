@@ -1,10 +1,10 @@
 {
-  String instanceState=getInstanceState(processingUnitInstance);
-  int instanceId=processingUnitInstance.getInstanceId();
-  String instanceHostName=processingUnitInstance.getVirtualMachine().getMachine().getHostName();
-  String instanceHostAddress=processingUnitInstance.getVirtualMachine().getMachine().getHostAddress();
-  String instanceName=processingUnitInstance.getName();
-  InstanceDescription instanceDescription=new InstanceDescription();
+  final String instanceState=getInstanceState(processingUnitInstance);
+  final int instanceId=processingUnitInstance.getInstanceId();
+  final String instanceHostName=processingUnitInstance.getVirtualMachine().getMachine().getHostName();
+  final String instanceHostAddress=processingUnitInstance.getVirtualMachine().getMachine().getHostAddress();
+  final String instanceName=processingUnitInstance.getName();
+  final InstanceDescription instanceDescription=new InstanceDescription();
   instanceDescription.setInstanceStatus(instanceState);
   instanceDescription.setInstanceName(instanceName);
   instanceDescription.setInstanceId(instanceId);

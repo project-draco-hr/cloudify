@@ -1,7 +1,4 @@
 {
-  Application application=admin.getApplications().waitFor(applicationName,5,TimeUnit.SECONDS);
-  if (application == null) {
-    throw new RestErrorException(FAILED_TO_LOCATE_APP,applicationName);
-  }
+  final Application application=admin.getApplications().getApplication(applicationName);
   return getApplicationDescription(application);
 }

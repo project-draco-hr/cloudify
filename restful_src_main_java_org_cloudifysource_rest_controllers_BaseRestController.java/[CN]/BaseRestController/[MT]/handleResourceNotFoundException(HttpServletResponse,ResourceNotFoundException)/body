@@ -1,0 +1,13 @@
+{
+  String messageId=CloudifyMessageKeys.MISSING_RESOURCE.getName();
+  Object[] messageArgs=new Object[]{e.getResourceDescription()};
+  String formattedMessage=messageSource.getMessage(messageId,messageArgs,Locale.US);
+  Response<Void> finalResponse=new Response<Void>();
+  finalResponse.setStatus("Failed");
+  finalResponse.setMessage(formattedMessage);
+  finalResponse.setMessageId(messageId);
+  finalResponse.setResponse(null);
+  finalResponse.setVerbose(ExceptionUtils.getFullStackTrace(e));
+  String responseString=OBJECT_MAPPER.writeValueAsString(finalResponse);
+  response.getOutputStream().write(responseString.getBytes());
+}

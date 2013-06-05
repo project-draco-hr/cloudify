@@ -1,7 +1,7 @@
 {
-  getApplication(appName);
+  controllerHelper.getApplication(appName);
   if (attributesRequest == null || attributesRequest.getAttributes() == null) {
     throw new RestErrorException(CloudifyMessageKeys.EMPTY_REQUEST_BODY_ERROR.getName());
   }
-  setAttributes(appName,null,null,attributesRequest.getAttributes());
+  controllerHelper.setAttributes(appName,null,null,attributesRequest.getAttributes());
 }

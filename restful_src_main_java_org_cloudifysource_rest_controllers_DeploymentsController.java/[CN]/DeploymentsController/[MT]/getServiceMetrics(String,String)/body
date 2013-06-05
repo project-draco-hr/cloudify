@@ -1,6 +1,6 @@
 {
   final List<ServiceInstanceMetricsData> serviceInstanceMetricsDatas=new ArrayList<ServiceInstanceMetricsData>();
-  final ProcessingUnit service=getService(appName,serviceName);
+  final ProcessingUnit service=controllerHelper.getService(appName,serviceName);
   for (  final ProcessingUnitInstance serviceInstance : service.getInstances()) {
     final Map<String,Object> metrics=serviceInstance.getStatistics().getMonitors().get("USM").getMonitors();
     serviceInstanceMetricsDatas.add(new ServiceInstanceMetricsData(serviceInstance.getInstanceId(),metrics));

@@ -1,7 +1,0 @@
-{
-  Application application=admin.getApplications().waitFor(appName,timeout,TimeUnit.SECONDS);
-  if (application == null) {
-    throw new RestErrorException(CloudifyMessageKeys.APPLICATION_WAIT_TIMEOUT.getName(),appName,timeout,TimeUnit.SECONDS);
-  }
-  return application;
-}

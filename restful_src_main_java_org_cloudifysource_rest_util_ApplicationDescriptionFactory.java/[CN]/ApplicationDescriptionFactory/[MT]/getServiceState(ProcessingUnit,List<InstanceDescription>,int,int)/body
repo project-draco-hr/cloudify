@@ -1,0 +1,25 @@
+{
+  if (processingUnit == null || numberOfServiceInstances > plannedNumberOfInstances) {
+    return DeploymentState.IN_PROGRESS;
+  }
+  if (processingUnit.getType() == ProcessingUnitType.UNIVERSAL) {
+    for (    InstanceDescription instanceDescription : serviceInstancesStatus) {
+      String instanceState=instanceDescription.getInstanceStatus();
+      if (instanceState.equals(USMState.ERROR.toString())) {
+        return DeploymentState.FAILED;
+      }
+    }
+    if (numberOfServiceInstances < plannedNumberOfInstances) {
+      return DeploymentState.IN_PROGRESS;
+    }
+    return DeploymentState.STARTED;
+  }
+ else {
+    if (processingUnit.getStatus() != DeploymentStatus.INTACT) {
+      return DeploymentState.IN_PROGRESS;
+    }
+ else {
+      return DeploymentState.STARTED;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 {
-  getService(appName,serviceName);
+  controllerHelper.getService(appName,serviceName);
   if (request == null || request.getAttributes() == null) {
     throw new RestErrorException(CloudifyMessageKeys.EMPTY_REQUEST_BODY_ERROR.getName());
   }
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("received request to set attributes " + request.getAttributes().keySet() + " of service "+ ServiceUtils.getAbsolutePUName(appName,serviceName)+ " of application "+ appName+ " to: "+ request.getAttributes().values());
   }
-  setAttributes(appName,serviceName,null,request.getAttributes());
+  controllerHelper.setAttributes(appName,serviceName,null,request.getAttributes());
 }

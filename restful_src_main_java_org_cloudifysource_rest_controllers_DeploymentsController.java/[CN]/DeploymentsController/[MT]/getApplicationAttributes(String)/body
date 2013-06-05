@@ -1,0 +1,10 @@
+{
+  controllerHelper.getApplication(appName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to get all attributes of application " + appName);
+  }
+  final Map<String,Object> attributes=controllerHelper.getAttributes(appName,null,null);
+  final GetApplicationAttributesResponse aar=new GetApplicationAttributesResponse();
+  aar.setAttributes(attributes);
+  return aar;
+}
