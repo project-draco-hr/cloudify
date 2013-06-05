@@ -2,7 +2,7 @@
   final MockHttpServletRequest request=new MockHttpServletRequest();
   request.setRequestURI(requestUri);
   request.setMethod("POST");
-  request.setContentType("application/json");
+  request.setContentType(MediaType.APPLICATION_JSON);
   if (StringUtils.isNotBlank(contentAsJson)) {
     request.setContent(contentAsJson.getBytes());
   }

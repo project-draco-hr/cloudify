@@ -1,2 +1,2 @@
-MockHttpServletRequest reqeust
+MockHttpServletRequest request
 HandlerMethod expectedHandlerMethod

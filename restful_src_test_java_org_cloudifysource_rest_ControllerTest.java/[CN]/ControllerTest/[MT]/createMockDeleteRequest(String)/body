@@ -2,6 +2,6 @@
   final MockHttpServletRequest request=new MockHttpServletRequest();
   request.setRequestURI(requestUri);
   request.setMethod("DELETE");
-  request.setContentType("application/json");
+  request.setContentType(MediaType.APPLICATION_JSON);
   return request;
 }

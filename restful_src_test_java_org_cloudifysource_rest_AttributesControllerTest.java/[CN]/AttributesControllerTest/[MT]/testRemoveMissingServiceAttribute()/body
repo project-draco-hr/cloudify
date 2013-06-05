@@ -1,3 +1,0 @@
-{
-  testDelete(SINGLE_SERVICE_ATTRIBUTE_URI,convertToJson(new HashMap<Object,Object>()));
-}

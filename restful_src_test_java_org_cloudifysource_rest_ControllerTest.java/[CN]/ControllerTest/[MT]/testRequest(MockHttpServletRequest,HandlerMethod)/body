@@ -1,9 +1,17 @@
 {
   final MockHttpServletResponse response=new MockHttpServletResponse();
-  final Object handler=getHandlerToRequest(reqeust);
-  Assert.assertEquals("Wrong handler selected for request uri: " + reqeust.getRequestURI(),expectedHandlerMethod.toString(),handler.toString());
-  handlerAdapter.handle(reqeust,response,handler);
+  final HandlerExecutionChain handlerExecutionChain=getHandlerToRequest(request);
+  Object handler=handlerExecutionChain.getHandler();
+  Assert.assertEquals("Wrong handler selected for request uri: " + request.getRequestURI(),expectedHandlerMethod.toString(),handler.toString());
+  HandlerInterceptor[] interceptors=handlerExecutionChain.getInterceptors();
+  for (  HandlerInterceptor handlerInterceptor : interceptors) {
+    handlerInterceptor.preHandle(request,response,handler);
+  }
+  ModelAndView modelAndView=handlerAdapter.handle(request,response,handler);
+  for (  HandlerInterceptor handlerInterceptor : interceptors) {
+    handlerInterceptor.postHandle(request,response,handler,modelAndView);
+  }
   Assert.assertTrue("Wrong response status: " + response.getStatus(),response.getStatus() == HttpStatus.OK.value());
-  Assert.assertEquals("Wrong content type in response: " + response.getContentType(),JSON_CONTENT_TYPE,response.getContentType());
+  Assert.assertEquals("Wrong content type in response: " + response.getContentType(),MediaType.APPLICATION_JSON,response.getContentType());
   return response;
 }

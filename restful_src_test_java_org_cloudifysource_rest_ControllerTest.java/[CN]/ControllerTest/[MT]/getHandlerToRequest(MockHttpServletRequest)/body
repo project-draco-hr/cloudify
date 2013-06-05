@@ -10,5 +10,5 @@
   if (chain == null) {
     throw new InvalidParameterException("Unable to find handler for request URI: " + request.getRequestURI());
   }
-  return chain.getHandler();
+  return chain;
 }
