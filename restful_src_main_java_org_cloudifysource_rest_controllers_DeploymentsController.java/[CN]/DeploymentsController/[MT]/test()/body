@@ -1,0 +1,8 @@
+{
+  if (restConfig.getAdmin().getLookupServices().getSize() > 0) {
+    return;
+  }
+  final String groups=Arrays.toString(restConfig.getAdmin().getGroups());
+  final String locators=Arrays.toString(restConfig.getAdmin().getLocators());
+  throw new RestErrorException(FAILED_TO_LOCATE_LUS,groups,locators);
+}
