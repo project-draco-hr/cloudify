@@ -1,0 +1,28 @@
+{
+  final String applcationFileUploadKey=request.getApplcationFileUploadKey();
+  final File applicationFile=getFromRepo(applcationFileUploadKey,CloudifyMessageKeys.WRONG_APPLICTION_FILE_UPLOAD_KEY.getName(),appName);
+  final String applicationOverridesFileKey=request.getApplicationOverridesUploadKey();
+  final File applicationOverridesFile=getFromRepo(applicationOverridesFileKey,CloudifyMessageKeys.WRONG_APPLICTION_OVERRIDES_FILE_UPLOAD_KEY.getName(),appName);
+  DSLApplicationCompilatioResult result;
+  try {
+    result=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
+  }
+ catch (  final Exception e) {
+    throw new RestErrorException("Failed reading application file." + " Reason: " + e.getMessage(),e);
+  }
+  validateInstallApplication(result.getApplication());
+  String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
+  request.setAuthGroups(effectiveAuthGroups);
+  final List<Service> services=createServiceDependencyOrder(result.getApplication());
+  final String deploymentID=UUID.randomUUID().toString();
+  final ApplicationDeployerRunnable installer=new ApplicationDeployerRunnable(this,request,result,services,deploymentID,applicationOverridesFile);
+  if (installer.isAsyncInstallPossibleForApplication()) {
+    installer.run();
+  }
+ else {
+    restConfig.getExecutorService().execute(installer);
+  }
+  final InstallApplicationResponse response=new InstallApplicationResponse();
+  response.setDeploymentID(deploymentID);
+  return response;
+}

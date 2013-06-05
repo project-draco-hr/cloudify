@@ -1,6 +1,7 @@
 {
   logger.info("Initializing service controller cloud configuration");
   Cloud cloud=readCloud();
+  config.setAdmin(admin);
   if (cloud != null) {
     initCloudTemplates();
     CloudCompute cloudCompute=cloud.getCloudCompute();
@@ -13,7 +14,6 @@
     String managementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
     config.setManagementTemplateName(managementTemplateName);
     config.setManagementTemplate(cloudCompute.getTemplates().get(managementTemplateName));
-    config.setAdmin(admin);
     config.setCloud(cloud);
     config.setTemporaryFolderPath(CloudifyConstants.REST_FOLDER);
   }

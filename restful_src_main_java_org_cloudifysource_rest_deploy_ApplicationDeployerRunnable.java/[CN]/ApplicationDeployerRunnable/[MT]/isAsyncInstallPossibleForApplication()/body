@@ -1,0 +1,8 @@
+{
+  for (  final Service service : this.services) {
+    if (service.getLifecycle() == null) {
+      return false;
+    }
+  }
+  return true;
+}

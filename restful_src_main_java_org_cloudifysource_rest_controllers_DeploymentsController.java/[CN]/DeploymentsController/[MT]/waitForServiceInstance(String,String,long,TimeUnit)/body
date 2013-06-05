@@ -1,0 +1,8 @@
+{
+  final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  final ProcessingUnit pu=restConfig.getAdmin().getProcessingUnits().waitFor(absolutePUName,timeout,timeUnit);
+  if (pu == null) {
+    return false;
+  }
+  return pu.waitFor(1,timeout,timeUnit);
+}

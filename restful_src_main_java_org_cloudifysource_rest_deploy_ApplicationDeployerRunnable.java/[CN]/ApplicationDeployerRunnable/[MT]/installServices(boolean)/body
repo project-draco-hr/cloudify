@@ -1,0 +1,54 @@
+{
+  final File appDir=result.getApplicationDir();
+  logger.info("Installing services for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
+  for (  final Service service : services) {
+    logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
+    service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
+    final String serviceName=service.getName();
+    final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+    final File serviceDirectory=new File(appDir,serviceName);
+    boolean found=false;
+    try {
+      final File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
+      File actualOverridesFile=overridesFile;
+      if (actualOverridesFile == null) {
+        actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
+      }
+      final File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
+      result.getApplicationFile().delete();
+      packedFile.deleteOnExit();
+      final InstallServiceRequest installServiceReq=createInstallServiceRequest(packedFile);
+      final String appName=this.request.getApplicationName();
+      final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
+      fileHolder.setPackedFile(packedFile);
+      fileHolder.setServiceOverridesFile(actualOverridesFile);
+      fileHolder.setApplicationPropertiesFile(applicationPropertiesFile);
+      controller.installServiceInternal(appName,serviceName,installServiceReq,deploymentID,fileHolder);
+      try {
+        FileUtils.deleteDirectory(packedFile.getParentFile());
+      }
+ catch (      final IOException ioe) {
+        logger.warning("Failed to delete temporary directory: " + packedFile.getParentFile());
+      }
+      if (!async) {
+        logger.info("Waiting for instance of service: " + serviceName + " of application: "+ applicationName);
+        final boolean instanceFound=controller.waitForServiceInstance(applicationName,serviceName,SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES,TimeUnit.MINUTES);
+        if (!instanceFound) {
+          throw new TimeoutException("Service " + serviceName + " of application "+ applicationName+ " was installed, but no instance of the service has started after "+ SERVICE_INSTANCE_STARTUP_TIMEOUT_MINUTES+ " minutes.");
+        }
+        logger.info("Found instance of: " + serviceName);
+      }
+      found=true;
+      logger.fine("service " + service + " deployed.");
+    }
+ catch (    final Exception e) {
+      logger.log(Level.SEVERE,"Failed to install service: " + serviceName + " of application: "+ applicationName+ ". Application installation will halt. "+ "Some services may already have started, and should be shutdown manually. Error was: "+ e.getMessage(),e);
+      return;
+    }
+    if (!found) {
+      logger.severe("Failed to find an instance of service: " + serviceName + " while installing application "+ applicationName+ ". Application installation will stop. Some services may have been installed!");
+      return;
+    }
+  }
+  FileUtils.deleteDirectory(appDir);
+}

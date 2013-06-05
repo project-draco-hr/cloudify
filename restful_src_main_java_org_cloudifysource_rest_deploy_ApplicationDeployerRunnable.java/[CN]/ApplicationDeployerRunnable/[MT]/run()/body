@@ -1,0 +1,11 @@
+{
+  logger.fine("Installing application " + applicationName + " with the following services: "+ services);
+  final boolean asyncInstallPossible=isAsyncInstallPossibleForApplication();
+  logger.info("Async install setting is " + asyncInstallPossible);
+  try {
+    installServices(asyncInstallPossible);
+  }
+ catch (  final IOException e) {
+    e.printStackTrace();
+  }
+}
