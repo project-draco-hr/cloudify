@@ -1,0 +1,11 @@
+{
+  SetServiceInstancesValidationContext validationContext=new SetServiceInstancesValidationContext();
+  validationContext.setApplicationName(applicationName);
+  validationContext.setServiceName(serviceName);
+  validationContext.setCloud(this.restConfig.getCloud());
+  validationContext.setRequest(request);
+  validationContext.setProcessingUnit(pu);
+  for (  SetServiceInstancesValidator validator : setServiceInstancesValidators) {
+    validator.validate(validationContext);
+  }
+}

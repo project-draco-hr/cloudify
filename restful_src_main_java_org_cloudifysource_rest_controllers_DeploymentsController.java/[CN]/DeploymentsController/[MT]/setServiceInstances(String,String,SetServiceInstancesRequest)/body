@@ -1,0 +1,28 @@
+{
+  if (logger.isLoggable(Level.INFO)) {
+    logger.info("Scaling request for service: " + applicationName + "."+ serviceName+ " to "+ request.getCount()+ " instances");
+  }
+  final ProcessingUnit pu=this.controllerHelper.getService(applicationName,serviceName);
+  if (pu == null) {
+    throw new RestErrorException(ResponseConstants.FAILED_TO_LOCATE_SERVICE,serviceName);
+  }
+  validateSetInstances(applicationName,serviceName,request,pu);
+  if (permissionEvaluator != null) {
+    final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+  }
+  final int count=request.getCount();
+  logger.info("Scaling " + pu.getName() + " to "+ count+ " instances");
+  Cloud cloud=restConfig.getCloud();
+  if (cloud == null) {
+    pu.scale(new ManualCapacityScaleConfigurer().memoryCapacity(LOCAL_CLOUD_INSTANCE_MEMORY_MB * count,MemoryUnit.MEGABYTES).create());
+  }
+ else {
+    final Map<String,String> properties=((InternalProcessingUnit)pu).getElasticProperties();
+    final GridServiceContainerConfig gscConfig=new GridServiceContainerConfig(properties);
+    final long cloudExternalProcessMemoryInMB=gscConfig.getMaximumMemoryCapacityInMB();
+    pu.scale(ElasticScaleConfigFactory.createManualCapacityScaleConfig((int)(cloudExternalProcessMemoryInMB * count),0,request.isLocationAware(),true));
+  }
+}
