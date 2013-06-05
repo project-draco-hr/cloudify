@@ -1,0 +1,64 @@
+{
+  validateUninstallApplication(appName);
+  final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+  final org.openspaces.admin.application.Application app=this.restConfig.getAdmin().getApplications().waitFor(appName,10,TimeUnit.SECONDS);
+  final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
+  if (pus.length > 0) {
+    if (permissionEvaluator != null) {
+      final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+      final String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+      permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+    }
+  }
+  final StringBuilder sb=new StringBuilder();
+  final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,appName);
+  FutureTask<Boolean> undeployTask=null;
+  logger.log(Level.INFO,"Starting to poll for" + appName + " uninstall lifecycle events.");
+  if (uninstallOrder.size() > 0) {
+    undeployTask=new FutureTask<Boolean>(new Runnable(){
+      private final long startTime=System.currentTimeMillis();
+      @Override public void run(){
+        final String deploymentId=uninstallOrder.get(0).getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+        for (        final ProcessingUnit processingUnit : uninstallOrder) {
+          if (permissionEvaluator != null) {
+            final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+            final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+            permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+          }
+          final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
+          try {
+            if (processingUnit.waitForManaged(WAIT_FOR_MANAGED_TIMEOUT_SECONDS,TimeUnit.SECONDS) == null) {
+              logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
+            }
+ else {
+              logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
+              populateEventsCache(deploymentId,processingUnit);
+              processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MILLISECONDS);
+              final String serviceName=ServiceUtils.getApplicationServiceName(processingUnit.getName(),appName);
+              logger.info("Removing application service scope attributes for service " + serviceName);
+              deleteServiceAttributes(appName,serviceName);
+            }
+          }
+ catch (          final Exception e) {
+            final String msg="Failed to undeploy processing unit: " + processingUnit.getName() + " while uninstalling application "+ appName+ ". Uninstall will continue, but service "+ processingUnit.getName()+ " may remain in an unstable state";
+            logger.log(Level.SEVERE,msg,e);
+          }
+        }
+        DeploymentEvent undeployFinishedEvent=new DeploymentEvent();
+        undeployFinishedEvent.setDescription(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT);
+        eventsCache.add(new EventsCacheKey(deploymentId),undeployFinishedEvent);
+        logger.log(Level.INFO,"Application " + appName + " undeployment complete");
+      }
+    }
+,Boolean.TRUE);
+    ((InternalAdmin)this.restConfig.getAdmin()).scheduleAdminOperation(undeployTask);
+  }
+  final String errors=sb.toString();
+  if (errors.length() == 0) {
+    logger.info("Removing all application scope attributes for application " + appName);
+    deleteApplicationScopeAttributes(appName);
+    final UninstallApplicationResponse response=new UninstallApplicationResponse();
+    return response;
+  }
+  throw new RestErrorException(errors);
+}

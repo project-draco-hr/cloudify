@@ -1,0 +1,4 @@
+{
+  final ApplicationCloudifyAttribute applicationAttributeTemplate=new ApplicationCloudifyAttribute(applicationName,null,null);
+  gigaSpace.takeMultiple(applicationAttributeTemplate);
+}

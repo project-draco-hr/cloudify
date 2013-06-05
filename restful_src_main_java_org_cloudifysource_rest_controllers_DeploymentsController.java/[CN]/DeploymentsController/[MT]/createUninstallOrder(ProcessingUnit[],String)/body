@@ -1,0 +1,46 @@
+{
+  final DirectedGraph<ProcessingUnit,DefaultEdge> graph=new DefaultDirectedGraph<ProcessingUnit,DefaultEdge>(DefaultEdge.class);
+  for (  final ProcessingUnit processingUnit : pus) {
+    graph.addVertex(processingUnit);
+  }
+  final Map<String,ProcessingUnit> puByName=new HashMap<String,ProcessingUnit>();
+  for (  final ProcessingUnit processingUnit : pus) {
+    puByName.put(processingUnit.getName(),processingUnit);
+  }
+  for (  final ProcessingUnit processingUnit : pus) {
+    final String dependsOn=(String)processingUnit.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON);
+    if (dependsOn == null) {
+      logger.warning("Could not find the " + CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON + " property for processing unit "+ processingUnit.getName());
+    }
+ else {
+      final String[] dependencies=dependsOn.replace("[","").replace("]","").split(",");
+      for (      final String puName : dependencies) {
+        final String normalizedPuName=puName.trim();
+        if (normalizedPuName.length() > 0) {
+          final ProcessingUnit dependency=puByName.get(normalizedPuName);
+          if (dependency == null) {
+            logger.severe("Could not find Processing Unit " + normalizedPuName + " that Processing Unit "+ processingUnit.getName()+ " depends on");
+          }
+ else {
+            graph.addEdge(processingUnit,dependency);
+          }
+        }
+      }
+    }
+  }
+  final CycleDetector<ProcessingUnit,DefaultEdge> cycleDetector=new CycleDetector<ProcessingUnit,DefaultEdge>(graph);
+  final boolean containsCycle=cycleDetector.detectCycles();
+  if (containsCycle) {
+    logger.warning("Detected a cycle in the dependencies of application: " + applicationName + " while preparing to uninstall."+ " The service in this application will be uninstalled in a random order");
+    return Arrays.asList(pus);
+  }
+  final TopologicalOrderIterator<ProcessingUnit,DefaultEdge> iterator=new TopologicalOrderIterator<ProcessingUnit,DefaultEdge>(graph);
+  final List<ProcessingUnit> orderedList=new ArrayList<ProcessingUnit>();
+  while (iterator.hasNext()) {
+    final ProcessingUnit nextPU=iterator.next();
+    if (!orderedList.contains(nextPU)) {
+      orderedList.add(nextPU);
+    }
+  }
+  return orderedList;
+}

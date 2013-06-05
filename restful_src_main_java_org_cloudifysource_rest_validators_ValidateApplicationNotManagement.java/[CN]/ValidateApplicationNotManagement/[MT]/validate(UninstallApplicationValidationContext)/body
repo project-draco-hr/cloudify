@@ -1,0 +1,12 @@
+{
+  final String appName=validationContext.getApplicationName();
+  final Application app=this.admin.getApplications().waitFor(appName,10,TimeUnit.SECONDS);
+  if (app == null) {
+    logger.log(Level.INFO,"Cannot uninstall application " + appName + " since it has not been discovered yet.");
+    throw new RestErrorException(FAILED_TO_LOCATE_APP,appName);
+  }
+  if (app.getName().equals(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
+    logger.log(Level.INFO,"Cannot uninstall the Management application.");
+    throw new RestErrorException(ResponseConstants.CANNOT_UNINSTALL_MANAGEMENT_APP);
+  }
+}

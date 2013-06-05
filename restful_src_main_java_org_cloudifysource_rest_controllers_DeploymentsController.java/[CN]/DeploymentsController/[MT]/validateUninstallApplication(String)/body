@@ -1,0 +1,8 @@
+{
+  final UninstallApplicationValidationContext validationContext=new UninstallApplicationValidationContext();
+  validationContext.setCloud(restConfig.getCloud());
+  validationContext.setApplicationName(appName);
+  for (  final UninstallApplicationValidator validator : uninstallApplicationValidators) {
+    validator.validate(validationContext);
+  }
+}
