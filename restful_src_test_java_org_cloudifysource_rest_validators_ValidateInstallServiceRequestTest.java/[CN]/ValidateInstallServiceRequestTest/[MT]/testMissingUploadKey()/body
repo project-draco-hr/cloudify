@@ -1,4 +1,0 @@
-{
-  final InstallServiceRequest request=new InstallServiceRequest();
-  testValidator(request,CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
-}
