@@ -1,7 +1,9 @@
 {
   File file=new File(TEST_FILE_PATH);
+  System.out.println("tring to upload file " + file.getAbsolutePath());
   UploadResponse uploadResponse=uploadFile(file);
   String uploadKey=uploadResponse.getUploadKey();
+  System.out.println("file has been uploaded. the upload key is " + uploadKey);
   Assert.assertNotNull(uploadKey);
   assertUploadedFileExists(file,uploadKey);
 }

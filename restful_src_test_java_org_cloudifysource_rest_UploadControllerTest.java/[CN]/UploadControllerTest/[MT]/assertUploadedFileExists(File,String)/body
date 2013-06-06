@@ -9,6 +9,7 @@
   Assert.assertTrue(uploadedFileDir.exists());
   Assert.assertTrue(uploadedFileDir.isDirectory());
   File uploadedFile=new File(uploadedFileDir,UPLOADED_FILE_NAME);
+  System.out.println("uploaded file " + uploadedFile.getAbsolutePath() + (uploadedFile.exists() ? "" : " not")+ " exists.");
   Assert.assertNotNull(uploadedFile);
   Assert.assertTrue(uploadedFile.exists());
   Assert.assertTrue(uploadedFile.isFile());
