@@ -3,7 +3,6 @@
   versionedUploadUri="/" + version + UPLOAD_URI;
   controller=applicationContext.getBean(UploadController.class);
   uploadRepo=applicationContext.getBean(UploadRepo.class);
-  uploadRepo.resetTimeout(TEST_CLEANUP_TIMOUT_MILLIS);
   controllerMapping=new HashMap<String,HashMap<RequestMethod,HandlerMethod>>();
   HashMap<RequestMethod,HandlerMethod> map=new HashMap<RequestMethod,HandlerMethod>();
   HandlerMethod method=new HandlerMethod(controller,"upload",String.class,MultipartFile.class);

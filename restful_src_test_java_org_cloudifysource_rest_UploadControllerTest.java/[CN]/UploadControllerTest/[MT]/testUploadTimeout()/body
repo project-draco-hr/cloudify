@@ -1,11 +1,19 @@
 {
-  File file=new File(TEST_FILE_PATH);
-  UploadResponse uploadResponse=uploadFile(file);
-  String uploadKey=uploadResponse.getUploadKey();
-  Assert.assertNotNull(uploadKey);
-  File uploadedFile=assertUploadedFileExists(file,uploadKey);
-  String parentPath=uploadedFile.getParentFile().getAbsolutePath();
-  Thread.sleep(TEST_CLEANUP_TIMOUT_MILLIS * 3);
-  File expectedToBeDeletedFolder=new File(parentPath);
-  Assert.assertFalse(expectedToBeDeletedFolder.exists());
+  int cleanupTimeoutMillis=uploadRepo.getCleanupTimeoutMillis();
+  uploadRepo.resetTimeout(TEST_CLEANUP_TIMOUT_MILLIS);
+  try {
+    File file=new File(TEST_FILE_PATH);
+    UploadResponse uploadResponse=uploadFile(file);
+    String uploadKey=uploadResponse.getUploadKey();
+    Assert.assertNotNull(uploadKey);
+    File uploadedFile=assertUploadedFileExists(file,uploadKey);
+    String parentPath=uploadedFile.getParentFile().getAbsolutePath();
+    Thread.sleep(TEST_CLEANUP_TIMOUT_MILLIS * 3);
+    File expectedToBeDeletedFolder=new File(parentPath);
+    Assert.assertFalse(expectedToBeDeletedFolder.exists());
+  }
+  finally {
+    System.out.println("setting the cleanup timeout back to " + cleanupTimeoutMillis + " millis");
+    uploadRepo.resetTimeout(cleanupTimeoutMillis);
+  }
 }
