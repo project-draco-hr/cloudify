@@ -1,4 +1,5 @@
 {
   createUploadDir();
+  logger.log(Level.INFO,"created rest uploads directory - " + restUploadDir.getAbsolutePath());
   createScheduledExecutor();
 }
