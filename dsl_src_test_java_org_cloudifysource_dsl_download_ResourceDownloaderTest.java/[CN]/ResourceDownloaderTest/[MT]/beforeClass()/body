@@ -5,4 +5,8 @@
   handler.setBaseResource(resource);
   server.setHandler(handler);
   server.start();
+  final File destinationFolder=new File(DESTINATION_FOLDER);
+  if (!destinationFolder.exists()) {
+    destinationFolder.mkdirs();
+  }
 }

@@ -1,3 +1,7 @@
 {
   server.stop();
+  final File destinationFolder=new File(DESTINATION_FOLDER);
+  if (destinationFolder.exists()) {
+    FileUtils.deleteQuietly(destinationFolder);
+  }
 }
