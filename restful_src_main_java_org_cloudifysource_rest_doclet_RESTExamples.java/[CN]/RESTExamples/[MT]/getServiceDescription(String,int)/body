@@ -1,0 +1,14 @@
+{
+  final ServiceDescription serviceDescription=new ServiceDescription();
+  final int numberOfInstances=getNumberOfInstances();
+  final List<InstanceDescription> instancesDescriptionList=new LinkedList<InstanceDescription>();
+  instancesDescriptionList.add(getInstanceDescription(serviceName,id));
+  instancesDescriptionList.add(getInstanceDescription(serviceName,id + 2));
+  serviceDescription.setApplicationName(getAppName());
+  serviceDescription.setInstanceCount(numberOfInstances);
+  serviceDescription.setPlannedInstances(numberOfInstances);
+  serviceDescription.setServiceName(serviceName);
+  serviceDescription.setInstancesDescription(instancesDescriptionList);
+  serviceDescription.setServiceState(DeploymentState.STARTED);
+  return serviceDescription;
+}

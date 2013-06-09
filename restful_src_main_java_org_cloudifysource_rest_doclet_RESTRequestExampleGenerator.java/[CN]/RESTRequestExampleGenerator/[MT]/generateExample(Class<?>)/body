@@ -1,0 +1,4 @@
+{
+  Object requestBodyParam=getRequestExample(clazz);
+  return new ObjectMapper().writeValueAsString(requestBodyParam);
+}

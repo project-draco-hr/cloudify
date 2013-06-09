@@ -1,0 +1,20 @@
+{
+  final InstanceDescription instanceDescription=new InstanceDescription();
+  final InetAddress localHost=getLocalHost();
+  String hostAddress;
+  String hostName;
+  if (localHost == null) {
+    hostAddress="localhost";
+    hostName="localhost";
+  }
+ else {
+    hostAddress=localHost.getHostAddress();
+    hostName=localHost.getHostName();
+  }
+  instanceDescription.setHostAddress(hostAddress);
+  instanceDescription.setHostName(hostName);
+  instanceDescription.setInstanceId(id);
+  instanceDescription.setInstanceName(getInstanceName(serviceName,null));
+  instanceDescription.setInstanceStatus("RUNNING");
+  return instanceDescription;
+}

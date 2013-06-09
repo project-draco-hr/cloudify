@@ -1,0 +1,12 @@
+{
+  final List<DeploymentEvent> events=new LinkedList<DeploymentEvent>();
+  final DeploymentEvent event1=new DeploymentEvent();
+  event1.setDescription("[127.0.0.1/127.0.0.1] - tomcat-1 INIT invoked");
+  event1.setIndex(0);
+  final DeploymentEvent event2=new DeploymentEvent();
+  event2.setDescription("[127.0.0.1/127.0.0.1] - tomcat-1 INIT completed, duration: 4.2 seconds");
+  event2.setIndex(1);
+  events.add(event1);
+  events.add(event2);
+  return events;
+}

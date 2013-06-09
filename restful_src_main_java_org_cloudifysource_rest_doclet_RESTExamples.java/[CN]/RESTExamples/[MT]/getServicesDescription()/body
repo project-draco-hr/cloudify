@@ -1,0 +1,8 @@
+{
+  final List<ServiceDescription> list=new LinkedList<ServiceDescription>();
+  final int id1=getInstanceId();
+  list.add(getServiceDescription("service" + id1,id1));
+  final int id2=id1 + 1;
+  list.add(getServiceDescription("service" + id2,id2));
+  return list;
+}

@@ -1,0 +1,8 @@
+{
+  final Map<String,Object> metricsExample=new HashMap<String,Object>();
+  final int id1=getInstanceId();
+  final int id2=id1 + 1;
+  metricsExample.put("metric" + id1,"value" + id1);
+  metricsExample.put("metric" + id2,"value" + id2);
+  return new ServiceInstanceMetricsData(id1,metricsExample);
+}

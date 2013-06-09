@@ -1,0 +1,3 @@
+{
+  return DebugModes.ON_ERROR.getName();
+}

@@ -1,0 +1,7 @@
+{
+  final Map<String,Object> attributesExample=new HashMap<String,Object>();
+  attributesExample.put("attr1","value1");
+  attributesExample.put("attr2","value2");
+  attributesExample.put("attr3","value3");
+  return attributesExample;
+}

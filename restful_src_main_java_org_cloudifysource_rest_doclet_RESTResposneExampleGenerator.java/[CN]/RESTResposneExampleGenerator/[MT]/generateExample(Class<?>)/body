@@ -1,0 +1,9 @@
+{
+  Object response=getExample(clazz);
+  Response<Object> responseWrapper=new Response<Object>();
+  responseWrapper.setResponse(response);
+  responseWrapper.setStatus("Success");
+  responseWrapper.setMessage("Operation completed successfully");
+  responseWrapper.setMessageId(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName());
+  return new ObjectMapper().writeValueAsString(responseWrapper);
+}

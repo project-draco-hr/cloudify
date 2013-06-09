@@ -1,0 +1,14 @@
+{
+  final Map<String,Object> map=new HashMap<String,Object>();
+  map.put("icon","icon.png");
+  map.put("url",null);
+  map.put("Cloud Public IP",getPublicIp());
+  map.put("Cloud Image ID",getImageId());
+  map.put("Cloud Private IP",getPrivateIp());
+  map.put("GSC PID","4276");
+  map.put("Cloud Hardware ID",getHardwareId());
+  map.put("Instance ID",instanceId);
+  map.put("Machine ID",getMachineId());
+  map.put("Working Directory","D:\\gigaSpaces\\gigaspaces-cloudify\\work\\processing-units\\simpleApp_simple_" + instanceId + "_1051025036\\ext");
+  return map;
+}

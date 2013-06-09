@@ -1,0 +1,5 @@
+{
+  final String effServiceName=serviceName != null ? serviceName : getServiceName();
+  final String effAppName=appName != null ? appName : getAppName();
+  return effAppName + "." + effServiceName;
+}

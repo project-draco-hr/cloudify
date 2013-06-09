@@ -1,0 +1,3 @@
+{
+  return getRandomInt(MAX_INSTANCE_ID);
+}
