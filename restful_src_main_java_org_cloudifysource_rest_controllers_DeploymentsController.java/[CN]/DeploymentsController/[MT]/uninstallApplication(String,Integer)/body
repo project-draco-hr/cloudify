@@ -12,13 +12,13 @@
   }
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,appName);
+  final String deploymentId=uninstallOrder.get(0).getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
   FutureTask<Boolean> undeployTask=null;
   logger.log(Level.INFO,"Starting to poll for" + appName + " uninstall lifecycle events.");
   if (uninstallOrder.size() > 0) {
     undeployTask=new FutureTask<Boolean>(new Runnable(){
       private final long startTime=System.currentTimeMillis();
       @Override public void run(){
-        final String deploymentId=uninstallOrder.get(0).getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
         for (        final ProcessingUnit processingUnit : uninstallOrder) {
           if (permissionEvaluator != null) {
             final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
@@ -58,6 +58,7 @@
     logger.info("Removing all application scope attributes for application " + appName);
     deleteApplicationScopeAttributes(appName);
     final UninstallApplicationResponse response=new UninstallApplicationResponse();
+    response.setDeploymentID(deploymentId);
     return response;
   }
   throw new RestErrorException(errors);
