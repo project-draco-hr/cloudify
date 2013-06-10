@@ -10,9 +10,11 @@
   ServiceDescription serviceDescription=new ServiceDescription();
   serviceDescription.setPlannedInstances(plannedNumberOfInstances);
   serviceDescription.setInstanceCount(numberOfServiceInstances);
-  String applicationName=processingUnit.getName().split("\\.")[1];
+  FullServiceName fullServiceName=ServiceUtils.getFullServiceName(processingUnit.getName());
+  final String applicationName=fullServiceName.getApplicationName();
+  final String serviceName=fullServiceName.getServiceName();
   serviceDescription.setApplicationName(applicationName);
-  serviceDescription.setServiceName(ServiceUtils.getApplicationServiceName(absolutePuName,applicationName));
+  serviceDescription.setServiceName(serviceName);
   serviceDescription.setInstancesDescription(serviceInstancesDescription);
   serviceDescription.setServiceState(serviceState);
   return serviceDescription;
