@@ -1,0 +1,23 @@
+{
+  retries=this.usmLifecycleBean.getConfiguration().getService().getRetries();
+  logger.fine("Retries value for this service is: " + retries);
+  if (retries == -1) {
+    return;
+  }
+  final String attemptFileName=this.uniqueFileNamePrefix + this.myPid + ".dat";
+  final File attemptFile=new File(attemptFileName);
+  logger.fine("Attemp file is: " + attemptFile.getAbsolutePath());
+  int currentAttempt=1;
+  if (attemptFile.exists()) {
+    final String attemptInformation=FileUtils.readFileToString(attemptFile);
+    logger.fine("Read retry data: " + attemptInformation);
+    try {
+      currentAttempt=Integer.parseInt(attemptInformation);
+      ++currentAttempt;
+    }
+ catch (    NumberFormatException e) {
+      throw new USMException("Failed to parse retry data from attempt file data: " + attemptInformation,e);
+    }
+  }
+  FileUtils.writeStringToFile(attemptFile,Integer.toString(currentAttempt));
+}

@@ -1,5 +1,5 @@
 {
-  IsolationSLA isolationSla=getIsolationSLA();
+  final IsolationSLA isolationSla=getIsolationSLA();
   if (isolationSla != null) {
     if (isolationSla.getDedicated() != null) {
       return false;

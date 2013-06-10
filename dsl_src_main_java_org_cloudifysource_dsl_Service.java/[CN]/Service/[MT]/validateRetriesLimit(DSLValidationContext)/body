@@ -1,0 +1,5 @@
+{
+  if (this.retries < -1) {
+    throw new DSLValidationException("Valid values for the retries field are -1 (for always retry) and above. " + "Set to '0' for no retries.");
+  }
+}

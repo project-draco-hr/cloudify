@@ -1,12 +1,12 @@
 {
   boolean isServiceFile=false;
-  String serviceSuffix=DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX.trim();
-  String filePath=validationContext.getFilePath().trim();
+  final String serviceSuffix=DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX.trim();
+  final String filePath=validationContext.getFilePath().trim();
   if (filePath.endsWith(serviceSuffix)) {
     isServiceFile=true;
   }
   if (icon != null && isServiceFile) {
-    File dslFile=new File(filePath);
+    final File dslFile=new File(filePath);
     File iconFile=new File(dslFile.getParent(),icon);
     if (!iconFile.isFile()) {
       File dslDirectory=dslFile.getParentFile();

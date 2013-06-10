@@ -1,8 +1,8 @@
 {
   boolean typeExists=false;
-  String[] enumAsString=new String[ServiceTierType.values().length];
+  final String[] enumAsString=new String[ServiceTierType.values().length];
   int counter=0;
-  for (  ServiceTierType tierType : ServiceTierType.values()) {
+  for (  final ServiceTierType tierType : ServiceTierType.values()) {
     enumAsString[counter]=tierType.toString();
     counter++;
     if (tierType.toString().equalsIgnoreCase(this.type)) {
