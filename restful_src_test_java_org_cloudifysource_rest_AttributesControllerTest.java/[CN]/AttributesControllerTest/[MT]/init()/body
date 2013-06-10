@@ -17,7 +17,7 @@
   final String singleApplicationAttributeUri="/attributes/applications/" + APPLICATION_NAME + "/"+ ATTRIBUTE_NAME;
   singleAttributeUris.add(singleApplicationAttributeUri);
   final HashMap<RequestMethod,HandlerMethod> singleApplicationAttributeHandlers=new HashMap<RequestMethod,HandlerMethod>();
-  singleApplicationAttributeHandlers.put(RequestMethod.GET,new HandlerMethod(controller,"getApplicationAttributes",String.class,String.class));
+  singleApplicationAttributeHandlers.put(RequestMethod.GET,new HandlerMethod(controller,"getApplicationAttribute",String.class,String.class));
   singleApplicationAttributeHandlers.put(RequestMethod.POST,new HandlerMethod(controller,"setApplicationAttribute",String.class,String.class,Object.class));
   singleApplicationAttributeHandlers.put(RequestMethod.DELETE,new HandlerMethod(controller,"deleteApplicationAttribute",String.class,String.class));
   final String multipleApplicationAttributesUri="/attributes/applications/" + APPLICATION_NAME;
@@ -29,7 +29,7 @@
   final String singleServiceAttributeUri="/attributes/services/" + APPLICATION_NAME + "/"+ SERVICE_NAME+ "/"+ ATTRIBUTE_NAME;
   singleAttributeUris.add(singleServiceAttributeUri);
   final HashMap<RequestMethod,HandlerMethod> singleServiceAttributeHandlers=new HashMap<RequestMethod,HandlerMethod>();
-  singleServiceAttributeHandlers.put(RequestMethod.GET,new HandlerMethod(controller,"getServiceAttributes",String.class,String.class,String.class));
+  singleServiceAttributeHandlers.put(RequestMethod.GET,new HandlerMethod(controller,"getServiceAttribute",String.class,String.class,String.class));
   singleServiceAttributeHandlers.put(RequestMethod.POST,new HandlerMethod(controller,"setServiceAttribute",String.class,String.class,String.class,Object.class));
   singleServiceAttributeHandlers.put(RequestMethod.DELETE,new HandlerMethod(controller,"deleteServiceAttribute",String.class,String.class,String.class));
   final String multipleServiceAttributesUri="/attributes/services/" + APPLICATION_NAME + "/"+ SERVICE_NAME;
