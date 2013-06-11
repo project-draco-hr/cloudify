@@ -8,12 +8,16 @@
     launch();
   }
  catch (  USMException e) {
-    if (this.selfHealing) {
-      throw e;
-    }
- else {
+    if (!this.selfHealing) {
       logger.log(Level.SEVERE,"An exception was encountered while executing the service lifecycle. " + "Self-healing is disabled so this service will not be restarted.",e);
       this.state=USMState.ERROR;
+    }
+ else     if (isRetryLimitExceeded()) {
+      logger.log(Level.SEVERE,"An exception was encountered while executing the service lifecycle. " + "The retry limit was exceeded so this service will not be restarted.",e);
+      this.state=USMState.ERROR;
+    }
+ else {
+      throw e;
     }
   }
 }

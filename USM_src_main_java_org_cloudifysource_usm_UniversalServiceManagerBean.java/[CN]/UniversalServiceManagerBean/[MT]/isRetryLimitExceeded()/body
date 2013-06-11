@@ -1,0 +1,6 @@
+{
+  if (this.retries == -1) {
+    return false;
+  }
+  return (this.currentAttempt > this.retries);
+}

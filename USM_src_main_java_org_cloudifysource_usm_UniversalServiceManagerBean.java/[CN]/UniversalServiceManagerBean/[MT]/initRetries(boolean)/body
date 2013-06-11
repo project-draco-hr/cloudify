@@ -1,0 +1,35 @@
+{
+  retries=this.usmLifecycleBean.getConfiguration().getService().getRetries();
+  logger.fine("Retries value for this service is: " + retries);
+  if (retries == -1) {
+    return;
+  }
+  final File attemptFile=getAttemptFile();
+  logger.fine("Attemp file is: " + attemptFile.getAbsolutePath());
+  currentAttempt=1;
+  if (attemptFile.exists()) {
+    String attemptInformation;
+    try {
+      attemptInformation=FileUtils.readFileToString(attemptFile);
+    }
+ catch (    final IOException e) {
+      throw new USMException("Failed to read attempt file " + attemptFile + ". Error was: "+ e.getMessage(),e);
+    }
+    logger.fine("Read retry data: " + attemptInformation);
+    try {
+      currentAttempt=Integer.parseInt(attemptInformation);
+    }
+ catch (    NumberFormatException e) {
+      throw new USMException("Failed to parse retry data from attempt file data: " + attemptInformation,e);
+    }
+    if (!existingProcessFound) {
+      ++currentAttempt;
+    }
+  }
+  try {
+    FileUtils.writeStringToFile(attemptFile,Integer.toString(currentAttempt));
+  }
+ catch (  final IOException e) {
+    throw new USMException("Failed to write attempt file " + attemptFile + ". Error was: "+ e.getMessage(),e);
+  }
+}
