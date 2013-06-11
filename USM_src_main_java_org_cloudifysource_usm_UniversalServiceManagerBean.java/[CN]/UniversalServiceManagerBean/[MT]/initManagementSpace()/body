@@ -2,4 +2,12 @@
   if (this.isRunningInGSC()) {
     managementSpace=((AttributesFacadeImpl)getUsmLifecycleBean().getConfiguration().getServiceContext().getAttributes()).getManagementSpace();
   }
+ else {
+    Admin admin=USMUtils.getAdmin();
+    Space space=admin.getSpaces().getSpaceByName(CloudifyConstants.MANAGEMENT_SPACE_NAME);
+    if (space == null) {
+      throw new USMException("Failed to locate management space in environment - USM initialization cannot continue");
+    }
+    this.managementSpace=space.getGigaSpace();
+  }
 }

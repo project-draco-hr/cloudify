@@ -5,7 +5,6 @@
   initCustomProperties();
   this.myPid=this.sigar.getPid();
   final boolean existingProcessFound=checkForPIDFile();
-  initRetries(existingProcessFound);
   initManagementSpace();
   initEvents();
   reset(existingProcessFound);

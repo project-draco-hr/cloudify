@@ -1,6 +1,10 @@
 {
-  if (this.retries == -1) {
+  retries=this.usmLifecycleBean.getConfiguration().getService().getRetries();
+  logger.info("Retry limit for this service is: " + retries);
+  if (retries == -1) {
     return false;
   }
-  return (this.currentAttempt > this.retries);
+  currentAttempt=getCurrentAttemptNumber();
+  logger.info("Current attempt number is: " + currentAttempt);
+  return (currentAttempt > retries);
 }

@@ -1,0 +1,15 @@
+{
+  USMInstanceAttemptData template=new USMInstanceAttemptData();
+  FullServiceName fullName=ServiceUtils.getFullServiceName(this.clusterName);
+  template.setApplicationName(fullName.getApplicationName());
+  template.setGscPid(this.myPid);
+  template.setServiceName(fullName.getServiceName());
+  template.setInstanceId(this.instanceId);
+  final USMInstanceAttemptData data=this.managementSpace.read(template);
+  if (data == null) {
+    return 1;
+  }
+ else {
+    return data.getCurrentAttemptNumber();
+  }
+}

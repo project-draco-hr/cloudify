@@ -13,7 +13,7 @@
       this.state=USMState.ERROR;
     }
  else     if (isRetryLimitExceeded()) {
-      logger.log(Level.SEVERE,"An exception was encountered while executing the service lifecycle. " + "The retry limit was exceeded so this service will not be restarted.",e);
+      logger.log(Level.SEVERE,"An exception was encountered while executing the service lifecycle. " + "Current installation attempt is " + this.currentAttempt + " which exceeds the The retry limit("+ this.retries+ "), so this service will not be restarted.",e);
       this.state=USMState.ERROR;
     }
  else {
