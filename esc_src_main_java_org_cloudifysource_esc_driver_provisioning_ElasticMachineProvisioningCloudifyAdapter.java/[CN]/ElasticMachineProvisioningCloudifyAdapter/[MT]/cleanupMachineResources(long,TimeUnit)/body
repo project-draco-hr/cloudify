@@ -1,2 +1,8 @@
 {
+  try {
+    cloudifyProvisioning.releaseCloudResources(duration,timeUnit);
+  }
+ catch (  Exception e) {
+    throw new ElasticMachineProvisioningException("Failed to cleanup cloud",e);
+  }
 }
