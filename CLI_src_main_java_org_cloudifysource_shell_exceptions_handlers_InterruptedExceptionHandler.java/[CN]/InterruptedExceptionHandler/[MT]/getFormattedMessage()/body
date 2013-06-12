@@ -1,0 +1,3 @@
+{
+  return ShellUtils.getFormattedMessage("command_interrupted",new Object[]{});
+}

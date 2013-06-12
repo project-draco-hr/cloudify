@@ -1,0 +1,16 @@
+{
+  boolean serviceIsInstalled=false;
+  try {
+    ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+    serviceIsInstalled=serviceDescription.getServiceState().equals(CloudifyConstants.DeploymentState.STARTED);
+  }
+ catch (  final RestClientResponseException e) {
+    if (e.getStatusCode() == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+      serviceIsInstalled=false;
+    }
+ else {
+      throw e;
+    }
+  }
+  return serviceIsInstalled;
+}

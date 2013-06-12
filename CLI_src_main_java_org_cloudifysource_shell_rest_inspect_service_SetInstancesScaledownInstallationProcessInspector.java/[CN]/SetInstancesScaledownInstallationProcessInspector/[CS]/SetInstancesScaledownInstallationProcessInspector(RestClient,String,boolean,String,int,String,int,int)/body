@@ -1,0 +1,5 @@
+{
+  super(restClient,deploymentId,verbose,currentNumberOfInstances,serviceName,applicationName,currentEventIndex,plannedNumberOfInstances);
+  this.setWaitForCloudResourcesRelease(false);
+  this.plannedNumberOfInstances=plannedNumberOfInstances;
+}

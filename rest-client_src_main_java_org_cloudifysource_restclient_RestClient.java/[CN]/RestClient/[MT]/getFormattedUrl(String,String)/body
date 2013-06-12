@@ -1,3 +1,0 @@
-{
-  return versionedDeploymentControllerUrl + String.format(format,(Object[])args);
-}

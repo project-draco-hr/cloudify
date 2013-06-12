@@ -1,0 +1,10 @@
+{
+  serviceGroovyFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,serviceDirectory);
+  try {
+    this.service=ServiceReader.readService(serviceGroovyFile,serviceDirectory,null,null,null,false,overrides);
+  }
+ catch (  final DSLException e) {
+    throw new CLIStatusException(e,"read_dsl_file_failed",serviceGroovyFile,e.getMessage());
+  }
+  this.initialized=true;
+}

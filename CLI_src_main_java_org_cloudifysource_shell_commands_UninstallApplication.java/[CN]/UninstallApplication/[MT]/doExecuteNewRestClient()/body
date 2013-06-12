@@ -1,0 +1,18 @@
+{
+  if (!askUninstallConfirmationQuestion()) {
+    return getFormattedMessage("uninstall_aborted");
+  }
+  if (CloudifyConstants.MANAGEMENT_APPLICATION_NAME.equalsIgnoreCase(applicationName)) {
+    throw new CLIStatusException("cannot_uninstall_management_application");
+  }
+  CLIApplicationUninstaller uninstaller=new CLIApplicationUninstaller();
+  uninstaller.setApplicationName(applicationName);
+  uninstaller.setAskOnTimeout(true);
+  uninstaller.setInitialTimeout(timeoutInMinutes);
+  uninstaller.setRestClient(newRestClient);
+  uninstaller.setSession(session);
+  uninstaller.uninstall();
+  session.put(Constants.ACTIVE_APP,CloudifyConstants.DEFAULT_APPLICATION_NAME);
+  GigaShellMain.getInstance().setCurrentApplicationName(CloudifyConstants.DEFAULT_APPLICATION_NAME);
+  return getFormattedMessage("application_uninstalled_successfully",Color.GREEN,this.applicationName);
+}

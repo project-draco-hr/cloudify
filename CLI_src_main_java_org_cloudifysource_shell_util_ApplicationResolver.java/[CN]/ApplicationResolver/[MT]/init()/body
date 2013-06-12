@@ -1,0 +1,18 @@
+{
+  final RecipePathResolver pathResolver=new RecipePathResolver();
+  if (pathResolver.resolveApplication(applicationDir)) {
+    applicationDir=pathResolver.getResolved();
+  }
+ else {
+    throw new CLIStatusException("application_not_found",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
+  }
+  final File dslFile=DSLReader.findDefaultDSLFile(DSLUtils.APPLICATION_DSL_FILE_NAME_SUFFIX,applicationDir);
+  final DSLReader dslReader=createDslReader(dslFile);
+  try {
+    this.application=dslReader.readDslEntity(Application.class);
+  }
+ catch (  DSLException e) {
+    throw new CLIStatusException(e,"failed_while_reading_dsl_file",e.getMessage());
+  }
+  initialized=true;
+}

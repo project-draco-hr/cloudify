@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(clientSideExceptionHandler.getLoggingLevel())) {
+    logger.log(clientSideExceptionHandler.getLoggingLevel(),clientSideExceptionHandler.getMessage(verbose));
+  }
+  raiseCloseShellExceptionIfNonInteractive(session,t);
+}

@@ -1,0 +1,14 @@
+{
+  if (verbose) {
+    final String stackTrace=getVerbose();
+    if (stackTrace != null) {
+      return getFormattedMessage() + " : " + stackTrace;
+    }
+ else {
+      return getFormattedMessage();
+    }
+  }
+ else {
+    return getFormattedMessage();
+  }
+}

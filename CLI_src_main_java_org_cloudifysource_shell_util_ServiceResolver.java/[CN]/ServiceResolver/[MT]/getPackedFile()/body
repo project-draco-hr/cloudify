@@ -1,0 +1,14 @@
+{
+  try {
+    if (!initialized) {
+      init();
+    }
+    return Packager.pack(serviceGroovyFile,false,service,null);
+  }
+ catch (  final IOException e) {
+    throw new CLIStatusException(e,"failed_to_package_service",serviceGroovyFile);
+  }
+catch (  final PackagingException e) {
+    throw new CLIStatusException(e,"failed_to_package_service",serviceGroovyFile);
+  }
+}

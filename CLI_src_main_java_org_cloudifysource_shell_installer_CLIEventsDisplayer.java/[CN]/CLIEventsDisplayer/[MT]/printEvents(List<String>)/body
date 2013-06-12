@@ -1,5 +1,9 @@
 {
   for (  final String eventString : events) {
-    printEvent(eventString);
+    if (!eventString.equals(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
+      printEvent(eventString);
+    }
+ else {
+    }
   }
 }

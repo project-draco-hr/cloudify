@@ -1,0 +1,10 @@
+{
+  List<ServiceDescription> servicesDescription=restClient.getServicesDescription(deploymentId);
+  if (servicesDescription.isEmpty()) {
+    return 0;
+  }
+  if (servicesDescription.size() > 1) {
+    throw new IllegalStateException("Got more than one services for deployment id " + deploymentId);
+  }
+  return servicesDescription.get(0).getInstanceCount();
+}

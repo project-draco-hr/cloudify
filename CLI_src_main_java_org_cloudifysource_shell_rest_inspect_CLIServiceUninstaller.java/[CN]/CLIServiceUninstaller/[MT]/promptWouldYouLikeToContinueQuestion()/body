@@ -1,0 +1,3 @@
+{
+  return ShellUtils.promptUser(session,"would_you_like_to_continue_service_uninstallation",serviceName);
+}

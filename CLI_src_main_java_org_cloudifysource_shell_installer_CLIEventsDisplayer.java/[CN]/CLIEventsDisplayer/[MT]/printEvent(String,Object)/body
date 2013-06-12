@@ -1,0 +1,4 @@
+{
+  final String message=ShellUtils.getFormattedMessage(messageCode,args);
+  printEvent(message);
+}

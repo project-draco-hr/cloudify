@@ -1,0 +1,6 @@
+{
+  if (recipe.isFile()) {
+    return new PreparedPackageResolver(recipe);
+  }
+  return new ServiceResolver(resolve(recipe),overrides,serviceName);
+}

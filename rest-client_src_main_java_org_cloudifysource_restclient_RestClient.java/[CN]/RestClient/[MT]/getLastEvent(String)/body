@@ -1,5 +1,5 @@
 {
-  final String setInstancesUrl=getFormattedUrl(GET_LAST_EVENT_URL_FORMAT,deploymentId);
+  final String setInstancesUrl=getFormattedUrl(versionedDeploymentControllerUrl,GET_LAST_EVENT_URL_FORMAT,deploymentId);
   return executor.get(setInstancesUrl,new TypeReference<Response<DeploymentEvents>>(){
   }
 );

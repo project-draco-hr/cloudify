@@ -1,0 +1,7 @@
+{
+  this.restClient=restClient;
+  this.deploymentId=deploymentId;
+  this.verbose=verbose;
+  this.plannedNumberOfInstancesPerService=plannedNumberOfInstancesPerService;
+  this.currentRunningInstancesPerService=currentRunningInstancesPerService;
+}

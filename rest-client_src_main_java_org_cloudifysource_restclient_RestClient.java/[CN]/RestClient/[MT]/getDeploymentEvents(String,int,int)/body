@@ -1,5 +1,6 @@
 {
-  return executor.get(versionedDeploymentControllerUrl + "/" + deploymentId+ "/events/"+ "?from="+ from+ "&to="+ to,new TypeReference<Response<DeploymentEvents>>(){
+  String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_DEPLOYMENT_EVENTS_URL_FORMAT,deploymentId,String.valueOf(from),String.valueOf(to));
+  return executor.get(url,new TypeReference<Response<DeploymentEvents>>(){
   }
 );
 }

@@ -1,0 +1,5 @@
+{
+  super(restClient,deploymentId,verbose,createOneEntryMap(serviceName,plannedNumberOfInstances),createOneEntryMap(serviceName,currentNumberOfInstances));
+  this.serviceName=serviceName;
+  this.applicationName=applicationName != null ? applicationName : CloudifyConstants.DEFAULT_APPLICATION_NAME;
+}

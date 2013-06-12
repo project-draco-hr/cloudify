@@ -1,0 +1,26 @@
+{
+  ApplicationInstallationProcessInspector inspector=new ApplicationInstallationProcessInspector(restClient,deploymentId,applicationName,false,plannedNumberOfInstancesPerService);
+  int actualTimeout=initialTimeout;
+  boolean isDone=false;
+  displayer.printEvent("installing_application",applicationName);
+  displayer.printEvent("waiting_for_lifecycle_of_application",applicationName);
+  while (!isDone) {
+    try {
+      inspector.waitForLifeCycleToEnd(actualTimeout);
+      isDone=true;
+    }
+ catch (    final TimeoutException e) {
+      if (!askOnTimeout || !(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+        throw new CLIException(e.getMessage(),e);
+      }
+      displayer.printEvent("");
+      boolean continueViewing=promptWouldYouLikeToContinueQuestion();
+      if (continueViewing) {
+        actualTimeout=DEFAULT_TIMEOUT_MINUTES;
+      }
+ else {
+        throw new CLIStatusException(e,"application_installation_timed_out_on_client",applicationName);
+      }
+    }
+  }
+}

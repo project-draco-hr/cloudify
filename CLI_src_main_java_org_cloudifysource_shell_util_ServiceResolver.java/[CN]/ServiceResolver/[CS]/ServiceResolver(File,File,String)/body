@@ -1,0 +1,5 @@
+{
+  this.serviceDirectory=serviceDirectory;
+  this.overrides=overrides;
+  this.serviceOverrideName=serviceOverrideName;
+}

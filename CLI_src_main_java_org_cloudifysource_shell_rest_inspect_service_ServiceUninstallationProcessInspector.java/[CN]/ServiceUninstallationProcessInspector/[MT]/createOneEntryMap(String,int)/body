@@ -1,0 +1,5 @@
+{
+  Map<String,Integer> map=new HashMap<String,Integer>();
+  map.put(serviceName,numberOfInstances);
+  return map;
+}

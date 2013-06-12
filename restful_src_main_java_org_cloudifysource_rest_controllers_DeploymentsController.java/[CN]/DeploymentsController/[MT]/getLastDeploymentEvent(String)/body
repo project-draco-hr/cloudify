@@ -1,0 +1,20 @@
+{
+  EventsCacheKey key=new EventsCacheKey(operationId);
+  logger.fine(EventsUtils.getThreadId() + " Received request for last event of key : " + key);
+  EventsCacheValue value;
+  try {
+    logger.fine(EventsUtils.getThreadId() + " Retrieving events from cache for key : " + key);
+    value=eventsCache.get(key);
+  }
+ catch (  final ExecutionException e) {
+    throw e.getCause();
+  }
+synchronized (value.getMutex()) {
+    eventsCache.refresh(key);
+    int lastEventId=value.getLastEventIndex();
+    if (lastEventId > 0) {
+      lastEventId=lastEventId - 1;
+    }
+    return EventsUtils.extractDesiredEvents(value.getEvents(),lastEventId,lastEventId);
+  }
+}

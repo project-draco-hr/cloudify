@@ -1,0 +1,12 @@
+{
+  List<String> eventsStrings=new ArrayList<String>();
+  DeploymentEvents events=restClient.getDeploymentEvents(deploymentId,lastEventIndex,-1);
+  if (events == null || events.getEvents().isEmpty()) {
+    return eventsStrings;
+  }
+  for (  DeploymentEvent event : events.getEvents()) {
+    eventsStrings.add(event.getDescription());
+  }
+  lastEventIndex=events.getEvents().get(events.getEvents().size() - 1).getIndex() + 1;
+  return eventsStrings;
+}

@@ -1,0 +1,4 @@
+{
+  this.packedFile=packedFile;
+  this.overridesFile=overridesFile;
+}

@@ -1,0 +1,67 @@
+{
+  ConditionLatch conditionLatch=createConditionLatch(timeout);
+  conditionLatch.waitFor(new ConditionLatch.Predicate(){
+    boolean lifeCycleEnded=false;
+    boolean undeployEnded=false;
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      try {
+        List<String> latestEvents;
+        boolean ended=false;
+        if (!lifeCycleEnded) {
+          lifeCycleEnded=lifeCycleEnded();
+          latestEvents=getLatestEvents();
+          if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
+            undeployEnded=true;
+          }
+          if (!latestEvents.isEmpty()) {
+            if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
+              ended=true;
+            }
+            displayer.printEvents(latestEvents);
+          }
+ else {
+            if (!lifeCycleEnded) {
+              displayer.printNoChange();
+            }
+          }
+          printUnInstalledInstances();
+          if (lifeCycleEnded && waitForCloudResourcesRelease) {
+            displayer.printEvent("releasing cloud resources...");
+            return ended;
+          }
+        }
+        if (lifeCycleEnded) {
+          if (waitForCloudResourcesRelease) {
+            latestEvents=getLatestEvents();
+            undeployEnded=false;
+            if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
+              undeployEnded=true;
+            }
+ else {
+              displayer.printNoChange();
+            }
+            ended=lifeCycleEnded && undeployEnded;
+          }
+ else {
+            ended=true;
+          }
+        }
+        return ended;
+      }
+ catch (      final RestClientException e) {
+        throw new CLIException(e.getMessage(),e,e.getVerbose());
+      }
+    }
+    private void printUnInstalledInstances() throws RestClientException {
+      for (      Map.Entry<String,Integer> entry : plannedNumberOfInstancesPerService.entrySet()) {
+        int runningInstances=getNumberOfRunningInstances(entry.getKey());
+        Integer current=currentRunningInstancesPerService.get(entry.getKey());
+        if (runningInstances < current) {
+          displayer.printEvent("Installed " + runningInstances + " planned "+ entry.getValue());
+          currentRunningInstancesPerService.put(entry.getKey(),runningInstances);
+        }
+      }
+    }
+  }
+);
+}

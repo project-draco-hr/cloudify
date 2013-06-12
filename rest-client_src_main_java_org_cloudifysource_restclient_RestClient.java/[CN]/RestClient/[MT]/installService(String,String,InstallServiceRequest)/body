@@ -1,5 +1,5 @@
 {
-  final String installServiceUrl=versionedDeploymentControllerUrl + applicationName + "/services/"+ serviceName;
+  final String installServiceUrl=getFormattedUrl(versionedDeploymentControllerUrl,INSTALL_SERVICE_URL_FORMAT,applicationName,serviceName);
   return executor.postObject(installServiceUrl,request,new TypeReference<Response<InstallServiceResponse>>(){
   }
 );

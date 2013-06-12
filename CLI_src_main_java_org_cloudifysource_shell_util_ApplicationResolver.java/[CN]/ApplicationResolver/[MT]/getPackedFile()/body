@@ -1,0 +1,14 @@
+{
+  try {
+    if (!initialized) {
+      init();
+    }
+    return Packager.packApplication(application,applicationDir);
+  }
+ catch (  final IOException e) {
+    throw new CLIStatusException(e,"failed_to_package_application",applicationDir);
+  }
+catch (  final PackagingException e) {
+    throw new CLIStatusException(e,"failed_to_package_application",applicationDir);
+  }
+}

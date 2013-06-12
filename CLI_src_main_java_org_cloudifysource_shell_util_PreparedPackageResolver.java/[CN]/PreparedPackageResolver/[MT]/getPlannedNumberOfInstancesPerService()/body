@@ -1,0 +1,8 @@
+{
+  if (!initialized) {
+    init();
+  }
+  final Map<String,Integer> instanceCountMap=new HashMap<String,Integer>();
+  instanceCountMap.put(service.getName(),service.getNumInstances());
+  return instanceCountMap;
+}

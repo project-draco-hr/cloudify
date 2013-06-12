@@ -1,0 +1,6 @@
+RestClient restClient
+String deploymentId
+boolean verbose
+String serviceName
+int plannedNumberOfInstances
+String applicationName

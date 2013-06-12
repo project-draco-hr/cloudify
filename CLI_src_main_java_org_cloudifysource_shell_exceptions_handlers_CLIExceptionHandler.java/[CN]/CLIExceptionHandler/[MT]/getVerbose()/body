@@ -1,0 +1,8 @@
+{
+  if (e.getVerbose() == null) {
+    return ExceptionUtils.getFullStackTrace(e);
+  }
+ else {
+    return e.getVerbose();
+  }
+}

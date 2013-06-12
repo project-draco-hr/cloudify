@@ -1,0 +1,4 @@
+{
+  final ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(restConfig.getAdmin());
+  return appDescriptionFactory.getApplicationDescription(appName);
+}

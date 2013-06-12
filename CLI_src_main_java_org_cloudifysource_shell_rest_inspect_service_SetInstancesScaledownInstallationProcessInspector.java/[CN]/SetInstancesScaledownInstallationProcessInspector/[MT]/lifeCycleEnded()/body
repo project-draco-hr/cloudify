@@ -1,0 +1,6 @@
+{
+  ServiceDescription description=restClient.getServiceDescription(applicationName,serviceName);
+  final int numOfInstances=description.getInstanceCount();
+  final boolean finished=(numOfInstances == plannedNumberOfInstances);
+  return finished;
+}

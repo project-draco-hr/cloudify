@@ -1,0 +1,52 @@
+{
+  final RecipePathResolver pathResolver=new RecipePathResolver();
+  if (pathResolver.resolveApplication(applicationFile)) {
+    applicationFile=pathResolver.getResolved();
+  }
+ else {
+    throw new CLIStatusException("application_not_found",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
+  }
+  final NameAndPackedFileResolver nameAndPackedFileResolver=getResolver(applicationFile);
+  if (StringUtils.isBlank(applicationName)) {
+    applicationName=nameAndPackedFileResolver.getName();
+  }
+  final File packedFile=nameAndPackedFileResolver.getPackedFile();
+  final String packedFileKey=ShellUtils.uploadToRepo(newRestClient,packedFile,displayer);
+  final String overridesFileKey=ShellUtils.uploadToRepo(newRestClient,overrides,displayer);
+  final String cloudOverridesFileKey=ShellUtils.uploadToRepo(newRestClient,cloudOverrides,displayer);
+  final String cloudConfigurationFileKey=ShellUtils.uploadToRepo(newRestClient,cloudConfiguration,displayer);
+  InstallApplicationRequest request=new InstallApplicationRequest();
+  request.setApplcationFileUploadKey(packedFileKey);
+  request.setApplicationOverridesUploadKey(overridesFileKey);
+  request.setCloudOverridesUploadKey(cloudOverridesFileKey);
+  request.setCloudConfigurationUploadKey(cloudConfigurationFileKey);
+  request.setApplicationName(applicationName);
+  request.setAuthGroups(authGroups);
+  request.setDebugAll(debugAll);
+  request.setDebugEvents(debugEvents);
+  request.setDebugMode(debugModeString);
+  request.setSelfHealing(disableSelfHealing);
+  request.setTimeoutInMillis(TimeUnit.MINUTES.toMillis(timeoutInMinutes));
+  final InstallApplicationResponse installApplicationResponse=newRestClient.installApplication(applicationName,request);
+  Application application=((Application)nameAndPackedFileResolver.getDSLObject());
+  printApplicationInfo(application);
+  Map<String,Integer> plannedNumberOfInstancesPerService=nameAndPackedFileResolver.getPlannedNumberOfInstancesPerService();
+  CLIApplicationInstaller installer=new CLIApplicationInstaller();
+  installer.setApplicationName(applicationName);
+  installer.setAskOnTimeout(true);
+  installer.setDeploymentId(installApplicationResponse.getDeploymentID());
+  installer.setPlannedNumberOfInstancesPerService(plannedNumberOfInstancesPerService);
+  installer.setInitialTimeout(timeoutInMinutes);
+  installer.setRestClient(newRestClient);
+  installer.setSession(session);
+  if (!applicationFile.isFile()) {
+    final boolean delete=packedFile.delete();
+    if (!delete) {
+      logger.info("Failed to delete application file: " + packedFile.getAbsolutePath());
+    }
+  }
+  session.put(Constants.ACTIVE_APP,applicationName);
+  GigaShellMain.getInstance().setCurrentApplicationName(applicationName);
+  displayer.printEvent("");
+  return this.getFormattedMessage("application_installed_successfully",Color.GREEN,applicationName);
+}

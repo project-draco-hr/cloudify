@@ -1,0 +1,4 @@
+{
+  super(restClient,deploymentId,verbose,plannedNumberOfInstancesPerService,initWithZeros(plannedNumberOfInstancesPerService.keySet()));
+  this.applicationName=applicationName;
+}

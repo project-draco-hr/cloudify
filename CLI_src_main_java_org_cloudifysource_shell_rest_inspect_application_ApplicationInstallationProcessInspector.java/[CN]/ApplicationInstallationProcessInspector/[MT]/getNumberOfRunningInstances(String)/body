@@ -1,0 +1,16 @@
+{
+  int instanceCount;
+  try {
+    ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+    instanceCount=serviceDescription.getInstanceCount();
+  }
+ catch (  RestClientResponseException e) {
+    if (e.getStatusCode() == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+      instanceCount=0;
+    }
+ else {
+      throw e;
+    }
+  }
+  return instanceCount;
+}

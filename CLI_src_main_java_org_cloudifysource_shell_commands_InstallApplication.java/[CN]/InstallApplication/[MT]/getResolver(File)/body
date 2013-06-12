@@ -1,0 +1,9 @@
+{
+  if (applicationFile.isFile()) {
+    if (applicationFile.getName().endsWith("zip") || applicationFile.getName().endsWith("jar")) {
+      return new PreparedApplicationPackageResolver(applicationFile,overrides);
+    }
+    throw new CLIStatusException("application_file_format_mismatch",applicationFile.getPath());
+  }
+  return new ApplicationResolver(applicationFile);
+}

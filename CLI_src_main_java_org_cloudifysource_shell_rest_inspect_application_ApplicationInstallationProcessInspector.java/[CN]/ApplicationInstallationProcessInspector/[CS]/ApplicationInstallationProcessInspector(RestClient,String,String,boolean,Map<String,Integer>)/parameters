@@ -1,0 +1,5 @@
+RestClient restClient
+String deploymentId
+String applicationName
+boolean verbose
+Map<String,Integer> plannedNumberOfInstancesPerService

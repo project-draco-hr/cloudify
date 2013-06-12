@@ -1,0 +1,8 @@
+{
+  if (!initialized) {
+    init();
+  }
+  Map<String,Integer> plannedNumberOfInstancesPerService=new HashMap<String,Integer>();
+  plannedNumberOfInstancesPerService.put(getName(),service.getNumInstances());
+  return plannedNumberOfInstancesPerService;
+}

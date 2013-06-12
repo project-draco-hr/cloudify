@@ -1,0 +1,5 @@
+{
+  super(restClient,deploymentId,verbose,initWithZeros(currentRunningInstancesPerService.keySet()),currentRunningInstancesPerService);
+  this.applicationName=applicationName;
+  setEventIndex(nextEventId);
+}

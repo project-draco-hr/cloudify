@@ -1,5 +1,5 @@
 {
-  final String installApplicationUrl=versionedDeploymentControllerUrl + applicationName;
+  final String installApplicationUrl=getFormattedUrl(versionedDeploymentControllerUrl,INSTALL_APPLICATION_URL_FORMAT,applicationName);
   return executor.postObject(installApplicationUrl,request,new TypeReference<Response<InstallApplicationResponse>>(){
   }
 );

@@ -1,0 +1,28 @@
+{
+  final SetInstancesScaledownInstallationProcessInspector inspector=new SetInstancesScaledownInstallationProcessInspector(((RestAdminFacade)adminFacade).getNewRestClient(),deploymentID,verbose,serviceName,plannedNumberOfInstnaces,getCurrentApplicationName(),lastEventIndex,currentNumberOfInstances);
+  int actualTimeout=this.timeout;
+  boolean isDone=false;
+  displayer.printEvent("installing_service",serviceName,plannedNumberOfInstnaces);
+  displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
+  while (!isDone) {
+    try {
+      inspector.waitForLifeCycleToEnd(actualTimeout);
+      isDone=true;
+    }
+ catch (    final TimeoutException e) {
+      if (!(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+        throw new CLIException(e.getMessage(),e);
+      }
+      displayer.printEvent("");
+      final boolean continueViewing=promptWouldYouLikeToContinueQuestion();
+      if (continueViewing) {
+        actualTimeout=DEFAULT_TIMEOUT_MINUTES;
+      }
+ else {
+        throw new CLIStatusException(e,"service_installation_timed_out_on_client",serviceName);
+      }
+    }
+  }
+  displayer.printEvent("");
+  return getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
+}

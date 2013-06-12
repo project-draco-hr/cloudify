@@ -1,0 +1,7 @@
+{
+  final RecipePathResolver pathResolver=new RecipePathResolver();
+  if (pathResolver.resolveService(recipe)) {
+    return pathResolver.getResolved();
+  }
+  throw new CLIStatusException("service_file_doesnt_exist",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
+}

@@ -8,48 +8,25 @@
         throw new CLIStatusException("not_connected");
       }
     }
-    final Object result=doExecute();
-    return result;
+    if (this instanceof NewRestClientCommand && NewRestClientUtils.isNewRestClientEnabled()) {
+      return ((NewRestClientCommand)this).doExecuteNewRestClient();
+    }
+    return doExecute();
   }
- catch (  final CLIStatusException cse) {
-    if (verbose) {
-      if (cse.getVerboseData() == null) {
-        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse),cse);
-      }
- else {
-        logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse,cse.getVerboseData()));
-      }
-    }
- else {
-      logger.log(Level.WARNING,getFormattedMessageFromErrorStatusException(cse));
-    }
-    raiseCloseShellExceptionIfNonInteractive(session,cse);
+ catch (  final CLIStatusException e) {
+    handle(new CLIStatusExceptionHandler(e),e);
   }
 catch (  final CLIException e) {
-    if (!verbose) {
-      e.setStackTrace(new StackTraceElement[]{});
-    }
-    logger.log(Level.WARNING,"",e);
-    raiseCloseShellExceptionIfNonInteractive(session,e);
+    handle(new CLIExceptionHandler(e),e);
+  }
+catch (  final RestClientException e) {
+    handle(new RestClientExceptionHandler(e),e);
   }
 catch (  final InterruptedException e) {
-    final String msg=messages.getString("command_interrupted");
-    if (verbose) {
-      logger.log(Level.SEVERE,msg,e);
-    }
- else {
-      logger.log(Level.SEVERE,msg);
-    }
-    raiseCloseShellExceptionIfNonInteractive(session,e);
+    handle(new InterruptedExceptionHandler(),e);
   }
-catch (  final Throwable e) {
-    if (verbose) {
-      logger.log(Level.SEVERE,"",e);
-    }
- else {
-      logger.log(Level.SEVERE,e.getMessage());
-    }
-    raiseCloseShellExceptionIfNonInteractive(session,e);
+catch (  final Throwable t) {
+    handle(new ThrowableHandler(t),t);
   }
   return getFormattedMessage("op_failed",Color.RED,"");
 }

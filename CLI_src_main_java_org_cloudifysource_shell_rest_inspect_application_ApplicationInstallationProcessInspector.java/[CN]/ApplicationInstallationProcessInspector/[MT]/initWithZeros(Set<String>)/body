@@ -1,0 +1,7 @@
+{
+  Map<String,Integer> map=new HashMap<String,Integer>();
+  for (  String serviceName : serviceNames) {
+    map.put(serviceName,0);
+  }
+  return map;
+}

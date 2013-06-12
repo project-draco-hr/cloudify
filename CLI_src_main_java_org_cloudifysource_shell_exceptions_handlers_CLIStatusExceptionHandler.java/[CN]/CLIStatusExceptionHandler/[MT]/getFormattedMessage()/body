@@ -1,0 +1,7 @@
+{
+  String message=ShellUtils.getFormattedMessage(e.getReasonCode(),e.getArgs());
+  if (message == null) {
+    message=e.getReasonCode();
+  }
+  return message;
+}

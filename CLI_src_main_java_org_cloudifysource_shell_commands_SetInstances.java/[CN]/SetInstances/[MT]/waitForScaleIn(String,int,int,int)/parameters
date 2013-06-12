@@ -1,0 +1,4 @@
+String deploymentID
+int plannedNumberOfInstnaces
+int lastEventIndex
+int currentNumberOfInstances

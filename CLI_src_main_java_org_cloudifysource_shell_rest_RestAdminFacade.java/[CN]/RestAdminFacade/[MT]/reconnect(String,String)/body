@@ -1,7 +1,9 @@
 {
   try {
     client.setCredentials(username,password);
+    newRestClient.setCredentials(username,password);
     client.get(SERVICE_CONTROLLER_URL + "testlogin");
+    newRestClient.connect();
   }
  catch (  final ErrorStatusException e) {
     throw new CLIStatusException(e,e.getReasonCode(),e.getArgs());

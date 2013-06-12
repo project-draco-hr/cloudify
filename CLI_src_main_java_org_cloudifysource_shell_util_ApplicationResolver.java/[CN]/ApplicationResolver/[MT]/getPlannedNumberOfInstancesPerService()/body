@@ -1,0 +1,10 @@
+{
+  if (!initialized) {
+    init();
+  }
+  final Map<String,Integer> deploymentIDsMap=new HashMap<String,Integer>();
+  for (  Service service : application.getServices()) {
+    deploymentIDsMap.put(service.getName(),service.getNumInstances());
+  }
+  return deploymentIDsMap;
+}

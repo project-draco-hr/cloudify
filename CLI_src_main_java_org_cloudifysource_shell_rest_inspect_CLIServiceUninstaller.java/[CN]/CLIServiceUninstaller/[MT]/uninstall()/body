@@ -1,0 +1,31 @@
+{
+  ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+  final int nextEventId=getNextEventId(restClient,serviceDescription.getDeploymentId());
+  int currentNumberOfRunningInstances=serviceDescription.getInstanceCount();
+  restClient.uninstallService(applicationName,serviceName,initialTimeout);
+  ServiceUninstallationProcessInspector inspector=new ServiceUninstallationProcessInspector(restClient,serviceDescription.getDeploymentId(),false,currentNumberOfRunningInstances,serviceName,applicationName,nextEventId);
+  boolean isDone=false;
+  displayer.printEvent("uninstalling_service",serviceName);
+  displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
+  int actualTimeout=initialTimeout;
+  while (!isDone) {
+    try {
+      inspector.waitForLifeCycleToEnd(actualTimeout);
+      isDone=true;
+    }
+ catch (    final TimeoutException e) {
+      if (!askOnTimeout || !(Boolean)session.get(Constants.INTERACTIVE_MODE)) {
+        throw new CLIException(e.getMessage(),e);
+      }
+      displayer.printEvent("");
+      boolean continueViewing=promptWouldYouLikeToContinueQuestion();
+      if (continueViewing) {
+        actualTimeout=DEFAULT_TIMEOUT_MINUTES;
+      }
+ else {
+        throw new CLIStatusException(e,"service_uninstallation_timed_out_on_client",serviceName);
+      }
+    }
+  }
+  displayer.printEvent("");
+}

@@ -1,3 +1,4 @@
 {
   client=null;
+  newRestClient=null;
 }

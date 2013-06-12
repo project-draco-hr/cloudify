@@ -1,0 +1,6 @@
+RestClient restClient
+String deploymentId
+boolean verbose
+Map<String,Integer> currentRunningInstancesPerService
+String applicationName
+int nextEventId

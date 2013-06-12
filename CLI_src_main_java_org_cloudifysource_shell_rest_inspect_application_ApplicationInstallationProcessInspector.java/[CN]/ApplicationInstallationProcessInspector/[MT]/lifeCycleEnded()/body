@@ -1,0 +1,4 @@
+{
+  ApplicationDescription applicationDescription=restClient.getApplicationDescription(applicationName);
+  return applicationDescription.getApplicationState().equals(CloudifyConstants.DeploymentState.STARTED);
+}

@@ -1,0 +1,31 @@
+{
+  NameAndPackedFileResolver nameAndPackedFileResolver=getResolver(recipe);
+  serviceName=nameAndPackedFileResolver.getName();
+  File packedFile=nameAndPackedFileResolver.getPackedFile();
+  final String cloudConfigurationFileKey=ShellUtils.uploadToRepo(newRestClient,cloudConfiguration,displayer);
+  final String cloudOverridesFileKey=ShellUtils.uploadToRepo(newRestClient,cloudOverrides,displayer);
+  final String overridesFileKey=ShellUtils.uploadToRepo(newRestClient,overrides,displayer);
+  final String recipeFileKey=ShellUtils.uploadToRepo(newRestClient,packedFile,displayer);
+  InstallServiceRequest request=new InstallServiceRequest();
+  request.setAuthGroups(authGroups);
+  request.setCloudConfigurationUploadKey(cloudConfigurationFileKey);
+  request.setDebugAll(debugAll);
+  request.setCloudOverridesUploadKey(cloudOverridesFileKey);
+  request.setDebugEvents(debugEvents);
+  request.setServiceOverridesUploadKey(overridesFileKey);
+  request.setServiceFolderUploadKey(recipeFileKey);
+  request.setSelfHealing(disableSelfHealing);
+  request.setTimeoutInMillis(timeoutInMinutes * DateUtils.MILLIS_PER_MINUTE);
+  InstallServiceResponse installServiceResponse=newRestClient.installService(getCurrentApplicationName(),serviceName,request);
+  CLIServiceInstaller installer=new CLIServiceInstaller();
+  installer.setApplicationName(getCurrentApplicationName());
+  installer.setAskOnTimeout(true);
+  installer.setDeploymentId(installServiceResponse.getDeploymentID());
+  installer.setInitialTimeout(timeoutInMinutes);
+  installer.setRestClient(newRestClient);
+  installer.setServiceName(serviceName);
+  installer.setSession(session);
+  installer.setPlannedNumberOfInstances(nameAndPackedFileResolver.getPlannedNumberOfInstancesPerService().get(serviceName));
+  installer.install();
+  return getFormattedMessage("service_install_ended",Color.GREEN,serviceName);
+}

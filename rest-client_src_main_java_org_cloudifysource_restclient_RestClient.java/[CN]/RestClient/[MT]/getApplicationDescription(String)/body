@@ -1,5 +1,6 @@
 {
-  return executor.get(versionedDeploymentControllerUrl + "/applications/" + appName+ "/description",new TypeReference<Response<ApplicationDescription>>(){
+  String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_APPLICATION_DESCRIPTION_URL_FORMAT,appName);
+  return executor.get(url,new TypeReference<Response<ApplicationDescription>>(){
   }
 );
 }

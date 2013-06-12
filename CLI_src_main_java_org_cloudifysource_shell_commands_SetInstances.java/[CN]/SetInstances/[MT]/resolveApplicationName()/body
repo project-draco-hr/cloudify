@@ -1,0 +1,7 @@
+{
+  String applicationName=this.getCurrentApplicationName();
+  if (applicationName == null) {
+    applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
+  }
+  return applicationName;
+}

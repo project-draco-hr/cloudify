@@ -1,0 +1,9 @@
+{
+  if (!initialized) {
+    init();
+  }
+  if (serviceOverrideName != null) {
+    return serviceOverrideName;
+  }
+  return service.getName();
+}

@@ -1,0 +1,37 @@
+{
+  ConditionLatch conditionLatch=createConditionLatch(timeout);
+  conditionLatch.waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      try {
+        printInstalledInstances();
+        boolean ended=lifeCycleEnded();
+        List<String> latestEvents=getLatestEvents();
+        if (!latestEvents.isEmpty()) {
+          displayer.printEvents(latestEvents);
+        }
+ else {
+          if (!ended) {
+            displayer.printNoChange();
+          }
+        }
+        if (ended) {
+          printInstalledInstances();
+        }
+        return ended;
+      }
+ catch (      final RestClientException e) {
+        throw new CLIException(e.getMessage(),e,e.getVerbose());
+      }
+    }
+    private void printInstalledInstances() throws RestClientException {
+      for (      Map.Entry<String,Integer> entry : plannedNumberOfInstancesPerService.entrySet()) {
+        int runningInstances=getNumberOfRunningInstances(entry.getKey());
+        if (runningInstances > currentRunningInstancesPerService.get(entry.getKey())) {
+          displayer.printEvent("succesfully_installed_instances",runningInstances,entry.getValue(),entry.getKey());
+          currentRunningInstancesPerService.put(entry.getKey(),runningInstances);
+        }
+      }
+    }
+  }
+);
+}

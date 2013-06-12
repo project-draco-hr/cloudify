@@ -1,0 +1,8 @@
+{
+  try {
+    this.service=ServiceReader.readServiceFromZip(zipFile);
+  }
+ catch (  final Exception e) {
+    throw new CLIStatusException(e,"read_dsl_file_failed",zipFile,e.getMessage());
+  }
+}

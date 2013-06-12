@@ -1,0 +1,3 @@
+{
+  return new ConditionLatch().verbose(verbose).pollingInterval(POLLING_INTERVAL_MILLI_SECONDS,TimeUnit.MILLISECONDS).timeout(timeout,TimeUnit.MINUTES).timeoutErrorMessage(getTimeoutErrorMessage());
+}

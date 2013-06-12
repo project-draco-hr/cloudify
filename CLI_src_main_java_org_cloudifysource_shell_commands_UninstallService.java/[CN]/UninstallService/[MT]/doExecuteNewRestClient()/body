@@ -1,0 +1,14 @@
+{
+  if (!askUninstallConfirmationQuestion()) {
+    return getFormattedMessage("uninstall_aborted");
+  }
+  CLIServiceUninstaller uninstaller=new CLIServiceUninstaller();
+  uninstaller.setApplicationName(getCurrentApplicationName());
+  uninstaller.setAskOnTimeout(true);
+  uninstaller.setInitialTimeout(timeoutInMinutes);
+  uninstaller.setRestClient(newRestClient);
+  uninstaller.setServiceName(serviceName);
+  uninstaller.setSession(session);
+  uninstaller.uninstall();
+  return getFormattedMessage("undeployed_successfully",Color.GREEN,serviceName);
+}
