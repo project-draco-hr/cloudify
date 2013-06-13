@@ -1,0 +1,9 @@
+{
+  final ServiceInstanceAttemptData template=new ServiceInstanceAttemptData();
+  final FullServiceName fullName=ServiceUtils.getFullServiceName(this.clusterName);
+  template.setApplicationName(fullName.getApplicationName());
+  template.setGscPid(this.myPid);
+  template.setServiceName(fullName.getServiceName());
+  template.setInstanceId(this.instanceId);
+  return template;
+}

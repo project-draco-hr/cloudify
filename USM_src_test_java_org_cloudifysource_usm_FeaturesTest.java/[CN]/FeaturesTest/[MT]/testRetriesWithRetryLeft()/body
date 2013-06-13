@@ -1,0 +1,17 @@
+{
+  IntegratedProcessingUnitContainer ipuc=createContainer("classpath:/retries/META-INF/spring/pu.xml");
+  try {
+    ApplicationContext ctx=ipuc.getApplicationContext();
+    final UniversalServiceManagerBean usm=ctx.getBean(UniversalServiceManagerBean.class);
+    Assert.assertNotNull(usm);
+    ServiceInstanceAttemptData attempt=gigaspace.read(new ServiceInstanceAttemptData(),20000);
+    Assert.assertNotNull("Expected to find attempt data in space",attempt);
+    Assert.assertEquals((Integer)2,attempt.getCurrentAttemptNumber());
+    Assert.assertEquals((Integer)1,attempt.getInstanceId());
+    Assert.assertEquals("groovyError",attempt.getServiceName());
+    Assert.assertEquals("default",attempt.getApplicationName());
+  }
+  finally {
+    ipuc.close();
+  }
+}

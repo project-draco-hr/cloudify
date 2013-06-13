@@ -1,0 +1,7 @@
+{
+  if (admin == null) {
+    return;
+  }
+  admin.close();
+  admin=null;
+}

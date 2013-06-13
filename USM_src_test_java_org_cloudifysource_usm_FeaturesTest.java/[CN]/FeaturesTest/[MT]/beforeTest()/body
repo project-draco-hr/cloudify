@@ -1,0 +1,4 @@
+{
+  gigaspace.clear(new Object());
+  USMUtils.clearAdmin();
+}

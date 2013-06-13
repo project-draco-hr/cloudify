@@ -2,4 +2,9 @@
   deleteServiceInstanceAttributes(applicationName,serviceName,null);
   final ServiceCloudifyAttribute serviceAttributeTemplate=new ServiceCloudifyAttribute(applicationName,serviceName,null,null);
   gigaSpace.takeMultiple(serviceAttributeTemplate);
+  ServiceInstanceAttemptData template=new ServiceInstanceAttemptData();
+  template.setApplicationName(applicationName);
+  template.setServiceName(serviceName);
+  ServiceInstanceAttemptData[] attempts=gigaSpace.takeMultiple(template);
+  logger.info("Removed " + attempts.length + " instance attempts from management space");
 }

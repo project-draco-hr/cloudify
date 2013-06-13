@@ -1,5 +1,5 @@
 {
-  Service service=getUsmLifecycleBean().getConfiguration().getService();
+  final Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
     final StorageFacade storage=getUsmLifecycleBean().getConfiguration().getServiceContext().getStorage();
@@ -12,7 +12,7 @@
  else {
         getUsmLifecycleBean().log("De-allocating storage");
         logger.fine("Detected an existing volume for this service upon de-allocation. found in state : " + serviceVolume.getState());
-        StorageTemplate template=storage.getTemplate(storageTemplateName);
+        final StorageTemplate template=storage.getTemplate(storageTemplateName);
         final boolean deleteStorage=template.isDeleteOnExit();
         logger.fine("Storage will be deleted = " + deleteStorage);
 switch (serviceVolume.getState()) {

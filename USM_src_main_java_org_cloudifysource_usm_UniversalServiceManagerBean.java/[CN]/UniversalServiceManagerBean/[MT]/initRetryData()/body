@@ -1,0 +1,4 @@
+{
+  retries=this.usmLifecycleBean.getConfiguration().getService().getRetries();
+  logger.info("Retry limit for this service is: " + retries + ". Retry in use: "+ isRetryLimitUsed());
+}

@@ -6,5 +6,5 @@
   }
   currentAttempt=getCurrentAttemptNumber();
   logger.info("Current attempt number is: " + currentAttempt);
-  return (currentAttempt > retries);
+  return currentAttempt > retries;
 }

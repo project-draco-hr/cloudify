@@ -1,0 +1,8 @@
+{
+  retries=this.usmLifecycleBean.getConfiguration().getService().getRetries();
+  if (retries == -1) {
+    return;
+  }
+  ServiceInstanceAttemptData template=createInstanceAttemptDataTemplate();
+  this.managementSpace.clear(template);
+}

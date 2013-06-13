@@ -1,5 +1,5 @@
 {
-  Service service=getUsmLifecycleBean().getConfiguration().getService();
+  final Service service=getUsmLifecycleBean().getConfiguration().getService();
   final String storageTemplateName=service.getStorage().getTemplate();
   if (StringUtils.isNotBlank(storageTemplateName)) {
     try {
@@ -13,7 +13,7 @@
         getUsmLifecycleBean().log("Creating volume");
         final String id=storage.createVolume(storageTemplateName);
         getUsmLifecycleBean().log("Volume created with id " + id);
-        ServiceVolume newServiceVolume=managementSpace.readById(ServiceVolume.class,id);
+        final ServiceVolume newServiceVolume=managementSpace.readById(ServiceVolume.class,id);
         logger.fine("Flagging service volume with id " + id + " to be static storage.");
         managementSpace.change(newServiceVolume,new ChangeSet().set("dynamic",false));
         getUsmLifecycleBean().log("Attaching volume to device " + storageTemplate.getDeviceName());

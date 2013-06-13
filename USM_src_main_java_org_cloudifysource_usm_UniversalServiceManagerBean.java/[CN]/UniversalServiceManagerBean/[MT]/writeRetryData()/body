@@ -1,0 +1,14 @@
+{
+  if (!isRetryLimitUsed()) {
+    return;
+  }
+  if (this.instanceAttemptData == null) {
+    this.instanceAttemptData=createInstanceAttemptDataTemplate();
+    instanceAttemptData.setCurrentAttemptNumber(2);
+  }
+ else {
+    this.instanceAttemptData.setCurrentAttemptNumber(this.instanceAttemptData.getCurrentAttemptNumber() + 1);
+  }
+  logger.info("Writing attempt data to space with instance number: " + this.instanceAttemptData.getCurrentAttemptNumber());
+  this.managementSpace.write(this.instanceAttemptData);
+}

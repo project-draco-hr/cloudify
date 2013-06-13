@@ -1,0 +1,3 @@
+{
+  return "ServiceInstanceAttemptData [uid=" + uid + ", gscPid="+ gscPid+ ", applicationName="+ applicationName+ ", serviceName="+ serviceName+ ", instanceId="+ instanceId+ ", currentAttemptNumber="+ currentAttemptNumber+ "]";
+}

@@ -1,0 +1,15 @@
+{
+  ServiceInstanceAttemptData data=createServiceInstanceAttempDataTemplate();
+  data.setCurrentAttemptNumber(2);
+  gigaspace.write(data);
+  IntegratedProcessingUnitContainer ipuc=createContainer("classpath:/retries/META-INF/spring/pu.xml");
+  try {
+    ApplicationContext ctx=ipuc.getApplicationContext();
+    final UniversalServiceManagerBean usm=ctx.getBean(UniversalServiceManagerBean.class);
+    Assert.assertNotNull(usm);
+    waitForInstanceToReachStatus(usm,USMState.ERROR);
+  }
+  finally {
+    ipuc.close();
+  }
+}

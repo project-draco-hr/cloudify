@@ -1,5 +1,5 @@
 {
-  ServiceVolume serviceVolume=new ServiceVolume();
+  final ServiceVolume serviceVolume=new ServiceVolume();
   serviceVolume.setApplicationName(serviceContext.getApplicationName());
   serviceVolume.setServiceName(serviceContext.getServiceName());
   serviceVolume.setIp(serviceContext.getBindAddress());

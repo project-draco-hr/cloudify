@@ -1,0 +1,8 @@
+{
+  ServiceInstanceAttemptData data=new ServiceInstanceAttemptData();
+  data.setApplicationName("default");
+  data.setServiceName("groovyError");
+  data.setGscPid(new Sigar().getPid());
+  data.setInstanceId(1);
+  return data;
+}

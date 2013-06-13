@@ -1,0 +1,5 @@
+{
+  admin.close();
+  urlSpaceConfigurer.destroy();
+  System.out.println("Closed down embedded space");
+}
