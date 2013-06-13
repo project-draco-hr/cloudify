@@ -40,6 +40,10 @@
     }
  else {
       cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
+      long usmRequiredMemoryInMB=MemoryUnit.toMegaBytes(cloud.getConfiguration().getComponents().getUsm().getMaxMemory());
+      if (usmRequiredMemoryInMB >= cloudExternalProcessMemoryInMB) {
+        throw new IllegalArgumentException("the usm required memory " + usmRequiredMemoryInMB + " can not be more then the total memory defined for a service instance "+ cloudExternalProcessMemoryInMB);
+      }
     }
     logger.info("Creating cloud machine provisioning config. Template remote directory is: " + template.getRemoteDirectory());
     final CloudifyMachineProvisioningConfig config=new CloudifyMachineProvisioningConfig(cloud,template,templateName,this.managementTemplate.getRemoteDirectory(),service.getStorage() != null ? service.getStorage().getTemplate() : null);
