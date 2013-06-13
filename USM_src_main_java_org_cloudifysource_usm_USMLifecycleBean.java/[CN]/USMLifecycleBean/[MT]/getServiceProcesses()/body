@@ -5,7 +5,7 @@
     if (processLocator != null) {
       final List<Long> processIDs=processLocator.getProcessIDs();
       if (processIDs.isEmpty()) {
-        logger.warning("A process locator returned no process IDs. " + "If this is normal, you can ignote this warning. " + "Otherwise, check that your process locator is correctly configured");
+        logger.warning("A process locator returned no process IDs. " + "If this is normal, you can ignore this warning. " + "Otherwise, check that your process locator is correctly configured");
       }
       set.addAll(processIDs);
     }
