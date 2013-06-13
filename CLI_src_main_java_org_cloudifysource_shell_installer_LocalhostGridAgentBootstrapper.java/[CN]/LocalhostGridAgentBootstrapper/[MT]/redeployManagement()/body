@@ -1,5 +1,5 @@
 {
-  ManagementRedeployer redeployer=new ManagementRedeployer();
+  final ManagementRedeployer redeployer=new ManagementRedeployer();
   try {
     redeployer.run(cloud.getConfiguration().getPersistentStoragePath(),Environment.getHomeDirectory());
   }

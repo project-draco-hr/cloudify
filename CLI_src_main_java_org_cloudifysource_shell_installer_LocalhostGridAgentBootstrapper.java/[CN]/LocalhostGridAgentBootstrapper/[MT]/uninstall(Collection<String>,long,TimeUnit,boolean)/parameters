@@ -1,0 +1,4 @@
+Collection<String> applicationsList
+long timeout
+TimeUnit timeunit
+boolean applicationsExist

@@ -1,0 +1,17 @@
+{
+  final int minutesToEnd=(int)TimeUnit.MILLISECONDS.toMinutes(millisToEnd);
+  final Map<String,String> lifeCycleEventContainersIdsByApplicationName=new HashMap<String,String>();
+  if (applicationsList.size() > 0) {
+    logger.info("Uninstalling the currently deployed applications");
+    for (    final String application : applicationsList) {
+      if (!application.equals(MANAGEMENT_APPLICATION)) {
+        final Map<String,String> uninstallApplicationResponse=adminFacade.uninstallApplication(application,minutesToEnd);
+        lifeCycleEventContainersIdsByApplicationName.put(uninstallApplicationResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID),application);
+      }
+    }
+  }
+  for (  final Map.Entry<String,String> entry : lifeCycleEventContainersIdsByApplicationName.entrySet()) {
+    logger.info("Waiting for application " + entry.getValue() + " to uninstall.");
+    adminFacade.waitForLifecycleEvents(entry.getKey(),minutesToEnd,CloudifyConstants.TIMEOUT_ERROR_MESSAGE);
+  }
+}

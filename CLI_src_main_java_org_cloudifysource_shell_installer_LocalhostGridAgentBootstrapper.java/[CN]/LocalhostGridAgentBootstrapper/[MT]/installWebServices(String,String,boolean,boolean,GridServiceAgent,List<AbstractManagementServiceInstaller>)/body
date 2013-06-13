@@ -1,7 +1,7 @@
 {
-  String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
+  final String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
   final String webuiMemory=getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR);
-  int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
+  final int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
   final ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
   webuiInstaller.setAdmin(agent.getAdmin());
   webuiInstaller.setVerbose(verbose);

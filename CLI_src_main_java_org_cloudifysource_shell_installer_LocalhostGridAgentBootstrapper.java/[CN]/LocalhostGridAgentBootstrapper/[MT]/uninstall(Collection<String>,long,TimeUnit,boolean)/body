@@ -1,0 +1,35 @@
+{
+  for (  final String appName : applicationsList) {
+    try {
+      if (!appName.equals(MANAGEMENT_APPLICATION)) {
+        logger.fine("Uninstalling application " + appName);
+        final Map<String,String> uninstallApplicationResponse=adminFacade.uninstallApplication(appName,(int)timeout);
+        if (uninstallApplicationResponse.containsKey(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID)) {
+          final String pollingID=uninstallApplicationResponse.get(CloudifyConstants.LIFECYCLE_EVENT_CONTAINER_ID);
+          this.adminFacade.waitForLifecycleEvents(pollingID,(int)timeout,CloudifyConstants.TIMEOUT_ERROR_MESSAGE);
+        }
+ else {
+          publishEvent("Failed to retrieve lifecycle logs from rest. " + "Check logs for more details.");
+        }
+      }
+    }
+ catch (    final CLIException e) {
+      final String errorMessage="Application " + appName + " faild to uninstall."+ " Continuing teardown-localcloud.";
+      if (!force) {
+        throw new CLIStatusException(e,"failed_to_uninstall_app_before_teardown",appName);
+      }
+      if (verbose) {
+        logger.log(Level.FINE,errorMessage,e);
+        publishEvent(errorMessage);
+      }
+ else {
+        logger.log(Level.FINE,errorMessage);
+      }
+    }
+  }
+  if (applicationsExist) {
+    waitForUninstallApplications(timeout,timeunit);
+    publishEvent(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
+    logger.fine(ShellUtils.getMessageBundle().getString("all_apps_removed_before_teardown"));
+  }
+}

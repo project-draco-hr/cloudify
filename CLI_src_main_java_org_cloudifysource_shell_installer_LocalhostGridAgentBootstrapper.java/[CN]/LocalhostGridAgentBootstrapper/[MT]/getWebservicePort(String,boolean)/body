@@ -19,7 +19,7 @@
     }
   }
  else {
-    String portAsString=System.getenv().get(portEnvVriable);
+    final String portAsString=System.getenv().get(portEnvVriable);
     if (org.apache.commons.lang.StringUtils.isBlank(portAsString)) {
       throw new IllegalStateException("Could not find web-service port variable in environment");
     }
