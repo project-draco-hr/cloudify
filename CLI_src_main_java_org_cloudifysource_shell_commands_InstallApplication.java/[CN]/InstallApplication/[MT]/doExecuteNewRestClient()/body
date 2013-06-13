@@ -11,6 +11,7 @@
     applicationName=nameAndPackedFileResolver.getName();
   }
   final File packedFile=nameAndPackedFileResolver.getPackedFile();
+  RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   final String packedFileKey=ShellUtils.uploadToRepo(newRestClient,packedFile,displayer);
   final String overridesFileKey=ShellUtils.uploadToRepo(newRestClient,overrides,displayer);
   final String cloudOverridesFileKey=ShellUtils.uploadToRepo(newRestClient,cloudOverrides,displayer);

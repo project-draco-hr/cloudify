@@ -1,4 +1,5 @@
 {
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   final String applicationName=resolveApplicationName();
   final ServiceDescription serviceDescription=newRestClient.getServiceDescription(applicationName,serviceName);
   final String deploymentId=serviceDescription.getDeploymentId();

@@ -1,4 +1,5 @@
 {
+  RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   NameAndPackedFileResolver nameAndPackedFileResolver=getResolver(recipe);
   serviceName=nameAndPackedFileResolver.getName();
   File packedFile=nameAndPackedFileResolver.getPackedFile();

@@ -6,7 +6,7 @@
   uninstaller.setApplicationName(getCurrentApplicationName());
   uninstaller.setAskOnTimeout(true);
   uninstaller.setInitialTimeout(timeoutInMinutes);
-  uninstaller.setRestClient(newRestClient);
+  uninstaller.setRestClient(((RestAdminFacade)getRestAdminFacade()).getNewRestClient());
   uninstaller.setServiceName(serviceName);
   uninstaller.setSession(session);
   uninstaller.uninstall();

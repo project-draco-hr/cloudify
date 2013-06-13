@@ -9,7 +9,7 @@
   uninstaller.setApplicationName(applicationName);
   uninstaller.setAskOnTimeout(true);
   uninstaller.setInitialTimeout(timeoutInMinutes);
-  uninstaller.setRestClient(newRestClient);
+  uninstaller.setRestClient(((RestAdminFacade)getRestAdminFacade()).getNewRestClient());
   uninstaller.setSession(session);
   uninstaller.uninstall();
   session.put(Constants.ACTIVE_APP,CloudifyConstants.DEFAULT_APPLICATION_NAME);
