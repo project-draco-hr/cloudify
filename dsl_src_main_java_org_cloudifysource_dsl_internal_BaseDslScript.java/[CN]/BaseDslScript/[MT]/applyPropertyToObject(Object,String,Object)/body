@@ -38,7 +38,7 @@
     throw new DSLValidationRuntimeException(e);
   }
 catch (  final Exception e) {
-    throw new IllegalArgumentException("Failed to set property " + name + " of Object "+ object+ " to value: "+ value,e);
+    throw new IllegalArgumentException("Failed to set property " + name + " of Object "+ object+ " to value: "+ value+ ". Error was: "+ e.getMessage(),e);
   }
   checkForApplicationServiceBlockNameParameter(name,value);
 }

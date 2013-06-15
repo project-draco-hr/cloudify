@@ -1,0 +1,3 @@
+{
+  BeanUtilsBean.getInstance().getConvertUtils().register(true,false,0);
+}
