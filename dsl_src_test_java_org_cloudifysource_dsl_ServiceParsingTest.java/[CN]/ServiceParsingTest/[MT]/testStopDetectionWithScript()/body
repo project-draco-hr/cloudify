@@ -1,0 +1,10 @@
+{
+  final File serviceFile=new File(TEST_PARSING_RESOURCE_BASE + "misc/stopDetectionScript-service.groovy");
+  try {
+    ServiceReader.getServiceFromFile(serviceFile);
+    Assert.fail("Expected parsing to fail");
+  }
+ catch (  PackagingException e) {
+    Assert.assertTrue("Unexpected error message: " + e.getMessage(),e.getMessage().contains("The stop detection field only supports execution of closures"));
+  }
+}
