@@ -1,0 +1,8 @@
+{
+  LogEntryMatcherProvider provider=new LogEntryMatcherProvider();
+  GridServiceContainer mockContainer=createMockContainer("containerUid");
+  LogEntryMatcherProviderKey key1=createKey(mockContainer,"deploymentId1");
+  LogEntryMatcherProviderKey key2=createKey(mockContainer,"deploymentId2");
+  Assert.assertEquals(getLogEntryMatcher(provider,key1),getLogEntryMatcher(provider,key1));
+  Assert.assertNotSame(getLogEntryMatcher(provider,key1),getLogEntryMatcher(provider,key2));
+}

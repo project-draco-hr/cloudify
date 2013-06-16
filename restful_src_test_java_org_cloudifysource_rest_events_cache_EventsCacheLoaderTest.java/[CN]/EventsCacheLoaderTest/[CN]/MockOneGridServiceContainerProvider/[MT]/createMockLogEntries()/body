@@ -1,0 +1,12 @@
+{
+  List<LogEntry> logEntries=new ArrayList<LogEntry>();
+  for (int i=0; i < LOG_ENTRIES_BATCH_SIZE; i++) {
+    LogEntry entry=createMockLogEntry();
+    logEntries.add(entry);
+  }
+  LogEntries mockLogEntries=Mockito.mock(LogEntries.class);
+  Mockito.when(mockLogEntries.iterator()).thenReturn(logEntries.iterator());
+  Mockito.when(mockLogEntries.getHostAddress()).thenReturn("hostAddress");
+  Mockito.when(mockLogEntries.getHostName()).thenReturn("hostName");
+  return mockLogEntries;
+}

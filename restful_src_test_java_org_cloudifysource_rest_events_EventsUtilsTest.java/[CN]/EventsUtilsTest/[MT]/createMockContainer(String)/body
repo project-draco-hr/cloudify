@@ -1,0 +1,5 @@
+{
+  GridServiceContainer mockContainer=Mockito.mock(GridServiceContainer.class);
+  Mockito.when(mockContainer.getUid()).thenReturn(containerUid);
+  return mockContainer;
+}

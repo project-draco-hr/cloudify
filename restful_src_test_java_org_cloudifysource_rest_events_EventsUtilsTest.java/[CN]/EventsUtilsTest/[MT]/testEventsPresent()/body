@@ -1,0 +1,6 @@
+{
+  DeploymentEvents events=createEvents(0,10);
+  Assert.assertTrue(EventsUtils.eventsPresent(events,0,10));
+  Assert.assertTrue(EventsUtils.eventsPresent(events,5,8));
+  Assert.assertFalse(EventsUtils.eventsPresent(events,0,15));
+}

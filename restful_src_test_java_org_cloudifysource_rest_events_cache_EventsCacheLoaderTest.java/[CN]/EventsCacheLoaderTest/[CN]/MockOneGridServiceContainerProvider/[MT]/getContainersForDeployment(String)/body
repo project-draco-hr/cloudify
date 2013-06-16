@@ -1,0 +1,6 @@
+{
+  Set<GridServiceContainer> containers=new HashSet<GridServiceContainer>();
+  containers.add(createMockContainer());
+  containersPerDeployment.put(deploymentId,containers);
+  return containers;
+}

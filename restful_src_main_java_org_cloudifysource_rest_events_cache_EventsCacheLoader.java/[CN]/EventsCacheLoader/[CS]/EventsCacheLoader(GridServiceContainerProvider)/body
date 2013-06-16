@@ -1,0 +1,4 @@
+{
+  this.matcherProvider=new LogEntryMatcherProvider();
+  this.containerProvider=containerProvider;
+}

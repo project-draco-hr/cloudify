@@ -1,0 +1,6 @@
+{
+  LogEntry mockLogEntry=Mockito.mock(LogEntry.class);
+  Mockito.when(mockLogEntry.isLog()).thenReturn(true);
+  Mockito.when(mockLogEntry.getText()).thenReturn("USMLOGGER - Event" + System.currentTimeMillis());
+  return mockLogEntry;
+}

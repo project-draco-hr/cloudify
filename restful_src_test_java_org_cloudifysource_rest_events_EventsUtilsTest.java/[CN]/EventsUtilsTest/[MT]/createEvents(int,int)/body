@@ -1,0 +1,8 @@
+{
+  DeploymentEvents events=new DeploymentEvents();
+  for (int i=from; i <= to; i++) {
+    DeploymentEvent event=createEvent(i);
+    events.getEvents().add(event);
+  }
+  return events;
+}

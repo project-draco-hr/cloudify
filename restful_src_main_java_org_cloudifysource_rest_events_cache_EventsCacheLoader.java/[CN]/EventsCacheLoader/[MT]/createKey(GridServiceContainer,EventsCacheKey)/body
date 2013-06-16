@@ -1,6 +1,6 @@
 {
   LogEntryMatcherProviderKey logEntryMatcherProviderKey=new LogEntryMatcherProviderKey();
-  logEntryMatcherProviderKey.setDeploymentId(key.getOperationId());
+  logEntryMatcherProviderKey.setDeploymentId(key.getDeploymentId());
   logEntryMatcherProviderKey.setContainer(container);
   return logEntryMatcherProviderKey;
 }

@@ -4,7 +4,6 @@
       logger.fine(EventsUtils.getThreadId() + "Loading matcher cache with matcher for key " + key);
       LogEntryMatcher continuousMatcher=EventsUtils.createUSMEventLoggerMatcher();
       LogEntryMatcher initialMatcher=EventsUtils.createUSMEventLoggerMatcher();
-      ;
       return new ContinuousLogEntryMatcher(initialMatcher,continuousMatcher);
     }
   }

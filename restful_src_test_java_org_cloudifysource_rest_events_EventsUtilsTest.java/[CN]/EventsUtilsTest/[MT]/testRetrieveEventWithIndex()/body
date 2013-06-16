@@ -1,0 +1,5 @@
+{
+  DeploymentEvents events=createEvents(0,10);
+  Assert.assertEquals(createEvents(0,0).getEvents().get(0),EventsUtils.retrieveEventWithIndex(0,events.getEvents()));
+  Assert.assertNull(EventsUtils.retrieveEventWithIndex(15,events.getEvents()));
+}

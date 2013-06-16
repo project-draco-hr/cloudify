@@ -1,0 +1,6 @@
+{
+  LogEntryMatcherProviderKey key=new LogEntryMatcherProviderKey();
+  key.setContainer(mockContainer);
+  key.setDeploymentId(deploymentId);
+  return key;
+}

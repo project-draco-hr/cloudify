@@ -1,14 +1,12 @@
 {
   logger.fine(EventsUtils.getThreadId() + "Reloading events cache entry for key " + key);
   Set<GridServiceContainer> containersForDeployment=new HashSet<GridServiceContainer>();
-  for (  ProcessingUnit pu : oldValue.getProcessingUnits()) {
-    containersForDeployment.addAll(EventsUtils.getContainersForProcessingUnit(pu));
-  }
+  containersForDeployment.addAll(containerProvider.getContainersForDeployment(key.getDeploymentId()));
   if (containersForDeployment.isEmpty()) {
-    containersForDeployment=EventsUtils.getContainersForDeployment(key.getOperationId(),admin);
+    containersForDeployment=containerProvider.getContainersForDeployment(key.getDeploymentId());
   }
   if (!containersForDeployment.isEmpty()) {
-    int index=oldValue.getLastEventIndex();
+    int index=oldValue.getLastEventIndex() + 1;
     for (    GridServiceContainer container : containersForDeployment) {
       LogEntryMatcherProviderKey logEntryMatcherProviderKey=createKey(container,key);
       LogEntryMatcher matcher=matcherProvider.get(logEntryMatcherProviderKey);
@@ -22,7 +20,7 @@
       }
     }
     oldValue.setLastRefreshedTimestamp(System.currentTimeMillis());
-    oldValue.setLastEventIndex(index);
+    oldValue.setLastEventIndex(index - 1);
   }
   return Futures.immediateFuture(oldValue);
 }

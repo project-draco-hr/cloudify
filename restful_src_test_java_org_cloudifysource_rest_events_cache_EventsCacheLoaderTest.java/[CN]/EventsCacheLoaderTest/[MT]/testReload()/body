@@ -1,0 +1,13 @@
+{
+  EventsCacheLoader loader=new EventsCacheLoader(new MockOneGridServiceContainerProvider());
+  EventsCacheKey eventsCacheKey=new EventsCacheKey("deploymentId");
+  EventsCacheValue oldValue=loader.load(eventsCacheKey);
+  ListenableFuture<EventsCacheValue> reloadedValue=loader.reload(eventsCacheKey,oldValue);
+  EventsCacheValue events=reloadedValue.get();
+  Assert.assertSame(events,oldValue);
+  Assert.assertEquals(2 * LOG_ENTRIES_BATCH_SIZE - 1,oldValue.getLastEventIndex());
+  for (int i=0; i < LOG_ENTRIES_BATCH_SIZE * 2; i++) {
+    DeploymentEvent event=EventsUtils.retrieveEventWithIndex(i,events.getEvents().getEvents());
+    Assert.assertNotNull(event);
+  }
+}

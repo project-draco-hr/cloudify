@@ -1,0 +1,15 @@
+{
+  LogEntryMatcherProvider provider=new LogEntryMatcherProvider();
+  GridServiceContainer mockContainer1=createMockContainer("containerId1");
+  GridServiceContainer mockContainer2=createMockContainer("containerId2");
+  LogEntryMatcherProviderKey key1=createKey(mockContainer1,"deploymentId1");
+  LogEntryMatcherProviderKey key2=createKey(mockContainer2,"deploymentId1");
+  LogEntryMatcher logEntryMatcher1BeforeRemoval=getLogEntryMatcher(provider,key1);
+  LogEntryMatcher logEntryMatcher2BeforeRemoval=getLogEntryMatcher(provider,key2);
+  EventsCacheKey key=new EventsCacheKey("deploymentId1");
+  provider.removeAll(key);
+  LogEntryMatcher logEntryMatcher1AfterRemoval=getLogEntryMatcher(provider,key1);
+  LogEntryMatcher logEntryMatcher2AfterRemoval=getLogEntryMatcher(provider,key2);
+  Assert.assertNotSame(logEntryMatcher1BeforeRemoval,logEntryMatcher1AfterRemoval);
+  Assert.assertNotSame(logEntryMatcher2BeforeRemoval,logEntryMatcher2AfterRemoval);
+}
