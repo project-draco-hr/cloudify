@@ -1,8 +1,8 @@
 {
   ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+  restClient.uninstallService(applicationName,serviceName,initialTimeout);
   final int nextEventId=getNextEventId(restClient,serviceDescription.getDeploymentId());
   int currentNumberOfRunningInstances=serviceDescription.getInstanceCount();
-  restClient.uninstallService(applicationName,serviceName,initialTimeout);
   ServiceUninstallationProcessInspector inspector=new ServiceUninstallationProcessInspector(restClient,serviceDescription.getDeploymentId(),false,currentNumberOfRunningInstances,serviceName,applicationName,nextEventId);
   boolean isDone=false;
   displayer.printEvent("uninstalling_service",serviceName);

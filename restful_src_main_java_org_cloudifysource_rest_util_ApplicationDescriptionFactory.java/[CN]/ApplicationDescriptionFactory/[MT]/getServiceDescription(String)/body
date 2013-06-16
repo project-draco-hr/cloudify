@@ -13,7 +13,7 @@
     processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   }
   if (processingUnit == null) {
-    return null;
+    throw new ResourceNotFoundException(absolutePuName);
   }
   return getServiceDescription(processingUnit);
 }

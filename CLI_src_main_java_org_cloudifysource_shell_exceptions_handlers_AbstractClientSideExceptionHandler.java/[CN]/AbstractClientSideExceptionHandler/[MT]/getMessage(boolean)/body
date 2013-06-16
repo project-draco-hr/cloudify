@@ -4,11 +4,7 @@
     if (stackTrace != null) {
       return getFormattedMessage() + " : " + stackTrace;
     }
- else {
-      return getFormattedMessage();
-    }
-  }
- else {
     return getFormattedMessage();
   }
+  return getFormattedMessage();
 }

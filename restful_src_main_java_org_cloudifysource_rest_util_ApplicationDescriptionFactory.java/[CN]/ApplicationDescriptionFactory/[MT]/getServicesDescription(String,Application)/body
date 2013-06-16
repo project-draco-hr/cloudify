@@ -2,8 +2,7 @@
   List<ServiceDescription> serviceDescriptionList=new ArrayList<ServiceDescription>();
   final ProcessingUnits pus=app.getProcessingUnits();
   for (  final ProcessingUnit pu : pus) {
-    final String absolutePuName=pu.getName();
-    final ServiceDescription serviceDescription=getServiceDescription(absolutePuName,applicationName);
+    final ServiceDescription serviceDescription=getServiceDescription(pu);
     serviceDescriptionList.add(serviceDescription);
   }
   return serviceDescriptionList;
