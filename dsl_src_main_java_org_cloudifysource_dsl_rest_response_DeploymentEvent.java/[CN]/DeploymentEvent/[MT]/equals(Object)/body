@@ -1,0 +1,16 @@
+{
+  if (this == o) {
+    return true;
+  }
+  if (o == null || getClass() != o.getClass()) {
+    return false;
+  }
+  DeploymentEvent event=(DeploymentEvent)o;
+  if (index != event.index) {
+    return false;
+  }
+  if (!description.equals(event.description)) {
+    return false;
+  }
+  return true;
+}
