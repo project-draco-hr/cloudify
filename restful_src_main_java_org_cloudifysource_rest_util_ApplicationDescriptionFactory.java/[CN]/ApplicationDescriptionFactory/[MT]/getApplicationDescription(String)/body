@@ -1,4 +1,7 @@
 {
   final Application application=admin.getApplications().getApplication(applicationName);
+  if (application == null) {
+    throw new ResourceNotFoundException(applicationName);
+  }
   return getApplicationDescription(application);
 }
