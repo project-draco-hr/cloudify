@@ -1,0 +1,7 @@
+{
+  Assert.assertTrue("Expecting internal value " + INTERNAL_ENV_VAR_1 + " to be exported as-is",environment.contains("export \"" + INTERNAL_ENV_VAR_1 + "="+ INTERNAL_ENV_VALUE_1+ "\""));
+  Assert.assertTrue("Value " + EXTERNAL_ENV_VALUE_1 + " was not appended to the internal value.",environment.contains("export \"" + EXTERNAL_ENV_VAR_1 + "="+ TESTING_VALUE+ ' '+ EXTERNAL_ENV_VALUE_1+ "\""));
+  Assert.assertFalse(EXTERNAL_ENV_VAR_1 + " was overridden.",environment.contains("export \"" + EXTERNAL_ENV_VAR_1 + "="+ EXTERNAL_ENV_VALUE_1+ "\""));
+  Assert.assertTrue("External var " + EXTERNAL_ENV_VAR_2 + " were not set.",environment.contains("export \"" + EXTERNAL_ENV_VAR_2 + "="+ EXTERNAL_ENV_VALUE_2+ "\""));
+  Assert.assertTrue("External var " + EXTERNAL_ENV_VAR_3 + " were not set.",environment.contains("export \"" + EXTERNAL_ENV_VAR_3 + "="+ EXTERNAL_ENV_VALUE_3+ "\""));
+}

@@ -1,0 +1,7 @@
+{
+  final Map<String,String> envMap=new HashMap<String,String>();
+  envMap.put(EXTERNAL_ENV_VAR_1,EXTERNAL_ENV_VALUE_1);
+  envMap.put(EXTERNAL_ENV_VAR_2,EXTERNAL_ENV_VALUE_2);
+  envMap.put(EXTERNAL_ENV_VAR_3,EXTERNAL_ENV_VALUE_3);
+  return envMap;
+}

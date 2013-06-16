@@ -35,9 +35,9 @@
     final String esmCommandlineArgs=gridCommandBuilder.getEsmCommandlineArgs(componentsConfig.getOrchestrator(),rebootstrapping);
     final String lusCommandlineArgs=gridCommandBuilder.getLusCommandlineArgs(componentsConfig.getDiscovery(),lookupLocatorsString);
     final String gsmCommandlineArgs=gridCommandBuilder.getGsmCommandlineArgs(cloud,lookupLocatorsString,componentsConfig.getDeployer(),componentsConfig.getDiscovery());
-    details.setEsmCommandlineArgs('"' + esmCommandlineArgs + '"');
-    details.setLusCommandlineArgs('"' + lusCommandlineArgs + '"');
-    details.setGsmCommandlineArgs('"' + gsmCommandlineArgs + '"');
+    details.setEsmCommandlineArgs(esmCommandlineArgs);
+    details.setLusCommandlineArgs(lusCommandlineArgs);
+    details.setGsmCommandlineArgs(gsmCommandlineArgs);
     details.setGscLrmiPortRange(componentsConfig.getUsm().getPortRange());
     details.setRestPort(componentsConfig.getRest().getPort());
     details.setWebuiPort(componentsConfig.getWebui().getPort());
@@ -47,7 +47,7 @@
  else {
     details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   }
-  details.setGsaCommandlineArgs('"' + gridCommandBuilder.getAgentCommandlineArgs(componentsConfig.getAgent(),details.isManagement() ? MANAGEMENT_ZONE : details.getZones()) + '"');
+  details.setGsaCommandlineArgs(gridCommandBuilder.getAgentCommandlineArgs(componentsConfig.getAgent(),details.isManagement() ? MANAGEMENT_ZONE : details.getZones()));
   final Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
   for (  final Entry<String,Object> entry : customEntries) {
     if (entry.getKey().startsWith("installer.")) {

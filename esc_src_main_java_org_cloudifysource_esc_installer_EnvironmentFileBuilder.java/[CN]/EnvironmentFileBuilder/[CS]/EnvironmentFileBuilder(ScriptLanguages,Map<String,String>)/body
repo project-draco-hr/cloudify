@@ -1,5 +1,6 @@
 {
   this.scriptLanguage=scriptLanguage;
+  this.externalEnvVars=externalEnvVars;
 switch (scriptLanguage) {
 case LINUX_SHELL:
     this.newline="\n";

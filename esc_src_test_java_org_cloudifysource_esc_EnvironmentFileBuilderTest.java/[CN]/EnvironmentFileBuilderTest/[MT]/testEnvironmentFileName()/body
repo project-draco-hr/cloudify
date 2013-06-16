@@ -1,0 +1,6 @@
+{
+  final EnvironmentFileBuilder winEnvFileBuilder=new EnvironmentFileBuilder(ScriptLanguages.WINDOWS_BATCH,new HashMap<String,String>());
+  final EnvironmentFileBuilder linuxEnvFileBuilder=new EnvironmentFileBuilder(ScriptLanguages.LINUX_SHELL,new HashMap<String,String>());
+  Assert.assertTrue("env file name mismatch",winEnvFileBuilder.getEnvironmentFileName().equals("cloudify_env.bat"));
+  Assert.assertTrue("env file name mismatch",linuxEnvFileBuilder.getEnvironmentFileName().equals("cloudify_env.sh"));
+}

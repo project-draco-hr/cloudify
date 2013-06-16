@@ -1,3 +1,8 @@
 {
+  for (  Map.Entry<String,String> entry : externalEnvVars.entrySet()) {
+    if (!appendedExternalEnvVars.contains(entry.getKey())) {
+      addValue(entry.getKey(),entry.getValue());
+    }
+  }
   return sb.toString();
 }

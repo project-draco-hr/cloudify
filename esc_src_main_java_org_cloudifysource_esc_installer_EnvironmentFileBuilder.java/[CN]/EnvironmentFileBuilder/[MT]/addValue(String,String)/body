@@ -1,0 +1,23 @@
+{
+  String actualValue=value;
+switch (this.scriptLanguage) {
+case LINUX_SHELL:
+    sb.append("export ").append('"').append(name).append("=").append(actualValue).append('"');
+  break;
+case WINDOWS_BATCH:
+if (actualValue.startsWith("\"") && actualValue.endsWith("\"")) {
+  actualValue=actualValue.substring(1,actualValue.length() - 1);
+}
+String normalizedValue=normalizeWindowsPaths(actualValue);
+if (normalizedValue.contains("&") || normalizedValue.contains("%")) {
+normalizedValue=normalizedValue.replace("&","^&");
+normalizedValue=normalizedValue.replace("%","%%");
+}
+sb.append("SET \"").append(name).append("=").append(normalizedValue).append("\"");
+break;
+default :
+throw new IllegalArgumentException("Unsupported script language: " + this.scriptLanguage);
+}
+sb.append(newline);
+return this;
+}
