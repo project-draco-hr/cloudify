@@ -1,0 +1,13 @@
+{
+  for (  Map.Entry<String,String> entry : externalEnvVars.entrySet()) {
+    String name=entry.getKey();
+    if (!appendedExternalEnvVars.contains(name)) {
+      String value=entry.getValue();
+      if (!StringUtils.isEmpty(value)) {
+        addValue(name,value);
+      }
+      this.appendedExternalEnvVars.add(name);
+    }
+  }
+  return this;
+}

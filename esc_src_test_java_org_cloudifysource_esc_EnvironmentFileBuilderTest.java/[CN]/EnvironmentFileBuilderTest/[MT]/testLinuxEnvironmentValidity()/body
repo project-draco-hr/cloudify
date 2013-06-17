@@ -3,6 +3,6 @@
   final EnvironmentFileBuilder linuxEnvFileBuilder=new EnvironmentFileBuilder(ScriptLanguages.LINUX_SHELL,externalEnvVars);
   linuxEnvFileBuilder.exportVar(INTERNAL_ENV_VAR_1,INTERNAL_ENV_VALUE_1);
   linuxEnvFileBuilder.exportVar(EXTERNAL_ENV_VAR_1,TESTING_VALUE);
-  String environment=linuxEnvFileBuilder.toString();
+  String environment=linuxEnvFileBuilder.build().toString();
   assertLinuxValidEnvVarString(environment);
 }

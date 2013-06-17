@@ -1,11 +1,12 @@
 {
-  String finalValue=value;
   String externalValue=externalEnvVars.get(name);
+  String finalValue=actualValue;
   if (!StringUtils.isEmpty(externalValue)) {
     if (externalValue.startsWith("\'") && externalValue.endsWith("\'")) {
       externalValue=externalValue.substring(1,externalValue.length() - 1);
     }
-    finalValue=value + ' ' + externalValue;
+    finalValue=actualValue + ' ' + externalValue;
   }
+  appendedExternalEnvVars.add(name);
   return finalValue;
 }

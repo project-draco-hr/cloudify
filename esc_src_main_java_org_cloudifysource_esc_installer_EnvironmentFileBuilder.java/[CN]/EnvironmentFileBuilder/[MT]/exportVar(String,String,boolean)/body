@@ -6,10 +6,6 @@
   if (append) {
     actualValue=appendValue(name,value);
   }
-  final String externalValue=externalEnvVars.get(name);
-  if (!StringUtils.isEmpty(externalValue)) {
-    actualValue=appendExternalValue(name,actualValue,externalValue);
-    appendedExternalEnvVars.add(name);
-  }
+  actualValue=appendExternalValue(name,actualValue);
   return addValue(name,actualValue);
 }

@@ -3,6 +3,6 @@
   final EnvironmentFileBuilder windowsEnvFileBuilder=new EnvironmentFileBuilder(ScriptLanguages.WINDOWS_BATCH,externalEnvVars);
   windowsEnvFileBuilder.exportVar(INTERNAL_ENV_VAR_1,INTERNAL_ENV_VALUE_1);
   windowsEnvFileBuilder.exportVar(EXTERNAL_ENV_VAR_1,TESTING_VALUE);
-  String environment=windowsEnvFileBuilder.toString();
+  String environment=windowsEnvFileBuilder.build().toString();
   assertWindowsValidEnvVarString(environment);
 }
