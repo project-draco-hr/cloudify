@@ -6,8 +6,13 @@
     final Admin admin=USMUtils.getAdmin();
     Space space=admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,MANAGEMENT_SPACE_LOOKUP_TIMEOUT,TimeUnit.SECONDS);
     if (space == null) {
-      throw new USMException("Failed to locate management space - USM initialization cannot continue");
+      final String testRecipeIndicator=System.getProperty(CloudifyConstants.TEST_RECIPE_TIMEOUT_SYSPROP);
+      if (StringUtils.isBlank(testRecipeIndicator)) {
+        throw new USMException("Failed to locate management space - USM initialization cannot continue");
+      }
     }
-    this.managementSpace=space.getGigaSpace();
+ else {
+      this.managementSpace=space.getGigaSpace();
+    }
   }
 }

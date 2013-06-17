@@ -1,5 +1,5 @@
 {
-  final String timeoutValue=System.getProperty("com.gs.usm.RecipeShutdownTimeout");
+  final String timeoutValue=System.getProperty(CloudifyConstants.TEST_RECIPE_TIMEOUT_SYSPROP);
   if (timeoutValue == null) {
     return;
   }
