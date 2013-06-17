@@ -8,5 +8,8 @@
     final int numberOfFailedInstances=getNumberOfFailedInstances(serviceName);
     addServiceInstanceCountEvents(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
     removeEndedServicesFromPollingList(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
+    if (numberOfFailedInstances != 0) {
+      this.failedServiceInstallationList.add(serviceName);
+    }
   }
 }

@@ -17,6 +17,11 @@
       logger.log(Level.INFO,"Polling task ended unexpectedly. Reason: " + e.getMessage(),e);
       setExecutionException(e);
     }
+ else     if (!this.failedServiceInstallationList.isEmpty()) {
+      String[] failedServiceNames=this.failedServiceInstallationList.toArray(new String[failedServiceInstallationList.size()]);
+      final Exception ex=new ExecutionException("Errors occurred during installation of services: " + Arrays.toString(failedServiceNames),e);
+      setExecutionException(ex);
+    }
  else {
       logger.log(Level.INFO,"Polling task ended successfully.");
     }
