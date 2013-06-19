@@ -18,6 +18,11 @@
  else {
     modifyCommandLine(modifiedCommandLineParams,workingDir,outputFile,errorFile,event);
   }
+  File tempBatchFile=null;
+  if (shouldModifyCommandLineForJDK7(outputFile)) {
+    tempBatchFile=createTempFileForJDK7(workingDir);
+    modifyCommandLineForJDK7ProcessBuilder(modifiedCommandLineParams,outputFile,workingDir,tempBatchFile);
+  }
   final String modifiedCommandLine=org.springframework.util.StringUtils.collectionToDelimitedString(modifiedCommandLineParams," ");
   this.commandLine=modifiedCommandLineParams;
   int attempt=1;

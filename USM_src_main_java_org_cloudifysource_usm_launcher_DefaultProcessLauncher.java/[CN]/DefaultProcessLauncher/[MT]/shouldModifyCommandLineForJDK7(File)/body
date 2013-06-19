@@ -1,0 +1,9 @@
+{
+  if (!ServiceUtils.isWindows()) {
+    return false;
+  }
+  if (outputFile == null) {
+    return false;
+  }
+  return true;
+}

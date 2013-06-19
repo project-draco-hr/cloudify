@@ -1,0 +1,4 @@
+List<String> modifiedCommandLineParams
+File outputFile
+File workingDir
+File tempFile

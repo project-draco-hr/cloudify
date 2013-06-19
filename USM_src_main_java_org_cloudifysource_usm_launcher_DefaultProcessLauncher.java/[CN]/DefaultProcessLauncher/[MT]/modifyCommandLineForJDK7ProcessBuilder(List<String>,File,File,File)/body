@@ -1,0 +1,12 @@
+{
+  final String actualCommand=StringUtils.join(modifiedCommandLineParams," ");
+  try {
+    FileUtils.writeStringToFile(tempFile,"@" + actualCommand);
+    modifiedCommandLineParams.clear();
+    modifiedCommandLineParams.addAll(Arrays.asList(WINDOWS_BATCH_FILE_PREFIX_PARAMS));
+    modifiedCommandLineParams.add(tempFile.getAbsolutePath());
+  }
+ catch (  IOException e) {
+    throw new IllegalStateException("Unable to create a temp file for script launching: " + e.getMessage(),e);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    final File file=File.createTempFile("ProcessLauncherScript",".bat",workingDir);
+    file.deleteOnExit();
+    return file;
+  }
+ catch (  IOException e) {
+    throw new USMException("Failed to create temporary batch file for command execution. Error was: " + e.getMessage(),e);
+  }
+}
