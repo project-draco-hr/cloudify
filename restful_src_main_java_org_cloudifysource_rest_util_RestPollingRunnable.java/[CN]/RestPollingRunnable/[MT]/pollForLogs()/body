@@ -8,7 +8,7 @@
     final int numberOfFailedInstances=getNumberOfFailedInstances(serviceName);
     addServiceInstanceCountEvents(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
     removeEndedServicesFromPollingList(serviceName,plannedNumberOfInstances,numberOfServiceInstances,numberOfFailedInstances);
-    if (numberOfFailedInstances != 0) {
+    if (numberOfFailedInstances != 0 && !isUninstall) {
       this.failedServiceInstallationList.add(serviceName);
     }
   }
