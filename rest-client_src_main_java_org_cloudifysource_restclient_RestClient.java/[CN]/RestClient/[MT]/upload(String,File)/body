@@ -1,7 +1,9 @@
 {
   validateFile(file);
   final String finalFileName=fileName == null ? file.getName() : fileName;
-  logger.fine("uploading file " + file.getAbsolutePath() + " with name "+ finalFileName);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("uploading file " + file.getAbsolutePath() + " with name "+ finalFileName);
+  }
   final String uploadUrl=getFormattedUrl(versionedUploadControllerUrl,UPLOAD_URL_FORMAT,finalFileName);
   final UploadResponse response=executor.postFile(uploadUrl,file,CloudifyConstants.UPLOAD_FILE_PARAM_NAME,new TypeReference<Response<UploadResponse>>(){
   }

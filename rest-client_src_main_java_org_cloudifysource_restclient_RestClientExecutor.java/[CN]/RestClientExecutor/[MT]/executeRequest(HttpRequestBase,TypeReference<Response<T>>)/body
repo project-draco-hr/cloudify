@@ -13,14 +13,16 @@
         break;
       }
  catch (      IOException e) {
-        logger.finer("Execute get request to " + request.getURI() + ". try number "+ (i + 1)+ " out of "+ GET_TRIALS_NUM+ ", error is "+ e.getMessage());
+        if (logger.isLoggable(Level.FINER)) {
+          logger.finer("Execute get request to " + request.getURI() + ". try number "+ (i + 1)+ " out of "+ GET_TRIALS_NUM+ ", error is "+ e.getMessage());
+        }
         lastException=e;
       }
     }
     if (lastException != null) {
       throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.EXECUTION_FAILURE.getName(),lastException,request.getURI());
     }
-    checkForError(httpResponse);
+    checkForError(httpResponse,request.getURI());
     return getResponseObject(responseTypeReference,httpResponse);
   }
   finally {

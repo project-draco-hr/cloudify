@@ -1,0 +1,7 @@
+{
+  int statusCode=e.getStatusCode();
+  String reasonPhrase=e.getReasonPhrase();
+  String statusLine=(statusCode + " " + ((reasonPhrase == null) ? "" : reasonPhrase));
+  String body=e.getResponseBody();
+  return e.getMessageFormattedText() + " status line: " + statusLine+ (body == null ? "" : ", response body: " + body);
+}

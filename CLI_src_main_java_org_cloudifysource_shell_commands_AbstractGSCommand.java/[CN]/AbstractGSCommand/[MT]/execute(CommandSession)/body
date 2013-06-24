@@ -25,6 +25,9 @@
 catch (  final CLIException e) {
     handle(new CLIExceptionHandler(e),e);
   }
+catch (  final RestClientHttpException e) {
+    handle(new RestClientHttpExceptionHandler(e),e);
+  }
 catch (  final RestClientException e) {
     handle(new RestClientExceptionHandler(e),e);
   }

@@ -12,7 +12,7 @@
       throw new RestClientResponseException(entity.getMessageId(),entity.getMessage(),statusCode,reasonPhrase,entity.getVerbose());
     }
  catch (    final IOException e) {
-      throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName());
+      throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),requestUri);
     }
   }
 }
