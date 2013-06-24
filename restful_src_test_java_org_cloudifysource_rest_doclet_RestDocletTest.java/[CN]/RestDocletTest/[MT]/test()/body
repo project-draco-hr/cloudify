@@ -1,0 +1,3 @@
+{
+  com.sun.tools.javadoc.Main.execute(new String[]{RestDocConstants.DOCLET_FLAG,RestDoclet.class.getName(),RestDocConstants.SOURCE_PATH_FLAG,SOURCES_PATH,RestDocConstants.CONTROLLERS_PACKAGE,RestDocConstants.VELOCITY_TEMPLATE_PATH_FLAG,VELOCITY_TEMPLATE_PATH,RestDocConstants.DOC_DEST_PATH_FLAG,DOC_DEST_PATH,RestDocConstants.DOC_CSS_PATH_FLAG,DOC_CSS_PATH,RestDocConstants.VERSION_FLAG,RestDocConstants.VERSION,RestDocConstants.REQUEST_EXAMPLE_GENERATOR_CLASS_FLAG,RESTRequestExampleGenerator.class.getName(),RestDocConstants.RESPONSE_EXAMPLE_GENERATOR_CLASS_FLAG,RESTResposneExampleGenerator.class.getName(),RestDocConstants.REQUEST_BODY_PARAM_FILTER_CLASS_FLAG,RequestBodyParamFilter.class.getName()});
+}

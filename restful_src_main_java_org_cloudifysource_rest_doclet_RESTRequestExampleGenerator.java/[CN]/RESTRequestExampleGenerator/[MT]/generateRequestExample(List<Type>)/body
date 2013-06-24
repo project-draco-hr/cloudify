@@ -1,0 +1,11 @@
+{
+  String result="";
+  for (  Type type : parameterTypes) {
+    Class<?> clazz=ClassUtils.getClass(type.qualifiedTypeName());
+    Object requestBodyParam=getRequestExample(clazz);
+    String jsonStr=new ObjectMapper().writeValueAsString(requestBodyParam);
+    result+=jsonStr;
+    result+=System.getProperty("line.separator");
+  }
+  return result;
+}

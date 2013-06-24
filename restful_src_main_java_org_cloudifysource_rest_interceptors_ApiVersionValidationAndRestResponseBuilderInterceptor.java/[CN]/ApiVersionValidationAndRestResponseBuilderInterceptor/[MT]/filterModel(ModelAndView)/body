@@ -1,4 +1,9 @@
 {
+  String viewName=modelAndView.getViewName();
+  Map<String,Object> model=modelAndView.getModel();
+  if (MapUtils.isEmpty(model)) {
+    return viewName;
+  }
   for (  Map.Entry<String,Object> entry : model.entrySet()) {
     Object value=entry.getValue();
     if (!(value instanceof BindingResult)) {

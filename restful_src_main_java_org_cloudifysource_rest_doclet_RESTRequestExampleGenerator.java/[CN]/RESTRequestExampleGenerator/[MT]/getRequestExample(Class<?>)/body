@@ -53,10 +53,26 @@
     setServiceInstancesRequest.setTimeout(RESTExamples.getTimeoutMinutes());
     example=setServiceInstancesRequest;
   }
+ else   if (MultipartFile.class.isAssignableFrom(clazz)) {
+    example="file's content";
+  }
+ else   if (clazz.isPrimitive()) {
+    example=PrimitiveExampleValues.getValue(clazz);
+  }
+ else   if (clazz.equals(String.class)) {
+    example="string";
+  }
  else {
-    String msg="Missing instantiation of class " + clazz + " for generating request example.";
-    logger.warning(msg);
-    throw new IllegalArgumentException(msg);
+    String className=clazz.getName();
+    logger.warning("Missing custom instantiation of class " + className + " for generating request example, using newInstance instead.");
+    try {
+      return clazz.newInstance();
+    }
+ catch (    Exception e) {
+      String errMsg="failed to instantiate " + className;
+      logger.warning(errMsg);
+      throw new IllegalArgumentException(errMsg);
+    }
   }
   return example;
 }

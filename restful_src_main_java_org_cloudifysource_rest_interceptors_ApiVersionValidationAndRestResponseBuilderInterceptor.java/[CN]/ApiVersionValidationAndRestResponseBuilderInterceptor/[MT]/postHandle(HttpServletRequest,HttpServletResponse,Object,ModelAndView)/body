@@ -1,5 +1,5 @@
 {
-  Object model=filterModel(modelAndView.getModel());
+  Object model=filterModel(modelAndView);
   modelAndView.clear();
   response.setContentType(MediaType.APPLICATION_JSON);
   if (model instanceof Response<?>) {

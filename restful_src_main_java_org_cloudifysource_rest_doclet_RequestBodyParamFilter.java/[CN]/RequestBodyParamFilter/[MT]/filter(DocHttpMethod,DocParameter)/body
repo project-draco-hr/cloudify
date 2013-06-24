@@ -1,0 +1,7 @@
+{
+  DocRequestParamAnnotation requestParamAnnotation=param.getRequestParamAnnotation();
+  if (requestParamAnnotation != null && MultipartFile.class.getName().equals(param.getType().qualifiedTypeName())) {
+    return true;
+  }
+  return param.getRequestBodyAnnotation() != null;
+}
