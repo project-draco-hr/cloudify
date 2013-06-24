@@ -9,7 +9,13 @@
       }
     }
     if (this instanceof NewRestClientCommand && NewRestClientUtils.isNewRestClientEnabled()) {
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("executing " + this.getClass().getName() + " command using the new rest client.");
+      }
       return ((NewRestClientCommand)this).doExecuteNewRestClient();
+    }
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("executing " + this.getClass().getName() + " command using the old rest client.");
     }
     return doExecute();
   }
