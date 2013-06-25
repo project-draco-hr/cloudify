@@ -1,7 +1,7 @@
 {
   File serviceDir=null;
   try {
-    final File baseDir=new File(restConfig.getTemporaryFolderPath(),CloudifyConstants.EXTRACTED_FILES_FOLDER_NAME);
+    final File baseDir=new File(restConfig.getRestTempFolder(),CloudifyConstants.EXTRACTED_FILES_FOLDER_NAME);
     baseDir.mkdirs();
     baseDir.deleteOnExit();
     serviceDir=ServiceReader.extractProjectFileToDir(srcFile,absolutePuName,baseDir);

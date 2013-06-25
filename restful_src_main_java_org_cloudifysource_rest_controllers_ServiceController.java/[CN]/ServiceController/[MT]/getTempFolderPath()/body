@@ -1,6 +1,0 @@
-{
-  final File tempFile=File.createTempFile("GS__",null);
-  tempFile.delete();
-  tempFile.mkdirs();
-  return tempFile.getParent();
-}

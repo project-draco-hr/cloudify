@@ -3,11 +3,11 @@
   FileWriter writer=null;
   try {
     tempFile=File.createTempFile("uploadTemp",".tmp");
+    tempFile.deleteOnExit();
     writer=new FileWriter(tempFile,true);
     if (props != null) {
       props.store(writer,"");
     }
-    tempFile.deleteOnExit();
   }
   finally {
     if (writer != null) {

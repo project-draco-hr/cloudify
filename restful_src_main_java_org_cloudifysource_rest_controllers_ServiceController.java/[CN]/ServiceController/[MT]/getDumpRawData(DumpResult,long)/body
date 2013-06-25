@@ -1,5 +1,5 @@
 {
-  final File target=File.createTempFile("dump",".zip",new File(this.temporaryFolder));
+  final File target=File.createTempFile("dump",".zip",restTemporaryFolder);
   target.deleteOnExit();
   dump.download(target,null);
   try {

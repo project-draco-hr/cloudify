@@ -1,11 +1,8 @@
 {
-  if (destMergeFile == null) {
-    throw new RestErrorException(CloudifyMessageKeys.DEST_MERGE_FILE_MISSING.getName());
-  }
-  updateDefaultValues(originPackedFile);
   if (applicationPropertiesFile == null && overridesFile == null) {
     return originPackedFile;
   }
+  validateValues(originPackedFile);
   try {
     LinkedHashMap<File,String> mergeFilesAndComments=new LinkedHashMap<File,String>();
     mergeFilesAndComments.put(applicationPropertiesFile,"application properties file");

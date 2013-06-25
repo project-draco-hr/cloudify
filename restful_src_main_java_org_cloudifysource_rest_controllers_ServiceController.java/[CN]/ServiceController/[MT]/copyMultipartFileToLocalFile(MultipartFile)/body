@@ -2,7 +2,7 @@
   if (srcFile == null) {
     return null;
   }
-  final File tempFile=new File(temporaryFolder,srcFile.getOriginalFilename());
+  final File tempFile=new File(restTemporaryFolder,srcFile.getOriginalFilename());
   srcFile.transferTo(tempFile);
   tempFile.deleteOnExit();
   return tempFile;
