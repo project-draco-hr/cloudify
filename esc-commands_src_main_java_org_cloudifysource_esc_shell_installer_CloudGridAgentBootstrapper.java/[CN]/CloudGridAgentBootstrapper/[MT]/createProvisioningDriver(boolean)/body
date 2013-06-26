@@ -1,6 +1,7 @@
 {
   try {
-    provisioning=(ProvisioningDriver)Class.forName(cloud.getConfiguration().getClassName()).newInstance();
+    final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
+    provisioning=builder.build(providerDirectory.getAbsolutePath(),cloud.getConfiguration().getClassName());
   }
  catch (  final ClassNotFoundException e) {
     throw new CLIException("Failed to load provisioning class for cloud: " + cloud.getName() + ". Class not found: "+ cloud.getConfiguration().getClassName(),e);

@@ -1,0 +1,8 @@
+{
+  return libFolder.listFiles(new FilenameFilter(){
+    @Override public boolean accept(    final File dir,    final String name){
+      return name.endsWith(".jar");
+    }
+  }
+);
+}

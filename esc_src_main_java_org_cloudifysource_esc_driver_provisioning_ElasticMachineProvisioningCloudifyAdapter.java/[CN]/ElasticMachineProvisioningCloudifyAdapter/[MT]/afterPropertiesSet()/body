@@ -25,7 +25,8 @@
       computeTemplate.setLocalDirectory(computeTemplate.getRemoteDirectory());
     }
     try {
-      this.cloudifyProvisioning=(ProvisioningDriver)Class.forName(this.cloud.getConfiguration().getClassName()).newInstance();
+      ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
+      this.cloudifyProvisioning=builder.build(cloudConfigDirectoryPath,this.cloud.getConfiguration().getClassName());
       if (cloudifyProvisioning instanceof ProvisioningDriverClassContextAware) {
         final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
         final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)cloudifyProvisioning;

@@ -2,5 +2,6 @@
   final File tempFile=File.createTempFile("cloud-","");
   tempFile.delete();
   tempFile.mkdir();
+  tempFile.deleteOnExit();
   return tempFile;
 }

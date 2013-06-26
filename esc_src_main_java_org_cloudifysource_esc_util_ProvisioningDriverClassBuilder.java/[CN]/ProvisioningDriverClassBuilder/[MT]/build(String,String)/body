@@ -1,0 +1,16 @@
+{
+  final File cloudLibFolder=new File(cloudFolder,"lib");
+  if (cloudLibFolder.exists()) {
+    String libFolderPath=cloudLibFolder.getAbsolutePath();
+    final CompilerConfiguration gcc=new CompilerConfiguration();
+    gcc.getClasspath().add(libFolderPath);
+    File[] jarFiles=listJarFiles(cloudLibFolder);
+    for (    File file : jarFiles) {
+      gcc.getClasspath().add(file.getAbsolutePath());
+    }
+    final ClassLoader ccl=Thread.currentThread().getContextClassLoader();
+    final GroovyClassLoader gcl=new GroovyClassLoader(ccl,gcc);
+    return (ProvisioningDriver)gcl.loadClass(className).newInstance();
+  }
+  return build(className);
+}
