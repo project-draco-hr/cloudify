@@ -1,0 +1,17 @@
+{
+  Class<? extends DSLValidator> validatorClass=validatorByClass.get(entity.getClass().getName());
+  if (validatorClass == null) {
+    return null;
+  }
+  try {
+    DSLValidator validator=(DSLValidator)validatorClass.newInstance();
+    validator.setDSLEntity(entity);
+    return validator;
+  }
+ catch (  InstantiationException e) {
+    throw new DSLValidationException("Failed to load validator for object of type: " + entity.getClass().getName() + ". Error was: "+ e.getMessage(),e);
+  }
+catch (  IllegalAccessException e) {
+    throw new DSLValidationException("Failed to load validator for object of type: " + entity.getClass().getName() + ". Error was: "+ e.getMessage(),e);
+  }
+}

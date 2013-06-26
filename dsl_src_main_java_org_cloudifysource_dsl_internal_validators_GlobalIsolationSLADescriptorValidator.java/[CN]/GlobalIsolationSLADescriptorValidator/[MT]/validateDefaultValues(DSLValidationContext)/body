@@ -1,0 +1,8 @@
+{
+  if (entity.getInstanceMemoryMB() < 0) {
+    throw new DSLValidationException("instanceMemoryInMB cannot be negative");
+  }
+  if (entity.getInstanceCpuCores() < 0) {
+    throw new DSLValidationException("instanceCpuCores cannot be negative");
+  }
+}

@@ -1,0 +1,3 @@
+{
+  validatorByClass.put(Application.class.getName(),ApplicationValidator.class);
+}
