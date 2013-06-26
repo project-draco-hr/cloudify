@@ -16,16 +16,7 @@
     String managementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
     config.setManagementTemplateName(managementTemplateName);
     config.setManagementTemplate(cloudCompute.getTemplates().get(managementTemplateName));
-    File restTempFolder;
-    if (!StringUtils.isEmpty(temporaryFolder)) {
-      restTempFolder=new File(temporaryFolder);
-    }
- else {
-      restTempFolder=new File(CloudifyConstants.REST_FOLDER);
-    }
-    restTempFolder.mkdirs();
-    restTempFolder.deleteOnExit();
-    config.setRestTempFolder(restTempFolder);
+    config.setRestTempFolder(createRestTempFolder());
   }
  else {
     logger.info("running in local cloud mode");
