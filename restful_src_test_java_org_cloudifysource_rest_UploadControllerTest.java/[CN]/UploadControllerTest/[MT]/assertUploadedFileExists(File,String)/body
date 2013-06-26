@@ -1,18 +1,20 @@
 {
   File restTempDir=new File(CloudifyConstants.REST_FOLDER);
   File uploadsFolder=new File(restTempDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
-  Assert.assertNotNull(uploadsFolder);
   File uploadedFileDir=new File(uploadsFolder,uploadKey);
+  System.out.println("uploaded file's folder: " + uploadedFileDir.getAbsolutePath());
   Assert.assertNotNull(uploadedFileDir);
+  System.out.println("uploaded file's folder exists: " + uploadedFileDir.exists());
   Assert.assertTrue(uploadedFileDir.exists());
-  Assert.assertTrue(uploadedFileDir.isDirectory());
-  Assert.assertTrue(uploadedFileDir.exists());
+  System.out.println("uploaded file's folder isDirectory: " + uploadedFileDir.isDirectory());
   Assert.assertTrue(uploadedFileDir.isDirectory());
   File uploadedFile=new File(uploadedFileDir,UPLOADED_FILE_NAME);
   System.out.println("uploaded file " + uploadedFile.getAbsolutePath() + (uploadedFile.exists() ? "" : " not")+ " exists.");
-  Assert.assertNotNull(uploadedFile);
   Assert.assertTrue(uploadedFile.exists());
+  System.out.println("uploaded file isFile: " + uploadedFile.isFile());
   Assert.assertTrue(uploadedFile.isFile());
-  Assert.assertTrue(FileUtils.contentEquals(expectedFile,uploadedFile));
+  boolean contentEquals=FileUtils.contentEquals(expectedFile,uploadedFile);
+  System.out.println("uploaded file [" + uploadedFile.getAbsolutePath() + "] content is "+ (contentEquals ? "" : "not")+ " equal to the expected content [ of file - "+ expectedFile.getAbsolutePath()+ "]");
+  Assert.assertTrue(contentEquals);
   return uploadedFile;
 }
