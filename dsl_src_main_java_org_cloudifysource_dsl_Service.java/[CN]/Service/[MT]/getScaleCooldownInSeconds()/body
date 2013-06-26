@@ -1,3 +1,0 @@
-{
-  return Math.max(this.scaleOutCooldownInSeconds,this.scaleInCooldownInSeconds);
-}

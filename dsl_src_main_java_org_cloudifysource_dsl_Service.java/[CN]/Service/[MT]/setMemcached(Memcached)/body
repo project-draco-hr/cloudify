@@ -1,6 +1,0 @@
-{
-  if (this.memcachedProcessingUnit != null) {
-    throw new IllegalStateException("DSL File contains more then one ProcessingUnit type");
-  }
-  this.memcachedProcessingUnit=memcached;
-}

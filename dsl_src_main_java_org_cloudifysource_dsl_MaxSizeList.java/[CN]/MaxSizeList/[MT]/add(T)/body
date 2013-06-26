@@ -1,6 +1,0 @@
-{
-  if (size() >= maxSize) {
-    remove(0);
-  }
-  return super.add(t);
-}

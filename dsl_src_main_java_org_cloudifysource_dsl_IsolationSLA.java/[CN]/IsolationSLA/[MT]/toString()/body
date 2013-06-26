@@ -1,3 +1,0 @@
-{
-  return "IsolationSLA [global=" + global + ", dedicated="+ dedicated+ ", appShared="+ appShared+ ", tenantShared="+ tenantShared+ "]";
-}

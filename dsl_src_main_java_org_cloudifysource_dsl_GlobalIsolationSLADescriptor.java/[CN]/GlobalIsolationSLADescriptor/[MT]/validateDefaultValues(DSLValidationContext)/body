@@ -1,8 +1,0 @@
-{
-  if (instanceMemoryMB < 0) {
-    throw new DSLValidationException("instanceMemoryInMB cannot be negative");
-  }
-  if (instanceCpuCores < 0) {
-    throw new DSLValidationException("instanceCpuCores cannot be negative");
-  }
-}

@@ -1,6 +1,0 @@
-{
-  if (this.datagrid != null) {
-    throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit type");
-  }
-  this.datagrid=dataGrid;
-}

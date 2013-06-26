@@ -1,3 +1,0 @@
-{
-  return "TenantSharedIsolationSLADescriptor [instanceMemoryMB=" + getInstanceMemoryMB() + ", instanceCpuCores="+ getInstanceCpuCores()+ ", useManagement="+ isUseManagement()+ "]";
-}
