@@ -9,13 +9,13 @@
     throw new IllegalStateException("Failed finding " + pu.getName() + " on "+ agent.getMachine().getHostAddress());
   }
   final Map<String,ServiceDetails> alldetails=pui.getServiceDetailsByServiceId();
+  String protocol=IPUtils.getRestProtocol();
   final ServiceDetails details=alldetails.get("jee-container");
   final String host=details.getAttributes().get("host").toString();
-  final String port=details.getAttributes().get("port").toString();
+  final int port=Integer.parseInt(details.getAttributes().get("port").toString());
   final String ctx=details.getAttributes().get("context-path").toString();
-  final String url="http://" + host + ":"+ port+ ctx;
   try {
-    return new URL(url);
+    return new URL(protocol,host,port,ctx);
   }
  catch (  final MalformedURLException e) {
     throw new IllegalStateException(e);

@@ -8,7 +8,7 @@
     LookupLocator[] locators=admin.getLocators();
     String[] locatorStrings=new String[locators.length];
     for (int i=0; i < locators.length; i++) {
-      locatorStrings[i]=locators[i].getHost() + ":" + locators[i].getPort();
+      locatorStrings[i]=IPUtils.getSafeIpAddress(locators[i].getHost()) + ":" + locators[i].getPort();
     }
     logger.info("Admin using lookup locators=" + Arrays.toString(locatorStrings) + " groups="+ Arrays.toString(admin.getGroups()));
   }

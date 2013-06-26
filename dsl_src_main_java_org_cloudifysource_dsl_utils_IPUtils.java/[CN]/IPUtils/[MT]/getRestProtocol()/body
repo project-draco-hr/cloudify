@@ -1,0 +1,7 @@
+{
+  String protocol="https";
+  if (StringUtils.isBlank(SPRING_SECURITY_PROFILE) || SPRING_SECURITY_PROFILE.contains(SPRING_PROFILE_NON_SECURE)) {
+    protocol="http";
+  }
+  return protocol;
+}

@@ -12,7 +12,7 @@
     return resultList;
   }
  catch (  final Exception e) {
-    final String msg="Failed to fetch JMX values for " + host + ":"+ port+ ". Error: "+ e;
+    final String msg="Failed to fetch JMX values for " + IPUtils.getSafeIpAddress(host) + ":"+ port+ ". Error: "+ e;
     logger.severe(msg);
   }
  finally {

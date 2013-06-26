@@ -5,7 +5,7 @@
     if (endPoint.isUnresolved()) {
       throw new UnknownHostException(ipAddress);
     }
-    socket.connect(endPoint,CalcUtils.safeLongToInt(TimeUnit.SECONDS.toMillis(timeout),true));
+    socket.connect(endPoint,safeLongToInt(TimeUnit.SECONDS.toMillis(timeout),true));
   }
   finally {
     try {

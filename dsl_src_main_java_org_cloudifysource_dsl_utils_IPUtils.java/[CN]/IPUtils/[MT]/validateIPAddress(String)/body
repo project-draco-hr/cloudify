@@ -1,10 +1,10 @@
 {
   boolean valid=false;
   final String[] ipParts=ipAddress.split("\\.");
-  if (ipParts.length == IP_PARTS) {
+  if (ipParts.length == IPV4_PARTS) {
     for (    final String part : ipParts) {
       final int intValue=Integer.parseInt(part);
-      if (intValue < 0 || intValue > (IP_BYTE_RANGE - 1)) {
+      if (intValue < 0 || intValue > IP_BYTE_RANGE - 1) {
         break;
       }
       valid=true;

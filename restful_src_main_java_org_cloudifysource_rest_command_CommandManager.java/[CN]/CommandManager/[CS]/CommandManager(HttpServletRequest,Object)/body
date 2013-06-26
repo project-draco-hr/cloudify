@@ -7,7 +7,13 @@
   if (!executionPath.startsWith(prefix)) {
     throw new IllegalArgumentException("Bad request URL " + request.getRequestURL());
   }
-  String restUrl="http://" + request.getLocalAddr() + ":"+ request.getLocalPort()+ request.getContextPath();
-  this.commandURL=restUrl + executionPath;
+  try {
+    String protocol=IPUtils.getRestProtocol();
+    URL restUrl=new URL(protocol,request.getLocalAddr(),request.getLocalPort(),request.getContextPath());
+    this.commandURL=restUrl + executionPath;
+  }
+ catch (  MalformedURLException e) {
+    throw new IllegalStateException(e);
+  }
   initilizeCommandList(executionPath.substring(prefix.length()),root);
 }

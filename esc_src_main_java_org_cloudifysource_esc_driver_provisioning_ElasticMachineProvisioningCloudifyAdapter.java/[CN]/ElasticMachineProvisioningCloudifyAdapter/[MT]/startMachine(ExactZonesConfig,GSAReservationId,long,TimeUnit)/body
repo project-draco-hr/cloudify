@@ -71,7 +71,7 @@
       installAndStartAgent(machineDetails,reservationId,end);
       checkForProvisioningTimeout(end,machineDetails);
     }
-    logger.info("Cloudify adapter is waiting for GSA with reservation id " + reservationId + " to become available");
+    logger.info("Cloudify adapter is waiting for GSA with reservation id \"" + reservationId + "\" and ip \""+ machineIp+ "\" to become available");
     final GridServiceAgent gsa=waitForGsa(machineIp,end);
     if (gsa == null) {
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);

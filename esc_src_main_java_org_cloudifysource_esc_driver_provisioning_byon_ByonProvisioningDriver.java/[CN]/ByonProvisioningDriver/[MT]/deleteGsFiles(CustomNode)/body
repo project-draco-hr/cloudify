@@ -2,7 +2,11 @@
   MachineDetails machineDetails=null;
   try {
     machineDetails=createMachineDetailsFromNode(cloudNode);
-    FileUtils.deleteFileSystemObjects(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),machineDetails.getKeyFile().getAbsolutePath(),cloudifyItems,machineDetails.getFileTransferMode());
+    String keyFile="";
+    if (machineDetails.getKeyFile() != null) {
+      keyFile=machineDetails.getKeyFile().getAbsolutePath();
+    }
+    FileUtils.deleteFileSystemObjects(machineDetails.getPrivateAddress(),machineDetails.getRemoteUsername(),machineDetails.getRemotePassword(),keyFile,cloudifyItems,machineDetails.getFileTransferMode());
   }
  catch (  final Exception e) {
     if (machineDetails != null) {

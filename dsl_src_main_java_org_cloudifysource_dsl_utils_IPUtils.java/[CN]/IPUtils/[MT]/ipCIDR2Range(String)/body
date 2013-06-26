@@ -9,14 +9,14 @@
     maskBits=Integer.parseInt(parts[1]);
   }
   if (!validateIPAddress(ipAddress)) {
-    throw new CloudProvisioningException("Invalid IP address: " + ipAddress);
+    throw new IllegalArgumentException("Invalid IP address: " + ipAddress);
   }
   final String[] ipParts=ipAddress.split("\\.");
   final int addr=Integer.parseInt(ipParts[0]) << 24 & 0xFF000000 | Integer.parseInt(ipParts[1]) << 16 & 0xFF0000 | Integer.parseInt(ipParts[2]) << 8 & 0xFF00 | Integer.parseInt(ipParts[3]) & 0xFF;
   final int mask=0xffffffff << 32 - maskBits;
   final int lowest=addr & mask;
-  final String lowestIP=buildIPString(toArray(lowest));
+  final String lowestIP=buildIPV4String(toIntArray(lowest));
   final int highest=lowest + ~mask;
-  final String highestIP=buildIPString(toArray(highest));
+  final String highestIP=buildIPV4String(toIntArray(highest));
   return lowestIP + "-" + highestIP;
 }

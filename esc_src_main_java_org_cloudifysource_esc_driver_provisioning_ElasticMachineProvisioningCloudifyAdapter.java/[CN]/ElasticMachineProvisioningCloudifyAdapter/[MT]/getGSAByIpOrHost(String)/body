@@ -1,11 +1,14 @@
 {
-  GridServiceAgent gsa=originalESMAdmin.getGridServiceAgents().getHostAddress().get(machineIp);
-  if (gsa != null) {
-    return gsa;
+  GridServiceAgent gsa=null;
+  Map<String,GridServiceAgent> gsaByHostAddress=originalESMAdmin.getGridServiceAgents().getHostAddress();
+  for (  String hostAddress : gsaByHostAddress.keySet()) {
+    if (hostAddress.equals(machineIp) || IPUtils.isSameIpv6Address(hostAddress,machineIp)) {
+      gsa=gsaByHostAddress.get(hostAddress);
+      break;
+    }
   }
-  gsa=originalESMAdmin.getGridServiceAgents().getHostNames().get(machineIp);
-  if (gsa != null) {
-    return gsa;
+  if (gsa == null) {
+    gsa=originalESMAdmin.getGridServiceAgents().getHostNames().get(machineIp);
   }
-  return null;
+  return gsa;
 }

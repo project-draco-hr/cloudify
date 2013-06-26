@@ -1,0 +1,13 @@
+{
+  String safeIpAddress;
+  try {
+    String strippedIp=StringUtils.strip(ipAddress,"[]");
+    strippedIp=StringUtils.substringBefore(strippedIp,NETWORK_INTERFACE_SEPARATOR);
+    IPv6Address.fromString(strippedIp);
+    safeIpAddress="[" + strippedIp + "]";
+  }
+ catch (  IllegalArgumentException e) {
+    safeIpAddress=ipAddress;
+  }
+  return safeIpAddress;
+}

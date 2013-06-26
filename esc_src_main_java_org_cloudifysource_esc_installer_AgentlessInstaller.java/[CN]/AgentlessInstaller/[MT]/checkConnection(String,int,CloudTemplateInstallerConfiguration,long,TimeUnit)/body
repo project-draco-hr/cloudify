@@ -24,5 +24,6 @@
       }
     }
   }
-  throw new TimeoutException("Failed connecting to " + ip + ":"+ port);
+  String ipAddress=inetAddress.getHostAddress();
+  throw new TimeoutException("Failed connecting to " + IPUtils.getSafeIpAddress(ipAddress) + ":"+ port);
 }

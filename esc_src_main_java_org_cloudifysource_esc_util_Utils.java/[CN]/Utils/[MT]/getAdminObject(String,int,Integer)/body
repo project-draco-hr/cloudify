@@ -1,6 +1,6 @@
 {
   final AdminFactory adminFactory=new AdminFactory();
-  adminFactory.addLocator(managementIP + ":" + lusPort);
+  adminFactory.addLocator(IPUtils.getSafeIpAddress(managementIP) + ":" + lusPort);
   final Admin admin=adminFactory.createAdmin();
   GridServiceManagers gsms=admin.getGridServiceManagers();
   final long end=System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(ADMIN_API_TIMEOUT);

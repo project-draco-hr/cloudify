@@ -2,7 +2,7 @@
   final LookupLocator[] locators=this.originalESMAdmin.getLocators();
   final StringBuilder sb=new StringBuilder();
   for (  final LookupLocator lookupLocator : locators) {
-    sb.append(lookupLocator.getHost()).append(':').append(lookupLocator.getPort()).append(',');
+    sb.append(IPUtils.getSafeIpAddress(lookupLocator.getHost())).append(':').append(lookupLocator.getPort()).append(',');
   }
   if (!sb.toString().isEmpty()) {
     sb.setLength(sb.length() - 1);

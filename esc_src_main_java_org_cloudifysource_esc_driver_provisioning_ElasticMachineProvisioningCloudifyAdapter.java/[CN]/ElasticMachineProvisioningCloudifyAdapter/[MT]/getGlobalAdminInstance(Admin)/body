@@ -7,7 +7,7 @@ synchronized (GLOBAL_ADMIN_MUTEX) {
         factory.addGroup(group);
       }
       for (      final LookupLocator locator : esmAdminInstance.getLocators()) {
-        factory.addLocator(locator.getHost() + ":" + locator.getPort());
+        factory.addLocator(IPUtils.getSafeIpAddress(locator.getHost()) + ":" + locator.getPort());
       }
       globalAdminInstance=factory.createAdmin();
       waitForAgentsToBeDiscovered(esmAdminInstance,globalAdminInstance);

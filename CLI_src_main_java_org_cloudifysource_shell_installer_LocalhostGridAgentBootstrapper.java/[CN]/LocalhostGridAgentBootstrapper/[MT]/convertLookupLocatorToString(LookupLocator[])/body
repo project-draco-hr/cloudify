@@ -2,7 +2,7 @@
   final List<String> trimmedLocators=new ArrayList<String>();
   if (locators != null) {
     for (    final LookupLocator locator : locators) {
-      trimmedLocators.add(locator.getHost() + ":" + locator.getPort());
+      trimmedLocators.add(IPUtils.getSafeIpAddress(locator.getHost()) + ":" + locator.getPort());
     }
   }
   return StringUtils.collectionToDelimitedString(trimmedLocators,",");

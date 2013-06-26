@@ -1,0 +1,11 @@
+{
+  boolean adressesEquals=false;
+  try {
+    final IPv6Address iPv6Address1=IPv6Address.fromString(address1);
+    final IPv6Address iPv6Address2=IPv6Address.fromString(address2);
+    adressesEquals=iPv6Address1.equals(iPv6Address2);
+  }
+ catch (  IllegalArgumentException e) {
+  }
+  return adressesEquals;
+}

@@ -1,5 +1,5 @@
 {
-  final int[] ret=new int[IP_PARTS];
+  final int[] ret=new int[IPV4_PARTS];
   for (int j=3; j >= 0; --j) {
     ret[j]|=ip >>> 8 * (3 - j) & 0xff;
   }

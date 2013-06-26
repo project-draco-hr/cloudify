@@ -1,7 +1,7 @@
 {
   if (!validateIPAddress(ipAddress)) {
-    throw new CloudProvisioningException("Invalid IP address: " + ipAddress);
+    throw new IllegalArgumentException("Invalid IP address: " + ipAddress);
   }
-  final byte[] ipBytes=getBytes(ipAddress);
+  final byte[] ipBytes=getIPv4BytesArray(ipAddress);
   return ((long)(byte2int(ipBytes[0]) * IP_BYTE_RANGE + byte2int(ipBytes[1])) * IP_BYTE_RANGE + byte2int(ipBytes[2])) * IP_BYTE_RANGE + byte2int(ipBytes[3]);
 }
