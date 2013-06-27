@@ -1,0 +1,15 @@
+{
+  if (memoryCapacityPerContainer == null) {
+    throw new DSLValidationException("Cannot determine memoryCapacityPerContainer SLA");
+  }
+  final int minimumNumberOfContainers=highlyAvailable ? 2 : 1;
+  final int minMemoryCapacityRequired=minimumNumberOfContainers * memoryCapacityPerContainer;
+  if (maxMemoryCapacity != null && memoryCapacity != null && maxMemoryCapacity < memoryCapacity) {
+    throw new DSLValidationException("Max memory capacity is smaller than the minimal memory capacity required." + maxMemoryCapacity + " < "+ memoryCapacity);
+  }
+  if (maxMemoryCapacity != null) {
+    if (maxMemoryCapacity < minMemoryCapacityRequired) {
+      throw new DSLValidationException("Cannot determine memoryCapacityPerContainer SLA");
+    }
+  }
+}

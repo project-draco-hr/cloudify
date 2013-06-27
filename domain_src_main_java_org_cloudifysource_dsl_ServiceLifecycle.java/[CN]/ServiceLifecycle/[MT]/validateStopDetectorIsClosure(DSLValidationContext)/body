@@ -1,0 +1,5 @@
+{
+  if ((this.stopDetection != null) && (!(this.stopDetection instanceof ClosureExecutableEntry))) {
+    throw new DSLValidationException("The stop detection field only supports execution of closures");
+  }
+}

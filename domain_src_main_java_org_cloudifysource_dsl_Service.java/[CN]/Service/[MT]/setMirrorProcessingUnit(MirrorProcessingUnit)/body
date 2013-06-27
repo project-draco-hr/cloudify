@@ -1,0 +1,6 @@
+{
+  if (this.mirrorProcessingUnit != null) {
+    throw new IllegalStateException("DSL File contains more then 1 ProcessingUnit type");
+  }
+  this.mirrorProcessingUnit=mirrorProcessingUnit;
+}

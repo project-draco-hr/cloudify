@@ -1,0 +1,6 @@
+{
+  super.validateDefaultValues(validationContext);
+  if (isUseManagement()) {
+    throw new DSLValidationException("isUseManagement can only be true for isolationSLA of type 'global'");
+  }
+}

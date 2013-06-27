@@ -1,0 +1,3 @@
+{
+  return "GlobalIsolationSLADescriptor [instanceMemoryMB=" + instanceMemoryMB + ", instanceCpuCores="+ instanceCpuCores+ ", useManagement="+ useManagement+ "]";
+}
