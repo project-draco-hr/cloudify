@@ -1,4 +1,0 @@
-{
-  this.application=(Application)dslEntity;
-  this.name=application.getName();
-}
