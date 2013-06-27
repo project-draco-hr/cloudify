@@ -4,7 +4,7 @@
     String libFolderPath=cloudLibFolder.getAbsolutePath();
     final CompilerConfiguration gcc=new CompilerConfiguration();
     gcc.getClasspath().add(libFolderPath);
-    File[] jarFiles=listJarFiles(cloudLibFolder);
+    final File[] jarFiles=listJarFiles(cloudLibFolder);
     for (    File file : jarFiles) {
       gcc.getClasspath().add(file.getAbsolutePath());
     }
