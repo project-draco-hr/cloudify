@@ -1,0 +1,6 @@
+{
+  Class<?> clazz=ClassUtils.getClass(type.qualifiedTypeName());
+  Object requestBodyParam=getRequestExample(clazz);
+  String jsonStr=new ObjectMapper().writeValueAsString(requestBodyParam);
+  return jsonStr;
+}

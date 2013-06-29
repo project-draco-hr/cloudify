@@ -1,0 +1,5 @@
+{
+  File htmlFile=new File(GENERATED_HTML_FILE_PATH);
+  Assert.assertTrue(htmlFile.exists());
+  return htmlFile;
+}
