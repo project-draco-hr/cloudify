@@ -1,0 +1,11 @@
+{
+  try {
+    IPUtils.validateConnection(Constants.getHostAddress(),0);
+  }
+ catch (  UnknownHostException uhe) {
+  }
+catch (  IOException ioe) {
+  }
+catch (  SecurityException se) {
+  }
+}

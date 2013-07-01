@@ -1,0 +1,22 @@
+{
+  String lrmiPortRange=System.getenv(CloudifyConstants.GSC_LRMI_PORT_RANGE_ENVIRONMENT_VAR);
+  if (lrmiPortRange == null) {
+    throw new IllegalArgumentException("LRMI port range not configred. The environment variable " + CloudifyConstants.GSC_LRMI_PORT_RANGE_ENVIRONMENT_VAR + " is not set");
+  }
+  if (lrmiPortRange.indexOf(PORT_RANGE_SEPARATOR) == -1) {
+    throw new IllegalArgumentException("Invalid LRMI port range: " + lrmiPortRange + ". The expected "+ "format is <lowest port>-<highest port>, e.g. 7010-7110");
+  }
+  String lowestPortStr=StringUtils.substringBefore(lrmiPortRange,PORT_RANGE_SEPARATOR);
+  String highestPortStr=StringUtils.substringAfter(lrmiPortRange,PORT_RANGE_SEPARATOR);
+  int lowestPort=Integer.parseInt(lowestPortStr);
+  int highestPort=Integer.parseInt(highestPortStr);
+  try {
+    IPUtils.validateConnection(Constants.getHostAddress(),lowestPort,highestPort);
+  }
+ catch (  UnknownHostException uhe) {
+  }
+catch (  IOException ioe) {
+  }
+catch (  SecurityException se) {
+  }
+}

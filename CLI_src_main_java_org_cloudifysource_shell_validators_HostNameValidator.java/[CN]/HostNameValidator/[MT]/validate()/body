@@ -1,0 +1,9 @@
+{
+  try {
+    InetAddress.getLocalHost().getHostName();
+    InetAddress.getLocalHost().getHostAddress();
+    InetAddress.getByName(InetAddress.getLocalHost().getHostName());
+  }
+ catch (  UnknownHostException e) {
+  }
+}
