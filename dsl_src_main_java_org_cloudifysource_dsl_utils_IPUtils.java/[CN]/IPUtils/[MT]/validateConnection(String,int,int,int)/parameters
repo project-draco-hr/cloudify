@@ -1,0 +1,4 @@
+String ipAddress
+int lowestPort
+int highestPort
+int timeout

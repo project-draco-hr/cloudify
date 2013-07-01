@@ -1,0 +1,26 @@
+{
+  if (lowestPort > highestPort) {
+    throw new IllegalArgumentException("Invalid port range: " + lowestPort + "-"+ highestPort+ ". The "+ " lowest port must be smaller than the highest port in the range.");
+  }
+  boolean connectionEstablished=false;
+  Exception lastException=null;
+  for (int port=lowestPort; port <= highestPort && !connectionEstablished; port++) {
+    try {
+      validateConnection(ipAddress,port);
+      connectionEstablished=true;
+    }
+ catch (    UnknownHostException uhe) {
+      throw uhe;
+    }
+catch (    SecurityException se) {
+      throw se;
+    }
+catch (    Exception e) {
+      lastException=e;
+      continue;
+    }
+  }
+  if (!connectionEstablished) {
+    throw new IOException("Failed to connect to host " + ipAddress + " on any port in the range "+ lowestPort+ "-"+ highestPort,lastException);
+  }
+}
