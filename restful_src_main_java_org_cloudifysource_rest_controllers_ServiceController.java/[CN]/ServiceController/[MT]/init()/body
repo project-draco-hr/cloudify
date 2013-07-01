@@ -5,5 +5,8 @@
   defaultTemplateName=restConfig.getDefaultTemplateName();
   managementTemplate=restConfig.getManagementTemplate();
   restTemporaryFolder=restConfig.getRestTempFolder();
+  cloudConfigurationDir=restConfig.getCloudConfigurationDir();
+  cloudConfigurationHolder=restConfig.getCloudConfigurationHolder();
+  permissionEvaluator=restConfig.getPermissionEvaluator();
   startLifecycleLogsCleanupTask();
 }

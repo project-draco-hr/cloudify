@@ -1,7 +1,7 @@
 {
-  logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
+  logger.log(Level.INFO,"[addTemplatesToCloud] - Adding templates to cloud.");
   final List<ComputeTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
-  logger.log(Level.FINE,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
+  logger.log(Level.INFO,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
   final Map<String,String> failedToAddTemplates=new HashMap<String,String>();
   final List<String> addedTemplates=new LinkedList<String>();
   addTemplatesToCloudList(templatesFolder,cloudTemplatesHolders,addedTemplates,failedToAddTemplates);
@@ -9,7 +9,9 @@
     logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates files from " + templatesFolder.getAbsolutePath());
   }
  else {
-    logger.log(Level.FINE,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+    logger.log(Level.INFO,"[addTemplatesToCloud] - templatesFolder is " + templatesFolder);
+    logger.log(Level.INFO,"[addTemplatesToCloud] - cloudConfigurationDir is " + cloudConfigurationDir);
+    logger.log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
     try {
       final File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
       updateCloudTemplatesUploadPath(addedTemplates,localTemplatesDir);

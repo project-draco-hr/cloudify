@@ -2,6 +2,7 @@
   logger.info("Initializing cloud configuration");
   config.setGigaSpace(gigaSpace);
   config.setAdmin(admin);
+  config.setPermissionEvaluator(permissionEvaluator);
   Cloud cloud=readCloud();
   if (cloud != null) {
     config.setCloud(cloud);
