@@ -1,0 +1,38 @@
+{
+  Object methodReturnObject=null;
+  Map<String,Object> model=modelAndView.getModel();
+  if (MapUtils.isNotEmpty(model)) {
+    for (    Map.Entry<String,Object> entry : model.entrySet()) {
+      Object value=entry.getValue();
+      if (!(value instanceof BindingResult)) {
+        methodReturnObject=value;
+        break;
+      }
+    }
+    if (methodReturnObject == null) {
+      logger.warning("return object not found in model: " + model.toString());
+      throw new RestErrorException("return object not found in model: " + model.toString());
+    }
+  }
+ else {
+    if (handler instanceof HandlerMethod) {
+      Class<?> returnType=((HandlerMethod)handler).getMethod().getReturnType();
+      if (returnType == Void.TYPE) {
+        methodReturnObject=null;
+      }
+ else       if (returnType == String.class) {
+        String viewName=modelAndView.getViewName();
+        methodReturnObject=viewName;
+      }
+ else {
+        logger.warning("return type not supported: " + returnType);
+        throw new RestErrorException("return type not supported: " + returnType);
+      }
+    }
+ else {
+      logger.warning("handler object is not a HandlerMethod: " + handler);
+      throw new RestErrorException("handler object is not a HandlerMethod: " + handler);
+    }
+  }
+  return methodReturnObject;
+}
