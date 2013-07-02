@@ -11,12 +11,15 @@
   int lowestPort=Integer.parseInt(lowestPortStr);
   int highestPort=Integer.parseInt(highestPortStr);
   try {
-    IPUtils.validateConnection(Constants.getHostAddress(),lowestPort,highestPort);
+    IPUtils.validateConnectionInPortRange(Constants.getHostAddress(),lowestPort,highestPort);
   }
  catch (  UnknownHostException uhe) {
+    throw new CLIValidationException(uhe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_UNKNOWN_HOST.getName());
   }
 catch (  IOException ioe) {
+    throw new CLIValidationException(ioe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_IO_ERROR.getName(),ioe.getMessage());
   }
 catch (  SecurityException se) {
+    throw new CLIValidationException(se,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
   }
 }

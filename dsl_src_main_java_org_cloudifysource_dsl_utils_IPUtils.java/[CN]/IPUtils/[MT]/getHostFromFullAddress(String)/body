@@ -1,0 +1,7 @@
+{
+  String host=ipAddress;
+  host=StringUtils.substringAfter(host,"[");
+  host=StringUtils.substringBefore(host,"]");
+  host=StringUtils.substringBefore(host,NETWORK_INTERFACE_SEPARATOR);
+  return host;
+}

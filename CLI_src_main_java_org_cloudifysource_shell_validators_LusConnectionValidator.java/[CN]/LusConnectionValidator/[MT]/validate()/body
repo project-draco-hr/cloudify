@@ -1,2 +1,15 @@
 {
+  String lusIpAddress=System.getenv(CloudifyConstants.LUS_IP_ADDRESS_ENV);
+  try {
+    IPUtils.validateConnectionInPortRange(Constants.getHostAddress(),lowestPort,highestPort);
+  }
+ catch (  UnknownHostException uhe) {
+    throw new CLIValidationException(uhe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_UNKNOWN_HOST.getName());
+  }
+catch (  IOException ioe) {
+    throw new CLIValidationException(ioe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_IO_ERROR.getName(),ioe.getMessage());
+  }
+catch (  SecurityException se) {
+    throw new CLIValidationException(se,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+  }
 }
