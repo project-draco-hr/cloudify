@@ -1,0 +1,4 @@
+{
+  super.setDSLEntity(dslEntity);
+  this.entity=(RestComponent)dslEntity;
+}

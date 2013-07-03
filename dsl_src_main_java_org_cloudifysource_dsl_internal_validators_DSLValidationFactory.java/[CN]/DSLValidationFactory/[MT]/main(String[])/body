@@ -1,0 +1,5 @@
+{
+  DSLValidationFactory factory=new DSLValidationFactory();
+  factory.init();
+  DSLValidator createValidator=factory.createValidator(new SharedIsolationSLADescriptor());
+}

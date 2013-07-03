@@ -1,0 +1,7 @@
+{
+  if (this.entity.getDiscoveryPort() == null) {
+    entity.setDiscoveryPort(CloudifyConstants.DEFAULT_LUS_PORT);
+  }
+  super.validatePort(this.entity.getPort());
+  super.validatePort(this.entity.getDiscoveryPort());
+}

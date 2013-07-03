@@ -1,0 +1,5 @@
+{
+  Assert.assertTrue("Expected default value not set.",((org.openspaces.admin.pu.statistics.AbstractTimeWindowStatisticsConfig)timeWindowStatistics).getTimeWindowSeconds() == 60);
+  Assert.assertTrue("Expected default value not set.",((org.openspaces.admin.pu.statistics.AbstractTimeWindowStatisticsConfig)timeWindowStatistics).getMinimumTimeWindowSeconds() == 60);
+  Assert.assertTrue("Expected default value not set.",((org.openspaces.admin.pu.statistics.AbstractTimeWindowStatisticsConfig)timeWindowStatistics).getMaximumTimeWindowSeconds() == 120);
+}

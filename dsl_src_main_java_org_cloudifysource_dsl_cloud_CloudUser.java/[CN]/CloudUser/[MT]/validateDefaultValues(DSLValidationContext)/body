@@ -1,8 +1,0 @@
-{
-  if ("ENTER_USER".equals(this.getUser())) {
-    throw new DSLValidationException("User field still has default configuration value of ENTER_USER");
-  }
-  if ("ENTER_KEY".equals(this.getApiKey())) {
-    throw new DSLValidationException("Key field still has default configuration value of ENTER_KEY");
-  }
-}

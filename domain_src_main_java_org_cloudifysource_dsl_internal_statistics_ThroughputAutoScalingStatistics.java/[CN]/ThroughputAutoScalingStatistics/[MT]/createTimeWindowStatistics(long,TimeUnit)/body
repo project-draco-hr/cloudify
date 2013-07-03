@@ -1,0 +1,5 @@
+{
+  ThroughputTimeWindowStatisticsConfig config=new ThroughputTimeWindowStatisticsConfig();
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

@@ -1,0 +1,5 @@
+{
+  if (memoryString == null || memoryString.length() <= 1 || (!memoryString.endsWith("m") && !memoryString.endsWith("g") && !memoryString.endsWith("t")&& !memoryString.endsWith("p")&& !memoryString.endsWith("e")) || !StringUtils.isNumeric(this.entity.getMaxMemory().substring(0,this.entity.getMaxMemory().length() - 1))) {
+    throw new DSLValidationException("Illegal memory property: " + memoryString + " Memory property should be defined as '<NUMBER><MEMORYUNIT>'.");
+  }
+}

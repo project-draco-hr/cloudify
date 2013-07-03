@@ -46,7 +46,15 @@
     final ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
     statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
     statisticsId.setMetric(serviceStatistics.getMetric());
-    statisticsId.setInstancesStatistics(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
+    StatisticsConfigAdapter adapter=new StatisticsConfigAdapter();
+    InstancesStatisticsConfig instanceStatistics;
+    try {
+      instanceStatistics=adapter.createInstanceStatistics(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
+      statisticsId.setInstancesStatistics(instanceStatistics);
+    }
+ catch (    Exception e) {
+      throw new DSLException("Failed instantiating instance statistics.",e);
+    }
     if (serviceStatistics.getMovingTimeRangeInSeconds() <= service.getSamplingPeriodInSeconds()) {
       if (logger.isLoggable(Level.FINE)) {
         logger.fine("Deploying service " + serviceName + " with auto scaling that monitors the last sample of "+ serviceStatistics.getMetric());
@@ -54,7 +62,14 @@
       statisticsId.setTimeWindowStatistics(new LastSampleTimeWindowStatisticsConfig());
     }
  else {
-      statisticsId.setTimeWindowStatistics(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
+      org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics;
+      try {
+        timeWindowStatistics=adapter.createTimeWindowStatistics(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
+      }
+ catch (      Exception e) {
+        throw new DSLException("Failed instantiating time window statistics.",e);
+      }
+      statisticsId.setTimeWindowStatistics(timeWindowStatistics);
     }
     statisticsId.setAgentZones(new AnyZonesConfig());
     final AutomaticCapacityScaleRuleConfig rule=new AutomaticCapacityScaleRuleConfig();

@@ -1,0 +1,11 @@
+{
+  final CloudConfiguration configuration=entity.getConfiguration();
+  final Map<String,ComputeTemplate> templates=entity.getCloudCompute().getTemplates();
+  final String managementTemplateName=configuration.getManagementMachineTemplate();
+  if (StringUtils.isBlank(managementTemplateName)) {
+    throw new DSLValidationException("managementMachineTemplate may not be empty");
+  }
+  if (!templates.containsKey(managementTemplateName)) {
+    throw new DSLValidationException("The management machine template \"" + managementTemplateName + "\" is "+ "not listed in the cloud's templates section");
+  }
+}

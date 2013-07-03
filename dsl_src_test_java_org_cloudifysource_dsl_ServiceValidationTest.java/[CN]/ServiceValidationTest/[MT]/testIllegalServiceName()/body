@@ -1,21 +1,23 @@
 {
   Service service=new Service();
+  ServiceValidator serviceValidator=new ServiceValidator();
+  serviceValidator.setDSLEntity(service);
   try {
-    service.validateName(new DSLValidationContext());
+    serviceValidator.validateName(new DSLValidationContext());
     fail("A service without a name was successfully validated");
   }
  catch (  DSLValidationException e) {
   }
   try {
     service.setName(StringUtils.EMPTY);
-    service.validateName(new DSLValidationContext());
+    serviceValidator.validateName(new DSLValidationContext());
     fail("A service with an empty name was successfully validated");
   }
  catch (  DSLValidationException e) {
   }
   try {
     service.setName(INVALID_SERVICE_NAME);
-    service.validateName(new DSLValidationContext());
+    serviceValidator.validateName(new DSLValidationContext());
     fail("A service with an invalid name was successfully validated");
   }
  catch (  DSLValidationException e) {

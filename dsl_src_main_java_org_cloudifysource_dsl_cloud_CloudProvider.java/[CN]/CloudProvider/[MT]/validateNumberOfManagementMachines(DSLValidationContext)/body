@@ -1,5 +1,0 @@
-{
-  if (numberOfManagementMachines != 1 && numberOfManagementMachines != 2) {
-    throw new DSLValidationException("Invalid numberOfManagementMachines: \"" + numberOfManagementMachines + "\". Valid values are 1 or 2");
-  }
-}

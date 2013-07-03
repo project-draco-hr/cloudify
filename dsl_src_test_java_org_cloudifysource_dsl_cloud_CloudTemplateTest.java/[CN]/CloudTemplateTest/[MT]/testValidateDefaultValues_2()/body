@@ -1,5 +1,7 @@
 {
   final ComputeTemplate fixture=new ComputeTemplate();
+  ComputeTemplateValidator fixtureValidator=new ComputeTemplateValidator();
+  fixtureValidator.setDSLEntity(fixture);
   fixture.setRemoteExecution(RemoteExecutionModes.SSH);
   fixture.setImageId("");
   fixture.setOptions(new HashMap());
@@ -13,5 +15,5 @@
   fixture.setOverrides(new HashMap());
   fixture.setPassword("");
   fixture.setMachineMemoryMB(1);
-  fixture.validateDefaultValues(new DSLValidationContext());
+  fixtureValidator.validateDefaultValues(new DSLValidationContext());
 }

@@ -1,0 +1,6 @@
+{
+  if (entity.getAbsoluteUploadDir() != null) {
+    throw new DSLValidationException("absolute upload directory may not be set by external code");
+  }
+  this.entity.setAbsoluteUploadDir(findUploadDir(context).getAbsolutePath());
+}

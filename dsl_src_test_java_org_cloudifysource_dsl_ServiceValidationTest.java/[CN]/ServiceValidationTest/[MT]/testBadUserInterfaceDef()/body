@@ -1,9 +1,11 @@
 {
   Service service=ServiceReader.readService(new File(SERVICE_WITH_VALID_USER_INTERFACE));
+  ServiceValidator serviceValidator=new ServiceValidator();
+  serviceValidator.setDSLEntity(service);
   DSLValidationContext validationContext=new DSLValidationContext();
   validationContext.setFilePath(SERVICE_WITH_VALID_USER_INTERFACE);
   try {
-    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    serviceValidator.validateUserInterfaceObjectIsWellDefined(validationContext);
   }
  catch (  DSLValidationException e) {
     fail("Validation of a valid User Interface object failed");
@@ -14,7 +16,7 @@
   firstInvalidMetricList.add(new Object());
   userInterface.getMetricGroups().get(0).setMetrics(firstInvalidMetricList);
   try {
-    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    serviceValidator.validateUserInterfaceObjectIsWellDefined(validationContext);
     fail("Validation of User Interface object is expected to fail");
   }
  catch (  DSLValidationException e) {
@@ -26,7 +28,7 @@
   secondInvalidMetricList.add(invalidMetricListForm);
   userInterface.getMetricGroups().get(0).setMetrics(secondInvalidMetricList);
   try {
-    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    serviceValidator.validateUserInterfaceObjectIsWellDefined(validationContext);
     fail("Validation of User Interface object is expected to fail");
   }
  catch (  DSLValidationException e) {
@@ -38,7 +40,7 @@
   thirdInvalidMetricList.add(invalidMetricListForm);
   userInterface.getMetricGroups().get(0).setMetrics(thirdInvalidMetricList);
   try {
-    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    serviceValidator.validateUserInterfaceObjectIsWellDefined(validationContext);
     fail("Validation of User Interface object is expected to fail");
   }
  catch (  DSLValidationException e) {
@@ -51,7 +53,7 @@
   fourthInvalidMetricList.add(invalidMetricListForm);
   userInterface.getMetricGroups().get(0).setMetrics(fourthInvalidMetricList);
   try {
-    service.validateUserInterfaceObjectIsWellDefined(validationContext);
+    serviceValidator.validateUserInterfaceObjectIsWellDefined(validationContext);
     fail("Validation of User Interface object is expected to fail");
   }
  catch (  DSLValidationException e) {

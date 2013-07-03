@@ -1,0 +1,15 @@
+{
+  if (CloudifyConstants.DYNAMIC_BYON_NAME.equals(entity.getName())) {
+    String managementMachineTemplateName=entity.getConfiguration().getManagementMachineTemplate();
+    ComputeTemplate managementMachineTemplate=entity.getCloudCompute().getTemplates().get(managementMachineTemplateName);
+    Map<String,Object> mngTemplateCustom=managementMachineTemplate.getCustom();
+    validateClosureExists(mngTemplateCustom,CloudifyConstants.DYNAMIC_BYON_START_MNG_MACHINES_KEY,managementMachineTemplateName);
+    validateClosureExists(mngTemplateCustom,CloudifyConstants.DYNAMIC_BYON_STOP_MNG_MACHINES_KEY,managementMachineTemplateName);
+    for (    Entry<String,ComputeTemplate> templateEntry : entity.getCloudCompute().getTemplates().entrySet()) {
+      final String templateName=templateEntry.getKey();
+      Map<String,Object> templateCustom=templateEntry.getValue().getCustom();
+      validateClosureExists(templateCustom,CloudifyConstants.DYNAMIC_BYON_START_MACHINE_KEY,templateName);
+      validateClosureExists(templateCustom,CloudifyConstants.DYNAMIC_BYON_STOP_MACHINE_KEY,templateName);
+    }
+  }
+}

@@ -1,6 +1,8 @@
 {
   final CloudUser fixture=new CloudUser();
+  CloudUserValidator fixtureValidator=new CloudUserValidator();
+  fixtureValidator.setDSLEntity(fixture);
   fixture.setUser("");
   fixture.setApiKey("ENTER_KEY");
-  fixture.validateDefaultValues(new DSLValidationContext());
+  fixtureValidator.validateDefaultValues(new DSLValidationContext());
 }

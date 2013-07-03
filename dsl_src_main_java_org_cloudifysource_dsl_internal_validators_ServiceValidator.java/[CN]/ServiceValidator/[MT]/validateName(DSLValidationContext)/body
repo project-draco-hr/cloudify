@@ -1,0 +1,6 @@
+{
+  if (StringUtils.isBlank(entity.getName())) {
+    throw new DSLValidationException("Service.validateName: The service's name " + (entity.getName() == null ? "is missing" : "is empty"));
+  }
+  DSLUtils.validateRecipeName(entity.getName());
+}

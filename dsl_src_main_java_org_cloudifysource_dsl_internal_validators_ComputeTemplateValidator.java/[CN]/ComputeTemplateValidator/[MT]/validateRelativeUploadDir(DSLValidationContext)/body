@@ -1,0 +1,9 @@
+{
+  final File uploadDir=findUploadDir(context);
+  if (StringUtils.isNotBlank(this.entity.getKeyFile())) {
+    final File keyFile=new File(uploadDir,this.entity.getKeyFile());
+    if (!keyFile.exists() || !keyFile.isFile()) {
+      throw new DSLValidationException("The specified key file was not found: " + keyFile);
+    }
+  }
+}

@@ -1,17 +1,19 @@
 {
   Service service=new Service();
+  ServiceValidator serviceValidator=new ServiceValidator();
+  serviceValidator.setDSLEntity(service);
   service.setIcon(ICON_FILE);
   DSLValidationContext validationContext=new DSLValidationContext();
   try {
     validationContext.setFilePath(SERVICE_WITHOUT_ICON_PATH);
-    service.validateIcon(validationContext);
+    serviceValidator.validateIcon(validationContext);
     fail("an invalid icon path was successfully validated: " + SERVICE_WITHOUT_ICON_PATH);
   }
  catch (  DSLValidationException e) {
   }
   try {
     validationContext.setFilePath(SERVICE_WITH_ICON_PATH);
-    service.validateIcon(validationContext);
+    serviceValidator.validateIcon(validationContext);
   }
  catch (  DSLValidationException e) {
     fail("Validation of service failed on a valid icon path: " + SERVICE_WITH_ICON_PATH + ": "+ e.getMessage());

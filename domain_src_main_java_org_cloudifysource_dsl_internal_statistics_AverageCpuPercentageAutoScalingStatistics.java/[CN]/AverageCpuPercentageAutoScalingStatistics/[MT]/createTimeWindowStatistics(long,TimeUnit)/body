@@ -1,0 +1,5 @@
+{
+  CpuPercentageTimeWindowStatisticsConfig config=new CpuPercentageTimeWindowStatisticsConfig();
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

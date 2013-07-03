@@ -1,0 +1,6 @@
+{
+  if (entity.getPort() == null) {
+    entity.setPort(CloudifyConstants.DEFAULT_WEBUI_PORT);
+  }
+  super.validatePort(this.entity.getPort());
+}

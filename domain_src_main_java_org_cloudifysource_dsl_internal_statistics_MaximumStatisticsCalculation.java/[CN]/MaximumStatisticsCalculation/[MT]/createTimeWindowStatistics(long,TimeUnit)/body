@@ -1,0 +1,5 @@
+{
+  MaximumTimeWindowStatisticsConfig config=new MaximumTimeWindowStatisticsConfig();
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

@@ -1,6 +1,6 @@
 {
-  if (StringUtils.isBlank(name)) {
-    throw new DSLValidationException("Application.validateName: The application's name " + (name == null ? "is missing" : "is empty"));
+  if (StringUtils.isBlank(application.getName())) {
+    throw new DSLValidationException("Application.validateName: The application's name " + (application.getName() == null ? "is missing" : "is empty"));
   }
-  DSLUtils.validateRecipeName(name);
+  DSLUtils.validateRecipeName(application.getName());
 }

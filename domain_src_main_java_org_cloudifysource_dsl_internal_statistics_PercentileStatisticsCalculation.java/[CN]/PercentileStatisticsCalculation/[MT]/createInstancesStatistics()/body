@@ -1,0 +1,5 @@
+{
+  PercentileInstancesStatisticsConfig config=new PercentileInstancesStatisticsConfig();
+  config.setPercentile(percentile);
+  return config;
+}

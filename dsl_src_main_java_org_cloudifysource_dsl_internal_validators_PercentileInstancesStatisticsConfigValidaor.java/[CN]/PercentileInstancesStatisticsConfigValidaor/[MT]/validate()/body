@@ -1,0 +1,5 @@
+{
+  if (entity.getPercentile() < 0 || entity.getPercentile() > 100) {
+    throw new IllegalArgumentException("percentile (" + entity.getPercentile() + ") must between 0 and 100 (inclusive)");
+  }
+}

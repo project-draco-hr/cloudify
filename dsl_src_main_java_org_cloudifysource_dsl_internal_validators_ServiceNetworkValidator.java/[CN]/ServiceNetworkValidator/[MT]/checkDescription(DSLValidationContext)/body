@@ -1,0 +1,5 @@
+{
+  if (this.entity.getProtocolDescription() == null) {
+    throw new DSLValidationException("The protocol description can't be an empty value");
+  }
+}

@@ -1,3 +1,0 @@
-{
-  return new AverageTimeWindowStatisticsConfigurer().timeWindow(timeWindow,timeUnit).create();
-}

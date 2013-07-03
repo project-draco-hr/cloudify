@@ -1,5 +1,0 @@
-{
-  if (port <= 0) {
-    throw new DSLValidationException("The port value of the network block must be a positive integer.");
-  }
-}

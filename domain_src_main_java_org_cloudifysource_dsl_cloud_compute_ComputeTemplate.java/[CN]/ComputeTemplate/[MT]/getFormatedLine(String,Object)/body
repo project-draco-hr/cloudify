@@ -1,0 +1,12 @@
+{
+  if (obj == null) {
+    return "";
+  }
+  if (obj instanceof Map) {
+    final Map<?,?> map=(Map<?,?>)obj;
+    if (map.isEmpty()) {
+      return "";
+    }
+  }
+  return "\t" + objName + " = "+ obj.toString()+ ","+ System.getProperty("line.separator");
+}

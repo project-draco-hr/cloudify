@@ -1,0 +1,4 @@
+{
+  validateMemoryString(this.entity.getMaxMemory());
+  validateMemoryString(this.entity.getMinMemory());
+}

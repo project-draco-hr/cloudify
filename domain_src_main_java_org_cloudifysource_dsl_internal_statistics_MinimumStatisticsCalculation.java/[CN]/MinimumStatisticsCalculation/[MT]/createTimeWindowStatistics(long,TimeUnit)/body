@@ -1,0 +1,5 @@
+{
+  MinimumTimeWindowStatisticsConfig config=new MinimumTimeWindowStatisticsConfig();
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

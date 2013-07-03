@@ -1,0 +1,17 @@
+{
+  if (entity.getMinAllowedInstances() <= 0) {
+    throw new DSLValidationException("Minimum number of instances (" + this.entity.getMinAllowedInstances() + ") must be 1 or higher.");
+  }
+  if (this.entity.getMinAllowedInstances() > this.entity.getMaxAllowedInstances()) {
+    throw new DSLValidationException("maximum number of instances (" + this.entity.getMaxAllowedInstances() + ") must be equal or greater than the minimum number of instances ("+ this.entity.getMinAllowedInstances()+ ")");
+  }
+  if (this.entity.getMinAllowedInstances() > this.entity.getNumInstances()) {
+    throw new DSLValidationException("number of instances (" + this.entity.getNumInstances() + ") must be equal or greater than the minimum number of instances ("+ this.entity.getMinAllowedInstances()+ ")");
+  }
+  if (this.entity.getNumInstances() > this.entity.getMaxAllowedInstances()) {
+    throw new DSLValidationException("number of instances (" + this.entity.getNumInstances() + ") must be equal or less than the maximum number of instances ("+ this.entity.getMaxAllowedInstances()+ ")");
+  }
+  if (this.entity.getNumInstances() <= 0) {
+    throw new DSLValidationException("number of instances must be set to a positive integer");
+  }
+}

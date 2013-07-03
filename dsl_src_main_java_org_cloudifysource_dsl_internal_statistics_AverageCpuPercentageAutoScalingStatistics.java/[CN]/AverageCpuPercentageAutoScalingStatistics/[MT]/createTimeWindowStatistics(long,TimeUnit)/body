@@ -1,3 +1,0 @@
-{
-  return new CpuPercentageTimeWindowStatisticsConfigurer().timeWindow(timeWindow,timeUnit).create();
-}

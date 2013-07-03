@@ -1,58 +1,62 @@
 {
   final AgentComponent agentComponent=new AgentComponent();
+  final AgentComponentValidator agentComponentValidator=new AgentComponentValidator();
+  agentComponentValidator.setDSLEntity(agentComponent);
   agentComponent.setMaxMemory("128u");
   try {
-    agentComponent.validateMemory(new DSLValidationContext());
+    agentComponentValidator.validateMemory(new DSLValidationContext());
     Assert.fail("invalid memory passed dsl validation");
   }
  catch (  final DSLValidationException e) {
   }
   agentComponent.setMaxMemory("128m");
   try {
-    agentComponent.validateMemory(new DSLValidationContext());
+    agentComponentValidator.validateMemory(new DSLValidationContext());
   }
  catch (  final DSLValidationException e) {
     Assert.fail("legit memory failed dsl validation");
   }
   agentComponent.setPort(124);
   try {
-    agentComponent.validatePort(new DSLValidationContext());
+    agentComponentValidator.validatePort(new DSLValidationContext());
     Assert.fail("invalid port passed dsl validation");
   }
  catch (  final DSLValidationException e) {
   }
   agentComponent.setPort(7000);
   try {
-    agentComponent.validateMemory(new DSLValidationContext());
+    agentComponentValidator.validateMemory(new DSLValidationContext());
   }
  catch (  final DSLValidationException e) {
     Assert.fail("legit port failed dsl validation");
   }
   UsmComponent usmComponent=new UsmComponent();
+  UsmComponentValidator usmComponentValidator=new UsmComponentValidator();
+  usmComponentValidator.setDSLEntity(usmComponent);
   usmComponent.setPortRange("7000-7100");
   try {
-    usmComponent.validatePortRange(new DSLValidationContext());
+    usmComponentValidator.validatePortRange(new DSLValidationContext());
   }
  catch (  final DSLValidationException e) {
     Assert.fail("legit port range failed dsl validation");
   }
   usmComponent.setPortRange("700q-7100");
   try {
-    usmComponent.validatePortRange(new DSLValidationContext());
+    usmComponentValidator.validatePortRange(new DSLValidationContext());
     Assert.fail("invalid port range passed dsl validation");
   }
  catch (  final DSLValidationException e) {
   }
   usmComponent.setPortRange("7100-7000");
   try {
-    usmComponent.validatePortRange(new DSLValidationContext());
+    usmComponentValidator.validatePortRange(new DSLValidationContext());
     Assert.fail("invalid port range passed dsl validation");
   }
  catch (  final DSLValidationException e) {
   }
   usmComponent.setPortRange("102-700");
   try {
-    usmComponent.validatePortRange(new DSLValidationContext());
+    usmComponentValidator.validatePortRange(new DSLValidationContext());
     Assert.fail("invalid port range passed dsl validation");
   }
  catch (  final DSLValidationException e) {

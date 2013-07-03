@@ -1,0 +1,5 @@
+{
+  AverageTimeWindowStatisticsConfig config=new AverageTimeWindowStatisticsConfig();
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

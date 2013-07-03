@@ -1,6 +1,8 @@
 {
   final ServiceNetwork fixture=new ServiceNetwork();
+  ServiceNetworkValidator fixtureValidator=new ServiceNetworkValidator();
+  fixtureValidator.setDSLEntity(fixture);
   fixture.setPort(0);
   fixture.setProtocolDescription("");
-  fixture.checkPortValue(new DSLValidationContext());
+  fixtureValidator.checkPortValue(new DSLValidationContext());
 }

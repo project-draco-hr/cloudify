@@ -1,0 +1,6 @@
+{
+  PercentileTimeWindowStatisticsConfig config=new PercentileTimeWindowStatisticsConfig();
+  config.setPercentile(percentile);
+  config.setTimeWindowSeconds(timeUnit.toSeconds(timeWindow));
+  return config;
+}

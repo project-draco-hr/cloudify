@@ -1,0 +1,8 @@
+{
+  final String configClassName=config.getClass().getSimpleName();
+  final String openspacesInstanceStatisticsClass=OPENSPACES_STATISTICS_CONFIG_PACKAGE_NAME + "." + configClassName;
+  Object obj=Class.forName(openspacesInstanceStatisticsClass).newInstance();
+  System.out.println(obj.getClass().getSimpleName());
+  BeanUtils.copyProperties(obj,config);
+  return (org.openspaces.admin.pu.statistics.InstancesStatisticsConfig)obj;
+}

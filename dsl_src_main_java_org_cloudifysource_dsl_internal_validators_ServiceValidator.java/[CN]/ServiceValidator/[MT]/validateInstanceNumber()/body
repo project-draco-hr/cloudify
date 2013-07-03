@@ -1,0 +1,5 @@
+{
+  if (this.entity.getNumInstances() > this.entity.getMaxAllowedInstances()) {
+    throw new DSLValidationException("The requested number of instances (" + this.entity.getNumInstances() + ") exceeds the maximum number of instances allowed"+ " ("+ this.entity.getMaxAllowedInstances()+ ") for service "+ this.entity.getName()+ ".");
+  }
+}

@@ -1,0 +1,6 @@
+{
+  TimeWindowStatisticsConfig config=new ThroughputTimeWindowStatisticsConfig();
+  org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics=configFactory.createTimeWindowStatistics(config);
+  assertDefaultTimeWindowValues(timeWindowStatistics);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof ThroughputTimeWindowStatisticsConfig",timeWindowStatistics instanceof org.openspaces.admin.pu.statistics.ThroughputTimeWindowStatisticsConfig);
+}

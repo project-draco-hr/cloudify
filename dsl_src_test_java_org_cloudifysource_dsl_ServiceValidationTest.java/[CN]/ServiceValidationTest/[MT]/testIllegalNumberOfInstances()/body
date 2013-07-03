@@ -1,27 +1,33 @@
 {
   try {
     Service service=new Service();
+    ServiceValidator serviceValidator=new ServiceValidator();
+    serviceValidator.setDSLEntity(service);
     service.setNumInstances(2);
     service.setMaxAllowedInstances(1);
-    service.validateDefaultValues(new DSLValidationContext());
+    serviceValidator.validateDefaultValues(new DSLValidationContext());
     fail("an invalid service was successfully validated");
   }
  catch (  DSLValidationException e) {
   }
   try {
     Service service=new Service();
+    ServiceValidator serviceValidator=new ServiceValidator();
+    serviceValidator.setDSLEntity(service);
     service.setType("WEB_SERVER");
-    service.validateDefaultValues(new DSLValidationContext());
+    serviceValidator.validateDefaultValues(new DSLValidationContext());
   }
  catch (  DSLValidationException e) {
     fail("Validation of service failed");
   }
   try {
     Service service=new Service();
+    ServiceValidator serviceValidator=new ServiceValidator();
+    serviceValidator.setDSLEntity(service);
     service.setNumInstances(1);
     service.setMaxAllowedInstances(1);
     service.setType("WEB_SERVER");
-    service.validateDefaultValues(new DSLValidationContext());
+    serviceValidator.validateDefaultValues(new DSLValidationContext());
   }
  catch (  DSLValidationException e) {
     fail("Validation of service failed");

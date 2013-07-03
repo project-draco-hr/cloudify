@@ -1,4 +1,0 @@
-{
-  validateMemoryString(this.maxMemory);
-  validateMemoryString(this.minMemory);
-}

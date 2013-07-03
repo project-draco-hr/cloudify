@@ -1,0 +1,4 @@
+{
+  this.setMaxMemory("256m");
+  this.setMinMemory("128m");
+}
