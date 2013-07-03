@@ -1,6 +1,3 @@
 {
-  if (validatorsList == null) {
-    initValidatorsList();
-  }
-  return validatorsList;
+  return getValidators(null);
 }

@@ -1,7 +1,16 @@
 {
   String host=ipAddress;
-  host=StringUtils.substringAfter(host,"[");
-  host=StringUtils.substringBefore(host,"]");
-  host=StringUtils.substringBefore(host,NETWORK_INTERFACE_SEPARATOR);
+  if (host.indexOf(PORT_SEPARATOR) > -1) {
+    host=StringUtils.substringBeforeLast(host,PORT_SEPARATOR);
+  }
+  if (host.indexOf("[") > -1) {
+    host=StringUtils.substringAfter(host,"[");
+  }
+  if (host.indexOf("]") > -1) {
+    host=StringUtils.substringBefore(host,"]");
+  }
+  if (host.indexOf(NETWORK_INTERFACE_SEPARATOR) > -1) {
+    host=StringUtils.substringBefore(host,NETWORK_INTERFACE_SEPARATOR);
+  }
   return host;
 }

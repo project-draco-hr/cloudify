@@ -1,9 +1,13 @@
 {
   try {
-    InetAddress.getLocalHost().getHostName();
+    final String hostName=InetAddress.getLocalHost().getHostName();
     InetAddress.getLocalHost().getHostAddress();
-    InetAddress.getByName(InetAddress.getLocalHost().getHostName());
+    InetAddress.getByName(hostName);
   }
- catch (  UnknownHostException e) {
+ catch (  UnknownHostException uhe) {
+    throw new CLIValidationException(uhe,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());
+  }
+catch (  SecurityException se) {
+    throw new CLIValidationException(se,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
   }
 }

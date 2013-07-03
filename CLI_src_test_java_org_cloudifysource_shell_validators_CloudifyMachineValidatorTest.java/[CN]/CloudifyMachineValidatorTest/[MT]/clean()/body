@@ -1,0 +1,9 @@
+{
+  if (lusServerSocket != null) {
+    try {
+      lusServerSocket.close();
+    }
+ catch (    Exception e) {
+    }
+  }
+}

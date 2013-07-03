@@ -1,7 +1,7 @@
 {
   validatorsList=new ArrayList<CloudifyMachineValidator>();
   validatorsList.add(new HostNameValidator());
-  validatorsList.add(new NicAddressValidator());
+  validatorsList.add(new NicAddressValidator(nicAddress));
   validatorsList.add(new LusConnectionValidator());
   validatorsList.add(new PortAvailabilityValidator());
 }

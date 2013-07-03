@@ -10,7 +10,7 @@ catch (  final DSLException e) {
   }
   setDefaultNicAddress();
   try {
-    List<CloudifyMachineValidator> validatorsList=CloudifyMachineValidatorsFactory.getValidators();
+    List<CloudifyMachineValidator> validatorsList=CloudifyMachineValidatorsFactory.getValidators(nicAddress);
     for (    CloudifyMachineValidator cloudifyMachineValidator : validatorsList) {
       cloudifyMachineValidator.validate();
     }

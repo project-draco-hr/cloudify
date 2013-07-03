@@ -1,11 +1,27 @@
 {
+  ServerSocket serverSocket=null;
   try {
-    IPUtils.validateConnection(Constants.getHostAddress(),0);
+    if (StringUtils.isBlank(nicAddress)) {
+      nicAddress=Constants.getHostAddress();
+    }
+    IPUtils.validatePortIsFree(nicAddress,0);
   }
  catch (  UnknownHostException uhe) {
+    throw new CLIValidationException(uhe,CloudifyErrorMessages.NIC_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());
   }
 catch (  IOException ioe) {
+    throw new CLIValidationException(ioe,CloudifyErrorMessages.NIC_VALIDATION_ABORTED_IO_ERROR.getName(),ioe.getMessage());
   }
 catch (  SecurityException se) {
+    throw new CLIValidationException(se,CloudifyErrorMessages.NIC_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+  }
+ finally {
+    if (serverSocket != null) {
+      try {
+        serverSocket.close();
+      }
+ catch (      Exception e) {
+      }
+    }
   }
 }

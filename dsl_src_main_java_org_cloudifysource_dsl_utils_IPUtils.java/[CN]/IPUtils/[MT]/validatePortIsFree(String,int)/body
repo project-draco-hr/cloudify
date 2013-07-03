@@ -1,0 +1,17 @@
+{
+  ServerSocket serverSocket=null;
+  try {
+    InetSocketAddress socketAddress=new InetSocketAddress(host,port);
+    serverSocket=new ServerSocket();
+    serverSocket.bind(socketAddress);
+  }
+  finally {
+    if (serverSocket != null) {
+      try {
+        serverSocket.close();
+      }
+ catch (      Exception e) {
+      }
+    }
+  }
+}

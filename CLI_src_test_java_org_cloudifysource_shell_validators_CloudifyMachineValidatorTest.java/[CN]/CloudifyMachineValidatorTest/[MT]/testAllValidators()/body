@@ -1,0 +1,10 @@
+{
+  try {
+    for (    CloudifyMachineValidator cloudifyMachineValidator : validatorsList) {
+      cloudifyMachineValidator.validate();
+    }
+  }
+ catch (  Exception e) {
+    Assert.fail("CloudifyMachine validation failed: " + e.getMessage());
+  }
+}

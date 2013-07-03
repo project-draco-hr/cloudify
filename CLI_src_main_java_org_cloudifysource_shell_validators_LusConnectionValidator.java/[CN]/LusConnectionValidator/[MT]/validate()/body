@@ -1,15 +1,22 @@
 {
-  String lusIpAddress=System.getenv(CloudifyConstants.LUS_IP_ADDRESS_ENV);
+  if (StringUtils.isBlank(lusIpAddress)) {
+    lusIpAddress=System.getenv(CloudifyConstants.LUS_IP_ADDRESS_ENV);
+  }
+  if (StringUtils.isBlank(lusIpAddress)) {
+    throw new IllegalArgumentException("LUS IP address not configred. The environment variable \"" + CloudifyConstants.LUS_IP_ADDRESS_ENV + "\" is not set.");
+  }
+  String hostAddress=IPUtils.getHostFromFullAddress(lusIpAddress);
+  int port=IPUtils.getPortFromFullAddress(lusIpAddress);
   try {
-    IPUtils.validateConnectionInPortRange(Constants.getHostAddress(),lowestPort,highestPort);
+    IPUtils.validateConnection(hostAddress,port);
   }
  catch (  UnknownHostException uhe) {
-    throw new CLIValidationException(uhe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_UNKNOWN_HOST.getName());
+    throw new CLIValidationException(uhe,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),hostAddress);
   }
 catch (  IOException ioe) {
-    throw new CLIValidationException(ioe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_IO_ERROR.getName(),ioe.getMessage());
+    throw new CLIValidationException(ioe,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_IO_ERROR.getName(),hostAddress,port,ioe.getMessage());
   }
 catch (  SecurityException se) {
-    throw new CLIValidationException(se,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+    throw new CLIValidationException(se,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_NO_PERMISSION.getName(),hostAddress,port,se.getMessage());
   }
 }

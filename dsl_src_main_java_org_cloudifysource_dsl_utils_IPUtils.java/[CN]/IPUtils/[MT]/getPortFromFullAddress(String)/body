@@ -1,0 +1,10 @@
+{
+  int port;
+  String address=ipAddress;
+  if (address.indexOf(PORT_SEPARATOR) == -1) {
+    throw new IllegalArgumentException("Port not found in address: " + ipAddress);
+  }
+  address=StringUtils.substringAfterLast(address,PORT_SEPARATOR);
+  port=Integer.parseInt(address);
+  return port;
+}

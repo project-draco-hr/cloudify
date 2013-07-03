@@ -1,0 +1,12 @@
+{
+  String lusIpAddress=envMap.get(LUS_IP_ADDRESS_ENV);
+  String hostAddress=IPUtils.getHostFromFullAddress(lusIpAddress);
+  int port=IPUtils.getPortFromFullAddress(lusIpAddress);
+  try {
+    InetSocketAddress socketAddress=new InetSocketAddress(InetAddress.getByName(hostAddress),port);
+    lusServerSocket=new ServerSocket();
+    lusServerSocket.bind(socketAddress);
+  }
+ catch (  Exception e) {
+  }
+}

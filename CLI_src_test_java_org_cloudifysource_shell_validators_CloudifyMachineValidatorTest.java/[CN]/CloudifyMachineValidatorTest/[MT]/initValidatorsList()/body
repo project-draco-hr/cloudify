@@ -1,0 +1,7 @@
+{
+  validatorsList=new ArrayList<CloudifyMachineValidator>();
+  validatorsList.add(new HostNameValidator());
+  validatorsList.add(new NicAddressValidator());
+  validatorsList.add(new LusConnectionValidator(envMap.get(LUS_IP_ADDRESS_ENV)));
+  validatorsList.add(new PortAvailabilityValidator(envMap.get("LRMI_PORT_RANGE")));
+}

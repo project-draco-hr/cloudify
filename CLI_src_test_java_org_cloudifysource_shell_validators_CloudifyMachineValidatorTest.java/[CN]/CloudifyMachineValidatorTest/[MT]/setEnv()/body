@@ -1,0 +1,4 @@
+{
+  envMap.put(LUS_IP_ADDRESS_ENV,"127.0.0.1:4174");
+  envMap.put("LRMI_PORT_RANGE","7010-7110");
+}
