@@ -12,9 +12,8 @@
   String highestPortStr=StringUtils.substringAfter(lrmiPortRange,PORT_RANGE_SEPARATOR);
   int lowestPort=Integer.parseInt(lowestPortStr);
   int highestPort=Integer.parseInt(highestPortStr);
-  IPUtils.validatePortIsFree(Constants.getHostAddress(),0);
   try {
-    IPUtils.validateConnectionInPortRange(Constants.getHostAddress(),lowestPort,highestPort);
+    IPUtils.validatePortIsFreeInRange(Constants.getHostAddress(),lowestPort,highestPort);
   }
  catch (  UnknownHostException uhe) {
     throw new CLIValidationException(uhe,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());

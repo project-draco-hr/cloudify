@@ -6,7 +6,7 @@
   Exception lastException=null;
   for (int port=lowestPort; port <= highestPort && !connectionEstablished; port++) {
     try {
-      validateConnection(ipAddress,port);
+      validatePortIsFree(host,port);
       connectionEstablished=true;
     }
  catch (    UnknownHostException uhe) {
@@ -21,6 +21,6 @@ catch (    Exception e) {
     }
   }
   if (!connectionEstablished) {
-    throw new IOException("Failed to connect to host " + ipAddress + " on any port in the range "+ lowestPort+ "-"+ highestPort+ ", reported error: "+ lastException.getMessage(),lastException);
+    throw new IOException("Failed to find any free ports in the range " + lowestPort + "-"+ highestPort+ " on host "+ host+ ", reported error: "+ lastException.getMessage(),lastException);
   }
 }
