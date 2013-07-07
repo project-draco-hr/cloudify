@@ -49,7 +49,7 @@
     OpenspacesDomainAdapter adapter=new OpenspacesDomainAdapter();
     InstancesStatisticsConfig instanceStatistics;
     try {
-      instanceStatistics=adapter.createInstanceStatistics(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
+      instanceStatistics=(InstancesStatisticsConfig)adapter.createStatisticsConfig(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
       statisticsId.setInstancesStatistics(instanceStatistics);
     }
  catch (    Exception e) {
@@ -64,7 +64,7 @@
  else {
       org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics;
       try {
-        timeWindowStatistics=adapter.createTimeWindowStatistics(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
+        timeWindowStatistics=(TimeWindowStatisticsConfig)adapter.createStatisticsConfig(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
       }
  catch (      Exception e) {
         throw new DSLException("Failed instantiating time window statistics.",e);
