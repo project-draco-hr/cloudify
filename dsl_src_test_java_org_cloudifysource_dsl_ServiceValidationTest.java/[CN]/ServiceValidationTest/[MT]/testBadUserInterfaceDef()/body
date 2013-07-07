@@ -11,7 +11,7 @@
     fail("Validation of a valid User Interface object failed");
   }
   validationContext.setFilePath(SERVICE_WITH_INVALID_USER_INTERFACE);
-  UserInterface userInterface=service.getUserInterface();
+  UserInterface userInterface=createOpenspacesUIObject(service.getUserInterface());
   List<Object> firstInvalidMetricList=new ArrayList<Object>();
   firstInvalidMetricList.add(new Object());
   userInterface.getMetricGroups().get(0).setMetrics(firstInvalidMetricList);

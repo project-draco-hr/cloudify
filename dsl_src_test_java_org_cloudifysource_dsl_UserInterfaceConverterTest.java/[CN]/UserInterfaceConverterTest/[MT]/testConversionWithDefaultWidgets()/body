@@ -1,14 +1,14 @@
 {
   Service wigetlessServiceFile=ServiceReader.readService(new File(NO_WIDGETS_SERVICE_FILE_PATH));
-  UserInterface convertedUserInterface=getConvertedObject(wigetlessServiceFile);
+  org.openspaces.ui.UserInterface convertedUserInterface=getConvertedObject(wigetlessServiceFile);
   Assert.assertEquals("Expected number of metric groups was not met." + " found " + convertedUserInterface.getMetricGroups().size() + " expected "+ NUMBER_OF_METRIC_GROUPS_AS_DEFINED_IN_GROOVY,convertedUserInterface.getMetricGroups().size(),NUMBER_OF_METRIC_GROUPS_AS_DEFINED_IN_GROOVY);
   int totalNumOfMetrics=getTotalNumberOfMetrics(convertedUserInterface.getMetricGroups());
   Assert.assertEquals("Expected number of widget groups was not met." + " found  " + convertedUserInterface.getWidgetGroups().size() + " expected "+ totalNumOfMetrics,convertedUserInterface.getWidgetGroups().size(),totalNumOfMetrics);
-  for (  WidgetGroup widgetGroup : convertedUserInterface.getWidgetGroups()) {
+  for (  org.openspaces.ui.WidgetGroup widgetGroup : convertedUserInterface.getWidgetGroups()) {
     Assert.assertEquals("Expected number of widgets per widget group was not met." + widgetGroup.getName() + " group has "+ widgetGroup.getWidgets().size()+ "widgets, expecting "+ DEFAULT_NUM_OF_WIDGETS,widgetGroup.getWidgets().size(),DEFAULT_NUM_OF_WIDGETS);
   }
   assertOverriddenMetricAxisYUnitAndDefaultValues(convertedUserInterface);
-  for (  MetricGroup metricGroup : convertedUserInterface.getMetricGroups()) {
+  for (  org.openspaces.ui.MetricGroup metricGroup : convertedUserInterface.getMetricGroups()) {
     for (    Object metric : metricGroup.getMetrics()) {
       Assert.assertTrue("Not all metrices in the converted UserInterface object are null",metric instanceof String);
     }

@@ -1,0 +1,6 @@
+{
+  TimeWindowStatisticsConfig config=new PercentileTimeWindowStatisticsConfig();
+  org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics=(org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig)configFactory.createStatisticsConfig(config);
+  assertDefaultTimeWindowValues(timeWindowStatistics);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof PercentileTimeWindowStatisticsConfig",timeWindowStatistics instanceof org.openspaces.admin.pu.statistics.PercentileTimeWindowStatisticsConfig);
+}

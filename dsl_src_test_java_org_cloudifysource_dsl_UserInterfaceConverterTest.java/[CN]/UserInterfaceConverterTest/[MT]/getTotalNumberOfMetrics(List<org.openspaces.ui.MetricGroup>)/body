@@ -1,0 +1,7 @@
+{
+  int totalNumberOfMetrics=0;
+  for (  org.openspaces.ui.MetricGroup metricGroup : list) {
+    totalNumberOfMetrics+=metricGroup.getMetrics().size();
+  }
+  return totalNumberOfMetrics;
+}

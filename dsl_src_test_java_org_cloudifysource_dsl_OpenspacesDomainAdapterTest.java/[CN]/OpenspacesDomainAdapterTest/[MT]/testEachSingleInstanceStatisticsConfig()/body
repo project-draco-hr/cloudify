@@ -1,0 +1,5 @@
+{
+  EachSingleInstanceStatisticsConfig config=new EachSingleInstanceStatisticsConfig();
+  InstancesStatisticsConfig instanceStatistics=(InstancesStatisticsConfig)configFactory.createStatisticsConfig(config);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof EachSingleInstanceStatisticsConfig",instanceStatistics instanceof org.openspaces.admin.pu.statistics.EachSingleInstanceStatisticsConfig);
+}

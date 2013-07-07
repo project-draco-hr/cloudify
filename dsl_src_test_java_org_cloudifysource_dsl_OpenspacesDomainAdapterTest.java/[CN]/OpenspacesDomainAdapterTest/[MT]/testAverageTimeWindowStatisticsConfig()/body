@@ -1,0 +1,6 @@
+{
+  TimeWindowStatisticsConfig config=new AverageTimeWindowStatisticsConfig();
+  org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics=(org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig)configFactory.createStatisticsConfig(config);
+  assertDefaultTimeWindowValues(timeWindowStatistics);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof AverageTimeWindowStatisticsConfig",timeWindowStatistics instanceof org.openspaces.admin.pu.statistics.AverageTimeWindowStatisticsConfig);
+}

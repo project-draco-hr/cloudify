@@ -1,5 +1,8 @@
 {
   final CloudProvider fixture=new CloudProvider();
+  CloudProviderValidator fixtureValidator=new CloudProviderValidator();
+  fixtureValidator.setDSLEntity(fixture);
+  fixtureValidator.validateCloudifyUrl(new DSLValidationContext());
   fixture.setMachineNamePrefix("");
   fixture.setReservedMemoryCapacityPerMachineInMB(1);
   fixture.setProvider("");

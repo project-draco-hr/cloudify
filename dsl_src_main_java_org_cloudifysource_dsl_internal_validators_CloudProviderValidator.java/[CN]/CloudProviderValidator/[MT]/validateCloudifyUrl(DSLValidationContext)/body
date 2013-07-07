@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isEmpty(entity.getCloudifyUrl())) {
+    initCloudifyUrlAccordingToPlatformVersion();
+  }
   try {
     new URI(entity.getCloudifyUrl());
   }

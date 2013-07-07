@@ -1,0 +1,14 @@
+{
+switch (axisYUnit) {
+case REGULAR:
+    return org.openspaces.ui.Unit.REGULAR;
+case PERCENTAGE:
+  return org.openspaces.ui.Unit.PERCENTAGE;
+case MEMORY:
+return org.openspaces.ui.Unit.MEMORY;
+case DURATION:
+return org.openspaces.ui.Unit.DURATION;
+default :
+throw new UnsupportedDataTypeException("Unit type " + axisYUnit.toString() + " is not supported");
+}
+}

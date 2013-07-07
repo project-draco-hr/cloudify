@@ -8,7 +8,7 @@
             throw new DSLValidationException("the defined metric " + metric.toString() + " is invalid."+ " metric name should be of type 'String'");
           }
           if (!(((List)metric).get(1) instanceof Unit)) {
-            throw new DSLValidationException("the defined metric " + metric.toString() + " is invalid."+ " metric axisYUnit should be of type org.openspaces.ui.Unit");
+            throw new DSLValidationException("the defined metric " + metric.toString() + " is invalid."+ " metric axisYUnit should be of type org.cloudifysource.dsl.Unit");
           }
           if (!(((List)metric).size() == 2)) {
             throw new DSLValidationException("the defined metric " + metric.toString() + " is invalid."+ " metric should be defined as String or as a list [String, Unit]");

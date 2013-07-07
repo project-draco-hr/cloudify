@@ -1,5 +1,8 @@
 {
   final DSLValidator obj=DSLValidationFactory.getInstance().createValidator(entity);
+  if (obj == null) {
+    return;
+  }
   final Method[] methods=obj.getClass().getDeclaredMethods();
   for (  final Method method : methods) {
     if (method.getAnnotation(DSLValidation.class) != null) {

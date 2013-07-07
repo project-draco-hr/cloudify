@@ -1,7 +1,0 @@
-{
-  int totalNumberOfMetrics=0;
-  for (  MetricGroup metricGroup : metricGroups) {
-    totalNumberOfMetrics+=metricGroup.getMetrics().size();
-  }
-  return totalNumberOfMetrics;
-}

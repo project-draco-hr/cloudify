@@ -2,4 +2,28 @@
   validatorByClass.put(AppSharedIsolationSLADescriptor.class.getName(),AppSharedIsolationSLADescriptorValidator.class);
   validatorByClass.put(Application.class.getName(),ApplicationValidator.class);
   validatorByClass.put(SharedIsolationSLADescriptor.class.getName(),SharedIsolationSLADescriptorValidator.class);
+  validatorByClass.put(AgentComponent.class.getName(),AgentComponentValidator.class);
+  validatorByClass.put(AppSharedIsolationSLADescriptor.class.getName(),AppSharedIsolationSLADescriptorValidator.class);
+  validatorByClass.put(CloudProvider.class.getName(),CloudProviderValidator.class);
+  validatorByClass.put(CloudUser.class.getName(),CloudUserValidator.class);
+  validatorByClass.put(Cloud.class.getName(),CloudValidator.class);
+  validatorByClass.put(ComputeTemplate.class.getName(),ComputeTemplateValidator.class);
+  validatorByClass.put(DeployerComponent.class.getName(),DeployerComponentValidator.class);
+  validatorByClass.put(DiscoveryComponent.class.getName(),DiscoveryComponentValidator.class);
+  validatorByClass.put(GlobalIsolationSLADescriptor.class.getName(),GlobalIsolationSLADescriptorValidator.class);
+  validatorByClass.put(GridComponent.class.getName(),GridComponentValidator.class);
+  validatorByClass.put(IsolationSLA.class.getName(),IsolationSLAValidatior.class);
+  validatorByClass.put(MirrorProcessingUnit.class.getName(),MirrorProcessingUnitValidator.class);
+  validatorByClass.put(OrchestratorComponent.class.getName(),OrchestratorComponentValidator.class);
+  validatorByClass.put(PercentileInstancesStatisticsConfig.class.getName(),PercentileInstancesStatisticsConfigValidaor.class);
+  validatorByClass.put(RestComponent.class.getName(),RestComponentValidator.class);
+  validatorByClass.put(ServiceLifecycle.class.getName(),ServiceLifecycleValidator.class);
+  validatorByClass.put(ServiceNetwork.class.getName(),ServiceNetworkValidator.class);
+  validatorByClass.put(Service.class.getName(),ServiceValidator.class);
+  validatorByClass.put(SharedIsolationSLADescriptor.class.getName(),SharedIsolationSLADescriptorValidator.class);
+  validatorByClass.put(Sla.class.getName(),SlaValidator.class);
+  validatorByClass.put(StatelessProcessingUnit.class.getName(),StatelessProcessingUnitValidator.class);
+  validatorByClass.put(TenantSharedIsolationSLADescriptor.class.getName(),TenantSharedIsolationSLADescriptorValidator.class);
+  validatorByClass.put(UsmComponent.class.getName(),UsmComponentValidator.class);
+  validatorByClass.put(WebuiComponent.class.getName(),WebuiComponentValidator.class);
 }

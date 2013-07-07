@@ -1,6 +1,7 @@
 {
-  UserInterface ui=wigetlessServiceFile.getUserInterface();
+  final UserInterface ui=wigetlessServiceFile.getUserInterface();
+  final OpenspacesDomainAdapter adapter=new OpenspacesDomainAdapter();
+  org.openspaces.ui.UserInterface convertUserInterfaceObject=adapter.createOpenspacesUIObject(ui);
   UserInterfaceConverter converter=new UserInterfaceConverter();
-  UserInterface convertedUserInterface=converter.convertUserInterface(ui);
-  return convertedUserInterface;
+  return converter.convertUserInterface(convertUserInterfaceObject);
 }

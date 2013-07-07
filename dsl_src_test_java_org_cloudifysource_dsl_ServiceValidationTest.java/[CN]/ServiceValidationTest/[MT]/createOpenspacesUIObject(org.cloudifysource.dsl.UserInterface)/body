@@ -1,0 +1,5 @@
+{
+  UserInterface ui=new UserInterface();
+  BeanUtils.copyProperties(ui,userInterface);
+  return ui;
+}

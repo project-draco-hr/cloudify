@@ -46,7 +46,7 @@
     final ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
     statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
     statisticsId.setMetric(serviceStatistics.getMetric());
-    StatisticsConfigAdapter adapter=new StatisticsConfigAdapter();
+    OpenspacesDomainAdapter adapter=new OpenspacesDomainAdapter();
     InstancesStatisticsConfig instanceStatistics;
     try {
       instanceStatistics=adapter.createInstanceStatistics(serviceStatistics.getInstancesStatistics().createInstancesStatistics());

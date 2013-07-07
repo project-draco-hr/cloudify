@@ -1,0 +1,15 @@
+{
+  for (  org.openspaces.ui.WidgetGroup widgetGroup : convertedUserInterface.getWidgetGroups()) {
+    String widgetGroupName=widgetGroup.getName();
+    for (    org.openspaces.ui.Widget widget : widgetGroup.getWidgets()) {
+      if (widget instanceof BarLineChart) {
+        if (widgetGroupName.equals(OVERRIDDEN_MATRIC_AXISY_WIDGET_GROUP_NAME)) {
+          Assert.assertTrue("expecting axisY Unit to be overridden",((BarLineChart)widget).getAxisYUnit().equals(Unit.PERCENTAGE));
+        }
+ else {
+          Assert.assertTrue("expecting axisY contain the default axisYUnit value",((BarLineChart)widget).getAxisYUnit().equals(Unit.REGULAR));
+        }
+      }
+    }
+  }
+}
