@@ -1,0 +1,34 @@
+{
+  final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
+  for (  final Map<String,String> nodeMap : nodesMapList) {
+    String nodeId=nodeMap.get(NODE_ID);
+    String hostList=nodeMap.get(NODE_HOST_LIST);
+    String hostRange=nodeMap.get(NODE_HOST_RANGE);
+    if (StringUtils.isBlank(nodeId)) {
+      throw new CloudProvisioningException(EMPTY_ID_ERR_MESSAGE);
+    }
+    if (StringUtils.isNotBlank(hostList)) {
+      if (isIPList(hostList.trim())) {
+        cloudNodes.addAll(parseNodeList(nodeMap));
+      }
+ else {
+        cloudNodes.add(parseOneNode(nodeMap));
+      }
+    }
+ else     if (StringUtils.isNotBlank(hostRange)) {
+      if (isIPRange(hostRange.trim())) {
+        cloudNodes.addAll(parseNodeRange(nodeMap));
+      }
+ else       if (isIPCIDR(hostRange.trim())) {
+        cloudNodes.addAll(parseNodeCIDR(nodeMap));
+      }
+ else {
+        throw new CloudProvisioningException(INVALID_HOSTS_ERR_MESSAGE + ": " + hostRange);
+      }
+    }
+ else {
+      throw new CloudProvisioningException(EMPTY_HOSTS_ERR_MESSAGE);
+    }
+  }
+  return cloudNodes;
+}

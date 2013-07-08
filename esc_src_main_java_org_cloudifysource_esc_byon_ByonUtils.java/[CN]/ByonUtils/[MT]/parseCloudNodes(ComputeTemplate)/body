@@ -1,0 +1,4 @@
+{
+  List<Map<String,String>> nodesList=ByonUtils.getTemplateNodesList(template);
+  return parseCloudNodes(nodesList);
+}

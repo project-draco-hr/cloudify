@@ -1,0 +1,43 @@
+{
+  final List<CustomNode> cloudNodes=new ArrayList<CustomNode>();
+  boolean useIdAsTemplate=false;
+  boolean useIdAsPrefix=false;
+  int index=1;
+  String currnentId;
+  final String nodeId=nodeMap.get(NODE_ID).trim();
+  final String ipRange=nodeMap.get(NODE_HOST_RANGE).trim();
+  final int ipDashIndex=ipRange.indexOf('-');
+  if (ipDashIndex < 0) {
+    throw new CloudProvisioningException(EMPTY_IP_RANGE_ERR_MESSAGE);
+  }
+  final String ipRangeStart=ipRange.substring(0,ipRange.indexOf('-'));
+  final String ipRangeEnd=ipRange.substring(ipRange.indexOf('-') + 1);
+  if (IPUtils.ip2Long(ipRangeStart) < IPUtils.ip2Long(ipRangeEnd)) {
+    if (isIdTemplate(nodeId)) {
+      useIdAsTemplate=true;
+    }
+ else {
+      useIdAsPrefix=true;
+    }
+  }
+  String ip=ipRangeStart;
+  while (IPUtils.ip2Long(ip) <= IPUtils.ip2Long(ipRangeEnd)) {
+    ip=ip.trim();
+    if (!IPUtils.validateIPAddress(ip)) {
+      throw new CloudProvisioningException("Invalid IP address: " + ip);
+    }
+    if (useIdAsTemplate) {
+      currnentId=MessageFormat.format(nodeId,index);
+    }
+ else     if (useIdAsPrefix) {
+      currnentId=nodeId + index;
+    }
+ else {
+      currnentId=nodeId;
+    }
+    cloudNodes.add(new CustomNodeImpl(PROVIDER_ID,currnentId,ip,null,nodeMap.get(NODE_USERNAME),nodeMap.get(NODE_CREDENTIAL),nodeMap.get(NODE_KEY_FILE),currnentId));
+    index++;
+    ip=IPUtils.getNextIP(ip);
+  }
+  return cloudNodes;
+}

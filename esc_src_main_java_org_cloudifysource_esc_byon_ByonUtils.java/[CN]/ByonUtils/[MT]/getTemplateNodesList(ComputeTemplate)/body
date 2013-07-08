@@ -1,0 +1,12 @@
+{
+  List<Map<String,String>> nodesList=null;
+  final Map<String,Object> customSettings=template.getCustom();
+  if (customSettings != null) {
+    @SuppressWarnings("unchecked") final List<Map<Object,Object>> originalNodesList=(List<Map<Object,Object>>)customSettings.get(NODES_LIST);
+    nodesList=ByonUtils.convertToStringMap(originalNodesList);
+  }
+  if (nodesList == null) {
+    throw new CloudProvisioningException("Nodes list not set");
+  }
+  return nodesList;
+}

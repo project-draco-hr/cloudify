@@ -1,0 +1,16 @@
+{
+  String nodeId=nodeMap.get(NODE_ID);
+  if (nodeId.contains("{")) {
+    nodeId=MessageFormat.format(nodeId,1);
+  }
+  String host=nodeMap.get(NODE_HOST_LIST).trim();
+  String ip=null;
+  String hostName=null;
+  if (IPUtils.validateIPAddress(host)) {
+    ip=host;
+  }
+ else {
+    hostName=host;
+  }
+  return new CustomNodeImpl(PROVIDER_ID,nodeId.trim(),ip,hostName,nodeMap.get(NODE_USERNAME),nodeMap.get(NODE_CREDENTIAL),nodeMap.get(NODE_KEY_FILE),nodeId.trim());
+}

@@ -1,0 +1,7 @@
+{
+  boolean result=false;
+  if (hostRange.contains("/")) {
+    result=true;
+  }
+  return result;
+}
