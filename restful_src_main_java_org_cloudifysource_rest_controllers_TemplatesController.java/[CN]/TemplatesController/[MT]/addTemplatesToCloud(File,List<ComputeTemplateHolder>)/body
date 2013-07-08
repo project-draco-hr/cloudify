@@ -1,0 +1,30 @@
+{
+  logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
+  AddTemplatesToPUResponse addTemplatesToPUResponse=addTemplatesToCloudList(templatesFolder,cloudTemplatesHolders);
+  final List<String> addedTemplates=addTemplatesToPUResponse.getAddedTempaltes();
+  final Map<String,String> failedToAddTemplates=addTemplatesToPUResponse.getFailedToAddTempaltesAndReasons();
+  if (addedTemplates.isEmpty()) {
+    logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates files from " + templatesFolder.getAbsolutePath());
+  }
+ else {
+    logger.log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+    try {
+      final File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
+      updateCloudTemplatesUploadPath(addedTemplates,localTemplatesDir);
+    }
+ catch (    final IOException e) {
+      logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
+      for (      final String templateName : addedTemplates) {
+        cloud.getCloudCompute().getTemplates().remove(templateName);
+        failedToAddTemplates.put(templateName,"failed to copy templates files");
+      }
+    }
+  }
+  if (!failedToAddTemplates.isEmpty()) {
+    logger.log(Level.INFO,"[addTemplatesToCloud] - Failed to add the following templates: " + failedToAddTemplates.toString());
+  }
+  AddTemplatesToPUResponse finalResponse=new AddTemplatesToPUResponse();
+  finalResponse.setAddedTempaltes(addedTemplates);
+  finalResponse.setFailedToAddTempaltesAndReasons(failedToAddTemplates);
+  return finalResponse;
+}

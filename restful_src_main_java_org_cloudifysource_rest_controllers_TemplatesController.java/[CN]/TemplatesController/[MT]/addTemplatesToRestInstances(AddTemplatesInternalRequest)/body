@@ -1,0 +1,54 @@
+{
+  Map<String,Map<String,String>> failedToAddAllTempaltesHosts=new HashMap<String,Map<String,String>>();
+  Map<String,AddTemplatesToPUResponse> partialFailedToAddTempaltesHosts=new HashMap<String,AddTemplatesToPUResponse>();
+  List<String> successfullyAddedAllTempaltesHosts=new LinkedList<String>();
+  List<String> expectedAddedTemplates=request.getExpectedTemplates();
+  final ProcessingUnitInstance[] instances=restConfig.getAdmin().getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
+  logger.log(Level.INFO,"[sendAddTemplatesToRestInstances] - sending templates folder to " + instances.length + " instances.");
+  for (  final ProcessingUnitInstance puInstance : instances) {
+    final String hostAddress=puInstance.getMachine().getHostAddress();
+    final String host=puInstance.getMachine().getHostName() + "/" + hostAddress;
+    final String port=Integer.toString(puInstance.getJeeDetails().getPort());
+    AddTemplatesToPUResponse response;
+    try {
+      final RestClient restClient=createRestClient(hostAddress,port,"","");
+      response=restClient.addTemplatesInternal(request);
+    }
+ catch (    final Exception e) {
+      logger.log(Level.WARNING,"[sendAddTemplatesToRestInstances] - failed to execute http request to " + host + ". Error: "+ e,e);
+      final Map<String,String> failedMap=new HashMap<String,String>();
+      for (      final String expectedTemplate : request.getExpectedTemplates()) {
+        failedMap.put(expectedTemplate,e.getMessage());
+      }
+      failedToAddAllTempaltesHosts.put(host,failedMap);
+      continue;
+    }
+    final Map<String,String> failedMap=response.getFailedToAddTempaltesAndReasons();
+    List<String> addedTempaltes=response.getAddedTempaltes();
+    if (!failedMap.isEmpty() && !addedTempaltes.isEmpty()) {
+      partialFailedToAddTempaltesHosts.put(host,response);
+    }
+ else     if (!failedMap.isEmpty() && addedTempaltes.isEmpty()) {
+      failedToAddAllTempaltesHosts.put(host,failedMap);
+    }
+ else {
+      successfullyAddedAllTempaltesHosts.add(host);
+    }
+  }
+  final AddTemplatesPartialFailureResponse partialResponse=new AddTemplatesPartialFailureResponse();
+  partialResponse.setFailedToAddAllTempaltesHosts(failedToAddAllTempaltesHosts);
+  partialResponse.setPartialFailedToAddTempaltesHosts(partialFailedToAddTempaltesHosts);
+  partialResponse.setSuccessfullyAddedAllTempaltesHosts(successfullyAddedAllTempaltesHosts);
+  AddTemplatesResponse addTemplatesResponse=new AddTemplatesResponse();
+  checkForFailure(partialResponse);
+  addTemplatesResponse.setAddedTemplates(expectedAddedTemplates);
+  if (!partialFailedToAddTempaltesHosts.isEmpty() || !failedToAddAllTempaltesHosts.isEmpty()) {
+    logger.log(Level.INFO,"[addTemplatesToRestInstances] - Partial success: " + printPartialSuccess(successfullyAddedAllTempaltesHosts,failedToAddAllTempaltesHosts,partialFailedToAddTempaltesHosts));
+    addTemplatesResponse.setPartialFailureResponse(partialResponse);
+  }
+ else {
+    logger.log(Level.INFO,"[addTemplatesToRestInstances] - Successfully added templates: " + expectedAddedTemplates);
+    addTemplatesResponse.setAddedTemplates(expectedAddedTemplates);
+  }
+  return addTemplatesResponse;
+}

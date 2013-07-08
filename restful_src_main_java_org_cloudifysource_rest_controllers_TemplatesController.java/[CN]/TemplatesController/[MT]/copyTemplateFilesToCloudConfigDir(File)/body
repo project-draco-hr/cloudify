@@ -1,0 +1,19 @@
+{
+  final File templatesDirParent=getTemplatesFolder();
+  String folderName="templates_" + restConfig.getLastTemplateFileNum().incrementAndGet();
+  File copiedtemplatesFolder=new File(templatesDirParent,folderName);
+  while (copiedtemplatesFolder.exists()) {
+    folderName="templates_" + restConfig.getLastTemplateFileNum().incrementAndGet();
+    copiedtemplatesFolder=new File(templatesDirParent,folderName);
+  }
+  copiedtemplatesFolder.mkdir();
+  try {
+    FileUtils.copyDirectory(templatesDirToCopy,copiedtemplatesFolder);
+    return copiedtemplatesFolder;
+  }
+ catch (  final IOException e) {
+    FileUtils.deleteDirectory(copiedtemplatesFolder);
+    restConfig.getLastTemplateFileNum().decrementAndGet();
+    throw e;
+  }
+}

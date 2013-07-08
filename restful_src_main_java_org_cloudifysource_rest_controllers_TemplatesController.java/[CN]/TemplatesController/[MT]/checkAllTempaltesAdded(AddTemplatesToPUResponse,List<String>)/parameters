@@ -1,0 +1,2 @@
+AddTemplatesToPUResponse addTemplatesToPUResponse
+List<String> expectedAddedTemplates

@@ -1,0 +1,8 @@
+{
+  final AddTemplatesValidationContext validationContext=new AddTemplatesValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setRequest(request);
+  for (  final AddTemplatesValidator validator : addTemplatesValidators) {
+    validator.validate(validationContext);
+  }
+}

@@ -1,0 +1,13 @@
+{
+  String toString="";
+  if (addedTempaltes.isEmpty()) {
+    toString+="no tempaltes was added.";
+  }
+ else {
+    toString+="added the following templates:" + addedTempaltes;
+  }
+  if (!failedToAddTempaltesAndReasons.isEmpty()) {
+    toString+=CloudifyConstants.NEW_LINE + "failed to add the following tempaltes:" + CloudifyConstants.NEW_LINE+ failedToAddTempaltesAndReasons;
+  }
+  return toString;
+}

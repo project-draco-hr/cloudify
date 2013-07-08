@@ -1,0 +1,7 @@
+{
+  for (  String templateName : addedTemplates) {
+    ComputeTemplate cloudTemplate=cloud.getCloudCompute().getTemplates().get(templateName);
+    String localUploadPath=new File(localTemplatesDir,cloudTemplate.getLocalDirectory()).getAbsolutePath();
+    cloudTemplate.setAbsoluteUploadDir(localUploadPath);
+  }
+}
