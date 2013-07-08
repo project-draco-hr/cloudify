@@ -1,0 +1,6 @@
+{
+  final String listTempaltesInternalUrl=getFormattedUrl(versionedTemplatesControllerUrl,GET_TEMPALTE_URL_FORMAT,templateName);
+  return executor.get(listTempaltesInternalUrl,new TypeReference<Response<GetTemplateResponse>>(){
+  }
+);
+}

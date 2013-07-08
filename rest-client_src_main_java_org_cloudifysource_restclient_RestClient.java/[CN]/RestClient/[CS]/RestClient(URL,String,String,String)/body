@@ -1,6 +1,7 @@
 {
   versionedDeploymentControllerUrl=apiVersion + DEPLOYMENT_CONTROLLER_URL;
   versionedUploadControllerUrl=apiVersion + UPLOAD_CONTROLLER_URL;
+  versionedTemplatesControllerUrl=apiVersion + TEMPLATES_CONTROLLER_URL;
   this.executor=createExecutor(url,apiVersion);
   setCredentials(username,password);
 }

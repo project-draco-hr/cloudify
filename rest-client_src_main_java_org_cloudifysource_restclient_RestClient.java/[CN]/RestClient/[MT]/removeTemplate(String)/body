@@ -1,0 +1,6 @@
+{
+  final String removeTempalteUrl=getFormattedUrl(versionedTemplatesControllerUrl,REMOVE_TEMPALTE_URL_FORMAT);
+  executor.delete(removeTempalteUrl,new TypeReference<Response<Void>>(){
+  }
+);
+}

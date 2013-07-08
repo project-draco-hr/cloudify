@@ -1,0 +1,6 @@
+{
+  final String addTempaltesInternalUrl=getFormattedUrl(versionedTemplatesControllerUrl,ADD_TEMPALTES_INTERNAL_URL_FORMAT);
+  return executor.postObject(addTempaltesInternalUrl,request,new TypeReference<Response<AddTemplatesToPUResponse>>(){
+  }
+);
+}
