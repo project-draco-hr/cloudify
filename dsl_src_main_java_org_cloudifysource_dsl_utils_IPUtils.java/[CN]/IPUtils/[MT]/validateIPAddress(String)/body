@@ -1,13 +1,19 @@
 {
   boolean valid=false;
-  final String[] ipParts=ipAddress.split("\\.");
-  if (ipParts.length == IPV4_PARTS) {
-    for (    final String part : ipParts) {
-      final int intValue=Integer.parseInt(part);
-      if (intValue < 0 || intValue > IP_BYTE_RANGE - 1) {
-        break;
+  if (isIPv6Address(ipAddress)) {
+    valid=true;
+  }
+ else {
+    final String[] ipParts=ipAddress.split("\\.");
+    if (ipParts.length == IPV4_PARTS) {
+      for (      final String part : ipParts) {
+        final int intValue=Integer.parseInt(part);
+        if (intValue < 0 || intValue > IP_BYTE_RANGE - 1) {
+          valid=false;
+          break;
+        }
+        valid=true;
       }
-      valid=true;
     }
   }
   return valid;

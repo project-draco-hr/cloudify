@@ -1,2 +1,32 @@
 {
+  validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
+  ComputeTemplate template=null;
+  boolean ipv6Used=false;
+  Map<String,ComputeTemplate> templatesMap=cloud.getCloudCompute().getTemplates();
+  for (  Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
+    ipv6Used=false;
+    String templateName=templateEntry.getKey();
+    template=templateEntry.getValue();
+    validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_template",templateName));
+    try {
+      List<CustomNode> nodes=ByonUtils.parseCloudNodes(template);
+      for (      CustomNode node : nodes) {
+        if (StringUtils.isNotBlank(node.getPrivateIP()) && IPUtils.isIPv6Address(node.getPrivateIP())) {
+          ipv6Used=true;
+          break;
+        }
+      }
+      if (ipv6Used) {
+        FileTransferModes fileTransferMode=template.getFileTransfer();
+        if (fileTransferMode == null || !fileTransferMode.equals(FileTransferModes.SCP)) {
+          throw new CloudProvisioningException("Invalid file transfer set for template " + templateName + ". Templates that use IPv6 addresses must use SCP for file transer.");
+        }
+      }
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+ catch (    CloudProvisioningException e) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException("Invalid configuration for template " + templateName + ", reported error: "+ e.getMessage(),e);
+    }
+  }
 }

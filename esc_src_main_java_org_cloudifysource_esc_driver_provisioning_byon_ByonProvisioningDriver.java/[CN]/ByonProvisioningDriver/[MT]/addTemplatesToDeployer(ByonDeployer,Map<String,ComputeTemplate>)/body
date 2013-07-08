@@ -1,14 +1,13 @@
 {
   List<Map<String,String>> nodesList=null;
-  for (  final String templateName : templatesMap.keySet()) {
-    final Map<String,Object> customSettings=cloud.getCloudCompute().getTemplates().get(templateName).getCustom();
-    if (customSettings != null) {
-      final List<Map<Object,Object>> originalNodesList=(List<Map<Object,Object>>)customSettings.get(CLOUD_NODES_LIST);
-      nodesList=convertToStringMap(originalNodesList);
+  for (  Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
+    String templateName=templateEntry.getKey();
+    try {
+      nodesList=ByonUtils.getTemplateNodesList(templateEntry.getValue());
     }
-    if (nodesList == null) {
+ catch (    CloudProvisioningException e) {
       publishEvent(CloudifyErrorMessages.MISSING_NODES_LIST.getName(),templateName);
-      throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration for tempalte " + templateName + " - missing nodes list.");
+      throw new CloudProvisioningException("Failed to create BYON cloud deployer, invalid configuration for " + "tempalte " + templateName + ", reported error: "+ e.getMessage(),e);
     }
     deployer.addNodesList(templateName,templatesMap.get(templateName),nodesList);
   }

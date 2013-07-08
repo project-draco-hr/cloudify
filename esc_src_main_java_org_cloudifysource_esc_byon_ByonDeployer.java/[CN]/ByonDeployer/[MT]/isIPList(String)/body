@@ -1,7 +1,0 @@
-{
-  boolean result=false;
-  if (hostList != null && hostList.contains(",")) {
-    result=true;
-  }
-  return result;
-}

@@ -1,0 +1,14 @@
+{
+  boolean isIPv6=false;
+  String strippedIp=StringUtils.strip(ipAddress,"[]");
+  if (strippedIp.indexOf(NETWORK_INTERFACE_SEPARATOR) > -1) {
+    strippedIp=StringUtils.substringBefore(strippedIp,NETWORK_INTERFACE_SEPARATOR);
+  }
+  try {
+    IPv6Address.fromString(strippedIp);
+    isIPv6=true;
+  }
+ catch (  IllegalArgumentException e) {
+  }
+  return isIPv6;
+}

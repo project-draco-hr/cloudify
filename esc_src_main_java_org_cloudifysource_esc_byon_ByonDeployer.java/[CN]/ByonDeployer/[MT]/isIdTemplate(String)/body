@@ -1,7 +1,0 @@
-{
-  boolean result=false;
-  if (nodeId.contains("{0}")) {
-    result=true;
-  }
-  return result;
-}
