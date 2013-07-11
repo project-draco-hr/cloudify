@@ -1,12 +1,15 @@
 {
   ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
-  ProvisioningContextAccessImpl.setCurrentProvisioingContext(ctx);
+  ProvisioningContextAccess.setCurrentProvisioingContext(ctx);
   MachineDetails machineDetails;
   try {
     machineDetails=cloudifyProvisioning.startMachine(locationId,duration,unit);
   }
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to start machine: " + e.getMessage(),e);
+  }
+ finally {
+    ProvisioningContextAccess.setCurrentProvisioingContext(null);
   }
   if (machineDetails == null) {
     throw new IllegalStateException("Provisioning provider: " + cloudifyProvisioning.getClass().getName() + " returned null when calling startMachine");

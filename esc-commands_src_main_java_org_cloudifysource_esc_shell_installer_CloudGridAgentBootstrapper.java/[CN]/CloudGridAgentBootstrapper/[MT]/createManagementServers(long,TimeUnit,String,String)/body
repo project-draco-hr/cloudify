@@ -1,5 +1,7 @@
 {
   MachineDetails[] servers;
+  final ProvisioningContextImpl context=setUpProvisioningContext(keystorePassword,securityProfile);
+  ProvisioningContextAccess.setCurrentProvisioingContext(context);
   try {
     servers=provisioning.startManagementMachines(timeout,timeoutUnit);
   }
@@ -9,6 +11,9 @@
   }
 catch (  final TimeoutException e) {
     throw new CLIException("Cloudify bootstrap on provider " + this.cloud.getProvider().getProvider() + " timed-out. "+ "Please try to run again using the ???timeout option.",e);
+  }
+ finally {
+    ProvisioningContextAccess.setCurrentProvisioingContext(null);
   }
   if (servers.length == 0) {
     throw new IllegalArgumentException("Received zero management servers from provisioning implementation");

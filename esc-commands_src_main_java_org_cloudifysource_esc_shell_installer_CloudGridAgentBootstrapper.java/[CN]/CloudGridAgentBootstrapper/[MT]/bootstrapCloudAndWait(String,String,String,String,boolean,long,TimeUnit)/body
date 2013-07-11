@@ -1,7 +1,7 @@
 {
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   createProvisioningDriver(performValidation);
-  final MachineDetails[] servers=getOrCreateManagementServers(timeout,timeoutUnit);
+  final MachineDetails[] servers=getOrCreateManagementServers(timeout,timeoutUnit,keystorePassword,securityProfile);
   try {
     if (logger.isLoggable(Level.FINE)) {
       for (      final MachineDetails server : servers) {
@@ -10,9 +10,11 @@
     }
     validateServers(servers);
     if (servers[0].isAgentRunning()) {
-      throw new IllegalStateException("Cloud bootstrapper found existing management machines with the same name. " + "Please shut them down before continuing");
+      logger.fine("Management servers are already running Cloudify agent - skipping default bootstrapping");
     }
-    startManagememntProcesses(servers,securityProfile,keystorePassword,end);
+ else {
+      startManagememntProcesses(servers,securityProfile,keystorePassword,end);
+    }
     if (!isNoWebServices()) {
       final Integer restPort=getRestPort(cloud.getConfiguration().getComponents().getRest().getPort(),ShellUtils.isSecureConnection(securityProfile));
       final Integer webuiPort=getWebuiPort(cloud.getConfiguration().getComponents().getWebui().getPort(),ShellUtils.isSecureConnection(securityProfile));

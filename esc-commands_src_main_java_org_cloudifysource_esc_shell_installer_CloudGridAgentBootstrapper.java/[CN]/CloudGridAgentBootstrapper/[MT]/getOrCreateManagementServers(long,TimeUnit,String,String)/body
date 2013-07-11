@@ -7,7 +7,7 @@
     servers=locateManagementMachines();
   }
  else {
-    servers=createManagementServers(timeout,timeoutUnit);
+    servers=createManagementServers(timeout,timeoutUnit,keystorePassword,securityProfile);
   }
   final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
   for (  MachineDetails machineDetails : servers) {

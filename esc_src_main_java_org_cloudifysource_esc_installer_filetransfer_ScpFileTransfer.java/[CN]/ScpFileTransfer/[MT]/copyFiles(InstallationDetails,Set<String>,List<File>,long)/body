@@ -5,6 +5,12 @@
     ssh.connect(host);
   }
  catch (  final IOException e) {
+    try {
+      ssh.close();
+    }
+ catch (    IOException e1) {
+      logger.log(Level.SEVERE,"Failed to close down ssh client after connection to: " + host + " failed. Error was: "+ e.getMessage(),e);
+    }
     throw new InstallerException("Failed to connect to host: " + host + ": "+ e.getMessage(),e);
   }
   try {

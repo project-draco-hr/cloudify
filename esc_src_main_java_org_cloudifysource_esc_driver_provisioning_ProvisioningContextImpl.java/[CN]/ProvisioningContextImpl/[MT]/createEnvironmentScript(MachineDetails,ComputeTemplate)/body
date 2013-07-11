@@ -1,7 +1,11 @@
 {
+  if (md == null) {
+    throw new IllegalArgumentException("Machine Details were not set");
+  }
   ScriptLanguages scriptLanguage=template.getScriptLanguage();
   Map<String,String> externalEnvVars=template.getEnv();
   EnvironmentFileBuilder fileBuilder=new EnvironmentFileBuilder(scriptLanguage,externalEnvVars);
+  installationDetailsBuilder.machineDetails(md);
   InstallationDetails installationDetails=installationDetailsBuilder.build();
   fileBuilder.loadEnvironmentFileFromDetails(installationDetails);
   fileBuilder.build();

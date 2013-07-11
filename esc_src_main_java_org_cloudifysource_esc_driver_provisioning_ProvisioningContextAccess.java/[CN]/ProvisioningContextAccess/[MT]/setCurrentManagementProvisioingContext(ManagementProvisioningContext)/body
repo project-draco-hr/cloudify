@@ -1,0 +1,3 @@
+{
+  mgtContextHolder.set(context);
+}

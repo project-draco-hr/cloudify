@@ -1,0 +1,20 @@
+{
+  final ProvisioningContextImpl ctx=new ProvisioningContextImpl();
+  ctx.setLocationId(null);
+  InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
+  builder.reservationId(null);
+  builder.admin(null);
+  builder.authGroups(null);
+  builder.cloud(this.cloud);
+  builder.cloudFile(this.cloudFile);
+  builder.keystorePassword(keystorePassword);
+  builder.lookupLocators(null);
+  builder.management(true);
+  builder.rebootstrapping(isRebootstrapping());
+  builder.reservationId(null);
+  builder.securityProfile(securityProfile);
+  builder.template(this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate()));
+  builder.templateName(this.cloud.getConfiguration().getManagementMachineTemplate());
+  builder.zones(new HashSet<String>(Arrays.asList(MANAGEMENT_GSA_ZONE)));
+  return ctx;
+}

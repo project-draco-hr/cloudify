@@ -1,0 +1,10 @@
+{
+  final Integer port=cloud.getConfiguration().getComponents().getDiscovery().getDiscoveryPort();
+  final StringBuilder lookupSb=new StringBuilder();
+  for (  final MachineDetails detail : mds) {
+    final String ip=cloud.getConfiguration().isConnectToPrivateIp() ? detail.getPrivateAddress() : detail.getPublicAddress();
+    lookupSb.append(ip).append(":").append(port).append(',');
+  }
+  lookupSb.setLength(lookupSb.length() - 1);
+  return lookupSb.toString();
+}
