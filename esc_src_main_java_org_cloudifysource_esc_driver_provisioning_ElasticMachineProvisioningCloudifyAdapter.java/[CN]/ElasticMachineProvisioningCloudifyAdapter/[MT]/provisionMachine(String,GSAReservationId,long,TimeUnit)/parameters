@@ -1,3 +1,4 @@
 String locationId
+GSAReservationId reservationId
 long duration
 TimeUnit unit

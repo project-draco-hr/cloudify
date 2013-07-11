@@ -1,0 +1,20 @@
+{
+  final ProvisioningContextImpl ctx=new ProvisioningContextImpl();
+  ctx.setLocationId(locationId);
+  InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
+  builder.reservationId(reservationId);
+  builder.admin(globalAdminInstance);
+  builder.authGroups(this.config.getAuthGroups());
+  builder.cloud(this.cloud);
+  builder.cloudFile(this.cloudDslFile);
+  builder.keystorePassword("");
+  builder.lookupLocators(this.lookupLocatorsString);
+  builder.management(false);
+  builder.rebootstrapping(false);
+  builder.reservationId(reservationId);
+  builder.securityProfile("");
+  builder.template(this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName));
+  builder.templateName(this.cloudTemplateName);
+  builder.zones(config.getGridServiceAgentZones().getZones());
+  return ctx;
+}

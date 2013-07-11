@@ -33,7 +33,7 @@
     if (locationId == null) {
       locationId=template.getLocationId();
     }
-    machineDetails=provisionMachine(locationId,duration,unit);
+    machineDetails=provisionMachine(locationId,reservationId,duration,unit);
     validateMachineIp(machineDetails);
     if (machineDetails != null && machineDetails.getInstallerConfiguration() == null) {
       machineDetails.setInstallerConfigutation(template.getInstaller());

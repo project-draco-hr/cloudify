@@ -1,0 +1,9 @@
+{
+  final DSLReader reader=new DSLReader();
+  reader.setDslFileNameSuffix(DSLUtils.CLOUD_DSL_FILE_NAME_SUFFIX);
+  reader.setWorkDir(new File(cloudConfigDirectory));
+  reader.setCreateServiceContext(false);
+  reader.setOverridesScript(overridesScript);
+  this.cloud=reader.readDslEntity(Cloud.class);
+  this.cloudDslFile=reader.getDslFile();
+}

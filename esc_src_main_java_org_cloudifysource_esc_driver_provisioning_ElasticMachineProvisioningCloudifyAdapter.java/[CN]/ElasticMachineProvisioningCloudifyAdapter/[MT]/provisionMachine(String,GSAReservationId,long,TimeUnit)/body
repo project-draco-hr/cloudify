@@ -1,4 +1,6 @@
 {
+  ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
+  ProvisioningContextAccessImpl.setCurrentProvisioingContext(ctx);
   MachineDetails machineDetails;
   try {
     machineDetails=cloudifyProvisioning.startMachine(locationId,duration,unit);
