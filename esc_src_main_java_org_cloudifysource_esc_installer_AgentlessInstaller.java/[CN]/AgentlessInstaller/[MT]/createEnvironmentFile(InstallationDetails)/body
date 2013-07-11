@@ -1,7 +1,14 @@
 {
+  String fileContents=null;
   final EnvironmentFileBuilder builder=new EnvironmentFileBuilder(details.getScriptLanguage(),details.getExtraRemoteEnvironmentVariables());
-  builder.loadEnvironmentFileFromDetails(details);
-  final String fileContents=builder.build().toString();
+  if (this.environmentFileContents == null) {
+    builder.loadEnvironmentFileFromDetails(details);
+    final String generatedFileContents=builder.build().toString();
+    fileContents=generatedFileContents;
+  }
+ else {
+    fileContents=this.environmentFileContents;
+  }
   final File tempFolder=Utils.createTempFolder();
   final File tempFile=new File(tempFolder,builder.getEnvironmentFileName());
   tempFile.deleteOnExit();
