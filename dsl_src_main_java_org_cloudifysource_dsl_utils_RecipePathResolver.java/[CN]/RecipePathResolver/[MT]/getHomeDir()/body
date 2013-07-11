@@ -1,0 +1,11 @@
+{
+  final String gsEnvClassName="com.j_spaces.kernel.Environment";
+  try {
+    final Object envObject=Class.forName(gsEnvClassName).newInstance();
+    final Method homeDirMethod=envObject.getClass().getMethod("getHomeDirectory");
+    return (String)homeDirMethod.invoke(envObject,(Object[])null);
+  }
+ catch (  Exception e) {
+    return "";
+  }
+}

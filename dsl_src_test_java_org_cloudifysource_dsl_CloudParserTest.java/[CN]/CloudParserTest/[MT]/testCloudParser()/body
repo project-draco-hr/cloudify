@@ -1,5 +1,5 @@
 {
-  final org.cloudifysource.dsl.cloud.Cloud cloud=ServiceReader.readCloud(new File(SIMPLE_CLOUD_PATH));
+  final org.cloudifysource.domain.cloud.Cloud cloud=ServiceReader.readCloud(new File(SIMPLE_CLOUD_PATH));
   assertNotNull(cloud);
   assertNotNull(cloud.getProvider());
   assertNotNull(cloud.getCloudCompute().getTemplates());

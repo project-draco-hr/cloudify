@@ -1,0 +1,4 @@
+AttributesFacade attributesFacadeImpl
+String applicationName
+String serviceName
+ServiceContext serviceContext

@@ -1,5 +1,0 @@
-{
-  super(attributesFacade,applicationName);
-  this.serviceName=serviceName;
-  this.instancesFacade=new InstancesFacade(attributesFacade,applicationName,serviceName,serviceContext);
-}

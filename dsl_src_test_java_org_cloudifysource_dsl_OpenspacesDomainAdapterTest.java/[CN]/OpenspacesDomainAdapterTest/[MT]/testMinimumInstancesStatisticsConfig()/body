@@ -1,5 +1,0 @@
-{
-  MinimumInstancesStatisticsConfig config=new MinimumInstancesStatisticsConfig();
-  InstancesStatisticsConfig instanceStatistics=(InstancesStatisticsConfig)configFactory.createStatisticsConfig(config);
-  Assert.assertTrue("InstanceStatistics is expected to be instanceof MinimumInstancesStatisticsConfig",instanceStatistics instanceof org.openspaces.admin.pu.statistics.MinimumInstancesStatisticsConfig);
-}

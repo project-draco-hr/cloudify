@@ -1,0 +1,8 @@
+{
+  PercentileInstancesStatisticsConfig config=new PercentileInstancesStatisticsConfig();
+  config.setPercentile(10);
+  InstancesStatisticsConfig instanceStatistics=configFactory.createInstanceStatisticsConfig(config);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof PercentileInstancesStatisticsConfig",instanceStatistics instanceof org.openspaces.admin.pu.statistics.PercentileInstancesStatisticsConfig);
+  org.openspaces.admin.pu.statistics.PercentileInstancesStatisticsConfig percentileConfig=(org.openspaces.admin.pu.statistics.PercentileInstancesStatisticsConfig)instanceStatistics;
+  Assert.assertTrue("Expecting percentile to be set to 10",percentileConfig.getPercentile() == 10);
+}

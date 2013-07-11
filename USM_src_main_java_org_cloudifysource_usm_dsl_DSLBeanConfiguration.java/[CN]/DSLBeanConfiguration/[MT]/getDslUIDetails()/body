@@ -5,9 +5,7 @@
   if (this.service.getUserInterface() == null) {
     return null;
   }
-  OpenspacesDomainAdapter openspacesAdapter=new OpenspacesDomainAdapter();
-  final UserInterface ui=openspacesAdapter.createOpenspacesUIObject(this.service.getUserInterface());
   UserInterfaceConverter converter=new UserInterfaceConverter();
-  UserInterface convertUserInterface=converter.convertUserInterface(ui);
+  UserInterface convertUserInterface=converter.convertUserInterface(this.service.getUserInterface());
   return new UIDetails(convertUserInterface);
 }

@@ -1,5 +1,0 @@
-{
-  AverageInstancesStatisticsConfig config=new AverageInstancesStatisticsConfig();
-  InstancesStatisticsConfig instanceStatistics=(InstancesStatisticsConfig)configFactory.createStatisticsConfig(config);
-  Assert.assertTrue("InstanceStatistics is expected to be instanceof AverageInstancesStatisticsConfig",instanceStatistics instanceof org.openspaces.admin.pu.statistics.AverageInstancesStatisticsConfig);
-}

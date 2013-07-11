@@ -12,7 +12,7 @@
         line=line.substring(0,line.indexOf(BaseDslScript.EXTEND_PROPERTY_NAME) + BaseDslScript.EXTEND_PROPERTY_NAME.length());
         line+=" \"" + localExtendedServiceFile.getName() + "\"";
       }
-      bufferedWriter.write(line + StringUtils.NEW_LINE);
+      bufferedWriter.write(line + System.getProperty("line.separator"));
       line=bufferedReader.readLine();
     }
   }

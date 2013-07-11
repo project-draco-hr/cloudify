@@ -1,0 +1,6 @@
+{
+  this.attributesFacade=(AttributesFacadeImpl)attributesFacade;
+  this.applicationName=applicationName;
+  this.serviceName=serviceName;
+  this.serviceContext=serviceContext;
+}

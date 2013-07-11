@@ -1,7 +1,0 @@
-{
-  final String tierTypeStr=getContextPropertyValue(processingUnit,CloudifyConstants.CONTEXT_PROPERTY_SERVICE_TYPE);
-  if (tierTypeStr == null) {
-    return ServiceTierType.UNDEFINED;
-  }
-  return ServiceTierType.valueOf(tierTypeStr);
-}

@@ -1,0 +1,3 @@
+{
+  return getServiceFromFile(dslFile,workDir,propertiesFileName,isRunningInGSC,overridesFile).getService();
+}

@@ -1,0 +1,17 @@
+{
+  checkInitialized();
+  if (this.admin != null) {
+    final String puName=ServiceUtils.getAbsolutePUName(this.applicationName,name);
+    final ProcessingUnit pu=waitForProcessingUnitFromAdmin(puName,timeout,unit);
+    if (pu == null) {
+      return null;
+    }
+ else {
+      return new ServiceImpl(pu);
+    }
+  }
+  if (name.equals(this.service.getName())) {
+    return new ServiceImpl(name,service.getNumInstances());
+  }
+  throw new IllegalArgumentException("When running in the integrated container, Service Context only includes the running service");
+}

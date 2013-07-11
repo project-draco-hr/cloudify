@@ -4,7 +4,7 @@
   System.setProperty("java.rmi.server.hostname","127.0.0.1");
   System.setProperty("com.gs.jini_lus.locators","127.0.0.1:4176");
   ClusterInfo clusterInfo=new ClusterInfo(null,1,null,1,null);
-  urlSpaceConfigurer=new UrlSpaceConfigurer("/./" + CloudifyConstants.MANAGEMENT_SPACE_NAME + "?locators=127.0.0.1:"+ CloudifyConstants.DEFAULT_LOCALCLOUD_LUS_PORT);
+  urlSpaceConfigurer=new UrlSpaceConfigurer("/./" + CloudifyConstants.MANAGEMENT_SPACE_NAME + "?locators=127.0.0.1:"+ OpenspacesConstants.DEFAULT_LOCALCLOUD_LUS_PORT);
   final IJSpace space=urlSpaceConfigurer.clusterInfo(clusterInfo).addProperty("com.j_spaces.core.container.directory_services.jini_lus.start-embedded-lus","true").space();
   gigaSpaceConfigurer=new GigaSpaceConfigurer(space);
   gigaspace=gigaSpaceConfigurer.gigaSpace();

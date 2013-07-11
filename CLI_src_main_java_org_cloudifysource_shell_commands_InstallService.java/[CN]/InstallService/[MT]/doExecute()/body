@@ -40,7 +40,7 @@
  else {
         recipeFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,recipe);
       }
-      service=ServiceReader.readService(recipeFile,recipe,null,null,null,false,overrides);
+      service=ServiceReader.readService(recipeFile,recipe,null,false,overrides);
       packedFile=Packager.pack(recipeFile,false,service,additionFiles);
       packedFile.deleteOnExit();
     }

@@ -28,7 +28,7 @@
       final String agentNicAddress=agent.getMachine().getHostAddress();
       final String agentLookupGroups=getLookupGroups(agent);
       final boolean checkLookupGroups=lookupGroups != null && lookupGroups.equals(agentLookupGroups);
-      final boolean checkNicAddress=nicAddress != null && agentNicAddress.equals(nicAddress) || IsLocalCloudUtils.isThisMyIpAddress(agentNicAddress);
+      final boolean checkNicAddress=nicAddress != null && agentNicAddress.equals(nicAddress) || NetworkUtils.isThisMyIpAddress(agentNicAddress);
       if (verbose) {
         String message="Discovered agent nic-address=" + agentNicAddress + " lookup-groups="+ agentLookupGroups+ ". ";
         if (!checkLookupGroups) {

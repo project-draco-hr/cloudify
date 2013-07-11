@@ -1,4 +1,0 @@
-{
-  this.attributesFacade=attributesFacade;
-  this.applicationName=applicationName;
-}

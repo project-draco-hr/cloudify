@@ -1,0 +1,5 @@
+File dslFile
+File workDir
+String propertiesFileName
+boolean isRunningInGSC
+File overridesFile

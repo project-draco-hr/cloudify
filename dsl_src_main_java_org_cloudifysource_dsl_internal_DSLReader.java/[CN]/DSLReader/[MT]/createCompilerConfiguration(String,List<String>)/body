@@ -3,7 +3,7 @@
   final ImportCustomizer ic=new ImportCustomizer();
   ic.addStarImports(STAR_IMPORTS);
   ic.addImports(CLASS_IMPORTS);
-  ic.addStaticImport("Statistics",org.cloudifysource.dsl.statistics.AbstractStatisticsDetails.class.getName(),"STATISTICS_FACTORY");
+  ic.addStaticImport("Statistics",org.cloudifysource.domain.statistics.AbstractStatisticsDetails.class.getName(),"STATISTICS_FACTORY");
   cc.addCompilationCustomizers(ic);
   cc.setScriptBaseClass(baseClassName);
   cc.setClasspathList(extraJarFileNames);

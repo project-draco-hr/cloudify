@@ -1,0 +1,5 @@
+{
+  MaximumInstancesStatisticsConfig config=new MaximumInstancesStatisticsConfig();
+  InstancesStatisticsConfig instanceStatistics=configFactory.createInstanceStatisticsConfig(config);
+  Assert.assertTrue("InstanceStatistics is expected to be instanceof MaximumInstancesStatisticsConfig",instanceStatistics instanceof org.openspaces.admin.pu.statistics.MaximumInstancesStatisticsConfig);
+}

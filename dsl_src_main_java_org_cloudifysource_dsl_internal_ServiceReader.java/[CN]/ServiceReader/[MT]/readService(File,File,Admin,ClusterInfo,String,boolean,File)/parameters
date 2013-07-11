@@ -1,7 +1,0 @@
-File dslFile
-File workDir
-Admin admin
-ClusterInfo clusterInfo
-String propertiesFileName
-boolean isRunningInGSC
-File overridesFile

@@ -1,0 +1,4 @@
+org.cloudifysource.domain.Application application
+String applicationName
+int timeout
+TimeUnit timeUnit

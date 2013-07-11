@@ -2,8 +2,6 @@
   @SuppressWarnings("unchecked") final Map<Object,Object> currentVars=this.getBinding().getVariables();
   final DSLReader dslReader=new DSLReader();
   dslReader.setBindingVariables(currentVars);
-  dslReader.setAdmin(null);
-  dslReader.setClusterInfo(null);
   dslReader.setContext(null);
   dslReader.setCreateServiceContext(false);
   dslReader.setDslFile(externalFile);

@@ -1,5 +1,5 @@
 {
-  lusPort=CloudifyConstants.DEFAULT_LOCALCLOUD_LUS_PORT;
+  lusPort=OpenspacesConstants.DEFAULT_LOCALCLOUD_LUS_PORT;
   if (lookupLocators == null) {
     setLookupLocators(getLocalcloudLookupLocators());
   }

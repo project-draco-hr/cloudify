@@ -46,10 +46,10 @@
     final ProcessingUnitStatisticsId statisticsId=new ProcessingUnitStatisticsId();
     statisticsId.setMonitor(CloudifyConstants.USM_MONITORS_SERVICE_ID);
     statisticsId.setMetric(serviceStatistics.getMetric());
-    OpenspacesDomainAdapter adapter=new OpenspacesDomainAdapter();
+    OpenspacesDomainStatisticsAdapter adapter=new OpenspacesDomainStatisticsAdapter();
     InstancesStatisticsConfig instanceStatistics;
     try {
-      instanceStatistics=(InstancesStatisticsConfig)adapter.createStatisticsConfig(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
+      instanceStatistics=adapter.createInstanceStatisticsConfig(serviceStatistics.getInstancesStatistics().createInstancesStatistics());
       statisticsId.setInstancesStatistics(instanceStatistics);
     }
  catch (    Exception e) {
@@ -64,7 +64,7 @@
  else {
       org.openspaces.admin.pu.statistics.TimeWindowStatisticsConfig timeWindowStatistics;
       try {
-        timeWindowStatistics=(TimeWindowStatisticsConfig)adapter.createStatisticsConfig(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
+        timeWindowStatistics=adapter.createTimeWindowStatisticsConfig(serviceStatistics.getTimeStatistics().createTimeWindowStatistics(serviceStatistics.getMovingTimeRangeInSeconds(),TimeUnit.SECONDS));
       }
  catch (      Exception e) {
         throw new DSLException("Failed instantiating time window statistics.",e);
