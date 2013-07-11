@@ -1,0 +1,7 @@
+{
+  validateGscPorts();
+  validateGsaPorts();
+  validateGsmPorts();
+  validateEsmPorts();
+  validateLusPorts();
+}

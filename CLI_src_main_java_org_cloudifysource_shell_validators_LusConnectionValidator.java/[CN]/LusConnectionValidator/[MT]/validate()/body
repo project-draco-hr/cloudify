@@ -11,12 +11,12 @@
     IPUtils.validateConnection(hostAddress,port);
   }
  catch (  UnknownHostException uhe) {
-    throw new CLIValidationException(uhe,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),hostAddress);
+    throw new CLIValidationException(uhe,127,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),hostAddress);
   }
 catch (  IOException ioe) {
-    throw new CLIValidationException(ioe,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_IO_ERROR.getName(),hostAddress,port,ioe.getMessage());
+    throw new CLIValidationException(ioe,128,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_IO_ERROR.getName(),hostAddress,port,ioe.getMessage());
   }
 catch (  SecurityException se) {
-    throw new CLIValidationException(se,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_NO_PERMISSION.getName(),hostAddress,port,se.getMessage());
+    throw new CLIValidationException(se,129,CloudifyErrorMessages.LUS_CONNECTION_VALIDATION_ABORTED_NO_PERMISSION.getName(),hostAddress,port,se.getMessage());
   }
 }

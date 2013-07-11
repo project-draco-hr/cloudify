@@ -1,6 +1,0 @@
-{
-  if (validatorsList == null) {
-    initValidatorsList(nicAddress);
-  }
-  return validatorsList;
-}

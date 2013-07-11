@@ -1,4 +1,7 @@
 {
   boolean valid=false;
+  if (portNumber >= 0 && portNumber <= MAX_PORT_NUMBER) {
+    valid=true;
+  }
   return valid;
 }

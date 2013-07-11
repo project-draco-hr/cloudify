@@ -1,0 +1,35 @@
+{
+  final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  connectionLogs.supressConnectionErrors();
+  final Admin admin=createAdmin();
+  try {
+    setLookupDefaults(admin);
+    GridServiceAgent agent;
+    try {
+      try {
+        if (!isLocalCloud || fastExistingAgentCheck()) {
+          agent=waitForExistingAgent(admin,progressInSeconds,TimeUnit.SECONDS);
+        }
+      }
+ catch (      final TimeoutException e) {
+        throw new CLIValidationException(120,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+      }
+    }
+  finally {
+      connectionLogs.restoreConnectionErrors();
+    }
+    waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    connectionLogs.supressConnectionErrors();
+    try {
+      for (      final AbstractManagementServiceInstaller managementServiceInstaller : managementServicesInstallers) {
+        managementServiceInstaller.waitForInstallation(adminFacade,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+      }
+    }
+  finally {
+      connectionLogs.restoreConnectionErrors();
+    }
+  }
+  finally {
+    admin.close();
+  }
+}

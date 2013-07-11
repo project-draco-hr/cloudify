@@ -1,13 +1,14 @@
 {
   try {
-    final String hostName=InetAddress.getLocalHost().getHostName();
-    InetAddress.getLocalHost().getHostAddress();
+    InetAddress localInetAddress=InetAddress.getLocalHost();
+    final String hostName=localInetAddress.getHostName();
+    localInetAddress.getHostAddress();
     InetAddress.getByName(hostName);
   }
  catch (  UnknownHostException uhe) {
-    throw new CLIValidationException(uhe,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());
+    throw new CLIValidationException(uhe,119,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());
   }
 catch (  SecurityException se) {
-    throw new CLIValidationException(se,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+    throw new CLIValidationException(se,120,CloudifyErrorMessages.HOST_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
   }
 }

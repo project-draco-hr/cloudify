@@ -1,4 +1,5 @@
 {
+  final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
   try {
     this.cloud=ServiceReader.readCloud(new File(this.cloudFilePath));
   }
@@ -9,14 +10,12 @@ catch (  final DSLException e) {
     throw new CLIException("Failed to read cloud file: " + e.getMessage(),e);
   }
   setDefaultNicAddress();
-  try {
-    List<CloudifyMachineValidator> validatorsList=CloudifyMachineValidatorsFactory.getValidators(nicAddress);
-    for (    CloudifyMachineValidator cloudifyMachineValidator : validatorsList) {
-      cloudifyMachineValidator.validate();
-    }
-  }
- catch (  Exception e) {
+  List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(true,nicAddress);
+  for (  CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
+    cloudifyMachineValidator.validate();
   }
   redeployManagement();
-  startManagementOnLocalhostAndWaitInternal(CLOUD_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeout,timeunit,false);
+  final List<AbstractManagementServiceInstaller> managementServicesInstallers=new LinkedList<AbstractManagementServiceInstaller>();
+  startManagementOnLocalhostAndWaitInternal(CLOUD_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,managementServicesInstallers,end,false);
+  waitForManagementServices(managementServicesInstallers,end);
 }

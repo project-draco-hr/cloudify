@@ -1,4 +1,13 @@
 {
   boolean valid=false;
+  try {
+    int minPort=getMinimumPort(portRange);
+    int maxPort=getMaximumPort(portRange);
+    if (isValidPortNumber(minPort) && isValidPortNumber(maxPort)) {
+      valid=true;
+    }
+  }
+ catch (  Exception e) {
+  }
   return valid;
 }

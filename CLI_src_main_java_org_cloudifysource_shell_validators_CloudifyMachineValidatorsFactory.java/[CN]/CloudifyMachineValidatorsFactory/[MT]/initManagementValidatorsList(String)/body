@@ -1,0 +1,5 @@
+{
+  managementValidatorsList=new ArrayList<CloudifyMachineValidator>();
+  managementValidatorsList.add(new HostNameValidator());
+  managementValidatorsList.add(new PortAvailabilityManagementValidator());
+}

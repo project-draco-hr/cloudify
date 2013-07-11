@@ -1,0 +1,14 @@
+{
+  if (StringUtils.isBlank(lusPortOrRange)) {
+    lusPortOrRange=retrievePortOrRange(CloudifyConstants.LUS_JAVA_OPTIONS_ENVIRONMENT_VAR);
+    if (StringUtils.isBlank(lusPortOrRange)) {
+      throw new IllegalArgumentException("LUS java options port or range not configred. The environment " + "variable \"" + CloudifyConstants.LUS_JAVA_OPTIONS_ENVIRONMENT_VAR + "\" is not set.");
+    }
+  }
+  try {
+    validateFreePorts(lusPortOrRange);
+  }
+ catch (  IllegalArgumentException e) {
+    throw new IllegalArgumentException("LUS LRMI ports validation failed. " + e.getMessage(),e);
+  }
+}

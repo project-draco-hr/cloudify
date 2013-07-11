@@ -1,0 +1,7 @@
+{
+  super("reasonCode: " + reasonCode,cause);
+  this.exitCode=exitCode;
+  this.args=args;
+  this.reasonCode=reasonCode;
+  this.verboseData=null;
+}

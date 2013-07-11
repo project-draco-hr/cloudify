@@ -6,6 +6,10 @@
   final Admin admin=createAdmin();
   try {
     setLookupDefaults(admin);
+    List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(false,nicAddress);
+    for (    CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
+      cloudifyMachineValidator.validate();
+    }
     try {
       waitForExistingAgent(admin,WAIT_EXISTING_AGENT_TIMEOUT_SECONDS,TimeUnit.SECONDS);
       throw new CLIException("Agent already running on local machine. Use shutdown-agent first.");

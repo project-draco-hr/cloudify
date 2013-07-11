@@ -1,0 +1,32 @@
+{
+  try {
+    if (IPUtils.isValidPortRange(portOrRange)) {
+      int lowestPort=IPUtils.getMinimumPort(portOrRange);
+      int highestPort=IPUtils.getMaximumPort(portOrRange);
+      IPUtils.validatePortIsFreeInRange(Constants.getHostAddress(),lowestPort,highestPort);
+    }
+ else {
+      try {
+        int port=Integer.parseInt(portOrRange);
+        if (IPUtils.isValidPortNumber(port)) {
+          IPUtils.validatePortIsFree(Constants.getHostAddress(),port);
+        }
+ else {
+          throw new IllegalArgumentException("Invalid port or range: " + portOrRange);
+        }
+      }
+ catch (      Exception e) {
+        throw new IllegalArgumentException("Invalid port or range: " + portOrRange);
+      }
+    }
+  }
+ catch (  UnknownHostException uhe) {
+    throw new CLIValidationException(uhe,124,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_UNKNOWN_HOST.getName(),uhe.getMessage());
+  }
+catch (  IOException ioe) {
+    throw new CLIValidationException(ioe,125,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_IO_ERROR.getName(),ioe.getMessage());
+  }
+catch (  SecurityException se) {
+    throw new CLIValidationException(se,126,CloudifyErrorMessages.PORT_VALIDATION_ABORTED_NO_PERMISSION.getName(),se.getMessage());
+  }
+}

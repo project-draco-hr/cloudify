@@ -1,0 +1,16 @@
+{
+  List<CloudifyMachineValidator> validatorsList=null;
+  if (isManagement) {
+    if (managementValidatorsList == null) {
+      initManagementValidatorsList(nicAddress);
+    }
+    validatorsList=managementValidatorsList;
+  }
+ else {
+    if (agentValidatorsList == null) {
+      initAgentValidatorsList(nicAddress);
+    }
+    validatorsList=agentValidatorsList;
+  }
+  return validatorsList;
+}

@@ -2,6 +2,18 @@
   validatorsList=new ArrayList<CloudifyMachineValidator>();
   validatorsList.add(new HostNameValidator());
   validatorsList.add(new NicAddressValidator());
-  validatorsList.add(new LusConnectionValidator(envMap.get(LUS_IP_ADDRESS_ENV)));
-  validatorsList.add(new PortAvailabilityValidator(envMap.get("LRMI_PORT_RANGE")));
+  LusConnectionValidator lusValidator=new LusConnectionValidator();
+  lusValidator.setLusIpAddress(envMap.get(LUS_IP_ADDRESS_ENV));
+  validatorsList.add(lusValidator);
+  PortAvailabilityAgentValidator portAvailabilityAgentValidator=new PortAvailabilityAgentValidator();
+  portAvailabilityAgentValidator.setGscPortOrRange(envMap.get(GSC_PORT_OR_RANGE));
+  portAvailabilityAgentValidator.setGsaPortOrRange(envMap.get(GSA_PORT_OR_RANGE));
+  validatorsList.add(portAvailabilityAgentValidator);
+  PortAvailabilityManagementValidator portAvailabilityManagementValidator=new PortAvailabilityManagementValidator();
+  portAvailabilityManagementValidator.setGscPortOrRange(envMap.get(GSC_PORT_OR_RANGE));
+  portAvailabilityManagementValidator.setGsaPortOrRange(envMap.get(GSA_PORT_OR_RANGE));
+  portAvailabilityManagementValidator.setLusPortOrRange(envMap.get(LUS_PORT_OR_RANGE));
+  portAvailabilityManagementValidator.setEsmPortOrRange(envMap.get(ESM_PORT_OR_RANGE));
+  portAvailabilityManagementValidator.setGsmPortOrRange(envMap.get(GSM_PORT_OR_RANGE));
+  validatorsList.add(portAvailabilityManagementValidator);
 }

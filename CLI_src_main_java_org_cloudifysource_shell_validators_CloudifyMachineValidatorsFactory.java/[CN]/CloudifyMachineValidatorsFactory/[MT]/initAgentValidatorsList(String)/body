@@ -1,0 +1,9 @@
+{
+  agentValidatorsList=new ArrayList<CloudifyMachineValidator>();
+  agentValidatorsList.add(new HostNameValidator());
+  NicAddressValidator nicAddressValidator=new NicAddressValidator();
+  nicAddressValidator.setNicAddress(nicAddress);
+  agentValidatorsList.add(nicAddressValidator);
+  agentValidatorsList.add(new LusConnectionValidator());
+  agentValidatorsList.add(new PortAvailabilityAgentValidator());
+}

@@ -1,0 +1,19 @@
+{
+  String portOrRange="";
+  int sysPropIndex=javaOptionsStr.indexOf(CloudifyConstants.LRMI_PORT_OR_RANGE_SYS_PROP + "=");
+  if (sysPropIndex == -1) {
+    throw new IllegalArgumentException("javaOptionsStr is missing the system property \"" + CloudifyConstants.LRMI_PORT_OR_RANGE_SYS_PROP + "\"");
+  }
+  int startIndex=sysPropIndex + CloudifyConstants.LRMI_PORT_OR_RANGE_SYS_PROP.length() + 1;
+  int endIndex=javaOptionsStr.indexOf(" ",startIndex);
+  if (endIndex > -1) {
+    portOrRange=javaOptionsStr.substring(startIndex,endIndex);
+  }
+ else {
+    portOrRange=javaOptionsStr.substring(startIndex);
+  }
+  if (StringUtils.isNotBlank(portOrRange)) {
+    portOrRange=portOrRange.trim();
+  }
+  return portOrRange;
+}

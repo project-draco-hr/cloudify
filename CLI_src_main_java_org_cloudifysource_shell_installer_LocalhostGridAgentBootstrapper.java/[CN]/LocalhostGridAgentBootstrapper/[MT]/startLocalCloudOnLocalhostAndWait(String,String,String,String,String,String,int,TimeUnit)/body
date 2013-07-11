@@ -1,10 +1,13 @@
 {
+  final long end=System.currentTimeMillis() + timeunit.toMillis(timeout);
+  final List<AbstractManagementServiceInstaller> managementServicesInstallers=new LinkedList<AbstractManagementServiceInstaller>();
   setDefaultNicAddress();
   setDefaultLocalcloudLookup();
   if (isWindows()) {
-    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_WIN_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeout,timeunit,true);
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_WIN_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,managementServicesInstallers,end,true);
   }
  else {
-    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_LINUX_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeout,timeunit,true);
+    startManagementOnLocalhostAndWaitInternal(LOCALCLOUD_LINUX_MANAGEMENT_ARGUMENTS,securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,managementServicesInstallers,end,true);
   }
+  waitForManagementServices(managementServicesInstallers,end);
 }

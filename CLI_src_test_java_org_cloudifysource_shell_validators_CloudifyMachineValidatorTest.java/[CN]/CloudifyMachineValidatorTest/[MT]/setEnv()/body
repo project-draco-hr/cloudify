@@ -1,4 +1,8 @@
 {
   envMap.put(LUS_IP_ADDRESS_ENV,"127.0.0.1:4174");
-  envMap.put("LRMI_PORT_RANGE","7010-7110");
+  envMap.put(GSC_PORT_OR_RANGE,"7010-7110");
+  envMap.put(GSA_PORT_OR_RANGE,parseJavaOptionsString(GSA_JAVA_OPTIONS));
+  envMap.put(LUS_PORT_OR_RANGE,parseJavaOptionsString(LUS_JAVA_OPTIONS));
+  envMap.put(ESM_PORT_OR_RANGE,parseJavaOptionsString(ESM_JAVA_OPTIONS));
+  envMap.put(GSM_PORT_OR_RANGE,parseJavaOptionsString(GSM_JAVA_OPTIONS));
 }

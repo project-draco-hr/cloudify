@@ -1,6 +1,0 @@
-{
-  super("reasonCode: " + reasonCode,cause);
-  this.args=args;
-  this.reasonCode=reasonCode;
-  this.verboseData=null;
-}

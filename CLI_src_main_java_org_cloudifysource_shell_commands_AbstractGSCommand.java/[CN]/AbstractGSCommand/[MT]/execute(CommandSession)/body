@@ -22,6 +22,9 @@
  catch (  final CLIStatusException e) {
     handle(new CLIStatusExceptionHandler(e),e);
   }
+catch (  final CLIValidationException e) {
+    handle(new CLIValidationExceptionHandler(e),e);
+  }
 catch (  final CLIException e) {
     handle(new CLIExceptionHandler(e),e);
   }

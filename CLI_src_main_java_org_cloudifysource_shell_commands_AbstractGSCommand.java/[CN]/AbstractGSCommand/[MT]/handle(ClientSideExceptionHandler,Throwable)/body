@@ -2,5 +2,10 @@
   if (logger.isLoggable(clientSideExceptionHandler.getLoggingLevel())) {
     logger.log(clientSideExceptionHandler.getLoggingLevel(),clientSideExceptionHandler.getMessage(verbose));
   }
-  raiseCloseShellExceptionIfNonInteractive(session,t);
+  if (t instanceof CLIValidationException) {
+    System.exit(((CLIValidationException)t).getExitCode());
+  }
+ else {
+    raiseCloseShellExceptionIfNonInteractive(session,t);
+  }
 }

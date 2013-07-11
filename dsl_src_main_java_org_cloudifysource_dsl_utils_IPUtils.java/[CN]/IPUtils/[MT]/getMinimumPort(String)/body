@@ -1,0 +1,7 @@
+{
+  if (portRange.indexOf(PORT_RANGE_SEPARATOR) == -1) {
+    throw new IllegalArgumentException("Invalid port range: " + portRange + ". The expected "+ "format is <lowest port>-<highest port>, e.g. 7010-7110");
+  }
+  String lowestPortStr=StringUtils.substringBefore(portRange,PORT_RANGE_SEPARATOR);
+  return Integer.parseInt(lowestPortStr);
+}

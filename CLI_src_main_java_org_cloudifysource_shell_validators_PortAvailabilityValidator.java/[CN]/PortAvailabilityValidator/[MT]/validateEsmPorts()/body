@@ -1,0 +1,14 @@
+{
+  if (StringUtils.isBlank(esmPortOrRange)) {
+    esmPortOrRange=retrievePortOrRange(CloudifyConstants.ESM_JAVA_OPTIONS_ENVIRONMENT_VAR);
+    if (StringUtils.isBlank(esmPortOrRange)) {
+      throw new IllegalArgumentException("ESM java options port or range not configred. The environment " + "variable \"" + CloudifyConstants.ESM_JAVA_OPTIONS_ENVIRONMENT_VAR + "\" is not set.");
+    }
+  }
+  try {
+    validateFreePorts(esmPortOrRange);
+  }
+ catch (  IllegalArgumentException e) {
+    throw new IllegalArgumentException("ESM LRMI ports validation failed. " + e.getMessage(),e);
+  }
+}

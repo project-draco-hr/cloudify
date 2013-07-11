@@ -1,0 +1,14 @@
+{
+  if (StringUtils.isBlank(gsaPortOrRange)) {
+    gsaPortOrRange=retrievePortOrRange(CloudifyConstants.GSA_JAVA_OPTIONS_ENVIRONMENT_VAR);
+    if (StringUtils.isBlank(gsaPortOrRange)) {
+      throw new IllegalArgumentException("GSA java options port or range not configred. The environment " + "variable \"" + CloudifyConstants.GSA_JAVA_OPTIONS_ENVIRONMENT_VAR + "\" is not set.");
+    }
+  }
+  try {
+    validateFreePorts(gsaPortOrRange);
+  }
+ catch (  IllegalArgumentException e) {
+    throw new IllegalArgumentException("GSA LRMI ports validation failed. " + e.getMessage(),e);
+  }
+}
