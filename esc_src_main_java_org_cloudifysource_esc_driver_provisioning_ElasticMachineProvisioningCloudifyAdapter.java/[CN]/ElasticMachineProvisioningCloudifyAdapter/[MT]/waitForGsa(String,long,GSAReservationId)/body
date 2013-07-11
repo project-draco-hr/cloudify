@@ -1,6 +1,6 @@
 {
   while (CalcUtils.millisUntil(end) > 0) {
-    final GridServiceAgent gsa=getGSAByIpOrHost(machineIp);
+    final GridServiceAgent gsa=getGSAByIpOrHost(machineIp,reservationId);
     if (gsa != null) {
       return gsa;
     }

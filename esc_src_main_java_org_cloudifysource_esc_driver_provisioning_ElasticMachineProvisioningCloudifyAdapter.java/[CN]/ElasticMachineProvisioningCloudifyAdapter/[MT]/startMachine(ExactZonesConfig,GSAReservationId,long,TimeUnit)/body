@@ -71,15 +71,10 @@
       installAndStartAgent(machineDetails,reservationId,end);
       checkForProvisioningTimeout(end,machineDetails);
     }
-    logger.info("Cloudify adapter is waiting for GSA with reservation id \"" + reservationId + "\" and ip \""+ machineIp+ "\" to become available");
-    final GridServiceAgent gsa=waitForGsa(machineIp,end);
+    logger.info("Cloudify adapter is waiting for GSA on host: " + machineIp + " with reservation id: "+ reservationId+ " to become available");
+    final GridServiceAgent gsa=waitForGsa(machineIp,end,reservationId);
     if (gsa == null) {
       throw new TimeoutException("New machine was provisioned and Cloudify was installed, " + "but a GSA was not discovered on the new machine: " + machineDetails);
-    }
-    final GSAReservationId discoveredReservationId=((InternalGridServiceAgent)gsa).getReservationId();
-    logger.info("Discovered agent with reservation id " + discoveredReservationId);
-    if (reservationId != null && !reservationId.equals(discoveredReservationId)) {
-      throw new ElasticMachineProvisioningException("Cloudify Adapter discovered the wrong agent. " + "expected reservation id is " + reservationId + ". but actual was "+ discoveredReservationId);
     }
     agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(new GridServiceAgentStartedEvent(machineIp,gsa.getUid()));
     if (gsa.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME) == null) {
@@ -90,31 +85,31 @@
  catch (  final ElasticMachineProvisioningException e) {
     logger.info("ElasticMachineProvisioningException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end,reservationId);
     throw e;
   }
 catch (  final ElasticGridServiceAgentProvisioningException e) {
     logger.info("ElasticGridServiceAgentProvisioningException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end,reservationId);
     throw e;
   }
 catch (  final TimeoutException e) {
     logger.info("TimeoutException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end,reservationId);
     throw e;
   }
 catch (  final InterruptedException e) {
     logger.info("InterruptedException occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end,reservationId);
     throw e;
   }
 catch (  final Throwable e) {
     logger.info("Unexpected exception occurred, " + e.getMessage());
     logger.info(ExceptionUtils.getFullStackTrace(e));
-    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end);
+    handleExceptionAfterMachineCreated(machineIp,volumeId,machineDetails,end,reservationId);
     throw new IllegalStateException("Unexpected exception during machine provisioning",e);
   }
 }

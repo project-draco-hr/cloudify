@@ -3,7 +3,7 @@
     boolean machineIpExists=machineIp != null && !machineIp.trim().isEmpty();
     if (machineIpExists) {
       try {
-        final GridServiceAgent agent=getGSAByIpOrHost(machineIp);
+        final GridServiceAgent agent=getGSAByIpOrHost(machineIp,reservationId);
         if (agent != null) {
           logger.info("handleExceptionAfterMachineCreated is shutting down agent: " + agent + " on host: "+ machineIp);
           agent.shutdown();
