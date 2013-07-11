@@ -1,0 +1,10 @@
+{
+  ScriptLanguages scriptLanguage=template.getScriptLanguage();
+  Map<String,String> externalEnvVars=template.getEnv();
+  EnvironmentFileBuilder fileBuilder=new EnvironmentFileBuilder(scriptLanguage,externalEnvVars);
+  InstallationDetails installationDetails=installationDetailsBuilder.build();
+  fileBuilder.loadEnvironmentFileFromDetails(installationDetails);
+  fileBuilder.build();
+  final String fileContents=fileBuilder.toString();
+  return fileContents;
+}

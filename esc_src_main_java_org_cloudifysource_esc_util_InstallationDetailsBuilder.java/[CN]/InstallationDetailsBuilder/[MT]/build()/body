@@ -1,0 +1,4 @@
+{
+  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zones,lookupLocatorsString,admin,isManagement,cloudFile,reservationId,templateName,securityProfile,keystorePassword,authGroups,this.isRebootstrapping);
+  return details;
+}
