@@ -1,0 +1,13 @@
+{
+  InstallationDetailsBuilder copy=new InstallationDetailsBuilder();
+  try {
+    BeanUtils.copyProperties(copy,this);
+  }
+ catch (  IllegalAccessException e) {
+    throw new RuntimeException("Failed to clone existing installation details builder: " + e.getMessage(),e);
+  }
+catch (  InvocationTargetException e) {
+    throw new RuntimeException("Failed to clone existing installation details builder: " + e.getMessage(),e);
+  }
+  return copy;
+}

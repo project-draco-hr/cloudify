@@ -1,8 +1,8 @@
 {
   final Map<String,GridServiceContainer> undiscoveredAgentsContianersPerProcessingUnitInstanceName=new HashMap<String,GridServiceContainer>();
-  for (  ProcessingUnit pu : admin.getProcessingUnits()) {
-    for (    ProcessingUnitInstance instance : pu.getInstances()) {
-      GridServiceContainer container=instance.getGridServiceContainer();
+  for (  final ProcessingUnit pu : admin.getProcessingUnits()) {
+    for (    final ProcessingUnitInstance instance : pu.getInstances()) {
+      final GridServiceContainer container=instance.getGridServiceContainer();
       if (container.getAgentId() != -1 && container.getGridServiceAgent() == null) {
         undiscoveredAgentsContianersPerProcessingUnitInstanceName.put(instance.getProcessingUnitInstanceName(),container);
       }

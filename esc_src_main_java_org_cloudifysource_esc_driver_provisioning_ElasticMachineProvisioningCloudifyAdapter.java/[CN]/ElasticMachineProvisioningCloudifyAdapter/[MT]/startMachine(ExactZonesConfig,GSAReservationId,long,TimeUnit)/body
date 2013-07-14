@@ -60,7 +60,7 @@
   final GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
   agentStartEvent.setHostAddress(machineIp);
   agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
-  String volumeId=null;
+  final String volumeId=null;
   try {
     checkForProvisioningTimeout(end,machineDetails);
     if (machineDetails.isAgentRunning()) {

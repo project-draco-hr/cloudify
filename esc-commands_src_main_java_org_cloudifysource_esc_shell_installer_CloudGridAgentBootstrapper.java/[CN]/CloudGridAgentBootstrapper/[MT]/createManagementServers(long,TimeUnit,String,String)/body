@@ -1,7 +1,8 @@
 {
   MachineDetails[] servers;
+  logger.warning("Creating provisioning Context");
   final ProvisioningContextImpl context=setUpProvisioningContext(keystorePassword,securityProfile);
-  ProvisioningContextAccess.setCurrentProvisioingContext(context);
+  ProvisioningContextAccess.setCurrentManagementProvisioingContext(context);
   try {
     servers=provisioning.startManagementMachines(timeout,timeoutUnit);
   }

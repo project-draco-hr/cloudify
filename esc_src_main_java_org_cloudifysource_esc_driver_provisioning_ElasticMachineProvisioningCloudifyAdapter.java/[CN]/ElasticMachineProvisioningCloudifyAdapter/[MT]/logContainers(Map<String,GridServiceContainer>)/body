@@ -1,6 +1,6 @@
 {
-  StringBuilder builder=new StringBuilder();
-  for (  Map.Entry<String,GridServiceContainer> entry : undiscoveredAgentsContainersPerProcessingUnitInstanceName.entrySet()) {
+  final StringBuilder builder=new StringBuilder();
+  for (  final Map.Entry<String,GridServiceContainer> entry : undiscoveredAgentsContainersPerProcessingUnitInstanceName.entrySet()) {
     final GridServiceContainer container=entry.getValue();
     final String processingUnitInstanceName=entry.getKey();
     builder.append("GridServiceContainer[uid=" + container.getUid() + "] agentId=["+ container.getAgentId()+ "] processingUnitInstanceName=["+ processingUnitInstanceName+ "]");

@@ -1,7 +1,7 @@
 {
 synchronized (context) {
     if (!context.containsKey(key)) {
-      Object value=factory.call();
+      final Object value=factory.call();
       context.put(key,value);
       return value;
     }

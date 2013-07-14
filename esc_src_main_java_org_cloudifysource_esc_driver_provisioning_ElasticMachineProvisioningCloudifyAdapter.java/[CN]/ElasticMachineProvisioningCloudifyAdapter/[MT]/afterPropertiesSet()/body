@@ -25,7 +25,7 @@
       computeTemplate.setLocalDirectory(computeTemplate.getRemoteDirectory());
     }
     try {
-      ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
+      final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
       this.cloudifyProvisioning=builder.build(cloudConfigDirectoryPath,this.cloud.getConfiguration().getClassName());
       if (cloudifyProvisioning instanceof ProvisioningDriverClassContextAware) {
         final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
@@ -34,7 +34,7 @@
       }
       handleServiceCloudConfiguration();
       this.cloudifyProvisioning.setConfig(cloud,cloudTemplateName,false,serviceName);
-      String storageClassName=this.cloud.getConfiguration().getStorageClassName();
+      final String storageClassName=this.cloud.getConfiguration().getStorageClassName();
       if (StringUtils.isNotBlank(storageClassName)) {
         logger.info("creating storage provisioning driver.");
         this.storageProvisioning=(StorageProvisioningDriver)Class.forName(storageClassName).newInstance();

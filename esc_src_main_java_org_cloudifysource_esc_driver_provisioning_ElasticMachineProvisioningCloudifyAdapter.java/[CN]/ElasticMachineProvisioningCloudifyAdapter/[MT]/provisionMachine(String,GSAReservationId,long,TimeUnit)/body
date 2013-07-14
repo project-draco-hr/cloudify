@@ -1,5 +1,5 @@
 {
-  ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
+  final ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
   ProvisioningContextAccess.setCurrentProvisioingContext(ctx);
   MachineDetails machineDetails;
   try {

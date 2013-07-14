@@ -1,20 +1,20 @@
 {
   final ProvisioningContextImpl ctx=new ProvisioningContextImpl();
   ctx.setLocationId(locationId);
-  InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
-  builder.reservationId(reservationId);
-  builder.admin(globalAdminInstance);
-  builder.authGroups(this.config.getAuthGroups());
-  builder.cloud(this.cloud);
-  builder.cloudFile(this.cloudDslFile);
-  builder.keystorePassword("");
-  builder.lookupLocators(this.lookupLocatorsString);
-  builder.management(false);
-  builder.rebootstrapping(false);
-  builder.reservationId(reservationId);
-  builder.securityProfile("");
-  builder.template(this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName));
-  builder.templateName(this.cloudTemplateName);
-  builder.zones(config.getGridServiceAgentZones().getZones());
+  final InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
+  builder.setReservationId(reservationId);
+  builder.setAdmin(globalAdminInstance);
+  builder.setAuthGroups(this.config.getAuthGroups());
+  builder.setCloud(this.cloud);
+  builder.setCloudFile(this.cloudDslFile);
+  builder.setKeystorePassword("");
+  builder.setLookupLocators(this.lookupLocatorsString);
+  builder.setManagement(false);
+  builder.setRebootstrapping(false);
+  builder.setReservationId(reservationId);
+  builder.setSecurityProfile("");
+  builder.setTemplate(this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName));
+  builder.setTemplateName(this.cloudTemplateName);
+  builder.setZones(config.getGridServiceAgentZones().getZones());
   return ctx;
 }

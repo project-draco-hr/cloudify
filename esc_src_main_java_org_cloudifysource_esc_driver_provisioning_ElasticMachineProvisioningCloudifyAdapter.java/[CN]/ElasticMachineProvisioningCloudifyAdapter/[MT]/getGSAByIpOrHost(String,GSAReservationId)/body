@@ -1,6 +1,6 @@
 {
   final GridServiceAgent[] allAgents=originalESMAdmin.getGridServiceAgents().getAgents();
-  for (  GridServiceAgent gridServiceAgent : allAgents) {
+  for (  final GridServiceAgent gridServiceAgent : allAgents) {
     if (gridServiceAgent.getMachine().getHostAddress().equals(machineIp) || gridServiceAgent.getMachine().getHostName().equals(machineIp)) {
       final boolean reservationMatches=checkReservationId(machineIp,reservationId,gridServiceAgent);
       if (reservationMatches) {

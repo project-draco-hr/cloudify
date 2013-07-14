@@ -2,8 +2,8 @@
   logger.fine("Validating " + machineDetails + " after provisioning ");
   String machineIp;
   logger.fine("Listing existing agents");
-  GridServiceAgents gridServiceAgents=originalESMAdmin.getGridServiceAgents();
-  for (  GridServiceAgent agent : gridServiceAgents) {
+  final GridServiceAgents gridServiceAgents=originalESMAdmin.getGridServiceAgents();
+  for (  final GridServiceAgent agent : gridServiceAgents) {
     if (cloud.getConfiguration().isConnectToPrivateIp()) {
       machineIp=machineDetails.getPrivateAddress();
     }

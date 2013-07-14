@@ -15,10 +15,10 @@
       }
     }
  else {
-      Set<String> esmAdminAgentUids=esmAdminInstance.getGridServiceAgents().getUids().keySet();
-      Set<String> globalAdminAgentUids=globalAdminInstance.getGridServiceAgents().getUids().keySet();
-      Set<String> agentsNotDiscoveredInGlobalAdminInstance=new HashSet<String>();
-      for (      String agentUid : esmAdminAgentUids) {
+      final Set<String> esmAdminAgentUids=esmAdminInstance.getGridServiceAgents().getUids().keySet();
+      final Set<String> globalAdminAgentUids=globalAdminInstance.getGridServiceAgents().getUids().keySet();
+      final Set<String> agentsNotDiscoveredInGlobalAdminInstance=new HashSet<String>();
+      for (      final String agentUid : esmAdminAgentUids) {
         if (!globalAdminAgentUids.contains(agentUid)) {
           agentsNotDiscoveredInGlobalAdminInstance.add(agentUid);
         }

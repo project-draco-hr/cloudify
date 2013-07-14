@@ -3,15 +3,18 @@
     throw new IllegalArgumentException("mds must have at least one element");
   }
   final String[] result=new String[mds.length];
-  ScriptLanguages scriptLanguage=template.getScriptLanguage();
-  InstallationDetails installationDetails=installationDetailsBuilder.build();
-  Cloud cloud=this.installationDetailsBuilder.getCloud();
+  final ScriptLanguages scriptLanguage=template.getScriptLanguage();
+  final Cloud cloud=this.installationDetailsBuilder.getCloud();
   final String lookupLocatorsString=createLocatorsString(mds,cloud);
-  installationDetails.setLocator(lookupLocatorsString);
   for (int i=0; i < mds.length; i++) {
-    MachineDetails md=mds[i];
-    Map<String,String> externalEnvVars=template.getEnv();
-    EnvironmentFileBuilder fileBuilder=new EnvironmentFileBuilder(scriptLanguage,externalEnvVars);
+    final MachineDetails md=mds[i];
+    final InstallationDetailsBuilder currentBuilder=installationDetailsBuilder.clone();
+    currentBuilder.setMachineDetails(md);
+    currentBuilder.setLookupLocators(lookupLocatorsString);
+    final InstallationDetails installationDetails=currentBuilder.build();
+    createdDetails.add(installationDetails);
+    final Map<String,String> externalEnvVars=installationDetails.getExtraRemoteEnvironmentVariables();
+    final EnvironmentFileBuilder fileBuilder=new EnvironmentFileBuilder(scriptLanguage,externalEnvVars);
     installationDetails.setNoWebServices(i != 0);
     fileBuilder.loadEnvironmentFileFromDetails(installationDetails);
     fileBuilder.build();
