@@ -34,7 +34,9 @@
       locationId=template.getLocationId();
     }
     machineDetails=provisionMachine(locationId,reservationId,duration,unit);
-    validateMachineIp(machineDetails);
+    if (!machineDetails.isAgentRunning()) {
+      validateMachineIp(machineDetails);
+    }
     if (machineDetails != null && machineDetails.getInstallerConfiguration() == null) {
       machineDetails.setInstallerConfigutation(template.getInstaller());
     }
