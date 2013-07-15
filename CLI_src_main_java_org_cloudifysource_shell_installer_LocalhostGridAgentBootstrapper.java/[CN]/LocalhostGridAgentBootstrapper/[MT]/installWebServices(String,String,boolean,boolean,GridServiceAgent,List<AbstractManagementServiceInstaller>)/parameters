@@ -3,4 +3,4 @@ String password
 boolean isLocalCloud
 boolean isSecureConnection
 GridServiceAgent agent
-List<AbstractManagementServiceInstaller> waitForManagementServices
+List<AbstractManagementServiceInstaller> managementServices
