@@ -1,0 +1,3 @@
+{
+  return "id='" + id + '\''+ ", privateIp='"+ privateIp+ '\''+ ", hostName='"+ hostName+ '\''+ ", nodeName='"+ nodeName+ '\'';
+}

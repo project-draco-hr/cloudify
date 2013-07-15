@@ -10,7 +10,7 @@
   final List<CustomNode> allocatedNodesPool=templateLists.get(NODES_LIST_ALLOCATED);
   final List<CustomNode> invalidNodesPool=templateLists.get(NODES_LIST_INVALID);
   if (freeNodesPool.isEmpty() && invalidNodesPool.isEmpty()) {
-    throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
+    throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used."+ " Free nodes: "+ getNodesListForPrint(freeNodesPool)+ ", Invalid nodes: "+ getNodesListForPrint(invalidNodesPool)+ ", Allocated nodes: "+ getNodesListForPrint(allocatedNodesPool));
   }
   CustomNode node=null;
   if (!freeNodesPool.isEmpty()) {
@@ -51,7 +51,7 @@
     }
   }
   if (node == null) {
-    throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used");
+    throw new CloudProvisioningException("Failed to create a new cloud node for template \"" + templateName + "\", all available nodes are currently used."+ " Free nodes: "+ getNodesListForPrint(freeNodesPool)+ ", Invalid nodes: "+ getNodesListForPrint(invalidNodesPool)+ ", Allocated nodes: "+ getNodesListForPrint(allocatedNodesPool));
   }
   node.setNodeName(serverName);
   return node;

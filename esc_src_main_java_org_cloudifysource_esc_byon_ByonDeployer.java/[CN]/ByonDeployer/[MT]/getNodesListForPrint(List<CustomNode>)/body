@@ -1,0 +1,7 @@
+{
+  StringBuilder nodesStr=new StringBuilder();
+  for (  CustomNode node : nodesToPrint) {
+    nodesStr.append(node.toShortString());
+  }
+  return nodesStr.toString();
+}

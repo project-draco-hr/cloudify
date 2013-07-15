@@ -4,6 +4,7 @@
   final List<CustomNode> invalidNodesPool=new ArrayList<CustomNode>();
   freeNodesPool.addAll(aggregateWithoutDuplicates(freeNodesPool,resolvedNodes));
   invalidNodesPool.addAll(aggregateWithoutDuplicates(invalidNodesPool,unresolvedNodes));
+  logger.info("Setting initial pools for template: " + templateName + ". "+ "Free nodes: "+ getNodesListForPrint(freeNodesPool)+ "Invalid nodes: "+ getNodesListForPrint(invalidNodesPool));
   templateLists.put(NODES_LIST_FREE,freeNodesPool);
   templateLists.put(NODES_LIST_ALLOCATED,new ArrayList<CustomNode>());
   templateLists.put(NODES_LIST_INVALID,invalidNodesPool);
