@@ -1,0 +1,14 @@
+{
+  boolean isSameAddress=false;
+  if (StringUtils.isBlank(address1) || StringUtils.isBlank(address2)) {
+  }
+ else {
+    if (isIPv6Address(address1) && isIPv6Address(address2)) {
+      isSameAddress=isSameIpv6Address(address1,address2);
+    }
+ else {
+      isSameAddress=address1.equalsIgnoreCase(address2);
+    }
+  }
+  return isSameAddress;
+}
