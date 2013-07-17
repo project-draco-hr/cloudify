@@ -1,0 +1,17 @@
+{
+  String cloudifyUrlPattern;
+  String productUri;
+  String editionUrlVariable;
+  if (PlatformVersion.getEdition().equalsIgnoreCase(PlatformVersion.EDITION_CLOUDIFY)) {
+    productUri="org/cloudifysource";
+    editionUrlVariable="cloudify";
+    cloudifyUrlPattern="http://repository.cloudifysource.org/" + "%s/" + OutputVersion.computeCloudifyVersion() + "/gigaspaces-%s-"+ PlatformVersion.getVersion()+ "-"+ PlatformVersion.getMilestone()+ "-b"+ PlatformVersion.getBuildNumber();
+    return String.format(cloudifyUrlPattern,productUri,editionUrlVariable);
+  }
+ else {
+    productUri="com/gigaspaces/xap";
+    editionUrlVariable="xap-premium";
+    cloudifyUrlPattern="http://repository.cloudifysource.org/" + "%s/" + OutputVersion.computeXapVersion() + "/gigaspaces-%s-"+ PlatformVersion.getVersion()+ "-"+ PlatformVersion.getMilestone()+ "-b"+ PlatformVersion.getBuildNumber();
+    return String.format(cloudifyUrlPattern,productUri,editionUrlVariable);
+  }
+}

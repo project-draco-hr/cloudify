@@ -4,5 +4,7 @@
   reader.setWorkDir(new File(cloudConfigDirectory));
   reader.setCreateServiceContext(false);
   reader.setOverridesScript(overridesScript);
-  return reader.readDslEntity(Cloud.class);
+  final Cloud cloud=reader.readDslEntity(Cloud.class);
+  setDependentCloudProperties(null,cloud);
+  return cloud;
 }

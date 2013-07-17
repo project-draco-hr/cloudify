@@ -4,6 +4,6 @@
   }
   final String dslContents=FileUtils.readFileToString(dslFile);
   final Cloud cloud=readCloud(dslContents,dslFile);
-  setDependentCloudProperties(null,cloud);
+  setDependentCloudProperties(dependentConfig,cloud);
   return cloud;
 }

@@ -1,0 +1,11 @@
+{
+  final String utilDomainClass="org.cloudifysource.utilitydomain.openspaces.OpenspacesDomainUtils";
+  try {
+    final Object utilDomainClassInstance=Class.forName(utilDomainClass).newInstance();
+    final Method getCloudDependentConfMethod=utilDomainClassInstance.getClass().getMethod("getCloudDependentConfig");
+    return (CloudDependentConfigHolder)getCloudDependentConfMethod.invoke(utilDomainClassInstance,(Object[])null);
+  }
+ catch (  Exception e) {
+    return null;
+  }
+}

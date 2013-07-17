@@ -22,7 +22,7 @@
     serviceContext=new ServiceContextImpl(new ClusterInfo(null,1,0,1,0),canonicalPath);
   }
   DSLReader dslReader=new DSLReader();
-  dslReader.setContext(serviceContext);
+  dslReader.setCreateServiceContext(false);
   dslReader.setPropertiesFileName(propertiesFileName);
   dslReader.setRunningInGSC(isRunningInGSC);
   dslReader.setDslFile(dslFile);

@@ -1,0 +1,5 @@
+{
+  CloudDependentConfigHolder cloudDependentProps=getCloudDependentProps();
+  System.out.println(cloudDependentProps.getDownloadUrl());
+  System.out.println(cloudDependentProps.getDefaultLusPort());
+}

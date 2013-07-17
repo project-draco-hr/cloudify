@@ -1,9 +1,0 @@
-{
-  try {
-    ServiceReader.readCloud(new File(INVALID_NUM_MGMT_MACHINES_PATH));
-    assertTrue("The number of management machines is invalid yet no error was thrown",false);
-  }
- catch (  final Throwable e) {
-    assertTrue("The number of management machines is invalid yet no relevant error was thrown. Error was: " + e.getMessage(),e.getMessage().contains("Invalid numberOfManagementMachines"));
-  }
-}

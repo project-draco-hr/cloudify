@@ -1,0 +1,7 @@
+{
+  final CloudDependentConfigHolder dependentConfig=new CloudDependentConfigHolder();
+  final String cloudifyUrlAccordingToPlatformVersion=createCloudifyUrlAccordingToPlatformVersion();
+  dependentConfig.setDownloadUrl(cloudifyUrlAccordingToPlatformVersion);
+  dependentConfig.setDefaultLusPort(OpenspacesConstants.DEFAULT_LUS_PORT);
+  return dependentConfig;
+}

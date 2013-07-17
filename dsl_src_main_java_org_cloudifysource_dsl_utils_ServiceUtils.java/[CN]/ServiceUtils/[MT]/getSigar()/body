@@ -1,0 +1,6 @@
+{
+  if (sigar == null) {
+    sigar=new Sigar();
+  }
+  return sigar;
+}
