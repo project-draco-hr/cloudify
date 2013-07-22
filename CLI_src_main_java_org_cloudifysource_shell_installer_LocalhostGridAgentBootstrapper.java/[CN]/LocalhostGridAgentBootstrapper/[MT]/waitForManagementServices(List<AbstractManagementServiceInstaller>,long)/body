@@ -1,0 +1,61 @@
+{
+  final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
+  connectionLogs.supressConnectionErrors();
+  final Admin admin=createAdmin();
+  logger.fine("Starting waitForManagementServices to verify the management services are still up...");
+  try {
+    setLookupDefaults(admin);
+    GridServiceAgent agent=null;
+    try {
+      try {
+        logger.fine("Attempting to find the running agent...");
+        if (!isLocalCloud || fastExistingAgentCheck()) {
+          agent=waitForExistingAgent(admin,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+          if (agent == null) {
+            logger.warning("Error! Failed to find a running agent after bootstrap completed");
+            throw new CLIValidationException(131,CloudifyErrorMessages.POST_BOOTSTRAP_NO_AGENT_FOUND.getName());
+          }
+          logger.fine("OK, agent was found.");
+        }
+      }
+ catch (      final Exception e) {
+        logger.warning("Error! Failed to find a running agent after bootstrap completed. Reported error: " + e.getMessage());
+        throw new CLIValidationException(e,131,CloudifyErrorMessages.POST_BOOTSTRAP_NO_AGENT_FOUND.getName());
+      }
+    }
+  finally {
+      connectionLogs.restoreConnectionErrors();
+    }
+    try {
+      logger.fine("Attempting to find the running management componenets (LUS, GSM and ESM)...");
+      waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+      logger.fine("OK, LUS, GSM and ESM are up and running.");
+    }
+ catch (    final Exception e) {
+      logger.warning("Error! Some management components (LUS/ESM/GSM) are not available after bootstrap " + "completed. Reported error: " + e.getMessage());
+      throw new CLIValidationException(e,132,CloudifyErrorMessages.POST_BOOTSTRAP_MISSING_MGMT_COMPONENT.getName());
+    }
+    connectionLogs.supressConnectionErrors();
+    try {
+      for (      final AbstractManagementServiceInstaller managementServiceInstaller : managementServicesInstallers) {
+        String serviceName="";
+        try {
+          serviceName=managementServiceInstaller.getServiceName();
+          logger.fine("Attempting to find a running management service " + serviceName + "...");
+          managementServiceInstaller.validateManagementService(admin,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+          logger.fine("OK, management service " + serviceName + " is up and running.");
+        }
+ catch (        Exception e) {
+          logger.warning("Error! Management service " + serviceName + " is not available after bootstrap "+ "completed. Reported error: "+ e.getMessage());
+          throw new CLIValidationException(e,133,CloudifyErrorMessages.POST_BOOTSTRAP_MISSING_MGMT_SERVICE.getName(),serviceName);
+        }
+      }
+    }
+  finally {
+      connectionLogs.restoreConnectionErrors();
+    }
+  }
+  finally {
+    admin.close();
+  }
+}
