@@ -1,0 +1,3 @@
+{
+  waitForInstallation(null,agent,timeout,timeunit);
+}

@@ -1,6 +1,7 @@
 {
   final long startTime=System.currentTimeMillis();
-  final URL url=waitForProcessingUnitInstance(agent,timeout,timeunit);
+  waitForProcessingUnitInstance(agent,timeout,timeunit);
+  final URL url=getProcessingUnitUrl(agent);
   final long remainingTime=timeunit.toMillis(timeout) - (System.currentTimeMillis() - startTime);
   if (waitForConnection) {
     waitForConnection(adminFacade,username,password,url,remainingTime,TimeUnit.MILLISECONDS);

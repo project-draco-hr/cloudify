@@ -7,11 +7,9 @@
     @Override public boolean isDone() throws CLIException, InterruptedException {
       logger.fine("Waiting for " + serviceName + " service.");
       if (!messagePublished) {
-        final String message=ShellUtils.getMessageBundle().getString("starting_management_web_service");
-        publishEvent(MessageFormat.format(message,serviceName.toUpperCase()));
         messagePublished=true;
       }
-      final ProcessingUnit pu=getProcessingUnit();
+      final ProcessingUnit pu=admin.getProcessingUnits().getProcessingUnit(serviceName);
       boolean isDone=false;
       if (pu != null) {
         for (        final ProcessingUnitInstance instance : pu) {
@@ -32,4 +30,5 @@
     }
   }
 );
+  return;
 }

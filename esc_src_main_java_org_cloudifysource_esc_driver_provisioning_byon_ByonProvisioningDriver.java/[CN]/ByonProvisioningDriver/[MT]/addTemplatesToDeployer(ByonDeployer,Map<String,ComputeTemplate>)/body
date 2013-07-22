@@ -3,6 +3,8 @@
   for (  Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
     String templateName=templateEntry.getKey();
     try {
+      ComputeTemplate template=templateEntry.getValue();
+      validateTemplate(templateName,template);
       nodesList=ByonUtils.getTemplateNodesList(templateEntry.getValue());
     }
  catch (    CloudProvisioningException e) {

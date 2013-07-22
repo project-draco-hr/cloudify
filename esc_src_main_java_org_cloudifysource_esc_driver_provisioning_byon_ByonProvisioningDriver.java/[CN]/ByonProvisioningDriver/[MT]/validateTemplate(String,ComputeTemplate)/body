@@ -1,0 +1,21 @@
+{
+  boolean ipv6Used=false;
+  try {
+    List<CustomNode> nodes=ByonUtils.parseCloudNodes(template);
+    for (    CustomNode node : nodes) {
+      if (StringUtils.isNotBlank(node.getPrivateIP()) && IPUtils.isIPv6Address(node.getPrivateIP())) {
+        ipv6Used=true;
+        break;
+      }
+    }
+    if (ipv6Used) {
+      FileTransferModes fileTransferMode=template.getFileTransfer();
+      if (fileTransferMode == null || !fileTransferMode.equals(FileTransferModes.SCP)) {
+        throw new CloudProvisioningException("Invalid file transfer set for template " + templateName + ". Templates that use IPv6 addresses must use SCP for file transer.");
+      }
+    }
+  }
+ catch (  CloudProvisioningException e) {
+    throw new CloudProvisioningException("Invalid configuration for template " + templateName + ", reported error: "+ e.getMessage(),e);
+  }
+}
