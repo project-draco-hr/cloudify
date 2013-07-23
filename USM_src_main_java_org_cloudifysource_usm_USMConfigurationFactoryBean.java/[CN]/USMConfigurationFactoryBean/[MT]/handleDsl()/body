@@ -28,6 +28,7 @@
   dslReader.setDslFile(dslFile);
   dslReader.setWorkDir(this.puExtDir);
   dslReader.setDslFileNameSuffix(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+  dslReader.setContext(serviceContext);
   dslReader.setLoadUsmLib(false);
   logger.info("Loading Service configuration from DSL File");
   Service service=dslReader.readDslEntity(Service.class);
