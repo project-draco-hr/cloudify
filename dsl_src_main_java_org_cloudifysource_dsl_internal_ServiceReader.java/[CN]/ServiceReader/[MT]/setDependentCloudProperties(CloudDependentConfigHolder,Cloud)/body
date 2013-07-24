@@ -17,4 +17,10 @@
       cloud.getConfiguration().getComponents().getDiscovery().setDiscoveryPort(cloudDependentProps.getDefaultLusPort());
     }
   }
+  if (cloud.getConfiguration().getComponents().getRest().getPort() == null) {
+    cloud.getConfiguration().getComponents().getRest().setPort(CloudifyConstants.DEFAULT_REST_PORT);
+  }
+  if (cloud.getConfiguration().getComponents().getWebui().getPort() == null) {
+    cloud.getConfiguration().getComponents().getWebui().setPort(CloudifyConstants.DEFAULT_WEBUI_PORT);
+  }
 }
