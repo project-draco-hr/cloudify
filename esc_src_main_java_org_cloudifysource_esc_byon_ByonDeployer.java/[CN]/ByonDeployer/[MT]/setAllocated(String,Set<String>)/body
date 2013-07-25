@@ -9,7 +9,7 @@
     logger.log(Level.INFO,"Looking for " + ipAddress + " in the pool of \"free\" machines");
     for (    final CustomNode node : freeNodesPool) {
       if (StringUtils.isNotBlank(node.getPrivateIP())) {
-        if (node.getPrivateIP().equalsIgnoreCase(ipAddress)) {
+        if (IPUtils.isSameIpAddress(node.getPrivateIP(),ipAddress)) {
           freeNodesPool.remove(node);
           if (!allocatedNodesPool.contains(node)) {
             allocatedNodesPool.add(node);
