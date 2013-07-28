@@ -2,5 +2,5 @@
   if (nicAddress == null) {
     throw new IllegalStateException("nicAddress cannot be null");
   }
-  return IPUtils.getSafeIpAddress(nicAddress) + ":" + lusPort;
+  return IPUtils.getSafeIpAddress(nicAddress) + ":" + OpenspacesConstants.DEFAULT_LOCALCLOUD_LUS_PORT;
 }
