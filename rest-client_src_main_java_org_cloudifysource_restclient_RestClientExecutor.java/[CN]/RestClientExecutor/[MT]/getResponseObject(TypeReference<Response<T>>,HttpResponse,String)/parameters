@@ -1,0 +1,3 @@
+TypeReference<Response<T>> typeReference
+HttpResponse httpResponse
+String url

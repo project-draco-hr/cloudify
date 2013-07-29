@@ -1,6 +1,19 @@
 {
   logger.log(Level.INFO,"[addTemplates] - starting add templates.");
   validateAddTemplates(request);
-  AddTemplatesInternalRequest internalRequest=createInternalRequest(request);
-  return addTemplatesToRestInstances(internalRequest);
+  File templatesZippedFolder=null;
+  try {
+    final String uploadKey=request.getUploadKey();
+    templatesZippedFolder=repo.get(uploadKey);
+    if (templatesZippedFolder == null) {
+      throw new RestErrorException(CloudifyMessageKeys.WRONG_TEMPLATES_UPLOAD_KEY.getName(),uploadKey);
+    }
+    final AddTemplatesInternalRequest internalRequest=createInternalRequest(request,templatesZippedFolder);
+    return addTemplatesToEachRestInstance(internalRequest);
+  }
+  finally {
+    if (templatesZippedFolder != null) {
+      FileUtils.deleteQuietly(templatesZippedFolder);
+    }
+  }
 }

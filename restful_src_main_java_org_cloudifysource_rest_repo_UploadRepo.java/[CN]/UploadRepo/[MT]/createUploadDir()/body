@@ -3,5 +3,17 @@
   if (restUploadDir.exists()) {
     FileUtils.deleteDirectory(restUploadDir);
   }
-  restUploadDir.mkdirs();
+  final boolean mkdirs=restUploadDir.mkdirs();
+  final String absolutePath=restUploadDir.getAbsolutePath();
+  if (mkdirs) {
+    if (logger.isLoggable(Level.INFO)) {
+      logger.log(Level.INFO,"created rest uploads directory - " + absolutePath);
+    }
+  }
+ else {
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("failed to create rest uploads directory at " + absolutePath);
+    }
+    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_DIRECTORY_CREATION_FAILED.getName(),absolutePath);
+  }
 }

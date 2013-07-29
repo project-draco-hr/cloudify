@@ -1,0 +1,18 @@
+{
+  final String templatesFolderName=templatesFileOrDir.getName();
+  if (templatesFileOrDir.isFile()) {
+    if (isZipFile) {
+      return new ComputeTemplatesReader().unzipCloudTemplatesFolder(templatesFileOrDir);
+    }
+    if (!templatesFolderName.endsWith(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX)) {
+      throw new CLIStatusException("illegal_template_file_name",templatesFolderName);
+    }
+    final File parentFile=templatesFileOrDir.getParentFile();
+    final File[] actualTemplatesDslFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,parentFile);
+    if (actualTemplatesDslFiles.length > 1) {
+      throw new CLIStatusException("too_many_template_files",Arrays.toString(actualTemplatesDslFiles));
+    }
+    return parentFile;
+  }
+  return templatesFileOrDir;
+}

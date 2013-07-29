@@ -4,8 +4,10 @@
   try {
     executor.scheduleAtFixedRate(cleanupThread,0,cleanupTimeoutMillis,TimeUnit.MILLISECONDS);
   }
- catch (  RejectedExecutionException e) {
-    logger.log(Level.WARNING,"failed to scheduled for execution - " + e.getMessage());
+ catch (  final RejectedExecutionException e) {
+    if (logger.isLoggable(Level.INFO)) {
+      logger.log(Level.INFO,"failed to scheduled for execution - " + e.getMessage());
+    }
     throw e;
   }
 }

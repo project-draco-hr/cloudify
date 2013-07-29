@@ -1,6 +1,6 @@
 {
-  StringBuilder sb=new StringBuilder(CloudifyConstants.NEW_LINE).append("Added ").append(templates.size()).append(" templates:");
-  for (  String templateName : templates) {
+  final StringBuilder sb=new StringBuilder(CloudifyConstants.NEW_LINE).append("Added ").append(templates.size()).append(" templates:");
+  for (  final String templateName : templates) {
     sb.append(CloudifyConstants.NEW_LINE).append(CloudifyConstants.TAB_CHAR).append(templateName);
   }
   return sb;

@@ -1,15 +1,6 @@
 {
   final ComputeTemplatesReader reader=new ComputeTemplatesReader();
   final File templatesFolder=repo.get(request.getUploadKey());
-  File unzippedTemplatesFolder=reader.unzipCloudTemplatesFolder(templatesFolder);
-  final List<String> expectedAddedTemplates=readCloudTemplatesNames(unzippedTemplatesFolder,request.getCloudTemplates());
-  try {
-    logger.log(Level.INFO,"[addTemplatesInternal] - adding templates from templates folder: " + unzippedTemplatesFolder.getAbsolutePath());
-    AddTemplatesToPUResponse addTemplatesToPUResponse=addTemplatesToCloud(unzippedTemplatesFolder,request.getCloudTemplates());
-    checkAllTempaltesAdded(addTemplatesToPUResponse,expectedAddedTemplates);
-    return addTemplatesToPUResponse;
-  }
-  finally {
-    FileUtils.deleteQuietly(unzippedTemplatesFolder);
-  }
+  final File unzippedTemplatesFolder=reader.unzipCloudTemplatesFolder(templatesFolder);
+  return addTemplatesInternal(unzippedTemplatesFolder,request.getCloudTemplates());
 }

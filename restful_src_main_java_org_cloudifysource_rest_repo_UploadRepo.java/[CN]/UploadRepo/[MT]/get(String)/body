@@ -1,35 +1,52 @@
 {
   if (key == null) {
-    logger.finer("failed to get uploaded file, key is null.");
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("failed to get uploaded file, key is null.");
+    }
     return null;
   }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Getting uploaded file with key " + key);
+  }
   if (restUploadDir == null) {
-    logger.finer("failed to get uploaded file, key is " + key + ", upload directory is null.");
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("failed to get uploaded file, key is " + key + ", upload directory is null.");
+    }
     return null;
   }
   if (!restUploadDir.exists()) {
-    logger.finer("failed to get uploaded file. key is " + key + ", upload directory ["+ restUploadDir.getAbsolutePath()+ "] does not exist.");
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("failed to get uploaded file. key is " + key + ", upload directory ["+ restUploadDir.getAbsolutePath()+ "] does not exist.");
+    }
     return null;
   }
-  logger.finer("Trying to get the uploaded file stored in a directory named - " + key + " (under "+ restUploadDir.getAbsolutePath()+ ").");
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Trying to get the uploaded file stored in a directory named - " + key + " (under "+ restUploadDir.getAbsolutePath()+ ").");
+  }
   final File dir=new File(restUploadDir,key);
   if (dir.exists()) {
     if (!dir.isDirectory()) {
-      logger.finer("The file found is not a directory [" + dir.getAbsolutePath() + "].");
+      if (logger.isLoggable(Level.FINER)) {
+        logger.finer("The file found is not a directory [" + dir.getAbsolutePath() + "].");
+      }
       return null;
     }
-    File[] listFiles=dir.listFiles();
+    final File[] listFiles=dir.listFiles();
     if (listFiles.length > 0) {
-      File uploadedFile=listFiles[0];
-      logger.finer("Returning the found uploaded file [" + uploadedFile.getAbsolutePath() + "].");
+      final File uploadedFile=listFiles[0];
+      if (logger.isLoggable(Level.FINER)) {
+        logger.finer("Returning the found uploaded file [" + uploadedFile.getAbsolutePath() + "].");
+      }
       return uploadedFile;
     }
- else {
+    if (logger.isLoggable(Level.FINER)) {
       logger.finer("The directory [" + dir.getAbsolutePath() + "] does not contain an uploaded file.");
     }
   }
  else {
-    logger.finer("No directory with name " + key + " was found at "+ restUploadDir.getAbsolutePath());
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("No directory with name " + key + " was found at "+ restUploadDir.getAbsolutePath());
+    }
   }
   return null;
 }

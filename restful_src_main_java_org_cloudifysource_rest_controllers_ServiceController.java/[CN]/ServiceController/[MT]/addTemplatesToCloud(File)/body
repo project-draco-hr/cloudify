@@ -1,6 +1,6 @@
 {
   logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
-  final List<ComputeTemplateHolder> cloudTemplatesHolders=readCloudTemplates(templatesFolder);
+  final List<ComputeTemplateHolder> cloudTemplatesHolders=new ComputeTemplatesReader().readCloudTemplatesFromDirectory(templatesFolder);
   logger.log(Level.INFO,"[addTemplatesToCloud] - Successfully read " + cloudTemplatesHolders.size() + " templates from folder - "+ templatesFolder);
   final Map<String,String> failedToAddTemplates=new HashMap<String,String>();
   final List<String> addedTemplates=new LinkedList<String>();

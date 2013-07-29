@@ -1,9 +1,0 @@
-{
-  List<ComputeTemplateHolder> cloudTemplatesHolders;
-  final ComputeTemplatesReader reader=new ComputeTemplatesReader();
-  cloudTemplatesHolders=reader.readCloudTemplatesFromDirectory(templatesFolder);
-  if (cloudTemplatesHolders.isEmpty()) {
-    throw new RestErrorException("no_template_files","templates folder missing templates files.",templatesFolder.getAbsolutePath());
-  }
-  return cloudTemplatesHolders;
-}

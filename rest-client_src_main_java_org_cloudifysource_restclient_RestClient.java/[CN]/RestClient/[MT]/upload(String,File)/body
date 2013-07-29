@@ -5,7 +5,7 @@
     logger.fine("uploading file " + file.getAbsolutePath() + " with name "+ finalFileName);
   }
   final String uploadUrl=getFormattedUrl(versionedUploadControllerUrl,UPLOAD_URL_FORMAT,finalFileName);
-  final UploadResponse response=executor.postObject(uploadUrl,file,new TypeReference<Response<UploadResponse>>(){
+  final UploadResponse response=executor.postFile(uploadUrl,file,CloudifyConstants.UPLOAD_FILE_PARAM_NAME,new TypeReference<Response<UploadResponse>>(){
   }
 );
   return response;

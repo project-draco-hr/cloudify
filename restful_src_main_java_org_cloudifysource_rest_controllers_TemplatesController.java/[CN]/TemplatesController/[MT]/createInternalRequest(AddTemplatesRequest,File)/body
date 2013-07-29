@@ -1,0 +1,21 @@
+{
+  final AddTemplatesInternalRequest internalRequest=new AddTemplatesInternalRequest();
+  internalRequest.setUploadKey(request.getUploadKey());
+  final File unzippedFolder=new ComputeTemplatesReader().unzipCloudTemplatesFolder(templatesZippedFolder);
+  try {
+    final List<ComputeTemplateHolder> cloudTemplatesHolders=new ComputeTemplatesReader().readCloudTemplatesFromDirectory(unzippedFolder);
+    internalRequest.setCloudTemplates(cloudTemplatesHolders);
+    final List<String> expectedAddedTemplates=new LinkedList<String>();
+    for (    final ComputeTemplateHolder templateHolder : cloudTemplatesHolders) {
+      renameTemplateFilesIfNeeded(unzippedFolder,templateHolder);
+      expectedAddedTemplates.add(templateHolder.getName());
+    }
+    internalRequest.setExpectedTemplates(expectedAddedTemplates);
+    return internalRequest;
+  }
+  finally {
+    if (unzippedFolder != null) {
+      FileUtils.deleteQuietly(unzippedFolder);
+    }
+  }
+}

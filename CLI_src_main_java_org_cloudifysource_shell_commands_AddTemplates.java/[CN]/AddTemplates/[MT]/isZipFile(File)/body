@@ -1,0 +1,4 @@
+{
+  final String templatesFolderName=templatesFileOrDir.getName();
+  return templatesFolderName.endsWith(".zip") || templatesFolderName.endsWith(".jar");
+}

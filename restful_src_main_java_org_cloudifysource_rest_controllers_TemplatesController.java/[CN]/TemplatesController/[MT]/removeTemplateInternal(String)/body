@@ -1,0 +1,16 @@
+{
+  logger.log(Level.INFO,"[removeTemplateInternal] - removing template [" + templateName + "].");
+  final List<String> templateServices=getTemplateServices(templateName);
+  if (!templateServices.isEmpty()) {
+    logger.log(Level.WARNING,"[removeTemplateInternal] - failed to remove template [" + templateName + "]. The template is being used by the following services: "+ templateServices);
+    throw new RestErrorException(CloudifyErrorMessages.TEMPLATE_IN_USE.getName(),templateName,templateServices);
+  }
+  try {
+    removeTemplateFromCloud(templateName);
+  }
+ catch (  final RestErrorException e) {
+    logger.log(Level.WARNING,"[removeTemplateInternal] - failed to remove template [" + templateName + "]."+ " Error: "+ e.getMessage(),e);
+    throw e;
+  }
+  logger.log(Level.INFO,"[removeTemplateInternal] - Successfully removed template [" + templateName + "].");
+}

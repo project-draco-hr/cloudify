@@ -1,0 +1,7 @@
+{
+  List<String> expectedTempalteNames=new LinkedList<String>();
+  for (  ComputeTemplateHolder templateHolder : expectedTemplates) {
+    expectedTempalteNames.add(templateHolder.getName());
+  }
+  return getFormattedMessage("failed_to_add_templates",Color.RED,expectedTempalteNames);
+}

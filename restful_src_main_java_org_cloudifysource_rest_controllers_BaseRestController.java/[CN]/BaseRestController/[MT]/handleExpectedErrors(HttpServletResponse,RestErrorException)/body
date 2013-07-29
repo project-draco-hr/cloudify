@@ -1,7 +1,13 @@
 {
   String messageId=(String)e.getErrorDescription().get("error");
   Object[] messageArgs=(Object[])e.getErrorDescription().get("error_args");
-  String formattedMessage=messageSource.getMessage(messageId,messageArgs,Locale.US);
+  String formattedMessage;
+  try {
+    formattedMessage=messageSource.getMessage(messageId,messageArgs,Locale.US);
+  }
+ catch (  NoSuchMessageException ne) {
+    formattedMessage=messageId + " [" + Arrays.toString(messageArgs)+ "]";
+  }
   Response<Void> finalResponse=new Response<Void>();
   finalResponse.setStatus("Failed");
   finalResponse.setMessage(formattedMessage);

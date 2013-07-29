@@ -20,10 +20,14 @@
       }
     }
     if (lastException != null) {
+      if (logger.isLoggable(Level.WARNING)) {
+        logger.warning("Execute get request to " + request.getURI() + " failed after "+ numOfTrials+ " tries. exception was: "+ lastException);
+      }
       throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.EXECUTION_FAILURE.getName(),lastException,request.getURI());
     }
-    checkForError(httpResponse,request.getURI());
-    return getResponseObject(responseTypeReference,httpResponse);
+    String url=request.getURI().toString();
+    checkForError(httpResponse,url);
+    return getResponseObject(responseTypeReference,httpResponse,url);
   }
   finally {
     request.abort();

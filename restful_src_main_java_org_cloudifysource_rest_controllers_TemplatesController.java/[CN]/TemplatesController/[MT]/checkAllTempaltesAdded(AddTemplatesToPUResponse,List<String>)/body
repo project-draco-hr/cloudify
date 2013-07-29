@@ -1,6 +1,0 @@
-{
-  List<String> addedTempaltes=addTemplatesToPUResponse.getAddedTempaltes();
-  List intersection=ListUtils.intersection(expectedAddedTemplates,addedTempaltes);
-  if (intersection.size() != expectedAddedTemplates.size()) {
-  }
-}

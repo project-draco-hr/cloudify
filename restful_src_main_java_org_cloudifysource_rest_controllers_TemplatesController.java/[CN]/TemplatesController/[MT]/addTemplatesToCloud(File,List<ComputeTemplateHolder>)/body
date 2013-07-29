@@ -1,15 +1,16 @@
 {
-  logger.log(Level.FINE,"[addTemplatesToCloud] - Adding templates to cloud.");
-  AddTemplatesToPUResponse addTemplatesToPUResponse=addTemplatesToCloudList(templatesFolder,cloudTemplatesHolders);
-  final List<String> addedTemplates=addTemplatesToPUResponse.getAddedTempaltes();
-  final Map<String,String> failedToAddTemplates=addTemplatesToPUResponse.getFailedToAddTempaltesAndReasons();
+  logger.log(Level.INFO,"[addTemplatesToCloud] - Adding " + templatesHolders.size() + " templates to cloud.");
+  final AddTemplatesInternalResponse addTemplatesToCloudListresponse=addTemplatesToCloudList(templatesFolder,templatesHolders);
+  List<String> addedTemplates=addTemplatesToCloudListresponse.getAddedTempaltes();
+  final Map<String,String> failedToAddTemplates=addTemplatesToCloudListresponse.getFailedToAddTempaltesAndReasons();
   if (addedTemplates.isEmpty()) {
-    logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates files from " + templatesFolder.getAbsolutePath());
+    logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates from " + templatesFolder.getAbsolutePath());
   }
  else {
-    logger.log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to "+ cloudConfigurationDir.getAbsolutePath());
+    logger.log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to a new folder under "+ cloudConfigurationDir.getAbsolutePath());
     try {
       final File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
+      logger.log(Level.INFO,"[addTemplatesToCloud] - The templates files copied to " + localTemplatesDir.getAbsolutePath());
       updateCloudTemplatesUploadPath(addedTemplates,localTemplatesDir);
     }
  catch (    final IOException e) {
@@ -18,13 +19,14 @@
         cloud.getCloudCompute().getTemplates().remove(templateName);
         failedToAddTemplates.put(templateName,"failed to copy templates files");
       }
+      addedTemplates=new LinkedList<String>();
     }
   }
   if (!failedToAddTemplates.isEmpty()) {
     logger.log(Level.INFO,"[addTemplatesToCloud] - Failed to add the following templates: " + failedToAddTemplates.toString());
   }
-  AddTemplatesToPUResponse finalResponse=new AddTemplatesToPUResponse();
-  finalResponse.setAddedTempaltes(addedTemplates);
-  finalResponse.setFailedToAddTempaltesAndReasons(failedToAddTemplates);
-  return finalResponse;
+  final AddTemplatesInternalResponse response=new AddTemplatesInternalResponse();
+  response.setAddedTempaltes(addedTemplates);
+  response.setFailedToAddTempaltesAndReasons(failedToAddTemplates);
+  return response;
 }

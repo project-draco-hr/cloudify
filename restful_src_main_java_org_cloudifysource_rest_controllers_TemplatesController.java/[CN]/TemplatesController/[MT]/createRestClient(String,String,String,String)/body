@@ -1,6 +1,0 @@
-{
-  final String protocol=getRestProtocol(permissionEvaluator != null);
-  final String baseUrl=protocol + "://" + host+ ":"+ port;
-  final String versionName=PlatformVersion.getVersion() + "-Cloudify-" + PlatformVersion.getMilestone();
-  return new RestClient(new URL(baseUrl),username,password,versionName);
-}

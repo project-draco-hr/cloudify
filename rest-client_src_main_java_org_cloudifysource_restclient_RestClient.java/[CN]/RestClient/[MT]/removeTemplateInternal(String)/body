@@ -1,5 +1,5 @@
 {
-  final String removeTempalteUrl=getFormattedUrl(versionedTemplatesControllerUrl,REMOVE_TEMPALTE_INTERNAL_URL_FORMAT);
+  final String removeTempalteUrl=getFormattedUrl(versionedTemplatesControllerUrl,REMOVE_TEMPALTE_INTERNAL_URL_FORMAT,templateName);
   executor.delete(removeTempalteUrl,new TypeReference<Response<Void>>(){
   }
 );

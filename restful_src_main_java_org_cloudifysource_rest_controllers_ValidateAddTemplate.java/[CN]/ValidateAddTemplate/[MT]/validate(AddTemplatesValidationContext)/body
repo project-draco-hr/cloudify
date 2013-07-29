@@ -1,7 +1,6 @@
 {
-  if (validationContext.getCloud() == null) {
-    throw new RestErrorException("local_cloud_not_support_templates_operations","add-templates");
-  }
+  validationContext.setOperationName("add-templates");
+  super.validate(validationContext);
   if (validationContext.getRequest().getUploadKey() == null) {
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }

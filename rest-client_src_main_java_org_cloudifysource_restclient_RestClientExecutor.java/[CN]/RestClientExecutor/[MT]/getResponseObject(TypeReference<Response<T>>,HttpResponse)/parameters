@@ -1,2 +1,0 @@
-TypeReference<Response<T>> typeReference
-HttpResponse httpResponse

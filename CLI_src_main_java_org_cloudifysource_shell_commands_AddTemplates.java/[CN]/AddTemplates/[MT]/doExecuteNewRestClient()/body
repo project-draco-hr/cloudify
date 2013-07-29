@@ -1,0 +1,32 @@
+{
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  final String templatesPath=templatesFileOrDir.getAbsolutePath();
+  validateTemplateFile(templatesPath);
+  final boolean isZipFile=isZipFile(templatesFileOrDir);
+  final File templatesFolder=getTemplatesFolder(isZipFile);
+  final List<ComputeTemplateHolder> expectedTemplates=new ComputeTemplatesReader().readCloudTemplatesFromDirectory(templatesFolder);
+  File zipFile=templatesFileOrDir;
+  if (!isZipFile) {
+    zipFile=Packager.createZipFile("templates",templatesFolder);
+  }
+  logger.info("Adding " + expectedTemplates.size() + " templates to cloud:"+ printExpectedTemplates(expectedTemplates));
+  final String uploadKey=ShellUtils.uploadToRepo(newRestClient,zipFile,displayer);
+  final AddTemplatesRequest request=new AddTemplatesRequest();
+  request.setUploadKey(uploadKey);
+  try {
+    final AddTemplatesResponse response=newRestClient.addTemplates(request);
+    String result;
+    final Map<String,Map<String,String>> failedToAddTempaltes=response.getFailedToAddTempaltes();
+    final List<String> successfullyAddedTempaltes=response.getSuccessfullyAddedTempaltes();
+    if (failedToAddTempaltes.isEmpty()) {
+      result=getFormattedMessage("templates_added_successfully",Color.GREEN) + getFormatedAddedTemplateNamesList(successfullyAddedTempaltes);
+    }
+ else {
+      result=getPartialFailureMessage(successfullyAddedTempaltes,failedToAddTempaltes);
+    }
+    return result;
+  }
+ catch (  RestClientException e) {
+    return getFailureMessage(expectedTemplates);
+  }
+}

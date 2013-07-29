@@ -2,11 +2,13 @@
   String proeprtiesFileName=templateName + DSLUtils.TEMPLATES_PROPERTIES_FILE_NAME_SUFFIX;
   File propertiesFile=new File(templateFolder,proeprtiesFileName);
   if (propertiesFile.exists()) {
-    propertiesFile.delete();
+    boolean delete=propertiesFile.delete();
+    logger.log(Level.FINE,"[removeTemplateFiles] - " + (delete ? "Successfully deleted" : "Failed to delete") + " template's properties file ["+ propertiesFile.getAbsolutePath()+ "].");
   }
   String overridesFileName=templateName + DSLUtils.TEMPLATES_OVERRIDES_FILE_NAME_SUFFIX;
   File overridesFile=new File(templateFolder,overridesFileName);
   if (overridesFile.exists()) {
-    overridesFile.delete();
+    boolean delete=overridesFile.delete();
+    logger.log(Level.FINE,"[removeTemplateFiles] - " + (delete ? "Successfully deleted" : "Failed to delete") + " template's overrides file ["+ overridesFile.getAbsolutePath()+ "].");
   }
 }

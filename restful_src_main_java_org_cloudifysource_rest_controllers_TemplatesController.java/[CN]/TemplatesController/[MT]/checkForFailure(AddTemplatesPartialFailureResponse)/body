@@ -1,9 +1,0 @@
-{
-  Map<String,Map<String,String>> failedToAddAllTempaltesHosts=response.getFailedToAddAllTempaltesHosts();
-  Map<String,AddTemplatesToPUResponse> partialFailedToAddTempaltesHosts=response.getPartialFailedToAddTempaltesHosts();
-  List<String> successfullyAddedAllTempaltesHosts=response.getSuccessfullyAddedAllTempaltesHosts();
-  if (partialFailedToAddTempaltesHosts.isEmpty() && successfullyAddedAllTempaltesHosts.isEmpty()) {
-    logger.log(Level.WARNING,"[addTemplates] - Failed to add templates: " + failedToAddAllTempaltesHosts);
-    throw new RestErrorException(CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName(),failedToAddAllTempaltesHosts);
-  }
-}

@@ -1,0 +1,13 @@
+{
+  final String responseBody=getResponseBody(httpResponse);
+  Response<T> response;
+  try {
+    response=new ObjectMapper().readValue(responseBody,typeReference);
+    return response.getResponse();
+  }
+ catch (  IOException e) {
+    StatusLine statusLine=httpResponse.getStatusLine();
+    String reasonPhrase=statusLine.getReasonPhrase();
+    throw MessagesUtils.createRestClientHttpException(e,statusLine.getStatusCode(),reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,url);
+  }
+}

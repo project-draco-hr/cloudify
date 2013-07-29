@@ -1,0 +1,8 @@
+{
+  final TemplatesValidationContext validationContext=new TemplatesValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setOperationName(opName);
+  for (  final TemplatesValidator validator : templatesValidators) {
+    validator.validate(validationContext);
+  }
+}

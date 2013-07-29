@@ -7,7 +7,7 @@
   }
   File[] templateFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,templatesDir);
   if (templateFiles == null || templateFiles.length == 0) {
-    return new LinkedList<ComputeTemplateHolder>();
+    throw new DSLException("There is no template files (files with the suffix " + DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX + ") in the given folder ["+ templatesDir+ "]");
   }
   Map<String,ComputeTemplateHolder> cloudTemplatesMap=new HashMap<String,ComputeTemplateHolder>();
   for (  File templateFile : templateFiles) {

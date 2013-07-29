@@ -1,0 +1,5 @@
+{
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  GetTemplateResponse response=newRestClient.getTemplate(templateName);
+  return templateName + ":" + CloudifyConstants.NEW_LINE+ response.getTemplate().toFormatedString();
+}

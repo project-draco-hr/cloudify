@@ -1,4 +1,0 @@
-{
-  File templateDirectory=unzipCloudTemplatesFolder(templatesZip);
-  return readCloudTemplatesFromDirectory(templateDirectory);
-}

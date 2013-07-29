@@ -1,6 +1,6 @@
 {
   cloud=restConfig.getCloud();
-  controllerHelper=new ControllerHelper(restConfig.getGigaSpace(),restConfig.getAdmin());
+  admin=restConfig.getAdmin();
   permissionEvaluator=restConfig.getPermissionEvaluator();
   cloudConfigurationDir=restConfig.getCloudConfigurationDir();
 }

@@ -1,0 +1,11 @@
+{
+  final String protocol=getRestProtocol(permissionEvaluator != null);
+  final String baseUrl=protocol + "://" + host+ ":"+ port;
+  final String apiVersion=PlatformVersion.getVersion();
+  try {
+    return new RestClient(new URL(baseUrl),"","",apiVersion);
+  }
+ catch (  MalformedURLException e) {
+    throw new RestClientException(CloudifyErrorMessages.FAILED_CREATE_REST_CLIENT.getName(),"failed to create REST client",ExceptionUtils.getFullStackTrace(e));
+  }
+}

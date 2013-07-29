@@ -1,19 +1,19 @@
 {
-  String[] newArgs=new String[args.length];
+  final String[] newArgs=new String[args.length];
   if (newArgs.length < 2) {
     return args;
   }
-  Map<String,Map<String,String>> failedToAddTemplates=(Map<String,Map<String,String>>)args[0];
-  StringBuilder failedToAddTemplatesStr=new StringBuilder();
+  final Map<String,Map<String,String>> failedToAddTemplates=(Map<String,Map<String,String>>)args[0];
+  final StringBuilder failedToAddTemplatesStr=new StringBuilder();
   if (failedToAddTemplates.isEmpty()) {
     failedToAddTemplatesStr.append("{ }");
   }
  else {
     failedToAddTemplatesStr.append(CloudifyConstants.NEW_LINE).append("{").append(CloudifyConstants.NEW_LINE);
-    for (    Entry<String,Map<String,String>> entry : failedToAddTemplates.entrySet()) {
-      Map<String,String> failedToAddTemplatesErrDesc=entry.getValue();
+    for (    final Entry<String,Map<String,String>> entry : failedToAddTemplates.entrySet()) {
+      final Map<String,String> failedToAddTemplatesErrDesc=entry.getValue();
       failedToAddTemplatesStr.append(CloudifyConstants.TAB_CHAR).append(entry.getKey()).append(":").append(CloudifyConstants.NEW_LINE).append(CloudifyConstants.TAB_CHAR).append("{").append(CloudifyConstants.NEW_LINE);
-      for (      Entry<String,String> templateErrDesc : failedToAddTemplatesErrDesc.entrySet()) {
+      for (      final Entry<String,String> templateErrDesc : failedToAddTemplatesErrDesc.entrySet()) {
         failedToAddTemplatesStr.append(CloudifyConstants.TAB_CHAR).append(CloudifyConstants.TAB_CHAR).append(templateErrDesc.getKey()).append(" - ").append(templateErrDesc.getValue()).append(CloudifyConstants.NEW_LINE);
       }
       failedToAddTemplatesStr.append(CloudifyConstants.TAB_CHAR).append("}").append(CloudifyConstants.NEW_LINE);

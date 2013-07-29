@@ -1,0 +1,5 @@
+{
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  newRestClient.removeTemplate(templateName);
+  return getFormattedMessage("template_removed_successfully",Color.GREEN,templateName);
+}

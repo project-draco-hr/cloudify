@@ -1,11 +1,11 @@
 {
-  StringBuilder successfullyAddedTemplatesStr=new StringBuilder();
+  final StringBuilder successfullyAddedTemplatesStr=new StringBuilder();
   if (map.isEmpty()) {
     successfullyAddedTemplatesStr.append("{ }");
   }
  else {
     successfullyAddedTemplatesStr.append(CloudifyConstants.NEW_LINE).append("{").append(CloudifyConstants.NEW_LINE);
-    for (    Entry<String,Object> entry : map.entrySet()) {
+    for (    final Entry<String,Object> entry : map.entrySet()) {
       successfullyAddedTemplatesStr.append(CloudifyConstants.TAB_CHAR).append(entry.getKey()).append(": ").append(entry.getValue()).append(CloudifyConstants.NEW_LINE);
     }
     successfullyAddedTemplatesStr.append("}");

@@ -1,3 +1,0 @@
-List<String> successfullyAddedAllTempaltesHosts
-Map<String,Map<String,String>> failedToAddAllTempaltesHosts
-Map<String,AddTemplatesToPUResponse> partialFailedToAddTempaltesHosts

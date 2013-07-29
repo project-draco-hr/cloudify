@@ -1,0 +1,33 @@
+{
+  AddTemplatesInternalResponse instanceResponse;
+  try {
+    RestClient createRestClient=createRestClient(host,port);
+    instanceResponse=createRestClient.addTemplatesInternal(request);
+  }
+ catch (  final RestClientException e) {
+    logger.log(Level.WARNING,"[executeAddTemplateOnInstance] - Failed to execute http request to " + host + ". Error message: "+ e.getMessageFormattedText());
+    final Map<String,String> failedMap=new HashMap<String,String>();
+    for (    final String expectedTemplate : request.getExpectedTemplates()) {
+      failedMap.put(expectedTemplate,"http request failed [" + e.getMessageFormattedText() + "]");
+    }
+    instanceResponse=new AddTemplatesInternalResponse();
+    instanceResponse.setFailedToAddTempaltesAndReasons(failedMap);
+    return instanceResponse;
+  }
+  final List<String> addedTempaltes=instanceResponse.getAddedTempaltes();
+  logger.log(Level.INFO,"[executeAddTemplateOnInstance] - added " + addedTempaltes.size() + " templates: "+ addedTempaltes);
+  final Map<String,String> failedToAddTempaltesAndReasons=instanceResponse.getFailedToAddTempaltesAndReasons();
+  final List<String> failedList=new ArrayList<String>(failedToAddTempaltesAndReasons.keySet());
+  logger.log(Level.INFO,"[executeAddTemplateOnInstance] - failed to add " + failedList.size() + " templates: "+ failedList);
+  final List<?> union=ListUtils.union(addedTempaltes,failedList);
+  logger.log(Level.INFO,"[executeAddTemplateOnInstance] - union of  addedTempaltes and failedList: " + union);
+  final List<?> subtract=ListUtils.subtract(request.getExpectedTemplates(),union);
+  logger.log(Level.INFO,"[executeAddTemplateOnInstance] - subtract union from expectedTemplates [" + request.getExpectedTemplates() + "]: "+ subtract);
+  if (!subtract.isEmpty()) {
+    for (    final Object templateName : subtract) {
+      failedToAddTempaltesAndReasons.put((String)templateName,"expected template missing (not found in failure list)");
+    }
+    instanceResponse.setFailedToAddTempaltesAndReasons(failedToAddTempaltesAndReasons);
+  }
+  return instanceResponse;
+}

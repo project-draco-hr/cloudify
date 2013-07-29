@@ -1,0 +1,8 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  for (  final ComputeTemplateHolder computeTemplateHolder : expectedTemplates) {
+    sb.append(CloudifyConstants.NEW_LINE);
+    sb.append(computeTemplateHolder.getName());
+  }
+  return sb.toString();
+}

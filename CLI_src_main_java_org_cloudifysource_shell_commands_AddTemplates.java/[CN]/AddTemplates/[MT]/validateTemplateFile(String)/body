@@ -1,0 +1,6 @@
+{
+  logger.info("Validating template folder and files: " + templatesPath);
+  if (!templatesFileOrDir.exists()) {
+    throw new CLIStatusException("templates_file_not_found",templatesPath);
+  }
+}

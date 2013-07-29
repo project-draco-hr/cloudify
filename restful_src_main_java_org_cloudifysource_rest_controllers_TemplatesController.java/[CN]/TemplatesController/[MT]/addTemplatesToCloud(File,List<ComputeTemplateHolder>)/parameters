@@ -1,2 +1,2 @@
 File templatesFolder
-List<ComputeTemplateHolder> cloudTemplatesHolders
+List<ComputeTemplateHolder> templatesHolders
