@@ -1,0 +1,7 @@
+{
+  if (remoteDirectory.startsWith("/") && remoteDirectory.indexOf("$") == 2) {
+    final String quoteReplacement=Matcher.quoteReplacement("$");
+    return remoteDirectory.replaceFirst(quoteReplacement,":").replaceFirst("/","");
+  }
+  return remoteDirectory;
+}
