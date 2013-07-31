@@ -6,6 +6,7 @@
   }
   if (ServiceUtils.isWindows()) {
     cloudConfigDirectoryPath=EnvironmentFileBuilder.normalizeCygwinPath(cloudConfigDirectoryPath);
+    cloudConfigDirectoryPath=EnvironmentFileBuilder.normalizeLocalAbsolutePath(cloudConfigDirectoryPath);
   }
   return cloudConfigDirectoryPath;
 }
