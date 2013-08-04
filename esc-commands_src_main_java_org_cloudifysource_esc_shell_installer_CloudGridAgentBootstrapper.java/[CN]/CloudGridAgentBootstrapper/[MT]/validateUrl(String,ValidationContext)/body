@@ -1,9 +1,9 @@
 {
-  DefaultHttpClient httpClient=new DefaultHttpClient();
-  HttpHead httpMethod=new HttpHead(cloudifyUrl);
+  final DefaultHttpClient httpClient=new DefaultHttpClient();
+  final HttpHead httpMethod=new HttpHead(cloudifyUrl);
   try {
     validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_VALIDATING_CLOUDIFY_URL.getName(),cloudifyUrl));
-    HttpResponse response=httpClient.execute(httpMethod);
+    final HttpResponse response=httpClient.execute(httpMethod);
     if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);
       logger.warning("Failed to validate Cloudify URL: " + cloudifyUrl);
@@ -11,12 +11,12 @@
     }
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
- catch (  ClientProtocolException e) {
+ catch (  final ClientProtocolException e) {
     validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE," Unable to validate URL");
     validationContext.validationEventEnd(ValidationResultType.WARNING);
     logger.fine("Failed to validate Cloudify URL: " + cloudifyUrl);
   }
-catch (  IOException e) {
+catch (  final IOException e) {
     validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE," Unable to validate URL");
     validationContext.validationEventEnd(ValidationResultType.WARNING);
     logger.fine("Failed to validate Cloudify URL: " + cloudifyUrl);

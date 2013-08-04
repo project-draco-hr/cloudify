@@ -10,7 +10,7 @@
     servers=createManagementServers(timeout,timeoutUnit,keystorePassword,securityProfile);
   }
   final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
-  for (  MachineDetails machineDetails : servers) {
+  for (  final MachineDetails machineDetails : servers) {
     if (machineDetails.getInstallerConfiguration() == null) {
       machineDetails.setInstallerConfigutation(template.getInstaller());
     }

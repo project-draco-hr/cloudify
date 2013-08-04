@@ -1,7 +1,7 @@
 {
-  Set<String> langs=new HashSet<String>();
-  for (  Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
-    ComputeTemplate template=entry.getValue();
+  final Set<String> langs=new HashSet<String>();
+  for (  final Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
+    final ComputeTemplate template=entry.getValue();
     langs.add(template.getScriptLanguage().toString());
   }
   return langs;

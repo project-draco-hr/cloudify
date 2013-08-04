@@ -10,7 +10,8 @@
     }
     final ClassLoader ccl=Thread.currentThread().getContextClassLoader();
     final GroovyClassLoader gcl=new GroovyClassLoader(ccl,gcc);
-    return (ProvisioningDriver)gcl.loadClass(className).newInstance();
+    final Object createdInstance=gcl.loadClass(className).newInstance();
+    return ComputeDriverProvisioningAdapter.create(createdInstance);
   }
   return build(className);
 }

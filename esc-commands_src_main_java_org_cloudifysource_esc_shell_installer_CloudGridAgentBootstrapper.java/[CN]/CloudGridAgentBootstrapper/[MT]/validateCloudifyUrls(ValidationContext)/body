@@ -4,7 +4,7 @@
     validateUrl(baseCloudifyUrl,validationContext);
   }
  else {
-    Set<String> scriptLanguages=getScriptLanguages();
+    final Set<String> scriptLanguages=getScriptLanguages();
     if (scriptLanguages.contains(ScriptLanguages.LINUX_SHELL.toString())) {
       validateUrl(baseCloudifyUrl + ".tar.gz",validationContext);
     }

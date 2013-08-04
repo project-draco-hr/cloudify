@@ -1,0 +1,21 @@
+{
+  String locationId=null;
+  logger.fine("searching for cloud specific zone");
+  for (  final String zone : zones.getZones()) {
+    logger.fine("current zone = " + zone);
+    if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
+      logger.fine("found a zone with " + CLOUD_ZONE_PREFIX + " prefix : "+ zone);
+      if (locationId == null) {
+        locationId=zone.substring(CLOUD_ZONE_PREFIX.length());
+        logger.fine("passing locationId to machine provisioning as " + locationId);
+      }
+ else {
+        throw new IllegalArgumentException("The specified zones " + zones + " should include only one zone with the "+ CLOUD_ZONE_PREFIX+ " prefix:"+ locationId);
+      }
+    }
+  }
+  if (locationId == null) {
+    return template.getLocationId();
+  }
+  return locationId;
+}

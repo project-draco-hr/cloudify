@@ -7,7 +7,7 @@
   }
   final File[] listFiles=additionalTemplatesFolder.listFiles();
   logger.info("addTemplatesToCloud - found files: " + Arrays.toString(listFiles));
-  ComputeTemplatesReader reader=new ComputeTemplatesReader();
-  List<ComputeTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
+  final ComputeTemplatesReader reader=new ComputeTemplatesReader();
+  final List<ComputeTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
   logger.info("addTemplatesToCloud - Added " + addedTemplates.size() + " templates to the cloud: "+ addedTemplates);
 }

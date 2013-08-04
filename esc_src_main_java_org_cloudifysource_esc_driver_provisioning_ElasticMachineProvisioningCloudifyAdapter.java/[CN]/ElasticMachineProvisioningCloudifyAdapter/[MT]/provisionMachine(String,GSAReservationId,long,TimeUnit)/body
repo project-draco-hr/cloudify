@@ -1,9 +1,8 @@
 {
   final ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
-  ProvisioningContextAccess.setCurrentProvisioingContext(ctx);
   MachineDetails machineDetails;
   try {
-    machineDetails=cloudifyProvisioning.startMachine(locationId,duration,unit);
+    machineDetails=cloudifyProvisioning.startMachine(ctx,duration,unit);
   }
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to start machine: " + e.getMessage(),e);

@@ -1,0 +1,6 @@
+{
+  final MachineStartRequestedCloudifyEvent machineStartEvent=new MachineStartRequestedCloudifyEvent();
+  machineStartEvent.setTemplateName(cloudTemplateName);
+  machineStartEvent.setLocationId(locationId);
+  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartEvent);
+}

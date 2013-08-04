@@ -1,7 +1,7 @@
 {
   for (  final String application : applicationsList) {
     if (!application.equals(MANAGEMENT_APPLICATION)) {
-      CLIApplicationUninstaller uninstaller=new CLIApplicationUninstaller();
+      final CLIApplicationUninstaller uninstaller=new CLIApplicationUninstaller();
       uninstaller.setRestClient(((RestAdminFacade)adminFacade).getNewRestClient());
       uninstaller.setApplicationName(application);
       uninstaller.setAskOnTimeout(false);

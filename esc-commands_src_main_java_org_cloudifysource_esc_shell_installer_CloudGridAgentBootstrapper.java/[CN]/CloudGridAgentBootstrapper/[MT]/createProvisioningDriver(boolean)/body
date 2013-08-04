@@ -15,19 +15,25 @@ catch (  final Exception e) {
   }
   provisioning.addListener(new CliProvisioningDriverListener());
   final String serviceName=null;
-  ValidationContext validationContext=new ValidationContextImpl();
+  final ValidationContext validationContext=new ValidationContextImpl();
   try {
     if (performValidation) {
       validateCloudifyUrls(validationContext);
     }
-    provisioning.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,serviceName);
+    final ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
+    configuration.setAdmin(null);
+    configuration.setCloud(cloud);
+    configuration.setCloudTemplate(cloud.getConfiguration().getManagementMachineTemplate());
+    configuration.setManagement(true);
+    configuration.setServiceName(serviceName);
+    provisioning.setConfig(configuration);
     if (performValidation && provisioning instanceof ProvisioningDriverBootstrapValidation) {
       validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_VALIDATE_CLOUD_CONFIG.getName()));
       ((ProvisioningDriverBootstrapValidation)provisioning).validateCloudConfiguration(validationContext);
       validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_CLOUD_CONFIG_VALIDATED.getName()));
     }
   }
- catch (  CloudProvisioningException e) {
+ catch (  final CloudProvisioningException e) {
     throw new CLIException(e.getMessage(),e);
   }
 }

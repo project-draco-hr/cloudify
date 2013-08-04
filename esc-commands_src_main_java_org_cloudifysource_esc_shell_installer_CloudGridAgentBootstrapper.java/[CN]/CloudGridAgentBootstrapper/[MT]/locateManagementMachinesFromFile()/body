@@ -1,11 +1,11 @@
 {
   if (provisioning instanceof ManagementLocator) {
-    ObjectMapper mapper=new ObjectMapper();
+    final ObjectMapper mapper=new ObjectMapper();
     ControllerDetails[] controllers=null;
     try {
       controllers=mapper.readValue(this.existingManagersFile,TypeFactory.arrayType(ControllerDetails.class));
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       throw new IllegalArgumentException("Failed to read managers file: " + this.existingManagersFile.getAbsolutePath() + ". Error was: "+ e.getMessage(),e);
     }
     final ManagementLocator locator=(ManagementLocator)provisioning;

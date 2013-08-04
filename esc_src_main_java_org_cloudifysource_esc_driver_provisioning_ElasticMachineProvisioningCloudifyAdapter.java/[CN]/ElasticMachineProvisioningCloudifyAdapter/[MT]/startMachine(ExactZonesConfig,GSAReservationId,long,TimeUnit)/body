@@ -1,38 +1,23 @@
 {
   logger.info("Cloudify Adapter is starting a new machine with zones " + zones.getZones() + " and reservation id "+ reservationId);
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
+  try {
+    configureDrivers();
+  }
+ catch (  CloudProvisioningException e) {
+    throw new ElasticMachineProvisioningException("Failed to configure cloud driver for first use: " + e.getMessage(),e);
+  }
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
-  cloudifyProvisioning.setAdmin(getGlobalAdminInstance(originalESMAdmin));
   final ZonesConfig defaultZones=config.getGridServiceAgentZones();
   logger.fine("default zones = " + defaultZones.getZones());
   if (!defaultZones.isSatisfiedBy(zones)) {
     throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
   }
-  String locationId=null;
-  logger.fine("searching for cloud specific zone");
-  for (  final String zone : zones.getZones()) {
-    logger.fine("current zone = " + zone);
-    if (zone.startsWith(CLOUD_ZONE_PREFIX)) {
-      logger.fine("found a zone with " + CLOUD_ZONE_PREFIX + " prefix : "+ zone);
-      if (locationId == null) {
-        locationId=zone.substring(CLOUD_ZONE_PREFIX.length());
-        logger.fine("passing locationId to machine provisioning as " + locationId);
-      }
- else {
-        throw new IllegalArgumentException("The specified zones " + zones + " should include only one zone with the "+ CLOUD_ZONE_PREFIX+ " prefix:"+ locationId);
-      }
-    }
-  }
-  final MachineStartRequestedCloudifyEvent machineStartEvent=new MachineStartRequestedCloudifyEvent();
-  machineStartEvent.setTemplateName(cloudTemplateName);
-  machineStartEvent.setLocationId(locationId);
-  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartEvent);
+  final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
+  String locationId=findLocationIdInZones(zones,template);
+  fireMachineStartEvent(locationId);
   try {
-    final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
-    if (locationId == null) {
-      locationId=template.getLocationId();
-    }
     machineDetails=provisionMachine(locationId,reservationId,duration,unit);
     if (!machineDetails.isAgentRunning()) {
       validateMachineIp(machineDetails);
@@ -55,13 +40,8 @@
   if (machineIp == null) {
     throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
   }
-  final MachineStartedCloudifyEvent machineStartedEvent=new MachineStartedCloudifyEvent();
-  machineStartedEvent.setMachineDetails(machineDetails);
-  machineStartedEvent.setHostAddress(machineIp);
-  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartedEvent);
-  final GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
-  agentStartEvent.setHostAddress(machineIp);
-  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
+  fireMachineStartedEvent(machineDetails,machineIp);
+  fireGSAStartRequestedEvent(machineIp);
   final String volumeId=null;
   try {
     checkForProvisioningTimeout(end,machineDetails);

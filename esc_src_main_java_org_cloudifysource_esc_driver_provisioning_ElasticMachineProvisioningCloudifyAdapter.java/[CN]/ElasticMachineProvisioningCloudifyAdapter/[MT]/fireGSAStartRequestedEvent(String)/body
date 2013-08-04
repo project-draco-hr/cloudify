@@ -1,0 +1,5 @@
+{
+  final GridServiceAgentStartRequestedEvent agentStartEvent=new GridServiceAgentStartRequestedEvent();
+  agentStartEvent.setHostAddress(machineIp);
+  agentEventListener.elasticGridServiceAgentProvisioningProgressChanged(agentStartEvent);
+}

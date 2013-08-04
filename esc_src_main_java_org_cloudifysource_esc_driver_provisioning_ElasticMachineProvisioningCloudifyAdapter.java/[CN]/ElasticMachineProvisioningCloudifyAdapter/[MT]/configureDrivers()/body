@@ -1,0 +1,16 @@
+{
+  if (this.driversConfigured) {
+    return;
+  }
+  final ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
+  configuration.setAdmin(getGlobalAdminInstance(originalESMAdmin));
+  configuration.setCloud(cloud);
+  configuration.setCloudTemplate(cloudTemplateName);
+  configuration.setManagement(false);
+  configuration.setServiceName(serviceName);
+  this.cloudifyProvisioning.setConfig(configuration);
+  if (this.storageProvisioning != null) {
+    this.storageProvisioning.setConfig(cloud,this.cloudTemplateName);
+  }
+  this.driversConfigured=true;
+}

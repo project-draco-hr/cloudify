@@ -1,0 +1,6 @@
+{
+  final MachineStartedCloudifyEvent machineStartedEvent=new MachineStartedCloudifyEvent();
+  machineStartedEvent.setMachineDetails(machineDetails);
+  machineStartedEvent.setHostAddress(machineIp);
+  machineEventListener.elasticMachineProvisioningProgressChanged(machineStartedEvent);
+}

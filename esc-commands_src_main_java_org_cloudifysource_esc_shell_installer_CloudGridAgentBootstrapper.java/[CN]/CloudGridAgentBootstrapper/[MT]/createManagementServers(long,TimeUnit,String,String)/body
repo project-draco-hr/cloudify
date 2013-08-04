@@ -2,9 +2,8 @@
   MachineDetails[] servers;
   logger.warning("Creating provisioning Context");
   final ProvisioningContextImpl context=setUpProvisioningContext(keystorePassword,securityProfile);
-  ProvisioningContextAccess.setCurrentManagementProvisioingContext(context);
   try {
-    servers=provisioning.startManagementMachines(timeout,timeoutUnit);
+    servers=provisioning.startManagementMachines(context,timeout,timeoutUnit);
   }
  catch (  final CloudProvisioningException e) {
     final CLIStatusException cliStatusException=new CLIStatusException(e,CloudifyErrorMessages.CLOUD_API_ERROR.getName(),e.getMessage());
