@@ -8,19 +8,19 @@
     throw new RestErrorException(CloudifyErrorMessages.FAILED_REMOVE_TEMPLATE_FILE.getName(),templateName,"template file doesn't exist");
   }
   final String templatesPath=templateFile.getAbsolutePath();
-  logger.log(Level.FINE,"[deleteTemplateFile] - removing template file " + templatesPath);
+  log(Level.FINE,"[deleteTemplateFile] - removing template file " + templatesPath);
   boolean deleted=false;
   try {
     deleted=templateFile.delete();
   }
  catch (  final SecurityException e) {
-    logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to deleted template file " + templatesPath + ", Error: "+ e.getMessage(),e);
+    log(Level.WARNING,"[deleteTemplateFile] - Failed to deleted template file " + templatesPath + ", Error: "+ e.getMessage(),e);
     throw new RestErrorException(CloudifyErrorMessages.FAILED_REMOVE_TEMPLATE_FILE.getName(),templatesPath,"Security exception: " + e.getMessage());
   }
   if (!deleted) {
     throw new RestErrorException(CloudifyErrorMessages.FAILED_REMOVE_TEMPLATE_FILE.getName(),templatesPath,"template file was not deleted.");
   }
-  logger.log(Level.FINE,"[deleteTemplateFile] - Successfully deleted template file [" + templatesPath + "].");
+  log(Level.FINE,"[deleteTemplateFile] - Successfully deleted template file [" + templatesPath + "].");
   ComputeTemplatesReader.removeTemplateFiles(templateFolder,templateName);
   deleteTemplateFolderIfNeeded(templateName,templateFolder);
 }

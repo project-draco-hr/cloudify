@@ -1,6 +1,7 @@
 {
   gigaSpace=restConfig.getGigaSpace();
   permissionEvaluator=restConfig.getPermissionEvaluator();
-  this.eventsCache=new EventsCache(restConfig.getAdmin());
-  this.controllerHelper=new ControllerHelper(gigaSpace,restConfig.getAdmin());
+  this.admin=restConfig.getAdmin();
+  this.eventsCache=new EventsCache(admin);
+  this.controllerHelper=new ControllerHelper(gigaSpace,admin);
 }

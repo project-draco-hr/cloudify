@@ -1,7 +1,7 @@
 {
   final StringBuilder sb=new StringBuilder("Partial Failure:" + CloudifyConstants.NEW_LINE);
   if (!successfullyAddedTempaltes.isEmpty()) {
-    sb.append("The following templates were added to all REST instances: " + successfullyAddedTempaltes);
+    sb.append("The following templates were successfully added to all REST instances: " + successfullyAddedTempaltes);
     sb.append(CloudifyConstants.NEW_LINE);
   }
   sb.append("The following templates failed to be added to one or more REST instances:");

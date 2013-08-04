@@ -1,7 +1,7 @@
 {
   final ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
   final ProcessingUnitInstance[] instances=processingUnit.getInstances();
-  logger.log(Level.INFO,"[removeTemplateFromRestInstances] - sending an http request to " + instances.length + " REST instances. Template's name is "+ templateName);
+  log(Level.INFO,"[removeTemplateFromRestInstances] - sending an http request to " + instances.length + " REST instances. Template's name is "+ templateName);
   final Map<String,String> failedToRemoveFromHosts=new HashMap<String,String>();
   final List<String> successfullyRemovedFromHosts=new LinkedList<String>();
   for (  final ProcessingUnitInstance puInstance : instances) {
@@ -13,11 +13,11 @@
     }
  catch (    final RestClientException e) {
       failedToRemoveFromHosts.put(hostAddress,e.getMessageFormattedText());
-      logger.log(Level.WARNING,"[removeTemplateFromRestInstances] - remove template [" + templateName + "] from instance ["+ hostAddress+ "] failed. Error: "+ e.getMessageFormattedText(),e);
+      log(Level.WARNING,"[removeTemplateFromRestInstances] - remove template [" + templateName + "] from instance ["+ hostAddress+ "] failed. Error: "+ e.getMessageFormattedText(),e);
       continue;
     }
     successfullyRemovedFromHosts.add(hostAddress);
-    logger.log(Level.INFO,"[removeTemplateFromRestInstances] - Successfully removed template [" + templateName + "] from "+ hostAddress);
+    log(Level.INFO,"[removeTemplateFromRestInstances] - Successfully removed template [" + templateName + "] from "+ hostAddress);
   }
   final RemoveTemplatesResponse response=new RemoveTemplatesResponse();
   response.setFailedToRemoveFromHosts(failedToRemoveFromHosts);

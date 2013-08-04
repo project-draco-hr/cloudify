@@ -1,5 +1,5 @@
 {
-  logger.log(Level.INFO,"[addTemplates] - starting add templates.");
+  log(Level.INFO,"[addTemplates] - starting add templates.");
   validateAddTemplates(request);
   File templatesZippedFolder=null;
   try {

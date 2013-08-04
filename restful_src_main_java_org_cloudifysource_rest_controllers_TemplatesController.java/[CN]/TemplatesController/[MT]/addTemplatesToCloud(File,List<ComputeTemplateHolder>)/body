@@ -1,20 +1,20 @@
 {
-  logger.log(Level.INFO,"[addTemplatesToCloud] - Adding " + templatesHolders.size() + " templates to cloud.");
+  log(Level.FINE,"[addTemplatesToCloud] - Adding " + templatesHolders.size() + " templates to cloud.");
   final AddTemplatesInternalResponse addTemplatesToCloudListresponse=addTemplatesToCloudList(templatesFolder,templatesHolders);
   List<String> addedTemplates=addTemplatesToCloudListresponse.getAddedTempaltes();
   final Map<String,String> failedToAddTemplates=addTemplatesToCloudListresponse.getFailedToAddTempaltesAndReasons();
   if (addedTemplates.isEmpty()) {
-    logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates from " + templatesFolder.getAbsolutePath());
+    log(Level.WARNING,"[addTemplatesToCloud] - Failed to add templates from " + templatesFolder.getAbsolutePath());
   }
  else {
-    logger.log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to a new folder under "+ cloudConfigurationDir.getAbsolutePath());
+    log(Level.INFO,"[addTemplatesToCloud] - Coping templates files from " + templatesFolder.getAbsolutePath() + " to a new folder under "+ cloudConfigurationDir.getAbsolutePath());
     try {
       final File localTemplatesDir=copyTemplateFilesToCloudConfigDir(templatesFolder);
-      logger.log(Level.INFO,"[addTemplatesToCloud] - The templates files copied to " + localTemplatesDir.getAbsolutePath());
+      log(Level.INFO,"[addTemplatesToCloud] - The templates files copied to " + localTemplatesDir.getAbsolutePath());
       updateCloudTemplatesUploadPath(addedTemplates,localTemplatesDir);
     }
  catch (    final IOException e) {
-      logger.log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
+      log(Level.WARNING,"[addTemplatesToCloud] - Failed to copy templates files, error: " + e.getMessage(),e);
       for (      final String templateName : addedTemplates) {
         cloud.getCloudCompute().getTemplates().remove(templateName);
         failedToAddTemplates.put(templateName,"failed to copy templates files");
@@ -23,7 +23,7 @@
     }
   }
   if (!failedToAddTemplates.isEmpty()) {
-    logger.log(Level.INFO,"[addTemplatesToCloud] - Failed to add the following templates: " + failedToAddTemplates.toString());
+    log(Level.INFO,"[addTemplatesToCloud] - Failed to add the following templates: " + failedToAddTemplates.toString());
   }
   final AddTemplatesInternalResponse response=new AddTemplatesInternalResponse();
   response.setAddedTempaltes(addedTemplates);

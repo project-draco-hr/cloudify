@@ -3,7 +3,7 @@
   final String absoluteUploadDir=computeTemplate.getAbsoluteUploadDir();
   final File parentFile=new File(absoluteUploadDir).getParentFile();
   if (parentFile == null) {
-    logger.log(Level.WARNING,"Failed to get template's folder for template " + templateName + ". The template's upload directory is "+ absoluteUploadDir);
+    log(Level.WARNING,"Failed to get template's folder for template " + templateName + ". The template's upload directory is "+ absoluteUploadDir);
   }
   return parentFile;
 }

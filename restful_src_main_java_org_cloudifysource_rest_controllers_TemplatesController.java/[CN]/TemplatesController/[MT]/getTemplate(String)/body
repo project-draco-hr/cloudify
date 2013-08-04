@@ -2,7 +2,7 @@
   validateTemplateOperation("get-template");
   final ComputeTemplate cloudTemplate=cloud.getCloudCompute().getTemplates().get(templateName);
   if (cloudTemplate == null) {
-    logger.log(Level.WARNING,"[getTemplate] - template [" + templateName + "] not found. cloud templates list: "+ cloud.getCloudCompute().getTemplates());
+    log(Level.WARNING,"[getTemplate] - template [" + templateName + "] not found. cloud templates list: "+ cloud.getCloudCompute().getTemplates());
     throw new RestErrorException(CloudifyErrorMessages.TEMPLATE_NOT_EXIST.getName(),templateName);
   }
   final GetTemplateResponse response=new GetTemplateResponse();

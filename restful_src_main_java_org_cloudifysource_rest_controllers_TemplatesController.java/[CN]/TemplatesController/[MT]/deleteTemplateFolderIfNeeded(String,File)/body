@@ -1,16 +1,16 @@
 {
-  logger.log(Level.FINE,"[deleteTemplateFile] - checking if the folder of template [" + templateName + "] can be deleted ["+ templateFolder+ "].");
+  log(Level.FINE,"[deleteTemplateFile] - checking if the folder of template [" + templateName + "] can be deleted ["+ templateFolder+ "].");
   final File[] templatesFiles=DSLReader.findDefaultDSLFiles(DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX,templateFolder);
   if (templatesFiles == null || templatesFiles.length == 0) {
     try {
-      logger.log(Level.FINE,"[deleteTemplateFile] - templates folder is empty, deleting it.");
+      log(Level.FINE,"[deleteTemplateFile] - templates folder is empty, deleting it.");
       FileUtils.deleteDirectory(templateFolder);
     }
  catch (    final IOException e) {
-      logger.log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + templateFolder,e);
+      log(Level.WARNING,"[deleteTemplateFile] - Failed to delete templates folder" + templateFolder,e);
     }
   }
  else {
-    logger.log(Level.FINE,"[deleteTemplateFile] - templates folder is not empty.");
+    log(Level.FINE,"[deleteTemplateFile] - templates folder is not empty.");
   }
 }

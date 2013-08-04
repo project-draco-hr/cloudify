@@ -1,12 +1,12 @@
 {
   validateTemplateOperation("remove-template");
-  logger.log(Level.INFO,"[removeTemplate] - removing template " + templateName);
+  log(Level.INFO,"[removeTemplate] - removing template " + templateName);
   final List<String> templateServices=getTemplateServices(templateName);
   if (!templateServices.isEmpty()) {
-    logger.log(Level.WARNING,"[removeTemplate] - failed to remove template [" + templateName + "]. The template is being used by "+ templateServices.size()+ " services: "+ templateServices);
+    log(Level.WARNING,"[removeTemplate] - failed to remove template [" + templateName + "]. The template is being used by "+ templateServices.size()+ " services: "+ templateServices);
     throw new RestErrorException(CloudifyErrorMessages.TEMPLATE_IN_USE.getName(),templateName,templateServices);
   }
   final RemoveTemplatesResponse resposne=removeTemplateFromRestInstances(templateName);
   handleRemoveTemplateResponse(resposne,templateName);
-  logger.log(Level.INFO,"[removeTemplate] - successfully removed template [" + templateName + "].");
+  log(Level.INFO,"[removeTemplate] - successfully removed template [" + templateName + "].");
 }

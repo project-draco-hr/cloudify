@@ -4,11 +4,11 @@
   successfullyAddedTemplates.addAll(request.getExpectedTemplates());
   int failedHostCount=0;
   final ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
-  logger.log(Level.INFO,"[addTemplatesToRestInstances] - sending add templates request to " + instances.length + " instances.");
+  log(Level.INFO,"[addTemplatesToRestInstances] - sending add templates request to " + instances.length + " instances.");
   for (  final ProcessingUnitInstance puInstance : instances) {
     final String port=Integer.toString(puInstance.getJeeDetails().getPort());
     String hostAddress=puInstance.getMachine().getHostAddress();
-    logger.log(Level.INFO,"[addTemplatesToRestInstances] - execute add-templates to " + hostAddress);
+    log(Level.INFO,"[addTemplatesToRestInstances] - execute add-templates to " + hostAddress);
     final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,port,request);
     final Map<String,String> failedToAddTempaltesToHost=instanceResponse.getFailedToAddTempaltesAndReasons();
     if (failedToAddTempaltesToHost != null && !failedToAddTempaltesToHost.isEmpty()) {
@@ -24,20 +24,20 @@
         failedToAddTempaltes.put(templateName,templateFailedPUs);
       }
       final List<String> addedTempaltes=instanceResponse.getAddedTempaltes();
-      logger.log(Level.WARNING,"[addTemplatesToRestInstances] - failed to add templates to host [" + hostAddress + "]: "+ failedToAddTempaltesToHost);
+      log(Level.WARNING,"[addTemplatesToRestInstances] - failed to add templates to host [" + hostAddress + "]: "+ failedToAddTempaltesToHost);
       if (addedTempaltes == null || addedTempaltes.isEmpty()) {
         failedHostCount++;
       }
  else {
-        logger.log(Level.WARNING,"[addTemplatesToRestInstances] - successfully added templates: " + addedTempaltes);
+        log(Level.WARNING,"[addTemplatesToRestInstances] - successfully added templates: " + addedTempaltes);
       }
     }
  else {
-      logger.log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "].");
+      log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "].");
     }
   }
   if (instances.length == failedHostCount) {
-    logger.log(Level.WARNING,"[sendAddTemplatesToRestInstances] - Failed to add templates: " + failedToAddTempaltes);
+    log(Level.WARNING,"[sendAddTemplatesToRestInstances] - Failed to add templates: " + failedToAddTempaltes);
     throw new RestErrorException(CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName(),failedToAddTempaltes.toString());
   }
   final AddTemplatesResponse response=new AddTemplatesResponse();

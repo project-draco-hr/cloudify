@@ -1,4 +1,5 @@
 {
+  log(Level.INFO,"Initializing Templates controller.");
   cloud=restConfig.getCloud();
   admin=restConfig.getAdmin();
   permissionEvaluator=restConfig.getPermissionEvaluator();

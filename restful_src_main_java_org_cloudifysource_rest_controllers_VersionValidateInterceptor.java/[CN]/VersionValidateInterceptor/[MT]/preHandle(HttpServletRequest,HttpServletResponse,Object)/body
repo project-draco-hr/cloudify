@@ -2,7 +2,7 @@
   final String version=request.getHeader(CloudifyConstants.REST_API_VERSION_HEADER);
   final String currentVersion=PlatformVersion.getVersionNumber();
   if (logger.isLoggable(Level.FINEST)) {
-    logger.log(Level.FINEST,"Validating the value of " + CloudifyConstants.REST_API_VERSION_HEADER + " header, request URI = "+ request.getRequestURI()+ ", request REST-API version = "+ version+ " current REST-API version = "+ currentVersion);
+    logger.log(Level.FINEST,"pre handle request to " + request.getRequestURI() + ". Validating the value of "+ CloudifyConstants.REST_API_VERSION_HEADER+ " header, request URI = "+ request.getRequestURI()+ ", request REST-API version = "+ version+ " current REST-API version = "+ currentVersion);
   }
   if (version == null) {
     logger.log(Level.FINE,"The " + CloudifyConstants.REST_API_VERSION_HEADER + " header is missing, the request URI is "+ request.getRequestURI());

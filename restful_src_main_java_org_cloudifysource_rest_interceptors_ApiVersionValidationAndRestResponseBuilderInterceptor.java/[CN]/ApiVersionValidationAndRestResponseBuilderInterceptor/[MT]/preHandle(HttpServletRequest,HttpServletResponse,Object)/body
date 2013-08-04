@@ -1,5 +1,11 @@
 {
   String requestVersion=extractVersionFromRequest(request);
+  if (CloudifyConstants.SERVICE_CONTROLLER_URL.equals(requestVersion)) {
+    return true;
+  }
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("pre handle request from " + request.getRequestURI());
+  }
   if (!CURRENT_API_VERSION.equalsIgnoreCase(requestVersion)) {
     throw new RestErrorException(CloudifyMessageKeys.API_VERSION_MISMATCH.getName(),requestVersion,CURRENT_API_VERSION);
   }

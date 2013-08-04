@@ -2,12 +2,14 @@
   final ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(restConfig.getAdmin());
   List<ServiceDescription> descriptions=new ArrayList<ServiceDescription>();
   EventsCacheValue value=eventsCache.getIfExists(new EventsCacheKey(deploymentId));
-  for (  ProcessingUnit pu : value.getProcessingUnits()) {
-    ServiceDescription serviceDescription=appDescriptionFactory.getServiceDescription(pu);
-    if (!serviceDescription.getInstancesDescription().isEmpty()) {
-      descriptions.add(serviceDescription);
-    }
+  if (value != null) {
+    for (    ProcessingUnit pu : value.getProcessingUnits()) {
+      ServiceDescription serviceDescription=appDescriptionFactory.getServiceDescription(pu);
+      if (!serviceDescription.getInstancesDescription().isEmpty()) {
+        descriptions.add(serviceDescription);
+      }
  else {
+      }
     }
   }
   return descriptions;

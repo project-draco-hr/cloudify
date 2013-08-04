@@ -2,6 +2,7 @@
   validateTemplateOperation("list-templates");
   final ListTemplatesResponse response=new ListTemplatesResponse();
   final Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
+  log(Level.FINE,"listTemplates found " + templates.size() + " templates: "+ templates);
   response.setTemplates(templates);
   return response;
 }

@@ -6,7 +6,7 @@
     if (!successfullyRemovedFromHosts.isEmpty()) {
       message+=". Succeeded to remove the template from: " + successfullyRemovedFromHosts;
     }
-    logger.log(Level.WARNING,message);
+    log(Level.WARNING,message);
     throw new RestErrorException(CloudifyErrorMessages.FAILED_REMOVE_TEMPLATE.getName(),templateName,failedToRemoveFromHosts.toString());
   }
 }

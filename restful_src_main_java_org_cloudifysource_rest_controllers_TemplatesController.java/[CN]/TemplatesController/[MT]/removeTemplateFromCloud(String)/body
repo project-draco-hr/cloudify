@@ -1,5 +1,5 @@
 {
-  logger.log(Level.INFO,"[removeTemplateFromCloud] - removing template [" + templateName + "] from cloud.");
+  log(Level.INFO,"[removeTemplateFromCloud] - removing template [" + templateName + "] from cloud.");
   deleteTemplateFile(templateName);
   final Map<String,ComputeTemplate> cloudTemplates=cloud.getCloudCompute().getTemplates();
   if (!cloudTemplates.containsKey(templateName)) {

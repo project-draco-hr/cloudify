@@ -7,25 +7,25 @@
   try {
     String newName=DSLUtils.renameCloudTemplateFileNameIfNeeded(templateFile,templateName,DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX);
     if (newName != null) {
-      logger.log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template file name from " + templateFileName + " to "+ newName+ ".");
+      log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template file name from " + templateFileName + " to "+ newName+ ".");
     }
     if (propertiesFileName != null) {
       final File propertiesFile=new File(templatesFolder,propertiesFileName);
       newName=DSLUtils.renameCloudTemplateFileNameIfNeeded(propertiesFile,templateName,DSLUtils.TEMPLATES_PROPERTIES_FILE_NAME_SUFFIX);
       if (newName != null) {
-        logger.log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template's properties file name from" + " " + propertiesFileName + " to "+ newName+ ".");
+        log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template's properties file name from" + " " + propertiesFileName + " to "+ newName+ ".");
       }
     }
     if (overridesFileName != null) {
       final File overridesFile=new File(templatesFolder,overridesFileName);
       newName=DSLUtils.renameCloudTemplateFileNameIfNeeded(overridesFile,templateName,DSLUtils.TEMPLATES_OVERRIDES_FILE_NAME_SUFFIX);
       if (newName != null) {
-        logger.log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template's overrides file name from " + overridesFileName + " to "+ newName+ ".");
+        log(Level.INFO,"[renameTemplateFileIfNeeded] - Renamed template's overrides file name from " + overridesFileName + " to "+ newName+ ".");
       }
     }
   }
  catch (  final IOException e) {
-    logger.log(Level.WARNING,"[renameTemplateFileIfNeeded] - Failed to rename template file name [" + templateFile.getName() + "] to "+ templateName+ DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX+ ". The file will be deleted. Error:"+ e);
+    log(Level.WARNING,"[renameTemplateFileIfNeeded] - Failed to rename template file name [" + templateFile.getName() + "] to "+ templateName+ DSLUtils.TEMPLATE_DSL_FILE_NAME_SUFFIX+ ". The file will be deleted.",e);
     templateFile.delete();
     throw e;
   }

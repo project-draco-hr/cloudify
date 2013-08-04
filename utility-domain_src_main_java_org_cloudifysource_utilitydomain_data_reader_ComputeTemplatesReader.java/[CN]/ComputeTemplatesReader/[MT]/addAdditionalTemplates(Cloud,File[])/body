@@ -6,22 +6,22 @@
     logger.info("[addAdditionalTemplates] - Folder's files: " + Arrays.toString(folder.listFiles()));
     try {
       additionalTemplates=readCloudTemplatesFromDirectory(folder);
+      for (      ComputeTemplateHolder holder : additionalTemplates) {
+        String templateName=holder.getName();
+        Map<String,ComputeTemplate> cloudTemplates=cloud.getCloudCompute().getTemplates();
+        if (cloudTemplates.containsKey(templateName)) {
+          logger.log(Level.WARNING,"[addAdditionalTemplates] - template already exist: " + templateName);
+          continue;
+        }
+        ComputeTemplate cloudTemplate=holder.getCloudTemplate();
+        String uploadAbsolutePath=new File(folder,cloudTemplate.getLocalDirectory()).getAbsolutePath();
+        cloudTemplate.setAbsoluteUploadDir(uploadAbsolutePath);
+        cloudTemplates.put(templateName,cloudTemplate);
+        addedTemplates.add(cloudTemplate);
+      }
     }
  catch (    DSLException e) {
       logger.log(Level.WARNING,"[addAdditionalTemplates] - Failed to read templates from directory [" + folder.getAbsolutePath() + "]. Error: "+ e.getMessage());
-    }
-    for (    ComputeTemplateHolder holder : additionalTemplates) {
-      String templateName=holder.getName();
-      Map<String,ComputeTemplate> cloudTemplates=cloud.getCloudCompute().getTemplates();
-      if (cloudTemplates.containsKey(templateName)) {
-        logger.log(Level.WARNING,"[addAdditionalTemplates] - template already exist: " + templateName);
-        continue;
-      }
-      ComputeTemplate cloudTemplate=holder.getCloudTemplate();
-      String uploadAbsolutePath=new File(folder,cloudTemplate.getLocalDirectory()).getAbsolutePath();
-      cloudTemplate.setAbsoluteUploadDir(uploadAbsolutePath);
-      cloudTemplates.put(templateName,cloudTemplate);
-      addedTemplates.add(cloudTemplate);
     }
   }
   return addedTemplates;

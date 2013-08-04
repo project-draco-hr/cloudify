@@ -1,15 +1,13 @@
 {
   final List<String> addedTemplates=new LinkedList<String>();
   final Map<String,String> failedToAddTemplates=new HashMap<String,String>();
-  logger.log(Level.INFO,"[addTemplatesToCloudList] - adding " + cloudTemplates.size() + " templates to cloud's list.");
+  log(Level.FINE,"[addTemplatesToCloudList] - adding " + cloudTemplates.size() + " templates to cloud's list.");
   for (  final ComputeTemplateHolder holder : cloudTemplates) {
     final String templateName=holder.getName();
-    logger.log(Level.INFO,"[addTemplatesToCloudList] - adding " + templateName + " to cloud's list.");
     final String originalTemplateFileName=holder.getTemplateFileName();
     final Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
-    logger.log(Level.INFO,"[addTemplatesToCloudList] - cloud's templates: " + templates);
     if (templates.containsKey(templateName)) {
-      logger.log(Level.WARNING,"[addTemplatesToCloudList] - Template already exists: " + templateName);
+      log(Level.WARNING,"[addTemplatesToCloudList] - Template already exists: " + templateName);
       failedToAddTemplates.put(templateName,"template already exists");
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
