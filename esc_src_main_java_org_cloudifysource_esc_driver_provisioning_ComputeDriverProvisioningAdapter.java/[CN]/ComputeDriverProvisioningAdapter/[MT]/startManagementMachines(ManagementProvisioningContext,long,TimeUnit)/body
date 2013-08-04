@@ -1,0 +1,9 @@
+{
+  ProvisioningContextAccess.setCurrentManagementProvisioingContext(context);
+  try {
+    return provisioningDriver.startManagementMachines(duration,unit);
+  }
+  finally {
+    ProvisioningContextAccess.setCurrentProvisioingContext(null);
+  }
+}

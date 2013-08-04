@@ -1,0 +1,9 @@
+{
+  if (driverInstance instanceof BaseComputeDriver) {
+    return (BaseComputeDriver)driverInstance;
+  }
+  if (driverInstance instanceof ProvisioningDriver) {
+    return new ComputeDriverProvisioningAdapter((ProvisioningDriver)driverInstance);
+  }
+  throw new IllegalArgumentException("Driver class is does not extend " + BaseComputeDriver.class.getName() + " or implement "+ ProvisioningDriver.class.getName());
+}

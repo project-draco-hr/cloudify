@@ -1,0 +1,3 @@
+{
+  provisioningDriver.setConfig(configuration.getCloud(),configuration.getCloudTemplate(),configuration.isManagement(),configuration.getServiceName());
+}

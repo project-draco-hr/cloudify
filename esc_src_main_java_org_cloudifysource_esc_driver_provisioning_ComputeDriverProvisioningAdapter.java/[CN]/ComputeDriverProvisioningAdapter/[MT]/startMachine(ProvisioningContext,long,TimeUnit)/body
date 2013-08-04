@@ -1,0 +1,9 @@
+{
+  ProvisioningContextAccess.setCurrentProvisioingContext(context);
+  try {
+    return super.startMachine(context,duration,unit);
+  }
+  finally {
+    ProvisioningContextAccess.setCurrentProvisioingContext(null);
+  }
+}
