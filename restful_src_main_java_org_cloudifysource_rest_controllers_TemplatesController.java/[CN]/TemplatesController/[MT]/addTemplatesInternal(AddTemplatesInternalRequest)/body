@@ -3,7 +3,7 @@
   final File templatesFolder=repo.get(request.getUploadKey());
   final File unzippedTemplatesFolder=reader.unzipCloudTemplatesFolder(templatesFolder);
   try {
-    log(Level.INFO,"[addTemplatesInternal] - adding templates [" + request.getExpectedTemplates() + "]");
+    log(Level.INFO,"[addTemplatesInternal] - adding templates " + request.getExpectedTemplates());
     return addTemplatesToCloud(unzippedTemplatesFolder,request.getCloudTemplates());
   }
   finally {

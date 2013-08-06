@@ -40,6 +40,12 @@
     log(Level.WARNING,"[sendAddTemplatesToRestInstances] - Failed to add templates: " + failedToAddTempaltes);
     throw new RestErrorException(CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName(),failedToAddTempaltes.toString());
   }
+  if (failedToAddTempaltes.isEmpty()) {
+    log(Level.INFO,"successfully added all templates to all " + instances.length + " REST instances.");
+  }
+ else {
+    log(Level.INFO,"successfully added tempaltes: " + successfullyAddedTemplates + ", failed to be added templates: "+ failedToAddTempaltes);
+  }
   final AddTemplatesResponse response=new AddTemplatesResponse();
   response.setFailedToAddTempaltes(failedToAddTempaltes);
   response.setSuccessfullyAddedTempaltes(successfullyAddedTemplates);
