@@ -2,5 +2,11 @@
   final ComputeTemplatesReader reader=new ComputeTemplatesReader();
   final File templatesFolder=repo.get(request.getUploadKey());
   final File unzippedTemplatesFolder=reader.unzipCloudTemplatesFolder(templatesFolder);
-  return addTemplatesInternal(unzippedTemplatesFolder,request.getCloudTemplates());
+  try {
+    log(Level.INFO,"[addTemplatesInternal] - adding templates [" + request.getExpectedTemplates() + "]");
+    return addTemplatesToCloud(unzippedTemplatesFolder,request.getCloudTemplates());
+  }
+  finally {
+    FileUtils.deleteQuietly(unzippedTemplatesFolder);
+  }
 }

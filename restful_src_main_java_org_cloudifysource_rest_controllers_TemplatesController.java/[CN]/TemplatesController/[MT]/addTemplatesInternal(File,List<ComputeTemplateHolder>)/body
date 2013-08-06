@@ -1,9 +1,0 @@
-{
-  try {
-    log(Level.INFO,"[addTemplatesInternal] - adding templates from templates folder: " + unzippedTemplatesFolder.getAbsolutePath());
-    return addTemplatesToCloud(unzippedTemplatesFolder,templates);
-  }
-  finally {
-    FileUtils.deleteQuietly(unzippedTemplatesFolder);
-  }
-}

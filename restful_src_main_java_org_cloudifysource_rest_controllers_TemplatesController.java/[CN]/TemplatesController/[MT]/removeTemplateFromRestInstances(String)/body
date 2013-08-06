@@ -1,7 +1,7 @@
 {
   final ProcessingUnit processingUnit=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS);
   final ProcessingUnitInstance[] instances=processingUnit.getInstances();
-  log(Level.INFO,"[removeTemplateFromRestInstances] - sending an http request to " + instances.length + " REST instances. Template's name is "+ templateName);
+  log(Level.INFO,"[removeTemplateFromRestInstances] - sending remove-template request to " + instances.length + " REST instances.");
   final Map<String,String> failedToRemoveFromHosts=new HashMap<String,String>();
   final List<String> successfullyRemovedFromHosts=new LinkedList<String>();
   for (  final ProcessingUnitInstance puInstance : instances) {
@@ -9,6 +9,7 @@
     final String port=Integer.toString(puInstance.getJeeDetails().getPort());
     try {
       RestClient restClient=createRestClient(hostAddress,port);
+      log(Level.INFO,"sending request to " + hostAddress);
       restClient.removeTemplateInternal(templateName);
     }
  catch (    final RestClientException e) {

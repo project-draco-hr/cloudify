@@ -4,11 +4,11 @@
   successfullyAddedTemplates.addAll(request.getExpectedTemplates());
   int failedHostCount=0;
   final ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
-  log(Level.INFO,"[addTemplatesToRestInstances] - sending add templates request to " + instances.length + " instances.");
+  log(Level.INFO,"[addTemplatesToRestInstances] - sending add-templates request to " + instances.length + " instances.");
   for (  final ProcessingUnitInstance puInstance : instances) {
     final String port=Integer.toString(puInstance.getJeeDetails().getPort());
     String hostAddress=puInstance.getMachine().getHostAddress();
-    log(Level.INFO,"[addTemplatesToRestInstances] - execute add-templates to " + hostAddress);
+    log(Level.INFO,"[addTemplatesToRestInstances] - sending request to " + hostAddress);
     final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,port,request);
     final Map<String,String> failedToAddTempaltesToHost=instanceResponse.getFailedToAddTempaltesAndReasons();
     if (failedToAddTempaltesToHost != null && !failedToAddTempaltesToHost.isEmpty()) {
@@ -29,7 +29,7 @@
         failedHostCount++;
       }
  else {
-        log(Level.WARNING,"[addTemplatesToRestInstances] - successfully added templates: " + addedTempaltes);
+        log(Level.WARNING,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "]: "+ addedTempaltes);
       }
     }
  else {

@@ -1,0 +1,10 @@
+{
+  log(Level.FINE,"[removeTemplateFromCloudList] - removing template [" + templateName + "] from cloud's list.");
+  final Map<String,ComputeTemplate> cloudTemplates=cloud.getCloudCompute().getTemplates();
+  if (!cloudTemplates.containsKey(templateName)) {
+    log(Level.WARNING,"[removeTemplateFromCloudList] - tempalte [" + templateName + "] doesn't exist in cloud's list.");
+    throw new RestErrorException(CloudifyErrorMessages.TEMPLATE_NOT_EXIST.getName(),templateName);
+  }
+  cloudTemplates.remove(templateName);
+  log(Level.FINE,"[removeTemplateFromCloudList] - template [" + templateName + "] was removed from cloud's list.");
+}
