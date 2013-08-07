@@ -20,7 +20,7 @@
     Assert.assertArrayEquals(expectedArgs,args);
   }
  finally {
+    System.out.println("setting the upload size limit back to " + CloudifyConstants.DEFAULT_UPLOAD_SIZE_LIMIT_BYTES + " bytes.");
     uploadRepo.setUploadSizeLimitBytes(CloudifyConstants.DEFAULT_UPLOAD_SIZE_LIMIT_BYTES);
-    System.out.println("set the upload size limit back to " + uploadRepo.getUploadSizeLimitBytes() + " bytes.");
   }
 }
