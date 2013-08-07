@@ -8,9 +8,9 @@
     String hostAddress=puInstance.getMachine().getHostAddress();
     final String port=Integer.toString(puInstance.getJeeDetails().getPort());
     try {
-      RestClient restClient=createRestClient(hostAddress,port);
+      RestClientInternal client=createRestClientInternal(hostAddress,port);
       log(Level.INFO,"sending request to " + hostAddress);
-      restClient.removeTemplateInternal(templateName);
+      client.removeTemplateInternal(templateName);
     }
  catch (    final RestClientException e) {
       failedToRemoveFromHosts.put(hostAddress,e.getMessageFormattedText());
