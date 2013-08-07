@@ -1,9 +1,13 @@
 {
   File file=new File("notExist.zip");
   try {
-    uploadFile(file);
-    Assert.fail();
+    uploadFile(file,"testUplaodFileNotExist");
+    Assert.fail("[testUplaodFileNotExist] - FileNotFoundException expected");
   }
  catch (  FileNotFoundException e) {
+    System.out.println("cought exeption " + e.getMessage() + " as expected");
+  }
+catch (  Exception e) {
+    Assert.fail("cought exception other than FileNotFoundException [" + e.getClass() + "] message: "+ e.getMessage());
   }
 }

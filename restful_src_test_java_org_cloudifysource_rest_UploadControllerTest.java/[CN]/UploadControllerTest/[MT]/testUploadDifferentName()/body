@@ -1,6 +1,6 @@
 {
   File file=new File(TEST_FILE1_PATH);
-  UploadResponse uploadResponse=uploadFile(file);
+  UploadResponse uploadResponse=uploadFile(file,"testUploadDifferentName");
   String uploadKey=uploadResponse.getUploadKey();
   Assert.assertNotNull(uploadKey);
   assertUploadedFileExists(file,uploadKey);

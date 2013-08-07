@@ -4,7 +4,7 @@
   uploadRepo.resetTimeout(TEST_CLEANUP_TIMOUT_MILLIS);
   try {
     File file=new File(TEST_FILE_PATH);
-    UploadResponse uploadResponse=uploadFile(file);
+    UploadResponse uploadResponse=uploadFile(file,"testUploadTimeout");
     String uploadKey=uploadResponse.getUploadKey();
     System.out.println("successfully uploaded file " + file.getName() + " upload key is "+ uploadKey);
     Assert.assertNotNull(uploadKey);
