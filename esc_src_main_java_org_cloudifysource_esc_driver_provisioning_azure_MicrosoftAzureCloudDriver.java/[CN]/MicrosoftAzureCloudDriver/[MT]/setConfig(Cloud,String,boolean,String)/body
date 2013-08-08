@@ -11,8 +11,13 @@
     throw new IllegalArgumentException("Custom field '" + AZURE_PFX_PASSWORD + "' must be set");
   }
   this.deploymentSlot=(String)this.template.getCustom().get(AZURE_DEPLOYMENT_SLOT);
-  if (deploymentSlot == null) {
+  if (StringUtils.isBlank(deploymentSlot)) {
     deploymentSlot="Staging";
+  }
+ else {
+    if (!deploymentSlot.equals("Staging") && !deploymentSlot.equals("Production")) {
+      throw new IllegalArgumentException(AZURE_DEPLOYMENT_SLOT + " property must be either 'Staging' or " + "'Production'");
+    }
   }
   this.endpoints=(List<Map<String,String>>)this.template.getCustom().get(AZURE_ENDPOINTS);
   this.imageName=this.template.getImageId();
