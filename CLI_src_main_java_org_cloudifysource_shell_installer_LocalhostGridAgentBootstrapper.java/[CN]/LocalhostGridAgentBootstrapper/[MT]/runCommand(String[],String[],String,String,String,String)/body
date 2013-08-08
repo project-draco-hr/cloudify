@@ -38,6 +38,7 @@
       environment.put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,nicAddress);
       environment.put("NIC_ADDR",nicAddress);
     }
+    environment.put("RMI_OPTIONS","");
   }
   try {
     logger.fine("Executing command: " + commandString);
