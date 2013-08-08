@@ -1,5 +1,5 @@
 {
-  System.out.println("[" + testName + "] - tring to upload file "+ file.getName()+ ", repo upload size limit in bytes: "+ uploadRepo.getUploadSizeLimitBytes()+ ", repo cleanup timeout in millis: "+ uploadRepo.getCleanupTimeoutMillis());
+  System.out.println("[" + testName + "] - trying to upload file "+ file.getName()+ ", repo upload size limit in bytes: "+ uploadRepo.getUploadSizeLimitBytes()+ ", repo cleanup timeout in millis: "+ uploadRepo.getCleanupTimeoutMillis());
   MockHttpServletResponse response;
   try {
     response=testPostFile(versionedUploadUri,file);

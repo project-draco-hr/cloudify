@@ -3,8 +3,8 @@
   if (StringUtils.isEmpty(fileName)) {
     name=file.getOriginalFilename();
   }
-  if (logger.isLoggable(Level.FINE)) {
-    logger.fine("received request to upload file " + name);
+  if (logger.isLoggable(Level.INFO)) {
+    logger.info("received request to upload file " + name);
   }
   String uploadedFileDirName=null;
   try {
