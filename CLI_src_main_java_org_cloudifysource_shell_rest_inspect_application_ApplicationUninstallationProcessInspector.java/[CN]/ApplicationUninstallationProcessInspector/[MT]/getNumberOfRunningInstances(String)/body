@@ -1,5 +1,5 @@
 {
-  List<ServiceDescription> servicesDescription=restClient.getServicesDescription(deploymentId);
+  List<ServiceDescription> servicesDescription=restClient.getServiceDescriptions(deploymentId);
   for (  ServiceDescription serviceDescription : servicesDescription) {
     if (serviceDescription.getServiceName().contains(serviceName)) {
       return serviceDescription.getInstanceCount();

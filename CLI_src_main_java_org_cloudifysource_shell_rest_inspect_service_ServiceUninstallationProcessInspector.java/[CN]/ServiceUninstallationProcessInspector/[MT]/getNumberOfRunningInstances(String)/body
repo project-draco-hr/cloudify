@@ -1,5 +1,5 @@
 {
-  List<ServiceDescription> servicesDescription=restClient.getServicesDescription(deploymentId);
+  List<ServiceDescription> servicesDescription=restClient.getServiceDescriptions(deploymentId);
   if (servicesDescription.isEmpty()) {
     return 0;
   }

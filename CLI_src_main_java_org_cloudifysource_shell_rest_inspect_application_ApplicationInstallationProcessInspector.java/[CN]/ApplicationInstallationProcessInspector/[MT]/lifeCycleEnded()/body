@@ -1,4 +1,16 @@
 {
-  ApplicationDescription applicationDescription=restClient.getApplicationDescription(applicationName);
-  return applicationDescription.getApplicationState().equals(CloudifyConstants.DeploymentState.STARTED);
+  boolean spplicationIsInstalled=false;
+  try {
+    ApplicationDescription applicationDescription=restClient.getApplicationDescription(applicationName);
+    spplicationIsInstalled=applicationDescription.getApplicationState().equals(CloudifyConstants.DeploymentState.STARTED);
+  }
+ catch (  final RestClientResponseException e) {
+    if (e.getStatusCode() == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
+      spplicationIsInstalled=false;
+    }
+ else {
+      throw e;
+    }
+  }
+  return spplicationIsInstalled;
 }

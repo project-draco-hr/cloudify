@@ -9,7 +9,6 @@
       final Response<Void> entity=new ObjectMapper().readValue(responseBody,new TypeReference<Response<Void>>(){
       }
 );
-      logger.log(Level.INFO,"[checkForError] - REST request to " + requestUri + "  failed. Error message: "+ entity.getMessage());
       throw new RestClientResponseException(entity.getMessageId(),entity.getMessage(),statusCode,reasonPhrase,entity.getVerbose());
     }
  catch (    final IOException e) {
