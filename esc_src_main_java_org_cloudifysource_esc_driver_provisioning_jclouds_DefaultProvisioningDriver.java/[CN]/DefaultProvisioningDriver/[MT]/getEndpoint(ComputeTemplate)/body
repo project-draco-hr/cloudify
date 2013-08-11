@@ -1,6 +1,6 @@
 {
   String endpoint=null;
-  Map<String,Object> templateOverrides=template.getOverrides();
+  final Map<String,Object> templateOverrides=template.getOverrides();
   if (templateOverrides != null && templateOverrides.size() > 0) {
     endpoint=(String)templateOverrides.get(ENDPOINT_OVERRIDE);
   }

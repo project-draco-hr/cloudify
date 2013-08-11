@@ -1,9 +1,0 @@
-{
-  final Object temp=config.get(key);
-  if (temp == null) {
-    return defaultValue;
-  }
- else {
-    return temp;
-  }
-}

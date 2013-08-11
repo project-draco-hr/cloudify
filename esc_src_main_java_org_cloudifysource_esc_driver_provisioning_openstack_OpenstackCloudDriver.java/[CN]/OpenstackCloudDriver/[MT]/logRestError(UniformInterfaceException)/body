@@ -1,5 +1,0 @@
-{
-  logger.severe("REST Error: " + e.getMessage());
-  logger.severe("REST Status: " + e.getResponse().getStatus());
-  logger.severe("REST Message: " + e.getResponse().getEntity(String.class));
-}

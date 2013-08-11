@@ -1,7 +1,0 @@
-{
-  final Node node=getNodeByIp(serverIp,token);
-  if (node == null) {
-    throw new IllegalArgumentException("Could not find a server with IP: " + serverIp);
-  }
-  terminateServer(node.getId(),token,endTime);
-}

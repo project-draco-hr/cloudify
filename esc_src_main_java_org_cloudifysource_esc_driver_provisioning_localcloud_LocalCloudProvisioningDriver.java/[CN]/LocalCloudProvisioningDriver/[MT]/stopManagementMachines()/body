@@ -1,3 +1,0 @@
-{
-  throw new UnsupportedOperationException("Not available on local cloud");
-}

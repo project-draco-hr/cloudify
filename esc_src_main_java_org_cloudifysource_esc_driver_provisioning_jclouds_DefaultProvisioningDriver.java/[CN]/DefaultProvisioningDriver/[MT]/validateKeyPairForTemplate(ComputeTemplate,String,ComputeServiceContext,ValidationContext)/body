@@ -14,7 +14,7 @@
     if (!(keyPairObj instanceof String)) {
       throw new CloudProvisioningException("Invalid configuration: keyPair must be of type String");
     }
-    String keyPairString=(String)keyPairObj;
+    final String keyPairString=(String)keyPairObj;
     if (StringUtils.isNotBlank(keyPairString)) {
       try {
         validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_key_pair",keyPairString));
@@ -32,7 +32,7 @@
         }
         validationContext.validationEventEnd(ValidationResultType.OK);
       }
- catch (      CloudProvisioningException ex) {
+ catch (      final CloudProvisioningException ex) {
         validationContext.validationEventEnd(ValidationResultType.ERROR);
         throw ex;
       }

@@ -16,13 +16,7 @@
       throw new BeanConfigurationException("Received a service cloud configuration file, " + "but root of zip file had more then one entry!");
     }
     final File serviceCloudConfigurationFile=childFiles[0];
-    if (this.cloudifyProvisioning instanceof CustomServiceDataAware) {
-      logger.info("Setting service cloud configuration in cloud driver to: " + serviceCloudConfigurationFile);
-      final CustomServiceDataAware custom=(CustomServiceDataAware)this.cloudifyProvisioning;
-      custom.setCustomDataFile(serviceCloudConfigurationFile);
-    }
- else {
-      throw new BeanConfigurationException("Cloud driver configuration inclouded a service cloud configuration file," + " but the cloud driver " + this.cloudifyProvisioning.getClass().getName() + " does not implement the "+ CustomServiceDataAware.class.getName()+ " interface");
-    }
+    logger.info("Setting service cloud configuration in cloud driver to: " + serviceCloudConfigurationFile);
+    this.cloudifyProvisioning.setCustomDataFile(serviceCloudConfigurationFile);
   }
 }

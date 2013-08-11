@@ -6,18 +6,18 @@
   String locationId="";
   try {
     validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
-    for (    Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
+    for (    final Entry<String,ComputeTemplate> entry : cloud.getCloudCompute().getTemplates().entrySet()) {
       templateName=entry.getKey();
       validationContext.validationEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_template",templateName));
-      ComputeTemplate template=entry.getValue();
-      String endpoint=getEndpoint(template);
+      final ComputeTemplate template=entry.getValue();
+      final String endpoint=getEndpoint(template);
       if (endpointRequired && StringUtils.isBlank(endpoint)) {
         throw new CloudProvisioningException("Endpoint not defined. Please add a \"jclouds.endpoint\"" + " entry in the template's overrides section");
       }
       try {
         validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_cloud_credentials"));
         final Properties templateProps=new Properties();
-        Map<String,Object> templateOverrides=template.getOverrides();
+        final Map<String,Object> templateOverrides=template.getOverrides();
         templateProps.putAll(templateOverrides);
         logger.fine("Creating a new cloud deployer");
         deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps);
@@ -41,7 +41,7 @@
         deployer.getTemplate(locationId);
         validationContext.validationEventEnd(ValidationResultType.OK);
       }
- catch (      Exception ex) {
+ catch (      final Exception ex) {
         validationContext.validationEventEnd(ValidationResultType.ERROR);
         if (apiId.equalsIgnoreCase(OPENSTACK_API) && this.isVerboseValidation) {
           validateLocationID(locationId);

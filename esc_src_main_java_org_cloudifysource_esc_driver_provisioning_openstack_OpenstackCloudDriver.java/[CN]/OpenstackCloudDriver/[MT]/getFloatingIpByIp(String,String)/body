@@ -1,9 +1,0 @@
-{
-  final List<FloatingIP> allips=listFloatingIPs(token);
-  for (  final FloatingIP floatingIP : allips) {
-    if (ip.equals(floatingIP.getIp())) {
-      return floatingIP;
-    }
-  }
-  return null;
-}

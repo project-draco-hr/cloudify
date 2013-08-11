@@ -1,5 +1,5 @@
 {
-  String providerName=cloud.getProvider().getProvider();
+  final String providerName=cloud.getProvider().getProvider();
   cloudFolder=CLOUDS_FOLDER_PATH + FILE_SEPARATOR + cloud.getName();
   groovyFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.groovy";
   propertiesFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.properties";
@@ -7,19 +7,19 @@
   boolean endpointRequired=false;
   try {
     validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_provider_or_api_name",providerName));
-    ProviderMetadata providerMetadata=Providers.withId(providerName);
-    ApiMetadata apiMetadata=providerMetadata.getApiMetadata();
+    final ProviderMetadata providerMetadata=Providers.withId(providerName);
+    final ApiMetadata apiMetadata=providerMetadata.getApiMetadata();
     apiId=apiMetadata.getId();
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
- catch (  NoSuchElementException e) {
+ catch (  final NoSuchElementException e) {
     try {
-      ApiMetadata apiMetadata=Apis.withId(providerName);
+      final ApiMetadata apiMetadata=Apis.withId(providerName);
       apiId=apiMetadata.getId();
       endpointRequired=true;
       validationContext.validationEventEnd(ValidationResultType.OK);
     }
- catch (    NoSuchElementException ex) {
+ catch (    final NoSuchElementException ex) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);
       throw new CloudProvisioningException(getFormattedMessage("error_provider_or_api_name_validation",providerName,cloudFolder),ex);
     }

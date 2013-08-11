@@ -1,6 +1,0 @@
-{
-  final String json="{\"auth\":{\"RAX-KSKEY:apiKeyCredentials\":{\"username\":\"" + this.cloud.getUser().getUser() + "\",\"apiKey\":\""+ this.cloud.getUser().getApiKey()+ "\"}}}";
-  final WebResource service=client.resource(this.identityEndpoint);
-  final String resp=service.path("/v2.0/tokens").header("Content-Type","application/json").post(String.class,json);
-  return getAutenticationTokenIdFromResponse(resp);
-}

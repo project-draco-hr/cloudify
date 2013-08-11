@@ -1,5 +1,5 @@
 {
-  CloudAddressResolver resolver=new CloudAddressResolver();
+  final CloudAddressResolver resolver=new CloudAddressResolver();
   final String privateAddress=resolver.getAddress(node.getPrivateAddresses(),node.getPublicAddresses(),privateSubnetInfo,this.privateIpPattern);
   final String publicAddress=resolver.getAddress(node.getPublicAddresses(),node.getPrivateAddresses(),publicSubnetInfo,this.publicIpPattern);
   md.setPrivateAddress(privateAddress);

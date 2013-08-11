@@ -1,8 +1,8 @@
 {
-  Set<String> missingSecurityGroups=new HashSet<String>();
-  SecurityGroupApi securityGroupApi=novaApi.getSecurityGroupExtensionForZone(region).get();
-  for (  String securityGroupName : securityGroupsInRegion) {
-    Predicate<org.jclouds.openstack.nova.v2_0.domain.SecurityGroup> securityGroupNamePredicate=org.jclouds.openstack.nova.v2_0.predicates.SecurityGroupPredicates.nameEquals(securityGroupName);
+  final Set<String> missingSecurityGroups=new HashSet<String>();
+  final SecurityGroupApi securityGroupApi=novaApi.getSecurityGroupExtensionForZone(region).get();
+  for (  final String securityGroupName : securityGroupsInRegion) {
+    final Predicate<org.jclouds.openstack.nova.v2_0.domain.SecurityGroup> securityGroupNamePredicate=org.jclouds.openstack.nova.v2_0.predicates.SecurityGroupPredicates.nameEquals(securityGroupName);
     if (!securityGroupApi.list().anyMatch(securityGroupNamePredicate)) {
       missingSecurityGroups.add(securityGroupName);
     }

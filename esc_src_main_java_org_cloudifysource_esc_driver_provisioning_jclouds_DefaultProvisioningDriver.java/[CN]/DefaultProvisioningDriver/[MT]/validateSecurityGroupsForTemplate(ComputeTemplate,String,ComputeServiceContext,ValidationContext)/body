@@ -12,7 +12,7 @@
   }
   if (securityGroupsObj != null) {
     if (securityGroupsObj instanceof String[]) {
-      String[] securityGroupsArr=(String[])securityGroupsObj;
+      final String[] securityGroupsArr=(String[])securityGroupsObj;
       if (securityGroupsArr.length > 0) {
         try {
           if (securityGroupsArr.length == 1) {
@@ -22,11 +22,11 @@
             validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_groups",org.cloudifysource.esc.util.StringUtils.arrayToString(securityGroupsArr,", ")));
           }
           if (apiId.equalsIgnoreCase(EC2_API)) {
-            RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
+            final RestContext<EC2Client,EC2AsyncClient> unwrapped=computeServiceContext.unwrap();
             validateEc2SecurityGroups(unwrapped.getApi(),locationId,securityGroupsArr);
           }
  else           if (apiId.equalsIgnoreCase(OPENSTACK_API)) {
-            RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
+            final RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
             validateOpenstackSecurityGroups(unwrapped.getApi(),locationId,securityGroupsArr);
           }
  else           if (apiId.equalsIgnoreCase(CLOUDSTACK)) {
@@ -37,7 +37,7 @@
           }
           validationContext.validationEventEnd(ValidationResultType.OK);
         }
- catch (        CloudProvisioningException ex) {
+ catch (        final CloudProvisioningException ex) {
           validationContext.validationEventEnd(ValidationResultType.ERROR);
           throw ex;
         }

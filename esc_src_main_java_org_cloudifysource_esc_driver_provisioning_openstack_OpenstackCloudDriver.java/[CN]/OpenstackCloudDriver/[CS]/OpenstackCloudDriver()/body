@@ -1,6 +1,0 @@
-{
-  dbf=DocumentBuilderFactory.newInstance();
-  dbf.setNamespaceAware(false);
-  final ClientConfig config=new DefaultClientConfig();
-  this.client=Client.create(config);
-}

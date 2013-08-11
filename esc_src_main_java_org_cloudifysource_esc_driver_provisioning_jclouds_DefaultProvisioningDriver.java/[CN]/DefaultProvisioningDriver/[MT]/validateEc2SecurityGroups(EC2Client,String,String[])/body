@@ -1,9 +1,9 @@
 {
-  String region=JCloudsUtils.getEC2region(ec2Client,locationId);
-  org.jclouds.ec2.services.SecurityGroupClient ec2SecurityGroupsClient=ec2Client.getSecurityGroupServices();
-  Set<String> missingSecurityGroups=new HashSet<String>();
-  for (  String securityGroupName : securityGroupsInRegion) {
-    Set<org.jclouds.ec2.domain.SecurityGroup> foundGroups=ec2SecurityGroupsClient.describeSecurityGroupsInRegion(region,securityGroupName);
+  final String region=JCloudsUtils.getEC2region(ec2Client,locationId);
+  final org.jclouds.ec2.services.SecurityGroupClient ec2SecurityGroupsClient=ec2Client.getSecurityGroupServices();
+  final Set<String> missingSecurityGroups=new HashSet<String>();
+  for (  final String securityGroupName : securityGroupsInRegion) {
+    final Set<org.jclouds.ec2.domain.SecurityGroup> foundGroups=ec2SecurityGroupsClient.describeSecurityGroupsInRegion(region,securityGroupName);
     if (foundGroups == null || foundGroups.size() == 0 || foundGroups.iterator().next() == null) {
       missingSecurityGroups.add(securityGroupName);
     }

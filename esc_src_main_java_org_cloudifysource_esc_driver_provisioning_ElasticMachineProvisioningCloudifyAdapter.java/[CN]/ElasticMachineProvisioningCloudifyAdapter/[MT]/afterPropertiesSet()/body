@@ -27,11 +27,8 @@
     try {
       final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
       this.cloudifyProvisioning=builder.build(cloudConfigDirectoryPath,this.cloud.getConfiguration().getClassName());
-      if (cloudifyProvisioning instanceof ProvisioningDriverClassContextAware) {
-        final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
-        final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)cloudifyProvisioning;
-        contextAware.setProvisioningDriverClassContext(provisioningDriverContext);
-      }
+      final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
+      this.cloudifyProvisioning.setProvisioningDriverClassContext(provisioningDriverContext);
       handleServiceCloudConfiguration();
       final String storageClassName=this.cloud.getConfiguration().getStorageClassName();
       if (StringUtils.isNotBlank(storageClassName)) {

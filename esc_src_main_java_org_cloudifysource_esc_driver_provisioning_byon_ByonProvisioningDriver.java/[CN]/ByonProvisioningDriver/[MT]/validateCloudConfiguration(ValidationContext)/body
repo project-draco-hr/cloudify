@@ -12,7 +12,7 @@
       validateTemplate(templateName,template);
       validationContext.validationEventEnd(ValidationResultType.OK);
     }
- catch (    CloudProvisioningException e) {
+ catch (    final CloudProvisioningException e) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);
       throw e;
     }

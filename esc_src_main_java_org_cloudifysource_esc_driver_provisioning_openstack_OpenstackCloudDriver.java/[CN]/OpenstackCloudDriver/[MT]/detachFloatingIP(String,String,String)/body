@@ -1,3 +1,0 @@
-{
-  service.path(this.pathPrefix + "servers/" + serverId+ "/action").header("Content-type","application/json").header("X-Auth-Token",token).accept(MediaType.APPLICATION_JSON).post(String.class,String.format("{\"removeFloatingIp\":{\"server\": \"%s\", \"address\": \"%s\"}}",serverId,ip));
-}

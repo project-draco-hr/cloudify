@@ -1,6 +1,6 @@
 {
   try {
-    deployer=(ByonDeployer)context.getOrCreate("UNIQUE_BYON_DEPLOYER_ID",new Callable<Object>(){
+    deployer=(ByonDeployer)provisioningContext.getOrCreate("UNIQUE_BYON_DEPLOYER_ID",new Callable<Object>(){
       @Override public Object call() throws Exception {
         logger.info("Creating BYON context deployer for cloud: " + cloud.getName());
         final ByonDeployer newDeployer=new ByonDeployer();

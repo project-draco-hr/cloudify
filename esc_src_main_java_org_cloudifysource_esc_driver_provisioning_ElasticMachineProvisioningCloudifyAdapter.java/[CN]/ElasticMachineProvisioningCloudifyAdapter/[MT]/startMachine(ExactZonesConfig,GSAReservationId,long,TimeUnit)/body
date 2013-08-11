@@ -4,7 +4,7 @@
   try {
     configureDrivers();
   }
- catch (  CloudProvisioningException e) {
+ catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to configure cloud driver for first use: " + e.getMessage(),e);
   }
   logger.info("Calling provisioning implementation for new machine");
@@ -15,7 +15,7 @@
     throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
   }
   final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
-  String locationId=findLocationIdInZones(zones,template);
+  final String locationId=findLocationIdInZones(zones,template);
   fireMachineStartEvent(locationId);
   try {
     machineDetails=provisionMachine(locationId,reservationId,duration,unit);

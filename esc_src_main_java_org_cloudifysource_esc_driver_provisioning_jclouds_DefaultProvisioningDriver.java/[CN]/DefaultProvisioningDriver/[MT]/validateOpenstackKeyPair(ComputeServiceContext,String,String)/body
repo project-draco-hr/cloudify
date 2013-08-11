@@ -1,7 +1,7 @@
 {
-  RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
-  KeyPairApi keyPairApi=unwrapped.getApi().getKeyPairExtensionForZone(locationId).get();
-  Predicate<org.jclouds.openstack.nova.v2_0.domain.KeyPair> keyPairNamePredicate=org.jclouds.openstack.nova.v2_0.predicates.KeyPairPredicates.nameEquals(keyPairName);
+  final RestContext<NovaApi,NovaAsyncApi> unwrapped=computeServiceContext.unwrap();
+  final KeyPairApi keyPairApi=unwrapped.getApi().getKeyPairExtensionForZone(locationId).get();
+  final Predicate<org.jclouds.openstack.nova.v2_0.domain.KeyPair> keyPairNamePredicate=org.jclouds.openstack.nova.v2_0.predicates.KeyPairPredicates.nameEquals(keyPairName);
   if (!keyPairApi.list().anyMatch(keyPairNamePredicate)) {
     throw new CloudProvisioningException(getFormattedMessage("error_key_pair_validation",keyPairName,groovyFile,propertiesFile));
   }

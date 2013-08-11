@@ -1,30 +1,27 @@
 {
-  if (provisioning instanceof ManagementLocator) {
-    final ObjectMapper mapper=new ObjectMapper();
-    ControllerDetails[] controllers=null;
-    try {
-      controllers=mapper.readValue(this.existingManagersFile,TypeFactory.arrayType(ControllerDetails.class));
-    }
- catch (    final IOException e) {
-      throw new IllegalArgumentException("Failed to read managers file: " + this.existingManagersFile.getAbsolutePath() + ". Error was: "+ e.getMessage(),e);
-    }
-    final ManagementLocator locator=(ManagementLocator)provisioning;
-    MachineDetails[] mds;
-    try {
-      mds=locator.getExistingManagementServers(controllers);
-    }
- catch (    final CloudProvisioningException e) {
-      throw new CLIStatusException(e,CloudifyErrorMessages.MANAGEMENT_SERVERS_FAILED_TO_READ.getName(),e.getMessage());
-    }
-    if (mds.length == 0) {
-      throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NOT_LOCATED.getName());
-    }
-    if (mds.length != this.cloud.getProvider().getNumberOfManagementMachines()) {
-      throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NUMBER_NOT_MATCH.getName(),cloud.getProvider().getNumberOfManagementMachines(),mds.length);
-    }
-    return mds;
+  final ObjectMapper mapper=new ObjectMapper();
+  ControllerDetails[] controllers=null;
+  try {
+    controllers=mapper.readValue(this.existingManagersFile,TypeFactory.arrayType(ControllerDetails.class));
   }
- else {
+ catch (  final IOException e) {
+    throw new IllegalArgumentException("Failed to read managers file: " + this.existingManagersFile.getAbsolutePath() + ". Error was: "+ e.getMessage(),e);
+  }
+  MachineDetails[] mds;
+  try {
+    mds=provisioning.getExistingManagementServers(controllers);
+  }
+ catch (  final CloudProvisioningException e) {
+    throw new CLIStatusException(e,CloudifyErrorMessages.MANAGEMENT_SERVERS_FAILED_TO_READ.getName(),e.getMessage());
+  }
+catch (  final UnsupportedOperationException e) {
     throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_LOCATOR_NOT_SUPPORTED.getName(),this.cloud.getName());
   }
+  if (mds.length == 0) {
+    throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NOT_LOCATED.getName());
+  }
+  if (mds.length != this.cloud.getProvider().getNumberOfManagementMachines()) {
+    throw new CLIStatusException(CloudifyErrorMessages.MANAGEMENT_SERVERS_NUMBER_NOT_MATCH.getName(),cloud.getProvider().getNumberOfManagementMachines(),mds.length);
+  }
+  return mds;
 }

@@ -1,7 +1,7 @@
 {
   List<Map<String,String>> nodesList=null;
-  for (  Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
-    String templateName=templateEntry.getKey();
+  for (  final Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
+    final String templateName=templateEntry.getKey();
     try {
       ComputeTemplate template=templateEntry.getValue();
       validateTemplate(templateName,template);

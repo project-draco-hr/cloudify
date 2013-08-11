@@ -1,0 +1,8 @@
+{
+  if (this.provisioningDriver instanceof ManagementLocator) {
+    return ((ManagementLocator)this.provisioningDriver).getExistingManagementServers();
+  }
+ else {
+    return super.getExistingManagementServers();
+  }
+}

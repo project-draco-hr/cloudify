@@ -9,10 +9,7 @@
 catch (  final Exception e) {
     throw new CLIException("Failed to load provisioning class for cloud: " + cloud.getName(),e);
   }
-  if (provisioning instanceof ProvisioningDriverClassContextAware) {
-    final ProvisioningDriverClassContextAware contextAware=(ProvisioningDriverClassContextAware)provisioning;
-    contextAware.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
-  }
+  provisioning.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
   provisioning.addListener(new CliProvisioningDriverListener());
   final String serviceName=null;
   final ValidationContext validationContext=new ValidationContextImpl();
@@ -27,9 +24,13 @@ catch (  final Exception e) {
     configuration.setManagement(true);
     configuration.setServiceName(serviceName);
     provisioning.setConfig(configuration);
-    if (performValidation && provisioning instanceof ProvisioningDriverBootstrapValidation) {
+    if (performValidation) {
       validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_VALIDATE_CLOUD_CONFIG.getName()));
-      ((ProvisioningDriverBootstrapValidation)provisioning).validateCloudConfiguration(validationContext);
+      try {
+        provisioning.validateCloudConfiguration(validationContext);
+      }
+ catch (      final UnsupportedOperationException e) {
+      }
       validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_CLOUD_CONFIG_VALIDATED.getName()));
     }
   }

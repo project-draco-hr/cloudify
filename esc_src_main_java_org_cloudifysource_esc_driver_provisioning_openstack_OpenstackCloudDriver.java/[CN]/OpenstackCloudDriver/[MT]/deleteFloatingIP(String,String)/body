@@ -1,9 +1,0 @@
-{
-  final FloatingIP floatingIp=getFloatingIpByIp(ip,token);
-  if (floatingIp == null) {
-    logger.warning("Could not find floating IP " + ip + " in list. IP was not deleted.");
-  }
- else {
-    service.path(this.pathPrefix + "os-floating-ips/" + floatingIp.getId()).header("X-Auth-Token",token).accept(MediaType.APPLICATION_JSON).delete();
-  }
-}

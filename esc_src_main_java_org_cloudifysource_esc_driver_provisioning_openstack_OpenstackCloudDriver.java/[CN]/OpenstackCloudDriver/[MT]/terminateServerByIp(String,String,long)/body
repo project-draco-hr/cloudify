@@ -1,9 +1,0 @@
-{
-  logger.log(Level.INFO,"Terminating machine with IP " + serverIp);
-  final Node node=getNodeByIp(serverIp,token);
-  if (node == null) {
-    throw new IllegalArgumentException("Could not find a server with IP: " + serverIp);
-  }
-  logger.log(Level.INFO,"Terminating node with the following detailes: " + node.toString());
-  terminateServer(node.getId(),token,endTime);
-}
