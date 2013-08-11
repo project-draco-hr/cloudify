@@ -1,25 +1,25 @@
 {
   int cleanupTimeoutMillis=uploadRepo.getCleanupTimeoutMillis();
-  System.out.println("setting the cleanup timeout " + TEST_CLEANUP_TIMOUT_MILLIS + " millis.");
+  logger.log(Level.FINE,"setting the cleanup timeout " + TEST_CLEANUP_TIMOUT_MILLIS + " millis.");
   uploadRepo.resetTimeout(TEST_CLEANUP_TIMOUT_MILLIS);
   try {
     File file=new File(TEST_FILE_PATH);
     UploadResponse uploadResponse=uploadFile(file,"testUploadTimeout");
     String uploadKey=uploadResponse.getUploadKey();
-    System.out.println("successfully uploaded file " + file.getName() + " upload key is "+ uploadKey);
+    logger.log(Level.FINE,"successfully uploaded file " + file.getName() + " upload key is "+ uploadKey);
     Assert.assertNotNull(uploadKey);
     File uploadedFile=assertUploadedFileExists(file,uploadKey);
     String parentPath=uploadedFile.getParentFile().getAbsolutePath();
-    System.out.println("sleeping for " + (TEST_CLEANUP_TIMOUT_MILLIS * 3) / DateUtils.MILLIS_PER_SECOND + " seconds");
+    logger.log(Level.INFO,"sleeping for " + (TEST_CLEANUP_TIMOUT_MILLIS * 3) / DateUtils.MILLIS_PER_SECOND + " seconds");
     Thread.sleep(TEST_CLEANUP_TIMOUT_MILLIS * 3);
     File expectedToBeDeletedFolder=new File(parentPath);
-    System.out.println("validate that the folder [" + expectedToBeDeletedFolder.getAbsolutePath() + "] was deleted:");
+    logger.log(Level.FINE,"validate that the folder [" + expectedToBeDeletedFolder.getAbsolutePath() + "] was deleted:");
     boolean exists=expectedToBeDeletedFolder.exists();
-    System.out.println("The folder [" + expectedToBeDeletedFolder.getAbsolutePath() + "] (expected to be deleted at this point) "+ (exists ? " exists" : " not exists."));
+    logger.log(Level.FINE,"The folder [" + expectedToBeDeletedFolder.getAbsolutePath() + "] (expected to be deleted at this point) "+ (exists ? " exists" : " not exists."));
     Assert.assertFalse(exists);
   }
   finally {
-    System.out.println("setting the cleanup timeout back to " + cleanupTimeoutMillis + " millis");
+    logger.log(Level.FINE,"setting the cleanup timeout back to " + cleanupTimeoutMillis + " millis");
     uploadRepo.resetTimeout(cleanupTimeoutMillis);
   }
 }

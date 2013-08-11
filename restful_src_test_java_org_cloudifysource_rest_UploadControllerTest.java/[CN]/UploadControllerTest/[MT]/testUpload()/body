@@ -2,7 +2,7 @@
   File file=new File(TEST_FILE_PATH);
   UploadResponse uploadResponse=uploadFile(file,"testUpload");
   String uploadKey=uploadResponse.getUploadKey();
-  System.out.println("file has been uploaded. the upload key is " + uploadKey);
+  logger.log(Level.FINE,"file has been uploaded. the upload key is " + uploadKey);
   Assert.assertNotNull(uploadKey);
   assertUploadedFileExists(file,uploadKey);
 }

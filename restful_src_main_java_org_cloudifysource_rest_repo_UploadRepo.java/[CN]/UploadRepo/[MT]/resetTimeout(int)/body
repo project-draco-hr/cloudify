@@ -1,5 +1,7 @@
 {
-  logger.info("reset timeout to " + cleanupTimeoutMillis + " milliseconds.");
+  if (logger.isLoggable(Level.INFO)) {
+    logger.info("reset timeout to " + cleanupTimeoutMillis + " milliseconds.");
+  }
   this.setCleanupTimeoutMillis(cleanupTimeoutMillis);
   reset();
 }

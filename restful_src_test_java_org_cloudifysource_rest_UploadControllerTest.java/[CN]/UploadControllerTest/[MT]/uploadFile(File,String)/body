@@ -1,14 +1,14 @@
 {
-  System.out.println("[" + testName + "] - trying to upload file "+ file.getName()+ ", repo upload size limit in bytes: "+ uploadRepo.getUploadSizeLimitBytes()+ ", repo cleanup timeout in millis: "+ uploadRepo.getCleanupTimeoutMillis());
+  logger.log(Level.FINE,"[" + testName + "] - trying to upload file "+ file.getName()+ ", repo upload size limit in bytes: "+ uploadRepo.getUploadSizeLimitBytes()+ ", repo cleanup timeout in millis: "+ uploadRepo.getCleanupTimeoutMillis());
   MockHttpServletResponse response;
   try {
     response=testPostFile(versionedUploadUri,file);
   }
  catch (  Exception e) {
-    System.out.println("upload response thrown an exception: " + e.getMessage());
+    logger.log(Level.WARNING,"upload response thrown an exception: " + e.getMessage());
     throw e;
   }
-  System.out.println("upload response's content: " + response.getContentAsString());
+  logger.log(Level.FINE,"upload response's content: " + response.getContentAsString());
   ObjectMapper objectMapper=new ObjectMapper();
   Response<UploadResponse> readValue=objectMapper.readValue(response.getContentAsString(),new TypeReference<Response<UploadResponse>>(){
   }

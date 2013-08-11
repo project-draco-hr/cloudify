@@ -1,12 +1,12 @@
 {
   if (key == null) {
-    if (logger.isLoggable(Level.FINER)) {
-      logger.finer("failed to get uploaded file, key is null.");
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("failed to get uploaded file, key is null.");
     }
     return null;
   }
-  if (logger.isLoggable(Level.FINER)) {
-    logger.finer("Getting uploaded file with key " + key);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Getting uploaded file with key " + key);
   }
   if (restUploadDir == null) {
     if (logger.isLoggable(Level.WARNING)) {
@@ -26,26 +26,26 @@
   final File dir=new File(restUploadDir,key);
   if (dir.exists()) {
     if (!dir.isDirectory()) {
-      if (logger.isLoggable(Level.FINER)) {
-        logger.finer("The file found is not a directory [" + dir.getAbsolutePath() + "].");
+      if (logger.isLoggable(Level.WARNING)) {
+        logger.warning("The file found is not a directory [" + dir.getAbsolutePath() + "].");
       }
       return null;
     }
     final File[] listFiles=dir.listFiles();
     if (listFiles.length > 0) {
       final File uploadedFile=listFiles[0];
-      if (logger.isLoggable(Level.FINER)) {
-        logger.finer("Returning the found uploaded file [" + uploadedFile.getAbsolutePath() + "].");
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Returning the found uploaded file [" + uploadedFile.getAbsolutePath() + "].");
       }
       return uploadedFile;
     }
-    if (logger.isLoggable(Level.FINER)) {
-      logger.finer("The directory [" + dir.getAbsolutePath() + "] does not contain an uploaded file.");
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("The directory [" + dir.getAbsolutePath() + "] is empty.");
     }
   }
  else {
-    if (logger.isLoggable(Level.FINER)) {
-      logger.finer("No directory with name " + key + " was found at "+ restUploadDir.getAbsolutePath());
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("No directory with name " + key + " was found at "+ restUploadDir.getAbsolutePath());
     }
   }
   return null;
