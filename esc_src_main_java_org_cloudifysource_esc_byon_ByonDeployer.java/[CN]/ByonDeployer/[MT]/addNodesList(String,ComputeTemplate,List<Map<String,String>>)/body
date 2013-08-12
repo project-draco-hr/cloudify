@@ -13,7 +13,7 @@
       resolvedNodes.add(node);
     }
  catch (    final Exception ex) {
-      logger.log(Level.INFO,"Failed to resolve node: " + node.toShortString() + ", exception: "+ ex.getMessage(),ex);
+      logger.log(Level.WARNING,"Failed to resolve node: " + node.toShortString() + ", exception: "+ ex.getMessage(),ex);
       unresolvedNodes.add(node);
     }
   }

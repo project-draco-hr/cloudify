@@ -1,4 +1,5 @@
 {
+  logger.warning("Invalidaing node: " + serverName + " from template: "+ templateName);
   final Map<String,List<CustomNode>> templateLists=nodesListsByTemplates.get(templateName);
   if (templateLists == null || templateLists.isEmpty()) {
     throw new CloudProvisioningException("Failed to invalidate server. \"" + templateName + "\" is not a known template.");
