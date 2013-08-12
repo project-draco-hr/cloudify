@@ -1,0 +1,11 @@
+{
+  Set<? extends Location> allLocations=deployer.getAllLocations();
+  final List<String> ids=new ArrayList<String>();
+  for (  Location location : allLocations) {
+    if (locationId.equalsIgnoreCase(location.getId())) {
+      return;
+    }
+    ids.add(location.getId());
+  }
+  throw new CloudProvisioningException(getFormattedMessage("error_location_id_validation",locationId == null ? "" : locationId,Arrays.toString(ids.toArray())));
+}

@@ -41,6 +41,11 @@
       }
  catch (      Exception ex) {
         validationContext.validationEventEnd(ValidationResultType.ERROR);
+        if (apiId.equalsIgnoreCase(OPENSTACK_API) && this.isVerboseValidation) {
+          validateLocationID(locationId);
+          validateHardwareID(hardwareId);
+          validateImageID(imageId);
+        }
         throw new CloudProvisioningException(getFormattedMessage("error_image_hardware_location_combination_validation",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId,groovyFile,propertiesFile),ex);
       }
       if (isKnownAPI(apiId)) {
