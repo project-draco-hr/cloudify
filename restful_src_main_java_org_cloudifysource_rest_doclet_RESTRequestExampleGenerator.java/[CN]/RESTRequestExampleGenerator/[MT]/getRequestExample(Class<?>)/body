@@ -53,6 +53,10 @@
     setServiceInstancesRequest.setTimeout(RESTExamples.getTimeoutMinutes());
     example=setServiceInstancesRequest;
   }
+ else   if (AddTemplatesRequest.class.equals(clazz)) {
+    example=new AddTemplatesRequest();
+    ((AddTemplatesRequest)example).setUploadKey(RESTExamples.getUploadKey());
+  }
  else   if (MultipartFile.class.isAssignableFrom(clazz)) {
     example="file's content";
   }

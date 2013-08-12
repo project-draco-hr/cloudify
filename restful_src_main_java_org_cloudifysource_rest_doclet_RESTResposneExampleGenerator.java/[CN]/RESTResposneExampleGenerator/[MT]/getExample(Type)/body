@@ -97,11 +97,30 @@
     serviceInstanceDetails.setPublicIp(RESTExamples.getPublicIp());
     serviceInstanceDetails.setServiceInstanceName(RESTExamples.getInstanceName(serviceName,appName));
     serviceInstanceDetails.setServiceName(serviceName);
-    serviceInstanceDetails.setTemplateName(RESTExamples.getTemplateName());
+    serviceInstanceDetails.setTemplateName("SMALL_UBUNTU");
     example=serviceInstanceDetails;
   }
  else   if (ServiceDescription.class.equals(clazz)) {
     example=RESTExamples.getServicesDescription();
+  }
+ else   if (AddTemplatesResponse.class.equals(clazz)) {
+    example=new AddTemplatesResponse();
+    ((AddTemplatesResponse)example).setFailedToAddTempaltes(new HashMap<String,Map<String,String>>());
+    List<String> successfullyAddedTempaltes=new LinkedList<String>();
+    successfullyAddedTempaltes.add("SMALL_UBUNTU");
+    successfullyAddedTempaltes.add("SMALL_SUSE");
+    ((AddTemplatesResponse)example).setSuccessfullyAddedTempaltes(successfullyAddedTempaltes);
+  }
+ else   if (ListTemplatesResponse.class.equals(clazz)) {
+    example=new ListTemplatesResponse();
+    Map<String,ComputeTemplate> templates=new HashMap<String,ComputeTemplate>();
+    ComputeTemplateHolder templateHolder=RESTExamples.getTemplate();
+    templates.put(templateHolder.getName(),templateHolder.getCloudTemplate());
+    ((ListTemplatesResponse)example).setTemplates(templates);
+  }
+ else   if (GetTemplateResponse.class.equals(clazz)) {
+    example=new GetTemplateResponse();
+    ((GetTemplateResponse)example).setTemplate(RESTExamples.getTemplate().getCloudTemplate());
   }
  else   if (clazz.isPrimitive()) {
     example=PrimitiveExampleValues.getValue(clazz);
