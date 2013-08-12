@@ -1,0 +1,7 @@
+{
+  String publicLocalCloudIp=defaultValue;
+  if (System.getenv().containsKey(key)) {
+    publicLocalCloudIp=System.getenv().get(key);
+  }
+  return publicLocalCloudIp;
+}

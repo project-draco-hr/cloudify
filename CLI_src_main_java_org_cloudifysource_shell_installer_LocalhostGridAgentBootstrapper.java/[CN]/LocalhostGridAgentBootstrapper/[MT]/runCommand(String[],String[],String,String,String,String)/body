@@ -32,10 +32,12 @@
     }
     environment.put(CloudifyConstants.SPRING_SECURITY_CONFIG_FILE_ENV_VAR,securityFilePath);
     if (nicAddress != null) {
-      environment.put(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,nicAddress);
-      environment.put(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,nicAddress);
-      environment.put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,nicAddress);
-      environment.put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,nicAddress);
+      final String publicLocalCloudIp=getEnvWithDefault(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,nicAddress);
+      final String privateLocalCloudIp=getEnvWithDefault(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,nicAddress);
+      environment.put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PUBLIC_IP,publicLocalCloudIp);
+      environment.put(CloudifyConstants.GIGASPACES_AGENT_ENV_PUBLIC_IP,publicLocalCloudIp);
+      environment.put(CloudifyConstants.GIGASPACES_AGENT_ENV_PRIVATE_IP,privateLocalCloudIp);
+      environment.put(CloudifyConstants.CLOUDIFY_AGENT_ENV_PRIVATE_IP,privateLocalCloudIp);
       environment.put("NIC_ADDR",nicAddress);
     }
     environment.put("RMI_OPTIONS","");
