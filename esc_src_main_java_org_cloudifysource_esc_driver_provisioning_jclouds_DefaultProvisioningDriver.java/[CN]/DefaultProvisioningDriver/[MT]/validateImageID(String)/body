@@ -1,0 +1,11 @@
+{
+  Set<? extends Image> allImages=deployer.getAllImages();
+  final List<String> ids=new ArrayList<String>();
+  for (  Image image : allImages) {
+    if (imageId.equalsIgnoreCase(image.getId())) {
+      return;
+    }
+    ids.add(image.getId());
+  }
+  throw new CloudProvisioningException(getFormattedMessage("error_image_id_validation",imageId == null ? "" : imageId,Arrays.toString(ids.toArray())));
+}
