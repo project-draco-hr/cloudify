@@ -3,7 +3,7 @@
     Set<? extends Location> allLocations=deployer.getAllLocations();
     final List<String> ids=new ArrayList<String>();
     for (    Location location : allLocations) {
-      if (location.getId().equalsIgnoreCase(locationId)) {
+      if (location.getId().equals(locationId)) {
         return;
       }
       ids.add(location.getId());
