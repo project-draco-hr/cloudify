@@ -2,7 +2,7 @@
   final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   final MachineDetails md=createMachineDetailsForTemplate(template);
   md.setMachineId(node.getId());
-  md.setPrivateAddress(node.getHostName());
+  md.setPrivateAddress(node.getPrivateIP());
   md.setPublicAddress(node.getPublicIP());
   if (StringUtils.isNotBlank(node.getUsername()) && StringUtils.isNotBlank(node.getKeyFile())) {
     md.setRemoteUsername(node.getUsername());
