@@ -1,0 +1,15 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  sb.append(System.getProperty("line.separator"));
+  int index=1;
+  for (  String string : ids) {
+    if (index > MAX_VERBOSE_IDS_LENGTH) {
+      sb.append("etc...");
+      break;
+    }
+    sb.append(" - " + string);
+    sb.append(System.getProperty("line.separator"));
+    index++;
+  }
+  return sb.toString();
+}

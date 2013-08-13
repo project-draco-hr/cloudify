@@ -1,11 +1,14 @@
 {
-  Set<? extends Location> allLocations=deployer.getAllLocations();
-  final List<String> ids=new ArrayList<String>();
-  for (  Location location : allLocations) {
-    if (locationId.equalsIgnoreCase(location.getId())) {
-      return;
+  if (locationId != null) {
+    Set<? extends Location> allLocations=deployer.getAllLocations();
+    final List<String> ids=new ArrayList<String>();
+    for (    Location location : allLocations) {
+      if (location.getId().equalsIgnoreCase(locationId)) {
+        return;
+      }
+      ids.add(location.getId());
     }
-    ids.add(location.getId());
+    String message=createVerboseIdValidationMessage(ids);
+    throw new CloudProvisioningException(getFormattedMessage("error_location_id_validation",locationId,message));
   }
-  throw new CloudProvisioningException(getFormattedMessage("error_location_id_validation",locationId == null ? "" : locationId,Arrays.toString(ids.toArray())));
 }

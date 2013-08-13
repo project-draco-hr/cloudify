@@ -2,10 +2,11 @@
   final Set<? extends Hardware> allHardwareProfiles=deployer.getContext().getComputeService().listHardwareProfiles();
   final List<String> ids=new ArrayList<String>();
   for (  Hardware hardware : allHardwareProfiles) {
-    if (hardwareId.equalsIgnoreCase(hardware.getId())) {
+    if (hardware.getId().equalsIgnoreCase(hardwareId)) {
       return;
     }
     ids.add(hardware.getId());
   }
-  throw new CloudProvisioningException(getFormattedMessage("error_hardware_id_validation",hardwareId == null ? "" : hardwareId,Arrays.toString(ids.toArray())));
+  final String message=createVerboseIdValidationMessage(ids);
+  throw new CloudProvisioningException(getFormattedMessage("error_hardware_id_validation",hardwareId == null ? "" : hardwareId,message));
 }

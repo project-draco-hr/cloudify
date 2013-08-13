@@ -1,11 +1,12 @@
 {
-  Set<? extends Image> allImages=deployer.getAllImages();
-  final List<String> ids=new ArrayList<String>();
-  for (  Image image : allImages) {
-    if (imageId.equalsIgnoreCase(image.getId())) {
-      return;
+  Image img=deployer.getContext().getComputeService().getImage(imageId);
+  if (img == null) {
+    Set<? extends Image> allImages=deployer.getAllImages();
+    final List<String> ids=new ArrayList<String>();
+    for (    Image image : allImages) {
+      ids.add(image.getId());
     }
-    ids.add(image.getId());
+    final String message=createVerboseIdValidationMessage(ids);
+    throw new CloudProvisioningException(getFormattedMessage("error_image_id_validation",imageId == null ? "" : imageId,message));
   }
-  throw new CloudProvisioningException(getFormattedMessage("error_image_id_validation",imageId == null ? "" : imageId,Arrays.toString(ids.toArray())));
 }
