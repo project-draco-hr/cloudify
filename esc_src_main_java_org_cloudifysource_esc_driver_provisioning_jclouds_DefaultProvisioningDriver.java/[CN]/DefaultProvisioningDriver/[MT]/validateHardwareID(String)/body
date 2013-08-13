@@ -2,7 +2,7 @@
   final Set<? extends Hardware> allHardwareProfiles=deployer.getContext().getComputeService().listHardwareProfiles();
   final List<String> ids=new ArrayList<String>();
   for (  Hardware hardware : allHardwareProfiles) {
-    if (hardware.getId().equalsIgnoreCase(hardwareId)) {
+    if (hardware.getId().equals(hardwareId)) {
       return;
     }
     ids.add(hardware.getId());

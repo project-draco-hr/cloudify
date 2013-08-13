@@ -7,7 +7,7 @@
       sb.append("etc...");
       break;
     }
-    sb.append(" - " + string);
+    sb.append(string);
     sb.append(System.getProperty("line.separator"));
     index++;
   }
