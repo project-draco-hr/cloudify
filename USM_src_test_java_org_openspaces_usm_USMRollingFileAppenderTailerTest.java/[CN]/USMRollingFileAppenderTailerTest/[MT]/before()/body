@@ -1,4 +1,5 @@
 {
+  logger.addHandler(new ConsoleHandler());
   final File logDir=new File(logsDirectory);
   FileSystemUtils.deleteRecursively(logDir);
   logDir.mkdirs();
@@ -10,8 +11,8 @@
   rfp.setBufferSize(LOG_IO_BUFFER_SIZE_BYTES);
   rfp.setMaxBackupIndex(MAX_LOG_BACKUP_FILES);
   rfp.setMaxFileSize(MAX_LOG_FILE_SIZE);
-  logger.setLevel(Level.INFO);
-  logger.addAppender(rfp);
-  logger.getAllAppenders();
-  logger.info("Log directory: " + logDir.getAbsolutePath());
+  testLogger.setLevel(Level.INFO);
+  testLogger.addAppender(rfp);
+  testLogger.getAllAppenders();
+  testLogger.info("Log directory: " + logDir.getAbsolutePath());
 }

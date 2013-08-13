@@ -2,5 +2,6 @@
   int counter=0;
   String seporatedLines[]=loggedMessages.split("[\\r\\n]+");
   counter+=seporatedLines.length;
+  logger.log(java.util.logging.Level.INFO,"asserting number of lines tailed. expecting " + (NUMBER_OF_LINES_TO_LOG - counter) + " to be smaller then "+ EXPECTED_NUMBER_OF_FILE_PARTS);
   Assert.assertTrue(NUMBER_OF_LINES_TO_LOG - counter < EXPECTED_NUMBER_OF_FILE_PARTS);
 }

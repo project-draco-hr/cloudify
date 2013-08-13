@@ -6,10 +6,12 @@
     }
   }
 );
-  Assert.assertTrue(files.length == EXPECTED_NUMBER_OF_FILE_PARTS);
+  logger.log(java.util.logging.Level.INFO,"Asserting number of file parts is " + EXPECTED_NUMBER_OF_FILE_PARTS);
+  Assert.assertTrue("Was expecting " + EXPECTED_NUMBER_OF_FILE_PARTS + " files. Got "+ files.length,files.length == EXPECTED_NUMBER_OF_FILE_PARTS);
+  logger.log(java.util.logging.Level.INFO,"Asserting files do not exceed the maximal log file size " + MAX_LOG_FILE_SIZE_DOUBLE + 1);
   for (  File file : files) {
     long fileSize=file.length();
     double fileSizeInKB=(double)fileSize / LOG_IO_BUFFER_SIZE_BYTES;
-    Assert.assertTrue(fileSizeInKB < MAX_LOG_FILE_SIZE_DOUBLE + 1);
+    Assert.assertTrue("Expecting filesize " + fileSize + " to be smaller then max allowed size "+ MAX_LOG_FILE_SIZE_DOUBLE,fileSizeInKB < MAX_LOG_FILE_SIZE_DOUBLE + 1);
   }
 }
