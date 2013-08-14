@@ -13,7 +13,8 @@
       if (i == 2) {
         throw e;
       }
-      logger.log(Level.WARNING,"Failed validating connection to lus. " + "Attempting to reconnect.",e);
+      logger.log(Level.WARNING,"Failed validating connection to lus. " + "Error was: " + e.getMessage() + "Attempting to reconnect.",e);
     }
+    IOUtils.threadSleep(TWO_SECONDS_MILLI);
   }
 }
