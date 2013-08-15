@@ -1,6 +1,6 @@
 {
   final String protocol=getRestProtocol(permissionEvaluator != null);
-  final String baseUrl=protocol + "://" + host+ ":"+ port;
+  final String baseUrl=protocol + "://" + IPUtils.getSafeIpAddress(host)+ ":"+ port;
   final String apiVersion=PlatformVersion.getVersion();
   try {
     return new RestClientInternal(new URL(baseUrl),"","",apiVersion);
