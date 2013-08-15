@@ -1,0 +1,22 @@
+{
+  final String utilDomainClass=UTIL_DOMAIN_COMPLEMENTARY_CLASS;
+  try {
+    final Object utilDomainClassInstance=Class.forName(utilDomainClass).newInstance();
+    final Method getCloudDependentConfMethod=utilDomainClassInstance.getClass().getMethod(GET_CLOUD_DEPEDENT_CONFIG_METHOD_NAME);
+    CloudDependentConfigHolder holder=(CloudDependentConfigHolder)getCloudDependentConfMethod.invoke(utilDomainClassInstance,(Object[])null);
+    if (StringUtils.isEmpty(entity.getProvider().getCloudifyUrl())) {
+      entity.getProvider().setCloudifyUrl(holder.getDownloadUrl());
+    }
+    if (entity.getConfiguration().getComponents().getDiscovery().getDiscoveryPort() == null) {
+      entity.getConfiguration().getComponents().getDiscovery().setDiscoveryPort(holder.getDefaultLusPort());
+    }
+    if (entity.getConfiguration().getComponents().getRest().getPort() == null) {
+      entity.getConfiguration().getComponents().getRest().setPort(CloudifyConstants.DEFAULT_REST_PORT);
+    }
+    if (entity.getConfiguration().getComponents().getWebui().getPort() == null) {
+      entity.getConfiguration().getComponents().getWebui().setPort(CloudifyConstants.DEFAULT_WEBUI_PORT);
+    }
+  }
+ catch (  Exception e) {
+  }
+}

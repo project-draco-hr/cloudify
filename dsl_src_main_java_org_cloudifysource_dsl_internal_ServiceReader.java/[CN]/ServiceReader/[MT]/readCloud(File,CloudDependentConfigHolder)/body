@@ -1,9 +1,0 @@
-{
-  if (!dslFile.exists()) {
-    throw new FileNotFoundException(dslFile.getAbsolutePath());
-  }
-  final String dslContents=FileUtils.readFileToString(dslFile);
-  final Cloud cloud=readCloud(dslContents,dslFile);
-  setDependentCloudProperties(dependentConfig,cloud);
-  return cloud;
-}
