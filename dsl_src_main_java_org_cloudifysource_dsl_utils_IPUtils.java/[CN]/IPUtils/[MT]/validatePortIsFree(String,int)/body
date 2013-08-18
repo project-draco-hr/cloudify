@@ -1,17 +1,27 @@
 {
   ServerSocket serverSocket=null;
-  try {
-    InetSocketAddress socketAddress=new InetSocketAddress(host,port);
-    serverSocket=new ServerSocket();
-    serverSocket.bind(socketAddress);
-  }
-  finally {
-    if (serverSocket != null) {
-      try {
-        serverSocket.close();
-      }
- catch (      Exception e) {
+  IOException ex=null;
+  for (int i=0; i < PORT_VALIDATION_RETRY_COUNT; i++) {
+    try {
+      InetSocketAddress socketAddress=new InetSocketAddress(host,port);
+      serverSocket=new ServerSocket();
+      serverSocket.bind(socketAddress);
+      return;
+    }
+ catch (    final IOException e) {
+      ex=e;
+      IOUtils.threadSleep(MILLISECONDS_IN_A_SECOND * 2);
+    }
+ finally {
+      if (serverSocket != null) {
+        try {
+          serverSocket.close();
+          serverSocket=null;
+        }
+ catch (        Exception e) {
+        }
       }
     }
   }
+  throw ex;
 }
