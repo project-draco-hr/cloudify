@@ -1,0 +1,9 @@
+{
+  final Service service=validationContext.getService();
+  final StorageDetails storage=service.getStorage();
+  if (storage != null) {
+    String serviceTemplateName=storage.getTemplate();
+    Cloud cloud=validationContext.getCloud();
+    validateStorageTemplateExists(serviceTemplateName,cloud);
+  }
+}
