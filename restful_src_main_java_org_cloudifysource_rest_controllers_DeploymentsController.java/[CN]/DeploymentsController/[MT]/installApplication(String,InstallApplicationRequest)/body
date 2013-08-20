@@ -15,6 +15,7 @@
   request.setAuthGroups(effectiveAuthGroups);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());
   final String deploymentID=UUID.randomUUID().toString();
+  deleteApplicationScopeAttributes(request.getApplicationName());
   final ApplicationDeployerRunnable installer=new ApplicationDeployerRunnable(this,request,result,services,deploymentID,applicationOverridesFile);
   if (installer.isAsyncInstallPossibleForApplication()) {
     installer.run();

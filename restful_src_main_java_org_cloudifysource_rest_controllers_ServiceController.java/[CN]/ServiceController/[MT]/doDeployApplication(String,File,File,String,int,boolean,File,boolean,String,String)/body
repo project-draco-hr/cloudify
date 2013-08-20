@@ -15,6 +15,7 @@
   logger.log(Level.INFO,"Starting to poll for " + applicationName + " installation lifecycle events.");
   final UUID lifecycleEventContainerID=startPollingForLifecycleEvents(result.getApplication(),applicationName,timeout,TimeUnit.MINUTES);
   installer.setTaskPollingId(lifecycleEventContainerID);
+  deleteApplicationScopeAttributes(applicationName);
   if (installer.isAsyncInstallPossibleForApplication()) {
     installer.run();
   }

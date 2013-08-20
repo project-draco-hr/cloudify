@@ -29,6 +29,7 @@
  catch (  IOException e) {
     throw new RestErrorException("Failed reading cloud overrides file.",e);
   }
+  deleteServiceAttributes(appName,serviceName);
   final DeploymentConfig deployConfig=new DeploymentConfig();
   final String locators=extractLocators(restConfig.getAdmin());
   final Cloud cloud=restConfig.getCloud();

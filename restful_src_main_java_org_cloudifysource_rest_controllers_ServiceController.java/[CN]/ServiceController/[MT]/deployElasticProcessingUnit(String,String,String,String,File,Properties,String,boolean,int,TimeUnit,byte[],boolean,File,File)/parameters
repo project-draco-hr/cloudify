@@ -1,4 +1,4 @@
-String serviceName
+String absolutePUName
 String applicationName
 String authGroups
 String zone
