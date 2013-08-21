@@ -4,7 +4,7 @@
     httpClient=getSSLHttpClient(url);
   }
  else {
-    httpClient=new DefaultHttpClient();
+    httpClient=new SystemDefaultHttpClient();
   }
   final HttpParams httpParams=httpClient.getParams();
   HttpConnectionParams.setConnectionTimeout(httpParams,CloudifyConstants.DEFAULT_HTTP_CONNECTION_TIMEOUT);
