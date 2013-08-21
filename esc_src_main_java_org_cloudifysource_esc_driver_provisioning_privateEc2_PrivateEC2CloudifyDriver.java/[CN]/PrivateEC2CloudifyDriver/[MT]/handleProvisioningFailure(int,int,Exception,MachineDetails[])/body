@@ -1,0 +1,15 @@
+{
+  logger.severe("Of the required " + numberOfManagementMachines + " management machines, "+ numberOfErrors+ " failed to start.");
+  if (numberOfManagementMachines > numberOfErrors) {
+    logger.severe("Shutting down the other managememnt machines");
+    for (    final MachineDetails machineDetails : createdManagementMachines) {
+      if (machineDetails != null) {
+        logger.severe("Shutting down machine: " + machineDetails);
+        TerminateInstancesRequest terminateInstancesRequest=new TerminateInstancesRequest();
+        terminateInstancesRequest.setInstanceIds(Arrays.asList(machineDetails.getMachineId()));
+        ec2.terminateInstances(terminateInstancesRequest);
+      }
+    }
+  }
+  throw new CloudProvisioningException("One or more managememnt machines failed. The first encountered error was: " + firstCreationException.getMessage(),firstCreationException);
+}

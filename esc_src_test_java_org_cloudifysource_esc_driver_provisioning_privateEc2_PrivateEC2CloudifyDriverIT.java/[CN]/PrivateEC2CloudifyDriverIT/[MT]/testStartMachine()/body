@@ -1,0 +1,13 @@
+{
+  String cloudTemplateName="CFN_TEMPLATE";
+  ProvisioningContextImpl ctx=new ProvisioningContextImpl();
+  ProvisioningContextAccess.setCurrentProvisioingContext(ctx);
+  ctx.getInstallationDetailsBuilder().setCloud(this.cloud);
+  ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
+  ctx.getInstallationDetailsBuilder().setTemplate(template);
+  driver.setCustomDataFile(new File("./cloudify/cfn-templates/sampleApplication"));
+  driver.setConfig(cloud,cloudTemplateName,false,"someService");
+  MachineDetails md=driver.startMachine(null,60,TimeUnit.MINUTES);
+  assertNotNull(md.getPrivateAddress());
+  assertNotNull(md.getPublicAddress());
+}

@@ -1,0 +1,6 @@
+{
+  File file=new File("cloudify/clouds/privateEc2");
+  logger.info(file.getAbsolutePath());
+  cloud=ServiceReader.readCloudFromDirectory(file.getAbsolutePath(),null);
+  driver=new PrivateEC2CloudifyDriver();
+}

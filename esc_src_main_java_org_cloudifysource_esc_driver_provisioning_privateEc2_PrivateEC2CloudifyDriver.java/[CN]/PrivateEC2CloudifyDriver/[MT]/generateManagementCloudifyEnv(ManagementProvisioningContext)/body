@@ -1,0 +1,16 @@
+{
+  ComputeTemplate template=new ComputeTemplate();
+  template.setScriptLanguage(ScriptLanguages.LINUX_SHELL);
+  template.setRemoteDirectory("");
+  try {
+    MachineDetails machineDetails=new MachineDetails();
+    machineDetails.setRemoteDirectory(getManagerComputeTemplate().getRemoteDirectory());
+    MachineDetails[] mds={machineDetails};
+    String[] scripts=ctx.createManagementEnvironmentScript(mds,template);
+    return scripts[0];
+  }
+ catch (  FileNotFoundException e) {
+    logger.log(Level.SEVERE,"Couldn't find file: ",e.getMessage());
+    throw new CloudProvisioningException(e);
+  }
+}

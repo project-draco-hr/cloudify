@@ -1,0 +1,11 @@
+{
+  String managerCfnTemplateFile="./cloudify/clouds/privateEc2/privateEc2-cfn.template";
+  PrivateEc2Template template=driver.getManagerPrivateEc2Template(managerCfnTemplateFile);
+  Assert.assertNotNull(template);
+  logger.info(template.toString());
+  Assert.assertNotNull(template.getResources());
+  AWSEC2Instance awsec2Instance=(AWSEC2Instance)template.getEC2Instance();
+  Assert.assertNotNull(awsec2Instance.getProperties().getImageId());
+  List<VolumeMapping> volumes=awsec2Instance.getProperties().getVolumes();
+  Assert.assertNull(volumes);
+}

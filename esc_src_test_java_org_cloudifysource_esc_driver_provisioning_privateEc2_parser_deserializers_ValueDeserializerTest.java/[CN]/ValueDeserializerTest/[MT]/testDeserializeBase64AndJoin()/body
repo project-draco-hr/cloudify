@@ -1,0 +1,8 @@
+{
+  String template="{\"Value\": { \"Fn::Base64\" : { \"Fn::Join\" : [\" \", [\"hello\",\"pretty\",\"world\"]]}}}";
+  SimpleValue mapJson=ParserUtils.mapJson(SimpleValue.class,template);
+  assertNotNull(mapJson.getValueType());
+  String base64=StringUtils.newStringUtf8(Base64.encodeBase64("hello pretty world ".getBytes()));
+  Assert.assertThat(mapJson.getValueType().getValue(),CoreMatchers.is("hello pretty world "));
+  assertThat(((Base64Function)mapJson.getValueType()).getEncodedValue(),is(base64));
+}

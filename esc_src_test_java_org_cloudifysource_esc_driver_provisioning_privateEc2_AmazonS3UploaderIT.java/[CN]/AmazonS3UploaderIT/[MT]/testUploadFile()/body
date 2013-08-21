@@ -1,0 +1,4 @@
+{
+  String uploadFile=this.s3Uploader.uploadFile("cloudify-eu/test2",new File("./privateEc2.zip"));
+  System.out.println(uploadFile);
+}

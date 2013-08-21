@@ -1,0 +1,8 @@
+{
+  String locationId=availabilityZone;
+  String lastChar=availabilityZone.substring(availabilityZone.length() - 1,availabilityZone.length());
+  if (!NumberUtils.isDigits(lastChar)) {
+    locationId=availabilityZone.substring(0,availabilityZone.length() - 1);
+  }
+  return locationId;
+}

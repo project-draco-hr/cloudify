@@ -1,0 +1,14 @@
+{
+  ProvisioningContextImpl context=new ProvisioningContextImpl();
+  ProvisioningContextAccess.setCurrentManagementProvisioingContext(context);
+  context.getInstallationDetailsBuilder().setCloud(cloud);
+  cloud.getConfiguration().getComponents().getDiscovery().setDiscoveryPort(4174);
+  cloud.getCloudCompute().getTemplates().get("CFN_MANAGER_TEMPLATE").getCustom().put("cfnManagerTemplate","./cloudify/clouds/privateEc2/privateEc2-cfn.template");
+  String cloudTemplateName="CFN_MANAGER_TEMPLATE";
+  driver.setConfig(cloud,cloudTemplateName,true,"someService");
+  MachineDetails[] mds=driver.startManagementMachines(60,TimeUnit.MINUTES);
+  for (  MachineDetails md : mds) {
+    assertNotNull(md.getPrivateAddress());
+    assertNotNull(md.getPublicAddress());
+  }
+}

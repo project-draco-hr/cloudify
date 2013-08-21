@@ -1,0 +1,5 @@
+{
+  File zipFile=this.zipFolder(pathFolderToZip);
+  String s3Url=this.uploadFile(existingBucketName,zipFile);
+  return s3Url;
+}

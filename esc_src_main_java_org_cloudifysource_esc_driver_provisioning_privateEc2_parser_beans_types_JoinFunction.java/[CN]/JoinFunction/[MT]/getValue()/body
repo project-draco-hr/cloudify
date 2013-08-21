@@ -1,0 +1,7 @@
+{
+  StringBuilder sb=new StringBuilder();
+  for (  ValueType s : this.strings) {
+    sb.append(s.getValue()).append(this.separator);
+  }
+  return sb.toString();
+}

@@ -1,0 +1,10 @@
+{
+  String templateFile="./cfn_templates/WordPress_Single_Instance_With_RDS.template";
+  InputStream templateStream=ClassLoader.getSystemResourceAsStream(templateFile);
+  PrivateEc2Template template=ParserUtils.mapJson(PrivateEc2Template.class,templateStream);
+  assertNotNull(template);
+  assertNotNull(template.getEC2Instance());
+  assertNotNull(template.getEC2Instance().getProperties());
+  assertNotNull(template.getEC2Instance().getProperties().getImageId().getValue());
+  assertNull(template.getEC2Volume(null));
+}

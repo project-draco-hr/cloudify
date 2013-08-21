@@ -1,0 +1,13 @@
+{
+  List<AWSResource> resources=new ArrayList<AWSResource>();
+  if (JsonToken.START_OBJECT != jp.getCurrentToken()) {
+    throw ctxt.mappingException("Expected START OBJECT got: " + jp.getCurrentName());
+  }
+  while (JsonToken.END_OBJECT != jp.nextToken()) {
+    AWSResource deserialize=deserializeResource(jp,ctxt);
+    if (deserialize != null) {
+      resources.add(deserialize);
+    }
+  }
+  return resources;
+}

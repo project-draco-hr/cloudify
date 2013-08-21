@@ -1,0 +1,7 @@
+{
+  SimpleValue mapJson=ParserUtils.mapJson(SimpleValue.class,"{\"Value\": { \"Fn::Base64\" : \"hello world\" }}");
+  assertNotNull(mapJson.getValueType());
+  String helloWorldBase64=StringUtils.newStringUtf8(Base64.encodeBase64("hello world".getBytes()));
+  Assert.assertThat(mapJson.getValueType().getValue(),CoreMatchers.is("hello world"));
+  Assert.assertThat(((Base64Function)mapJson.getValueType()).getEncodedValue(),CoreMatchers.is(helloWorldBase64));
+}

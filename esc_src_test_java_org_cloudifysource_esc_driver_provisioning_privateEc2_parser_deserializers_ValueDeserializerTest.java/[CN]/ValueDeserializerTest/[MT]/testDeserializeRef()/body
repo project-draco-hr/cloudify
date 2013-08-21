@@ -1,0 +1,11 @@
+{
+  PrivateEc2Template template=ParserUtils.mapJson(PrivateEc2Template.class,new File("./src/test/resources/cfn_templates/ref.template"));
+  assertNotNull(template);
+  AWSEC2Instance ec2instance=template.getEC2Instance();
+  AWSEC2Volume volume=template.getEC2Volume("smallVolume");
+  assertNotNull(ec2instance);
+  assertNotNull(volume);
+  ValueType volumeId=ec2instance.getProperties().getVolumes().get(0).getVolumeId();
+  assertThat(volumeId,instanceOf(RefValue.class));
+  assertThat(volumeId.getValue(),equalTo(volume.getResourceName()));
+}

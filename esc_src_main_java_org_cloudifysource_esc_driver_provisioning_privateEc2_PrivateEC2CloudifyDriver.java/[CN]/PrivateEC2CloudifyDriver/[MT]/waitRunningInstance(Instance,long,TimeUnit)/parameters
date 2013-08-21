@@ -1,0 +1,3 @@
+Instance ec2instance
+long duration
+TimeUnit unit

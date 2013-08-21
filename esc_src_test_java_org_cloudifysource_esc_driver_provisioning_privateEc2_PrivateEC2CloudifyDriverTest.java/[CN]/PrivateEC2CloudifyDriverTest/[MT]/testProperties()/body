@@ -1,0 +1,8 @@
+{
+  driver.setCustomDataFile(new File("./src/test/resources/cfn_templates"));
+  PrivateEc2Template template=driver.getCFNTemplatePerService("externalConfig");
+  ValueType imageId=template.getEC2Instance().getProperties().getImageId();
+  assertThat(imageId.getValue(),is("ami-23d9a94a"));
+  ValueType keyName=template.getEC2Instance().getProperties().getKeyName();
+  assertThat(keyName.getValue(),is("cloudify"));
+}

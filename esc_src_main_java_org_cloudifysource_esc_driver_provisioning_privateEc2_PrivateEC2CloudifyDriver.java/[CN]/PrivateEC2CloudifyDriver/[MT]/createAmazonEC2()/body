@@ -1,0 +1,14 @@
+{
+  CloudUser user=cloud.getUser();
+  AWSCredentials credentials=new BasicAWSCredentials(user.getUser(),user.getApiKey());
+  AmazonEC2 ec2=new AmazonEC2Client(credentials);
+  String endpoint=(String)cloud.getCustom().get("endpoint");
+  if (endpoint != null) {
+    ec2.setEndpoint(endpoint);
+  }
+ else {
+    Region region=this.getRegion();
+    ec2.setRegion(region);
+  }
+  return ec2;
+}

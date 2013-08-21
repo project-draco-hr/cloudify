@@ -1,0 +1,4 @@
+{
+  List<Tag> additionalTags=Arrays.asList(new Tag(TK_NAME,ec2InstanceName));
+  this.createEC2Tags(ec2Instance.getInstanceId(),templateInstance.getProperties().getTags(),additionalTags);
+}

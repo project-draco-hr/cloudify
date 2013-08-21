@@ -1,0 +1,25 @@
+{
+  if (duration < 0) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
+  final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
+  if (org.apache.commons.lang.StringUtils.isBlank(managementMachinePrefix)) {
+    throw new CloudProvisioningException("The management group name is missing - can't locate existing servers!");
+  }
+  final MachineDetails[] existingManagementServers=this.getManagementServersMachineDetails();
+  if (existingManagementServers.length > 0) {
+    final String serverDescriptions=this.createExistingServersDescription(managementMachinePrefix,existingManagementServers);
+    throw new CloudProvisioningException("Found existing servers matching group " + managementMachinePrefix + ": "+ serverDescriptions);
+  }
+  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  MachineDetails[] createdMachines;
+  try {
+    createdMachines=this.doStartManagementMachines(numberOfManagementMachines,endTime,unit);
+  }
+ catch (  PrivateEc2ParserException e) {
+    throw new CloudProvisioningException(e);
+  }
+  return createdMachines;
+}

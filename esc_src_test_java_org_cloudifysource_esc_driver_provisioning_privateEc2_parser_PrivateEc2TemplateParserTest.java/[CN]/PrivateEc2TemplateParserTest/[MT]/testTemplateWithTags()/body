@@ -1,0 +1,7 @@
+{
+  InputStream templateStream=ClassLoader.getSystemResourceAsStream("./cfn_templates/tags.template");
+  PrivateEc2Template template=ParserUtils.mapJson(PrivateEc2Template.class,templateStream);
+  assertNotNull(template);
+  assertNotNull(template.getEC2Instance().getProperties().getTags());
+  assertFalse(template.getEC2Instance().getProperties().getTags().isEmpty());
+}

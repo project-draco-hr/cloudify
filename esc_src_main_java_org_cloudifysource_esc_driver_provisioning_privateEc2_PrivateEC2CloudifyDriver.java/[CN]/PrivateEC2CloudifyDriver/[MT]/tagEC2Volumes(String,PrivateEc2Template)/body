@@ -1,0 +1,24 @@
+{
+  List<VolumeMapping> volumeMappings=cfnTemplate.getEC2Instance().getProperties().getVolumes();
+  if (volumeMappings != null) {
+    DescribeVolumesRequest request=new DescribeVolumesRequest();
+    request.withFilters(new Filter("attachment.instance-id",Arrays.asList(instanceId)));
+    DescribeVolumesResult describeVolumes=ec2.describeVolumes(request);
+    for (    Volume volume : describeVolumes.getVolumes()) {
+      String volumeRef=null;
+      for (      VolumeMapping vMap : volumeMappings) {
+        String device=volume.getAttachments().get(0).getDevice();
+        if (device.equals(vMap.getDevice().getValue())) {
+          volumeRef=vMap.getVolumeId().getValue();
+          break;
+        }
+      }
+      if (volumeRef != null) {
+        AWSEC2Volume ec2Volume=cfnTemplate.getEC2Volume(volumeRef);
+        List<org.cloudifysource.esc.driver.provisioning.privateEc2.parser.beans.Tag> templateTags=ec2Volume == null ? null : ec2Volume.getProperties().getTags();
+        List<Tag> additionalTags=Arrays.asList(new Tag(TK_NAME,this.createNewName(TagResourceType.VOLUME,VOLUME_PREFIX)));
+        this.createEC2Tags(volume.getVolumeId(),templateTags,additionalTags);
+      }
+    }
+  }
+}

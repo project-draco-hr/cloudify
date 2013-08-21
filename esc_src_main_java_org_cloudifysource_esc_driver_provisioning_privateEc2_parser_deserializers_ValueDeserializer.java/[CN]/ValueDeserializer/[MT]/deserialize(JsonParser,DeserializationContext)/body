@@ -1,0 +1,5 @@
+{
+  ObjectCodec oc=jp.getCodec();
+  JsonNode node=oc.readTree(jp);
+  return this.functionValue(node,ctxt);
+}

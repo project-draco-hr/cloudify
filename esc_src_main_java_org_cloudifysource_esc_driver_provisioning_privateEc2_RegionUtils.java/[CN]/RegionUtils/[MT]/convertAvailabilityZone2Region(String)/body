@@ -1,0 +1,10 @@
+{
+  Region region;
+  String regionStr=availabilityZone;
+  String lastChar=availabilityZone.substring(availabilityZone.length() - 1,availabilityZone.length());
+  if (!NumberUtils.isDigits(lastChar)) {
+    regionStr=availabilityZone.substring(0,availabilityZone.length() - 1);
+  }
+  region=Region.getRegion(Regions.valueOf(regionStr.replaceAll("-","_").toUpperCase()));
+  return region;
+}

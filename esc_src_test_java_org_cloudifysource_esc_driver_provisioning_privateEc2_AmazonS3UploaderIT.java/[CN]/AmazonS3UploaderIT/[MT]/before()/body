@@ -1,0 +1,7 @@
+{
+  Properties awscredentials=new Properties();
+  awscredentials.load(new FileInputStream("./cloudify/clouds/privateEc2/privateEc2-cloud.properties"));
+  String accessKey=((String)awscredentials.get("accessKey")).replaceAll("\"","");
+  String secretKey=((String)awscredentials.get("apiKey")).replaceAll("\"","");
+  this.s3Uploader=new AmazonS3Uploader(accessKey,secretKey,"eu-west-1");
+}

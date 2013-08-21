@@ -1,0 +1,24 @@
+{
+  logger.fine("Properties file=" + propertiesFile.getName());
+  Properties props=new Properties();
+  props.load(new FileInputStream(propertiesFile));
+  String templateString=FileUtils.readFileToString(file);
+  Pattern p=Pattern.compile(PATTERN_PROPS_JSON);
+  Matcher m=p.matcher(templateString);
+  while (m.find()) {
+    String group=m.group();
+    String group1=m.group(1);
+    if (props.containsKey(group1)) {
+      String value=props.getProperty(group1);
+      if (logger.isLoggable(Level.FINEST)) {
+        logger.finest("Replacing property " + group + " by "+ value);
+      }
+      templateString=m.replaceFirst(group.replace(group1,value));
+      m=p.matcher(templateString);
+    }
+ else {
+      throw new IllegalStateException("Couldn't find property: " + group1);
+    }
+  }
+  return templateString;
+}

@@ -1,0 +1,16 @@
+{
+  if (jsonString == null) {
+    return null;
+  }
+  final ObjectMapper mapper=new ObjectMapper();
+  mapper.configure(Feature.USE_ANNOTATIONS,true);
+  mapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  T tokenResponse=null;
+  try {
+    tokenResponse=mapper.readValue(jsonString,clazz);
+  }
+ catch (  Exception e) {
+    throw new PrivateEc2ParserException(e);
+  }
+  return tokenResponse;
+}

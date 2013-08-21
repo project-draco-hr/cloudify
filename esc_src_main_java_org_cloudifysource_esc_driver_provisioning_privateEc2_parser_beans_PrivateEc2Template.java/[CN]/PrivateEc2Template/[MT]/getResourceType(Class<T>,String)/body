@@ -1,0 +1,15 @@
+{
+  for (  AWSResource resource : this.resources) {
+    if (clazz.isInstance(resource)) {
+      if (volumeName != null) {
+        if (volumeName.equals(resource.getResourceName())) {
+          return (T)resource;
+        }
+      }
+ else {
+        return (T)resource;
+      }
+    }
+  }
+  return null;
+}

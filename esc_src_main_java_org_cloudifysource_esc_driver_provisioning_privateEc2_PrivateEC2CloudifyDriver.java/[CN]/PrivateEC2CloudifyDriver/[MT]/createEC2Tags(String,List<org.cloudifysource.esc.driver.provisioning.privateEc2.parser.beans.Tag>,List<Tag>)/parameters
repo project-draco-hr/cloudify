@@ -1,0 +1,3 @@
+String resourceId
+List<org.cloudifysource.esc.driver.provisioning.privateEc2.parser.beans.Tag> templateTags
+List<Tag> additionalTags

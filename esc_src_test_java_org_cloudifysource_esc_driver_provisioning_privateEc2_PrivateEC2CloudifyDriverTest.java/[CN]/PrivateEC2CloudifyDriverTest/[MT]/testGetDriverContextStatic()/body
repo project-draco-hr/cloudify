@@ -1,0 +1,8 @@
+{
+  driver.setCustomDataFile(new File("./src/test/resources/cfn_templates/static-cfn.template"));
+  PrivateEc2Template template=(PrivateEc2Template)driver.getCFNTemplatePerService("static");
+  Assert.assertNotNull(template);
+  logger.info(template.toString());
+  Assert.assertNotNull(template.getResources());
+  Assert.assertNotNull(template.getEC2Instance().getProperties().getImageId());
+}

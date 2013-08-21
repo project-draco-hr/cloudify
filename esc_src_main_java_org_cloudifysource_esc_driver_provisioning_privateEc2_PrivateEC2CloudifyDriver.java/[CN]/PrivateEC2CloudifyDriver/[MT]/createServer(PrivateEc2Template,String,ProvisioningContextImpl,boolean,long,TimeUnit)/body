@@ -1,0 +1,12 @@
+{
+  Instance ec2Instance=this.createEC2Instance(cfnTemplate,ctx,management,duration,unit);
+  this.tagEC2Instance(ec2Instance,machineName,cfnTemplate.getEC2Instance());
+  this.tagEC2Volumes(ec2Instance.getInstanceId(),cfnTemplate);
+  MachineDetails md=new MachineDetails();
+  md.setMachineId(ec2Instance.getInstanceId());
+  md.setPrivateAddress(ec2Instance.getPrivateIpAddress());
+  md.setPublicAddress(ec2Instance.getPublicIpAddress());
+  md.setAgentRunning(true);
+  md.setCloudifyInstalled(true);
+  return md;
+}

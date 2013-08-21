@@ -1,0 +1,11 @@
+{
+  InputStream templateStream=ClassLoader.getSystemResourceAsStream("./cfn_templates/join.template");
+  PrivateEc2Template template=ParserUtils.mapJson(PrivateEc2Template.class,templateStream);
+  assertNotNull(template);
+  assertNotNull(template);
+  assertNotNull(template.getEC2Instance());
+  assertNotNull(template.getEC2Instance().getProperties());
+  assertNotNull(template.getEC2Instance().getProperties().getAvailabilityZone());
+  assertNotNull(template.getEC2Instance().getProperties().getUserData());
+  assertEquals("export NIC_ADDR=`hostname`\nexport JAVA_HOME=/home/ubuntu/java\n",template.getEC2Instance().getProperties().getUserData().getValue());
+}
