@@ -1,0 +1,10 @@
+{
+  final byte[] buffer=new byte[BUFFER_SIZE];
+  while (true) {
+    final int readCount=in.read(buffer);
+    if (readCount < 0) {
+      break;
+    }
+    out.write(buffer,0,readCount);
+  }
+}
