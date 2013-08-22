@@ -1,5 +1,5 @@
 {
-  Response<Object> responseWrapper=new Response<Object>();
+  RESTExampleRespone<Object> responseWrapper=new RESTExampleRespone<Object>();
   responseWrapper.setResponse(getExample(type));
   responseWrapper.setStatus("Success");
   responseWrapper.setMessage("Operation completed successfully");

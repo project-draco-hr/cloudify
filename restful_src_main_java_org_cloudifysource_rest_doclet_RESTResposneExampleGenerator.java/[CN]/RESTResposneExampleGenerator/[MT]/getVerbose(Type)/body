@@ -1,7 +1,10 @@
 {
   Class<?> clazz=ClassUtils.getClass(type.qualifiedTypeName());
   if (AddTemplatesResponse.class.equals(clazz)) {
-    return getIndentJson(new ObjectMapper().writeValueAsString(RESTExamples.getAddTemplatesResponseExample()));
+    AddTemplatesResponse example=RESTExamples.getAddTemplatesResponseExample();
+    String writeValueAsString=new ObjectMapper().writeValueAsString(example);
+    String indentJson=getIndentJson(writeValueAsString);
+    return example;
   }
   return null;
 }
