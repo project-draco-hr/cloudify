@@ -15,18 +15,9 @@
   request.setUploadKey(uploadKey);
   try {
     final AddTemplatesResponse response=newRestClient.addTemplates(request);
-    String result;
-    final Map<String,Map<String,String>> failedToAddTempaltes=response.getFailedToAddTempaltes();
-    final List<String> successfullyAddedTempaltes=response.getSuccessfullyAddedTempaltes();
-    if (failedToAddTempaltes.isEmpty()) {
-      result=getFormattedMessage("templates_added_successfully",Color.GREEN) + getFormatedAddedTemplateNamesList(successfullyAddedTempaltes);
-    }
- else {
-      result=getPartialFailureMessage(successfullyAddedTempaltes,failedToAddTempaltes);
-    }
-    return result;
+    return getFormattedMessage("templates_added_successfully",Color.GREEN) + getSuccessfulMessage(response);
   }
- catch (  RestClientException e) {
-    return getFailureMessage(expectedTemplates);
+ catch (  AddTemplatesException e) {
+    return getFailureMessage(e.getAddTemplatesResponse());
   }
 }

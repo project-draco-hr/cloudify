@@ -3,13 +3,13 @@
   try {
     deleteTemplateFile(templateName);
   }
- catch (  RestErrorException e) {
+ catch (  final RestErrorException e) {
     try {
       log(Level.FINE,"[removeTemplateFromCloud] - failed to remove template's files: " + e.getLocalizedMessage() + ", trying to remove the template from cloud's list.");
       removeTemplateFromCloudList(templateName);
       throw e;
     }
- catch (    RestErrorException e1) {
+ catch (    final RestErrorException e1) {
       log(Level.FINE,"[removeTemplateFromCloud] - failed to remove template from cloud list: " + e1.getLocalizedMessage());
       throw e;
     }

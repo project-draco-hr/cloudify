@@ -1,0 +1,26 @@
+{
+  AddTemplatesResponse addTemplatesResponse=e.getAddTemplatesResponse();
+  AddTemplatesStatus status=addTemplatesResponse.getStatus();
+  String messageId=CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName();
+  if (status == AddTemplatesStatus.PARTIAL_FAILURE) {
+    messageId=CloudifyErrorMessages.PARTLY_FAILED_TO_ADD_TEMPLATES.getName();
+  }
+  Object[] messageArgs={addTemplatesResponse.getTemplates()};
+  String formattedMessage;
+  try {
+    formattedMessage=messageSource.getMessage(messageId,messageArgs,Locale.US);
+  }
+ catch (  NoSuchMessageException ne) {
+    formattedMessage=messageId + " [" + Arrays.toString(messageArgs)+ "]";
+  }
+  Response<Void> finalResponse=new Response<Void>();
+  finalResponse.setStatus(status.getName());
+  finalResponse.setMessage(formattedMessage);
+  finalResponse.setMessageId(messageId);
+  finalResponse.setResponse(null);
+  String addTemplatesResponseAsString=OBJECT_MAPPER.writeValueAsString(e.getAddTemplatesResponse());
+  Logger.getLogger(BaseRestController.class.getName()).log(Level.INFO,"[handleAddTemplatesException] - create failed status response with verbose: " + addTemplatesResponseAsString);
+  finalResponse.setVerbose(addTemplatesResponseAsString);
+  String responseString=OBJECT_MAPPER.writeValueAsString(finalResponse);
+  response.getOutputStream().write(responseString.getBytes());
+}

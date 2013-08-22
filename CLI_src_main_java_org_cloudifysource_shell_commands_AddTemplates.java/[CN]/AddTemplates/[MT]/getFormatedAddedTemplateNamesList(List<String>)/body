@@ -1,5 +1,6 @@
 {
-  final StringBuilder sb=new StringBuilder(CloudifyConstants.NEW_LINE).append("Added ").append(templates.size()).append(" templates:");
+  int size=templates.size();
+  final StringBuilder sb=new StringBuilder(CloudifyConstants.NEW_LINE).append("The ").append(size).append(" template" + (size == 1 ? "" : "s") + " added:");
   for (  final String templateName : templates) {
     sb.append(CloudifyConstants.NEW_LINE).append(CloudifyConstants.TAB_CHAR).append(templateName);
   }

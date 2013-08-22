@@ -5,6 +5,9 @@
   String responseBody;
   if (statusCode != HttpStatus.SC_OK) {
     responseBody=getResponseBody(response);
+    if (logger.isLoggable(Level.FINE)) {
+      logger.log(Level.FINE,"[checkForError] - REST request to " + requestUri + "  failed. status code is: "+ statusCode+ ", response body is: "+ responseBody);
+    }
     try {
       final Response<Void> entity=new ObjectMapper().readValue(responseBody,new TypeReference<Response<Void>>(){
       }
@@ -12,7 +15,9 @@
       throw new RestClientResponseException(entity.getMessageId(),entity.getMessage(),statusCode,reasonPhrase,entity.getVerbose());
     }
  catch (    final IOException e) {
-      logger.log(Level.INFO,"[checkForError] - REST request to " + requestUri + "  failed and the response is not in the correct format: "+ responseBody);
+      if (logger.isLoggable(Level.WARNING)) {
+        logger.log(Level.WARNING,"[checkForError] - failed to read response. responseBody: " + responseBody + ", reasonPhrase:"+ reasonPhrase);
+      }
       throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,requestUri);
     }
   }

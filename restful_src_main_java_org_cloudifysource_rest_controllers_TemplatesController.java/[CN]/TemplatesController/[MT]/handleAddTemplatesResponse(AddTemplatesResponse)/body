@@ -1,0 +1,33 @@
+{
+  final Map<String,AddTemplateResponse> templatesResponse=addTemplatesResponse.getTemplates();
+  boolean atLeastOneFailed=false;
+  boolean atLeastOneSucceeded=false;
+  for (  final AddTemplateResponse templateResponse : templatesResponse.values()) {
+    final Map<String,String> failedToAddHosts=templateResponse.getFailedToAddHosts();
+    if (failedToAddHosts != null && !failedToAddHosts.isEmpty()) {
+      atLeastOneFailed=true;
+      if (atLeastOneSucceeded) {
+        break;
+      }
+    }
+    final List<String> successfullyAddedHosts=templateResponse.getSuccessfullyAddedHosts();
+    if (successfullyAddedHosts != null && !successfullyAddedHosts.isEmpty()) {
+      atLeastOneSucceeded=true;
+      if (atLeastOneFailed) {
+        break;
+      }
+    }
+  }
+  if (atLeastOneFailed) {
+    if (atLeastOneSucceeded) {
+      log(Level.WARNING,"[addTemplates] - Partial failure: " + templatesResponse);
+      addTemplatesResponse.setStatus(AddTemplatesStatus.PARTIAL_FAILURE);
+      throw new AddTemplatesException(addTemplatesResponse);
+    }
+    log(Level.WARNING,"[addTemplates] - Failed to add all templates: " + templatesResponse);
+    addTemplatesResponse.setStatus(AddTemplatesStatus.FAILURE);
+    throw new AddTemplatesException(addTemplatesResponse);
+  }
+  addTemplatesResponse.setStatus(AddTemplatesStatus.SUCCESS);
+  log(Level.INFO,"[addTemplatesToRestInstances] - successfully added all templates to all (" + addTemplatesResponse.getInstances().size() + ") REST instances.");
+}

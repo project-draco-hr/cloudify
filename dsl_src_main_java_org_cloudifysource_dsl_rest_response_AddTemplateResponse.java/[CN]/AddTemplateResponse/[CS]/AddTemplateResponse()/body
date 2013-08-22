@@ -1,0 +1,4 @@
+{
+  failedToAddHosts=new HashMap<String,String>();
+  successfullyAddedHosts=new LinkedList<String>();
+}

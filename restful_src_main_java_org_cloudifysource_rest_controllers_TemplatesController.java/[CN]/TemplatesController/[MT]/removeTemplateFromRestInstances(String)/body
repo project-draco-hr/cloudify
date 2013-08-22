@@ -5,10 +5,10 @@
   final Map<String,String> failedToRemoveFromHosts=new HashMap<String,String>();
   final List<String> successfullyRemovedFromHosts=new LinkedList<String>();
   for (  final ProcessingUnitInstance puInstance : instances) {
-    String hostAddress=puInstance.getMachine().getHostAddress();
+    final String hostAddress=puInstance.getMachine().getHostAddress();
     final String port=Integer.toString(puInstance.getJeeDetails().getPort());
     try {
-      RestClientInternal client=createRestClientInternal(hostAddress,port);
+      final RestClientInternal client=createRestClientInternal(hostAddress,port);
       log(Level.INFO,"sending request to " + hostAddress);
       client.removeTemplateInternal(templateName);
     }

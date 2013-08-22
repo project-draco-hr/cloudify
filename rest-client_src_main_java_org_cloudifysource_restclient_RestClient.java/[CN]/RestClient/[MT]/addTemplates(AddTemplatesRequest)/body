@@ -1,6 +1,25 @@
 {
-  final String addTempaltesInternalUrl=getFormattedUrl(versionedTemplatesControllerUrl,ADD_TEMPALTES_URL_FORMAT);
-  return executor.postObject(addTempaltesInternalUrl,request,new TypeReference<Response<AddTemplatesResponse>>(){
-  }
+  final String addTempaltesUrl=getFormattedUrl(versionedTemplatesControllerUrl,ADD_TEMPALTES_URL_FORMAT);
+  AddTemplatesResponse response=null;
+  try {
+    response=executor.postObject(addTempaltesUrl,request,new TypeReference<Response<AddTemplatesResponse>>(){
+    }
 );
+  }
+ catch (  RestClientException e) {
+    String verbose=e.getVerbose();
+    try {
+      response=new ObjectMapper().readValue(verbose,AddTemplatesResponse.class);
+      throw new AddTemplatesException(response);
+    }
+ catch (    JsonProcessingException e1) {
+      logger.warning("Failed to process exception, got JsonProcessingException: " + e1.getMessage());
+      throw e;
+    }
+catch (    IOException e1) {
+      logger.warning("Failed to process exception, got IOException: " + e1.getMessage());
+      throw e;
+    }
+  }
+  return response;
 }

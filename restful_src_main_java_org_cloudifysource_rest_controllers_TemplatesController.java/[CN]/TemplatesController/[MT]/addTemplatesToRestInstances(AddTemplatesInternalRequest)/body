@@ -1,53 +1,50 @@
 {
-  final Map<String,Map<String,String>> failedToAddTempaltes=new HashMap<String,Map<String,String>>();
-  final List<String> successfullyAddedTemplates=new LinkedList<String>();
-  successfullyAddedTemplates.addAll(request.getExpectedTemplates());
-  int failedHostCount=0;
+  final Map<String,AddTemplateResponse> templatesResponse=new HashMap<String,AddTemplateResponse>();
   final ProcessingUnitInstance[] instances=admin.getProcessingUnits().waitFor("rest",RestUtils.TIMEOUT_IN_SECOND,TimeUnit.SECONDS).getInstances();
+  final List<String> instancesList=new ArrayList<String>(instances.length);
   log(Level.INFO,"[addTemplatesToRestInstances] - sending add-templates request to " + instances.length + " instances.");
   for (  final ProcessingUnitInstance puInstance : instances) {
-    final String port=Integer.toString(puInstance.getJeeDetails().getPort());
-    String hostAddress=puInstance.getMachine().getHostAddress();
+    final String hostAddress=puInstance.getMachine().getHostAddress();
+    instancesList.add(hostAddress);
     log(Level.INFO,"[addTemplatesToRestInstances] - sending request to " + hostAddress);
-    final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,port,request);
+    final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,Integer.toString(puInstance.getJeeDetails().getPort()),request);
     final Map<String,String> failedToAddTempaltesToHost=instanceResponse.getFailedToAddTempaltesAndReasons();
-    if (failedToAddTempaltesToHost != null && !failedToAddTempaltesToHost.isEmpty()) {
+    final List<String> addedTempaltes=instanceResponse.getAddedTempaltes();
+    if (failedToAddTempaltesToHost != null) {
       for (      final Entry<String,String> entry : failedToAddTempaltesToHost.entrySet()) {
-        final String templateName=entry.getKey();
-        final String reason=entry.getValue();
-        successfullyAddedTemplates.remove(templateName);
-        Map<String,String> templateFailedPUs=failedToAddTempaltes.get(templateName);
-        if (templateFailedPUs == null) {
-          templateFailedPUs=new HashMap<String,String>();
+        log(Level.WARNING,"[addTemplatesToRestInstances] - failed to add templates to host [" + hostAddress + "]: "+ failedToAddTempaltesToHost);
+        AddTemplateResponse addTemplateResponse=templatesResponse.get(entry.getKey());
+        if (addTemplateResponse == null) {
+          addTemplateResponse=new AddTemplateResponse();
         }
-        templateFailedPUs.put(hostAddress,reason);
-        failedToAddTempaltes.put(templateName,templateFailedPUs);
-      }
-      final List<String> addedTempaltes=instanceResponse.getAddedTempaltes();
-      log(Level.WARNING,"[addTemplatesToRestInstances] - failed to add templates to host [" + hostAddress + "]: "+ failedToAddTempaltesToHost);
-      if (addedTempaltes == null || addedTempaltes.isEmpty()) {
-        failedHostCount++;
-      }
- else {
-        log(Level.WARNING,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "]: "+ addedTempaltes);
+        Map<String,String> failedHostsReasons=addTemplateResponse.getFailedToAddHosts();
+        if (failedHostsReasons == null) {
+          failedHostsReasons=new HashMap<String,String>();
+        }
+        failedHostsReasons.put(hostAddress,entry.getValue());
+        addTemplateResponse.setFailedToAddHosts(failedHostsReasons);
+        templatesResponse.put(entry.getKey(),addTemplateResponse);
       }
     }
- else {
-      log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "].");
+    if (addedTempaltes != null) {
+      for (      final String templateName : addedTempaltes) {
+        log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "]: "+ addedTempaltes);
+        AddTemplateResponse addTemplateResponse=templatesResponse.get(templateName);
+        if (addTemplateResponse == null) {
+          addTemplateResponse=new AddTemplateResponse();
+        }
+        List<String> successfullyAddedHosts=addTemplateResponse.getSuccessfullyAddedHosts();
+        if (successfullyAddedHosts == null) {
+          successfullyAddedHosts=new LinkedList<String>();
+        }
+        successfullyAddedHosts.add(hostAddress);
+        addTemplateResponse.setSuccessfullyAddedHosts(successfullyAddedHosts);
+        templatesResponse.put(templateName,addTemplateResponse);
+      }
     }
-  }
-  if (instances.length == failedHostCount) {
-    log(Level.WARNING,"[sendAddTemplatesToRestInstances] - Failed to add templates: " + failedToAddTempaltes);
-    throw new RestErrorException(CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName(),failedToAddTempaltes.toString());
-  }
-  if (failedToAddTempaltes.isEmpty()) {
-    log(Level.INFO,"successfully added all templates to all " + instances.length + " REST instances.");
-  }
- else {
-    log(Level.INFO,"successfully added tempaltes: " + successfullyAddedTemplates + ", failed to be added templates: "+ failedToAddTempaltes);
   }
   final AddTemplatesResponse response=new AddTemplatesResponse();
-  response.setFailedToAddTempaltes(failedToAddTempaltes);
-  response.setSuccessfullyAddedTempaltes(successfullyAddedTemplates);
+  response.setInstances(instancesList);
+  response.setTemplates(templatesResponse);
   return response;
 }

@@ -1,7 +1,7 @@
 {
   AddTemplatesInternalResponse instanceResponse;
   try {
-    RestClientInternal client=createRestClientInternal(host,port);
+    final RestClientInternal client=createRestClientInternal(host,port);
     instanceResponse=client.addTemplatesInternal(request);
   }
  catch (  final RestClientException e) {

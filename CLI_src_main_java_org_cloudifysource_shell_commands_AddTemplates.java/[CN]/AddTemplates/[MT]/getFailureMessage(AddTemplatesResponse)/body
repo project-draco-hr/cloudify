@@ -1,0 +1,24 @@
+{
+  List<String> instances=addTemplatesResponse.getInstances();
+  int size=instances.size();
+  StringBuilder sb=new StringBuilder("Add templates to " + size + " REST instance"+ (size == 1 ? " " : "s ")+ instances+ " resulted with ");
+  if (AddTemplatesStatus.PARTIAL_FAILURE.equals(addTemplatesResponse.getStatus())) {
+    sb.append("partial failure (at least one template failed to be added to at least one REST instance):");
+  }
+ else {
+    sb.append("failure (all templates failed to be added to all REST instances):");
+  }
+  sb.append(CloudifyConstants.NEW_LINE);
+  Map<String,AddTemplateResponse> templates=addTemplatesResponse.getTemplates();
+  Map<String,Map<String,String>> resultMap=new HashMap<String,Map<String,String>>();
+  ObjectMapper objectMapper=new ObjectMapper();
+  for (  Entry<String,AddTemplateResponse> entry : templates.entrySet()) {
+    AddTemplateResponse addTemplateResponse=entry.getValue();
+    Map<String,String> templateResultMap=new HashMap<String,String>();
+    templateResultMap.put("failed to add to",objectMapper.writeValueAsString(addTemplateResponse.getFailedToAddHosts()));
+    templateResultMap.put("successfully added to",objectMapper.writeValueAsString(addTemplateResponse.getSuccessfullyAddedHosts()));
+    resultMap.put(entry.getKey(),templateResultMap);
+  }
+  sb.append(getIndentJson(objectMapper.writeValueAsString(resultMap)));
+  return sb.toString().replaceAll("\"","").replaceAll("\\\\","");
+}

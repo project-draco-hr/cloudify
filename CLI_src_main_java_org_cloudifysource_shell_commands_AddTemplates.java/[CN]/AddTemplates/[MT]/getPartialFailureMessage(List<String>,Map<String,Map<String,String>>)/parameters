@@ -1,2 +1,0 @@
-List<String> successfullyAddedTempaltes
-Map<String,Map<String,String>> failedToAddTempaltes

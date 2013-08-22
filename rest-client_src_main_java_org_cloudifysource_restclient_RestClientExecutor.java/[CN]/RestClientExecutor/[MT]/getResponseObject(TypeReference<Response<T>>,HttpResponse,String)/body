@@ -6,6 +6,9 @@
     return response.getResponse();
   }
  catch (  IOException e) {
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.finer("failed to read the responseBody (of request to " + url + ")."+ ", error was "+ e.getMessage());
+    }
     StatusLine statusLine=httpResponse.getStatusLine();
     String reasonPhrase=statusLine.getReasonPhrase();
     throw MessagesUtils.createRestClientHttpException(e,statusLine.getStatusCode(),reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,url);

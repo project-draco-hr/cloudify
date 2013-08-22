@@ -9,9 +9,11 @@
       throw new RestErrorException(CloudifyMessageKeys.WRONG_TEMPLATES_UPLOAD_KEY.getName(),uploadKey);
     }
     final AddTemplatesInternalRequest internalRequest=createInternalRequest(request,templatesZippedFolder);
-    List<String> expectedTemplates=internalRequest.getExpectedTemplates();
+    final List<String> expectedTemplates=internalRequest.getExpectedTemplates();
     log(Level.INFO,"expecting to add " + expectedTemplates.size() + " templates: "+ expectedTemplates);
-    return addTemplatesToRestInstances(internalRequest);
+    final AddTemplatesResponse addTemplatesToRestInstances=addTemplatesToRestInstances(internalRequest);
+    handleAddTemplatesResponse(addTemplatesToRestInstances);
+    return addTemplatesToRestInstances;
   }
   finally {
     if (templatesZippedFolder != null) {

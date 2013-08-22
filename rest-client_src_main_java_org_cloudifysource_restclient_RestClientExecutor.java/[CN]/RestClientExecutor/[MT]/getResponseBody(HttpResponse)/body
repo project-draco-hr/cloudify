@@ -17,7 +17,9 @@
         instream.close();
       }
  catch (      IOException e) {
-        logger.warning(e.getMessage());
+        if (logger.isLoggable(Level.WARNING)) {
+          logger.warning(e.getMessage());
+        }
       }
     }
   }

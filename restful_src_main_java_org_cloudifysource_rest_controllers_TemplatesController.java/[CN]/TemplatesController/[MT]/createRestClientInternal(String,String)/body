@@ -5,7 +5,7 @@
   try {
     return new RestClientInternal(new URL(baseUrl),"","",apiVersion);
   }
- catch (  MalformedURLException e) {
+ catch (  final MalformedURLException e) {
     throw new RestClientException(CloudifyErrorMessages.FAILED_CREATE_REST_CLIENT.getName(),"failed to create REST client",ExceptionUtils.getFullStackTrace(e));
   }
 }
