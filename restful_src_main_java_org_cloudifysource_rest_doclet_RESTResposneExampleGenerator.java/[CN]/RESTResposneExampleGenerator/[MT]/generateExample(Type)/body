@@ -4,5 +4,6 @@
   responseWrapper.setStatus("Success");
   responseWrapper.setMessage("Operation completed successfully");
   responseWrapper.setMessageId(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName());
+  responseWrapper.setVerbose(getVerbose(type));
   return new ObjectMapper().writeValueAsString(responseWrapper);
 }

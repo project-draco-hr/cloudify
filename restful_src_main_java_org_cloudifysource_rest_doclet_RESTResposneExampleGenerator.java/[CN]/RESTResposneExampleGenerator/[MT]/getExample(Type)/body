@@ -104,10 +104,7 @@
     example=RESTExamples.getServicesDescription();
   }
  else   if (AddTemplatesResponse.class.equals(clazz)) {
-    example=new AddTemplatesResponse();
-    List<String> successfullyAddedTempaltes=new LinkedList<String>();
-    successfullyAddedTempaltes.add("SMALL_UBUNTU");
-    successfullyAddedTempaltes.add("SMALL_SUSE");
+    example=null;
   }
  else   if (ListTemplatesResponse.class.equals(clazz)) {
     example=new ListTemplatesResponse();

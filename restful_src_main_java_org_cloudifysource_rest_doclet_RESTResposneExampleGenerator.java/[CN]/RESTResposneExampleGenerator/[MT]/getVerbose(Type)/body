@@ -1,0 +1,7 @@
+{
+  Class<?> clazz=ClassUtils.getClass(type.qualifiedTypeName());
+  if (AddTemplatesResponse.class.equals(clazz)) {
+    return getIndentJson(new ObjectMapper().writeValueAsString(RESTExamples.getAddTemplatesResponseExample()));
+  }
+  return null;
+}
