@@ -1,7 +1,7 @@
 {
   Object methodReturnObject=null;
   Map<String,Object> model=modelAndView.getModel();
-  if (MapUtils.isNotEmpty(model)) {
+  if (model != null && !model.isEmpty()) {
     for (    Map.Entry<String,Object> entry : model.entrySet()) {
       Object value=entry.getValue();
       if (!(value instanceof BindingResult)) {
