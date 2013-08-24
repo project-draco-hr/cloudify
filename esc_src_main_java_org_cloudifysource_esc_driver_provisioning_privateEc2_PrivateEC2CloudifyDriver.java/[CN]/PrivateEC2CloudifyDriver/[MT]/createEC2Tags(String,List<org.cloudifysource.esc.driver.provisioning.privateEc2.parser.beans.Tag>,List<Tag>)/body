@@ -1,7 +1,7 @@
 {
-  List<Tag> tags=new ArrayList<Tag>();
+  final List<Tag> tags=new ArrayList<Tag>();
   if (templateTags != null) {
-    for (    org.cloudifysource.esc.driver.provisioning.privateEc2.parser.beans.Tag tag : templateTags) {
+    for (    final org.cloudifysource.esc.driver.provisioning.privateEc2.parser.beans.Tag tag : templateTags) {
       tags.add(tag.convertToEC2Model());
     }
   }
@@ -10,7 +10,7 @@
   }
   if (!tags.isEmpty()) {
     logger.fine("Tag resourceId=" + resourceId + " tags="+ tags);
-    CreateTagsRequest ctr=new CreateTagsRequest();
+    final CreateTagsRequest ctr=new CreateTagsRequest();
     ctr.setTags(tags);
     ctr.withResources(resourceId);
     this.ec2.createTags(ctr);

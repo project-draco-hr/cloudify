@@ -14,11 +14,11 @@ break;
 default :
 throw new CloudProvisioningException("ResourceType not supported");
 }
-DescribeTagsRequest tagRequest=new DescribeTagsRequest();
+final DescribeTagsRequest tagRequest=new DescribeTagsRequest();
 tagRequest.withFilters(new Filter("resource-type",Arrays.asList(resourceType.getValue())));
 tagRequest.withFilters(new Filter("value",Arrays.asList(newName)));
-DescribeTagsResult describeTags=ec2.describeTags(tagRequest);
-List<TagDescription> tags=describeTags.getTags();
+final DescribeTagsResult describeTags=ec2.describeTags(tagRequest);
+final List<TagDescription> tags=describeTags.getTags();
 if (tags == null || tags.isEmpty()) {
 foundFreeName=true;
 break;

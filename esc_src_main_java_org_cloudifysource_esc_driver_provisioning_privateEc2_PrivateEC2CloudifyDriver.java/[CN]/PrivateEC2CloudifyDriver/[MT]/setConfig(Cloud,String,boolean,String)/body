@@ -9,9 +9,8 @@
   }
   try {
     if (management) {
-      ComputeTemplate managerTemplate=this.getManagerComputeTemplate();
-      String managerCfnTemplateFile=(String)managerTemplate.getCustom().get("cfnManagerTemplate");
-      this.privateEc2Template=this.getManagerPrivateEc2Template(managerCfnTemplateFile);
+      final ComputeTemplate managerTemplate=this.getManagerComputeTemplate();
+      managerCfnTemplateFileName=(String)managerTemplate.getCustom().get("cfnManagerTemplate");
     }
  else {
       this.privateEc2Template=cfnTemplatePerService.get(this.serviceName);
@@ -21,13 +20,7 @@
     }
     this.ec2=this.createAmazonEC2();
   }
- catch (  CloudProvisioningException e) {
-    throw new IllegalArgumentException(e);
-  }
-catch (  PrivateEc2ParserException e) {
-    throw new IllegalArgumentException(e);
-  }
-catch (  IOException e) {
+ catch (  final CloudProvisioningException e) {
     throw new IllegalArgumentException(e);
   }
 }

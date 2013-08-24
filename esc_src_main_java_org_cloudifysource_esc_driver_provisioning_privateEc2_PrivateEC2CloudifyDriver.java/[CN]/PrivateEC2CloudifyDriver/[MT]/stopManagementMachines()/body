@@ -1,10 +1,10 @@
 {
-  MachineDetails[] managementServersMachineDetails=this.getManagementServersMachineDetails();
-  List<String> ids=new ArrayList<String>(managementServersMachineDetails.length);
-  for (  MachineDetails machineDetails : managementServersMachineDetails) {
+  final MachineDetails[] managementServersMachineDetails=this.getManagementServersMachineDetails();
+  final List<String> ids=new ArrayList<String>(managementServersMachineDetails.length);
+  for (  final MachineDetails machineDetails : managementServersMachineDetails) {
     ids.add(machineDetails.getMachineId());
   }
-  TerminateInstancesRequest terminateInstancesRequest=new TerminateInstancesRequest();
+  final TerminateInstancesRequest terminateInstancesRequest=new TerminateInstancesRequest();
   terminateInstancesRequest.setInstanceIds(ids);
   logger.info("Terminating management instances... " + terminateInstancesRequest);
   ec2.terminateInstances(terminateInstancesRequest);

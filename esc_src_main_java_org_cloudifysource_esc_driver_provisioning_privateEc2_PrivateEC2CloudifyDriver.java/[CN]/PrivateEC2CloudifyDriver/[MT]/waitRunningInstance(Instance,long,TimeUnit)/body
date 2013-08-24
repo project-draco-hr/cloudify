@@ -1,12 +1,12 @@
 {
-  long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   while (System.currentTimeMillis() < endTime) {
-    DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
+    final DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
     describeRequest.setInstanceIds(Arrays.asList(ec2instance.getInstanceId()));
-    DescribeInstancesResult describeInstances=this.ec2.describeInstances(describeRequest);
-    for (    Reservation resa : describeInstances.getReservations()) {
-      for (      Instance instance : resa.getInstances()) {
-        InstanceStateType state=InstanceStateType.valueOf(instance.getState().getCode());
+    final DescribeInstancesResult describeInstances=this.ec2.describeInstances(describeRequest);
+    for (    final Reservation resa : describeInstances.getReservations()) {
+      for (      final Instance instance : resa.getInstances()) {
+        final InstanceStateType state=InstanceStateType.valueOf(instance.getState().getCode());
         if (logger.isLoggable(Level.FINER)) {
           logger.finer("instance= " + instance.getInstanceId() + " state="+ state);
         }
@@ -18,7 +18,7 @@ case PENDING:
             }
             Thread.sleep(WAIT_STATUS_SLEEP_TIME);
           }
- catch (          InterruptedException e) {
+ catch (          final InterruptedException e) {
             Thread.currentThread().interrupt();
           }
         break;

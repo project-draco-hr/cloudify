@@ -1,11 +1,11 @@
 {
   try {
-    DescribeInstancesRequest request=new DescribeInstancesRequest();
+    final DescribeInstancesRequest request=new DescribeInstancesRequest();
     request.withFilters(new Filter("instance-state-name",Arrays.asList(InstanceStateType.RUNNING.getName())),new Filter("tag-key",Arrays.asList("Name")),new Filter("tag-value",Arrays.asList(cloud.getProvider().getManagementGroup() + "*")));
-    DescribeInstancesResult describeInstances=ec2.describeInstances(request);
+    final DescribeInstancesResult describeInstances=ec2.describeInstances(request);
     return describeInstances;
   }
- catch (  AmazonServiceException e) {
+ catch (  final AmazonServiceException e) {
     if (e.getStatusCode() == AMAZON_EXCEPTION_CODE_400) {
       return null;
     }

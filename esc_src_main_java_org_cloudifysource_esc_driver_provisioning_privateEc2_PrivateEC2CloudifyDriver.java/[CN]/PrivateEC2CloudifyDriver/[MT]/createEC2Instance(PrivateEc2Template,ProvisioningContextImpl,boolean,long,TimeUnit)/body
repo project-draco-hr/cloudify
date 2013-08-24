@@ -2,30 +2,29 @@
   String cloudFileS3=null;
   if (management) {
     try {
-      CloudUser user=this.cloud.getUser();
-      ComputeTemplate template=this.getManagerComputeTemplate();
-      String cloudDirectory=(String)template.getCustom().get("cloudDirectory");
-      String s3BucketName=(String)template.getCustom().get("s3BucketName");
-      String locationId=(String)template.getCustom().get("s3LocationId");
-      AmazonS3Uploader amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
-      cloudFileS3=amazonS3Uploader.zipAndUploadToS3(s3BucketName,cloudDirectory);
+      final CloudUser user=this.cloud.getUser();
+      final ComputeTemplate template=this.getManagerComputeTemplate();
+      final String s3BucketName=(String)template.getCustom().get("s3BucketName");
+      final String locationId=(String)template.getCustom().get("s3LocationId");
+      final AmazonS3Uploader amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
+      cloudFileS3=amazonS3Uploader.zipAndUploadToS3(s3BucketName,ctx.getCloudFile().getParentFile().getAbsolutePath());
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       throw new CloudProvisioningException(e);
     }
   }
-  InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
-  String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
-  Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
-  String imageId=properties.getImageId() == null ? null : properties.getImageId().getValue();
-  String instanceType=properties.getInstanceType() == null ? null : properties.getInstanceType().getValue();
-  String keyName=properties.getKeyName() == null ? null : properties.getKeyName().getValue();
-  String privateIpAddress=properties.getPrivateIpAddress() == null ? null : properties.getPrivateIpAddress().getValue();
-  List<String> securityGroupIds=properties.getSecurityGroupIdsAsString();
-  List<String> securityGroups=properties.getSecurityGroupsAsString();
+  final InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
+  final String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
+  final Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
+  final String imageId=properties.getImageId() == null ? null : properties.getImageId().getValue();
+  final String instanceType=properties.getInstanceType() == null ? null : properties.getInstanceType().getValue();
+  final String keyName=properties.getKeyName() == null ? null : properties.getKeyName().getValue();
+  final String privateIpAddress=properties.getPrivateIpAddress() == null ? null : properties.getPrivateIpAddress().getValue();
+  final List<String> securityGroupIds=properties.getSecurityGroupIdsAsString();
+  final List<String> securityGroups=properties.getSecurityGroupsAsString();
   String userData=null;
   if (properties.getUserData() != null) {
-    StringBuilder sb=new StringBuilder();
+    final StringBuilder sb=new StringBuilder();
     String script=null;
     if (management) {
       script=this.generateManagementCloudifyEnv(ctx);
@@ -39,12 +38,12 @@
     sb.append("#!/bin/bash\n");
     sb.append(script).append("\n");
     if (management) {
-      ComputeTemplate template=this.getManagerComputeTemplate();
-      String cloudFileDir=(String)template.getRemoteDirectory();
+      final ComputeTemplate template=this.getManagerComputeTemplate();
+      String cloudFileDir=template.getRemoteDirectory();
       if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
         cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
       }
-      String endOfLine=" >> /tmp/cloud.txt\n";
+      final String endOfLine=" >> /tmp/cloud.txt\n";
       sb.append("export TMP_DIRECTORY=/tmp").append(endOfLine);
       sb.append("export S3_ZIP_FILE='" + cloudFileS3 + "'").append(endOfLine);
       sb.append("wget -q -O $TMP_DIRECTORY/cloudArchive.zip $S3_ZIP_FILE").append(endOfLine);
@@ -64,12 +63,12 @@
   AWSEC2Volume volumeConfig=null;
   if (properties.getVolumes() != null) {
     blockDeviceMappings=new ArrayList<BlockDeviceMapping>(properties.getVolumes().size());
-    for (    VolumeMapping volMapping : properties.getVolumes()) {
+    for (    final VolumeMapping volMapping : properties.getVolumes()) {
       volumeConfig=cfnTemplate.getEC2Volume(volMapping.getVolumeId().getValue());
       blockDeviceMappings.add(this.createBlockDeviceMapping(volMapping.getDevice().getValue(),volumeConfig));
     }
   }
-  RunInstancesRequest runInstancesRequest=new RunInstancesRequest();
+  final RunInstancesRequest runInstancesRequest=new RunInstancesRequest();
   runInstancesRequest.withPlacement(placement);
   runInstancesRequest.withImageId(imageId);
   runInstancesRequest.withInstanceType(instanceType);
@@ -84,7 +83,7 @@
   if (logger.isLoggable(Level.FINEST)) {
     logger.finest("EC2::Instance request=" + runInstancesRequest);
   }
-  RunInstancesResult runInstances=this.ec2.runInstances(runInstancesRequest);
+  final RunInstancesResult runInstances=this.ec2.runInstances(runInstancesRequest);
   if (runInstances.getReservation().getInstances().size() != 1) {
     throw new CloudProvisioningException("Request runInstace fails (request=" + runInstancesRequest + ").");
   }

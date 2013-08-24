@@ -1,6 +1,7 @@
 {
   final ProvisioningContextImpl ctx=new ProvisioningContextImpl();
   ctx.setLocationId(locationId);
+  ctx.setCloudFile(cloudDslFile);
   final InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
   builder.setReservationId(reservationId);
   builder.setAdmin(globalAdminInstance);

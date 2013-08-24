@@ -15,7 +15,7 @@
   md.setPublicAddress(instance.getPublicIpAddress());
   md.setRemoteUsername(template.getUsername());
   md.setRemotePassword(template.getPassword());
-  String availabilityZone=instance.getPlacement().getAvailabilityZone();
+  final String availabilityZone=instance.getPlacement().getAvailabilityZone();
   md.setLocationId(RegionUtils.convertAvailabilityZone2LocationId(availabilityZone));
   return md;
 }

@@ -4,21 +4,21 @@
   PrivateEc2Template mapJson=null;
   try {
     if (customDataFile.isFile()) {
-      String templateName=this.getTemplatName(customDataFile);
+      final String templateName=this.getTemplatName(customDataFile);
       logger.fine("Parsing CFN Template for service=" + templateName);
       mapJson=ParserUtils.mapJson(PrivateEc2Template.class,customDataFile);
       map.put(templateName,mapJson);
     }
  else {
-      File[] listFiles=customDataFile.listFiles();
+      final File[] listFiles=customDataFile.listFiles();
       if (listFiles != null) {
-        for (        File file : listFiles) {
+        for (        final File file : listFiles) {
           if (this.isTemplateFile(file)) {
-            String templateName=this.getTemplatName(file);
+            final String templateName=this.getTemplatName(file);
             logger.fine("Parsing CFN Template for service=" + templateName);
-            File pFile=this.getPropertiesFileIfExists(templateName,customDataFile.listFiles());
+            final File pFile=this.getPropertiesFileIfExists(templateName,customDataFile.listFiles());
             if (pFile != null) {
-              String templateString=this.replaceProperties(file,pFile);
+              final String templateString=this.replaceProperties(file,pFile);
               mapJson=ParserUtils.mapJson(PrivateEc2Template.class,templateString);
               map.put(templateName,mapJson);
             }
@@ -31,7 +31,7 @@
       }
     }
   }
- catch (  Exception e) {
+ catch (  final Exception e) {
     logger.log(Level.SEVERE,"Couldn't parse the template file: " + customDataFile.getPath());
     throw new IllegalStateException(e);
   }

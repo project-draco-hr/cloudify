@@ -1,8 +1,8 @@
 {
-  AWSEC2Instance instance=this.privateEc2Template.getEC2Instance();
-  ValueType availabilityZoneObj=instance.getProperties().getAvailabilityZone();
+  final AWSEC2Instance instance=this.privateEc2Template.getEC2Instance();
+  final ValueType availabilityZoneObj=instance.getProperties().getAvailabilityZone();
   if (availabilityZoneObj != null) {
-    Region region=RegionUtils.convertAvailabilityZone2Region(availabilityZoneObj.getValue());
+    final Region region=RegionUtils.convertAvailabilityZone2Region(availabilityZoneObj.getValue());
     logger.info("Amazon ec2 region: " + region);
     return region;
   }
