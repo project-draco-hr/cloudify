@@ -1,0 +1,14 @@
+{
+  if (locators == null) {
+    throw new IllegalArgumentException("locators can't be null");
+  }
+  final StringBuilder lookupSb=new StringBuilder();
+  for (  final String locator : locators) {
+    final String ip=IPUtils.getSafeIpAddress(locator);
+    lookupSb.append(ip).append(":").append(port).append(',');
+  }
+  if (!(lookupSb.length() == 0)) {
+    lookupSb.setLength(lookupSb.length() - 1);
+  }
+  return lookupSb.toString();
+}
