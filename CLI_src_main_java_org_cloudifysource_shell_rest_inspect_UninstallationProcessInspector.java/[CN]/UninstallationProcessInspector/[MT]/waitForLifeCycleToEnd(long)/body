@@ -1,8 +1,8 @@
 {
   ConditionLatch conditionLatch=createConditionLatch(timeout);
   conditionLatch.waitFor(new ConditionLatch.Predicate(){
-    boolean lifeCycleEnded=false;
-    boolean undeployEnded=false;
+    private boolean lifeCycleEnded=false;
+    private boolean undeployEnded=false;
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
         List<String> latestEvents;

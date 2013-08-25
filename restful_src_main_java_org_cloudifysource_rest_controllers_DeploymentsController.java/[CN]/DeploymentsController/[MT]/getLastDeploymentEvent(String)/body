@@ -12,9 +12,6 @@
 synchronized (value.getMutex()) {
     eventsCache.refresh(key);
     int lastEventId=value.getLastEventIndex();
-    if (lastEventId > 0) {
-      lastEventId=lastEventId - 1;
-    }
     return EventsUtils.extractDesiredEvents(value.getEvents(),lastEventId,lastEventId);
   }
 }
