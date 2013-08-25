@@ -1,0 +1,19 @@
+{
+  Class<?> clazz=ClassUtils.getClass(type.qualifiedTypeName());
+  if (AddTemplatesResponse.class.equals(clazz)) {
+    RESTExampleRespone<Object> response=new RESTExampleRespone<Object>();
+    response.setResponse(null);
+    response.setStatus(AddTemplatesStatus.PARTIAL_FAILURE.getName());
+    response.setMessageId(CloudifyErrorMessages.PARTLY_FAILED_TO_ADD_TEMPLATES.getName());
+    response.setMessage("partial failure - not all the expected templates were added to all REST instances.");
+    response.setVerbose(RESTExamples.getAddTemplatesResponseExample());
+    return response;
+  }
+  Response<Object> response=new Response<Object>();
+  response.setResponse(getExample(type));
+  response.setStatus("Success");
+  response.setMessage("Operation completed successfully");
+  response.setMessageId(CloudifyMessageKeys.OPERATION_SUCCESSFULL.getName());
+  response.setVerbose(null);
+  return response;
+}

@@ -1,17 +1,15 @@
 {
-  AddTemplatesResponse addTemplatesResponse=e.getAddTemplatesResponse();
-  AddTemplatesStatus status=addTemplatesResponse.getStatus();
+  AddTemplatesStatus status=e.getAddTemplatesResponse().getStatus();
   String messageId=CloudifyErrorMessages.FAILED_TO_ADD_TEMPLATES.getName();
   if (status == AddTemplatesStatus.PARTIAL_FAILURE) {
     messageId=CloudifyErrorMessages.PARTLY_FAILED_TO_ADD_TEMPLATES.getName();
   }
-  Object[] messageArgs={addTemplatesResponse.getTemplates()};
   String formattedMessage;
   try {
-    formattedMessage=messageSource.getMessage(messageId,messageArgs,Locale.US);
+    formattedMessage=messageSource.getMessage(messageId,null,Locale.US);
   }
  catch (  NoSuchMessageException ne) {
-    formattedMessage=messageId + " [" + Arrays.toString(messageArgs)+ "]";
+    formattedMessage=messageId;
   }
   Response<Void> finalResponse=new Response<Void>();
   finalResponse.setStatus(status.getName());
