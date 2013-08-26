@@ -4,7 +4,13 @@
   validateCloud(cloud);
   ByonProvisioningDriver driver=new ByonProvisioningDriver();
   driver.setProvisioningDriverClassContext(new DefaultProvisioningDriverClassContext());
-  driver.setConfig(cloud,cloud.getCloudCompute().getTemplates().keySet().iterator().next(),true,"test");
+  final ComputeDriverConfiguration config=new ComputeDriverConfiguration();
+  config.setAdmin(null);
+  config.setCloud(cloud);
+  config.setCloudTemplate(cloud.getCloudCompute().getTemplates().keySet().iterator().next());
+  config.setManagement(true);
+  config.setServiceName("test");
+  driver.setConfig(config);
   Cloud modifiedCloud=driver.getCloud();
   validateCloud(modifiedCloud);
   ByonDeployer deployer=driver.getDeployer();
