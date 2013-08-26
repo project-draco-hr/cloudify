@@ -4,8 +4,6 @@
   if (fileUnderDefaultLocation.exists()) {
     return fileUnderDefaultLocation;
   }
- else {
-    pathsLooked.add(fileUnderDefaultLocation.getAbsolutePath());
-    return null;
-  }
+  pathsLooked.add(fileUnderDefaultLocation.getAbsolutePath());
+  return null;
 }

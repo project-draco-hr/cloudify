@@ -1,4 +1,5 @@
 {
+  logger.info("install-service using the old rest client");
   try {
     DebugUtils.validateDebugSettings(debugAll,debugEvents,debugModeString);
   }

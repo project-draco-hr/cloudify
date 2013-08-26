@@ -4,10 +4,8 @@
       resolved=recipeFileOrFolder;
       return true;
     }
- else {
-      pathsLooked.add(recipeFileOrFolder.getAbsolutePath());
-      return false;
-    }
+    pathsLooked.add(recipeFileOrFolder.getAbsolutePath());
+    return false;
   }
   File recipe=null;
   recipe=lookInCurrentDir(recipeFileOrFolder);
