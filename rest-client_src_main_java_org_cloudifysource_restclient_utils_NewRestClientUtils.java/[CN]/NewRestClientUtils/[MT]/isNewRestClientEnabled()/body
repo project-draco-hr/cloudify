@@ -1,7 +1,7 @@
 {
   String propertyValue=System.getProperty(CloudifyConstants.NEW_REST_CLIENT_ENABLE_PROPERTY);
   if (StringUtils.isBlank(propertyValue)) {
-    return true;
+    return false;
   }
   return Boolean.parseBoolean(propertyValue);
 }
