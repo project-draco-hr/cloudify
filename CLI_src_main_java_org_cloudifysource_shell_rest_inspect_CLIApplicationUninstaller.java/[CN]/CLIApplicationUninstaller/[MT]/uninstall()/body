@@ -1,5 +1,14 @@
 {
-  ApplicationDescription applicationDescription=restClient.getApplicationDescription(applicationName);
+  ApplicationDescription applicationDescription;
+  try {
+    applicationDescription=restClient.getApplicationDescription(applicationName);
+  }
+ catch (  RestClientException e) {
+    if (CloudifyMessageKeys.MISSING_RESOURCE.getName().equals(e.getMessageCode())) {
+      throw new RestClientException("failed_to_locate_app","Application " + applicationName + " could not be found",e.getVerbose());
+    }
+    throw e;
+  }
   Map<String,Integer> currentNumberOfRunningInstancesPerService=new HashMap<String,Integer>();
   for (  ServiceDescription serviceDescription : applicationDescription.getServicesDescription()) {
     currentNumberOfRunningInstancesPerService.put(serviceDescription.getServiceName(),serviceDescription.getInstanceCount());
