@@ -15,6 +15,6 @@
       }
       logger.log(Level.WARNING,"Failed validating connection to lus. " + "Error was: " + e.getMessage() + "Attempting to reconnect.",e);
     }
-    IOUtils.threadSleep(TWO_SECONDS_MILLI);
+    IOUtils.threadSleep(TEN_SECONDS_MILLI);
   }
 }
