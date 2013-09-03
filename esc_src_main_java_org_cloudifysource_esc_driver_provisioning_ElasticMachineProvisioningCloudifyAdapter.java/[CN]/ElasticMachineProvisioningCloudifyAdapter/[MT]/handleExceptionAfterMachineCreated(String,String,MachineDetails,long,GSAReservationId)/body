@@ -14,8 +14,11 @@
         logger.log(Level.WARNING,"Failed to shutdown agent on host: " + machineIp + ". Continuing with shutdown of "+ "machine.",e);
       }
     }
-    logger.info("Stopping machine " + machineDetails.getPrivateAddress() + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
-    this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
+    logger.info("Stopping machine " + machineIp + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
+    boolean stoppedMachine=this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
+    if (!stoppedMachine) {
+      throw new ElasticMachineProvisioningException("Attempt to stop machine " + machineIp + " has failed. Cloud driver claims machine was already stopped, however it was just recently started.");
+    }
   }
  catch (  final Exception e) {
     logger.log(Level.WARNING,"Machine Provisioning failed. " + "An error was encountered while trying to shutdown the new machine ( " + machineDetails.toString() + "). Error was: "+ e.getMessage(),e);
