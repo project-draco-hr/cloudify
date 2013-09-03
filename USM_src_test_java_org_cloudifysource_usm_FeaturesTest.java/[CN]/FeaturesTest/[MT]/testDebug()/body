@@ -1,0 +1,20 @@
+{
+  if (ServiceUtils.isWindows()) {
+    return;
+  }
+  final BeanLevelProperties blp=new BeanLevelProperties();
+  final Properties contextProperties=new Properties();
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL,Boolean.TRUE.toString());
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,DebugModes.INSTEAD.toString());
+  blp.setContextProperties(contextProperties);
+  final IntegratedProcessingUnitContainer ipuc=createContainer("classpath:/nothing/META-INF/spring/pu.xml",blp);
+  try {
+    final ApplicationContext ctx=ipuc.getApplicationContext();
+    final UniversalServiceManagerBean usm=ctx.getBean(UniversalServiceManagerBean.class);
+    Assert.assertNotNull(usm);
+    waitForInstanceToReachStatus(usm,USMState.RUNNING);
+  }
+  finally {
+    ipuc.close();
+  }
+}

@@ -3,8 +3,8 @@
   final long end=start + 20000;
   USMState currentState=null;
   while (System.currentTimeMillis() < end) {
-    ServiceMonitors[] monitors=usm.getServicesMonitors();
-    Object state=monitors[0].getMonitors().get("USM_State");
+    final ServiceMonitors[] monitors=usm.getServicesMonitors();
+    final Object state=monitors[0].getMonitors().get("USM_State");
     if (state != null) {
       currentState=USMState.values()[(Integer)state];
       if (currentState.equals(targetState)) {

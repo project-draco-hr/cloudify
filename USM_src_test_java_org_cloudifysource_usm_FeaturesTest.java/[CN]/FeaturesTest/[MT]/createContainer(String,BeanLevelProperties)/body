@@ -1,0 +1,14 @@
+{
+  final IntegratedProcessingUnitContainerProvider provider=new IntegratedProcessingUnitContainerProvider();
+  final ClusterInfo clusterInfo=new ClusterInfo();
+  clusterInfo.setNumberOfInstances(1);
+  clusterInfo.setInstanceId(1);
+  clusterInfo.setName("default.groovyError");
+  provider.setClusterInfo(clusterInfo);
+  provider.addConfigLocation(classpath);
+  if (beanLevelProperties != null) {
+    provider.setBeanLevelProperties(beanLevelProperties);
+  }
+  final ProcessingUnitContainer container=provider.createContainer();
+  return (IntegratedProcessingUnitContainer)container;
+}
