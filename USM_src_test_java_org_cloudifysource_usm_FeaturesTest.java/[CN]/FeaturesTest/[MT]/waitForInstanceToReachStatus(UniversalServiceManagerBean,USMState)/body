@@ -1,17 +1,3 @@
 {
-  final long start=System.currentTimeMillis();
-  final long end=start + 20000;
-  USMState currentState=null;
-  while (System.currentTimeMillis() < end) {
-    final ServiceMonitors[] monitors=usm.getServicesMonitors();
-    final Object state=monitors[0].getMonitors().get("USM_State");
-    if (state != null) {
-      currentState=USMState.values()[(Integer)state];
-      if (currentState.equals(targetState)) {
-        break;
-      }
-    }
-    Thread.sleep(2000);
-  }
-  Assert.assertEquals(targetState,currentState);
+  waitForInstanceToReachStatus(usm,targetState,20000);
 }

@@ -1,0 +1,3 @@
+UniversalServiceManagerBean usm
+USMState targetState
+long timeoutMillis

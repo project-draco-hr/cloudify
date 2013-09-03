@@ -12,7 +12,7 @@
     final ApplicationContext ctx=ipuc.getApplicationContext();
     final UniversalServiceManagerBean usm=ctx.getBean(UniversalServiceManagerBean.class);
     Assert.assertNotNull(usm);
-    waitForInstanceToReachStatus(usm,USMState.RUNNING);
+    waitForInstanceToReachStatus(usm,USMState.RUNNING,5 * 60 * 1000);
   }
   finally {
     ipuc.close();
