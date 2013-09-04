@@ -1,0 +1,34 @@
+{
+  final Sigar sigar=new Sigar();
+  final long[] allPids=sigar.getProcList();
+  final long myPid=sigar.getPid();
+  final Set<Long> childPids=new HashSet<Long>();
+  for (  final long pid : allPids) {
+    try {
+      final ProcState state=sigar.getProcState(pid);
+      final long ppid=state.getPpid();
+      if (ppid == myPid) {
+        System.out.println("Found a leaking process: " + pid);
+        childPids.add(pid);
+      }
+    }
+ catch (    final SigarException e) {
+    }
+  }
+  if (!childPids.isEmpty()) {
+    System.out.println("Warning: found leaked processes after test finished: " + childPids);
+    final DefaultProcessKiller killer=new DefaultProcessKiller();
+    for (    final Long pid : childPids) {
+      final ProcExe procExe=sigar.getProcExe(pid);
+      final String[] procArgs=sigar.getProcArgs(pid);
+      System.out.println("Killing process: " + pid + ". Name: "+ procExe.getName()+ ", Args: "+ Arrays.toString(procArgs)+ "Directory: "+ procExe.getCwd());
+      try {
+        killer.killProcess(pid);
+      }
+ catch (      final USMException e) {
+        System.out.println("Failed to kill process: " + pid);
+      }
+    }
+    Assert.fail("Leaked processes found after test.");
+  }
+}

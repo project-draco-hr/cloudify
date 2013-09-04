@@ -1,0 +1,12 @@
+{
+  final String debugLockFile="target/test-classes/nothing/ext/.cloudify_debugging.lock";
+  final long endTime=System.currentTimeMillis() + 20000;
+  while (System.currentTimeMillis() < endTime) {
+    final File lockFile=new File(debugLockFile);
+    if (lockFile.exists()) {
+      return lockFile;
+    }
+  }
+  Assert.fail("Expected debug lock file: " + debugLockFile + " was not created");
+  return null;
+}

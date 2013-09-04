@@ -1,0 +1,11 @@
+{
+  final ServiceMonitors[] monitors=usm.getServicesMonitors();
+  final Object state=monitors[0].getMonitors().get("USM_State");
+  if (state != null) {
+    final USMState stateEnum=USMState.values()[(Integer)state];
+    return stateEnum;
+  }
+ else {
+    return null;
+  }
+}
