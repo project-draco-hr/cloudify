@@ -7,15 +7,16 @@
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_ALL,Boolean.TRUE.toString());
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEBUG_MODE,DebugModes.INSTEAD.toString());
   blp.setContextProperties(contextProperties);
+  deleteLockFile();
   final IntegratedProcessingUnitContainer ipuc=createContainer("classpath:/debug/META-INF/spring/pu.xml",blp);
   try {
     final ApplicationContext ctx=ipuc.getApplicationContext();
     final UniversalServiceManagerBean usm=ctx.getBean(UniversalServiceManagerBean.class);
     Assert.assertNotNull(usm);
-    final File lockFile=waitForDebugLockFile();
     final USMState stateAtBreakpoint=getUsmState(usm);
     Assert.assertNotNull(stateAtBreakpoint);
     Assert.assertEquals(USMState.INITIALIZING,stateAtBreakpoint);
+    final File lockFile=waitForDebugLockFile();
     FileUtils.deleteQuietly(lockFile);
     waitForInstanceToReachStatus(usm,USMState.RUNNING);
   }

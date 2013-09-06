@@ -1,0 +1,6 @@
+{
+  final File lockFile=new File(DEBUG_LOCK_FILE_PATH);
+  if (lockFile.exists()) {
+    FileUtils.deleteQuietly(lockFile);
+  }
+}
