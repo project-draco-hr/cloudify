@@ -17,6 +17,7 @@
     Assert.assertNotNull(stateAtBreakpoint);
     Assert.assertEquals(USMState.INITIALIZING,stateAtBreakpoint);
     final File lockFile=waitForDebugLockFile();
+    System.out.println("Deleting lock file: " + lockFile.getAbsolutePath());
     FileUtils.deleteQuietly(lockFile);
     waitForInstanceToReachStatus(usm,USMState.RUNNING);
   }
