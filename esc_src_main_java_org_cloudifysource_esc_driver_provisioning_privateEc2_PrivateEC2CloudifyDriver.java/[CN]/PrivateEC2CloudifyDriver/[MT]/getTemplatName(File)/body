@@ -1,0 +1,5 @@
+{
+  String name=file.getName();
+  name=name.replace("-cfn.template","");
+  return name;
+}

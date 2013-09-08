@@ -1,0 +1,4 @@
+{
+  final String name=file.getName();
+  return name.endsWith("-cfn.template");
+}

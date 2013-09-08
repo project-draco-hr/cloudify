@@ -1,0 +1,18 @@
+{
+  final List<Tag> tags=new ArrayList<Tag>();
+  if (templateTags != null) {
+    for (    final org.cloudifysource.esc.driver.provisioning.privateEc2.parser.beans.Tag tag : templateTags) {
+      tags.add(tag.convertToEC2Model());
+    }
+  }
+  if (additionalTags != null) {
+    tags.addAll(additionalTags);
+  }
+  if (!tags.isEmpty()) {
+    logger.fine("Tag resourceId=" + resourceId + " tags="+ tags);
+    final CreateTagsRequest ctr=new CreateTagsRequest();
+    ctr.setTags(tags);
+    ctr.withResources(resourceId);
+    this.ec2.createTags(ctr);
+  }
+}

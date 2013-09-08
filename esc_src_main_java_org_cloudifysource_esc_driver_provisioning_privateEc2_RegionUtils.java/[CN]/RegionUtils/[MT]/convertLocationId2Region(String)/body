@@ -1,0 +1,6 @@
+{
+  String regionString=locationId.replaceAll("-","_").toUpperCase();
+  Regions regionEnum=Regions.valueOf(regionString);
+  Region region=Region.getRegion(regionEnum);
+  return region;
+}

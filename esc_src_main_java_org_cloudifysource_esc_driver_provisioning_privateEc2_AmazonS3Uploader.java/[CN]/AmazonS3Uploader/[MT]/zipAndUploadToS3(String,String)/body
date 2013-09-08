@@ -1,0 +1,8 @@
+{
+  logger.info("Creating configuration zip file");
+  File zipFile=this.zipFolder(pathFolderToZip);
+  logger.info("Uploading configuration");
+  String s3Url=this.uploadFile(existingBucketName,zipFile);
+  logger.info("Finished uploading configuration");
+  return s3Url;
+}

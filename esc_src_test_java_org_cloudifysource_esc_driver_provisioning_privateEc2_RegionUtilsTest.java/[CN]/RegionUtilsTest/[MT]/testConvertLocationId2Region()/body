@@ -1,0 +1,5 @@
+{
+  String locationId="eu-west-1";
+  Region result=RegionUtils.convertLocationId2Region(locationId);
+  assertThat(result,is(Region.getRegion(Regions.EU_WEST_1)));
+}

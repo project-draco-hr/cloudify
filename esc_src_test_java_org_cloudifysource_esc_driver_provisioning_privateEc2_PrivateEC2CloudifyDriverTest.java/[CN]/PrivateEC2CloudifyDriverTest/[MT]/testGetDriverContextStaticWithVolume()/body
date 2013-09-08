@@ -1,0 +1,11 @@
+{
+  driver.setCustomDataFile(new File("./src/test/resources/cfn_templates/static-with-volume-cfn.template"));
+  PrivateEc2Template template=(PrivateEc2Template)driver.getCFNTemplatePerService("static-with-volume");
+  Assert.assertNotNull(template);
+  logger.info(template.toString());
+  Assert.assertNotNull(template.getResources());
+  AWSEC2Instance awsec2Instance=(AWSEC2Instance)template.getEC2Instance();
+  Assert.assertNotNull(awsec2Instance.getProperties().getImageId());
+  Assert.assertNotNull(awsec2Instance.getProperties().getVolumes());
+  Assert.assertNotNull(((AWSEC2Volume)template.getEC2Volume("smallVolume")).getProperties().getSize());
+}

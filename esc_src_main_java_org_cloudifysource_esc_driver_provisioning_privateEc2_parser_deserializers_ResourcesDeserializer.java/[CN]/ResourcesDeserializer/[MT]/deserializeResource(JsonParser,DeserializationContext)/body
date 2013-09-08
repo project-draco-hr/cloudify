@@ -1,0 +1,24 @@
+{
+  String resourceName=jp.getText();
+  jp.nextToken();
+  JsonNode jsonNode=jp.readValueAsTree();
+  String type=jsonNode.path("Type").getTextValue();
+  ObjectCodec codec=jp.getCodec();
+  if (type != null && type.startsWith("AWS::")) {
+    if ("AWS::EC2::Instance".equals(type)) {
+      AWSEC2Instance instance=codec.treeToValue(jsonNode,AWSEC2Instance.class);
+      instance.setResourceName(resourceName);
+      return instance;
+    }
+ else     if ("AWS::EC2::Volume".equals(type)) {
+      AWSEC2Volume instance=codec.treeToValue(jsonNode,AWSEC2Volume.class);
+      instance.setResourceName(resourceName);
+      return instance;
+    }
+ else {
+      logger.warning("The parsing do not handle resource type " + type);
+      return null;
+    }
+  }
+  throw ctxt.mappingException("Node is of type AWS::EC2 resources: " + resourceName);
+}

@@ -1,0 +1,5 @@
+{
+  SimpleValue sample=ParserUtils.mapJson(SimpleValue.class,"{\"Value\": \"hello world\"}");
+  assertNotNull("Value is null",sample.getValueType());
+  Assert.assertThat(sample.getValueType().getValue(),CoreMatchers.is("hello world"));
+}

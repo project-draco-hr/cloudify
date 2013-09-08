@@ -1,0 +1,8 @@
+{
+  Logger logger=Logger.getLogger(PrivateEC2CloudifyDriverIT.class.getName());
+  logger.setLevel(Level.FINEST);
+  Handler[] handlers=logger.getParent().getHandlers();
+  for (  Handler handler : handlers) {
+    handler.setLevel(Level.ALL);
+  }
+}

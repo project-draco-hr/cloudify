@@ -1,0 +1,4 @@
+{
+  String s3File=this.s3Uploader.zipAndUploadToS3("cloudify-eu/test","C:/cloudify-deployment/gigaspaces-cloudify-2.6.1-ga-b5199-139/clouds/privateEc2");
+  System.out.println(s3File);
+}

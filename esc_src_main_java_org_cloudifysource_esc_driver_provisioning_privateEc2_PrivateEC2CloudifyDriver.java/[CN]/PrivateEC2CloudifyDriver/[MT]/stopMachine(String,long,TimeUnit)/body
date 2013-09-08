@@ -1,0 +1,25 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Stopping new machine with the following thread: threadId=" + Thread.currentThread().getId() + " serviceName="+ this.serviceName+ " serverIp="+ serverIp);
+  }
+  logger.info("Stopping instance server ip = " + serverIp + "...");
+  final DescribeInstancesRequest describeInstance=new DescribeInstancesRequest();
+  describeInstance.withFilters(new Filter("private-ip-address",Arrays.asList(serverIp)));
+  final DescribeInstancesResult describeInstances=ec2.describeInstances(describeInstance);
+  final Reservation reservation=describeInstances.getReservations().get(0);
+  if (reservation != null && reservation.getInstances().get(0) != null) {
+    final TerminateInstancesRequest tir=new TerminateInstancesRequest();
+    tir.withInstanceIds(reservation.getInstances().get(0).getInstanceId());
+    final TerminateInstancesResult terminateInstances=ec2.terminateInstances(tir);
+    final String instanceId=terminateInstances.getTerminatingInstances().get(0).getInstanceId();
+    try {
+      this.waitStopInstanceStatus(instanceId,duration,unit);
+    }
+  finally {
+    }
+  }
+ else {
+    logger.warning("No instance to stop: " + reservation);
+  }
+  return true;
+}

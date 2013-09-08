@@ -1,0 +1,9 @@
+{
+  final File zipFile=File.createTempFile(ZIP_PREFIX,".zip");
+  zipFile.deleteOnExit();
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Created zip file: " + zipFile);
+  }
+  ZipUtils.zip(new File(pathFolderToZip),zipFile);
+  return zipFile;
+}

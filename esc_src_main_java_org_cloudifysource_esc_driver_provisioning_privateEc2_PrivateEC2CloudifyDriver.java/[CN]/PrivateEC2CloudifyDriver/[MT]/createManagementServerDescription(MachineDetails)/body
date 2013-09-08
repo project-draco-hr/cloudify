@@ -1,0 +1,11 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  sb.append("Machine ID: ").append(machineDetails.getMachineId());
+  if (machineDetails.getPublicAddress() != null) {
+    sb.append(", Public IP: ").append(machineDetails.getPublicAddress());
+  }
+  if (machineDetails.getPrivateAddress() != null) {
+    sb.append(", Private IP: ").append(machineDetails.getPrivateAddress());
+  }
+  return sb.toString();
+}

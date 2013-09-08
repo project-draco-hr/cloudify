@@ -1,0 +1,10 @@
+{
+  final AWSEC2Instance instance=this.privateEc2Template.getEC2Instance();
+  final ValueType availabilityZoneObj=instance.getProperties().getAvailabilityZone();
+  if (availabilityZoneObj != null) {
+    final Region region=RegionUtils.convertAvailabilityZone2Region(availabilityZoneObj.getValue());
+    logger.info("Amazon ec2 region: " + region);
+    return region;
+  }
+  throw new CloudProvisioningException("Region and/or endpoint aren't defined");
+}

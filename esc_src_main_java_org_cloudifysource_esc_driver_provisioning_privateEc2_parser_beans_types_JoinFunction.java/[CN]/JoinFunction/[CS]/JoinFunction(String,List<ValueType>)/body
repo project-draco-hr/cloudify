@@ -1,0 +1,4 @@
+{
+  this.separator=separator;
+  this.strings=strings;
+}

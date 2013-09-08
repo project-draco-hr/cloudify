@@ -1,0 +1,6 @@
+{
+  if (fullServiceName != null && fullServiceName.contains(".")) {
+    return fullServiceName.substring(fullServiceName.lastIndexOf(".") + 1,fullServiceName.length());
+  }
+  return fullServiceName;
+}

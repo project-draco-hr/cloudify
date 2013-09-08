@@ -1,0 +1,5 @@
+{
+  driver.setCustomDataFile(new File("./src/test/resources/cfn_templates/"));
+  driver.setConfig(cloud,"CFN_TEMPLATE",true,"tags");
+  driver.stopMachine("10.36.174.213",60,TimeUnit.MINUTES);
+}

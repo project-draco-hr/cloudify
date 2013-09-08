@@ -1,0 +1,5 @@
+{
+  driver.setCustomDataFile(new File("./src/test/resources/cfn_templates/"));
+  driver.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate(),true,"static-with-volume");
+  driver.stopMachine("10.48.110.158",1,TimeUnit.HOURS);
+}

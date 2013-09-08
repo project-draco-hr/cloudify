@@ -1,0 +1,9 @@
+{
+  final String filename=templateName + "-cfn.properties";
+  for (  final File file : listFiles) {
+    if (filename.equals(file.getName())) {
+      return file;
+    }
+  }
+  return null;
+}

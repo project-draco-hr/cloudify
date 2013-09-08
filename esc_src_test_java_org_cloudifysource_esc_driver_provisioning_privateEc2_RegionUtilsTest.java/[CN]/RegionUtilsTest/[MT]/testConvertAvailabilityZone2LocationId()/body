@@ -1,0 +1,9 @@
+{
+  String result;
+  String availabilityZone1="us-east-1a";
+  result=RegionUtils.convertAvailabilityZone2LocationId(availabilityZone1);
+  assertThat(result,is("us-east-1"));
+  String availabilityZone2="eu-west-1";
+  result=RegionUtils.convertAvailabilityZone2LocationId(availabilityZone2);
+  assertThat(result,is("eu-west-1"));
+}

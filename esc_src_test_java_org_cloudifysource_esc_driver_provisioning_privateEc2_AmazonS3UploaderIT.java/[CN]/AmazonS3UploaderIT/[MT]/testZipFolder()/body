@@ -1,0 +1,4 @@
+{
+  File zipFile=this.s3Uploader.zipFolder("C:/cloudify-deployment/gigaspaces-cloudify-2.6.1-ga-b5199-139/clouds/privateEc2");
+  System.out.println(zipFile);
+}

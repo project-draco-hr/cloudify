@@ -1,0 +1,20 @@
+{
+  final File file=new File(cloudDirectory,templateFileName);
+  if (!file.exists()) {
+    throw new IllegalArgumentException("CFN Template not found: " + file.getPath());
+  }
+  logger.fine("Manager cfn template: " + file.getPath());
+  final String templateName=this.getTemplatName(file);
+  final File pFile=new File(file.getParent(),templateName + "-cfn.properties");
+  logger.fine("Searching for manager cfn properties: " + file.getPath());
+  PrivateEc2Template mapJson=null;
+  if (pFile.exists()) {
+    final String templateString=this.replaceProperties(file,pFile);
+    logger.fine("The template:\n" + templateString);
+    mapJson=ParserUtils.mapJson(PrivateEc2Template.class,templateString);
+  }
+ else {
+    mapJson=ParserUtils.mapJson(PrivateEc2Template.class,file);
+  }
+  return mapJson;
+}

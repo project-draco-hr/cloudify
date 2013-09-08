@@ -1,0 +1,39 @@
+{
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  while (System.currentTimeMillis() < endTime) {
+    final DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
+    describeRequest.setInstanceIds(Arrays.asList(ec2instance.getInstanceId()));
+    final DescribeInstancesResult describeInstances=this.ec2.describeInstances(describeRequest);
+    for (    final Reservation resa : describeInstances.getReservations()) {
+      for (      final Instance instance : resa.getInstances()) {
+        final InstanceStateType state=InstanceStateType.valueOf(instance.getState().getCode());
+        if (logger.isLoggable(Level.FINER)) {
+          logger.finer("instance= " + instance.getInstanceId() + " state="+ state);
+        }
+switch (state) {
+case PENDING:
+          try {
+            if (logger.isLoggable(Level.FINEST)) {
+              logger.finest("sleeping...");
+            }
+            Thread.sleep(WAIT_STATUS_SLEEP_TIME);
+          }
+ catch (          final InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+        break;
+case RUNNING:
+      logger.fine("running okay...");
+    return instance;
+case STOPPING:
+case SHUTTING_DOWN:
+case TERMINATED:
+case STOPPED:
+default :
+  throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + state.getName() + " state. Node details: "+ ec2instance);
+}
+}
+}
+}
+throw new TimeoutException("Node failed to reach RUNNING mode in time");
+}

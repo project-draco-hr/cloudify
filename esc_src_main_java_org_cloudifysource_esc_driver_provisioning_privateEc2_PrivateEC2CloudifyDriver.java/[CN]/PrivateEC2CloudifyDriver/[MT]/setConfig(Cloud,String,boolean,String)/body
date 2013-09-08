@@ -1,0 +1,26 @@
+{
+  logger.fine("Running path : " + System.getProperty("user.dir"));
+  this.serviceName=this.getSimpleServiceName(fullServiceName);
+  this.cloudTemplateName=cloudTemplateName;
+  this.cloudName=cloud.getName();
+  super.setConfig(cloud,cloudTemplateName,management,fullServiceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Service name : " + this.serviceName + "("+ fullServiceName+ ")");
+  }
+  try {
+    if (management) {
+      final ComputeTemplate managerTemplate=this.getManagerComputeTemplate();
+      managerCfnTemplateFileName=(String)managerTemplate.getCustom().get("cfnManagerTemplate");
+    }
+ else {
+      this.privateEc2Template=cfnTemplatePerService.get(this.serviceName);
+      if (this.privateEc2Template == null) {
+        throw new IllegalArgumentException("CFN template not found for service:" + fullServiceName);
+      }
+    }
+    this.ec2=this.createAmazonEC2();
+  }
+ catch (  final CloudProvisioningException e) {
+    throw new IllegalArgumentException(e);
+  }
+}

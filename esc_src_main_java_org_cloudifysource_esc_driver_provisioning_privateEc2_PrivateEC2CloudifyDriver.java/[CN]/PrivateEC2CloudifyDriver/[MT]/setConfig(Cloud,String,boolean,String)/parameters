@@ -1,0 +1,4 @@
+Cloud cloud
+String cloudTemplateName
+boolean management
+String fullServiceName

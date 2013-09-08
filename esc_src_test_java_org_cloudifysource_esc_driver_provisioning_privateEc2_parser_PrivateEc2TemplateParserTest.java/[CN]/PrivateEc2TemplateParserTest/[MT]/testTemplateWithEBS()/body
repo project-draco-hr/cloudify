@@ -1,0 +1,12 @@
+{
+  InputStream templateStream=ClassLoader.getSystemResourceAsStream("./cfn_templates/EC2WithEBSSample.template");
+  PrivateEc2Template template=ParserUtils.mapJson(PrivateEc2Template.class,templateStream);
+  assertNotNull(template);
+  assertNotNull(template.getEC2Instance());
+  assertNotNull(template.getEC2Instance().getProperties());
+  assertNotNull(template.getEC2Instance().getProperties().getVolumes());
+  assertEquals(1,template.getEC2Instance().getProperties().getVolumes().size());
+  assertNotNull(template.getEC2Instance().getProperties().getVolumes().get(0).getVolumeId());
+  assertNotNull("NewVolume",template.getEC2Instance().getProperties().getVolumes().get(0).getVolumeId().getValue());
+  assertNotNull(template.getEC2Volume("NewVolume"));
+}

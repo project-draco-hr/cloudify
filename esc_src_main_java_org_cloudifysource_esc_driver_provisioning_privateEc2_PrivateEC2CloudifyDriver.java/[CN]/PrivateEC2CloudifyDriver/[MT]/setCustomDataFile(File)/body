@@ -1,0 +1,39 @@
+{
+  logger.info("Received custom data file: " + customDataFile);
+  final Map<String,PrivateEc2Template> map=new HashMap<String,PrivateEc2Template>();
+  PrivateEc2Template mapJson=null;
+  try {
+    if (customDataFile.isFile()) {
+      final String templateName=this.getTemplatName(customDataFile);
+      logger.fine("Parsing CFN Template for service=" + templateName);
+      mapJson=ParserUtils.mapJson(PrivateEc2Template.class,customDataFile);
+      map.put(templateName,mapJson);
+    }
+ else {
+      final File[] listFiles=customDataFile.listFiles();
+      if (listFiles != null) {
+        for (        final File file : listFiles) {
+          if (this.isTemplateFile(file)) {
+            final String templateName=this.getTemplatName(file);
+            logger.fine("Parsing CFN Template for service=" + templateName);
+            final File pFile=this.getPropertiesFileIfExists(templateName,customDataFile.listFiles());
+            if (pFile != null) {
+              final String templateString=this.replaceProperties(file,pFile);
+              mapJson=ParserUtils.mapJson(PrivateEc2Template.class,templateString);
+              map.put(templateName,mapJson);
+            }
+ else {
+              mapJson=ParserUtils.mapJson(PrivateEc2Template.class,file);
+              map.put(templateName,mapJson);
+            }
+          }
+        }
+      }
+    }
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Couldn't parse the template file: " + customDataFile.getPath());
+    throw new IllegalStateException(e);
+  }
+  this.cfnTemplatePerService.putAll(map);
+}

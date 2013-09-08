@@ -1,0 +1,10 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Stating new machine with the following thread: threadId=" + Thread.currentThread().getId() + " serviceName="+ this.serviceName);
+  }
+  final String newName=this.createNewName(TagResourceType.INSTANCE,cloud.getProvider().getMachineNamePrefix());
+  final ProvisioningContextImpl ctx=(ProvisioningContextImpl)new ProvisioningContextAccess().getProvisioiningContext();
+  final MachineDetails md=this.createServer(this.privateEc2Template,newName,ctx,false,duration,unit);
+  logger.fine("[" + md.getMachineId() + "] Cloud Server is allocated.");
+  return md;
+}

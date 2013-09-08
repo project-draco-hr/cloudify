@@ -1,0 +1,5 @@
+{
+  final String managementMachineTemplate=this.cloud.getConfiguration().getManagementMachineTemplate();
+  final ComputeTemplate managerTemplate=this.cloud.getCloudCompute().getTemplates().get(managementMachineTemplate);
+  return managerTemplate;
+}

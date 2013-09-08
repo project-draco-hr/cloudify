@@ -1,0 +1,6 @@
+{
+  String template="{\"Value\": { \"Fn::Join\" : [\" \", [\"hello\",\"pretty\",\"world\"]]}}";
+  SimpleValue mapJson=ParserUtils.mapJson(SimpleValue.class,template);
+  assertNotNull(mapJson.getValueType());
+  assertThat(mapJson.getValueType().getValue(),is("hello pretty world "));
+}

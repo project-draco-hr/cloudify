@@ -1,0 +1,12 @@
+{
+  if (securityGroupIds == null) {
+    return null;
+  }
+ else {
+    ArrayList<String> arrayList=new ArrayList<String>(this.securityGroupIds.size());
+    for (    ValueType value : securityGroupIds) {
+      arrayList.add(value.getValue());
+    }
+    return arrayList;
+  }
+}

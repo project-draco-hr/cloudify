@@ -1,0 +1,17 @@
+{
+  final VolumeProperties volumeProperties=volumeConfig.getProperties();
+  final Integer iops=volumeProperties.getIops() == null ? null : volumeProperties.getIops();
+  final Integer size=volumeProperties.getSize();
+  final String snapshotId=volumeProperties.getSnapshotId() == null ? null : volumeProperties.getSnapshotId().getValue();
+  final String volumeType=volumeProperties.getVolumeType() == null ? null : volumeProperties.getVolumeType().getValue();
+  final EbsBlockDevice ebs=new EbsBlockDevice();
+  ebs.setIops(iops);
+  ebs.setSnapshotId(snapshotId);
+  ebs.setVolumeSize(size);
+  ebs.setVolumeType(volumeType);
+  ebs.setDeleteOnTermination(true);
+  final BlockDeviceMapping mapping=new BlockDeviceMapping();
+  mapping.setDeviceName(device);
+  mapping.setEbs(ebs);
+  return mapping;
+}

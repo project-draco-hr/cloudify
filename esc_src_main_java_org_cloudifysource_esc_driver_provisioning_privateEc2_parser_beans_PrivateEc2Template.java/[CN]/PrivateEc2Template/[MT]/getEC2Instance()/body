@@ -1,0 +1,3 @@
+{
+  return this.getResourceType(AWSEC2Instance.class,null);
+}

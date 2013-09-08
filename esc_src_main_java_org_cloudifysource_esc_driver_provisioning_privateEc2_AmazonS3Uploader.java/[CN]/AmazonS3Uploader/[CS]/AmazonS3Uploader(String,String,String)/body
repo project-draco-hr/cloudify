@@ -1,0 +1,8 @@
+{
+  this.accessKey=accessKey;
+  AWSCredentials credentials=new BasicAWSCredentials(accessKey,secretKey);
+  this.s3client=new AmazonS3Client(credentials);
+  if (locationId != null) {
+    this.s3client.setRegion(RegionUtils.convertLocationId2Region(locationId));
+  }
+}

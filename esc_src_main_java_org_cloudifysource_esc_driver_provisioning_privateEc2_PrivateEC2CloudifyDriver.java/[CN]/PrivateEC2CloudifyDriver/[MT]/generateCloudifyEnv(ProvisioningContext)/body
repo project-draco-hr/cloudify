@@ -1,0 +1,14 @@
+{
+  final ComputeTemplate template=new ComputeTemplate();
+  template.setScriptLanguage(ScriptLanguages.LINUX_SHELL);
+  try {
+    final MachineDetails md=new MachineDetails();
+    md.setLocationId(this.getManagementServersMachineDetails()[0].getLocationId());
+    final String script=ctx.createEnvironmentScript(md,template);
+    return script;
+  }
+ catch (  final FileNotFoundException e) {
+    logger.log(Level.SEVERE,"Couldn't find file: ",e.getMessage());
+    throw new CloudProvisioningException(e);
+  }
+}

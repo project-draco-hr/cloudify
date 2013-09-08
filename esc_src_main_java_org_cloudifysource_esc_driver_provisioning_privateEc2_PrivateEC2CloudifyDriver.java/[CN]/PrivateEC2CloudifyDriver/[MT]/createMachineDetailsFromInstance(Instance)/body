@@ -1,0 +1,21 @@
+{
+  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
+  if (template == null) {
+    throw new CloudProvisioningException("Could not find template " + this.cloudTemplateName);
+  }
+  final MachineDetails md=new MachineDetails();
+  md.setAgentRunning(false);
+  md.setRemoteExecutionMode(template.getRemoteExecution());
+  md.setFileTransferMode(template.getFileTransfer());
+  md.setScriptLangeuage(template.getScriptLanguage());
+  md.setCloudifyInstalled(false);
+  md.setInstallationDirectory(null);
+  md.setMachineId(instance.getInstanceId());
+  md.setPrivateAddress(instance.getPrivateIpAddress());
+  md.setPublicAddress(instance.getPublicIpAddress());
+  md.setRemoteUsername(template.getUsername());
+  md.setRemotePassword(template.getPassword());
+  final String availabilityZone=instance.getPlacement().getAvailabilityZone();
+  md.setLocationId(RegionUtils.convertAvailabilityZone2LocationId(availabilityZone));
+  return md;
+}

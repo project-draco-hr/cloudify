@@ -1,0 +1,14 @@
+{
+  final DescribeInstancesResult describeInstances=this.requestEC2InstancesManager();
+  if (describeInstances == null) {
+    return new MachineDetails[0];
+  }
+  final List<MachineDetails> mds=new ArrayList<MachineDetails>();
+  for (  final Reservation resa : describeInstances.getReservations()) {
+    for (    final Instance instance : resa.getInstances()) {
+      final MachineDetails md=this.createMachineDetailsFromInstance(instance);
+      mds.add(md);
+    }
+  }
+  return mds.toArray(new MachineDetails[mds.size()]);
+}

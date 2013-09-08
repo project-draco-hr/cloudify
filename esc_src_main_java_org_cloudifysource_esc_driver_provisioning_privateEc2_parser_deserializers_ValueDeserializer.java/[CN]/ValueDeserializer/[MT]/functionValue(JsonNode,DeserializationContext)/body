@@ -1,0 +1,33 @@
+{
+  Iterator<String> fieldNames=root.getFieldNames();
+  while (fieldNames.hasNext()) {
+    String next=fieldNames.next();
+    if ("Fn::Base64".equals(next)) {
+      JsonNode jsonNode=root.get(next);
+      ValueType value=this.functionValue(jsonNode,ctxt);
+      return new Base64Function(value);
+    }
+ else     if ("Fn::Join".equals(next)) {
+      JsonNode joinNode=root.get(next);
+      Iterator<JsonNode> elements=joinNode.getElements();
+      JsonNode separatorNode=elements.next();
+      String separator=separatorNode.getTextValue();
+      JsonNode toJoinNodes=elements.next();
+      Iterator<JsonNode> iterator=toJoinNodes.iterator();
+      List<ValueType> toJoinList=new ArrayList<ValueType>();
+      while (iterator.hasNext()) {
+        JsonNode node=iterator.next();
+        toJoinList.add(this.functionValue(node,ctxt));
+      }
+      return new JoinFunction(separator,toJoinList);
+    }
+ else     if ("Ref".equals(next)) {
+      return new RefValue(root.get(next).getValueAsText());
+    }
+ else {
+      logger.warning("Value not supported: " + next + " - node: "+ root.toString());
+      return new StringValue(root.toString());
+    }
+  }
+  return new StringValue(root.getTextValue());
+}
