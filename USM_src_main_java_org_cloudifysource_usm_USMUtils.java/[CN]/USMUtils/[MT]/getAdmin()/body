@@ -6,6 +6,7 @@
   factory.useDaemonThreads(true);
   factory.discoverUnmanagedSpaces();
   admin=factory.createAdmin();
+  admin.setStatisticsHistorySize(0);
   logger.info("Created new Admin Object with groups: " + Arrays.toString(admin.getGroups()) + " and Locators: "+ Arrays.toString(admin.getLocators()));
   return admin;
 }

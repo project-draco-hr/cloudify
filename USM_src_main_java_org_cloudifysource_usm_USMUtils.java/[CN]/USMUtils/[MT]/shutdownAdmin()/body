@@ -3,4 +3,6 @@
     return;
   }
   admin.close();
+  admin=null;
+  logger.info("USM Admin API instance was shut down");
 }
