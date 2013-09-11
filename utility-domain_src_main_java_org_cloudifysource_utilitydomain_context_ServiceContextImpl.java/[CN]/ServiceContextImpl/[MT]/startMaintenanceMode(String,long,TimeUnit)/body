@@ -1,0 +1,4 @@
+{
+  InternalElasticServiceManager esm=(InternalElasticServiceManager)admin.getElasticServiceManagers().waitForAtLeastOne();
+  esm.disableAgentFailureDetection(processingUnitName,timeout,unit);
+}
