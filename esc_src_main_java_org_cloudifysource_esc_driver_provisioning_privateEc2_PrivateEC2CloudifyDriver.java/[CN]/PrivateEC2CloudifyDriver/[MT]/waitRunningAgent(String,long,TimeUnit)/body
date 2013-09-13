@@ -1,0 +1,24 @@
+{
+  long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  Socket socket=null;
+  while (System.currentTimeMillis() < endTime) {
+    try {
+      socket=new Socket(host,DEFAULT_CLOUDIFY_AGENT_PORT);
+      logger.fine("Agent is reachable on: " + host + ":"+ DEFAULT_CLOUDIFY_AGENT_PORT);
+      break;
+    }
+ catch (    Exception e) {
+      this.sleep();
+    }
+ finally {
+      if (socket != null) {
+        try {
+          socket.close();
+        }
+ catch (        IOException e) {
+          continue;
+        }
+      }
+    }
+  }
+}

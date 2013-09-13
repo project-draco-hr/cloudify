@@ -1,10 +1,8 @@
 {
   try {
-    final CloudUser user=this.cloud.getUser();
     final ComputeTemplate template=this.getManagerComputeTemplate();
     final String cloudDirectory=isManagement ? ((File)this.cloud.getCustom().get("###CLOUD_DIRECTORY###")).getAbsolutePath() : template.getAbsoluteUploadDir();
     final String s3BucketName=(String)template.getCustom().get("s3BucketName");
-    final String locationId=(String)template.getCustom().get("s3LocationId");
     final StringBuilder sb=new StringBuilder();
     sb.append("#!/bin/bash\n");
     sb.append(script);
@@ -17,11 +15,10 @@
     tmpEnvFile.deleteOnExit();
     FileUtils.writeStringToFile(tmpEnvFile,sb.toString(),CharEncoding.UTF_8);
     logger.fine("Archive folders to upload: " + cloudDirectory + " and "+ tmpEnvFile.getAbsolutePath());
-    final String[] sourcePaths=new String[]{cloudDirectory,tmpEnvFile.getAbsolutePath()};
+    String[] sourcePaths=new String[]{cloudDirectory,tmpEnvFile.getAbsolutePath()};
     final File tarGzFile=TarGzUtils.createTarGz(sourcePaths,false);
-    final AmazonS3Uploader amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
-    final String cloudFileS3=amazonS3Uploader.uploadFile(s3BucketName,tarGzFile);
-    return cloudFileS3;
+    final S3Object s3Object=amazonS3Uploader.uploadFile(s3BucketName,tarGzFile);
+    return s3Object;
   }
  catch (  IOException e) {
     throw new CloudProvisioningException(e);
