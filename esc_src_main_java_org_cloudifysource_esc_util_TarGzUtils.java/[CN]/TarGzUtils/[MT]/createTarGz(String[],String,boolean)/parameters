@@ -1,0 +1,3 @@
+String[] sourcePaths
+String base
+boolean addRoot

@@ -1,18 +1,4 @@
 {
-  String cloudFileS3=null;
-  if (management) {
-    try {
-      final CloudUser user=this.cloud.getUser();
-      final ComputeTemplate template=this.getManagerComputeTemplate();
-      final String s3BucketName=(String)template.getCustom().get("s3BucketName");
-      final String locationId=(String)template.getCustom().get("s3LocationId");
-      final AmazonS3Uploader amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
-      cloudFileS3=amazonS3Uploader.zipAndUploadToS3(s3BucketName,ctx.getCloudFile().getParentFile().getAbsolutePath());
-    }
- catch (    final IOException e) {
-      throw new CloudProvisioningException(e);
-    }
-  }
   final InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
   final String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
   final Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
@@ -24,36 +10,26 @@
   final List<String> securityGroups=properties.getSecurityGroupsAsString();
   String userData=null;
   if (properties.getUserData() != null) {
+    String cloudFileS3=null;
     final StringBuilder sb=new StringBuilder();
-    String script=null;
-    if (management) {
-      script=this.generateManagementCloudifyEnv(ctx);
+    final String script=management ? this.generateManagementCloudifyEnv(ctx) : this.generateCloudifyEnv(ctx);
+    cloudFileS3=this.uploadCloudDir(ctx,script,management);
+    final ComputeTemplate template=this.getManagerComputeTemplate();
+    String cloudFileDir=(String)template.getRemoteDirectory();
+    if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
+      cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
     }
- else {
-      script=this.generateCloudifyEnv(ctx);
-    }
-    if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("Generated Management Script:\n" + script);
-    }
+    final String endOfLine=" >> /tmp/cloud.txt\n";
     sb.append("#!/bin/bash\n");
-    sb.append(script).append("\n");
-    if (management) {
-      final ComputeTemplate template=this.getManagerComputeTemplate();
-      String cloudFileDir=template.getRemoteDirectory();
-      if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
-        cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
-      }
-      final String endOfLine=" >> /tmp/cloud.txt\n";
-      sb.append("export TMP_DIRECTORY=/tmp").append(endOfLine);
-      sb.append("export S3_ZIP_FILE='" + cloudFileS3 + "'").append(endOfLine);
-      sb.append("wget -q -O $TMP_DIRECTORY/cloudArchive.zip $S3_ZIP_FILE").append(endOfLine);
-      sb.append("mkdir -p " + cloudFileDir).append(endOfLine);
-      sb.append("apt-get update").append(endOfLine);
-      sb.append("apt-get install unzip").append(endOfLine);
-      sb.append("unzip $TMP_DIRECTORY/cloudArchive.zip -d " + cloudFileDir).append(endOfLine);
-      sb.append("rm -f $TMP_DIRECTORY/cloudArchive.zip").append(endOfLine);
-      sb.append("export LUS_IP_ADDRESS=`curl http://instance-data/latest/meta-data/local-ipv4`:4174").append(endOfLine);
-    }
+    sb.append("export TMP_DIRECTORY=/tmp").append(endOfLine);
+    sb.append("export S3_ARCHIVE_FILE='" + cloudFileS3 + "'").append(endOfLine);
+    sb.append("wget -q -O $TMP_DIRECTORY/cloudArchive.tar.gz $S3_ARCHIVE_FILE").append(endOfLine);
+    sb.append("mkdir -p " + cloudFileDir).append(endOfLine);
+    sb.append("tar zxvf $TMP_DIRECTORY/cloudArchive.tar.gz -C " + cloudFileDir).append(endOfLine);
+    sb.append("rm -f $TMP_DIRECTORY/cloudArchive.tar.gz").append(endOfLine);
+    sb.append("echo ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
+    sb.append("chmod 755 ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
+    sb.append("source ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
     sb.append(properties.getUserData().getValue());
     userData=sb.toString();
     logger.fine("Instanciate ec2 with user data:\n" + userData);
