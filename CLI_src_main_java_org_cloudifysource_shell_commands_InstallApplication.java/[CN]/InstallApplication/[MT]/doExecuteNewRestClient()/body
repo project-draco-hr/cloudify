@@ -15,7 +15,7 @@
   final String packedFileKey=ShellUtils.uploadToRepo(newRestClient,packedFile,displayer);
   final String overridesFileKey=ShellUtils.uploadToRepo(newRestClient,overrides,displayer);
   final String cloudOverridesFileKey=ShellUtils.uploadToRepo(newRestClient,cloudOverrides,displayer);
-  final String cloudConfigurationFileKey=ShellUtils.uploadToRepo(newRestClient,cloudConfiguration,displayer);
+  final String cloudConfigurationFileKey=ShellUtils.uploadToRepo(newRestClient,createCloudConfigurationZipFile(),displayer);
   InstallApplicationRequest request=new InstallApplicationRequest();
   request.setApplcationFileUploadKey(packedFileKey);
   request.setApplicationOverridesUploadKey(overridesFileKey);
