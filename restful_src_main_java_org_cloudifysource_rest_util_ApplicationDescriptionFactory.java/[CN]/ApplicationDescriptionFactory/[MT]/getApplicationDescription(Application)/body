@@ -1,9 +1,9 @@
 {
   String applicationName=application.getName();
+  final ApplicationDescription applicationDescription=new ApplicationDescription();
   List<ServiceDescription> serviceDescriptionList=getServicesDescription(applicationName,application);
   logger.log(Level.FINE,"Creating application description for application " + applicationName);
   final DeploymentState applicationState=getApplicationState(serviceDescriptionList);
-  final ApplicationDescription applicationDescription=new ApplicationDescription();
   applicationDescription.setApplicationName(applicationName);
   applicationDescription.setAuthGroups(getApplicationAuthorizationGroups(application));
   applicationDescription.setServicesDescription(serviceDescriptionList);
