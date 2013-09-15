@@ -1,0 +1,6 @@
+{
+  final String listServicesUrl=getFormattedUrl(versionedDeploymentControllerUrl,LIST_SERVICES_URL_FORMAT);
+  return executor.get(listServicesUrl,new TypeReference<Response<ListServicesResponse>>(){
+  }
+);
+}
