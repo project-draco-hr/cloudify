@@ -1,18 +1,14 @@
 {
-  BucketLifecycleConfiguration.Rule ruleArchiveAndExpire=new BucketLifecycleConfiguration.Rule().withId("Delete cloudify zip files").withPrefix(existingBucketName + "/" + ZIP_PREFIX).withExpirationInDays(1).withStatus(BucketLifecycleConfiguration.ENABLED.toString());
-  List<BucketLifecycleConfiguration.Rule> rules=new ArrayList<BucketLifecycleConfiguration.Rule>();
+  final BucketLifecycleConfiguration.Rule ruleArchiveAndExpire=new BucketLifecycleConfiguration.Rule().withId("Delete cloudFolder archives").withPrefix(this.extractPrefix(bucketFullPath) + ZIP_PREFIX).withExpirationInDays(1).withStatus(BucketLifecycleConfiguration.ENABLED.toString());
+  final List<BucketLifecycleConfiguration.Rule> rules=new ArrayList<BucketLifecycleConfiguration.Rule>();
   rules.add(ruleArchiveAndExpire);
-  BucketLifecycleConfiguration configuration=new BucketLifecycleConfiguration().withRules(rules);
-  this.s3client.setBucketLifecycleConfiguration(existingBucketName,configuration);
-  PutObjectRequest putObjectRequest=new PutObjectRequest(existingBucketName,this.accessKey,file);
+  final BucketLifecycleConfiguration configuration=new BucketLifecycleConfiguration().withRules(rules);
+  this.s3client.setBucketLifecycleConfiguration(bucketFullPath,configuration);
+  final PutObjectRequest putObjectRequest=new PutObjectRequest(bucketFullPath,this.accessKey,file);
   putObjectRequest.setKey(file.getName());
-  ObjectMetadata metadata=new ObjectMetadata();
+  final ObjectMetadata metadata=new ObjectMetadata();
   putObjectRequest.setMetadata(metadata);
   this.s3client.putObject(putObjectRequest);
-  S3Object object=this.s3client.getObject(existingBucketName,file.getName());
-  URL generatePresignedObjectURL=this.generatePresignedObjectURL(object.getBucketName(),object.getKey());
-  if (logger.isLoggable(Level.FINEST)) {
-    logger.finest("Zip uploaded. Limited signed URL: " + generatePresignedObjectURL);
-  }
-  return generatePresignedObjectURL.toString();
+  final S3Object object=this.s3client.getObject(bucketFullPath,file.getName());
+  return object;
 }

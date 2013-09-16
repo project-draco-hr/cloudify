@@ -1,0 +1,3 @@
+{
+  return createTarGz(new String[]{sourcePaths},"",addRoot);
+}

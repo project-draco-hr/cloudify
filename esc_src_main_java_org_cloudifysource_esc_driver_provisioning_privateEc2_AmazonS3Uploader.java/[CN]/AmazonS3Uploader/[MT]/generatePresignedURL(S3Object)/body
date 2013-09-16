@@ -1,0 +1,3 @@
+{
+  return this.generatePresignedURL(s3.getBucketName(),s3.getKey());
+}

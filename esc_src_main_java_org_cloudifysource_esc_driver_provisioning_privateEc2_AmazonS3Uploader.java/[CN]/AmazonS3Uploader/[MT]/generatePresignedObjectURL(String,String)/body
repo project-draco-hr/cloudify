@@ -1,8 +1,0 @@
-{
-  Date expiration=new Date();
-  expiration.setTime(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
-  GeneratePresignedUrlRequest generatePresignedUrlRequest=new GeneratePresignedUrlRequest(bucketName,objectKey);
-  generatePresignedUrlRequest.setMethod(HttpMethod.GET);
-  generatePresignedUrlRequest.setExpiration(expiration);
-  return s3client.generatePresignedUrl(generatePresignedUrlRequest);
-}

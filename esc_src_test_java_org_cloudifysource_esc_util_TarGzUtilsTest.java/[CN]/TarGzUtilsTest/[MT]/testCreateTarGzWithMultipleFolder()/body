@@ -1,0 +1,22 @@
+{
+  File createTempFile=File.createTempFile("test","");
+  createTempFile.delete();
+  createTempFile.deleteOnExit();
+  File tmpFile=new File(createTempFile,"setenv.sh");
+  tmpFile.deleteOnExit();
+  FileUtils.writeStringToFile(tmpFile,"this is a test");
+  File createTarGz=TarGzUtils.createTarGz(new String[]{"./src/main/resources/clouds/privateEc2",tmpFile.getAbsolutePath()},false);
+  createTarGz.deleteOnExit();
+  File destinationFolder=File.createTempFile("test","");
+  destinationFolder.delete();
+  destinationFolder.mkdirs();
+  destinationFolder.deleteOnExit();
+  TarGzUtils.extract(createTarGz,destinationFolder.getAbsolutePath());
+  List<String> filenames=new ArrayList<String>();
+  for (  File file : destinationFolder.listFiles()) {
+    filenames.add(file.getName());
+  }
+  Assert.assertTrue(filenames.contains("setenv.sh"));
+  Assert.assertTrue(filenames.contains("upload"));
+  Assert.assertTrue(filenames.contains("privateEc2-cloud.groovy"));
+}

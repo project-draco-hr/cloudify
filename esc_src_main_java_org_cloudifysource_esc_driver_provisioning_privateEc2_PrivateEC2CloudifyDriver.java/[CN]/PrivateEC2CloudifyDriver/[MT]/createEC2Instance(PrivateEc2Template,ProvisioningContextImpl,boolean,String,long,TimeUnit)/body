@@ -1,0 +1,80 @@
+{
+  final InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
+  final String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
+  final Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
+  final String imageId=properties.getImageId() == null ? null : properties.getImageId().getValue();
+  final String instanceType=properties.getInstanceType() == null ? null : properties.getInstanceType().getValue();
+  final String keyName=properties.getKeyName() == null ? null : properties.getKeyName().getValue();
+  final String privateIpAddress=properties.getPrivateIpAddress() == null ? null : properties.getPrivateIpAddress().getValue();
+  final List<String> securityGroupIds=properties.getSecurityGroupIdsAsString();
+  final List<String> securityGroups=properties.getSecurityGroupsAsString();
+  S3Object s3Object=null;
+  try {
+    String userData=null;
+    if (properties.getUserData() != null) {
+      final StringBuilder sb=new StringBuilder();
+      final String script=management ? this.generateManagementCloudifyEnv(ctx) : this.generateCloudifyEnv(ctx);
+      s3Object=this.uploadCloudDir(ctx,script,management);
+      final String cloudFileS3=this.amazonS3Uploader.generatePresignedURL(s3Object);
+      ComputeTemplate template=this.getManagerComputeTemplate();
+      String cloudFileDir=(String)template.getRemoteDirectory();
+      if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
+        cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
+      }
+      final String endOfLine=" >> /tmp/cloud.txt\n";
+      sb.append("#!/bin/bash\n");
+      sb.append("export TMP_DIRECTORY=/tmp").append(endOfLine);
+      sb.append("export S3_ARCHIVE_FILE='" + cloudFileS3 + "'").append(endOfLine);
+      sb.append("wget -q -O $TMP_DIRECTORY/cloudArchive.tar.gz $S3_ARCHIVE_FILE").append(endOfLine);
+      sb.append("mkdir -p " + cloudFileDir).append(endOfLine);
+      sb.append("tar zxvf $TMP_DIRECTORY/cloudArchive.tar.gz -C " + cloudFileDir).append(endOfLine);
+      sb.append("rm -f $TMP_DIRECTORY/cloudArchive.tar.gz").append(endOfLine);
+      sb.append("echo ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
+      sb.append("chmod 755 ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
+      sb.append("source ").append(cloudFileDir).append("/").append(CLOUDIFY_ENV_SCRIPT).append(endOfLine);
+      sb.append(properties.getUserData().getValue());
+      userData=sb.toString();
+      logger.fine("Instanciate ec2 with user data:\n" + userData);
+      userData=StringUtils.newStringUtf8(Base64.encodeBase64(userData.getBytes()));
+    }
+    List<BlockDeviceMapping> blockDeviceMappings=null;
+    AWSEC2Volume volumeConfig=null;
+    if (properties.getVolumes() != null) {
+      blockDeviceMappings=new ArrayList<BlockDeviceMapping>(properties.getVolumes().size());
+      for (      final VolumeMapping volMapping : properties.getVolumes()) {
+        volumeConfig=cfnTemplate.getEC2Volume(volMapping.getVolumeId().getValue());
+        blockDeviceMappings.add(this.createBlockDeviceMapping(volMapping.getDevice().getValue(),volumeConfig));
+      }
+    }
+    final RunInstancesRequest runInstancesRequest=new RunInstancesRequest();
+    runInstancesRequest.withPlacement(placement);
+    runInstancesRequest.withImageId(imageId);
+    runInstancesRequest.withInstanceType(instanceType);
+    runInstancesRequest.withKeyName(keyName);
+    runInstancesRequest.withPrivateIpAddress(privateIpAddress);
+    runInstancesRequest.withSecurityGroupIds(securityGroupIds);
+    runInstancesRequest.withSecurityGroups(securityGroups);
+    runInstancesRequest.withMinCount(1);
+    runInstancesRequest.withMaxCount(1);
+    runInstancesRequest.withBlockDeviceMappings(blockDeviceMappings);
+    runInstancesRequest.withUserData(userData);
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("EC2::Instance request=" + runInstancesRequest);
+    }
+    final RunInstancesResult runInstances=this.ec2.runInstances(runInstancesRequest);
+    if (runInstances.getReservation().getInstances().size() != 1) {
+      throw new CloudProvisioningException("Request runInstace fails (request=" + runInstancesRequest + ").");
+    }
+    Instance ec2Instance=runInstances.getReservation().getInstances().get(0);
+    ec2Instance=this.waitRunningInstance(ec2Instance,duration,unit);
+    this.tagEC2Instance(ec2Instance,machineName,cfnTemplate.getEC2Instance());
+    this.tagEC2Volumes(ec2Instance.getInstanceId(),cfnTemplate);
+    this.waitRunningAgent(ec2Instance.getPublicIpAddress(),duration,unit);
+    return ec2Instance;
+  }
+  finally {
+    if (s3Object != null) {
+      this.amazonS3Uploader.deleteS3Object(s3Object.getBucketName(),s3Object.getKey());
+    }
+  }
+}

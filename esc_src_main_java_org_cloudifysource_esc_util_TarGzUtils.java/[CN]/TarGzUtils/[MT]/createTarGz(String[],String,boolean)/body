@@ -1,0 +1,34 @@
+{
+  File tarGzFile=createTempTarGzFile();
+  if (!FilenameUtils.getExtension(tarGzFile.getName().toLowerCase()).equals("gz")) {
+    throw new IllegalArgumentException("Expecting tar.gz file: " + tarGzFile.getAbsolutePath());
+  }
+  FileOutputStream fOut=null;
+  BufferedOutputStream bOut=null;
+  GzipCompressorOutputStream gzOut=null;
+  TarArchiveOutputStream tOut=null;
+  try {
+    fOut=new FileOutputStream(tarGzFile);
+    bOut=new BufferedOutputStream(fOut);
+    gzOut=new GzipCompressorOutputStream(bOut);
+    tOut=new TarArchiveOutputStream(gzOut);
+    for (    String path : sourcePaths) {
+      addFileToTarGz(tOut,path,base,addRoot);
+    }
+  }
+  finally {
+    if (tOut != null) {
+      tOut.close();
+    }
+    if (gzOut != null) {
+      gzOut.close();
+    }
+    if (bOut != null) {
+      bOut.close();
+    }
+    if (fOut != null) {
+      fOut.close();
+    }
+  }
+  return tarGzFile;
+}

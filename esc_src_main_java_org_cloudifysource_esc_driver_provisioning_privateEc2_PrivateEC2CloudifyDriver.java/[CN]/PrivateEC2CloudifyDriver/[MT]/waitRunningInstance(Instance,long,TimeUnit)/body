@@ -1,6 +1,7 @@
 {
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   while (System.currentTimeMillis() < endTime) {
+    this.sleep();
     final DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
     describeRequest.setInstanceIds(Arrays.asList(ec2instance.getInstanceId()));
     final DescribeInstancesResult describeInstances=this.ec2.describeInstances(describeRequest);
@@ -12,25 +13,16 @@
         }
 switch (state) {
 case PENDING:
-          try {
-            if (logger.isLoggable(Level.FINEST)) {
-              logger.finest("sleeping...");
-            }
-            Thread.sleep(WAIT_STATUS_SLEEP_TIME);
-          }
- catch (          final InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
-        break;
+          break;
 case RUNNING:
-      logger.fine("running okay...");
-    return instance;
+        logger.fine("running okay...");
+      return instance;
 case STOPPING:
 case SHUTTING_DOWN:
 case TERMINATED:
 case STOPPED:
 default :
-  throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + state.getName() + " state. Node details: "+ ec2instance);
+    throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + state.getName() + " state. Node details: "+ ec2instance);
 }
 }
 }

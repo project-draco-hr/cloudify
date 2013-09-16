@@ -1,0 +1,9 @@
+{
+  try {
+    logger.fine("Delete S3 resource: bucketName=" + bucketName + ", key="+ key);
+    s3client.deleteObject(bucketName,key);
+  }
+ catch (  final Exception e) {
+    logger.log(Level.WARNING,"Couldn't delete files from S3 : bucketName=" + bucketName + ", keys="+ key);
+  }
+}

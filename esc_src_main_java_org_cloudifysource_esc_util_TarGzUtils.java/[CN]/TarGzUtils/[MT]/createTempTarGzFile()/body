@@ -1,0 +1,9 @@
+{
+  final File archiveFile=File.createTempFile(DEFAULT_PREFIX,".tar.gz");
+  archiveFile.deleteOnExit();
+  if (LOGGER.isLoggable(Level.FINE)) {
+    System.out.println(archiveFile);
+    LOGGER.finest("Created tar.gz file: " + archiveFile);
+  }
+  return archiveFile;
+}

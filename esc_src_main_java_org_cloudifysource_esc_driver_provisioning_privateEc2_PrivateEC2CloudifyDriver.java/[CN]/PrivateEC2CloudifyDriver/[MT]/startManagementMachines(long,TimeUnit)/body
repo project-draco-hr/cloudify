@@ -6,6 +6,7 @@
   logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
   try {
     final File cloudDirectory=new ProvisioningContextAccess().getManagementProvisioiningContext().getCloudFile().getParentFile();
+    this.cloud.getCustom().put("###CLOUD_DIRECTORY###",cloudDirectory);
     this.privateEc2Template=this.getManagerPrivateEc2Template(cloudDirectory,this.managerCfnTemplateFileName);
   }
  catch (  PrivateEc2ParserException e) {

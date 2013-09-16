@@ -1,0 +1,4 @@
+TarArchiveOutputStream tOut
+String path
+String base
+boolean addRoot

@@ -1,0 +1,26 @@
+{
+  try {
+    final ComputeTemplate template=this.getManagerComputeTemplate();
+    final String cloudDirectory=isManagement ? ((File)this.cloud.getCustom().get("###CLOUD_DIRECTORY###")).getAbsolutePath() : template.getAbsoluteUploadDir();
+    final String s3BucketName=(String)template.getCustom().get("s3BucketName");
+    final StringBuilder sb=new StringBuilder();
+    sb.append("#!/bin/bash\n");
+    sb.append(script);
+    if (isManagement) {
+      sb.append("export LUS_IP_ADDRESS=`curl http://instance-data/latest/meta-data/local-ipv4`:4174");
+    }
+    final File createTempFile=File.createTempFile("cloudify_env","");
+    createTempFile.delete();
+    final File tmpEnvFile=new File(createTempFile,CLOUDIFY_ENV_SCRIPT);
+    tmpEnvFile.deleteOnExit();
+    FileUtils.writeStringToFile(tmpEnvFile,sb.toString(),CharEncoding.UTF_8);
+    logger.fine("Archive folders to upload: " + cloudDirectory + " and "+ tmpEnvFile.getAbsolutePath());
+    String[] sourcePaths=new String[]{cloudDirectory,tmpEnvFile.getAbsolutePath()};
+    final File tarGzFile=TarGzUtils.createTarGz(sourcePaths,false);
+    final S3Object s3Object=amazonS3Uploader.uploadFile(s3BucketName,tarGzFile);
+    return s3Object;
+  }
+ catch (  IOException e) {
+    throw new CloudProvisioningException(e);
+  }
+}
