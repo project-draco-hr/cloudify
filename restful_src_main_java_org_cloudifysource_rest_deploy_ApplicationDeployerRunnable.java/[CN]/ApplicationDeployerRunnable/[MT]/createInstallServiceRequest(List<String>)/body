@@ -1,5 +1,6 @@
 {
   final InstallServiceRequest installServiceReq=new InstallServiceRequest();
+  installServiceReq.setDependsOn(dependsOn);
   installServiceReq.setCloudOverridesUploadKey(request.getCloudOverridesUploadKey());
   installServiceReq.setCloudConfigurationUploadKey(request.getCloudConfigurationUploadKey());
   installServiceReq.setAuthGroups(this.request.getAuthGroups());

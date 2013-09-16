@@ -12,7 +12,7 @@
   merger.setOverridesFile(fileHolder.getServiceOverridesFile());
   merger.setOriginPackedFile(fileHolder.getPackedFile());
   File updatedPackedFile=merger.merge();
-  final Service service=readService(workingProjectDir,request.getServiceFileName(),absolutePuName);
+  final Service service=readService(workingProjectDir,request,absolutePuName);
   final String templateName=getTempalteNameFromService(service);
   final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
   final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
