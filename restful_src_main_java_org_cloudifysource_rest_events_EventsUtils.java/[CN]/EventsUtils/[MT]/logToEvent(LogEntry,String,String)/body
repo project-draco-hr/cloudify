@@ -1,6 +1,10 @@
 {
   String text=logEntry.getText();
-  String textWithoutLogger=text.split(" - ")[1];
+  String[] split=text.split(" - ");
+  if (split.length < 2) {
+    throw new IllegalArgumentException("Expected a separator (' - ') in USM log entry: " + text);
+  }
+  String textWithoutLogger=split[1];
   String actualEvent=textWithoutLogger.substring(textWithoutLogger.indexOf(".") + 1);
   DeploymentEvent event=new DeploymentEvent();
   event.setDescription("[" + hostName + "/"+ hostAddress+ "] - "+ actualEvent);
