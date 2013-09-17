@@ -1,0 +1,4 @@
+{
+  this.applicationDir=appDir;
+  this.overridesFile=overridesFile;
+}

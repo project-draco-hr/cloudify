@@ -6,7 +6,7 @@
  else {
     throw new CLIStatusException("application_not_found",StringUtils.join(pathResolver.getPathsLooked().toArray(),", "));
   }
-  final NameAndPackedFileResolver nameAndPackedFileResolver=getResolver(applicationFile);
+  final NameAndPackedFileResolver nameAndPackedFileResolver=getResolver();
   if (StringUtils.isBlank(applicationName)) {
     applicationName=nameAndPackedFileResolver.getName();
   }

@@ -5,5 +5,5 @@
     }
     throw new CLIStatusException("application_file_format_mismatch",applicationFile.getPath());
   }
-  return new ApplicationResolver(applicationFile);
+  return new ApplicationResolver(applicationFile,overrides);
 }
