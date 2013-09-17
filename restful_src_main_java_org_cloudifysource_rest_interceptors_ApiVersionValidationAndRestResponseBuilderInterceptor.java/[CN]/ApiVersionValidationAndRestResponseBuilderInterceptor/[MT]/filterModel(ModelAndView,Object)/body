@@ -9,10 +9,6 @@
         break;
       }
     }
-    if (methodReturnObject == null) {
-      logger.warning("return object not found in model: " + model.toString());
-      throw new RestErrorException("return object not found in model: " + model.toString());
-    }
   }
  else {
     if (handler instanceof HandlerMethod) {
