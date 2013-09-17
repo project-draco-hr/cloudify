@@ -17,13 +17,15 @@
       final File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
-      final InstallServiceRequest installServiceReq=createInstallServiceRequest(service.getDependsOn());
+      final InstallServiceRequest installServiceReq=createInstallServiceRequest();
       final String appName=this.request.getApplicationName();
       final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
       fileHolder.setPackedFile(packedFile);
       fileHolder.setServiceOverridesFile(actualOverridesFile);
       fileHolder.setApplicationPropertiesFile(applicationPropertiesFile);
-      controller.installServiceInternal(appName,serviceName,installServiceReq,deploymentID,fileHolder);
+      final ServiceApplicationDependentProperties serviceProps=new ServiceApplicationDependentProperties();
+      serviceProps.setDependsOn(service.getDependsOn());
+      controller.installServiceInternal(appName,serviceName,installServiceReq,deploymentID,fileHolder,serviceProps);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }

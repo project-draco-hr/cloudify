@@ -12,5 +12,5 @@
   fileHolder.setServiceOverridesFile(serviceOverridesFile);
   fileHolder.setApplicationPropertiesFile(null);
   final String deploymentID=UUID.randomUUID().toString();
-  return installServiceInternal(appName,serviceName,request,deploymentID,fileHolder);
+  return installServiceInternal(appName,serviceName,request,deploymentID,fileHolder,null);
 }

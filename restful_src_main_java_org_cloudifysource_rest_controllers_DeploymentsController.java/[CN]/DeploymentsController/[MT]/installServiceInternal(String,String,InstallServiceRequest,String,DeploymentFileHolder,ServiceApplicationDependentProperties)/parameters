@@ -3,3 +3,4 @@ String serviceName
 InstallServiceRequest request
 String deploymentID
 DeploymentFileHolder fileHolder
+ServiceApplicationDependentProperties serviceProps

@@ -9,7 +9,9 @@
       result=ServiceReader.getServiceFromDirectory(workingProjectDir);
     }
     service=result.getService();
-    service.setDependsOn(request.getDependsOn());
+    if (serviceProps != null) {
+      service.setDependsOn(serviceProps.getDependsOn());
+    }
   }
  catch (  final Exception e) {
     throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_READ_SERVICE.getName(),absolutePuName);
