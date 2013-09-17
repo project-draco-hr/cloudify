@@ -15,15 +15,7 @@ case PENDING:
 case RUNNING:
 case STOPPING:
 case SHUTTING_DOWN:
-          try {
-            if (logger.isLoggable(Level.FINEST)) {
-              logger.finest("sleeping...");
-            }
-            Thread.sleep(WAIT_STATUS_SLEEP_TIME);
-          }
- catch (          final InterruptedException e) {
-            Thread.currentThread().interrupt();
-          }
+          this.sleep();
         break;
 case STOPPED:
 case TERMINATED:

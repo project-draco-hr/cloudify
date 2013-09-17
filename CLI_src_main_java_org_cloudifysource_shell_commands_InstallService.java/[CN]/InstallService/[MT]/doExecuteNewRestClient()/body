@@ -1,5 +1,5 @@
 {
-  logger.info("install-service using the old rest client");
+  logger.info("install-service using the new rest client");
   RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   NameAndPackedFileResolver nameAndPackedFileResolver=getResolver(recipe);
   serviceName=nameAndPackedFileResolver.getName();

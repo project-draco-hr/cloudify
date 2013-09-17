@@ -1,0 +1,5 @@
+{
+  InternalElasticServiceManager esm=(InternalElasticServiceManager)admin.getElasticServiceManagers().waitForAtLeastOne();
+  String absolutePUName=ServiceUtils.getAbsolutePUName(getApplicationName(),getServiceName());
+  esm.disableAgentFailureDetection(absolutePUName,timeout,unit);
+}

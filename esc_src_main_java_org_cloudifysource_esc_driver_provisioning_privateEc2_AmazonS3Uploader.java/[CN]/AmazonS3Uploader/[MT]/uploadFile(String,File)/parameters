@@ -1,2 +1,2 @@
-String existingBucketName
+String bucketFullPath
 File file

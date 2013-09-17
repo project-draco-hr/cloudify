@@ -1,0 +1,10 @@
+{
+  String prefix=null;
+  if (bucketFullPath.contains("/")) {
+    prefix=bucketFullPath.substring(bucketFullPath.indexOf("/") + 1,bucketFullPath.length()) + "/";
+  }
+ else {
+    prefix="/";
+  }
+  return prefix;
+}

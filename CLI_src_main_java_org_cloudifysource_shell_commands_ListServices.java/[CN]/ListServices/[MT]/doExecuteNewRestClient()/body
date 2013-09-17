@@ -1,0 +1,21 @@
+{
+  logger.fine("list-services using the new rest client");
+  RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  ApplicationDescription applicationDescription=null;
+  String applicationName=getCurrentApplicationName();
+  try {
+    applicationDescription=newRestClient.getApplicationDescription(applicationName);
+  }
+ catch (  RestClientException e) {
+    if (applicationName.equalsIgnoreCase(CloudifyConstants.DEFAULT_APPLICATION_NAME) && CloudifyConstants.ERR_MESSAGE_CODE_MISSING_RESOURCE.equalsIgnoreCase(e.getMessageCode())) {
+      return "";
+    }
+ else {
+      throw e;
+    }
+  }
+  if (applicationDescription == null) {
+    return "";
+  }
+  return getApplicationDescriptionAsString(applicationDescription);
+}

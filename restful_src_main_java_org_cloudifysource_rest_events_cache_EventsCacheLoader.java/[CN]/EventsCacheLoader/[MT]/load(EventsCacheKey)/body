@@ -2,7 +2,7 @@
   logger.fine(EventsUtils.getThreadId() + "Could not find events for key " + key+ " in cache. Loading from container logs...");
   DeploymentEvents events=new DeploymentEvents();
   Set<GridServiceContainer> containersForDeployment=containerProvider.getContainersForDeployment(key.getDeploymentId());
-  if (containersForDeployment == null) {
+  if (containersForDeployment == null || containersForDeployment.isEmpty()) {
     throw new ResourceNotFoundException("Deployment with id " + key.getDeploymentId());
   }
   int index=-1;

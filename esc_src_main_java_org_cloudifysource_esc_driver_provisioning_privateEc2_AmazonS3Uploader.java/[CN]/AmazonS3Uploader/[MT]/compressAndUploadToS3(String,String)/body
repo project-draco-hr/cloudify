@@ -1,0 +1,6 @@
+{
+  final File compressedFile=TarGzUtils.createTarGz(pathFolderToArchive,false);
+  final S3Object s3Object=this.uploadFile(existingBucketName,compressedFile);
+  final String s3Url=this.generatePresignedURL(s3Object);
+  return s3Url;
+}

@@ -1,0 +1,6 @@
+{
+  String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_APPLICATION_DESCRIPTIONS_URL_FORMAT);
+  return executor.get(url,new TypeReference<Response<List<ApplicationDescription>>>(){
+  }
+);
+}

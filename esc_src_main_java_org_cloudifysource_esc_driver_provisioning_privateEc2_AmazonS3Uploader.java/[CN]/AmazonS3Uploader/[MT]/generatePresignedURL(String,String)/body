@@ -1,0 +1,12 @@
+{
+  final Date expiration=new Date();
+  expiration.setTime(System.currentTimeMillis() + ONE_DAY_IN_MILLIS);
+  final GeneratePresignedUrlRequest generatePresignedUrlRequest=new GeneratePresignedUrlRequest(bucketName,objectKey);
+  generatePresignedUrlRequest.setMethod(HttpMethod.GET);
+  generatePresignedUrlRequest.setExpiration(expiration);
+  URL generatePresignedObjectURL=s3client.generatePresignedUrl(generatePresignedUrlRequest);
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Zip uploaded. Limited signed URL: " + generatePresignedObjectURL);
+  }
+  return generatePresignedObjectURL.toString();
+}

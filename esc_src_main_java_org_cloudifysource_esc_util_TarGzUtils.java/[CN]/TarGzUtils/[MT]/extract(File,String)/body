@@ -1,0 +1,32 @@
+{
+  LOGGER.fine(String.format("Extracting %s to %s",source.getName(),destination));
+  if (!FilenameUtils.getExtension(source.getName().toLowerCase()).equals("gz")) {
+    throw new IllegalArgumentException("Expecting tar.gz file: " + source.getAbsolutePath());
+  }
+  if (!new File(destination).isDirectory()) {
+    throw new IllegalArgumentException("Destination should be a folder: " + destination);
+  }
+  FileInputStream fin=new FileInputStream(source);
+  BufferedInputStream in=new BufferedInputStream(fin);
+  GzipCompressorInputStream gzIn=new GzipCompressorInputStream(in);
+  TarArchiveInputStream tarIn=new TarArchiveInputStream(gzIn);
+  TarArchiveEntry entry=null;
+  while ((entry=(TarArchiveEntry)tarIn.getNextEntry()) != null) {
+    LOGGER.finer("Extracting: " + entry.getName());
+    if (entry.isDirectory()) {
+      File f=new File(destination,entry.getName());
+      f.mkdirs();
+    }
+ else {
+      int count;
+      byte[] data=new byte[BUFFER];
+      FileOutputStream fos=new FileOutputStream(new File(destination,entry.getName()));
+      BufferedOutputStream dest=new BufferedOutputStream(fos,BUFFER);
+      while ((count=tarIn.read(data,0,BUFFER)) != -1) {
+        dest.write(data,0,count);
+      }
+      dest.close();
+    }
+  }
+  tarIn.close();
+}

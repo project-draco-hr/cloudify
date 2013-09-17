@@ -8,8 +8,8 @@
     logger.finer("Service name : " + this.serviceName + "("+ fullServiceName+ ")");
   }
   try {
+    ComputeTemplate managerTemplate=this.getManagerComputeTemplate();
     if (management) {
-      final ComputeTemplate managerTemplate=this.getManagerComputeTemplate();
       managerCfnTemplateFileName=(String)managerTemplate.getCustom().get("cfnManagerTemplate");
     }
  else {
@@ -19,6 +19,9 @@
       }
     }
     this.ec2=this.createAmazonEC2();
+    String locationId=(String)managerTemplate.getCustom().get("s3LocationId");
+    CloudUser user=this.cloud.getUser();
+    this.amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
   }
  catch (  final CloudProvisioningException e) {
     throw new IllegalArgumentException(e);

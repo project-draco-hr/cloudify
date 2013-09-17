@@ -1,0 +1,10 @@
+{
+  final Applications applications=admin.getApplications();
+  List<ApplicationDescription> applicationDescriptions=new ArrayList<ApplicationDescription>();
+  for (  Application application : applications) {
+    if (!application.getName().equalsIgnoreCase(CloudifyConstants.MANAGEMENT_APPLICATION_NAME)) {
+      applicationDescriptions.add(getApplicationDescription(application));
+    }
+  }
+  return applicationDescriptions;
+}

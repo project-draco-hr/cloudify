@@ -1,0 +1,28 @@
+{
+  File f=new File(path);
+  String entryName=base + f.getName();
+  if (f.isFile()) {
+    TarArchiveEntry tarEntry=new TarArchiveEntry(f,entryName);
+    tOut.putArchiveEntry(tarEntry);
+    IOUtils.copy(new FileInputStream(f),tOut);
+    tOut.closeArchiveEntry();
+  }
+ else {
+    if (addRoot) {
+      TarArchiveEntry tarEntry=new TarArchiveEntry(f,entryName);
+      tOut.putArchiveEntry(tarEntry);
+      tOut.closeArchiveEntry();
+    }
+    File[] children=f.listFiles();
+    if (children != null) {
+      for (      File child : children) {
+        if (addRoot) {
+          addFileToTarGz(tOut,child.getAbsolutePath(),entryName + "/",true);
+        }
+ else {
+          addFileToTarGz(tOut,child.getAbsolutePath(),"",true);
+        }
+      }
+    }
+  }
+}

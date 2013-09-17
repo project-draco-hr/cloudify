@@ -17,7 +17,7 @@
       final File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
       result.getApplicationFile().delete();
       packedFile.deleteOnExit();
-      final InstallServiceRequest installServiceReq=createInstallServiceRequest(packedFile);
+      final InstallServiceRequest installServiceReq=createInstallServiceRequest(service.getDependsOn());
       final String appName=this.request.getApplicationName();
       final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
       fileHolder.setPackedFile(packedFile);

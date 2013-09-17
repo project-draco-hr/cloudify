@@ -1,0 +1,6 @@
+PrivateEc2Template cfnTemplate
+ProvisioningContextImpl ctx
+boolean management
+String machineName
+long duration
+TimeUnit unit

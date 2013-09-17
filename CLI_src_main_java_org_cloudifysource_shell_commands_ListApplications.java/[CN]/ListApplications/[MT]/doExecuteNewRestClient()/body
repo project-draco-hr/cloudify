@@ -1,0 +1,6 @@
+{
+  logger.fine("list-applications using the new rest client");
+  RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  List<ApplicationDescription> applicationsList=newRestClient.getApplicationDescriptionsList();
+  return getApplicationDescriptionFromListAsString(applicationsList);
+}

@@ -1,0 +1,2 @@
+KeyStore trustStore
+X509HostnameVerifier hostnameVarifier

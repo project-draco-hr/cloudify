@@ -1,5 +1,3 @@
 {
-  this.messageCode=messageCode;
-  this.messageFormattedText=messageFormattedText;
-  this.verbose=verbose;
+  this(messageCode,messageFormattedText,verbose,(Object[])null);
 }

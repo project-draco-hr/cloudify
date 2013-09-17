@@ -18,7 +18,18 @@
       if (logger.isLoggable(Level.WARNING)) {
         logger.log(Level.WARNING,"[checkForError] - failed to read response. responseBody: " + responseBody + ", reasonPhrase:"+ reasonPhrase);
       }
-      throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,requestUri);
+      if (statusCode == CloudifyConstants.HTTP_STATUS_NOT_FOUND) {
+        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.URL_NOT_FOUND.getName(),requestUri);
+      }
+ else       if (statusCode == CloudifyConstants.HTTP_STATUS_ACCESS_DENIED) {
+        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.NO_PERMISSION_ACCESS_DENIED.getName());
+      }
+ else       if (statusCode == CloudifyConstants.HTTP_STATUS_UNAUTHORIZED) {
+        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,CloudifyErrorMessages.UNAUTHORIZED.getName());
+      }
+ else {
+        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,requestUri);
+      }
     }
   }
 }
