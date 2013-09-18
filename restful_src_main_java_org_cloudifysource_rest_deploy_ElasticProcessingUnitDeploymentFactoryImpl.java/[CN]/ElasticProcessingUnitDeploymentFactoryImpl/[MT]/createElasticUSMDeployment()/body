@@ -1,14 +1,30 @@
 {
-  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(deploymentConfig.getPackedFile());
+  File packedFile=deploymentConfig.getPackedFile();
+  String packedFileName=packedFile.getName();
+  String fileType="";
+  String[] split=packedFileName.split("\\.");
+  if (split.length > 1) {
+    fileType="." + split[split.length - 1];
+  }
+  final String expectedName=this.deploymentConfig.getAbsolutePUName() + fileType;
+  if (!packedFile.getName().equals(expectedName)) {
+    final File renamedFile=new File(expectedName);
+    if (!packedFile.renameTo(renamedFile)) {
+      throw new IllegalStateException("Failed to rename " + packedFile.getAbsolutePath() + " to: "+ renamedFile.getAbsolutePath());
+    }
+    packedFile=renamedFile;
+  }
+  final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(packedFile);
   addSharedDeploymentParameters(deployment);
   deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_ASYNC_INSTALL,"true");
   final String disableSelHealingValue=Boolean.toString(!deploymentConfig.getInstallRequest().getSelfHealing());
   logger.info("Setting disable self healing value to: " + disableSelHealingValue);
   deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_DISABLE_SELF_HEALING,disableSelHealingValue);
+  deployment.name(this.deploymentConfig.getAbsolutePUName());
   final Service service=deploymentConfig.getService();
   final boolean scalingRulesDefined=service.getScalingRules() == null ? false : true;
   if (!isLocalcloud()) {
-    boolean dedicated=IsolationUtils.isDedicated(service);
+    final boolean dedicated=IsolationUtils.isDedicated(service);
     final CloudifyMachineProvisioningConfig config=createCloudifyMachineProvisioningConfig();
     setIsolationConfig(deployment,dedicated,config);
     long cloudExternalProcessMemoryInMB;

@@ -1,5 +1,5 @@
 {
-  StatefulProcessingUnit puConfig=deploymentConfig.getService().getStatefulProcessingUnit();
+  final StatefulProcessingUnit puConfig=deploymentConfig.getService().getStatefulProcessingUnit();
   final Sla statefulSla=puConfig.getSla();
   prepareSla(statefulSla);
   final File packedService=deploymentConfig.getPackedFile();
@@ -8,7 +8,7 @@
   try {
     binaryFile=getBinaryFromPackedRecipe(packedService,binaryFileName);
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new ElasticDeploymentCreationException("Failed to open packaged service file: " + e.getMessage(),e);
   }
   final ElasticStatefulProcessingUnitDeployment deployment=new ElasticStatefulProcessingUnitDeployment(binaryFile);

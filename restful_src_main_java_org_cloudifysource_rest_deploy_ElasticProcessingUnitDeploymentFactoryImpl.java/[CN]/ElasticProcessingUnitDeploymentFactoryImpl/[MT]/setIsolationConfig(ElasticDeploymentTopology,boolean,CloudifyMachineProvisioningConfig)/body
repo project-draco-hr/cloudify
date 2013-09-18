@@ -21,7 +21,7 @@
       deployment.sharedMachineProvisioning(applicationName,config);
     }
  else     if (IsolationUtils.isTenantShared(service)) {
-      String authGroups=deploymentConfig.getAuthGroups();
+      final String authGroups=deploymentConfig.getAuthGroups();
       if (authGroups == null) {
         throw new IllegalStateException("authGroups cannot be null when using tenant shared isolation");
       }

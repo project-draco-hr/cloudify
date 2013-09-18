@@ -1,7 +1,7 @@
 {
   final Properties contextProperties=new Properties();
-  Service service=deploymentConfig.getService();
-  List<String> dependsOn=service.getDependsOn();
+  final Service service=deploymentConfig.getService();
+  final List<String> dependsOn=service.getDependsOn();
   if (dependsOn.isEmpty()) {
     contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPENDS_ON,"[]");
   }

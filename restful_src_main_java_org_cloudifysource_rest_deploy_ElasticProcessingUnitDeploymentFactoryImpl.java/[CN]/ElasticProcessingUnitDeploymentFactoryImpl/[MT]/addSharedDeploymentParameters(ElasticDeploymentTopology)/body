@@ -1,5 +1,5 @@
 {
-  ElasticDeploymentTopology addContextProperty=deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getAuthGroups());
+  final ElasticDeploymentTopology addContextProperty=deployment.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName()).addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getAuthGroups());
   if (deploymentConfig.getTemplateName() != null) {
     addContextProperty.addContextProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE,deploymentConfig.getTemplateName());
   }

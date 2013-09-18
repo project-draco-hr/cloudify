@@ -16,7 +16,7 @@
   try {
     binaryFile=getBinaryFromPackedRecipe(packedService,binaryFileName);
   }
- catch (  IOException e) {
+ catch (  final IOException e) {
     throw new ElasticDeploymentCreationException("Failed to open packaged service file: " + e.getMessage(),e);
   }
   final ElasticStatelessProcessingUnitDeployment deployment=new ElasticStatelessProcessingUnitDeployment(binaryFile).memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES);
