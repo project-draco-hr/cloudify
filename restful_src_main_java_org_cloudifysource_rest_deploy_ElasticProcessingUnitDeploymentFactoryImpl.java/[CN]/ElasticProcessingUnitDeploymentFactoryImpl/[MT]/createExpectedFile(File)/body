@@ -1,0 +1,23 @@
+{
+  String packedFileName=packedFile.getName();
+  String fileType="";
+  String[] split=packedFileName.split("\\.");
+  if (split.length > 1) {
+    fileType="." + split[split.length - 1];
+  }
+  final String expectedName=this.deploymentConfig.getAbsolutePUName() + fileType;
+  if (!packedFile.getName().equals(expectedName)) {
+    final File renamedFile=new File(packedFile.getParentFile(),expectedName);
+    if (renamedFile.exists()) {
+      final boolean deleteResult=FileUtils.deleteQuietly(renamedFile);
+      if (!deleteResult) {
+        throw new IllegalStateException("Failed to delete file: " + renamedFile);
+      }
+    }
+    if (!packedFile.renameTo(renamedFile)) {
+      throw new IllegalStateException("Failed to rename " + packedFile.getAbsolutePath() + " to: "+ renamedFile.getAbsolutePath());
+    }
+    return renamedFile;
+  }
+  return packedFile;
+}
