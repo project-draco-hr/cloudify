@@ -1,14 +1,17 @@
 {
   logger.fine("list-services using the new rest client");
-  RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   ApplicationDescription applicationDescription=null;
-  String applicationName=getCurrentApplicationName();
+  final String applicationName=getCurrentApplicationName();
   try {
     applicationDescription=newRestClient.getApplicationDescription(applicationName);
   }
- catch (  RestClientException e) {
+ catch (  final RestClientException e) {
     if (applicationName.equalsIgnoreCase(CloudifyConstants.DEFAULT_APPLICATION_NAME) && CloudifyConstants.ERR_MESSAGE_CODE_MISSING_RESOURCE.equalsIgnoreCase(e.getMessageCode())) {
       return "";
+    }
+    if (CloudifyConstants.ERR_MESSAGE_CODE_MISSING_RESOURCE.equalsIgnoreCase(e.getMessageCode())) {
+      throw new CLIStatusException(CloudifyConstants.ERR_REASON_CODE_FAILED_TO_LOCATE_APP,applicationName);
     }
  else {
       throw e;

@@ -1,7 +1,7 @@
 {
   ApplicationDescription applicationDescription=null;
   try {
-    String applicationName=getCurrentApplicationName();
+    final String applicationName=getCurrentApplicationName();
     applicationDescription=adminFacade.getServicesDescriptionList(applicationName);
     if (applicationDescription == null) {
       return "";
