@@ -4,8 +4,8 @@
   }
   final LocalhostGridAgentBootstrapper installer=new LocalhostGridAgentBootstrapper();
   installer.setVerbose(verbose);
-  installer.setLookupGroups(lookupGroups);
-  installer.setLookupLocators(lookupLocators);
+  installer.setLookupGroups(getLookupGroups());
+  installer.setLookupLocators(getLookupLocators());
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(DEFAULT_POLLING_INTERVAL);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
