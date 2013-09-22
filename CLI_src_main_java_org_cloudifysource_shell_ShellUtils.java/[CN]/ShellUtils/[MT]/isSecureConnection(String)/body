@@ -1,4 +1,4 @@
 {
-  List<String> existingProfiles=Arrays.asList(springSecurityProfile.toLowerCase().split(","));
+  final List<String> existingProfiles=Arrays.asList(springSecurityProfile.toLowerCase().split(","));
   return existingProfiles.contains(CloudifyConstants.SPRING_PROFILE_SECURE.toLowerCase());
 }

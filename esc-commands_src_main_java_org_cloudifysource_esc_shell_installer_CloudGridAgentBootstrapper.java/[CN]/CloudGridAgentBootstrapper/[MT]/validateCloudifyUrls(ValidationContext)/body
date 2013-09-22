@@ -1,15 +1,16 @@
 {
   final String baseCloudifyUrl=cloud.getProvider().getCloudifyUrl();
+  final SystemDefaultHttpClient client=new SystemDefaultHttpClient();
   if (baseCloudifyUrl.endsWith(".tar.gz") || baseCloudifyUrl.endsWith(".zip")) {
-    validateUrl(baseCloudifyUrl,validationContext);
+    validateUrl(client,baseCloudifyUrl,validationContext);
   }
  else {
     final Set<String> scriptLanguages=getScriptLanguages();
     if (scriptLanguages.contains(ScriptLanguages.LINUX_SHELL.toString())) {
-      validateUrl(baseCloudifyUrl + ".tar.gz",validationContext);
+      validateUrl(client,baseCloudifyUrl + ".tar.gz",validationContext);
     }
     if (scriptLanguages.contains(ScriptLanguages.WINDOWS_BATCH.toString())) {
-      validateUrl(baseCloudifyUrl + ".zip",validationContext);
+      validateUrl(client,baseCloudifyUrl + ".zip",validationContext);
     }
   }
 }

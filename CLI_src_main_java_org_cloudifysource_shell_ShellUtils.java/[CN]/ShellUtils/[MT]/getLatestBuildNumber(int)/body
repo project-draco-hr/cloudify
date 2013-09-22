@@ -1,6 +1,6 @@
 {
-  final HttpClient client=new DefaultHttpClient();
-  HttpParams params=client.getParams();
+  final HttpClient client=new SystemDefaultHttpClient();
+  final HttpParams params=client.getParams();
   HttpConnectionParams.setConnectionTimeout(params,VERSION_CHECK_READ_TIMEOUT);
   HttpConnectionParams.setSoTimeout(params,VERSION_CHECK_READ_TIMEOUT);
   final String url="http://www.gigaspaces.com/downloadgen/latest-cloudify-version?build=" + currentVersion;

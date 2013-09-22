@@ -1,5 +1,4 @@
 {
-  final DefaultHttpClient httpClient=new DefaultHttpClient();
   final HttpHead httpMethod=new HttpHead(cloudifyUrl);
   try {
     validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,ShellUtils.getFormattedMessage(CloudifyErrorMessages.EVENT_VALIDATING_CLOUDIFY_URL.getName(),cloudifyUrl));
