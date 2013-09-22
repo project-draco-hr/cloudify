@@ -7,6 +7,6 @@
     return config;
   }
  catch (  final Exception e) {
-    throw new IOException("Failed to read properties file: " + propertiesFile,e);
+    throw new IOException("Failed to read properties file: " + propertiesFile + ": "+ e.getMessage(),e);
   }
 }

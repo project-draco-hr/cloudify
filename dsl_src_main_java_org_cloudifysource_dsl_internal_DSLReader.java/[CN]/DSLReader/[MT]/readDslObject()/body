@@ -15,7 +15,7 @@
  catch (  final Exception e) {
     String msg=null;
     if (propertiesFile != null) {
-      msg="Failed to load properties file " + this.propertiesFile.getName() + ": "+ e.getMessage();
+      msg=e.getMessage();
     }
  else {
       msg="Failed to load properties file: " + e.getMessage();
