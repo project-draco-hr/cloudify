@@ -3,8 +3,18 @@
   if (logger.isLoggable(Level.FINE)) {
     logger.fine("Filtering with expression: " + filterExpression.getExpressionString());
   }
-  if (filterTarget instanceof Collection || filterTarget.getClass().isArray()) {
-    return super.filter(filterTarget,filterExpression,ctx);
+  if (filterTarget instanceof List) {
+    @SuppressWarnings("unchecked") List<Object> objectsList=(List<Object>)filterTarget;
+    List<Object> retainList=new ArrayList<Object>();
+    for (    Object objectToFilter : objectsList) {
+      if (objectToFilter instanceof ApplicationDescription) {
+        rootObject.setFilterObject(((ApplicationDescription)objectToFilter).getAuthGroups());
+        if (ExpressionUtils.evaluateAsBoolean(filterExpression,ctx)) {
+          retainList.add(objectToFilter);
+        }
+      }
+    }
+    return retainList;
   }
   if (filterTarget instanceof Map) {
     @SuppressWarnings("unchecked") Map<String,Object> returnValue=(Map<String,Object>)filterTarget;
