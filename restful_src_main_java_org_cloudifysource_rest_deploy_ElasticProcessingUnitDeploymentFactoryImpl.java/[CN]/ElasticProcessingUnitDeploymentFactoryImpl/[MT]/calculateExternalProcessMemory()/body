@@ -6,10 +6,12 @@
   final int machineMemoryMB=template.getMachineMemoryMB();
   final int reservedMemoryCapacityPerMachineInMB=cloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
   final int safteyMargin=100;
-  final long cloudExternalProcessMemoryInMB=machineMemoryMB - reservedMemoryCapacityPerMachineInMB - safteyMargin;
+  long cloudExternalProcessMemoryInMB=machineMemoryMB - reservedMemoryCapacityPerMachineInMB - safteyMargin;
   if (cloudExternalProcessMemoryInMB <= 0) {
     throw new IllegalStateException("Cloud template machineMemoryMB (" + machineMemoryMB + "MB) must be bigger than "+ "reservedMemoryCapacityPerMachineInMB+"+ safteyMargin+ " ("+ (reservedMemoryCapacityPerMachineInMB + safteyMargin)+ ")");
   }
   logger.fine("template.machineMemoryMB = " + template.getMachineMemoryMB() + "MB\n"+ "cloud.provider.reservedMemoryCapacityPerMachineInMB = "+ reservedMemoryCapacityPerMachineInMB+ "MB\n"+ "cloudExternalProcessMemoryInMB = "+ cloudExternalProcessMemoryInMB+ "MB"+ "cloudExternalProcessMemoryInMB = cloud.machineMemoryMB - "+ "cloud.reservedMemoryCapacityPerMachineInMB"+ " = "+ cloudExternalProcessMemoryInMB);
+  long usmRequiredMemoryInMB=MemoryUnit.toMegaBytes(cloud.getConfiguration().getComponents().getUsm().getMaxMemory());
+  cloudExternalProcessMemoryInMB=Math.max(cloudExternalProcessMemoryInMB,usmRequiredMemoryInMB);
   return cloudExternalProcessMemoryInMB;
 }

@@ -23,6 +23,10 @@
     }
  else {
       cloudExternalProcessMemoryInMB=IsolationUtils.getInstanceMemoryMB(service);
+      long usmRequiredMemoryInMB=MemoryUnit.toMegaBytes(deploymentConfig.getCloud().getConfiguration().getComponents().getUsm().getMaxMemory());
+      if (usmRequiredMemoryInMB > cloudExternalProcessMemoryInMB) {
+        throw new IllegalStateException("the usm required memory " + usmRequiredMemoryInMB + " can not be more then the total memory defined for a service instance "+ cloudExternalProcessMemoryInMB);
+      }
     }
     deployment.memoryCapacityPerContainer((int)cloudExternalProcessMemoryInMB,MemoryUnit.MEGABYTES);
     if (scalingRulesDefined) {
