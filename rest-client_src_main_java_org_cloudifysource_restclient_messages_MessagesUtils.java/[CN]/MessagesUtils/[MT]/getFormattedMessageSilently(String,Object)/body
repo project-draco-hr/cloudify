@@ -1,0 +1,15 @@
+{
+  String formattedMessage=messageCode;
+  final ResourceBundle messageBundle=getMessageBundle();
+  if (messageBundle.containsKey(messageCode)) {
+    String bundleMessage=messageBundle.getString(messageCode);
+    if (StringUtils.isNotBlank(bundleMessage)) {
+      try {
+        formattedMessage=MessageFormat.format(bundleMessage,arguments);
+      }
+ catch (      final IllegalArgumentException e) {
+      }
+    }
+  }
+  return formattedMessage;
+}

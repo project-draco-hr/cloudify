@@ -1,0 +1,7 @@
+{
+  String formattedMessage=getFormattedMessageSilently(messageCode,arguments);
+  if (formattedMessage.equalsIgnoreCase(messageCode) && StringUtils.isNotBlank(defaultMessage)) {
+    formattedMessage=defaultMessage;
+  }
+  return new RestClientResponseException(messageCode,formattedMessage,statusCode,reasonPhrase,responseBody);
+}

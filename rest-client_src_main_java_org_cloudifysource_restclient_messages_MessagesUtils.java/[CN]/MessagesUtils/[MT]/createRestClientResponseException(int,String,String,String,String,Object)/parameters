@@ -1,0 +1,6 @@
+int statusCode
+String reasonPhrase
+String responseBody
+String defaultMessage
+String messageCode
+Object arguments
