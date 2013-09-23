@@ -1,16 +1,18 @@
 {
-  boolean spplicationIsInstalled=false;
+  boolean applicationIsInstalled=false;
   try {
     ApplicationDescription applicationDescription=restClient.getApplicationDescription(applicationName);
-    spplicationIsInstalled=applicationDescription.getApplicationState().equals(CloudifyConstants.DeploymentState.STARTED);
+    boolean allServicesInstalled=(numServices == applicationDescription.getServicesDescription().size());
+    boolean applicationStarted=applicationDescription.getApplicationState().equals(CloudifyConstants.DeploymentState.STARTED);
+    applicationIsInstalled=applicationStarted && allServicesInstalled;
   }
  catch (  final RestClientResponseException e) {
     if (e.getStatusCode() == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
-      spplicationIsInstalled=false;
+      applicationIsInstalled=false;
     }
  else {
       throw e;
     }
   }
-  return spplicationIsInstalled;
+  return applicationIsInstalled;
 }
