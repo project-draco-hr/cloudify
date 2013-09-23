@@ -2,7 +2,7 @@
   int lastEventId=0;
   final DeploymentEvents lastDeploymentEvents=client.getLastEvent(deploymentId);
   if (!lastDeploymentEvents.getEvents().isEmpty()) {
-    lastEventId=lastDeploymentEvents.getEvents().iterator().next().getIndex();
+    lastEventId=lastDeploymentEvents.getEvents().iterator().next().getIndex() + 1;
   }
-  return lastEventId + 1;
+  return lastEventId;
 }

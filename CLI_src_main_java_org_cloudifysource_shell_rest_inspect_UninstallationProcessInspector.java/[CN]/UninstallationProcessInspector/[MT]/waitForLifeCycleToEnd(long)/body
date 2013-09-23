@@ -2,17 +2,12 @@
   ConditionLatch conditionLatch=createConditionLatch(timeout);
   conditionLatch.waitFor(new ConditionLatch.Predicate(){
     private boolean lifeCycleEnded=false;
-    private boolean undeployEnded=false;
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
-        List<String> latestEvents;
         boolean ended=false;
+        lifeCycleEnded=lifeCycleEnded();
+        List<String> latestEvents=getLatestEvents();
         if (!lifeCycleEnded) {
-          lifeCycleEnded=lifeCycleEnded();
-          latestEvents=getLatestEvents();
-          if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
-            undeployEnded=true;
-          }
           if (!latestEvents.isEmpty()) {
             if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
               ended=true;
@@ -32,15 +27,12 @@
         }
         if (lifeCycleEnded) {
           if (waitForCloudResourcesRelease) {
-            latestEvents=getLatestEvents();
-            undeployEnded=false;
             if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
-              undeployEnded=true;
+              ended=true;
             }
  else {
               displayer.printNoChange();
             }
-            ended=lifeCycleEnded && undeployEnded;
           }
  else {
             ended=true;
