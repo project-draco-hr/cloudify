@@ -9,12 +9,12 @@
   }
   logger.fine("Deleting directories in: " + workDirectory);
   final File[] filesToDelete=workDirectory.listFiles();
-  for (  File file : filesToDelete) {
+  for (  final File file : filesToDelete) {
     if (file.isDirectory()) {
       try {
         FileUtils.deleteDirectory(file);
       }
- catch (      IOException e) {
+ catch (      final IOException e) {
         throw new CLIStatusException(e,CloudifyErrorMessages.FAILED_CLEANING_WORK_DIRECTORY_BEFORE_BOOTSTRAP_LOCALCLOUD,file.getAbsolutePath(),e.getMessage());
       }
     }

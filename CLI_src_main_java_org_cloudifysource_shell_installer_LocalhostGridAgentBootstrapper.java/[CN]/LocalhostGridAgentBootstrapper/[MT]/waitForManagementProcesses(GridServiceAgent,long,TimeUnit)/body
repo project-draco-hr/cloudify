@@ -59,7 +59,7 @@
             if (agentThatStartedComponent != null) {
               agentUid=agentThatStartedComponent.getUid();
             }
-            String message="Detected " + serviceName + " management process "+ " started by agent "+ agentUid+ " ";
+            String message="Detected " + serviceName + " management process started by agent "+ agentUid+ " ";
             if (!checkAgent((AgentGridComponent)component)) {
               message+=" expected agent " + agent.getUid();
             }

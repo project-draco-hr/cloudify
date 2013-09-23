@@ -9,6 +9,7 @@
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(DEFAULT_POLLING_INTERVAL);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
+  installer.addListener(new CLILocalhostBootstrapperListener());
   installer.startAgentOnLocalhostAndWait("","",getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Agent started succesfully. Use the shutdown-agent command to shutdown agent running on local machine.";
 }

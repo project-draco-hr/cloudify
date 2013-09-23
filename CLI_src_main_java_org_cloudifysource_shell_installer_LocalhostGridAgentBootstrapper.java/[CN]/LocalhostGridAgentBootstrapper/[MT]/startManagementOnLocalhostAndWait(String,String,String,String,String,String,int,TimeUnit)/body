@@ -10,8 +10,8 @@ catch (  final DSLException e) {
     throw new CLIException("Failed to read cloud file: " + e.getMessage(),e);
   }
   setDefaultNicAddress();
-  List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(true,nicAddress);
-  for (  CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
+  final List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(true,nicAddress);
+  for (  final CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
     cloudifyMachineValidator.validate();
   }
   redeployManagement();

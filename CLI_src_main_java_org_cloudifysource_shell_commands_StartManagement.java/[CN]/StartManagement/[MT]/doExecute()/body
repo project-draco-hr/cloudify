@@ -30,6 +30,7 @@
   installer.setNotHighlyAvailableManagementSpace(isNotHAManagementSpace());
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);
+  installer.addListener(new CLILocalhostBootstrapperListener());
   installer.startManagementOnLocalhostAndWait(securityProfile,SPRING_SECURITY_CONFIG_FILE,username,password,KEYSTORE_FILE,KEYSTORE_PASSWORD,getTimeoutInMinutes(),TimeUnit.MINUTES);
   return "Management started successfully. Use the shutdown-management command to shutdown" + " management processes running on local machine.";
 }

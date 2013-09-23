@@ -6,8 +6,8 @@
   final Admin admin=createAdmin();
   try {
     setLookupDefaults(admin);
-    List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(false,nicAddress);
-    for (    CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
+    final List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(false,nicAddress);
+    for (    final CloudifyMachineValidator cloudifyMachineValidator : preValidatorsList) {
       cloudifyMachineValidator.validate();
     }
     try {

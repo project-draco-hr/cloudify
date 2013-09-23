@@ -45,7 +45,7 @@
           managementServiceInstaller.validateManagementService(admin,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
           logger.fine("OK, management service " + serviceName + " is up and running.");
         }
- catch (        Exception e) {
+ catch (        final Exception e) {
           logger.warning("Error! Management service " + serviceName + " is not available after bootstrap "+ "completed. Reported error: "+ e.getMessage());
           throw new CLIValidationException(e,133,CloudifyErrorMessages.POST_BOOTSTRAP_MISSING_MGMT_SERVICE.getName(),serviceName);
         }
