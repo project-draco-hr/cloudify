@@ -4,7 +4,7 @@
   installer.setLookupGroups(lookupGroups);
   installer.setLookupLocators(lookupLocators);
   installer.setNicAddress(nicAddress);
-  installer.setProgressInSeconds(10);
+  installer.setProgressInSeconds(PROGRESS_IN_SECONDS);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.shutdownManagementOnLocalhostAndWait(timeoutInMinutes,TimeUnit.MINUTES);
   return getFormattedMessage("agent_terminated_successfully");

@@ -6,7 +6,7 @@
   }
 );
   if (files.length != 1) {
-    throw new IllegalStateException("Expected to find 1 directory that contains '" + serviceName + "' in folder '"+ deployDir.getAbsolutePath()+ "'. but found : "+ files.length);
+    throw new IllegalStateException("Expected to find 1 directory that contains '" + serviceName + "' in folder '"+ deployDir.getAbsolutePath()+ "'. "+ "But found : "+ files.length);
   }
   return files[0];
 }
