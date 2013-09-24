@@ -11,7 +11,7 @@
     final AddTemplatesInternalRequest internalRequest=createInternalRequest(request,templatesZippedFolder);
     final List<String> expectedTemplates=internalRequest.getExpectedTemplates();
     log(Level.INFO,"expecting to add " + expectedTemplates.size() + " templates: "+ expectedTemplates);
-    final AddTemplatesResponse addTemplatesToRestInstances=addTemplatesToRestInstances(internalRequest);
+    final AddTemplatesResponse addTemplatesToRestInstances=addTemplatesToRestInstances(internalRequest,templatesZippedFolder);
     handleAddTemplatesResponse(addTemplatesToRestInstances);
     return addTemplatesToRestInstances;
   }

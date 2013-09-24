@@ -4,15 +4,8 @@
     deleteTemplateFile(templateName);
   }
  catch (  final RestErrorException e) {
-    try {
-      log(Level.FINE,"[removeTemplateFromCloud] - failed to remove template's files: " + e.getLocalizedMessage() + ", trying to remove the template from cloud's list.");
-      removeTemplateFromCloudList(templateName);
-      throw e;
-    }
- catch (    final RestErrorException e1) {
-      log(Level.FINE,"[removeTemplateFromCloud] - failed to remove template from cloud list: " + e1.getLocalizedMessage());
-      throw e;
-    }
+    log(Level.WARNING,"[removeTemplateFromCloud] - failed to remove template's files: " + e.getLocalizedMessage() + ". The template will not be removed from the cloud's tempaltes list.");
+    throw e;
   }
   removeTemplateFromCloudList(templateName);
 }

@@ -1,5 +1,8 @@
 {
   String fullUrl=getFullUrl(relativeUrl);
   final HttpGet getRequest=new HttpGet(fullUrl);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.log(Level.FINE,"execute get request to " + relativeUrl);
+  }
   return executeRequest(getRequest,responseTypeReference);
 }

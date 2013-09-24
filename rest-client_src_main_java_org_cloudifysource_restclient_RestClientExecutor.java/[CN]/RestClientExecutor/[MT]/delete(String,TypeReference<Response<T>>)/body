@@ -1,4 +1,7 @@
 {
   final HttpDelete deleteRequest=new HttpDelete(getFullUrl(relativeUrl));
+  if (logger.isLoggable(Level.FINE)) {
+    logger.log(Level.FINE,"executing delete request to " + relativeUrl);
+  }
   return executeRequest(deleteRequest,responseTypeReference);
 }

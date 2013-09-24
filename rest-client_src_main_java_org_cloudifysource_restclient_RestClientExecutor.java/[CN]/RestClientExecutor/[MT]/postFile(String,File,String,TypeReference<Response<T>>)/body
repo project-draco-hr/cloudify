@@ -2,5 +2,8 @@
   final MultipartEntity multipartEntity=new MultipartEntity();
   final FileBody fileBody=new FileBody(fileToPost);
   multipartEntity.addPart(partName,fileBody);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.log(Level.FINE,"executing post request to " + relativeUrl + ", tring to post file "+ fileToPost.getName());
+  }
   return post(relativeUrl,responseTypeReference,multipartEntity);
 }

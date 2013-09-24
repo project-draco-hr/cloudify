@@ -1,11 +1,15 @@
 {
   final HttpEntity stringEntity;
+  String jsonStr;
   try {
-    final String jsonStr=new ObjectMapper().writeValueAsString(postBody);
+    jsonStr=new ObjectMapper().writeValueAsString(postBody);
     stringEntity=new StringEntity(jsonStr,"UTF-8");
   }
  catch (  final IOException e) {
     throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.SERIALIZATION_ERROR.getName(),e,url);
+  }
+  if (logger.isLoggable(Level.FINE)) {
+    logger.log(Level.FINE,"executing post request to " + url + ", tring to post object "+ jsonStr);
   }
   return post(url,responseTypeReference,stringEntity);
 }

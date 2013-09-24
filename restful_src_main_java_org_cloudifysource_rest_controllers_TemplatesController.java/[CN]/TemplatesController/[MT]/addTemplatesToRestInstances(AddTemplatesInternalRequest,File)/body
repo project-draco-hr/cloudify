@@ -7,7 +7,7 @@
     final String hostAddress=puInstance.getMachine().getHostAddress();
     instancesList.add(hostAddress);
     log(Level.INFO,"[addTemplatesToRestInstances] - sending request to " + hostAddress);
-    final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,Integer.toString(puInstance.getJeeDetails().getPort()),request);
+    final AddTemplatesInternalResponse instanceResponse=executeAddTemplateOnInstance(hostAddress,Integer.toString(puInstance.getJeeDetails().getPort()),request,templatesZippedFolder);
     final Map<String,String> failedToAddTempaltesToHost=instanceResponse.getFailedToAddTempaltesAndReasons();
     final List<String> addedTempaltes=instanceResponse.getAddedTempaltes();
     if (failedToAddTempaltesToHost != null) {

@@ -12,5 +12,8 @@
     }
   }
   final HttpDelete deleteRequest=new HttpDelete(builder.toString());
+  if (logger.isLoggable(Level.FINE)) {
+    logger.log(Level.FINE,"executing delete request to " + relativeUrl);
+  }
   return executeRequest(deleteRequest,responseTypeReference);
 }

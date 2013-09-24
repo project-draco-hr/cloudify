@@ -1,6 +1,5 @@
 {
   final AddTemplatesInternalRequest internalRequest=new AddTemplatesInternalRequest();
-  internalRequest.setUploadKey(request.getUploadKey());
   final File unzippedFolder=new ComputeTemplatesReader().unzipCloudTemplatesFolder(templatesZippedFolder);
   try {
     final List<ComputeTemplateHolder> cloudTemplatesHolders=new ComputeTemplatesReader().readCloudTemplatesFromDirectory(unzippedFolder);

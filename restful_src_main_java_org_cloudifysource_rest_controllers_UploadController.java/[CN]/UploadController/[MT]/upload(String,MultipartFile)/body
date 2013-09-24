@@ -1,22 +1,3 @@
 {
-  String name=fileName;
-  if (StringUtils.isEmpty(fileName)) {
-    name=file.getOriginalFilename();
-  }
-  if (logger.isLoggable(Level.INFO)) {
-    logger.info("received request to upload file " + name);
-  }
-  String uploadedFileDirName=null;
-  try {
-    uploadedFileDirName=uploadRepo.put(name,file);
-  }
- catch (  IOException e) {
-    if (logger.isLoggable(Level.WARNING)) {
-      logger.warning("could not upload file " + name + " error was - "+ e.getMessage());
-    }
-    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_FAILED.getName(),name,e.getMessage());
-  }
-  UploadResponse response=new UploadResponse();
-  response.setUploadKey(uploadedFileDirName);
-  return response;
+  return uploadInternal(fileName,file);
 }

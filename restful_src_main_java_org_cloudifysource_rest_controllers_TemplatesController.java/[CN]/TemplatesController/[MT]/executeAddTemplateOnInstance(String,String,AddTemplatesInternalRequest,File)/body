@@ -1,11 +1,17 @@
 {
   AddTemplatesInternalResponse instanceResponse;
+  String requestName="create rest client";
   try {
     final RestClientInternal client=createRestClientInternal(host,port);
+    requestName="execute upload request";
+    String uploadKey=client.uploadInternal(null,templatesZippedFolder).getUploadKey();
+    log(Level.FINE,"[executeAddTemplateOnInstance] - Uploaded templates zipped folder [" + templatesZippedFolder + "] to "+ host+ ", upload key is "+ uploadKey);
+    request.setUploadKey(uploadKey);
+    requestName="execute add-templates-internal request";
     instanceResponse=client.addTemplatesInternal(request);
   }
  catch (  final RestClientException e) {
-    log(Level.WARNING,"[executeAddTemplateOnInstance] - Failed to execute http request to " + host + ". Error message: "+ e.getMessageFormattedText());
+    log(Level.WARNING,"[executeAddTemplateOnInstance] - Failed to " + requestName + " to "+ host+ ". Error message: "+ e.getMessageFormattedText()+ ", verbose: "+ e.getVerbose());
     final Map<String,String> failedMap=new HashMap<String,String>();
     for (    final String expectedTemplate : request.getExpectedTemplates()) {
       failedMap.put(expectedTemplate,"http request failed [" + e.getMessageFormattedText() + "]");
