@@ -4,7 +4,6 @@
   zone=getZone(absolutePuName);
   if (zone != null) {
     ProcessingUnitInstance[] processingUnitInstances=zone.getProcessingUnitInstances();
-    zone.getGridServiceContainers().getContainers()[0].getProcessingUnitInstances();
     if (processingUnitInstances.length > 0) {
       processingUnit=processingUnitInstances[0].getProcessingUnit();
     }
