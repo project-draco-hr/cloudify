@@ -1,4 +1,5 @@
 {
+  validateDeploymentIdExists(deploymentId);
   int actualTo=to;
   if (to == -1) {
     actualTo=from + MAX_NUMBER_OF_EVENTS;

@@ -1,4 +1,5 @@
 {
+  validateDeploymentIdExists(deploymentId);
   EventsCacheKey key=new EventsCacheKey(deploymentId);
   logger.fine(EventsUtils.getThreadId() + " Received request for last event of key : " + key);
   EventsCacheValue value;

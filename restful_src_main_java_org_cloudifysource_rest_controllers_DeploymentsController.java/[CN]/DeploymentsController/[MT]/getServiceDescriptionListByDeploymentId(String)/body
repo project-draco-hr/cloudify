@@ -1,4 +1,5 @@
 {
+  validateDeploymentIdExists(deploymentId);
   final ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(restConfig.getAdmin());
   List<ServiceDescription> descriptions=new ArrayList<ServiceDescription>();
   EventsCacheValue value=eventsCache.getIfExists(new EventsCacheKey(deploymentId));
