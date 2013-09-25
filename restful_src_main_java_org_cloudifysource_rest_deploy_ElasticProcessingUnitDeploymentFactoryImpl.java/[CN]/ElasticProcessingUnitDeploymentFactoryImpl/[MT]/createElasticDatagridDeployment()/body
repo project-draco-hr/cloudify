@@ -11,7 +11,8 @@
   deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryInMB,MemoryUnit.MEGABYTES).highlyAvailable(puSla.getHighlyAvailable()).singleMachineDeployment();
   ManualCapacityScaleConfig scaleConfig;
   if (isLocalcloud()) {
-    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create();
+    Integer memoryCapacity=puSla.getMemoryCapacity();
+    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(memoryCapacity,MemoryUnit.MEGABYTES).create();
   }
  else {
     final long cloudExternalProcessMemoryInMB=calculateExternalProcessMemory();

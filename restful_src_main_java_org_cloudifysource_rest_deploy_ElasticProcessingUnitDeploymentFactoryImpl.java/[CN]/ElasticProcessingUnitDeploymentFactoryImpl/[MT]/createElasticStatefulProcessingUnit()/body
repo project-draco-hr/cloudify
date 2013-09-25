@@ -16,12 +16,12 @@
   addProcessingUnitContextProperties(deployment,puConfig.getContextProperties());
   final int containerMemoryInMB=statefulSla.getMemoryCapacityPerContainer();
   final int maxMemoryCapacityInMB=statefulSla.getMaxMemoryCapacity();
-  deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB + "m").highlyAvailable(statefulSla.getHighlyAvailable()).singleMachineDeployment();
+  deployment.memoryCapacityPerContainer(containerMemoryInMB,MemoryUnit.MEGABYTES).maxMemoryCapacity(maxMemoryCapacityInMB,MemoryUnit.MEGABYTES).highlyAvailable(statefulSla.getHighlyAvailable()).singleMachineDeployment();
   setSpringProfilesActive(deployment,puConfig.getSpringProfilesActive());
   ManualCapacityScaleConfig scaleConfig;
   final int memoryCapacity=statefulSla.getMemoryCapacity();
   if (isLocalcloud()) {
-    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(containerMemoryInMB * deploymentConfig.getService().getNumInstances(),MemoryUnit.MEGABYTES).create();
+    scaleConfig=new ManualCapacityScaleConfigurer().memoryCapacity(memoryCapacity,MemoryUnit.MEGABYTES).create();
   }
  else {
     scaleConfig=ElasticScaleConfigFactory.createManualCapacityScaleConfig(memoryCapacity,0,deploymentConfig.getService().isLocationAware(),true);
