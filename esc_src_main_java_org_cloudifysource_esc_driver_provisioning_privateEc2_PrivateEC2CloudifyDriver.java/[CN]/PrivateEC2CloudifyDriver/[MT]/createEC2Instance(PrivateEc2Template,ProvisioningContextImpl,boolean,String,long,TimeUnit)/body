@@ -1,4 +1,5 @@
 {
+  final ComputeTemplate template=this.getManagerComputeTemplate();
   final InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
   final String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
   final Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
@@ -9,6 +10,7 @@
   final List<String> securityGroupIds=properties.getSecurityGroupIdsAsString();
   final List<String> securityGroups=properties.getSecurityGroupsAsString();
   S3Object s3Object=null;
+  final ExecutorService executors=Executors.newFixedThreadPool(1);
   try {
     String userData=null;
     if (properties.getUserData() != null) {
@@ -16,7 +18,6 @@
       final String script=management ? this.generateManagementCloudifyEnv(ctx) : this.generateCloudifyEnv(ctx);
       s3Object=this.uploadCloudDir(ctx,script,management);
       final String cloudFileS3=this.amazonS3Uploader.generatePresignedURL(s3Object);
-      ComputeTemplate template=this.getManagerComputeTemplate();
       String cloudFileDir=(String)template.getRemoteDirectory();
       if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
         cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
@@ -69,12 +70,22 @@
     ec2Instance=this.waitRunningInstance(ec2Instance,duration,unit);
     this.tagEC2Instance(ec2Instance,machineName,cfnTemplate.getEC2Instance());
     this.tagEC2Volumes(ec2Instance.getInstanceId(),cfnTemplate);
+    final boolean debug=BooleanUtils.toBoolean((String)template.getCustom().get("debugMode"));
+    if (debug) {
+      executors.submit(new EC2Console(ec2Instance.getInstanceId()));
+    }
     this.waitRunningAgent(ec2Instance.getPublicIpAddress(),duration,unit);
     return ec2Instance;
   }
   finally {
     if (s3Object != null) {
       this.amazonS3Uploader.deleteS3Object(s3Object.getBucketName(),s3Object.getKey());
+    }
+    if (executors != null) {
+      executors.shutdownNow();
+      if (logger.isLoggable(Level.FINEST)) {
+        logger.finest("Shutting down console output executor.");
+      }
     }
   }
 }

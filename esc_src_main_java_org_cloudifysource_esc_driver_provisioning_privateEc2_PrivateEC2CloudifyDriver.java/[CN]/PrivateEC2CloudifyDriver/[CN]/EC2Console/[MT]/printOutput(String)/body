@@ -1,0 +1,14 @@
+{
+  final StringTokenizer st=new StringTokenizer(read,"\n");
+  final int tokenCount=st.countTokens();
+  for (int i=0; i < this.nbAlreadyReadLines; i++) {
+    st.nextToken();
+  }
+  if (!st.hasMoreElements()) {
+    logger.finest(logHeader + "No additional output");
+  }
+  while (st.hasMoreElements()) {
+    logger.info(logHeader + st.nextElement().toString());
+  }
+  this.nbAlreadyReadLines=tokenCount;
+}

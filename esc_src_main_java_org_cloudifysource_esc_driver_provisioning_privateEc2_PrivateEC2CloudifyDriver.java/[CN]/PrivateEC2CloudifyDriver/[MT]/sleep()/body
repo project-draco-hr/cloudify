@@ -1,8 +1,5 @@
 {
   try {
-    if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("sleeping...");
-    }
     Thread.sleep(WAIT_STATUS_SLEEP_TIME);
   }
  catch (  InterruptedException e) {

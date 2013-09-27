@@ -1,0 +1,5 @@
+{
+  this.instanceId=instanceId;
+  this.logHeader="[" + instanceId + "] ";
+  this.ec2=createAmazonEC2();
+}
