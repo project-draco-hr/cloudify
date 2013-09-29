@@ -1,7 +1,16 @@
 {
-  final File resultFile=ZipUtils.unzipEntry(packedService,"ext/" + binaryName,binaryName);
-  if (resultFile == null) {
-    throw new IllegalArgumentException("Missing file in packaged service: " + binaryName);
+  File tempFile=File.createTempFile(binaryName,"");
+  tempFile.delete();
+  ZipUtils.unzip(packedService,tempFile);
+  File destFile=new File(tempFile,"ext/" + binaryName);
+  if (!destFile.exists()) {
+    throw new FileNotFoundException("deployment file/folder " + binaryName + " could not be found");
   }
-  return resultFile;
+  if (destFile.isDirectory()) {
+    final File jarFile=File.createTempFile(destFile.getName(),".jar");
+    jarFile.delete();
+    ZipUtils.zip(destFile,jarFile);
+    return jarFile;
+  }
+  return destFile;
 }
