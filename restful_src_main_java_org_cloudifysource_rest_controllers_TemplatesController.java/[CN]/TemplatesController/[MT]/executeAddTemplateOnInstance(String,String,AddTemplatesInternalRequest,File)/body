@@ -5,7 +5,7 @@
     final RestClientInternal client=createRestClientInternal(host,port);
     requestName="execute upload request";
     String uploadKey=client.uploadInternal(null,templatesZippedFolder).getUploadKey();
-    log(Level.FINE,"[executeAddTemplateOnInstance] - Uploaded templates zipped folder [" + templatesZippedFolder + "] to "+ host+ ", upload key is "+ uploadKey);
+    log(Level.FINE,"[executeAddTemplateOnInstance] - Uploaded templates zipped folder [" + templatesZippedFolder + "] to host ["+ host+ "], upload key = "+ uploadKey);
     request.setUploadKey(uploadKey);
     requestName="execute add-templates-internal request";
     instanceResponse=client.addTemplatesInternal(request);

@@ -13,7 +13,8 @@
     if (failedToAddTempaltesToHost != null) {
       for (      final Entry<String,String> entry : failedToAddTempaltesToHost.entrySet()) {
         log(Level.WARNING,"[addTemplatesToRestInstances] - failed to add templates to host [" + hostAddress + "]: "+ failedToAddTempaltesToHost);
-        AddTemplateResponse addTemplateResponse=templatesResponse.get(entry.getKey());
+        String templateName=entry.getKey();
+        AddTemplateResponse addTemplateResponse=templatesResponse.get(templateName);
         if (addTemplateResponse == null) {
           addTemplateResponse=new AddTemplateResponse();
         }
@@ -23,12 +24,12 @@
         }
         failedHostsReasons.put(hostAddress,entry.getValue());
         addTemplateResponse.setFailedToAddHosts(failedHostsReasons);
-        templatesResponse.put(entry.getKey(),addTemplateResponse);
+        templatesResponse.put(templateName,addTemplateResponse);
       }
     }
     if (addedTempaltes != null) {
+      log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "]: "+ addedTempaltes);
       for (      final String templateName : addedTempaltes) {
-        log(Level.INFO,"[addTemplatesToRestInstances] - successfully added templates to host [" + hostAddress + "]: "+ addedTempaltes);
         AddTemplateResponse addTemplateResponse=templatesResponse.get(templateName);
         if (addTemplateResponse == null) {
           addTemplateResponse=new AddTemplateResponse();
