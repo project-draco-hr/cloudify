@@ -1,7 +1,7 @@
 {
   int puInstanceCounter=0;
   if (processingUnit != null) {
-    for (    ProcessingUnitInstance pui : processingUnit) {
+    for (    ProcessingUnitInstance pui : processingUnit.getInstances()) {
       if (isUsmStateOfPuiRunning(pui)) {
         puInstanceCounter++;
       }

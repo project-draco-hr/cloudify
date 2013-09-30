@@ -1,7 +1,7 @@
 {
   List<InstanceDescription> instancesDescriptionList=new ArrayList<InstanceDescription>();
   if (processingUnit != null) {
-    for (    ProcessingUnitInstance processingUnitInstance : processingUnit) {
+    for (    ProcessingUnitInstance processingUnitInstance : processingUnit.getInstances()) {
       InstanceDescription instanceDescription=getInstanceDescription(processingUnitInstance);
       instancesDescriptionList.add(instanceDescription);
     }

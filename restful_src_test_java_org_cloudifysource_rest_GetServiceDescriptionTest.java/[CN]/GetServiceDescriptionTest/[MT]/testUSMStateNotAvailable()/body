@@ -1,0 +1,37 @@
+{
+  final ApplicationDescriptionFactory factory=new ApplicationDescriptionFactory(null);
+  final ProcessingUnit mockProcessingUnit=Mockito.mock(DefaultProcessingUnit.class);
+  final ProcessingUnitInstance mockProcessingUnitInstance=Mockito.mock(ProcessingUnitInstance.class);
+  Mockito.when(mockProcessingUnitInstance.getProcessingUnit()).thenReturn(mockProcessingUnit);
+  Mockito.when(mockProcessingUnitInstance.getProcessingUnit()).thenReturn(mockProcessingUnit);
+  VirtualMachine mockVirtualMachine=Mockito.mock(DefaultVirtualMachine.class);
+  Machine mockMachine=Mockito.mock(DefaultMachine.class);
+  Mockito.when(mockMachine.getHostName()).thenReturn("localhost");
+  Mockito.when(mockMachine.getHostAddress()).thenReturn("localhost");
+  Mockito.when(mockVirtualMachine.getMachine()).thenReturn(mockMachine);
+  Mockito.when(mockProcessingUnitInstance.getVirtualMachine()).thenReturn(mockVirtualMachine);
+  final ProcessingUnitInstance[] puis={mockProcessingUnitInstance};
+  Mockito.when(mockProcessingUnit.getInstances()).thenReturn(puis);
+  Mockito.when(mockProcessingUnit.iterator()).thenCallRealMethod();
+  Mockito.when(mockProcessingUnit.getType()).thenReturn(ProcessingUnitType.UNIVERSAL);
+  Mockito.when(mockProcessingUnit.getName()).thenReturn("default.tomcat");
+  final BeanLevelProperties blp=Mockito.mock(BeanLevelProperties.class);
+  final Properties contextProperties=new Properties();
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID,"12345");
+  Mockito.when(blp.getContextProperties()).thenReturn(contextProperties);
+  Mockito.when(mockProcessingUnit.getBeanLevelProperties()).thenReturn(blp);
+  Mockito.when(mockProcessingUnit.getNumberOfInstances()).thenReturn(1);
+  ServiceDescription result=factory.getServiceDescription(mockProcessingUnit);
+  Assert.assertEquals("default",result.getApplicationName());
+  Assert.assertEquals("12345",result.getDeploymentId());
+  Assert.assertEquals(0,result.getInstanceCount());
+  Assert.assertEquals(1,result.getPlannedInstances());
+  Assert.assertEquals("tomcat",result.getServiceName());
+  List<InstanceDescription> instancesDescription=result.getInstancesDescription();
+  Assert.assertEquals(1,instancesDescription.size());
+  InstanceDescription instanceDescription=instancesDescription.get(0);
+  Assert.assertNotNull(instanceDescription);
+  Assert.assertEquals("localhost",instanceDescription.getHostAddress());
+  Assert.assertEquals("localhost",instanceDescription.getHostName());
+  Assert.assertEquals("NA",instanceDescription.getInstanceStatus());
+}

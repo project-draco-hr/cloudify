@@ -1,11 +1,11 @@
 {
-  final String instanceState=getInstanceState(processingUnitInstance);
+  String instanceState=getInstanceState(processingUnitInstance);
   final int instanceId=processingUnitInstance.getInstanceId();
   final String instanceHostName=processingUnitInstance.getVirtualMachine().getMachine().getHostName();
   final String instanceHostAddress=processingUnitInstance.getVirtualMachine().getMachine().getHostAddress();
   final String instanceName=processingUnitInstance.getName();
   final InstanceDescription instanceDescription=new InstanceDescription();
-  instanceDescription.setInstanceStatus(instanceState);
+  instanceDescription.setInstanceStatus(instanceState != null ? instanceState : NOT_AVAILABLE_STATE);
   instanceDescription.setInstanceName(instanceName);
   instanceDescription.setInstanceId(instanceId);
   instanceDescription.setHostName(instanceHostName);
