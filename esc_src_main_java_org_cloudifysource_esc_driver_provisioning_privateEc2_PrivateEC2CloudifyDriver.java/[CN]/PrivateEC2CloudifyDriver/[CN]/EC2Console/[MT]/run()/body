@@ -5,6 +5,12 @@
   while (!Thread.interrupted() && loop) {
     try {
       sleep();
+      if (isPortReachable(ipAddress,agentPort)) {
+        if (logger.isLoggable(Level.FINEST)) {
+          logger.finest(logHeader + "Stopping the loop...");
+        }
+        loop=false;
+      }
       final String read=this.readEc2Output();
       if (read != null) {
         this.printOutput(read);

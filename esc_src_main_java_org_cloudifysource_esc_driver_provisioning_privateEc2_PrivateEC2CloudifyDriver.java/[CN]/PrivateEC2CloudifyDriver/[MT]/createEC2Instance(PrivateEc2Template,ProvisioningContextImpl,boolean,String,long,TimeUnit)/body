@@ -10,7 +10,6 @@
   final List<String> securityGroupIds=properties.getSecurityGroupIdsAsString();
   final List<String> securityGroups=properties.getSecurityGroupsAsString();
   S3Object s3Object=null;
-  final ExecutorService executors=Executors.newFixedThreadPool(1);
   try {
     String userData=null;
     if (properties.getUserData() != null) {
@@ -72,7 +71,7 @@
     this.tagEC2Volumes(ec2Instance.getInstanceId(),cfnTemplate);
     final boolean debug=BooleanUtils.toBoolean((String)template.getCustom().get("debugMode"));
     if (debug) {
-      executors.submit(new EC2Console(ec2Instance.getInstanceId()));
+      debugExecutors.submit(new EC2Console(ec2Instance.getInstanceId(),ec2Instance.getPublicIpAddress(),DEFAULT_CLOUDIFY_AGENT_PORT));
     }
     this.waitRunningAgent(ec2Instance.getPublicIpAddress(),duration,unit);
     return ec2Instance;
@@ -80,12 +79,6 @@
   finally {
     if (s3Object != null) {
       this.amazonS3Uploader.deleteS3Object(s3Object.getBucketName(),s3Object.getKey());
-    }
-    if (executors != null) {
-      executors.shutdownNow();
-      if (logger.isLoggable(Level.FINEST)) {
-        logger.finest("Shutting down console output executor.");
-      }
     }
   }
 }

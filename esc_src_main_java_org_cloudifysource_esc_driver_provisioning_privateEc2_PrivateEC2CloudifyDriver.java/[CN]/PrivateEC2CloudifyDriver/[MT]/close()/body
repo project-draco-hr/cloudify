@@ -2,4 +2,10 @@
   if (ec2 != null) {
     ec2.shutdown();
   }
+  if (debugExecutors != null) {
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("Shutting down console output executor.");
+    }
+    debugExecutors.shutdownNow();
+  }
 }
