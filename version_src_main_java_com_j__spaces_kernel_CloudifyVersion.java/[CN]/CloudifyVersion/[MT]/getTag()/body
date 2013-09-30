@@ -1,0 +1,6 @@
+{
+  DateFormat dateFormat=DateFormat.getDateInstance(DateFormat.SHORT);
+  String date=dateFormat.format(new Date());
+  String tag="build" + BUILD_NUM + "_"+ date;
+  return tag;
+}
