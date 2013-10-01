@@ -12,12 +12,7 @@
       response=new ObjectMapper().readValue(verbose,AddTemplatesResponse.class);
       throw new AddTemplatesException(response);
     }
- catch (    JsonProcessingException e1) {
-      logger.warning("Failed to process exception, got JsonProcessingException: " + e1.getMessage());
-      throw e;
-    }
-catch (    IOException e1) {
-      logger.warning("Failed to process exception, got IOException: " + e1.getMessage());
+ catch (    Exception e1) {
       throw e;
     }
   }
