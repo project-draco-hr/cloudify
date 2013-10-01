@@ -5,6 +5,8 @@
   if (StringUtils.isBlank(uploadKey)) {
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }
+  String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
+  request.setAuthGroups(effectiveAuthGroups);
   final File packedFile=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
   final File serviceOverridesFile=getFromRepo(request.getServiceOverridesUploadKey(),CloudifyMessageKeys.WRONG_SERVICE_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
   final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
