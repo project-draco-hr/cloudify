@@ -1,5 +1,5 @@
 {
-  final EC2Client api=(EC2Client)context.getProviderSpecificContext().getApi();
+  final EC2Client api=(EC2Client)ContextBuilder.newBuilder("EC2Client").build();
   final Location zone=node.getLocation();
   final Location region=zone.getParent();
   final String id=node.getId();

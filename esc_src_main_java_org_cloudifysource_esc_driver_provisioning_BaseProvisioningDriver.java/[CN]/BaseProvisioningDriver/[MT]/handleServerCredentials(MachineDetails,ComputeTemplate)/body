@@ -19,7 +19,7 @@
  else {
     final String remotePassword=machineDetails.getRemotePassword();
     if (StringUtils.isNotBlank(remotePassword)) {
-      if (CredentialUtils.isPrivateKeyCredential(remotePassword)) {
+      if (remotePassword.startsWith(PRIVATE_KEY_PREFIX)) {
         logger.fine("Cloud has provided a key file for connections to new machines");
         try {
           keyFile=File.createTempFile("gs-esm-key",".pem");
