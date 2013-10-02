@@ -1,0 +1,4 @@
+{
+  this.restUploadDir=restUploadDir;
+  createScheduledExecutor();
+}
