@@ -1,4 +1,4 @@
 DirContextOperations ctx
 String username
-Collection<GrantedAuthority> authorities
+Collection<? extends GrantedAuthority> authorities
 Collection<String> authGroups
