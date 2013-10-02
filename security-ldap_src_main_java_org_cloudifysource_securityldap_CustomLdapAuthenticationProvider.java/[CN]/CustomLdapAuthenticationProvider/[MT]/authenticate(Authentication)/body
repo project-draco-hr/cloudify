@@ -11,7 +11,7 @@
   Assert.notNull(password,"Null password was supplied in authentication token");
   try {
     DirContextOperations userData=getAuthenticator().authenticate(authentication);
-    Collection<GrantedAuthority> extraAuthorities=loadUserAuthorities(userData,username,password);
+    Collection<? extends GrantedAuthority> extraAuthorities=loadUserAuthorities(userData,username,password);
     Collection<String> userAuthGroups=loadUserAuthGroups(userData,username,password);
     ExtendedLdapUserDetailsImpl extendedUserDetails=userDetailsContextMapper.mapUserFromContext(userData,username,extraAuthorities,userAuthGroups);
     return createSuccessfulAuthentication(userToken,extendedUserDetails);

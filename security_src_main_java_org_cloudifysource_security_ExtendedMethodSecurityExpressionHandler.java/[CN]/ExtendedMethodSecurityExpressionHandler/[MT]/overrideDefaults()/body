@@ -1,0 +1,3 @@
+{
+  setPermissionEvaluator(new CustomDenyAllPermissionEvaluator());
+}

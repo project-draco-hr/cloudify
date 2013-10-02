@@ -1,0 +1,8 @@
+{
+  CustomMethodSecurityExpressionRoot root=new CustomMethodSecurityExpressionRoot(authentication);
+  root.setThis(invocation.getThis());
+  root.setPermissionEvaluator(getPermissionEvaluator());
+  root.setTrustResolver(trustResolver);
+  root.setRoleHierarchy(getRoleHierarchy());
+  return root;
+}
