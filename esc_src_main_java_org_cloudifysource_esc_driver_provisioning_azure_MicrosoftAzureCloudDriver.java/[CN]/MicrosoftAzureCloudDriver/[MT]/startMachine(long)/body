@@ -27,6 +27,7 @@
     machineDetails.setRemoteDirectory(this.template.getRemoteDirectory());
     machineDetails.setRemotePassword(password);
     machineDetails.setRemoteUsername(userName);
+    machineDetails.setOpenFilesLimit(this.template.getOpenFilesLimit());
     return machineDetails;
   }
  catch (  final Exception e) {

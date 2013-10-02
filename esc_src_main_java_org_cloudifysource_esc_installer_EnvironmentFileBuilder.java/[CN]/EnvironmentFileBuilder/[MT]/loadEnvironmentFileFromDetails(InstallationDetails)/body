@@ -48,4 +48,7 @@
     builder.exportVar(CloudifyConstants.KEYSTORE_FILE_ENV_VAR,details.getRemoteDir() + "/" + CloudifyConstants.KEYSTORE_FILE_NAME);
     builder.exportVar(CloudifyConstants.KEYSTORE_PASSWORD_ENV_VAR,details.getKeystorePassword());
   }
+  if (details.getOpenFilesLimit() != null) {
+    builder.exportVar(CloudifyConstants.CLOUDIFY_OPEN_FILES_LIMIT,details.getOpenFilesLimit());
+  }
 }

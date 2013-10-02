@@ -1,0 +1,9 @@
+{
+  if (this.entity.getOpenFilesLimit() == null) {
+    return;
+  }
+  if (this.entity.isPrivileged()) {
+    return;
+  }
+  throw new DSLValidationException("Setting an open files limit requires that the template run in privileged mode");
+}
