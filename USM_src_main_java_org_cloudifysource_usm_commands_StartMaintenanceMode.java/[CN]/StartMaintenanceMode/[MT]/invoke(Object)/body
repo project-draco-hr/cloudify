@@ -1,0 +1,6 @@
+{
+  validateParams(params);
+  final ServiceContext serviceContext=usmLifecycleBean.getConfiguration().getServiceContext();
+  serviceContext.startMaintenanceMode(Long.parseLong(params[0].toString()),TimeUnit.MINUTES);
+  return MessageFormat.format(successMessage,params[0].toString());
+}

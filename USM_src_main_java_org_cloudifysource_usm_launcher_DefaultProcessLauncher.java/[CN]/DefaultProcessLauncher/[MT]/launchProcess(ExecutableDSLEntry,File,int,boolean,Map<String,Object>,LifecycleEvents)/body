@@ -13,6 +13,10 @@
       throw new USMException("Failed to execute closure " + e.getMessage(),e);
     }
   }
+  if (arg.getEntryType().equals(ExecutableDSLEntryType.JAVA)) {
+    Object command=((JavaExecutableEntry)arg).getCommand();
+    return ((BuiltInCommand)command).invoke(paramsList.toArray());
+  }
   final Process proc=launchProcessAsync(arg,workingDir,retries,redirectErrorStream,paramsList,event);
   final BufferedReader reader=new BufferedReader(new InputStreamReader(proc.getInputStream()));
   String line=null;

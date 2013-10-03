@@ -1,0 +1,10 @@
+{
+  for (  BuiltInCommand command : getBuiltInCommands()) {
+    if (command.getName().equalsIgnoreCase(commandName)) {
+      JavaExecutableEntry entry=new JavaExecutableEntry();
+      entry.setCommand(command);
+      return entry;
+    }
+  }
+  return null;
+}

@@ -5,7 +5,13 @@
   }
   result.put(CloudifyConstants.INVOCATION_RESPONSE_COMMAND_NAME,commandName);
   final Service service=getUsmLifecycleBean().getConfiguration().getService();
-  final ExecutableDSLEntry customCommand=service.getCustomCommands().get(commandName);
+  final ExecutableDSLEntry customCommand;
+  if (commandName.startsWith(CloudifyConstants.BUILT_IN_COMMAND_PREFIX)) {
+    customCommand=getBuiltInCommand(commandName.substring(CloudifyConstants.BUILT_IN_COMMAND_PREFIX.length()));
+  }
+ else {
+    customCommand=service.getCustomCommands().get(commandName);
+  }
   if (customCommand == null) {
     logger.warning("Custom Command: " + commandName + " does not exist in service: "+ this.clusterName);
     result.put(CloudifyConstants.INVOCATION_RESPONSE_STATUS,false);

@@ -1,0 +1,5 @@
+{
+  if (args.length != 0) {
+    throw new IllegalStateException("command " + name + " does not accept parameters. received "+ Arrays.toString(args));
+  }
+}
