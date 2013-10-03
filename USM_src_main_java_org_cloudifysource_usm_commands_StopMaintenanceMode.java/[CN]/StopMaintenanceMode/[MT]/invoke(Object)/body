@@ -1,6 +1,5 @@
 {
   verifyParams(args);
-  final ServiceContext serviceContext=usmLifecycleBean.getConfiguration().getServiceContext();
-  serviceContext.stopMaintenanceMode();
+  this.getContext().stopMaintenanceMode();
   return successMessage;
 }

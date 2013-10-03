@@ -1,11 +1,11 @@
 {
   if (params.length != 1) {
-    throw new IllegalStateException("command " + name + " requires one param of type 'long'");
+    throw new IllegalArgumentException("command " + name + " requires one param of type 'long', got "+ Arrays.toString(params));
   }
   try {
     Long.parseLong(params[0].toString());
   }
  catch (  NumberFormatException e) {
-    throw new IllegalStateException("parameter type mismatch. can't convert " + params[0].toString() + " to 'long'",e);
+    throw new IllegalArgumentException("parameter type mismatch. can't convert " + params[0].getClass() + " to 'long'",e);
   }
 }
