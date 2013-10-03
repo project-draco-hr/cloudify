@@ -1,0 +1,23 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[validateDeploymentIdExists] validating deploymentId:" + deploymentId);
+  }
+  EventsCacheKey key=new EventsCacheKey(deploymentId);
+  EventsCacheValue value=eventsCache.getIfExists(key);
+  if (value == null) {
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("[validateDeploymentIdExists] - " + "The deploymentId doesn't exist in the eventsCache,  " + "searching for a processing unit with that deployment id [" + deploymentId + "]");
+    }
+    ProcessingUnits processingUnits=admin.getProcessingUnits();
+    for (    ProcessingUnit pu : processingUnits) {
+      String puDeploymentId=(String)pu.getBeanLevelProperties().getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+      if (deploymentId.equals(puDeploymentId)) {
+        return;
+      }
+    }
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("[validateDeploymentIdExists] - " + "There is no processing unit with the given deployment id [" + deploymentId + "]");
+    }
+    throw new ResourceNotFoundException("Deployment id " + deploymentId);
+  }
+}
