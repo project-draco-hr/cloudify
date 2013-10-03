@@ -5,7 +5,7 @@
   String baseFolderName=originalRestTempFolder.getName();
   String folderName=baseFolderName;
   while (!uniqueNameFound && index < 100) {
-    index=index++;
+    index++;
     folderName=baseFolderName + index;
     File restTempFolder=new File(parent,folderName);
     if (!restTempFolder.exists()) {
