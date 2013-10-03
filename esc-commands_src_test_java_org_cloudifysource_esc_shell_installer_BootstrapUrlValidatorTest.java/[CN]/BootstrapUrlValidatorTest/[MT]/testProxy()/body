@@ -1,0 +1,45 @@
+{
+  final Cloud cloud=new Cloud();
+  final ComputeTemplate template=new ComputeTemplate();
+  cloud.getProvider().setCloudifyUrl("http://blabla/bla");
+  cloud.getCloudCompute().getTemplates().put("atemplate",template);
+  final ValidationContext context=Mockito.mock(ValidationContext.class);
+  final AtomicInteger counter=new AtomicInteger();
+  final ProxyHandler handler=new ProxyHandler(counter);
+  final Server httpServer=new Server(18080);
+  httpServer.setHandler(handler);
+  final String proxyHostBefore=System.getProperty(HTTP_PROXY_HOST);
+  final String proxyPortBefore=System.getProperty(HTTP_PROXY_PORT);
+  System.setProperty(HTTP_PROXY_HOST,"localhost");
+  System.setProperty(HTTP_PROXY_PORT,"" + PROXY_PORT);
+  try {
+    httpServer.start();
+    try {
+      new BootstrapUrlValidator(cloud).validateCloudifyUrls(context);
+      Assert.fail("Expected a validation error");
+    }
+ catch (    final CloudProvisioningException e) {
+      System.out.println(e);
+    }
+    Assert.assertEquals("Missing proxy access",1,counter.get());
+  }
+  finally {
+    try {
+      httpServer.stop();
+    }
+ catch (    final Exception e) {
+    }
+    if (proxyHostBefore == null) {
+      System.clearProperty(HTTP_PROXY_HOST);
+    }
+ else {
+      System.setProperty(HTTP_PROXY_HOST,proxyHostBefore);
+    }
+    if (proxyPortBefore == null) {
+      System.clearProperty(HTTP_PROXY_PORT);
+    }
+ else {
+      System.setProperty(HTTP_PROXY_PORT,proxyPortBefore);
+    }
+  }
+}

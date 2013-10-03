@@ -2,7 +2,7 @@
   final ProvisioningContextImpl ctx=new ProvisioningContextImpl();
   ctx.setLocationId(null);
   ctx.setCloudFile(this.cloudFile);
-  InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
+  final InstallationDetailsBuilder builder=ctx.getInstallationDetailsBuilder();
   builder.setReservationId(null);
   builder.setAdmin(null);
   builder.setAuthGroups(null);

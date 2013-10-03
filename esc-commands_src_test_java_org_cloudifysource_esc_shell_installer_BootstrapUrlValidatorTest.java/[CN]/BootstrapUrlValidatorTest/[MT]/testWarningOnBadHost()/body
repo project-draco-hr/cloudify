@@ -1,0 +1,20 @@
+{
+  final Cloud cloud=new Cloud();
+  final ComputeTemplate template=new ComputeTemplate();
+  cloud.getProvider().setCloudifyUrl("http://blabla/link");
+  cloud.getCloudCompute().getTemplates().put("atemplate",template);
+  final ValidationContext context=Mockito.mock(ValidationContext.class);
+  final MutableBoolean found=new MutableBoolean(false);
+  Mockito.doAnswer(new Answer<Void>(){
+    @Override public Void answer(    final InvocationOnMock invocation) throws Throwable {
+      final Object[] args=invocation.getArguments();
+      if (args[0].equals(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE) && args[1].toString().contains("Unable to validate URL")) {
+        found.setValue(true);
+      }
+      return null;
+    }
+  }
+).when(context).validationOngoingEvent(Matchers.any(ValidationMessageType.class),Matchers.any(String.class));
+  new BootstrapUrlValidator(cloud).validateCloudifyUrls(context);
+  Assert.assertTrue("Missing validation event",found.booleanValue());
+}

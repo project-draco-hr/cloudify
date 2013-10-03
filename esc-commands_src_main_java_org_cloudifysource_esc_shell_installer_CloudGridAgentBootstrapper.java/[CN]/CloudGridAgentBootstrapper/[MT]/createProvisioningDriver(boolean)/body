@@ -15,7 +15,7 @@ catch (  final Exception e) {
   final ValidationContext validationContext=new ValidationContextImpl();
   try {
     if (performValidation) {
-      validateCloudifyUrls(validationContext);
+      new BootstrapUrlValidator(cloud).validateCloudifyUrls(validationContext);
     }
     final ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
     configuration.setAdmin(null);

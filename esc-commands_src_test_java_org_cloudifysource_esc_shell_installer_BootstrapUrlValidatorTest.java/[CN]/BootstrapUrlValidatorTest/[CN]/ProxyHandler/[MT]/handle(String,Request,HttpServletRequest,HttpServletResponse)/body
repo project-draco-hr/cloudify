@@ -1,0 +1,4 @@
+{
+  counter.incrementAndGet();
+  throw new ServletException("Request arrived at proxy");
+}
