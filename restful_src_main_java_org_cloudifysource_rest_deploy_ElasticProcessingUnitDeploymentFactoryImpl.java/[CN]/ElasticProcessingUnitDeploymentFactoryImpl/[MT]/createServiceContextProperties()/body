@@ -1,5 +1,11 @@
 {
   final Properties contextProperties=new Properties();
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_APPLICATION_NAME,deploymentConfig.getApplicationName());
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS,deploymentConfig.getAuthGroups());
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID,deploymentConfig.getDeploymentId());
+  if (deploymentConfig.getTemplateName() != null) {
+    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_TEMPLATE,deploymentConfig.getTemplateName());
+  }
   final Service service=deploymentConfig.getService();
   final List<String> dependsOn=service.getDependsOn();
   if (dependsOn.isEmpty()) {
