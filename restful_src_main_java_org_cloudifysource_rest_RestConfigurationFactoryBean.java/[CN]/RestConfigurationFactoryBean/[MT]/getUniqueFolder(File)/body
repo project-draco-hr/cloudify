@@ -4,9 +4,8 @@
   File parent=originalRestTempFolder.getParentFile();
   String baseFolderName=originalRestTempFolder.getName();
   String folderName=baseFolderName;
-  while (!uniqueNameFound && index < 100) {
-    index++;
-    folderName=baseFolderName + index;
+  while (!uniqueNameFound && index < 99) {
+    folderName=baseFolderName + (++index);
     File restTempFolder=new File(parent,folderName);
     if (!restTempFolder.exists()) {
       uniqueNameFound=true;

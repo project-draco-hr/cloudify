@@ -17,6 +17,7 @@
       restTempFolder=getUniqueFolder(restTempFolder);
     }
   }
+  restTempFolder.deleteOnExit();
   final boolean mkdirs=restTempFolder.mkdirs();
   final String absolutePath=restTempFolder.getAbsolutePath();
   if (mkdirs) {
@@ -30,6 +31,5 @@
     }
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_DIRECTORY_CREATION_FAILED.getName(),absolutePath);
   }
-  restTempFolder.deleteOnExit();
   return restTempFolder;
 }
