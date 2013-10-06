@@ -1,0 +1,18 @@
+{
+  StartMaintenanceMode command=new StartMaintenanceMode();
+  final ServiceContext contextMock=Mockito.mock(ServiceContext.class);
+  command.setContext(contextMock);
+  try {
+    command.invoke("string");
+  }
+ catch (  final IllegalArgumentException e) {
+    Assert.assertTrue("expecting exception cause to be 'NumberFormatException'",e.getCause() instanceof NumberFormatException);
+    Assert.assertTrue("Expecting the following error message: " + e.getMessage(),e.getMessage().equals("parameter type mismatch. can't convert class java.lang.String to 'long'"));
+  }
+  try {
+    command.invoke(4,4);
+  }
+ catch (  IllegalArgumentException e) {
+    Assert.assertTrue("Expecting the following error message: " + e.getMessage(),e.getMessage().equals("command start-maintenance-mode requires one " + "param of type 'long', got [4, 4]"));
+  }
+}

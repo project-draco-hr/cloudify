@@ -1,5 +1,5 @@
 {
   validateParams(params);
   getContext().startMaintenanceMode(Long.parseLong(params[0].toString()),TimeUnit.MINUTES);
-  return MessageFormat.format(successMessage,params[0].toString());
+  return MessageFormat.format(SUCCESS_MESSAGE,params[0].toString());
 }

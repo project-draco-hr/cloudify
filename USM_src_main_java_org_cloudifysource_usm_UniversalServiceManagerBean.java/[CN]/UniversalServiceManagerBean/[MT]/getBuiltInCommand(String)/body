@@ -1,5 +1,5 @@
 {
-  for (  BuiltInCommand command : getBuiltInCommands()) {
+  for (  USMBuiltInCommand command : getBuiltInCommands()) {
     if (command.getName().equalsIgnoreCase(commandName)) {
       JavaExecutableEntry entry=new JavaExecutableEntry();
       entry.setCommand(command);

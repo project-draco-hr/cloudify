@@ -1,0 +1,11 @@
+{
+  StopMaintenanceMode command=new StopMaintenanceMode();
+  final ServiceContext contextMock=Mockito.mock(ServiceContext.class);
+  command.setContext(contextMock);
+  try {
+    command.invoke("string");
+  }
+ catch (  final IllegalArgumentException e) {
+    Assert.assertTrue("Expecting the following error message: " + e.getMessage(),e.getMessage().equals("command stop-maintenance-mode does not accept parameters." + " received [string]"));
+  }
+}

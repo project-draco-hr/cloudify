@@ -1,6 +1,6 @@
 {
   if (params.length != 1) {
-    throw new IllegalArgumentException("command " + name + " requires one param of type 'long', got "+ Arrays.toString(params));
+    throw new IllegalArgumentException("command " + COMMAND_NAME + " requires one param of type 'long', got "+ Arrays.toString(params));
   }
   try {
     Long.parseLong(params[0].toString());

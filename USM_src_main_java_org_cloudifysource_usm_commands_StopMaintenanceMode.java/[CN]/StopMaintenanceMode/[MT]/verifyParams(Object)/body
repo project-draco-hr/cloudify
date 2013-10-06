@@ -1,5 +1,5 @@
 {
   if (args.length != 0) {
-    throw new IllegalArgumentException("command " + name + " does not accept parameters. received "+ Arrays.toString(args));
+    throw new IllegalArgumentException("command " + NAME + " does not accept parameters. received "+ Arrays.toString(args));
   }
 }

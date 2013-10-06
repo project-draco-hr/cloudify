@@ -1,5 +1,5 @@
 {
   verifyParams(args);
   this.getContext().stopMaintenanceMode();
-  return successMessage;
+  return SUCCESS_MESSAGE;
 }
