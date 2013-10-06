@@ -1,4 +1,5 @@
 {
+  printInitialRunningInstances();
   ConditionLatch conditionLatch=createConditionLatch(timeout);
   conditionLatch.waitFor(new ConditionLatch.Predicate(){
     private boolean lifeCycleEnded=false;
@@ -50,11 +51,12 @@
     }
     private void printUnInstalledInstances() throws RestClientException {
       for (      Map.Entry<String,Integer> entry : plannedNumberOfInstancesPerService.entrySet()) {
-        int runningInstances=getNumberOfRunningInstances(entry.getKey());
-        Integer current=currentRunningInstancesPerService.get(entry.getKey());
-        if (runningInstances < current) {
-          displayer.printEvent("Installed " + runningInstances + " planned "+ entry.getValue());
-          currentRunningInstancesPerService.put(entry.getKey(),runningInstances);
+        String serviceName=entry.getKey();
+        int currentRunningInstances=getNumberOfRunningInstances(serviceName);
+        Integer lastUpdatedRunningInstances=currentRunningInstancesPerService.get(serviceName);
+        if (currentRunningInstances < lastUpdatedRunningInstances) {
+          displayer.printEvent(serviceName + ": installed " + currentRunningInstances+ " planned "+ entry.getValue());
+          currentRunningInstancesPerService.put(serviceName,currentRunningInstances);
         }
       }
     }
