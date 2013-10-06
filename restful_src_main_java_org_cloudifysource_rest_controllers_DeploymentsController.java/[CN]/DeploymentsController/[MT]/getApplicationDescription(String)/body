@@ -1,4 +1,22 @@
 {
   final ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(restConfig.getAdmin());
+  final org.openspaces.admin.application.Application app=this.restConfig.getAdmin().getApplications().waitFor(appName,10,TimeUnit.SECONDS);
+  if (app == null) {
+    throw new ResourceNotFoundException(appName);
+  }
+  if (permissionEvaluator != null) {
+    final ProcessingUnit[] pus=app.getProcessingUnits().getProcessingUnits();
+    if (pus.length > 0) {
+      final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+      final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+      final String puAuthGroups=pus[0].getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+      try {
+        permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"view");
+      }
+ catch (      AccessDeniedException e) {
+        throw new ResourceNotFoundException(appName);
+      }
+    }
+  }
   return appDescriptionFactory.getApplicationDescription(appName);
 }

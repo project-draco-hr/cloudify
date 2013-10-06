@@ -5,6 +5,12 @@
     final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
     final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
     final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    try {
+      permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"view");
+    }
+ catch (    AccessDeniedException e) {
+      throw new ResourceNotFoundException(appName);
+    }
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
   validateUninstallService();

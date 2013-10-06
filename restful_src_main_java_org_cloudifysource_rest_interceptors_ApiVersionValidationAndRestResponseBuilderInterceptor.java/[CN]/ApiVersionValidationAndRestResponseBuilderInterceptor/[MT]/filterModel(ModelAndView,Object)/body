@@ -20,9 +20,6 @@
         String viewName=modelAndView.getViewName();
         methodReturnObject=viewName;
       }
- else       if (returnType == ApplicationDescription.class) {
-        methodReturnObject=null;
-      }
  else {
         logger.warning("return type not supported: " + returnType);
         throw new RestErrorException("return type not supported: " + returnType);
