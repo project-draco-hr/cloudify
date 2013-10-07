@@ -8,6 +8,9 @@
         formattedMessage=MessageFormat.format(bundleMessage,arguments);
       }
  catch (      final IllegalArgumentException e) {
+        if (logger.isLoggable(Level.FINE)) {
+          logger.fine("Failed to create a MessageFormat with the given pattern [" + bundleMessage + "] and the given arguments "+ Arrays.toString(arguments)+ ". returning messageCode ["+ messageCode+ "]");
+        }
       }
     }
   }

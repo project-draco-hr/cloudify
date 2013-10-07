@@ -1,4 +1,7 @@
 {
+  if (deploymentId == null) {
+    throw new RestErrorException(CloudifyErrorMessages.MISSING_DEPLOYMENT_ID.getName(),"getDeploymentEvents");
+  }
   verifyDeploymentIdExists(deploymentId);
   int actualTo=to;
   if (to == -1) {

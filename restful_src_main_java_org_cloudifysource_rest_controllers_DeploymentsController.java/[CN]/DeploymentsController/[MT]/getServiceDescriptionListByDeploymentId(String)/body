@@ -1,4 +1,7 @@
 {
+  if (deploymentId == null) {
+    throw new RestErrorException(CloudifyErrorMessages.MISSING_DEPLOYMENT_ID.getName(),"getServiceDescriptionListByDeploymentId");
+  }
   verifyDeploymentIdExists(deploymentId);
   final ApplicationDescriptionFactory appDescriptionFactory=new ApplicationDescriptionFactory(restConfig.getAdmin());
   List<ServiceDescription> descriptions=new ArrayList<ServiceDescription>();

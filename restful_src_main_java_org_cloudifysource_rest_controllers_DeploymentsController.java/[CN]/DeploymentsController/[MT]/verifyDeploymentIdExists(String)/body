@@ -15,8 +15,8 @@
         return;
       }
     }
-    if (logger.isLoggable(Level.FINE)) {
-      logger.fine("[validateDeploymentIdExists] - " + "There is no processing unit with the given deployment id [" + deploymentId + "]");
+    if (logger.isLoggable(Level.WARNING)) {
+      logger.warning("[validateDeploymentIdExists] - " + "There is no processing unit with the given deployment id [" + deploymentId + "]");
     }
     throw new ResourceNotFoundException("Deployment id " + deploymentId);
   }

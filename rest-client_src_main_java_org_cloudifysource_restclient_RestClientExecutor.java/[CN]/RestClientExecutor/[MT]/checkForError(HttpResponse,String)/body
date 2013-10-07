@@ -12,6 +12,9 @@
       final Response<Void> entity=new ObjectMapper().readValue(responseBody,new TypeReference<Response<Void>>(){
       }
 );
+      if (logger.isLoggable(Level.FINE)) {
+        logger.log(Level.FINE,"[checkForError] - REST request to " + requestUri + "  failed. throwing RestClientException: [statusCode "+ statusCode+ " reasonPhrase "+ reasonPhrase+ " defaultMessage "+ entity.getMessage()+ " messageCode"+ entity.getMessageId()+ "]");
+      }
       throw MessagesUtils.createRestClientResponseException(statusCode,reasonPhrase,entity.getVerbose(),entity.getMessage(),entity.getMessageId());
     }
  catch (    final IOException e) {

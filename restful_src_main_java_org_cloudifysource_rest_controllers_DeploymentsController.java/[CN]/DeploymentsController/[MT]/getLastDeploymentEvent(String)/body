@@ -1,4 +1,7 @@
 {
+  if (deploymentId == null) {
+    throw new RestErrorException(CloudifyErrorMessages.MISSING_DEPLOYMENT_ID.getName(),"getLastDeploymentEvent");
+  }
   verifyDeploymentIdExists(deploymentId);
   EventsCacheKey key=new EventsCacheKey(deploymentId);
   logger.fine(EventsUtils.getThreadId() + " Received request for last event of key : " + key);

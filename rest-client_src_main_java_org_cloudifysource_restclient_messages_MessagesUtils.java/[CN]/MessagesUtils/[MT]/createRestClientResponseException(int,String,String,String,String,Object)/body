@@ -1,6 +1,15 @@
 {
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[createRestClientResponseException] - getting formatted message with messageCode [" + messageCode + "] and arguments "+ Arrays.toString(arguments));
+  }
   String formattedMessage=getFormattedMessageSilently(messageCode,arguments);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[createRestClientResponseException] - the formatted message: " + formattedMessage);
+  }
   if (formattedMessage.equalsIgnoreCase(messageCode) && StringUtils.isNotBlank(defaultMessage)) {
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("[createRestClientResponseException] - cahnging the formatted message to defaultMessage: " + defaultMessage);
+    }
     formattedMessage=defaultMessage;
   }
   return new RestClientResponseException(messageCode,formattedMessage,statusCode,reasonPhrase,responseBody);

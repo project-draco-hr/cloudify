@@ -1,4 +1,5 @@
 {
+  validateDeploymentID(deploymentId,"getServiceDescriptions(String)");
   String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_SERVICES_DESCRIPTION_URL_FORMAT,deploymentId);
   return executor.get(url,new TypeReference<Response<List<ServiceDescription>>>(){
   }
