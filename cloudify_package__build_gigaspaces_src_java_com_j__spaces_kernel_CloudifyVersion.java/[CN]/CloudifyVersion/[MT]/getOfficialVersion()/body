@@ -1,3 +1,0 @@
-{
-  return V_NAME + " " + getShortOfficialVersion()+ " (build "+ BUILD_NUM+ ", timestamp "+ BUILD_TIMESTAMP+ ")";
-}

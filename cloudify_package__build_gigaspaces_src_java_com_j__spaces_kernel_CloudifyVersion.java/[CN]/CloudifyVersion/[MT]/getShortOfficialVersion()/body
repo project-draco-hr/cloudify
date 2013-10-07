@@ -1,8 +1,0 @@
-{
-  String edition=EDITION;
-  final String XAP_Prefix="XAP";
-  if (EDITION.startsWith("XAP")) {
-    edition=XAP_Prefix + " " + EDITION.substring(XAP_Prefix.length());
-  }
-  return edition + " " + VERSION+ " "+ MILESTONE.toUpperCase();
-}
