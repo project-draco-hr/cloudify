@@ -1,0 +1,13 @@
+{
+  X509TrustManager tm=new X509TrustManager(){
+    @Override public X509Certificate[] getAcceptedIssuers(){
+      return null;
+    }
+    @Override public void checkServerTrusted(    final X509Certificate[] chain,    final String authType) throws CertificateException {
+    }
+    @Override public void checkClientTrusted(    final X509Certificate[] chain,    final String authType) throws CertificateException {
+    }
+  }
+;
+  return tm;
+}
