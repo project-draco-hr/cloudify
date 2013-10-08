@@ -1,0 +1,34 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer(logHeader + "Getting console ouput...");
+  }
+  while (!Thread.interrupted() && loop) {
+    try {
+      sleep();
+      if (isPortReachable(ipAddress,agentPort)) {
+        if (logger.isLoggable(Level.FINEST)) {
+          logger.finest(logHeader + "Stopping the loop...");
+        }
+        loop=false;
+      }
+      final String read=this.readEc2Output();
+      if (read != null) {
+        this.printOutput(read);
+      }
+    }
+ catch (    final IllegalStateException e) {
+      if ("Connection pool shut down".equals(e.getMessage())) {
+        if (logger.isLoggable(Level.FINEST)) {
+          logger.finest(logHeader + "Getting console ouput...");
+        }
+        loop=false;
+      }
+    }
+catch (    final Exception e) {
+      logger.log(Level.WARNING,logHeader + "Error occurs when getting console output",e);
+    }
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer(logHeader + "Stop scrolling console ouput...");
+  }
+}

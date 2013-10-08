@@ -1,0 +1,7 @@
+{
+  this.ipAddress=ipAddress;
+  this.agentPort=agentPort;
+  this.instanceId=instanceId;
+  this.logHeader="[" + instanceId + "] ";
+  this.ec2=createAmazonEC2();
+}

@@ -1,0 +1,13 @@
+{
+  final GetConsoleOutputRequest request=new GetConsoleOutputRequest(instanceId);
+  final GetConsoleOutputResult consoleOutput=ec2.getConsoleOutput(request);
+  final String output=consoleOutput.getOutput();
+  if (output != null) {
+    final String x=new String(Base64.decodeBase64(output));
+    return x;
+  }
+ else {
+    logger.finest("[" + instanceId + "] No output yet");
+  }
+  return null;
+}

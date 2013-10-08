@@ -1,4 +1,5 @@
 {
+  final ComputeTemplate template=this.getManagerComputeTemplate();
   final InstanceProperties properties=cfnTemplate.getEC2Instance().getProperties();
   final String availabilityZone=properties.getAvailabilityZone() == null ? null : properties.getAvailabilityZone().getValue();
   final Placement placement=availabilityZone == null ? null : new Placement(availabilityZone);
@@ -16,7 +17,6 @@
       final String script=management ? this.generateManagementCloudifyEnv(ctx) : this.generateCloudifyEnv(ctx);
       s3Object=this.uploadCloudDir(ctx,script,management);
       final String cloudFileS3=this.amazonS3Uploader.generatePresignedURL(s3Object);
-      ComputeTemplate template=this.getManagerComputeTemplate();
       String cloudFileDir=(String)template.getRemoteDirectory();
       if (cloudFileDir.length() > 1 && cloudFileDir.endsWith("/")) {
         cloudFileDir=cloudFileDir.substring(0,cloudFileDir.length() - 1);
@@ -69,6 +69,10 @@
     ec2Instance=this.waitRunningInstance(ec2Instance,duration,unit);
     this.tagEC2Instance(ec2Instance,machineName,cfnTemplate.getEC2Instance());
     this.tagEC2Volumes(ec2Instance.getInstanceId(),cfnTemplate);
+    final boolean debug=BooleanUtils.toBoolean((String)template.getCustom().get("debugMode"));
+    if (debug) {
+      debugExecutors.submit(new EC2Console(ec2Instance.getInstanceId(),ec2Instance.getPublicIpAddress(),DEFAULT_CLOUDIFY_AGENT_PORT));
+    }
     this.waitRunningAgent(ec2Instance.getPublicIpAddress(),duration,unit);
     return ec2Instance;
   }

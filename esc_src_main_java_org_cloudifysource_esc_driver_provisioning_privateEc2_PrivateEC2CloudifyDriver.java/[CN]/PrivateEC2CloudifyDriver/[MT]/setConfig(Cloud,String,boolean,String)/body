@@ -22,6 +22,10 @@
     String locationId=(String)managerTemplate.getCustom().get("s3LocationId");
     CloudUser user=this.cloud.getUser();
     this.amazonS3Uploader=new AmazonS3Uploader(user.getUser(),user.getApiKey(),locationId);
+    final boolean debug=BooleanUtils.toBoolean((String)managerTemplate.getCustom().get("debugMode"));
+    if (debug) {
+      this.debugExecutors=Executors.newFixedThreadPool(NB_THREADS_CONSOLE_OUTPUT);
+    }
   }
  catch (  final CloudProvisioningException e) {
     throw new IllegalArgumentException(e);

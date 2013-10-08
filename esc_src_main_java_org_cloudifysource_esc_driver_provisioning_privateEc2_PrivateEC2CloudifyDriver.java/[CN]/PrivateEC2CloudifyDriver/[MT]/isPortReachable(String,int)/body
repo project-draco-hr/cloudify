@@ -1,0 +1,21 @@
+{
+  Socket socket=null;
+  try {
+    socket=new Socket(host,port);
+    return true;
+  }
+ catch (  Exception e) {
+    return false;
+  }
+ finally {
+    if (socket != null) {
+      try {
+        socket.close();
+      }
+ catch (      IOException e) {
+        logger.warning("Can't close port: " + host + ":"+ port);
+        return false;
+      }
+    }
+  }
+}
