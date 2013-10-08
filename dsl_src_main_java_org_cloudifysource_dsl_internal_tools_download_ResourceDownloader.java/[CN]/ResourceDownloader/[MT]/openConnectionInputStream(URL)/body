@@ -1,14 +1,15 @@
 {
-  final DefaultHttpClient httpClient=new DefaultHttpClient();
-  final HttpHead httpMethod=new HttpHead(url.toString());
-  HttpResponse response;
-  try {
-    logger.fine("validating url");
-    response=httpClient.execute(httpMethod);
-    if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-      logger.warning("Failed to validate Resource URL: " + url.toString());
-      throw new ResourceDownloadException("Invalid resource URL: " + url.toString());
+  if (url.toString().startsWith("https")) {
+    try {
+      final SSLContext sc=SSLContext.getInstance("SSL");
+      sc.init(null,getTrustingManager(),new java.security.SecureRandom());
+      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
     }
+ catch (    Exception e) {
+      throw new ResourceDownloadException("Failed setting default SSL socket. reason " + e.getMessage(),e);
+    }
+  }
+  try {
     final URLConnection connection=url.openConnection();
     if (url.getUserInfo() != null) {
       String basicAuth="Basic " + new String(new Base64().encode(url.getUserInfo().getBytes()));
