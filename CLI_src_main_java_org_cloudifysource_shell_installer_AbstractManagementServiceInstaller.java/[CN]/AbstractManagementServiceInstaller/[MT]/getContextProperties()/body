@@ -1,5 +1,6 @@
 {
   final Properties props=new Properties();
   props.setProperty("com.gs.application",MANAGEMENT_APPLICATION_NAME);
+  props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME,this.cloudName);
   return props;
 }

@@ -2,7 +2,7 @@
   try {
     final String serviceNameCapital=StringUtils.capitalize(serviceName);
     final String localhost=Constants.getHostAddress();
-    String protocol=isSecureConnection ? "https" : "http";
+    final String protocol=isSecureConnection ? "https" : "http";
     logger.info(serviceNameCapital + " service will be available at: " + protocol+ "://"+ IPUtils.getSafeIpAddress(localhost)+ ":"+ port);
   }
  catch (  final UnknownHostException e) {

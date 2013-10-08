@@ -15,10 +15,10 @@
       boolean isDone=false;
       if (pu != null) {
         for (        final ProcessingUnitInstance instance : pu) {
-          GridServiceContainer gsc=instance.getGridServiceContainer();
+          final GridServiceContainer gsc=instance.getGridServiceContainer();
           if (gsc != null) {
-            GridServiceAgent gsa=gsc.getGridServiceAgent();
-            if (gsa != null && (agent.equals(gsa))) {
+            final GridServiceAgent gsa=gsc.getGridServiceAgent();
+            if (gsa != null && agent.equals(gsa)) {
               isDone=true;
               break;
             }

@@ -3,13 +3,6 @@
   final String webuiMemory=getWebServiceMemory(CloudifyConstants.WEBUI_MAX_MEMORY_ENVIRONMENT_VAR);
   final int webuiPort=getWebservicePort(CloudifyConstants.WEBUI_PORT_ENV_VAR,isSecureConnection);
   final String webUiFileName=EnvironmentUtils.findWebuiWar();
-  String cloudName=null;
-  if (this.cloud != null) {
-    cloudName=this.cloud.getName();
-  }
- else {
-    cloudName="local-cloud";
-  }
   final ManagementWebServiceInstaller webuiInstaller=new ManagementWebServiceInstaller();
   webuiInstaller.setAdmin(agent.getAdmin());
   webuiInstaller.setVerbose(verbose);

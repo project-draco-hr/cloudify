@@ -25,6 +25,13 @@
     if (isLocalCloud) {
       startLocalCloudManagementServicesContainer(agent);
     }
+    String cloudName=null;
+    if (this.cloud != null) {
+      cloudName=this.cloud.getName();
+    }
+ else {
+      cloudName="local-cloud";
+    }
     connectionLogs.supressConnectionErrors();
     try {
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
@@ -42,6 +49,7 @@
         managementSpaceInstaller.addListeners(this.eventsListenersList);
         managementSpaceInstaller.setIsLocalCloud(isLocalCloud);
         managementSpaceInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
+        managementSpaceInstaller.setCloudName(cloudName);
         if (!this.isLocalCloud) {
           final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
           if (persistentStoragePath != null) {
@@ -61,7 +69,7 @@
         }
       }
       if (!noWebServices) {
-        installWebServices(username,password,isLocalCloud,ShellUtils.isSecureConnection(securityProfile),agent,managementServicesInstallers);
+        installWebServices(username,password,isLocalCloud,ShellUtils.isSecureConnection(securityProfile),agent,managementServicesInstallers,cloudName);
       }
       for (      final AbstractManagementServiceInstaller managementServiceInstaller : managementServicesInstallers) {
         managementServiceInstaller.waitForInstallation(adminFacade,agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);

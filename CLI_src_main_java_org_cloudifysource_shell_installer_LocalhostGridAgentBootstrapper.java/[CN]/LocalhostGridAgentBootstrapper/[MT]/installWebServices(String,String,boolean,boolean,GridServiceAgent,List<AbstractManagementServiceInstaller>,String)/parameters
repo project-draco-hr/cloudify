@@ -4,3 +4,4 @@ boolean isLocalCloud
 boolean isSecureConnection
 GridServiceAgent agent
 List<AbstractManagementServiceInstaller> managementServices
+String cloudName

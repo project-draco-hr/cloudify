@@ -5,6 +5,5 @@
   props.setProperty("web.sslPort",portAsString);
   props.setProperty("web.context","/");
   props.setProperty("web.context.unique","true");
-  props.setProperty(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME,this.cloudName);
   return props;
 }
