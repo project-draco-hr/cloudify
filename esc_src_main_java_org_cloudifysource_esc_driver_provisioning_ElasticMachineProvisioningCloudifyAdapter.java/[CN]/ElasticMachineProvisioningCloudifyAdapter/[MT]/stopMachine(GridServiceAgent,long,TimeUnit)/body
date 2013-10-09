@@ -41,7 +41,7 @@
       }
     }
  else     if (failedToShutdownAgentException == null) {
-      throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed. Cloud driver claims machine was already stopped, however we just recently stopped the agent process on that machine.");
+      throw new ElasticMachineProvisioningException("Attempt to shutdown machine with IP: " + machineIp + " for agent with UID: "+ agent.getUid()+ " has failed. Cloud driver claims machine was "+ "already stopped, however we just recently stopped the agent process on that machine.");
     }
   }
  catch (  final CloudProvisioningException e) {
