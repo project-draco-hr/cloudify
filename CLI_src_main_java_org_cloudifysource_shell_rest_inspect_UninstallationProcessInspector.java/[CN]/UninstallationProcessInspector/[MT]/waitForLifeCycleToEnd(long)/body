@@ -2,43 +2,20 @@
   printInitialRunningInstances();
   ConditionLatch conditionLatch=createConditionLatch(timeout);
   conditionLatch.waitFor(new ConditionLatch.Predicate(){
-    private boolean lifeCycleEnded=false;
     @Override public boolean isDone() throws CLIException, InterruptedException {
       try {
         boolean ended=false;
-        lifeCycleEnded=lifeCycleEnded();
-        List<String> latestEvents=getLatestEvents();
-        if (!lifeCycleEnded) {
-          if (!latestEvents.isEmpty()) {
-            if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
-              ended=true;
-            }
-            displayer.printEvents(latestEvents);
-          }
- else {
-            if (!lifeCycleEnded) {
-              displayer.printNoChange();
-            }
-          }
-          printUnInstalledInstances();
-          if (lifeCycleEnded && waitForCloudResourcesRelease) {
-            displayer.printEvent("releasing cloud resources...");
-            return ended;
-          }
-        }
-        if (lifeCycleEnded) {
-          if (waitForCloudResourcesRelease) {
-            if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
-              ended=true;
-            }
- else {
-              displayer.printNoChange();
-            }
-          }
- else {
+        final List<String> latestEvents=getLatestEvents();
+        if (!latestEvents.isEmpty()) {
+          if (latestEvents.contains(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT)) {
             ended=true;
           }
+          displayer.printEvents(latestEvents);
         }
+ else {
+          displayer.printNoChange();
+        }
+        printUnInstalledInstances();
         return ended;
       }
  catch (      final RestClientException e) {

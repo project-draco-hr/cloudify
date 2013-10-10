@@ -9,4 +9,6 @@
  else {
     value.getProcessingUnits().add(processingUnit);
   }
+  final AdminBasedGridServiceContainerProvider provider=new AdminBasedGridServiceContainerProvider(admin);
+  value.getContainers().addAll(provider.getContainersForDeployment(deploymentId));
 }
