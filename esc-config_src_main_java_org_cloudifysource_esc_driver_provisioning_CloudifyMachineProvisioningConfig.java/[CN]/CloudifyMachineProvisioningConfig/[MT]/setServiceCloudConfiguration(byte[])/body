@@ -1,0 +1,4 @@
+{
+  final String encodedResult=Base64.encodeBase64String(serviceCloudConfiguration);
+  properties.put(SERVICE_CLOUD_CONFIGURATION_KEY,encodedResult);
+}

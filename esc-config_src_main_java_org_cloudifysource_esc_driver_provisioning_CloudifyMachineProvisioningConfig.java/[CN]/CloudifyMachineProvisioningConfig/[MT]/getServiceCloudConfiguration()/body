@@ -3,6 +3,6 @@
   if (encodedFile == null) {
     return null;
   }
-  final byte[] decodedFile=jcifs.util.Base64.decode(encodedFile);
+  final byte[] decodedFile=Base64.decodeBase64(encodedFile);
   return decodedFile;
 }
