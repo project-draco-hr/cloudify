@@ -12,6 +12,6 @@
     handlerInterceptor.postHandle(request,response,handler,modelAndView);
   }
   Assert.assertTrue("Wrong response status: " + response.getStatus(),response.getStatus() == HttpStatus.OK.value());
-  Assert.assertTrue(response.getContentType().contains(MediaType.APPLICATION_JSON));
+  Assert.assertTrue(response.getContentType().contains(CloudifyConstants.MIME_TYPE_APPLICATION_JSON));
   return response;
 }

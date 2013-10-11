@@ -8,7 +8,7 @@
   }
   Object model=filterModel(modelAndView,handler);
   modelAndView.clear();
-  response.setContentType(MediaType.APPLICATION_JSON);
+  response.setContentType(CloudifyConstants.MIME_TYPE_APPLICATION_JSON);
   if (model instanceof Response<?>) {
     String responseBodyStr=new ObjectMapper().writeValueAsString(model);
     response.getOutputStream().write(responseBodyStr.getBytes());

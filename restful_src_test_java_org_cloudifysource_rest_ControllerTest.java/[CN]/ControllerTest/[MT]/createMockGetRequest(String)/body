@@ -2,6 +2,6 @@
   final MockHttpServletRequest request=new MockHttpServletRequest();
   request.setRequestURI(requestUri);
   request.setMethod("GET");
-  request.setContentType(MediaType.APPLICATION_JSON);
+  request.setContentType(CloudifyConstants.MIME_TYPE_APPLICATION_JSON);
   return request;
 }
