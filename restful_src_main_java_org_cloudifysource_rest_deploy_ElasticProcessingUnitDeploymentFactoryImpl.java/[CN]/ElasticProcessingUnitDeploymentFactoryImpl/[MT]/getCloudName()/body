@@ -1,0 +1,8 @@
+{
+  if (deploymentConfig.getCloud() != null) {
+    return deploymentConfig.getCloud().getName();
+  }
+ else {
+    return CloudifyConstants.LOCAL_CLOUD_NAME;
+  }
+}

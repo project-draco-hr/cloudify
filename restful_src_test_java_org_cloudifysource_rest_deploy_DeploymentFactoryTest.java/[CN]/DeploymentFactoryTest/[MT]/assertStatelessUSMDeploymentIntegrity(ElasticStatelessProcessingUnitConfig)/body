@@ -11,4 +11,5 @@
   final ElasticMachineProvisioningConfig machineProvisioning=deploymentHolder.getMachineProvisioning();
   final Map<String,String> machineProps=machineProvisioning.getProperties();
   Assert.assertTrue("dedicated-management-machines should be set to true",machineProps.get("dedicated-management-machines").equals("true"));
+  Assert.assertEquals(this.cloud.getName(),deploymentHolder.getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME));
 }

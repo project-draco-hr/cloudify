@@ -2,4 +2,5 @@
   final Map<String,String> elasticProperties=deploymentHolder.getElasticProperties();
   Assert.assertTrue("memory capacity should be set to 512",deploymentHolder.getScaleStrategy().getProperties().get("memory-capacity-megabytes").equals("512"));
   Assert.assertTrue("container memory capacity should be set to 512",elasticProperties.get("container.memory-capacity").equals("512"));
+  Assert.assertEquals(CloudifyConstants.LOCAL_CLOUD_NAME,deploymentHolder.getContextProperties().get(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME));
 }

@@ -29,9 +29,8 @@
       contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_NETWORK_PROTOCOL_DESCRIPTION,service.getNetwork().getProtocolDescription());
     }
   }
-  if (deploymentConfig.getCloud() != null) {
-    contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME,deploymentConfig.getCloud().getName());
-  }
+  final String cloudName=getCloudName();
+  contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_CLOUD_NAME,cloudName);
   contextProperties.setProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC,Boolean.toString(service.isElastic()));
   final InstallServiceRequest installRequest=deploymentConfig.getInstallRequest();
   if (installRequest.isDebugAll()) {
