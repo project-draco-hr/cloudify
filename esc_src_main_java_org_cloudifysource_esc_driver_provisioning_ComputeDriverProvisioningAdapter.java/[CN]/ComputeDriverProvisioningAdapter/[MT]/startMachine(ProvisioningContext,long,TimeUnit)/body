@@ -1,7 +1,7 @@
 {
   ProvisioningContextAccess.setCurrentProvisioingContext(context);
   try {
-    return super.startMachine(context,duration,unit);
+    return this.provisioningDriver.startMachine(context.getLocationId(),duration,unit);
   }
   finally {
     ProvisioningContextAccess.setCurrentProvisioingContext(null);
