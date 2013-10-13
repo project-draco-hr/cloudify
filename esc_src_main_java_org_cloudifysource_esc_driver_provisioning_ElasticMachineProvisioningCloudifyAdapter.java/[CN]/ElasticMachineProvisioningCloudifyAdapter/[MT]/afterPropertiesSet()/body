@@ -35,9 +35,6 @@
         logger.info("creating storage provisioning driver.");
         this.storageProvisioning=(StorageProvisioningDriver)Class.forName(storageClassName).newInstance();
         this.storageTemplateName=config.getStorageTemplateName();
-        if (this.storageProvisioning instanceof BaseStorageDriver) {
-          ((BaseStorageDriver)this.storageProvisioning).setComputeContext(cloudifyProvisioning.getComputeContext());
-        }
         logger.info("storage provisioning driver created successfully.");
       }
     }

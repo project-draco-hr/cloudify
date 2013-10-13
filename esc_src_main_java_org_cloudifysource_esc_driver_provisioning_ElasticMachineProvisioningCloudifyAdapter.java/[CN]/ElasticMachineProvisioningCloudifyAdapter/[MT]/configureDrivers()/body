@@ -10,6 +10,9 @@
   configuration.setServiceName(serviceName);
   this.cloudifyProvisioning.setConfig(configuration);
   if (this.storageProvisioning != null) {
+    if (this.storageProvisioning instanceof BaseStorageDriver) {
+      ((BaseStorageDriver)this.storageProvisioning).setComputeContext(cloudifyProvisioning.getComputeContext());
+    }
     this.storageProvisioning.setConfig(cloud,this.cloudTemplateName);
   }
   this.driversConfigured=true;

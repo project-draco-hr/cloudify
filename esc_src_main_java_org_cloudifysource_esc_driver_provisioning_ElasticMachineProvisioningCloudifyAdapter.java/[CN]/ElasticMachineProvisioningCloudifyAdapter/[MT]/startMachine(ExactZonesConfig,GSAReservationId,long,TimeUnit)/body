@@ -7,6 +7,9 @@
  catch (  final CloudProvisioningException e) {
     throw new ElasticMachineProvisioningException("Failed to configure cloud driver for first use: " + e.getMessage(),e);
   }
+catch (  StorageProvisioningException e) {
+    throw new ElasticMachineProvisioningException("Failed to configure storage driver for first use: " + e.getMessage(),e);
+  }
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
   final ZonesConfig defaultZones=config.getGridServiceAgentZones();
