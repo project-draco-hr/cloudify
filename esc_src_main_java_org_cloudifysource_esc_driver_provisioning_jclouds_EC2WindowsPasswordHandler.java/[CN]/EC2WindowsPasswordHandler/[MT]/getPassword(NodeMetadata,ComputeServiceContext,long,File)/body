@@ -1,7 +1,7 @@
 {
-  final EC2Client api=(EC2Client)ContextBuilder.newBuilder("EC2Client").build();
   final Location zone=node.getLocation();
   final Location region=zone.getParent();
+  WindowsApi winApi=EC2Client.class.cast(context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getWindowsApiForRegion(region.getId()).get();
   final String id=node.getId();
   String key;
   try {
@@ -13,7 +13,7 @@
   final String amiId=id.split("/")[1];
   while (System.currentTimeMillis() < end) {
     logger.fine("Reading Windows password");
-    final PasswordData passwordData=api.getWindowsServices().getPasswordDataInRegion(region.getId(),amiId);
+    final PasswordData passwordData=winApi.getPasswordDataInRegion(region.getId(),amiId);
     if (passwordData == null || passwordData.getPasswordData() == null || passwordData.getPasswordData().isEmpty()) {
       Thread.sleep(PASSWORD_POLLING_INTERVAL_MILLIS);
     }
