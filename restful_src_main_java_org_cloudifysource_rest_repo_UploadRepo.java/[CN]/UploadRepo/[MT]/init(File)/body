@@ -1,5 +1,6 @@
 {
   try {
+    logger.warning("***** starting uploadReop.init, setting baseDir to: " + restTempFolder);
     this.baseDir=restTempFolder;
     createUploadDir();
     createScheduledExecutor();
