@@ -1,7 +1,7 @@
 {
   MachineDetails machineDetails=new MachineDetails();
-  CreatePersistentVMRoleDeploymentDescriptor desc=null;
-  RoleDetails roleAddressDetails=null;
+  CreatePersistentVMRoleDeploymentDescriptor desc;
+  RoleDetails roleAddressDetails;
   try {
     desc=new CreatePersistentVMRoleDeploymentDescriptor();
     desc.setRoleName(serverNamePrefix + "_role");

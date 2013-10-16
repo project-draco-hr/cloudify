@@ -7,7 +7,7 @@
   logger.fine(getThreadIdentity() + "Waiting for pending request lock for lock " + pendingRequest.hashCode());
   boolean lockAcquired=pendingRequest.tryLock(lockTimeout,TimeUnit.MILLISECONDS);
   String serviceName=null;
-  Deployment deployment=null;
+  Deployment deployment;
   if (lockAcquired) {
     logger.fine(getThreadIdentity() + "Lock acquired : " + pendingRequest.hashCode());
     logger.fine(getThreadIdentity() + "Executing a request to provision a new virtual machine");
