@@ -12,6 +12,14 @@
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
     }
+    try {
+      renameTemplateFilesIfNeeded(templatesFolder,holder);
+    }
+ catch (    final IOException e) {
+      failedToAddTemplates.put(templateName,"failed to rename template's file. error: " + e.getMessage());
+      new File(templatesFolder,originalTemplateFileName).delete();
+      continue;
+    }
     final ComputeTemplate cloudTemplate=holder.getCloudTemplate();
     templates.put(templateName,cloudTemplate);
     addedTemplates.add(templateName);
