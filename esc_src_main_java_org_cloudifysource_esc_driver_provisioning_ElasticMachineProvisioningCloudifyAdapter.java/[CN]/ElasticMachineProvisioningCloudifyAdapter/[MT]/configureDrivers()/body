@@ -8,6 +8,7 @@
   configuration.setCloudTemplate(cloudTemplateName);
   configuration.setManagement(false);
   configuration.setServiceName(serviceName);
+  configuration.setNetwork(this.config.getNetworkAsString());
   this.cloudifyProvisioning.setConfig(configuration);
   if (this.storageProvisioning != null) {
     if (this.storageProvisioning instanceof BaseStorageDriver) {

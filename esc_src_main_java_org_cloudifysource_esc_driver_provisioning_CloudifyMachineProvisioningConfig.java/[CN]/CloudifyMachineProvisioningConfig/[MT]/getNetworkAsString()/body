@@ -1,0 +1,3 @@
+{
+  return properties.get(SERVICE_CLOUD_CONFIGURATION_KEY);
+}
