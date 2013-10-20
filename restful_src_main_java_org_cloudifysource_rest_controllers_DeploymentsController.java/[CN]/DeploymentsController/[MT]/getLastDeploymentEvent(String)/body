@@ -1,21 +1,15 @@
 {
-  if (deploymentId == null) {
-    throw new RestErrorException(CloudifyErrorMessages.MISSING_DEPLOYMENT_ID.getName(),"getLastDeploymentEvent");
-  }
-  verifyDeploymentIdExists(deploymentId);
   EventsCacheKey key=new EventsCacheKey(deploymentId);
-  logger.fine(EventsUtils.getThreadId() + " Received request for last event of key : " + key);
-  EventsCacheValue value;
-  try {
-    logger.fine(EventsUtils.getThreadId() + " Retrieving events from cache for key : " + key);
-    value=eventsCache.get(key);
+  EventsCacheValue value=eventsCache.getIfExists(key);
+  int lastEventIndex=value.getLastEventIndex();
+  List<DeploymentEvent> events=getDeploymentEvents(deploymentId,lastEventIndex,lastEventIndex + 1).getEvents();
+  if (events.size() == 2) {
+    return events.get(1);
   }
- catch (  final ExecutionException e) {
-    throw e.getCause();
+ else   if (events.size() == 1) {
+    return events.get(0);
   }
-synchronized (value.getMutex()) {
-    eventsCache.refresh(key);
-    int lastEventId=value.getLastEventIndex();
-    return EventsUtils.extractDesiredEvents(value.getEvents(),lastEventId,lastEventId);
+ else {
+    throw new IllegalStateException("Unexpected event list size for request of events [" + lastEventIndex + "]-["+ lastEventIndex+ 1+ "] : "+ events.size());
   }
 }
