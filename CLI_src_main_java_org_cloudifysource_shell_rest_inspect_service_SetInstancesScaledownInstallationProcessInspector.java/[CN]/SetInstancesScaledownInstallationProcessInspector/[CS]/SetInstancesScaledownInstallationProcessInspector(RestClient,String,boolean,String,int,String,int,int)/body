@@ -1,5 +1,5 @@
 {
   super(restClient,deploymentId,verbose,serviceName,plannedNumberOfInstances,currentNumberOfInstances,applicationName);
-  setEventIndex(currentEventIndex);
+  setLastEventIndex(currentEventIndex);
   this.plannedNumberOfInstances=plannedNumberOfInstances;
 }

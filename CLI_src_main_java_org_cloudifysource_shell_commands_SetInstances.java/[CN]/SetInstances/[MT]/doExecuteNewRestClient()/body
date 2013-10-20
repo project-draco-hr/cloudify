@@ -7,14 +7,14 @@
   if (initialNumberOfInstances == count) {
     return getFormattedMessage("num_instances_already_met",count);
   }
-  final int nextEventId=getNextEventId(newRestClient,deploymentId);
+  final int lastEventIndex=newRestClient.getLastEvent(deploymentId).getIndex();
   final SetServiceInstancesRequest request=new SetServiceInstancesRequest();
   request.setCount(count);
   request.setLocationAware(false);
   request.setTimeout(this.timeout);
   newRestClient.setServiceInstances(applicationName,serviceName,request);
   if (count > initialNumberOfInstances) {
-    return waitForScaleOut(deploymentId,count,nextEventId,initialNumberOfInstances);
+    return waitForScaleOut(deploymentId,count,lastEventIndex,initialNumberOfInstances);
   }
-  return waitForScaleIn(deploymentId,count,nextEventId,initialNumberOfInstances);
+  return waitForScaleIn(deploymentId,count,lastEventIndex,initialNumberOfInstances);
 }

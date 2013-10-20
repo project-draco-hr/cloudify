@@ -14,8 +14,8 @@
     currentNumberOfRunningInstancesPerService.put(serviceDescription.getServiceName(),serviceDescription.getInstanceCount());
   }
   final String deploymentId=applicationDescription.getServicesDescription().get(0).getDeploymentId();
-  final int nextEventId=getNextEventId(restClient,deploymentId);
-  ApplicationUninstallationProcessInspector inspector=new ApplicationUninstallationProcessInspector(restClient,deploymentId,false,currentNumberOfRunningInstancesPerService,applicationName,nextEventId);
+  final int lastEventIndex=restClient.getLastEvent(deploymentId).getIndex();
+  ApplicationUninstallationProcessInspector inspector=new ApplicationUninstallationProcessInspector(restClient,deploymentId,false,currentNumberOfRunningInstancesPerService,applicationName,lastEventIndex);
   inspector.setServiceDescriptionList(applicationDescription.getServicesDescription());
   restClient.uninstallApplication(applicationName,initialTimeout);
   boolean isDone=false;
