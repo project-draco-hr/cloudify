@@ -12,7 +12,7 @@
   }
   Application application=result.getApplication();
   application.setName(appName);
-  validateInstallApplication(application);
+  validateInstallApplication(application,request);
   String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
   request.setAuthGroups(effectiveAuthGroups);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());

@@ -25,7 +25,7 @@
       fileHolder.setApplicationPropertiesFile(applicationPropertiesFile);
       final ServiceApplicationDependentProperties serviceProps=new ServiceApplicationDependentProperties();
       serviceProps.setDependsOn(service.getDependsOn());
-      controller.installServiceInternal(appName,serviceName,installServiceReq,deploymentID,fileHolder,serviceProps);
+      controller.installServiceInternal(appName,installServiceReq,deploymentID,fileHolder,serviceProps,service,packedFile);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }

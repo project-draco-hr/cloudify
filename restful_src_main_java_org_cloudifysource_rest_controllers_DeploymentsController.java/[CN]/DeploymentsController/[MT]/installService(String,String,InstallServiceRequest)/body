@@ -5,14 +5,30 @@
   if (StringUtils.isBlank(uploadKey)) {
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }
-  String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
-  request.setAuthGroups(effectiveAuthGroups);
   final File packedFile=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
   final File serviceOverridesFile=getFromRepo(request.getServiceOverridesUploadKey(),CloudifyMessageKeys.WRONG_SERVICE_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
   final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
   fileHolder.setPackedFile(packedFile);
   fileHolder.setServiceOverridesFile(serviceOverridesFile);
   fileHolder.setApplicationPropertiesFile(null);
+  final File serviceDir=extractServiceDir(fileHolder.getPackedFile(),absolutePuName);
+  final File workingProjectDir=new File(serviceDir,"ext");
+  final File servicePropertiesFile=extractServicePropertiesFile(workingProjectDir);
+  PropertiesOverridesMerger merger=new PropertiesOverridesMerger();
+  merger.setRePackFileName(absolutePuName);
+  merger.setRePackFolder(serviceDir);
+  merger.setDestMergeFile(servicePropertiesFile);
+  merger.setApplicationPropertiesFile(fileHolder.getApplicationPropertiesFile());
+  merger.setServicePropertiesFile(servicePropertiesFile);
+  merger.setOverridesFile(fileHolder.getServiceOverridesFile());
+  merger.setOriginPackedFile(fileHolder.getPackedFile());
+  File updatedPackedFile=merger.merge();
+  final Service service=readService(workingProjectDir,request,absolutePuName,null);
+  final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
+  final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
+  validateInstallService(absolutePuName,request,service,service.getCompute().getTemplate(),cloudOverridesFile,serviceOverridesFile,cloudConfigurationFile);
+  String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
+  request.setAuthGroups(effectiveAuthGroups);
   final String deploymentID=UUID.randomUUID().toString();
-  return installServiceInternal(appName,serviceName,request,deploymentID,fileHolder,null);
+  return installServiceInternal(appName,request,deploymentID,fileHolder,null,service,updatedPackedFile);
 }

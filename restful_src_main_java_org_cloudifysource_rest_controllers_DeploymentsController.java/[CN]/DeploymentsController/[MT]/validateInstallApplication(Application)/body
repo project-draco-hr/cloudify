@@ -1,8 +1,0 @@
-{
-  final InstallApplicationValidationContext validationContext=new InstallApplicationValidationContext();
-  validationContext.setApplication(application);
-  validationContext.setCloud(restConfig.getCloud());
-  for (  final InstallApplicationValidator validator : installApplicationValidators) {
-    validator.validate(validationContext);
-  }
-}

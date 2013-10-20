@@ -1,25 +1,12 @@
 {
+  String serviceName=service.getName();
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
-  final File serviceDir=extractServiceDir(fileHolder.getPackedFile(),absolutePuName);
-  final File workingProjectDir=new File(serviceDir,"ext");
-  final File servicePropertiesFile=extractServicePropertiesFile(workingProjectDir);
-  PropertiesOverridesMerger merger=new PropertiesOverridesMerger();
-  merger.setRePackFileName(absolutePuName);
-  merger.setRePackFolder(serviceDir);
-  merger.setDestMergeFile(servicePropertiesFile);
-  merger.setApplicationPropertiesFile(fileHolder.getApplicationPropertiesFile());
-  merger.setServicePropertiesFile(servicePropertiesFile);
-  merger.setOverridesFile(fileHolder.getServiceOverridesFile());
-  merger.setOriginPackedFile(fileHolder.getPackedFile());
-  File updatedPackedFile=merger.merge();
-  final Service service=readService(workingProjectDir,request,absolutePuName,serviceProps);
   final String templateName=getTempalteNameFromService(service);
   final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
   final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
   final byte[] cloudConfigurationContents=getCloudConfigurationContent(cloudConfigurationFile,absolutePuName);
   String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
   request.setAuthGroups(effectiveAuthGroups);
-  validateInstallService(absolutePuName,request,service,templateName,cloudOverridesFile,fileHolder.getServiceOverridesFile(),cloudConfigurationFile);
   String cloudOverrides=null;
   try {
     if (cloudOverridesFile != null) {
@@ -39,7 +26,7 @@
   deployConfig.setAbsolutePUName(absolutePuName);
   deployConfig.setCloudOverrides(cloudOverrides);
   deployConfig.setCloud(cloud);
-  deployConfig.setPackedFile(updatedPackedFile);
+  deployConfig.setPackedFile(packedFile);
   deployConfig.setTemplateName(templateName);
   deployConfig.setApplicationName(appName);
   deployConfig.setInstallRequest(request);
