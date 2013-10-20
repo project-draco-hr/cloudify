@@ -1,2 +1,3 @@
 AgentComponent agent
 String zone
+GSAReservationId reservationId

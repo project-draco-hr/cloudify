@@ -6,7 +6,6 @@
     internalRequest.setCloudTemplates(cloudTemplatesHolders);
     final List<String> expectedAddedTemplates=new LinkedList<String>();
     for (    final ComputeTemplateHolder templateHolder : cloudTemplatesHolders) {
-      renameTemplateFilesIfNeeded(unzippedFolder,templateHolder);
       expectedAddedTemplates.add(templateHolder.getName());
     }
     internalRequest.setExpectedTemplates(expectedAddedTemplates);

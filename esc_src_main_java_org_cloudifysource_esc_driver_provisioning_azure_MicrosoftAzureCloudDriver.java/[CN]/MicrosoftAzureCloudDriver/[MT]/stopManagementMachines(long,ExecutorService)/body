@@ -1,6 +1,6 @@
 {
   List<Future<?>> futures=new ArrayList<Future<?>>();
-  Disks disks=null;
+  Disks disks;
   try {
     disks=azureClient.listOSDisks();
   }

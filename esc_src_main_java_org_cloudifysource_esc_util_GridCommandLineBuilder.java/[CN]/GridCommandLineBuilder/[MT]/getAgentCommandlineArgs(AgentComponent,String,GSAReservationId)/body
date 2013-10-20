@@ -3,6 +3,9 @@
   if (StringUtils.isNotBlank(zone)) {
     agentCommandLineArgs+="-D" + ZONES_PROPERTY + "="+ zone;
   }
+  if (reservationId != null && StringUtils.isNotBlank(reservationId.toString())) {
+    agentCommandLineArgs+=" -D" + GSA_RESERVATION_ID_PROPERTY + "="+ reservationId.toString();
+  }
   agentCommandLineArgs+=" " + AUTO_SHUTDOWN_COMMANDLINE_ARGUMENT;
   agentCommandLineArgs+=" ";
   Integer agentPort=agent.getPort();
