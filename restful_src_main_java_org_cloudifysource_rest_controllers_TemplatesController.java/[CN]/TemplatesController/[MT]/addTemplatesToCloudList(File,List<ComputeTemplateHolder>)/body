@@ -17,6 +17,7 @@
     }
  catch (    final IOException e) {
       failedToAddTemplates.put(templateName,"failed to rename template's file. error: " + e.getMessage());
+      log(Level.WARNING,"[renameTemplateFileIfNeeded] - Failed to rename template's file." + " The file [" + originalTemplateFileName + "] will be deleted.",e);
       new File(templatesFolder,originalTemplateFileName).delete();
       continue;
     }
