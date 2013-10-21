@@ -1,0 +1,3 @@
+{
+  return "InstanceDescription{" + "instanceName='" + instanceName + '\''+ ", instanceStatus='"+ instanceStatus+ '\''+ ", instanceId="+ instanceId+ ", hostName='"+ hostName+ '\''+ ", hostAddress='"+ hostAddress+ '\''+ '}';
+}

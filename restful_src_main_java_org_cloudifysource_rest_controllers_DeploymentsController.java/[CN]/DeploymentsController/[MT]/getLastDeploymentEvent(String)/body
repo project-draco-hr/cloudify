@@ -1,11 +1,12 @@
 {
+  logger.fine("Received request for last deployment event for deployment " + deploymentId);
   EventsCacheKey key=new EventsCacheKey(deploymentId);
-  EventsCacheValue value=eventsCache.getIfExists(key);
+  EventsCacheValue value=eventsCache.get(key);
   int lastEventIndex=value.getLastEventIndex();
   List<DeploymentEvent> events=getDeploymentEvents(deploymentId,lastEventIndex,lastEventIndex + 1).getEvents();
 switch (events.size()) {
 case 0:
-    return null;
+    return new DeploymentEvent();
 case 1:
   return events.get(0);
 case 2:

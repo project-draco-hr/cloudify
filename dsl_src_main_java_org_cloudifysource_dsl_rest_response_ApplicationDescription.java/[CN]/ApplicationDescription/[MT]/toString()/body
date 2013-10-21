@@ -1,0 +1,3 @@
+{
+  return "ApplicationDescription{" + "servicesDescription=" + servicesDescription + ", applicationName='"+ applicationName+ '\''+ ", authGroups='"+ authGroups+ '\''+ ", applicationState="+ applicationState+ '}';
+}

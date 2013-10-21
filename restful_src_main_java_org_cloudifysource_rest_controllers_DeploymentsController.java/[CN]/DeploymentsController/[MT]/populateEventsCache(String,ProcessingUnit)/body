@@ -7,8 +7,11 @@
     eventsCache.put(key,value);
   }
  else {
+    logger.fine("Adding processing unit " + processingUnit.getName() + " to events cache value with "+ "deployment id "+ deploymentId);
     value.getProcessingUnits().add(processingUnit);
   }
   final AdminBasedGridServiceContainerProvider provider=new AdminBasedGridServiceContainerProvider(admin);
-  value.getContainers().addAll(provider.getContainersForDeployment(deploymentId));
+  Set<GridServiceContainer> containersForDeployment=provider.getContainersForDeployment(deploymentId);
+  logger.fine("Adding containers " + containersForDeployment + " for events cache key with deployment id "+ deploymentId);
+  value.getContainers().addAll(containersForDeployment);
 }
