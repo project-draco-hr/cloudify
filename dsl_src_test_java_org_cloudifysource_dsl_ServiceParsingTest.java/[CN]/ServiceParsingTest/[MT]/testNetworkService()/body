@@ -1,0 +1,8 @@
+{
+  final File serviceDir=new File(TEST_PARSING_NETWORK);
+  final Service service=ServiceReader.getServiceFromDirectory(serviceDir).getService();
+  Assert.assertNotNull(service.getNetwork());
+  Assert.assertNotNull(service.getNetwork().getAccessRules() != null);
+  Assert.assertNotNull(service.getNetwork().getAccessRules().getIncoming() != null);
+  Assert.assertEquals(service.getNetwork().getAccessRules().getIncoming().get(0).getPortRange(),"80");
+}

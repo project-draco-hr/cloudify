@@ -1,0 +1,25 @@
+{
+  final StringTokenizer entryTokenizer=new StringTokenizer(currentRangeString,"-");
+  final String fromAsString=entryTokenizer.nextToken().trim();
+  String toAsString=null;
+  if (entryTokenizer.hasMoreElements()) {
+    toAsString=entryTokenizer.nextToken().trim();
+  }
+  if (entryTokenizer.hasMoreElements()) {
+    throw new IllegalArgumentException("Illegal port range entry in entry number: " + counter + " of port range expression: "+ portRangeAsString);
+  }
+  try {
+    final Integer from=Integer.parseInt(fromAsString);
+    Integer to=null;
+    if (toAsString != null) {
+      to=Integer.parseInt(toAsString);
+    }
+    final PortRangeEntry entry=new PortRangeEntry();
+    entry.setFrom(from);
+    entry.setTo(to);
+    result.getRanges().add(entry);
+  }
+ catch (  final NumberFormatException e) {
+    throw new IllegalArgumentException("Failed to parse port values from range expression: " + currentRangeString,e);
+  }
+}

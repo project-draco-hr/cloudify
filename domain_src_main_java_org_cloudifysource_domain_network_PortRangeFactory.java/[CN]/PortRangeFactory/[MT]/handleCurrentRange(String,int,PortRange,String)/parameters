@@ -1,0 +1,4 @@
+String portRangeAsString
+int counter
+PortRange result
+String currentRangeString

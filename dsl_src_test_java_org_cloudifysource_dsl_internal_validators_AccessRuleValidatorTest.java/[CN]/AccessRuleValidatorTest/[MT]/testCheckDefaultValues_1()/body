@@ -1,0 +1,6 @@
+{
+  AccessRuleValidator fixture=new AccessRuleValidator();
+  fixture.setDSLEntity(new AccessRule());
+  DSLValidationContext validationContext=new DSLValidationContext();
+  fixture.checkDefaultValues(validationContext);
+}

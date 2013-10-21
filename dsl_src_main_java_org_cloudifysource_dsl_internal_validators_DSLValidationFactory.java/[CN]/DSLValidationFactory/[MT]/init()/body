@@ -26,4 +26,5 @@
   validatorByClass.put(TenantSharedIsolationSLADescriptor.class.getName(),TenantSharedIsolationSLADescriptorValidator.class);
   validatorByClass.put(UsmComponent.class.getName(),UsmComponentValidator.class);
   validatorByClass.put(WebuiComponent.class.getName(),WebuiComponentValidator.class);
+  validatorByClass.put(AccessRule.class.getName(),AccessRuleValidator.class);
 }

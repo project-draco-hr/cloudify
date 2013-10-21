@@ -15,9 +15,9 @@
       }
     }
     logger.info("Stopping machine " + machineIp + ", DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE");
-    boolean stoppedMachine=this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
+    final boolean stoppedMachine=this.cloudifyProvisioning.stopMachine(machineDetails.getPrivateAddress(),DEFAULT_SHUTDOWN_TIMEOUT_AFTER_PROVISION_FAILURE,TimeUnit.MINUTES);
     if (!stoppedMachine) {
-      throw new ElasticMachineProvisioningException("Attempt to stop machine " + machineIp + " has failed. Cloud driver claims machine was already stopped, however it was just recently started.");
+      throw new ElasticMachineProvisioningException("Attempt to stop machine " + machineIp + " has failed. Cloud driver claims machine was already stopped, "+ "however it was just recently started.");
     }
   }
  catch (  final Exception e) {

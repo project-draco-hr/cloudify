@@ -23,5 +23,6 @@
   }
   addCloudConfigurationCostants(config);
   config.setLocator(deploymentConfig.getLocators());
+  addNetworkConfigurationToConfig(config);
   return config;
 }

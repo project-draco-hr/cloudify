@@ -1,0 +1,12 @@
+{
+  if (this.deploymentConfig.getService().getNetwork() != null) {
+    final ObjectMapper mapper=new ObjectMapper();
+    try {
+      final String serializedNetwork=mapper.writeValueAsString(this.deploymentConfig.getService().getNetwork());
+      config.setNetworkAsString(serializedNetwork);
+    }
+ catch (    final IOException e) {
+      throw new IllegalArgumentException("Failed to serialize service network description into a JSON string",e);
+    }
+  }
+}

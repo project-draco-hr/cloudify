@@ -1,0 +1,12 @@
+{
+  if (this.entity.getPortRange() == null) {
+    throw new DSLValidationException("Missing port range in access rule");
+  }
+  final String range=this.entity.getPortRange();
+  try {
+    PortRangeFactory.createPortRange(range);
+  }
+ catch (  final IllegalArgumentException e) {
+    throw new DSLValidationException("Invalid port range description: " + e.getMessage(),e);
+  }
+}

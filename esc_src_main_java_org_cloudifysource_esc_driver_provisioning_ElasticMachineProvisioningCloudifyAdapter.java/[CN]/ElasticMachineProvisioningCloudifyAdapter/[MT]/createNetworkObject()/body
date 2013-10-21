@@ -1,0 +1,14 @@
+{
+  final String networkAsString=this.config.getNetworkAsString();
+  if (StringUtils.isBlank(networkAsString)) {
+    return null;
+  }
+  final ObjectMapper mapper=new ObjectMapper();
+  try {
+    final ServiceNetwork network=mapper.readValue(networkAsString,ServiceNetwork.class);
+    return network;
+  }
+ catch (  final IOException e) {
+    throw new ElasticMachineProvisioningException("Failed to deserialize json string into service network description: " + e.getMessage(),e);
+  }
+}
