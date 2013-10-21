@@ -27,13 +27,13 @@
             final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
             permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
           }
-          final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
+          final long undeployTimeout=startTime + TimeUnit.MINUTES.toMillis(timeoutInMinutes) - System.currentTimeMillis();
           try {
             if (processingUnit.waitForManaged(WAIT_FOR_MANAGED_TIMEOUT_SECONDS,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
             }
  else {
-              logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
+              logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName() + " . Timeout is "+ undeployTimeout);
               populateEventsCache(deploymentId,processingUnit);
               processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MILLISECONDS);
               logger.log(Level.INFO,"Processing Unit " + processingUnit.getName() + " was "+ "undeployed successfully");
