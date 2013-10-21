@@ -1,18 +1,19 @@
 {
   logger.fine(EventsUtils.getThreadId() + "Reloading events cache entry for key " + key);
-  Set<GridServiceContainer> containersForDeployment=oldValue.getContainers();
-  containersForDeployment.addAll(containerProvider.getContainersForDeployment(key.getDeploymentId()));
-  if (!containersForDeployment.isEmpty()) {
+  oldValue.getContainers().addAll(containerProvider.getContainersForDeployment(key.getDeploymentId()));
+  if (!oldValue.getContainers().isEmpty()) {
     int index=oldValue.getLastEventIndex();
-    for (    GridServiceContainer container : containersForDeployment) {
+    for (    GridServiceContainer container : oldValue.getContainers()) {
       LogEntryMatcherProviderKey logEntryMatcherProviderKey=createKey(container,key);
       LogEntryMatcher matcher=matcherProvider.get(logEntryMatcherProviderKey);
-      LogEntries logEntries=container.logEntries(matcher);
-      for (      LogEntry logEntry : logEntries) {
-        if (logEntry.isLog()) {
-          DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
-          event.setIndex(++index);
-          oldValue.getEvents().getEvents().add(event);
+      if (container.isDiscovered()) {
+        LogEntries logEntries=container.logEntries(matcher);
+        for (        LogEntry logEntry : logEntries) {
+          if (logEntry.isLog()) {
+            DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
+            event.setIndex(++index);
+            oldValue.getEvents().getEvents().add(event);
+          }
         }
       }
     }

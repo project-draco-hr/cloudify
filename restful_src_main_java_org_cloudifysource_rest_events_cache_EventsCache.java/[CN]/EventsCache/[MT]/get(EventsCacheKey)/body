@@ -1,3 +1,4 @@
 {
+  logger.fine("Retrieving events cache value for entry " + key);
   return eventsLoadingCache.get(key);
 }

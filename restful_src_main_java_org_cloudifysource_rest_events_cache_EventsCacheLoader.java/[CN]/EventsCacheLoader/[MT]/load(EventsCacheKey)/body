@@ -2,21 +2,30 @@
   logger.fine(EventsUtils.getThreadId() + "Could not find events for key " + key+ " in cache. Loading from container logs...");
   DeploymentEvents events=new DeploymentEvents();
   Set<GridServiceContainer> containersForDeployment=containerProvider.getContainersForDeployment(key.getDeploymentId());
+  Set<ProcessingUnit> processingUnitsForDeployment=new HashSet<ProcessingUnit>();
   int index=0;
   for (  GridServiceContainer container : containersForDeployment) {
+    ProcessingUnitInstance[] processingUnitInstances=container.getProcessingUnitInstances();
+    if (processingUnitInstances != null && processingUnitInstances.length > 0) {
+      processingUnitsForDeployment.add(processingUnitInstances[0].getProcessingUnit());
+    }
     LogEntryMatcherProviderKey logEntryMatcherProviderKey=createKey(container,key);
-    LogEntries logEntries=container.logEntries(matcherProvider.get(logEntryMatcherProviderKey));
-    for (    LogEntry logEntry : logEntries) {
-      if (logEntry.isLog()) {
-        DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
-        event.setIndex(++index);
-        events.getEvents().add(event);
+    if (container.isDiscovered()) {
+      LogEntries logEntries=container.logEntries(matcherProvider.get(logEntryMatcherProviderKey));
+      for (      LogEntry logEntry : logEntries) {
+        if (logEntry.isLog()) {
+          DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
+          event.setIndex(++index);
+          events.getEvents().add(event);
+        }
       }
     }
   }
   EventsCacheValue value=new EventsCacheValue();
   value.setLastEventIndex(index);
   value.setEvents(events);
+  value.getProcessingUnits().addAll(processingUnitsForDeployment);
+  value.setContainers(containersForDeployment);
   value.setLastRefreshedTimestamp(System.currentTimeMillis());
   return value;
 }
