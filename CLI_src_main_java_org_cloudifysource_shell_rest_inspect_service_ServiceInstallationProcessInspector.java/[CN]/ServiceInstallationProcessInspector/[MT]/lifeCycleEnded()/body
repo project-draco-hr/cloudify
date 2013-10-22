@@ -1,8 +1,12 @@
 {
-  boolean serviceIsInstalled=false;
+  boolean serviceIsInstalled;
   try {
     ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
-    serviceIsInstalled=serviceDescription.getServiceState().equals(CloudifyConstants.DeploymentState.STARTED);
+    CloudifyConstants.DeploymentState serviceState=serviceDescription.getServiceState();
+    if (serviceState.equals(CloudifyConstants.DeploymentState.FAILED)) {
+      throw new CLIException(ShellUtils.getFormattedMessage(CloudifyErrorMessages.FAILED_TO_DEPLOY_SERVICE.getName(),serviceName));
+    }
+    serviceIsInstalled=serviceState.equals(CloudifyConstants.DeploymentState.STARTED);
   }
  catch (  final RestClientResponseException e) {
     if (e.getStatusCode() == RESOURCE_NOT_FOUND_EXCEPTION_CODE) {
