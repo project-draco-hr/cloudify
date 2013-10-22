@@ -1,5 +1,6 @@
 {
   final String networkAsString=this.config.getNetworkAsString();
+  logger.info("Network string is: " + networkAsString);
   if (StringUtils.isBlank(networkAsString)) {
     return null;
   }
