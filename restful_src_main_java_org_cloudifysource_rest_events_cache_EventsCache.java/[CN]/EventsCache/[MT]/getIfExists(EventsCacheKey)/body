@@ -1,4 +1,4 @@
 {
-  logger.fine("Retrieving events cache value for entry " + key + " if exists");
+  logger.finest("Retrieving events cache value for entry " + key + " if exists");
   return eventsLoadingCache.getIfPresent(key);
 }

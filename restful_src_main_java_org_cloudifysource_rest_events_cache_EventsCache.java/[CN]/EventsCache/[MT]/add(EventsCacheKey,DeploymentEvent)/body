@@ -3,7 +3,7 @@
 synchronized (eventsCacheValue.getMutex()) {
     DeploymentEvents events=eventsCacheValue.getEvents();
     event.setIndex(eventsCacheValue.getLastEventIndex() + 1);
-    logger.fine("Adding event " + event + " to cache value with key "+ key);
+    logger.finest("Adding event " + event + " to cache value with key "+ key);
     events.getEvents().add(event);
   }
 }
