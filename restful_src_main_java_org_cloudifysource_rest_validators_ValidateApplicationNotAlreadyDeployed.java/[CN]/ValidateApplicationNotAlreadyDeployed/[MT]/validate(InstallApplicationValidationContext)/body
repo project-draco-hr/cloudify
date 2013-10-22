@@ -1,6 +1,6 @@
 {
   final String appName=validationContext.getApplication().getName();
-  final Applications apps=admin.getApplications();
+  final Applications apps=validationContext.getAdmin().getApplications();
   for (  Application application : apps) {
     if (application.getName().equals(appName)) {
       throw new RestErrorException(CloudifyMessageKeys.APPLICATION_NAME_IS_ALREADY_IN_USE.getName(),appName);
