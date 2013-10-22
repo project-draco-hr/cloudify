@@ -1,5 +1,5 @@
 {
-  if (processingUnit == null || numberOfServiceInstances > plannedNumberOfInstances) {
+  if (numberOfServiceInstances > plannedNumberOfInstances) {
     return DeploymentState.IN_PROGRESS;
   }
   if (processingUnit.getType() == ProcessingUnitType.UNIVERSAL) {
