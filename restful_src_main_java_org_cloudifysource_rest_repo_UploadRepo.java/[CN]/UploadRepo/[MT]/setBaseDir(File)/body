@@ -1,3 +1,4 @@
 {
+  logger.warning("***** starting uploadReop.init, setting baseDir to: " + baseDir.getAbsolutePath());
   this.baseDir=baseDir;
 }

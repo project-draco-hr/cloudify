@@ -19,7 +19,7 @@
       e.printStackTrace();
       try {
         logger.warning("***** calling createUniqueFolderName() with parent: " + restTempFolder.getParentFile().getAbsolutePath() + " and folder name: "+ restTempFolder.getName());
-        String uniqueFolderName=org.cloudifysource.esc.util.FileUtils.createUniqueFolderName(restTempFolder.getParentFile(),restTempFolder.getName(),MAX_FILE_NAME_APPENDER);
+        String uniqueFolderName=RestUtils.createUniqueFolderName(restTempFolder.getParentFile(),restTempFolder.getName(),MAX_FILE_NAME_APPENDER);
         logger.warning("***** uniqueFolderName is: " + uniqueFolderName);
         restTempFolder=new File(restTempFolder.getParentFile(),uniqueFolderName);
       }
