@@ -17,5 +17,5 @@
   dslReader.addProperty(DSLUtils.APPLICATION_DIR,workDir.getAbsolutePath());
   dslReader.setOverridesFile(overridesFile);
   final Application application=dslReader.readDslEntity(Application.class);
-  return new DSLApplicationCompilatioResult(application,actualApplicationDslFile.getParentFile(),actualApplicationDslFile);
+  return new DSLApplicationCompilationResult(application,actualApplicationDslFile.getParentFile(),actualApplicationDslFile,dslReader.getPropertiesFile(),dslReader.getOverridesFile());
 }

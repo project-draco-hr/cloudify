@@ -1,5 +1,5 @@
 {
-  final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
+  final DSLApplicationCompilationResult result=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
   validateTemplate(result.getApplication());
   IsolationUtils.validateInstanceMemory(result.getApplication(),cloud);
   final List<Service> services=createServiceDependencyOrder(result.getApplication());

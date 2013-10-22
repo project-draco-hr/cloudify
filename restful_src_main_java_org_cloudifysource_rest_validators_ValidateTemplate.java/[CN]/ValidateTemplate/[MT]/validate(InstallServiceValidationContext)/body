@@ -1,5 +1,12 @@
 {
   Cloud cloud=validationContext.getCloud();
-  String templateName=validationContext.getTemplateName();
+  Service service=validationContext.getService();
+  String templateName=null;
+  if (service != null) {
+    ComputeDetails compute=service.getCompute();
+    if (compute != null) {
+      templateName=compute.getTemplate();
+    }
+  }
   validateTemplate(templateName,cloud);
 }

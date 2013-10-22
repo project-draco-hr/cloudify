@@ -1,31 +1,23 @@
 {
-  final File appDir=result.getApplicationDir();
   logger.info("Installing services for application: " + applicationName + ". Async install: "+ async+ ". Number of services: "+ this.services.size());
   for (  final Service service : services) {
-    logger.info("Installing service: " + service.getName() + " for application: "+ applicationName);
-    service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
     final String serviceName=service.getName();
     final String absolutePUName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
-    final File serviceDirectory=new File(appDir,serviceName);
+    logger.info("Installing service: " + absolutePUName);
+    service.getCustomProperties().put("usmJarPath",Environment.getHomeDirectory() + "/lib/platform/usm");
     boolean found=false;
     try {
-      final File applicationPropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_PROPERTIES_FILE_NAME,appDir);
-      File actualOverridesFile=overridesFile;
-      if (actualOverridesFile == null) {
-        actualOverridesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.APPLICATION_OVERRIDES_FILE_NAME,appDir);
-      }
-      final File packedFile=Packager.pack(service,serviceDirectory,absolutePUName,null);
-      result.getApplicationFile().delete();
+      final File serviceDir=new File(appDir,serviceName);
+      final File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.SERVICE_PROPERTIES_FILE_NAME_SUFFIX,serviceDir);
+      PropertiesOverridesMerger merger=new PropertiesOverridesMerger(servicePropertiesFile,applicationPropertiesFile,servicePropertiesFile,applicationOverridesFile);
+      merger.merge();
+      final File packedFile=Packager.pack(service,serviceDir,absolutePUName,null);
+      appFile.delete();
       packedFile.deleteOnExit();
       final InstallServiceRequest installServiceReq=createInstallServiceRequest();
-      final String appName=this.request.getApplicationName();
-      final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
-      fileHolder.setPackedFile(packedFile);
-      fileHolder.setServiceOverridesFile(actualOverridesFile);
-      fileHolder.setApplicationPropertiesFile(applicationPropertiesFile);
       final ServiceApplicationDependentProperties serviceProps=new ServiceApplicationDependentProperties();
       serviceProps.setDependsOn(service.getDependsOn());
-      controller.installServiceInternal(appName,installServiceReq,deploymentID,fileHolder,serviceProps,service,packedFile);
+      controller.installServiceInternal(applicationName,installServiceReq,deploymentID,serviceProps,service,packedFile);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }

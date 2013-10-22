@@ -1,0 +1,12 @@
+ServiceController controller
+DSLApplicationCompilationResult result
+String applicationName
+File overridesFile
+String authGroups
+List<Service> services
+Cloud cloud
+boolean selfHealing
+File cloudOverrides
+boolean debugAll
+String debugEvents
+String debugModeString

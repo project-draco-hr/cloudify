@@ -1,14 +1,10 @@
 {
-  final InstallServiceRequest request=validationContext.getRequest();
-  if (request == null) {
-    return;
-  }
-  boolean debugAll=request.isDebugAll();
-  String debugEvents=request.getDebugEvents();
+  boolean debugAll=validationContext.isDebugAll();
+  String debugEvents=validationContext.getDebugEvents();
   try {
-    DebugUtils.validateDebugSettings(debugAll,debugEvents,request.getDebugMode());
+    DebugUtils.validateDebugSettings(debugAll,debugEvents,validationContext.getDebugMode());
   }
  catch (  DSLErrorMessageException e) {
-    throw new RestErrorException(e.getErrorMessage().getName(),e.getArgs());
+    throw new RestErrorException(e.getErrorMessage().getName(),(Object[])e.getArgs());
   }
 }

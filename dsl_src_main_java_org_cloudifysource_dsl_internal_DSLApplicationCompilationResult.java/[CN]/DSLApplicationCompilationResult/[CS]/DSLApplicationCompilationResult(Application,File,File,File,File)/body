@@ -1,0 +1,8 @@
+{
+  super();
+  this.application=application;
+  this.applicationDir=applicationDir;
+  this.applicationFile=applicationFile;
+  this.applicationPropertiesFile=applicationPropertiesFile;
+  this.applicationOverridesFile=applicationOverridesFile;
+}

@@ -1,0 +1,7 @@
+{
+  this.destMergeFile=destMergeFile;
+  this.applicationPropertiesFile=applicationPropertiesFile;
+  this.servicePropertiesFile=propertiesFile;
+  this.overridesFile=overridesFile;
+  this.isMerged=false;
+}

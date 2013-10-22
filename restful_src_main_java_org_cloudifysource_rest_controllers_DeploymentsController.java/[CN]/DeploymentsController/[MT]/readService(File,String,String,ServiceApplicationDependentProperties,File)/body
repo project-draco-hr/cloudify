@@ -1,0 +1,19 @@
+{
+  DSLServiceCompilationResult result;
+  try {
+    if (serviceFileName != null) {
+      result=ServiceReader.getServiceFromFile(new File(workingProjectDir,serviceFileName),workingProjectDir,null,true,overridesFile);
+    }
+ else {
+      result=ServiceReader.getServiceFromDirectory(workingProjectDir,overridesFile);
+    }
+    Service service=result.getService();
+    if (serviceProps != null) {
+      service.setDependsOn(serviceProps.getDependsOn());
+    }
+  }
+ catch (  final Exception e) {
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_READ_SERVICE.getName(),absolutePuName);
+  }
+  return result;
+}

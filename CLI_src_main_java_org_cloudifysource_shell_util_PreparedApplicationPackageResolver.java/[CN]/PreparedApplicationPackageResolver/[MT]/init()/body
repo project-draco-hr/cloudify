@@ -3,7 +3,7 @@
   try {
     final File applicationFolder=ServiceReader.extractProjectFile(packedFile);
     applicationFile=DSLReader.findDefaultDSLFile(DSLUtils.APPLICATION_DSL_FILE_NAME_SUFFIX,applicationFolder);
-    final DSLApplicationCompilatioResult result=ServiceReader.getApplicationFromFile(applicationFile,this.overridesFile);
+    final DSLApplicationCompilationResult result=ServiceReader.getApplicationFromFile(applicationFile,this.overridesFile);
     this.application=result.getApplication();
   }
  catch (  final IOException e) {

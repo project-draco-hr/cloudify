@@ -1,7 +1,0 @@
-String absolutePuName
-InstallServiceRequest request
-Service service
-String templateName
-File cloudOverridesFile
-File serviceOverridesFile
-File cloudConfigurationFile

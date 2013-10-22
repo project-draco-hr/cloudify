@@ -1,34 +1,37 @@
 {
+  logger.info("[installService] - installing service " + serviceName);
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
-  logger.info("Installing service " + serviceName);
   String uploadKey=request.getServiceFolderUploadKey();
   if (StringUtils.isBlank(uploadKey)) {
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }
-  final File packedFile=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
+  final File servicePackedFolder=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
+  File serviceDir;
+  try {
+    serviceDir=ServiceReader.extractProjectFileToDir(servicePackedFolder,absolutePuName,extractedFodler);
+  }
+ catch (  final IOException e) {
+    logger.log(Level.WARNING,"Failed to extract project file [" + servicePackedFolder.getAbsolutePath() + "] to new directory "+ absolutePuName+ " [under "+ extractedFodler.getAbsolutePath()+ "]",e);
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_EXTRACT_PROJECT_FILE.getName(),absolutePuName);
+  }
   final File serviceOverridesFile=getFromRepo(request.getServiceOverridesUploadKey(),CloudifyMessageKeys.WRONG_SERVICE_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
-  final DeploymentFileHolder fileHolder=new DeploymentFileHolder();
-  fileHolder.setPackedFile(packedFile);
-  fileHolder.setServiceOverridesFile(serviceOverridesFile);
-  fileHolder.setApplicationPropertiesFile(null);
-  final File serviceDir=extractServiceDir(fileHolder.getPackedFile(),absolutePuName);
-  final File workingProjectDir=new File(serviceDir,"ext");
-  final File servicePropertiesFile=extractServicePropertiesFile(workingProjectDir);
-  PropertiesOverridesMerger merger=new PropertiesOverridesMerger();
-  merger.setRePackFileName(absolutePuName);
-  merger.setRePackFolder(serviceDir);
-  merger.setDestMergeFile(servicePropertiesFile);
-  merger.setApplicationPropertiesFile(fileHolder.getApplicationPropertiesFile());
-  merger.setServicePropertiesFile(servicePropertiesFile);
-  merger.setOverridesFile(fileHolder.getServiceOverridesFile());
-  merger.setOriginPackedFile(fileHolder.getPackedFile());
-  File updatedPackedFile=merger.merge();
-  final Service service=readService(workingProjectDir,request,absolutePuName,null);
-  final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
-  final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
-  validateInstallService(absolutePuName,request,service,service.getCompute().getTemplate(),cloudOverridesFile,serviceOverridesFile,cloudConfigurationFile);
+  final DSLServiceCompilationResult readServiceResult=readService(new File(serviceDir,"ext"),request.getServiceFileName(),absolutePuName,null,serviceOverridesFile);
+  Service service=readServiceResult.getService();
+  validateInstallService(request,service,absolutePuName,readServiceResult.getServiceOverridesFile());
+  PropertiesOverridesMerger merger=new PropertiesOverridesMerger(readServiceResult.getServicePropertiesFile(),null,readServiceResult.getServicePropertiesFile(),readServiceResult.getServiceOverridesFile());
+  merger.merge();
+  File updatedPackedFile=servicePackedFolder;
+  if (merger.isMerged()) {
+    try {
+      updatedPackedFile=Packager.createZipFile(absolutePuName,serviceDir);
+    }
+ catch (    IOException e) {
+      logger.log(Level.WARNING,"Failed to re-pack service folder [" + serviceDir.getAbsolutePath() + "]. Reason: "+ e.getMessage());
+      throw new RestErrorException(CloudifyErrorMessages.FAILED_PACKING_SERVICE_FOLDER.getName(),serviceDir);
+    }
+  }
   String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
   request.setAuthGroups(effectiveAuthGroups);
   final String deploymentID=UUID.randomUUID().toString();
-  return installServiceInternal(appName,request,deploymentID,fileHolder,null,service,updatedPackedFile);
+  return installServiceInternal(appName,request,deploymentID,null,service,updatedPackedFile);
 }

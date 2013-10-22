@@ -1,0 +1,18 @@
+{
+  List<Service> services=validationContext.getApplication().getServices();
+  for (  Service service : services) {
+    InstallServiceValidationContext serviceValidationContext=new InstallServiceValidationContext();
+    serviceValidationContext.setAdmin(validationContext.getAdmin());
+    serviceValidationContext.setCloud(validationContext.getCloud());
+    serviceValidationContext.setCloudConfigurationFile(validationContext.getCloudConfigurationFile());
+    serviceValidationContext.setCloudOverridesFile(validationContext.getCloudOverridesFile());
+    serviceValidationContext.setDebugAll(validationContext.isDebugAll());
+    serviceValidationContext.setDebugEvents(validationContext.getDebugEvents());
+    serviceValidationContext.setDebugMode(validationContext.getDebugMode());
+    serviceValidationContext.setService(service);
+    logger.info("validating service " + service.getName() + " for application "+ validationContext.getApplication().getName());
+    for (    InstallServiceValidator validator : installServiceValidators) {
+      validator.validate(serviceValidationContext);
+    }
+  }
+}

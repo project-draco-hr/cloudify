@@ -1,9 +1,0 @@
-{
-  this.request=request;
-  this.controller=controller;
-  this.result=result;
-  this.services=services;
-  this.deploymentID=deploymentID;
-  this.applicationName=request.getApplicationName();
-  this.overridesFile=overridesFile;
-}

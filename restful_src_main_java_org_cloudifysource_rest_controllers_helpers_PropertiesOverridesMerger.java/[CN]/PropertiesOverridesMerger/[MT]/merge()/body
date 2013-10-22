@@ -1,17 +1,16 @@
 {
   if (applicationPropertiesFile == null && overridesFile == null) {
-    return originPackedFile;
+    return;
   }
-  validateValues(originPackedFile);
   try {
-    LinkedHashMap<File,String> mergeFilesAndComments=new LinkedHashMap<File,String>();
+    final LinkedHashMap<File,String> mergeFilesAndComments=new LinkedHashMap<File,String>();
     mergeFilesAndComments.put(applicationPropertiesFile,"application properties file");
     mergeFilesAndComments.put(servicePropertiesFile,"service properties file");
     mergeFilesAndComments.put(overridesFile,"properties overrides file");
     new FileAppender(DEFAULT_MERGED_FILE_NAME).appendAll(destMergeFile,mergeFilesAndComments);
-    return Packager.createZipFile(rePackFileName,rePackFolder);
+    isMerged=true;
   }
  catch (  final IOException e) {
-    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_MERGE_OVERRIDES.getName(),rePackFileName,e.getMessage());
+    throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_MERGE_OVERRIDES.getName(),destMergeFile.getAbsolutePath(),e.getMessage());
   }
 }

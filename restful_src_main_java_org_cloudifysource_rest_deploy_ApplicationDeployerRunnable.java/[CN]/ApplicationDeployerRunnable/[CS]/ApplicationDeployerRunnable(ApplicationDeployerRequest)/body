@@ -1,0 +1,11 @@
+{
+  this.installApplicationRequest=request.getRequest();
+  this.appFile=request.getAppFile();
+  this.appDir=request.getAppDir();
+  this.applicationName=installApplicationRequest.getApplicationName();
+  this.services=request.getServices();
+  this.deploymentID=request.getDeploymentID();
+  this.applicationPropertiesFile=request.getAppPropertiesFile();
+  this.applicationOverridesFile=request.getAppOverridesFile();
+  this.controller=request.getController();
+}

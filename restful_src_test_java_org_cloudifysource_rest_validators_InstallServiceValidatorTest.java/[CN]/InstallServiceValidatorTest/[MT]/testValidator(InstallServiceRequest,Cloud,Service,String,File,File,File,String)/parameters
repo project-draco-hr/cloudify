@@ -1,8 +1,0 @@
-InstallServiceRequest request
-Cloud cloud
-Service service
-String templateName
-File cloudOverridesFile
-File serviceOverridesFile
-File cloudConfigurationFile
-String exceptionCause

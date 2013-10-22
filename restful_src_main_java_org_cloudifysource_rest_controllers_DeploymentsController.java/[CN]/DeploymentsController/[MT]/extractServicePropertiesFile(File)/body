@@ -1,4 +1,0 @@
-{
-  final String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
-  return new File(workingProjectDir,propertiesFileName);
-}

@@ -1,0 +1,5 @@
+File workingProjectDir
+String serviceFileName
+String absolutePuName
+ServiceApplicationDependentProperties serviceProps
+File overridesFile

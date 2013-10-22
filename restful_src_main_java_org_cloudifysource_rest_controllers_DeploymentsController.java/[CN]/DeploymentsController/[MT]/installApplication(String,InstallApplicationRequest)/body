@@ -3,22 +3,31 @@
   final File applicationFile=getFromRepo(applcationFileUploadKey,CloudifyMessageKeys.WRONG_APPLICTION_FILE_UPLOAD_KEY.getName(),appName);
   final String applicationOverridesFileKey=request.getApplicationOverridesUploadKey();
   final File applicationOverridesFile=getFromRepo(applicationOverridesFileKey,CloudifyMessageKeys.WRONG_APPLICTION_OVERRIDES_FILE_UPLOAD_KEY.getName(),appName);
-  DSLApplicationCompilatioResult result;
+  DSLApplicationCompilationResult appReaderResult;
   try {
-    result=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
+    appReaderResult=ServiceReader.getApplicationFromFile(applicationFile,applicationOverridesFile);
   }
  catch (  final Exception e) {
     throw new RestErrorException("Failed reading application file." + " Reason: " + e.getMessage(),e);
   }
-  Application application=result.getApplication();
+  Application application=appReaderResult.getApplication();
   application.setName(appName);
   validateInstallApplication(application,request);
   String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
   request.setAuthGroups(effectiveAuthGroups);
-  final List<Service> services=createServiceDependencyOrder(result.getApplication());
+  final List<Service> services=createServiceDependencyOrder(application);
   final String deploymentID=UUID.randomUUID().toString();
   deleteApplicationScopeAttributes(request.getApplicationName());
-  final ApplicationDeployerRunnable installer=new ApplicationDeployerRunnable(this,request,result,services,deploymentID,applicationOverridesFile);
+  ApplicationDeployerRequest applicationDeployerRequest=new ApplicationDeployerRequest();
+  applicationDeployerRequest.setAppDir(appReaderResult.getApplicationDir());
+  applicationDeployerRequest.setAppFile(appReaderResult.getApplicationFile());
+  applicationDeployerRequest.setAppPropertiesFile(appReaderResult.getApplicationPropertiesFile());
+  applicationDeployerRequest.setAppOverridesFile(appReaderResult.getApplicationOverridesFile());
+  applicationDeployerRequest.setController(this);
+  applicationDeployerRequest.setDeploymentID(deploymentID);
+  applicationDeployerRequest.setRequest(request);
+  applicationDeployerRequest.setServices(services);
+  final ApplicationDeployerRunnable installer=new ApplicationDeployerRunnable(applicationDeployerRequest);
   if (installer.isAsyncInstallPossibleForApplication()) {
     installer.run();
   }

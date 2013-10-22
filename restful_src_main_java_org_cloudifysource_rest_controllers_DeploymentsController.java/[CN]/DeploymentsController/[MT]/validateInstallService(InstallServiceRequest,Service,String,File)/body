@@ -1,0 +1,14 @@
+{
+  final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
+  final File cloudConfigurationFile=getFromRepo(request.getCloudConfigurationUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_CONFIGURATION_UPLOAD_KEY.getName(),absolutePuName);
+  final InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setCloud(restConfig.getCloud());
+  validationContext.setAdmin(admin);
+  validationContext.setService(service);
+  validationContext.setCloudOverridesFile(cloudOverridesFile);
+  validationContext.setServiceOverridesFile(serviceOverridesFile);
+  validationContext.setCloudConfigurationFile(cloudConfigurationFile);
+  for (  final InstallServiceValidator validator : installServiceValidators) {
+    validator.validate(validationContext);
+  }
+}

@@ -1,7 +1,0 @@
-String appName
-InstallServiceRequest request
-String deploymentID
-DeploymentFileHolder fileHolder
-ServiceApplicationDependentProperties serviceProps
-Service service
-File packedFile
