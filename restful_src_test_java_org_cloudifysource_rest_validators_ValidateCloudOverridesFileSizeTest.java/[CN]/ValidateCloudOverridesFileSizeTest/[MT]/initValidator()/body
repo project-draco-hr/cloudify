@@ -1,4 +1,0 @@
-{
-  validator=new ValidateCloudOverridesFileSize();
-  validator.setCloudOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-}

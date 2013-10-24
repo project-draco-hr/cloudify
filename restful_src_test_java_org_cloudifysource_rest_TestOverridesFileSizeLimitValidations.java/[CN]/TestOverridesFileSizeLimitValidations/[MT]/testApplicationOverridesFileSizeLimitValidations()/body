@@ -1,0 +1,3 @@
+{
+  testApplicationOverridesFileSizeLimitValidations(new File(APPLICATION_WITH_OVERRIDES_FOLDER_PATH),null);
+}

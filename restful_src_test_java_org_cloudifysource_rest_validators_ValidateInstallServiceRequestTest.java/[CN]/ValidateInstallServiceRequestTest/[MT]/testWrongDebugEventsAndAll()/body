@@ -1,7 +1,6 @@
 {
-  final InstallServiceRequest request=new InstallServiceRequest();
-  request.setServiceFolderUploadKey(UPLOAD_KEY);
-  request.setDebugAll(true);
-  request.setDebugEvents(DEBUG_EVENTS);
-  testValidator(request,CloudifyErrorMessages.DEBUG_EVENTS_AND_ALL_SET.getName());
+  setDebugAll(true);
+  setDebugEvents(DEBUG_EVENTS);
+  setExceptionCause(CloudifyErrorMessages.DEBUG_EVENTS_AND_ALL_SET.getName());
+  testValidator();
 }

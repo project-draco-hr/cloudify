@@ -1,0 +1,30 @@
+{
+  final UploadRepo mockRepo=Mockito.mock(UploadRepo.class);
+  final String appFolderUploadKey=UUID.randomUUID().toString();
+  String overridesFileUploadKey=null;
+  if (overridesFile != null) {
+    overridesFileUploadKey=UUID.randomUUID().toString();
+  }
+  Mockito.when(mockRepo.get(appFolderUploadKey)).thenReturn(appFolder);
+  Mockito.when(mockRepo.get(overridesFileUploadKey)).thenReturn(overridesFile);
+  final RestConfiguration mockRestConfig=Mockito.mock(RestConfiguration.class);
+  Mockito.when(mockRestConfig.getCloud()).thenReturn(null);
+  final DeploymentsController controller=new DeploymentsController();
+  controller.setRepo(mockRepo);
+  controller.setRestConfig(mockRestConfig);
+  final ValidateApplicationOverridesFileSize validator=new ValidateApplicationOverridesFileSize();
+  InstallApplicationValidator[] installApplicationValidators={validator};
+  validator.setApplicationOverridesFileSizeLimit(TEST_OVERRIDES_FILE_SIZE_LIMIT);
+  controller.setInstallApplicationValidators(installApplicationValidators);
+  final InstallApplicationRequest request=new InstallApplicationRequest();
+  request.setApplcationFileUploadKey(appFolderUploadKey);
+  request.setApplicationOverridesUploadKey(overridesFileUploadKey);
+  try {
+    controller.installApplication(APPLICATION_NAME,request);
+    Assert.fail("Expected RestErrorException");
+  }
+ catch (  final RestErrorException e) {
+    final String message=e.getMessage();
+    Assert.assertEquals(CloudifyMessageKeys.APPLICATION_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName(),message);
+  }
+}

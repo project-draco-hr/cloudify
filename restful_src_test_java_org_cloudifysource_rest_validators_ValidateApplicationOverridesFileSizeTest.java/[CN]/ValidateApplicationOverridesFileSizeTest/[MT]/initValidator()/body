@@ -1,4 +1,0 @@
-{
-  validator=new ValidateApplicationOverridesFileSize();
-  validator.setApplicationOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-}

@@ -1,4 +1,0 @@
-{
-  validator=new ValidateCloudConfigurationFileSize();
-  validator.setCloudConfigurationFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-}

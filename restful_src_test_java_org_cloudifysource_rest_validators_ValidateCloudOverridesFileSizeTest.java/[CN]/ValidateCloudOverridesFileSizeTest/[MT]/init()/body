@@ -1,0 +1,8 @@
+{
+  validator=new ValidateCloudOverridesFileSize();
+  validator.setCloudOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
+  cloudOverrides=File.createTempFile("cloudOverrides","");
+  FileUtils.writeStringToFile(cloudOverrides,"I'm longer than 3 bytes !");
+  setCloudOverridesFile(cloudOverrides);
+  setExceptionCause(CloudifyMessageKeys.CLOUD_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
+}

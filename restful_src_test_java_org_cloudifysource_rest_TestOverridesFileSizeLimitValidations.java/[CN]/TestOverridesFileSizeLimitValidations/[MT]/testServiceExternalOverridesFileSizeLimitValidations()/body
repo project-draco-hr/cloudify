@@ -1,0 +1,3 @@
+{
+  testServiceOverridesFileSizeLimitValidations(new File(SERVICE_FOLDER_PATH),new File(SERVICE_OVERRIDES_FILE_PATH));
+}

@@ -1,4 +1,0 @@
-{
-  validator=new ValidateServiceOverridesFileSize();
-  validator.setServiceOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-}

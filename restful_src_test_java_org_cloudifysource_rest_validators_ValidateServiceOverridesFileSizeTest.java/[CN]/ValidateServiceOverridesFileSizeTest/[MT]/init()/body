@@ -1,0 +1,8 @@
+{
+  validator=new ValidateServiceOverridesFileSize();
+  validator.setServiceOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
+  serviceOverrides=File.createTempFile("serviceOverrides","");
+  FileUtils.writeStringToFile(serviceOverrides,"I'm longer than 3 bytes !");
+  setServiceOverridesFile(serviceOverrides);
+  setExceptionCause(CloudifyMessageKeys.SERVICE_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
+}

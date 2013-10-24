@@ -1,0 +1,32 @@
+{
+  final Service service=ServiceReader.readService(new File(serviceFolder,SERVICE_DSL_FILE_NAME),serviceFolder,null,true,overridesFile);
+  final File servicePackedFolder=Packager.pack(serviceFolder,service,null);
+  final UploadRepo mockRepo=Mockito.mock(UploadRepo.class);
+  final String serviceFolderUploadKey=UUID.randomUUID().toString();
+  String overridesFileUploadKey=null;
+  if (overridesFile != null) {
+    overridesFileUploadKey=UUID.randomUUID().toString();
+  }
+  Mockito.when(mockRepo.get(serviceFolderUploadKey)).thenReturn(servicePackedFolder);
+  Mockito.when(mockRepo.get(overridesFileUploadKey)).thenReturn(overridesFile);
+  final RestConfiguration mockRestConfig=Mockito.mock(RestConfiguration.class);
+  Mockito.when(mockRestConfig.getCloud()).thenReturn(null);
+  final DeploymentsController controller=new DeploymentsController();
+  controller.setRepo(mockRepo);
+  controller.setRestConfig(mockRestConfig);
+  final ValidateServiceOverridesFileSize validator=new ValidateServiceOverridesFileSize();
+  final InstallServiceValidator[] installServiceValidators={validator};
+  validator.setServiceOverridesFileSizeLimit(TEST_OVERRIDES_FILE_SIZE_LIMIT);
+  controller.setInstallServiceValidators(installServiceValidators);
+  final InstallServiceRequest request=new InstallServiceRequest();
+  request.setServiceFolderUploadKey(serviceFolderUploadKey);
+  request.setServiceOverridesUploadKey(overridesFileUploadKey);
+  try {
+    controller.installService(CloudifyConstants.DEFAULT_APPLICATION_NAME,SERVICE_NAME,request);
+    Assert.fail("Expected RestErrorException");
+  }
+ catch (  final RestErrorException e) {
+    final String message=e.getMessage();
+    Assert.assertEquals(CloudifyMessageKeys.SERVICE_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName(),message);
+  }
+}
