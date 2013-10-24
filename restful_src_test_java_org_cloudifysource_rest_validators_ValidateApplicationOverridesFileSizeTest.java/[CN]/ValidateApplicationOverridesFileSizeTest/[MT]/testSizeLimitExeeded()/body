@@ -1,0 +1,6 @@
+{
+  File applicationOverrides=File.createTempFile("applicationOverrides","");
+  FileUtils.writeStringToFile(applicationOverrides,"I'm longer than 3 bytes !");
+  testValidator(null,null,null,applicationOverrides,null,null,false,null,null,CloudifyMessageKeys.APPLICATION_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
+  applicationOverrides.delete();
+}

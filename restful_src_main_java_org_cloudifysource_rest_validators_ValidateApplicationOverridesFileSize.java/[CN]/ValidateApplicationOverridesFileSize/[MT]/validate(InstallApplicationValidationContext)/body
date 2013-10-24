@@ -1,0 +1,9 @@
+{
+  final File appOverridesFile=validationContext.getApplicationOverridesFile();
+  if (appOverridesFile != null) {
+    final long length=appOverridesFile.length();
+    if (length > getApplicationOverridesFileSizeLimit()) {
+      throw new RestErrorException(CloudifyMessageKeys.APPLICATION_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName(),appOverridesFile.getAbsolutePath(),length,getApplicationOverridesFileSizeLimit());
+    }
+  }
+}
