@@ -1,0 +1,8 @@
+{
+  try {
+    DebugUtils.validateDebugSettings(debugAll,debugEvents,debugMode);
+  }
+ catch (  final DSLErrorMessageException e) {
+    throw new RestErrorException(e.getErrorMessage().getName(),(Object[])e.getArgs());
+  }
+}

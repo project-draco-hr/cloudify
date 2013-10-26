@@ -1,0 +1,3 @@
+{
+  validateDebugSettings(validationContext.isDebugAll(),validationContext.getDebugEvents(),validationContext.getDebugMode());
+}

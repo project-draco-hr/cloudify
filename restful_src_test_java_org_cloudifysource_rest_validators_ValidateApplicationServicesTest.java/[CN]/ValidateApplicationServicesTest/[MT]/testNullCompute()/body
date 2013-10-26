@@ -1,0 +1,5 @@
+{
+  Application application=ServiceReader.getApplicationFromFile(new File(NO_COMPUTE_APP)).getApplication();
+  setApplication(application);
+  testValidator();
+}

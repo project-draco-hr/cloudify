@@ -1,9 +1,0 @@
-{
-  final Application application=validationContext.getApplication();
-  final Cloud cloud=validationContext.getCloud();
-  for (  Service service : application.getServices()) {
-    if (service.getCompute() != null) {
-      validateTemplate(service.getCompute().getTemplate(),cloud);
-    }
-  }
-}

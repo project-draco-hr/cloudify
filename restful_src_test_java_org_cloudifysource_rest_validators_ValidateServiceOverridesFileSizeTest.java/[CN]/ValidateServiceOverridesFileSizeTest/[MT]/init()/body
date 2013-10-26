@@ -1,5 +1,5 @@
 {
-  validator=new ValidateServiceOverridesFileSize();
+  validator=new ValidateOverridesFileSize();
   validator.setServiceOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
   serviceOverrides=File.createTempFile("serviceOverrides","");
   FileUtils.writeStringToFile(serviceOverrides,"I'm longer than 3 bytes !");

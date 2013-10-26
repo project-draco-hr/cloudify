@@ -1,0 +1,7 @@
+{
+  if (cloudConfigurationFile != null) {
+    if (cloudConfigurationFile.length() > cloudConfigurationFileSizeLimit) {
+      throw new RestErrorException(CloudifyMessageKeys.CLOUD_CONFIGURATION_SIZE_LIMIT_EXCEEDED.getName(),cloudConfigurationFile.getAbsolutePath());
+    }
+  }
+}

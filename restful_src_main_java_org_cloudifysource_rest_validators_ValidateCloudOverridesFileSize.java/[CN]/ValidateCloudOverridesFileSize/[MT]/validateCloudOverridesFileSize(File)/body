@@ -1,0 +1,7 @@
+{
+  if (cloudOverridesFile != null) {
+    if (cloudOverridesFile.length() > cloudOverridesFileSizeLimit) {
+      throw new RestErrorException(CloudifyMessageKeys.CLOUD_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName(),cloudOverridesFile.getAbsolutePath());
+    }
+  }
+}

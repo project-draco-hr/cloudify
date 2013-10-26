@@ -1,0 +1,8 @@
+{
+  if (admin != null) {
+    final ElasticServiceManager esm=admin.getElasticServiceManagers().waitForAtLeastOne(TIMEOUT,TimeUnit.MILLISECONDS);
+    if (esm == null) {
+      throw new RestErrorException(CloudifyMessageKeys.ESM_MISSING.getName(),Arrays.toString(admin.getGroups()));
+    }
+  }
+}
