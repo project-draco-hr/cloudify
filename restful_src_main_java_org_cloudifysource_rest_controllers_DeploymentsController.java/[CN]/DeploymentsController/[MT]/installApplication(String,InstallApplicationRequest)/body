@@ -25,6 +25,10 @@
  else {
     restConfig.getExecutorService().execute(installer);
   }
+  final boolean firstPuCreated=waitForPu(appName,services.get(0).getName(),WAIT_FOR_PU_SECONDS,TimeUnit.SECONDS);
+  if (!firstPuCreated) {
+    throw new RestErrorException("Failed waiting for first processing unit to be created.");
+  }
   final InstallApplicationResponse response=new InstallApplicationResponse();
   response.setDeploymentID(deploymentID);
   return response;
