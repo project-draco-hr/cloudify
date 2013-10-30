@@ -1,4 +1,5 @@
 {
+  logger.info("Validating template operation: " + validationContext.getOperationName());
   if (validationContext.getCloud() == null) {
     throw new RestErrorException("local_cloud_not_support_templates_operations",validationContext.getOperationName());
   }

@@ -1,0 +1,8 @@
+{
+  Cloud cloud=new Cloud();
+  Service service=createServiceWithStorageTemplate(TEMPLATE_NAME);
+  InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setService(service);
+  ValidatorsTestsUtils.validate(validateStorageTemplateExists,validationContext,ERR_MSG);
+}

@@ -3,7 +3,7 @@
     final Map<String,StorageTemplate> templates=cloud.getCloudStorage().getTemplates();
     final StorageTemplate storageTemplate=templates.get(serviceTemplateName);
     if (storageTemplate == null) {
-      throw new RestErrorException(CloudifyMessageKeys.MISSING_TEMPLATE.getName(),serviceTemplateName);
+      throw new RestErrorException(CloudifyErrorMessages.MISSING_TEMPLATE.getName(),serviceTemplateName);
     }
   }
 }

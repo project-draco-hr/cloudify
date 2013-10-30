@@ -1,4 +1,5 @@
 {
+  logger.info("Validating that Esm exists");
   if (admin != null) {
     final ElasticServiceManager esm=admin.getElasticServiceManagers().waitForAtLeastOne(TIMEOUT,TimeUnit.MILLISECONDS);
     if (esm == null) {

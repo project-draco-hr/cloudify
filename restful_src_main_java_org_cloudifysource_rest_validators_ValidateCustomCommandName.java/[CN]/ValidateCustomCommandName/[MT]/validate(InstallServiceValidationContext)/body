@@ -1,8 +1,9 @@
 {
+  logger.info("Validating custom command name");
   ExecutableEntriesMap customCommands=validationContext.getService().getCustomCommands();
   for (  String key : customCommands.keySet()) {
     if (key.startsWith(reservedPrefix)) {
-      throw new RestErrorException("custom command name:" + key + " should not start with "+ reservedPrefix);
+      throw new RestErrorException(CloudifyErrorMessages.ILLEGAL_CUSTOM_COMMAND_PREFIX.getName(),key,reservedPrefix);
     }
   }
 }

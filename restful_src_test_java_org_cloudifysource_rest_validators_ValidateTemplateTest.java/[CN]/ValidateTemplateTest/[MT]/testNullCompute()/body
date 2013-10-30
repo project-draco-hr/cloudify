@@ -1,5 +1,7 @@
 {
   Service service=ServiceReader.readService(new File(NO_COMPUTE_SERVICE));
-  setService(service);
-  testValidator();
+  InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setService(service);
+  ValidatorsTestsUtils.validate(validateTempalte,validationContext,null);
 }

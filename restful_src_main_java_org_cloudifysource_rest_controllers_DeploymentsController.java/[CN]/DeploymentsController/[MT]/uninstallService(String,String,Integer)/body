@@ -1,4 +1,5 @@
 {
+  validateUninstallService(ServiceUtils.getAbsolutePUName(appName,serviceName));
   final ProcessingUnit processingUnit=controllerHelper.getService(appName,serviceName);
   final String deploymentId=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
   if (permissionEvaluator != null) {
@@ -13,7 +14,6 @@
     }
     permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
   }
-  validateUninstallService();
   populateEventsCache(deploymentId,processingUnit);
   final FutureTask<Boolean> undeployTask=new FutureTask<Boolean>(new Callable<Boolean>(){
     @Override public Boolean call() throws Exception {

@@ -1,0 +1,5 @@
+{
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  context.setCloudConfigurationFile(cloudConfigurationFile);
+  ValidatorsTestsUtils.validate(validator,context,ERR_MSG);
+}

@@ -1,8 +1,0 @@
-{
-  Cloud cloud=ServiceReader.readCloud(new File(CLOUD_FILE_PATH));
-  setCloud(cloud);
-  Application application=ServiceReader.getApplicationFromFile(new File(NOT_EXIST_TEMPLATE_APP)).getApplication();
-  setApplication(application);
-  setExceptionCause(CloudifyMessageKeys.MISSING_TEMPLATE.getName());
-  testValidator();
-}

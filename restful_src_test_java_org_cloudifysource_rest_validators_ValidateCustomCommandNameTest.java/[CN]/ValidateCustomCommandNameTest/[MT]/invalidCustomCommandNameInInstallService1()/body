@@ -1,0 +1,10 @@
+{
+  Service service=new Service();
+  ExecutableEntriesMap customCommands=new ExecutableEntriesMap();
+  customCommands.put("key1",null);
+  customCommands.put(RESERVED_PREFIX + " key2",null);
+  service.setCustomCommands(customCommands);
+  InstallServiceValidationContext context=new InstallServiceValidationContext();
+  context.setService(service);
+  ValidatorsTestsUtils.validate(validateCustomCommandName,context,ERR_MSG);
+}

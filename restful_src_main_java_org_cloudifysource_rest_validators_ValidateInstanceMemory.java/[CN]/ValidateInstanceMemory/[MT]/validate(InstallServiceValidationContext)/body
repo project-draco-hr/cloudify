@@ -1,4 +1,5 @@
 {
+  logger.info("Validating isntance memory");
   final Service service=validationContext.getService();
   final Cloud cloud=validationContext.getCloud();
   if (service == null) {

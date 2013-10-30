@@ -1,0 +1,6 @@
+{
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  context.setDebugAll(false);
+  context.setDebugEvents(DUPLICATE_DEBUG_EVENTS);
+  ValidatorsTestsUtils.validate(validateDebugSettings,context,CloudifyErrorMessages.DEBUG_EVENT_REPEATS.getName());
+}

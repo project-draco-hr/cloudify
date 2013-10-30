@@ -8,6 +8,7 @@
   validationContext.setCloudOverridesFile(cloudOverridesFile);
   validationContext.setServiceOverridesFile(serviceOverridesFile);
   validationContext.setCloudConfigurationFile(cloudConfigurationFile);
+  validationContext.setPuName(absolutePuName);
   for (  final InstallServiceValidator validator : installServiceValidators) {
     validator.validate(validationContext);
   }

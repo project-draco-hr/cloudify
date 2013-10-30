@@ -1,0 +1,9 @@
+{
+  Service service=ServiceReader.readService(new File(NO_COMPUTE_SERVICE));
+  InstallApplicationValidationContext validationContext=new InstallApplicationValidationContext();
+  validationContext.setCloud(cloud);
+  Application application=new Application();
+  application.setService(service);
+  validationContext.setApplication(application);
+  ValidatorsTestsUtils.validate(validateApplicationServices,validationContext,null);
+}

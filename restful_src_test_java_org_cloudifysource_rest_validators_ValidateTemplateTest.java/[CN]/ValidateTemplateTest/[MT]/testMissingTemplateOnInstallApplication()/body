@@ -1,0 +1,9 @@
+{
+  Service service=ServiceReader.readService(new File(NOT_EXIST_TEMPLATE_SERVICE_GROOVY));
+  InstallApplicationValidationContext validationContext=new InstallApplicationValidationContext();
+  validationContext.setCloud(cloud);
+  Application application=new Application();
+  application.setService(service);
+  validationContext.setApplication(application);
+  ValidatorsTestsUtils.validate(validateApplicationServices,validationContext,ERR_MSG);
+}

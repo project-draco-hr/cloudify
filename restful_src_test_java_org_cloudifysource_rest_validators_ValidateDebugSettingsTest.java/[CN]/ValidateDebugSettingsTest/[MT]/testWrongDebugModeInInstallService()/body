@@ -1,0 +1,6 @@
+{
+  InstallServiceValidationContext context=new InstallServiceValidationContext();
+  context.setDebugAll(true);
+  context.setDebugMode(WRONG_DEBUG_MODE);
+  ValidatorsTestsUtils.validate(validateDebugSettings,context,CloudifyErrorMessages.DEBUG_UNKNOWN_MODE.getName());
+}

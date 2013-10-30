@@ -1,8 +1,11 @@
 {
   validator=new ValidateCloudConfigurationFileSize();
   validator.setCloudConfigurationFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-  cloudConfig=File.createTempFile("cloudConfig","");
-  FileUtils.writeStringToFile(cloudConfig,"I'm longer than 3 bytes !");
-  setCloudConfigurationFile(cloudConfig);
-  setExceptionCause(CloudifyMessageKeys.CLOUD_CONFIGURATION_SIZE_LIMIT_EXCEEDED.getName());
+  try {
+    cloudConfigurationFile=File.createTempFile("cloudConfig","");
+    FileUtils.writeStringToFile(cloudConfigurationFile,"I'm longer than 3 bytes !");
+  }
+ catch (  IOException e) {
+    Assert.fail(e.getLocalizedMessage());
+  }
 }

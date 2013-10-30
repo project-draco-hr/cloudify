@@ -1,4 +1,5 @@
 {
+  logger.info("Validating application services");
   List<Service> services=validationContext.getApplication().getServices();
   for (  Service service : services) {
     InstallServiceValidationContext serviceValidationContext=new InstallServiceValidationContext();
@@ -6,7 +7,7 @@
     serviceValidationContext.setCloud(validationContext.getCloud());
     serviceValidationContext.setService(service);
     logger.info("validating service " + service.getName() + " for application "+ validationContext.getApplication().getName());
-    for (    InstallServiceValidator validator : installServiceValidators) {
+    for (    InstallServiceValidator validator : getInstallServiceValidators()) {
       validator.validate(serviceValidationContext);
     }
   }

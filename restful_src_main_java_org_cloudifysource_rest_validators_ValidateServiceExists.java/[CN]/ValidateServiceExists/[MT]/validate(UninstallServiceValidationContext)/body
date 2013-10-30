@@ -1,0 +1,9 @@
+{
+  logger.info("Validating that service exists");
+  final String puName=validationContext.getPuName();
+  ProcessingUnit pu=validationContext.getAdmin().getProcessingUnits().waitFor(puName,TIMEOUT_SECONDS,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.log(Level.INFO,"Cannot uninstall service " + puName + " since it has not been discovered yet.");
+    throw new RestErrorException(FAILED_TO_LOCATE_SERVICE,puName);
+  }
+}

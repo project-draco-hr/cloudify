@@ -1,0 +1,10 @@
+{
+  logger.info("Validating service name");
+  final String serviceName=validationContext.getService().getName();
+  if (serviceName.startsWith(CloudifyConstants.ILlEGAL_SERVICE_NAME_PREFIX)) {
+    throw new RestErrorException(CloudifyErrorMessages.ILLEGAL_SERVICE_NAME.getName(),serviceName,"starts with " + CloudifyConstants.ILlEGAL_SERVICE_NAME_PREFIX);
+  }
+  if (serviceName.endsWith(CloudifyConstants.ILlEGAL_SERVICE_NAME_SUFFIX)) {
+    throw new RestErrorException(CloudifyErrorMessages.ILLEGAL_SERVICE_NAME.getName(),serviceName,"ends with " + CloudifyConstants.ILlEGAL_SERVICE_NAME_SUFFIX);
+  }
+}

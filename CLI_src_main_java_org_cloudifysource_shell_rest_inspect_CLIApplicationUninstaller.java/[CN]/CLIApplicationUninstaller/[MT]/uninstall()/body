@@ -6,7 +6,7 @@
   }
  catch (  RestClientException e) {
     if (CloudifyMessageKeys.MISSING_RESOURCE.getName().equals(e.getMessageCode())) {
-      throw new RestClientException("failed_to_locate_app","Application " + applicationName + " could not be found",e.getVerbose());
+      throw MessagesUtils.createRestClientException(e.getVerbose(),CloudifyErrorMessages.FAILED_TO_LOCATE_APPLICATION.getName(),applicationName);
     }
     throw e;
   }

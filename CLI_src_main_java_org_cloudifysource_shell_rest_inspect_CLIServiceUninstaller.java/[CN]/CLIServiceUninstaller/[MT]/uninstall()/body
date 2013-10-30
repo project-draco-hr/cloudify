@@ -1,7 +1,16 @@
 {
   displayer.printEvent("uninstalling_service",serviceName);
   displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
-  ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+  ServiceDescription serviceDescription;
+  try {
+    serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+  }
+ catch (  RestClientException e) {
+    if (CloudifyMessageKeys.MISSING_RESOURCE.getName().equals(e.getMessageCode())) {
+      throw MessagesUtils.createRestClientException(e.getVerbose(),CloudifyErrorMessages.FAILED_TO_LOCATE_SERVICE.getName(),applicationName + "." + serviceName);
+    }
+    throw e;
+  }
   String deploymentId=serviceDescription.getDeploymentId();
   final int lastEventIndex=restClient.getLastEvent(deploymentId).getIndex();
   ServiceUninstallationProcessInspector inspector=new ServiceUninstallationProcessInspector(restClient,deploymentId,false,serviceDescription.getInstanceCount(),serviceName,applicationName,lastEventIndex);

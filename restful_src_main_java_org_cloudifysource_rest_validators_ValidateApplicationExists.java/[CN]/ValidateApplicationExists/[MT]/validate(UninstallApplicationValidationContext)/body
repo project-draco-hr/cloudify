@@ -1,6 +1,7 @@
 {
+  logger.info("Validating that application exists");
   final String appName=validationContext.getApplicationName();
-  final Application app=this.admin.getApplications().waitFor(validationContext.getApplicationName(),10,TimeUnit.SECONDS);
+  final Application app=validationContext.getAdmin().getApplications().waitFor(validationContext.getApplicationName(),10,TimeUnit.SECONDS);
   if (app == null) {
     logger.log(Level.INFO,"Cannot uninstall application " + appName + " since it has not been discovered yet.");
     throw new RestErrorException(FAILED_TO_LOCATE_APP,appName);

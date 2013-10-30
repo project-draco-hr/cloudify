@@ -1,8 +1,0 @@
-{
-  validator=new ValidateApplicationOverridesFileSize();
-  validator.setApplicationOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
-  applicationOverrides=File.createTempFile("applicationOverrides","");
-  FileUtils.writeStringToFile(applicationOverrides,"I'm longer than 3 bytes !");
-  setApplicationOverridesFile(applicationOverrides);
-  setExceptionCause(CloudifyMessageKeys.APPLICATION_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
-}

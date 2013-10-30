@@ -1,6 +1,0 @@
-{
-  setDebugAll(false);
-  setDebugEvents(DUPLICATE_DEBUG_EVENTS);
-  setExceptionCause(CloudifyErrorMessages.DEBUG_EVENT_REPEATS.getName());
-  testValidator();
-}

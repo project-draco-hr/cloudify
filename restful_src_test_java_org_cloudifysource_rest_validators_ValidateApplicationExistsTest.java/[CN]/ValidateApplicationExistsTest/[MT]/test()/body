@@ -1,0 +1,18 @@
+{
+  UninstallApplicationValidationContext context=new UninstallApplicationValidationContext();
+  DefaultAdmin admin=Mockito.mock(DefaultAdmin.class);
+  Applications applications=Mockito.mock(DefaultApplications.class);
+  Mockito.when(applications.getAdmin()).thenReturn(admin);
+  Mockito.when(applications.waitFor(APP_NAME,TIMEOUT_SECONDS,TimeUnit.SECONDS)).thenReturn(null);
+  Mockito.when(admin.getApplications()).thenReturn(applications);
+  context.setAdmin(admin);
+  context.setApplicationName(APP_NAME);
+  ValidateApplicationExists validator=new ValidateApplicationExists();
+  try {
+    validator.validate(context);
+    Assert.fail("RestErrorException expected");
+  }
+ catch (  RestErrorException e) {
+    Assert.assertEquals(ResponseConstants.FAILED_TO_LOCATE_APP,e.getMessage());
+  }
+}

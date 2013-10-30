@@ -1,0 +1,7 @@
+{
+  Service service=new Service();
+  StorageDetails storage=new StorageDetails();
+  storage.setTemplate(templateName);
+  service.setStorage(storage);
+  return service;
+}

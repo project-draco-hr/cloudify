@@ -1,0 +1,5 @@
+{
+  InstallServiceValidationContext context=new InstallServiceValidationContext();
+  context.setCloudOverridesFile(cloudOverridesFile);
+  ValidatorsTestsUtils.validate(validator,context,ERR_MSG);
+}

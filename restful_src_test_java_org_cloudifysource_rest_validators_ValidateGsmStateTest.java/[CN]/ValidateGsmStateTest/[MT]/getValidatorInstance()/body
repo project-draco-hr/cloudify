@@ -1,0 +1,19 @@
+{
+  validateGsmState=new ValidateGsmState();
+  cloud=null;
+  try {
+    cloud=ServiceReader.readCloud(new File(CLOUD_FILE_PATH));
+  }
+ catch (  Exception e) {
+    Assert.fail(e.getLocalizedMessage());
+  }
+  CloudConfiguration configuration=cloud.getConfiguration();
+  String persistentStoragePath="";
+  configuration.setPersistentStoragePath(persistentStoragePath);
+  DefaultGridServiceManagers internalGSMs=Mockito.mock(DefaultGridServiceManagers.class);
+  Mockito.when(internalGSMs.waitFor(cloud.getProvider().getNumberOfManagementMachines(),TIMEOUT_SECONDS,TimeUnit.SECONDS)).thenReturn(false);
+  adminMock=Mockito.mock(DefaultAdmin.class);
+  GridServiceManager[] gsmArray={};
+  Mockito.when(internalGSMs.getManagers()).thenReturn(gsmArray);
+  Mockito.when(adminMock.getGridServiceManagers()).thenReturn(internalGSMs);
+}

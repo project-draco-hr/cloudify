@@ -1,0 +1,27 @@
+{
+  validateInstanceMemory=new ValidateInstanceMemory();
+  validateApplicationServices=new ValidateApplicationServices();
+  InstallServiceValidator[] installServiceValidators={new ValidateInstanceMemory()};
+  validateApplicationServices.setInstallServiceValidators(installServiceValidators);
+  try {
+    byonCloud=ServiceReader.readCloud(new File(CLOUD_FILE_PATH));
+  }
+ catch (  Exception e) {
+    Assert.fail(e.getLocalizedMessage());
+  }
+  int templateMemory=byonCloud.getCloudCompute().getTemplates().get(TEMPLATE_NAME).getMachineMemoryMB();
+  int reservedMemoryCapacityPerMachineInMB=byonCloud.getProvider().getReservedMemoryCapacityPerMachineInMB();
+  service=new Service();
+  ComputeDetails compute=new ComputeDetails();
+  compute.setTemplate(TEMPLATE_NAME);
+  service.setCompute(compute);
+  IsolationSLA isolationSLA=new IsolationSLA();
+  GlobalIsolationSLADescriptor global=new GlobalIsolationSLADescriptor();
+  int instanceMemory=templateMemory;
+  if (includeReservedMemory) {
+    instanceMemory=templateMemory - reservedMemoryCapacityPerMachineInMB + 1;
+  }
+  global.setInstanceMemoryMB(instanceMemory);
+  isolationSLA.setGlobal(global);
+  service.setIsolationSLA(isolationSLA);
+}

@@ -1,0 +1,15 @@
+{
+  DefaultAdmin adminMock=Mockito.mock(DefaultAdmin.class);
+  Applications applications=Mockito.mock(Applications.class);
+  Iterator<Application> iter=Mockito.mock(Iterator.class);
+  Mockito.when(iter.hasNext()).thenReturn(true,false);
+  Mockito.when(iter.next()).thenReturn(new DefaultApplication(adminMock,APP_NAME));
+  Mockito.when(applications.iterator()).thenReturn(iter);
+  Mockito.when(adminMock.getApplications()).thenReturn(applications);
+  org.cloudifysource.domain.Application application=new org.cloudifysource.domain.Application();
+  application.setName(APP_NAME);
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  context.setAdmin(adminMock);
+  context.setApplication(application);
+  ValidatorsTestsUtils.validate(new ValidateApplicationNotAlreadyDeployed(),context,CloudifyMessageKeys.APPLICATION_NAME_IS_ALREADY_IN_USE.getName());
+}

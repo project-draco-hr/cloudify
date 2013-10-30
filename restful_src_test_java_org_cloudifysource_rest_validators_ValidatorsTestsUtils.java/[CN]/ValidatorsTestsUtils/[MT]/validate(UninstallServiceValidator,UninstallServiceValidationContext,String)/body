@@ -1,0 +1,15 @@
+{
+  try {
+    validator.validate(validationContext);
+    if (exceptionCause != null) {
+      Assert.fail(exceptionCause + " didn't yield the expected RestErrorException.");
+    }
+  }
+ catch (  final RestErrorException e) {
+    if (exceptionCause == null) {
+      e.printStackTrace();
+      Assert.fail();
+    }
+    Assert.assertEquals(exceptionCause,e.getMessage());
+  }
+}

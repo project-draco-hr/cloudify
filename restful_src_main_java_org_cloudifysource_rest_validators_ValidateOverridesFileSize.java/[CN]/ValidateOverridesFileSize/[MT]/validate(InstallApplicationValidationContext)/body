@@ -1,4 +1,5 @@
 {
+  logger.info("Validating overrides file size");
   final File appOverridesFile=validationContext.getApplicationOverridesFile();
   if (appOverridesFile != null) {
     final long length=appOverridesFile.length();

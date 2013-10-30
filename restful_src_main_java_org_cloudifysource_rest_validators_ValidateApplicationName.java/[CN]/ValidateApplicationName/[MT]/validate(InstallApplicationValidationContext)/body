@@ -1,4 +1,5 @@
 {
+  logger.info("Validating application name");
   final String appName=validationContext.getApplication().getName();
   final char[] invalidChars=new char[]{'{','}','[',']','(',')'};
   if (StringUtils.containsAny(appName,invalidChars)) {

@@ -1,0 +1,6 @@
+{
+  validateStorageTemplateExists=new ValidateStorageTemplateExists();
+  validateApplicationServices=new ValidateApplicationServices();
+  InstallServiceValidator[] installServiceValidators={validateStorageTemplateExists};
+  validateApplicationServices.setInstallServiceValidators(installServiceValidators);
+}

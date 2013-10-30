@@ -1,4 +1,16 @@
 {
-  testValidator();
-  applicationOverrides.delete();
+  File applicationOverridesFile=null;
+  try {
+    applicationOverridesFile=File.createTempFile("applicationOverrides","");
+    FileUtils.writeStringToFile(applicationOverridesFile,"I'm longer than 3 bytes !");
+  }
+ catch (  IOException e) {
+    Assert.fail(e.getLocalizedMessage());
+  }
+  ValidateOverridesFileSize validator=new ValidateOverridesFileSize();
+  validator.setApplicationOverridesFileSizeLimit(TEST_FILE_SIZE_LIMIT);
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  context.setApplicationOverridesFile(applicationOverridesFile);
+  ValidatorsTestsUtils.validate(validator,context,CloudifyMessageKeys.APPLICATION_OVERRIDES_SIZE_LIMIT_EXCEEDED.getName());
+  applicationOverridesFile.delete();
 }

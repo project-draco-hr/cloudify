@@ -1,0 +1,5 @@
+{
+  InstallApplicationValidationContext validationContext=new InstallApplicationValidationContext();
+  validationContext.setAdmin(adminMock);
+  ValidatorsTestsUtils.validate(validateEsmExists,validationContext,ERR_MSG);
+}

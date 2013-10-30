@@ -12,7 +12,7 @@
   final DeploymentsController controller=new DeploymentsController();
   controller.setRepo(mockRepo);
   controller.setRestConfig(mockRestConfig);
-  final ValidateApplicationOverridesFileSize validator=new ValidateApplicationOverridesFileSize();
+  final ValidateOverridesFileSize validator=new ValidateOverridesFileSize();
   InstallApplicationValidator[] installApplicationValidators={validator};
   validator.setApplicationOverridesFileSizeLimit(TEST_OVERRIDES_FILE_SIZE_LIMIT);
   controller.setInstallApplicationValidators(installApplicationValidators);

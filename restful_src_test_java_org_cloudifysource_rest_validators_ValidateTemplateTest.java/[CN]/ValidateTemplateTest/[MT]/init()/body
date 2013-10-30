@@ -1,0 +1,12 @@
+{
+  validateTempalte=new ValidateTemplate();
+  validateApplicationServices=new ValidateApplicationServices();
+  InstallServiceValidator[] installServiceValidators={validateTempalte};
+  validateApplicationServices.setInstallServiceValidators(installServiceValidators);
+  try {
+    cloud=ServiceReader.readCloud(new File(CLOUD_FILE_PATH));
+  }
+ catch (  Exception e) {
+    Assert.fail(e.getLocalizedMessage());
+  }
+}

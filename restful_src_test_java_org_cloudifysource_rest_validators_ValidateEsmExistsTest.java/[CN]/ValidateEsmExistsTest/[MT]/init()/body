@@ -1,0 +1,7 @@
+{
+  validateEsmExists=new ValidateEsmExists();
+  adminMock=Mockito.mock(DefaultAdmin.class);
+  InternalElasticServiceManagers internalESMsMock=Mockito.mock(InternalElasticServiceManagers.class);
+  Mockito.when(internalESMsMock.waitForAtLeastOne(TIMEOUT,TimeUnit.MILLISECONDS)).thenReturn(null);
+  Mockito.when(adminMock.getElasticServiceManagers()).thenReturn(internalESMsMock);
+}

@@ -1,0 +1,9 @@
+{
+  initInsufficientMemory(true);
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  context.setCloud(byonCloud);
+  Application application=new Application();
+  application.setService(service);
+  context.setApplication(application);
+  ValidatorsTestsUtils.validate(validateApplicationServices,context,ERR_MSG);
+}

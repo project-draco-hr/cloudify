@@ -1,5 +1,7 @@
 {
-  Cloud cloud=ServiceReader.readCloud(new File(CLOUD_FILE_PATH));
   Service service=ServiceReader.readService(new File(NOT_EXIST_TEMPLATE_SERVICE_GROOVY));
-  testValidator(cloud,service,CloudifyMessageKeys.MISSING_TEMPLATE.getName());
+  InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setService(service);
+  ValidatorsTestsUtils.validate(validateTempalte,validationContext,ERR_MSG);
 }

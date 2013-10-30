@@ -1,0 +1,10 @@
+{
+  Cloud cloud=new Cloud();
+  Map<String,StorageTemplate> templates=new HashMap<String,StorageTemplate>();
+  StorageTemplate template=new StorageTemplate();
+  templates.put(templateName,template);
+  CloudStorage cloudStorage=new CloudStorage();
+  cloudStorage.setTemplates(templates);
+  cloud.setCloudStorage(cloudStorage);
+  return cloud;
+}

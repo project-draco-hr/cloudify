@@ -1,0 +1,6 @@
+{
+  InstallApplicationValidationContext validationContext=new InstallApplicationValidationContext();
+  validationContext.setCloud(cloud);
+  validationContext.setAdmin(adminMock);
+  ValidatorsTestsUtils.validate(validateGsmState,validationContext,ERR_MSG);
+}

@@ -1,0 +1,14 @@
+{
+  Service service=new Service();
+  ExecutableEntriesMap customCommands=new ExecutableEntriesMap();
+  customCommands.put("key1",null);
+  customCommands.put(RESERVED_PREFIX + " key2",null);
+  service.setCustomCommands(customCommands);
+  InstallApplicationValidationContext context=new InstallApplicationValidationContext();
+  Application application=new Application();
+  List<Service> services=new LinkedList<Service>();
+  services.add(service);
+  application.setServices(services);
+  context.setApplication(application);
+  ValidatorsTestsUtils.validate(validateApplicationServices,context,ERR_MSG);
+}

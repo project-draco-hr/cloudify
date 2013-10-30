@@ -3,6 +3,7 @@
   validationContext.setApplicationName(applicationName);
   validationContext.setServiceName(serviceName);
   validationContext.setCloud(this.restConfig.getCloud());
+  validationContext.setAdmin(admin);
   validationContext.setRequest(request);
   validationContext.setProcessingUnit(pu);
   for (  SetServiceInstancesValidator validator : setServiceInstancesValidators) {

@@ -1,0 +1,6 @@
+{
+  validateCustomCommandName=new ValidateCustomCommandName();
+  validateApplicationServices=new ValidateApplicationServices();
+  InstallServiceValidator[] installServiceValidators={validateCustomCommandName};
+  validateApplicationServices.setInstallServiceValidators(installServiceValidators);
+}

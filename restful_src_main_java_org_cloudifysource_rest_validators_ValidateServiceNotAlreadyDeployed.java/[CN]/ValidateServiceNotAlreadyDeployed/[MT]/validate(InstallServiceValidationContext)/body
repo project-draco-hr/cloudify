@@ -1,0 +1,10 @@
+{
+  logger.info("Validating that service is not already deployed");
+  final String puName=validationContext.getPuName();
+  final ProcessingUnits pus=validationContext.getAdmin().getProcessingUnits();
+  for (  ProcessingUnit pu : pus) {
+    if (pu.getName().equals(puName)) {
+      throw new RestErrorException(CloudifyErrorMessages.SERVICE_ALREADY_INSTALLED.getName(),puName);
+    }
+  }
+}

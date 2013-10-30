@@ -1,4 +1,5 @@
 {
+  logger.info("Validating that application is not already deployed");
   final String appName=validationContext.getApplication().getName();
   final Applications apps=validationContext.getAdmin().getApplications();
   for (  Application application : apps) {

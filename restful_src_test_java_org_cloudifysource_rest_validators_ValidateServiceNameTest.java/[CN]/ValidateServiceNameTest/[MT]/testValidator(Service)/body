@@ -1,0 +1,5 @@
+{
+  InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setService(service);
+  ValidatorsTestsUtils.validate(new ValidateServiceName(),validationContext,CloudifyErrorMessages.ILLEGAL_SERVICE_NAME.getName());
+}

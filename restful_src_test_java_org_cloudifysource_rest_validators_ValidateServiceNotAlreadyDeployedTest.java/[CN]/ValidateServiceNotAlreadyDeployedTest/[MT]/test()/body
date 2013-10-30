@@ -1,0 +1,15 @@
+{
+  DefaultAdmin adminMock=Mockito.mock(DefaultAdmin.class);
+  Iterator<ProcessingUnit> iter=Mockito.mock(Iterator.class);
+  ProcessingUnit pu=Mockito.mock(ProcessingUnit.class);
+  Mockito.when(pu.getName()).thenReturn(PU_NAME);
+  Mockito.when(iter.next()).thenReturn(pu);
+  Mockito.when(iter.hasNext()).thenReturn(true,false);
+  ProcessingUnits pus=Mockito.mock(DefaultProcessingUnits.class);
+  Mockito.when(pus.iterator()).thenReturn(iter);
+  Mockito.when(adminMock.getProcessingUnits()).thenReturn(pus);
+  InstallServiceValidationContext validationContext=new InstallServiceValidationContext();
+  validationContext.setAdmin(adminMock);
+  validationContext.setPuName(PU_NAME);
+  ValidatorsTestsUtils.validate(new ValidateServiceNotAlreadyDeployed(),validationContext,CloudifyErrorMessages.SERVICE_ALREADY_INSTALLED.getName());
+}

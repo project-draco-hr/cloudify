@@ -1,0 +1,17 @@
+{
+  UninstallServiceValidationContext context=new UninstallServiceValidationContext();
+  DefaultAdmin admin=Mockito.mock(DefaultAdmin.class);
+  ProcessingUnits pus=Mockito.mock(ProcessingUnits.class);
+  Mockito.when(pus.waitFor(PU_NAME,TIMEOUT_SECONDS,TimeUnit.SECONDS)).thenReturn(null);
+  Mockito.when(admin.getProcessingUnits()).thenReturn(pus);
+  context.setAdmin(admin);
+  context.setPuName(PU_NAME);
+  ValidateServiceExists validator=new ValidateServiceExists();
+  try {
+    validator.validate(context);
+    Assert.fail("RestErrorException expected");
+  }
+ catch (  RestErrorException e) {
+    Assert.assertEquals(ResponseConstants.FAILED_TO_LOCATE_SERVICE,e.getMessage());
+  }
+}

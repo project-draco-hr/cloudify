@@ -1,4 +1,5 @@
 {
+  logger.info("Validating storage tempalte");
   final Service service=validationContext.getService();
   final StorageDetails storage=service.getStorage();
   if (storage != null) {

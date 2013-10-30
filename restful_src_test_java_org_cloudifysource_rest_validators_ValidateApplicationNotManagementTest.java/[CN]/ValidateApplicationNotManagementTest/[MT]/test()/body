@@ -1,0 +1,19 @@
+{
+  UninstallApplicationValidationContext context=new UninstallApplicationValidationContext();
+  DefaultAdmin admin=Mockito.mock(DefaultAdmin.class);
+  Applications applications=Mockito.mock(DefaultApplications.class);
+  Mockito.when(applications.getAdmin()).thenReturn(admin);
+  Application application=new DefaultApplication(admin,APP_NAME);
+  Mockito.when(applications.waitFor(APP_NAME,TIMEOUT_SECONDS,TimeUnit.SECONDS)).thenReturn(application);
+  Mockito.when(admin.getApplications()).thenReturn(applications);
+  context.setAdmin(admin);
+  context.setApplicationName(APP_NAME);
+  ValidateApplicationNotManagement validator=new ValidateApplicationNotManagement();
+  try {
+    validator.validate(context);
+    Assert.fail("RestErrorException expected");
+  }
+ catch (  RestErrorException e) {
+    Assert.assertEquals(ResponseConstants.CANNOT_UNINSTALL_MANAGEMENT_APP,e.getMessage());
+  }
+}

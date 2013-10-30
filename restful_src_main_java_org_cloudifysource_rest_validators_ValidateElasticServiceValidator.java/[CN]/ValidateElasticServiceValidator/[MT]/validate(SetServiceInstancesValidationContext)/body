@@ -1,4 +1,5 @@
 {
+  logger.info("Validating elastic service");
   final ProcessingUnit pu=validationContext.getProcessingUnit();
   final Properties contextProperties=pu.getBeanLevelProperties().getContextProperties();
   final String elasticProp=contextProperties.getProperty(CloudifyConstants.CONTEXT_PROPERTY_ELASTIC);
