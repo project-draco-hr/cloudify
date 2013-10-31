@@ -1,0 +1,7 @@
+{
+  Set<String> humanReadable=new HashSet<String>();
+  for (  GridServiceContainer container : containers) {
+    humanReadable.add(container.getUid() + container.getExactZones().getZones());
+  }
+  return humanReadable;
+}

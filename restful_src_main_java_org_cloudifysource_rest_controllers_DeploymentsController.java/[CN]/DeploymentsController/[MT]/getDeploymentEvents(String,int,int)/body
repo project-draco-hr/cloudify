@@ -26,6 +26,8 @@ synchronized (value.getMutex()) {
  else {
       logger.fine(EventsUtils.getThreadId() + " Found all relevant events in cache.");
     }
-    return EventsUtils.extractDesiredEvents(value.getEvents(),from,actualTo);
+    DeploymentEvents deploymentEvents=EventsUtils.extractDesiredEvents(value.getEvents(),from,actualTo);
+    logger.finest("Returning events " + deploymentEvents + " for deployment id "+ deploymentId+ " to the "+ "client");
+    return deploymentEvents;
   }
 }
