@@ -1,4 +1,5 @@
 {
+  logger.fine("Searching for processing units with deployment id " + deploymentId);
   Set<ProcessingUnit> processingUnitsForDeploymentId=new HashSet<ProcessingUnit>();
   Set<GridServiceContainer> containers=new HashSet<GridServiceContainer>();
   for (  ProcessingUnit pu : admin.getProcessingUnits()) {
@@ -8,7 +9,9 @@
     }
   }
   for (  ProcessingUnit pu : processingUnitsForDeploymentId) {
+    logger.fine("Retrieving containers for processing unit " + pu.getName());
     containers.addAll(getContainersForProcessingUnit(pu));
   }
+  logger.fine("Found containers " + toUidAndZone(containers) + " for deployment id "+ deploymentId);
   return containers;
 }
