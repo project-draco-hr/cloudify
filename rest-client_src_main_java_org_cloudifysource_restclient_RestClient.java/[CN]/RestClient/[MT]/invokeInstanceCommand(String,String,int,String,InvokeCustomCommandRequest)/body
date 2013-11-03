@@ -1,0 +1,16 @@
+{
+  if (request == null) {
+    throw new IllegalArgumentException("request may not be null");
+  }
+  String instanceIdStr=String.valueOf(instanceId);
+  InvokeInstanceCommandResponse result=null;
+  try {
+    final String invokeCommandUrl=getFormattedUrl(versionedDeploymentControllerUrl,INVOKE_INSTANCE_COMMAND_URL_FORMAT,applicationName,serviceName,instanceIdStr,beanName);
+    result=executor.postObject(invokeCommandUrl,request,new TypeReference<Response<InvokeInstanceCommandResponse>>(){
+    }
+);
+  }
+ catch (  final RestClientException e) {
+  }
+  return result;
+}

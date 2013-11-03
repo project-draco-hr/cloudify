@@ -1,6 +1,9 @@
 {
   int index=0;
   final Map<String,String> returnMap=new HashMap<String,String>();
+  if (parameters == null) {
+    return returnMap;
+  }
   for (  final String param : parameters) {
     returnMap.put(CloudifyConstants.INVOCATION_PARAMETERS_KEY + index,param);
     ++index;

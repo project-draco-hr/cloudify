@@ -1,0 +1,5 @@
+String applicationName
+String serviceName
+int instanceId
+String beanName
+InvokeCustomCommandRequest request

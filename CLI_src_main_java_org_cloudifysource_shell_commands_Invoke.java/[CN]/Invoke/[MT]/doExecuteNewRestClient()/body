@@ -1,0 +1,36 @@
+{
+  String successMessages="";
+  String failureMessages="";
+  logger.fine("Invoking command " + commandName + " using the new rest client");
+  final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
+  InvokeCustomCommandRequest request=new InvokeCustomCommandRequest();
+  request.setCommandName(commandName);
+  request.setParameters(getParamsMap(params));
+  String applicationName=this.getCurrentApplicationName();
+  if (applicationName == null) {
+    applicationName="default";
+  }
+  if (instanceId == null) {
+    InvokeServiceCommandResponse response=newRestClient.invokeServiceCommand(applicationName,serviceName,beanName,request);
+    final Map<String,InvocationResult> invocationResults=parseInvocationResults(response.getInvocationResultPerInstance());
+    final List<InvocationResult> resultsList=new ArrayList<InvocationResult>(invocationResults.values());
+    Collections.sort(resultsList);
+    successMessages=getAllSuccessMessages(resultsList);
+    failureMessages=getAllFailureMessages(resultsList);
+  }
+ else {
+    InvokeInstanceCommandResponse response=newRestClient.invokeInstanceCommand(applicationName,serviceName,instanceId,beanName,request);
+    final InvocationResult invocationResult=parseInvocationResult(response.getInvocationResult());
+    if (invocationResult.isSuccess()) {
+      successMessages=getSuccessMessage(invocationResult) + System.getProperty("line.separator");
+    }
+ else {
+      failureMessages=getFailureMessage(invocationResult) + System.getProperty("line.separator");
+    }
+  }
+  logger.info(successMessages);
+  if (StringUtils.isNotBlank(failureMessages)) {
+    throw new CLIStatusException("not_all_invocations_completed_successfully",this.serviceName,failureMessages);
+  }
+  return getFormattedMessage("all_invocations_completed_successfully");
+}

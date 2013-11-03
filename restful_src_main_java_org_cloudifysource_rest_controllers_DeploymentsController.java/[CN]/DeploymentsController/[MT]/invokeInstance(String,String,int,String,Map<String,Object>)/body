@@ -1,0 +1,35 @@
+{
+  InvokeInstanceCommandResponse response=new InvokeInstanceCommandResponse();
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to invoke bean " + beanName + " of service "+ serviceName+ " of application "+ applicationName);
+  }
+  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.severe("Could not find service " + absolutePuName);
+    throw new ResourceNotFoundException(absolutePuName);
+  }
+  if (permissionEvaluator != null) {
+    final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+  }
+  final InternalProcessingUnitInstance pui=findInstanceById(pu,instanceId);
+  if (pui == null) {
+    logger.severe("Could not find service instance " + instanceId + " for service "+ absolutePuName);
+    throw new RestErrorException(ResponseConstants.SERVICE_INSTANCE_UNAVAILABLE,applicationName,absolutePuName,Integer.toString(instanceId));
+  }
+  final String instanceName=buildServiceInstanceName(pui);
+  try {
+    final Future<?> future=pui.invoke(beanName,params);
+    final Object invocationResult=future.get();
+    final Object finalResult=postProcessInvocationResult(invocationResult,instanceName);
+    response.setInvocationResult(finalResult);
+  }
+ catch (  final Exception e) {
+    logger.severe("Error invoking pu instance " + absolutePuName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName());
+    throw new RestErrorException(FAILED_TO_INVOKE_INSTANCE,absolutePuName,Integer.toString(instanceId),e.getMessage());
+  }
+  return response;
+}

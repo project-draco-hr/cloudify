@@ -1,0 +1,15 @@
+{
+  final Map<String,InvocationResult> invocationResultsMap=new LinkedHashMap<String,InvocationResult>();
+  for (  final Map.Entry<String,Object> entry : restInvocationResultsPerInstance.entrySet()) {
+    final String instanceName=entry.getKey();
+    final Object restInvocationResult=entry.getValue();
+    if (restInvocationResult == null || !(restInvocationResult instanceof Map<?,?>)) {
+      logger.severe("Received an unexpected return value to the invoke command. Key: " + instanceName + ", value: "+ restInvocationResult);
+    }
+ else {
+      @SuppressWarnings("unchecked") final InvocationResult invocationResult=InvocationResult.createInvocationResult((Map<String,String>)restInvocationResult);
+      invocationResultsMap.put(instanceName,invocationResult);
+    }
+  }
+  return invocationResultsMap;
+}

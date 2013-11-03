@@ -1,0 +1,3 @@
+{
+  return getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
+}

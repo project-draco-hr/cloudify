@@ -1,0 +1,11 @@
+{
+  final StringBuilder invocationSuccessStringBuilder=new StringBuilder("Invocation results: ");
+  invocationSuccessStringBuilder.append(System.getProperty("line.separator"));
+  for (  final InvocationResult invocationResult : resultsList) {
+    if (invocationResult.isSuccess()) {
+      String successMessage=getSuccessMessage(invocationResult);
+      invocationSuccessStringBuilder.append(successMessage).append(System.getProperty("line.separator"));
+    }
+  }
+  return invocationSuccessStringBuilder.toString();
+}

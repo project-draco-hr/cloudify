@@ -1,0 +1,46 @@
+{
+  InvokeServiceCommandResponse response=new InvokeServiceCommandResponse();
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("received request to invoke bean " + beanName + " of service "+ absolutePuName+ " of application "+ applicationName);
+  }
+  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
+  if (pu == null) {
+    logger.severe("Could not find service " + absolutePuName);
+    throw new ResourceNotFoundException(absolutePuName);
+  }
+  if (permissionEvaluator != null) {
+    final String puAuthGroups=pu.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
+    final Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    final CloudifyAuthorizationDetails authDetails=new CloudifyAuthorizationDetails(authentication);
+    permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
+  }
+  final ProcessingUnitInstance[] instances=pu.getInstances();
+  if (instances.length == 0) {
+    throw new RestErrorException(ResponseConstants.NO_PROCESSING_UNIT_INSTANCES_FOUND_FOR_INVOCATION,serviceName);
+  }
+  final Map<String,Future<Object>> futures=new HashMap<String,Future<Object>>(instances.length);
+  for (  final ProcessingUnitInstance instance : instances) {
+    final String serviceInstanceName=buildServiceInstanceName(instance);
+    try {
+      final Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(beanName,params);
+      futures.put(serviceInstanceName,future);
+    }
+ catch (    final Exception e) {
+      logger.severe("Error invoking service " + serviceName + ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName());
+      response.setInvocationResult(serviceInstanceName,"pu_instance_invocation_failure");
+    }
+  }
+  for (  final Map.Entry<String,Future<Object>> entry : futures.entrySet()) {
+    String serviceInstanceName=entry.getKey();
+    try {
+      Object invocationResult=entry.getValue().get();
+      invocationResult=postProcessInvocationResult(invocationResult,entry.getKey());
+      response.setInvocationResult(serviceInstanceName,invocationResult);
+    }
+ catch (    final Exception e) {
+      response.setInvocationResult(serviceInstanceName,"Invocation failure: " + e.getMessage());
+    }
+  }
+  return response;
+}

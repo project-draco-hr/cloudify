@@ -1,0 +1,3 @@
+{
+  return getFormattedMessage("invocation_failed",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getExceptionMessage());
+}

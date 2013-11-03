@@ -1,0 +1,9 @@
+{
+  final ProcessingUnitInstance[] instances=pu.getInstances();
+  for (  final ProcessingUnitInstance instance : instances) {
+    if (instance.getInstanceId() == id) {
+      return (InternalProcessingUnitInstance)instance;
+    }
+  }
+  return null;
+}

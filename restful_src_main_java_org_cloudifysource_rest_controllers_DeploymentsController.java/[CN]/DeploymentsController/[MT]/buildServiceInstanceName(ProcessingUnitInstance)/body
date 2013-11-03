@@ -1,0 +1,3 @@
+{
+  return "instance #" + instance.getInstanceId() + "@"+ instance.getVirtualMachine().getMachine().getHostName();
+}
