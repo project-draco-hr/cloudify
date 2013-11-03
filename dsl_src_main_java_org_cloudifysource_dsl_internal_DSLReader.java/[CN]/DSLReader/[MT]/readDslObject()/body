@@ -30,7 +30,7 @@
     try {
       canonicalPath=workDir.getCanonicalPath();
     }
- catch (    IOException e) {
+ catch (    final IOException e) {
       throw new DSLException("Failed to get canonical path of work directory: " + workDir + ". Error was: "+ e.getMessage(),e);
     }
     if (this.context == null) {
@@ -49,5 +49,6 @@
     ((BaseServiceContext)this.context).init((Service)result);
   }
   this.dslClassLoader=gs.getClassLoader();
+  org.codehaus.groovy.reflection.ClassInfo.clearModifiedExpandos();
   return result;
 }

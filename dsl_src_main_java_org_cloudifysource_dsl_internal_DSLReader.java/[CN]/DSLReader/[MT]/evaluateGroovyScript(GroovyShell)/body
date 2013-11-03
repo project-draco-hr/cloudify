@@ -20,6 +20,9 @@ catch (    final MissingPropertyException e) {
 catch (    final DSLValidationRuntimeException e) {
       throw e.getDSLValidationException();
     }
+catch (    final CompilationFailedException e) {
+      throw new IllegalArgumentException("Could not parse " + dslFile + ": "+ e.getMessage(),e);
+    }
  finally {
       if (sis != null) {
         try {

@@ -3,7 +3,7 @@
   try {
     found=findDefaultDSLFile(fileNameSuffix,dir);
   }
- catch (  IllegalArgumentException e) {
+ catch (  final IllegalArgumentException e) {
     if (e.getMessage().contains("Found multiple configuration files")) {
       throw e;
     }

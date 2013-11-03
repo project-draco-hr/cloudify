@@ -1,5 +1,5 @@
 {
-  File[] files=findDefaultDSLFiles(fileNameSuffix,dir);
+  final File[] files=findDefaultDSLFiles(fileNameSuffix,dir);
   if (files == null || files.length == 0) {
     throw new IllegalArgumentException("Cannot find configuration file in " + dir.getAbsolutePath() + "/*"+ fileNameSuffix);
   }

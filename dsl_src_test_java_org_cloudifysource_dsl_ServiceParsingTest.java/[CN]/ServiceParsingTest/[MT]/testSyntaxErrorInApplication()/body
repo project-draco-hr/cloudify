@@ -1,0 +1,11 @@
+{
+  final File applicationDir=new File(TEST_SYNTAX_ERROR_IN_APPLICATION);
+  try {
+    ServiceReader.getApplicationFromFile(applicationDir);
+  }
+ catch (  final Exception e) {
+    Assert.assertTrue("Expected name of file in error message",e.getMessage().contains("nothing-service.groovy"));
+    return;
+  }
+  Assert.fail("Expected parsing compilation error");
+}

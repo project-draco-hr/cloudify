@@ -1,7 +1,7 @@
 {
-  for (  Entry<String,Object> entry : overrideProperties.entrySet()) {
-    String key=entry.getKey();
-    Object propertyValue=entry.getValue();
+  for (  final Entry<String,Object> entry : overrideProperties.entrySet()) {
+    final String key=entry.getKey();
+    final Object propertyValue=entry.getValue();
     properties.put(key,propertyValue);
   }
 }
