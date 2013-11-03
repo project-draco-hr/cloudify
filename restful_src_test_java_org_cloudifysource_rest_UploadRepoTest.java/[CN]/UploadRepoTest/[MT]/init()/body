@@ -1,4 +1,4 @@
 {
   repo=new UploadRepo();
-  repo.init(new File(CloudifyConstants.REST_FOLDER));
+  repo.init();
 }

@@ -3,7 +3,7 @@
   permissionEvaluator=restConfig.getPermissionEvaluator();
   repo.init();
   repo.setBaseDir(restConfig.getRestTempFolder());
-  logger.warning("***** starting DeolpymentsController, injecting rest temp folder to uploadrepo: " + restConfig.getRestTempFolder().getAbsolutePath());
+  logger.fine("starting DeolpymentsController, injecting rest temp folder to uploadrepo: " + restConfig.getRestTempFolder().getAbsolutePath());
   repo.createUploadDir();
   this.admin=restConfig.getAdmin();
   this.eventsCache=new EventsCache(admin);

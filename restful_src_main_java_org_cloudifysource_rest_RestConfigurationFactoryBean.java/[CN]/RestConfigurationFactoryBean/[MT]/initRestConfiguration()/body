@@ -1,12 +1,10 @@
 {
-  logger.warning("***** starting RestConfigurationFactoryBean.initRestConfiguration");
   logger.info("Initializing cloud configuration");
   config.setGigaSpace(gigaSpace);
   config.setAdmin(admin);
   config.setPermissionEvaluator(permissionEvaluator);
   Cloud cloud=readCloud();
   if (cloud != null) {
-    logger.warning("***** cloud is not null");
     config.setCloud(cloud);
     initCloudTemplates();
     CloudCompute cloudCompute=cloud.getCloudCompute();
@@ -19,7 +17,6 @@
     String managementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
     config.setManagementTemplateName(managementTemplateName);
     config.setManagementTemplate(cloudCompute.getTemplates().get(managementTemplateName));
-    logger.warning("***** calling createRestTempFolder()");
     config.setRestTempFolder(createRestTempFolder());
   }
  else {

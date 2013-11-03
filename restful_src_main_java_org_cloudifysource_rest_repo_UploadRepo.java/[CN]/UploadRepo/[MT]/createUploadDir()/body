@@ -1,13 +1,12 @@
 {
   restUploadDir=new File(baseDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
-  logger.warning("***** starting uploadReop, setting restUploadDir to: " + restUploadDir.getAbsolutePath());
+  logger.fine("starting uploadReop, setting restUploadDir to: " + restUploadDir.getAbsolutePath());
   restUploadDir.deleteOnExit();
   if (restUploadDir.exists()) {
     FileUtils.deleteDirectory(restUploadDir);
   }
   final boolean mkdirs=restUploadDir.mkdirs();
   final String absolutePath=restUploadDir.getAbsolutePath();
-  logger.warning("creating rest uploads directory at " + absolutePath);
   if (mkdirs) {
     if (logger.isLoggable(Level.INFO)) {
       logger.log(Level.INFO,"created rest uploads directory - " + absolutePath);
