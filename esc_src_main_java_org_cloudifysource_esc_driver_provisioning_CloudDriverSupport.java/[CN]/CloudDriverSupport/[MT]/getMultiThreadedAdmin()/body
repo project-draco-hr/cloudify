@@ -1,16 +1,3 @@
 {
-  if (this.multiThreadedAdmin != null) {
-    return this.multiThreadedAdmin;
-  }
-  final AdminFactory factory=new AdminFactory();
-  final String[] groups=singleThreadedAdmin.getGroups();
-  for (  final String group : groups) {
-    factory.addGroup(group);
-  }
-  final LookupLocator[] locators=singleThreadedAdmin.getLocators();
-  for (  final LookupLocator lookupLocator : locators) {
-    factory.addLocator(lookupLocator.toString());
-  }
-  this.multiThreadedAdmin=factory.createAdmin();
   return this.multiThreadedAdmin;
 }
