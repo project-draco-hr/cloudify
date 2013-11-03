@@ -1,9 +1,9 @@
 {
+  displayer.printEvent("installing_application",applicationName);
+  displayer.printEvent("waiting_for_lifecycle_of_application",applicationName);
   ApplicationInstallationProcessInspector inspector=new ApplicationInstallationProcessInspector(restClient,deploymentId,applicationName,false,plannedNumberOfInstancesPerService);
   int actualTimeout=initialTimeout;
   boolean isDone=false;
-  displayer.printEvent("installing_application",applicationName);
-  displayer.printEvent("waiting_for_lifecycle_of_application",applicationName);
   while (!isDone) {
     try {
       inspector.waitForLifeCycleToEnd(actualTimeout);

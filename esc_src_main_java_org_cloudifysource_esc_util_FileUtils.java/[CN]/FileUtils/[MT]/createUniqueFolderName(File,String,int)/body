@@ -1,0 +1,24 @@
+{
+  int index=0;
+  boolean uniqueNameFound=false;
+  String folderName=basicFolderName;
+  while (!uniqueNameFound && index < maxAppender) {
+    folderName=basicFolderName + (++index);
+    File restTempFolder=new File(parentFolder,folderName);
+    if (!restTempFolder.exists()) {
+      uniqueNameFound=true;
+    }
+  }
+  if (!uniqueNameFound) {
+    File tempFile=File.createTempFile(folderName,".tmp");
+    tempFile.deleteOnExit();
+    folderName=StringUtils.substringBeforeLast(tempFile.getName(),".tmp");
+    uniqueNameFound=true;
+  }
+  if (uniqueNameFound) {
+    return folderName;
+  }
+ else {
+    throw new IOException(CloudifyMessageKeys.UPLOAD_DIRECTORY_CREATION_FAILED.getName());
+  }
+}

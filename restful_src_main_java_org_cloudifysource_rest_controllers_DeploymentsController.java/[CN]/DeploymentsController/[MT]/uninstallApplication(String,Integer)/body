@@ -13,7 +13,9 @@
   final StringBuilder sb=new StringBuilder();
   final List<ProcessingUnit> uninstallOrder=createUninstallOrder(pus,appName);
   final String deploymentId=uninstallOrder.get(0).getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
-  FutureTask<Boolean> undeployTask=null;
+  logger.info("Uninstalling application " + appName + " . DeploymentId is "+ deploymentId);
+  logger.fine("Uninstall order is " + orderToNames(uninstallOrder));
+  FutureTask<Boolean> undeployTask;
   logger.log(Level.INFO,"Starting to poll for" + appName + " uninstall lifecycle events.");
   if (uninstallOrder.size() > 0) {
     undeployTask=new FutureTask<Boolean>(new Runnable(){
@@ -25,15 +27,16 @@
             final String puAuthGroups=processingUnit.getBeanLevelProperties().getContextProperties().getProperty(CloudifyConstants.CONTEXT_PROPERTY_AUTH_GROUPS);
             permissionEvaluator.verifyPermission(authDetails,puAuthGroups,"deploy");
           }
-          final long undeployTimeout=TimeUnit.MINUTES.toMillis(timeoutInMinutes) - (System.currentTimeMillis() - startTime);
+          final long undeployTimeout=startTime + TimeUnit.MINUTES.toMillis(timeoutInMinutes) - System.currentTimeMillis();
           try {
             if (processingUnit.waitForManaged(WAIT_FOR_MANAGED_TIMEOUT_SECONDS,TimeUnit.SECONDS) == null) {
               logger.log(Level.WARNING,"Failed to locate GSM that is managing Processing Unit " + processingUnit.getName());
             }
  else {
-              logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName());
+              logger.log(Level.INFO,"Undeploying Processing Unit " + processingUnit.getName() + " . Timeout is "+ undeployTimeout);
               populateEventsCache(deploymentId,processingUnit);
               processingUnit.undeployAndWait(undeployTimeout,TimeUnit.MILLISECONDS);
+              logger.log(Level.INFO,"Processing Unit " + processingUnit.getName() + " was "+ "undeployed successfully");
               final String serviceName=ServiceUtils.getApplicationServiceName(processingUnit.getName(),appName);
               logger.info("Removing application service scope attributes for service " + serviceName);
               deleteServiceAttributes(appName,serviceName);
@@ -47,7 +50,7 @@
         DeploymentEvent undeployFinishedEvent=new DeploymentEvent();
         undeployFinishedEvent.setDescription(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT);
         eventsCache.add(new EventsCacheKey(deploymentId),undeployFinishedEvent);
-        logger.log(Level.INFO,"Application " + appName + " undeployment complete");
+        logger.log(Level.INFO,"Application " + appName + " uninstalled successfully");
       }
     }
 ,Boolean.TRUE);

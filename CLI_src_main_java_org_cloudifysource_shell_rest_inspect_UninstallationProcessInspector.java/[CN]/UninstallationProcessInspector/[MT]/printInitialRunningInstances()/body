@@ -2,6 +2,6 @@
   for (  Map.Entry<String,Integer> entry : plannedNumberOfInstancesPerService.entrySet()) {
     String serviceName=entry.getKey();
     int numberOfRunningInstances=currentRunningInstancesPerService.get(serviceName);
-    displayer.printEvent(serviceName + ": installed " + numberOfRunningInstances+ " planned "+ entry.getValue());
+    displayer.printEvent(serviceName + ": Installed " + numberOfRunningInstances+ " Planned "+ entry.getValue());
   }
 }

@@ -1,0 +1,11 @@
+{
+  if (this.entity.getType() == null) {
+    throw new DSLValidationException("Missing type in access rule");
+  }
+  if (this.entity.getType().equals(AccessRuleType.GROUP) && this.entity.getTarget() == null) {
+    throw new DSLValidationException("Missing target in access rule of type GROUP");
+  }
+  if (this.entity.getType().equals(AccessRuleType.RANGE) && this.entity.getTarget() == null) {
+    throw new DSLValidationException("Missing target in access rule of type RANGE");
+  }
+}

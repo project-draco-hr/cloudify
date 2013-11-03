@@ -1,6 +1,9 @@
 {
   EventsCacheValue eventsCacheValue=eventsLoadingCache.asMap().get(key);
-  DeploymentEvents events=eventsCacheValue.getEvents();
-  event.setIndex(eventsCacheValue.getLastEventIndex() + 1);
-  events.getEvents().add(event);
+synchronized (eventsCacheValue.getMutex()) {
+    DeploymentEvents events=eventsCacheValue.getEvents();
+    event.setIndex(eventsCacheValue.getLastEventIndex() + 1);
+    logger.finest("Adding event " + event + " to cache value with key "+ key);
+    events.getEvents().add(event);
+  }
 }

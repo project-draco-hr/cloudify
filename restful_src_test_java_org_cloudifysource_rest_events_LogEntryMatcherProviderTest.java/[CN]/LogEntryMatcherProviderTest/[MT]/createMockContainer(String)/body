@@ -1,5 +1,6 @@
 {
   GridServiceContainer mockContainer=Mockito.mock(GridServiceContainer.class);
   Mockito.when(mockContainer.getUid()).thenReturn(containerUid);
+  Mockito.when(mockContainer.getExactZones()).thenReturn(new ExactZonesConfig());
   return mockContainer;
 }

@@ -1,12 +1,12 @@
 {
-  ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
-  String deploymentId=serviceDescription.getDeploymentId();
-  final int nextEventId=getNextEventId(restClient,deploymentId);
-  restClient.uninstallService(applicationName,serviceName,initialTimeout);
-  ServiceUninstallationProcessInspector inspector=new ServiceUninstallationProcessInspector(restClient,deploymentId,false,serviceDescription.getInstanceCount(),serviceName,applicationName,nextEventId);
-  boolean isDone=false;
   displayer.printEvent("uninstalling_service",serviceName);
   displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
+  ServiceDescription serviceDescription=restClient.getServiceDescription(applicationName,serviceName);
+  String deploymentId=serviceDescription.getDeploymentId();
+  final int lastEventIndex=restClient.getLastEvent(deploymentId).getIndex();
+  ServiceUninstallationProcessInspector inspector=new ServiceUninstallationProcessInspector(restClient,deploymentId,false,serviceDescription.getInstanceCount(),serviceName,applicationName,lastEventIndex);
+  restClient.uninstallService(applicationName,serviceName,initialTimeout);
+  boolean isDone=false;
   int actualTimeout=initialTimeout;
   while (!isDone) {
     try {

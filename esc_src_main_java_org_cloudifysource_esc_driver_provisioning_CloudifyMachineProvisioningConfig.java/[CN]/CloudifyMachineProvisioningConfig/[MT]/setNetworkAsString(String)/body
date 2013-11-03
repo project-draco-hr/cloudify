@@ -1,0 +1,3 @@
+{
+  properties.put(SERVICE_NETWORK_STRING_KEY,networkAsString);
+}

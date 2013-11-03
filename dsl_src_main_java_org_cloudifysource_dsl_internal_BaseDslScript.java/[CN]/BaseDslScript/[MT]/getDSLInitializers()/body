@@ -23,6 +23,8 @@
     addObjectInitializerForClass(dslObjectInitializersByName,StorageDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,ComputeDetails.class);
     addObjectInitializerForClass(dslObjectInitializersByName,Sla.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,AccessRules.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,AccessRule.class);
     dslObjectInitializersByName.put("userInterface",new DSLObjectInitializerData("userInterface",UserInterface.class,true,true,"service"));
     dslObjectInitializersByName.put("metricGroup",new DSLObjectInitializerData("metricGroup",MetricGroup.class,false,true,"userInterface"));
     dslObjectInitializersByName.put("widgetGroup",new DSLObjectInitializerData("widgetGroup",WidgetGroup.class,false,true,"userInterface"));

@@ -1,29 +1,29 @@
 {
   logger.fine(EventsUtils.getThreadId() + "Reloading events cache entry for key " + key);
-  Set<GridServiceContainer> containersForDeployment=new HashSet<GridServiceContainer>();
-  Set<GridServiceContainer> containers=oldValue.getContainers();
-  if (containers.isEmpty()) {
-    containersForDeployment.addAll(containerProvider.getContainersForDeployment(key.getDeploymentId()));
-  }
- else {
-    containersForDeployment.addAll(containers);
-  }
-  if (!containersForDeployment.isEmpty()) {
-    int index=oldValue.getLastEventIndex() + 1;
-    for (    GridServiceContainer container : containersForDeployment) {
+  oldValue.getContainers().addAll(containerProvider.getContainersForDeployment(key.getDeploymentId()));
+  if (!oldValue.getContainers().isEmpty()) {
+    int index=oldValue.getLastEventIndex();
+    for (    GridServiceContainer container : oldValue.getContainers()) {
       LogEntryMatcherProviderKey logEntryMatcherProviderKey=createKey(container,key);
       LogEntryMatcher matcher=matcherProvider.get(logEntryMatcherProviderKey);
-      LogEntries logEntries=container.logEntries(matcher);
-      for (      LogEntry logEntry : logEntries) {
-        if (logEntry.isLog()) {
-          DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
-          event.setIndex(index++);
-          oldValue.getEvents().getEvents().add(event);
+      if (container.isDiscovered()) {
+        logger.fine(EventsUtils.getThreadId() + "Retrieving logs from container " + container.getUid()+ container.getExactZones().getZones());
+        LogEntries logEntries=container.logEntries(matcher);
+        for (        LogEntry logEntry : logEntries) {
+          if (logEntry.isLog()) {
+            logger.finest(EventsUtils.getThreadId() + "Found log " + logEntry.getText()+ " for "+ "deployment id "+ key.getDeploymentId()+ " from container "+ container.getUid()+ container.getExactZones().getZones());
+            DeploymentEvent event=EventsUtils.logToEvent(logEntry,logEntries.getHostName(),logEntries.getHostAddress());
+            event.setIndex(++index);
+            oldValue.getEvents().getEvents().add(event);
+          }
         }
+      }
+ else {
+        logger.fine(EventsUtils.getThreadId() + "Not retrieving logs from container " + container.getUid()+ container.getExactZones().getZones()+ " since it is not discovered by the admin");
       }
     }
     oldValue.setLastRefreshedTimestamp(System.currentTimeMillis());
-    oldValue.setLastEventIndex(index - 1);
+    oldValue.setLastEventIndex(index);
   }
   return Futures.immediateFuture(oldValue);
 }

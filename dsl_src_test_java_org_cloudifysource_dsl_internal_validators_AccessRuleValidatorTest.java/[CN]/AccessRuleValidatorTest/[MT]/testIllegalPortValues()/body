@@ -1,0 +1,10 @@
+{
+  AccessRuleValidator fixture=new AccessRuleValidator();
+  AccessRule dslEntity=new AccessRule();
+  dslEntity.setPortRange("80-aaa");
+  dslEntity.setType(AccessRuleType.GROUP);
+  dslEntity.setTarget("My_Group");
+  fixture.setDSLEntity(dslEntity);
+  DSLValidationContext validationContext=new DSLValidationContext();
+  fixture.checkPortRange(validationContext);
+}

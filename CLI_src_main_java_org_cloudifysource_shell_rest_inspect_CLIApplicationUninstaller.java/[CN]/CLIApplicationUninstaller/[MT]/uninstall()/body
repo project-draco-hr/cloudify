@@ -2,6 +2,7 @@
   ApplicationDescription applicationDescription;
   try {
     applicationDescription=restClient.getApplicationDescription(applicationName);
+    logger.fine("Retrieved application description for application " + applicationName + " : "+ applicationDescription);
   }
  catch (  RestClientException e) {
     if (CloudifyMessageKeys.MISSING_RESOURCE.getName().equals(e.getMessageCode())) {
@@ -14,13 +15,14 @@
     currentNumberOfRunningInstancesPerService.put(serviceDescription.getServiceName(),serviceDescription.getInstanceCount());
   }
   final String deploymentId=applicationDescription.getServicesDescription().get(0).getDeploymentId();
-  final int nextEventId=getNextEventId(restClient,deploymentId);
-  ApplicationUninstallationProcessInspector inspector=new ApplicationUninstallationProcessInspector(restClient,deploymentId,false,currentNumberOfRunningInstancesPerService,applicationName,nextEventId);
+  logger.fine("DeploymentId for application " + applicationName + " is "+ deploymentId);
+  final int lastEventIndex=restClient.getLastEvent(deploymentId).getIndex();
+  ApplicationUninstallationProcessInspector inspector=new ApplicationUninstallationProcessInspector(restClient,deploymentId,false,currentNumberOfRunningInstancesPerService,applicationName,lastEventIndex);
   inspector.setServiceDescriptionList(applicationDescription.getServicesDescription());
-  restClient.uninstallApplication(applicationName,initialTimeout);
-  boolean isDone=false;
   displayer.printEvent("uninstalling_application",applicationName);
+  restClient.uninstallApplication(applicationName,initialTimeout);
   displayer.printEvent("waiting_for_lifecycle_of_application",applicationName);
+  boolean isDone=false;
   int actualTimeout=initialTimeout;
   while (!isDone) {
     try {

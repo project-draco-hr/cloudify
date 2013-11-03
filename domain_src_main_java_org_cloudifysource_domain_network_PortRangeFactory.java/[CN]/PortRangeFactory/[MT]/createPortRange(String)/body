@@ -1,0 +1,11 @@
+{
+  final StringTokenizer rangeTokenizer=new StringTokenizer(portRangeAsString,",");
+  int counter=1;
+  final PortRange result=new PortRange();
+  while (rangeTokenizer.hasMoreElements()) {
+    final String currentRangeString=rangeTokenizer.nextToken().trim();
+    handleCurrentRange(portRangeAsString,counter,result,currentRangeString);
+    ++counter;
+  }
+  return result;
+}

@@ -1,5 +1,7 @@
 {
   restUploadDir=new File(baseDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
+  logger.fine("starting uploadReop, setting restUploadDir to: " + restUploadDir.getAbsolutePath());
+  restUploadDir.deleteOnExit();
   if (restUploadDir.exists()) {
     FileUtils.deleteDirectory(restUploadDir);
   }

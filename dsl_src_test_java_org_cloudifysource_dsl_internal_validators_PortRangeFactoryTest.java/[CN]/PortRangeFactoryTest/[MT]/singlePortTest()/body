@@ -1,0 +1,7 @@
+{
+  final PortRange range=PortRangeFactory.createPortRange("80");
+  Assert.assertNotNull(range);
+  Assert.assertEquals(1,range.getRanges().size());
+  Assert.assertEquals((Integer)80,range.getRanges().get(0).getFrom());
+  Assert.assertEquals(null,range.getRanges().get(0).getTo());
+}

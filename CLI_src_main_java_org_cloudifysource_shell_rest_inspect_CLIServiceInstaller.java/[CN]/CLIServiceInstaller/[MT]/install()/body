@@ -1,9 +1,9 @@
 {
+  displayer.printEvent("installing_service",serviceName,plannedNumberOfInstances);
+  displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
   ServiceInstallationProcessInspector inspector=new ServiceInstallationProcessInspector(restClient,deploymentId,false,serviceName,plannedNumberOfInstances,applicationName);
   int actualTimeout=initialTimeout;
   boolean isDone=false;
-  displayer.printEvent("installing_service",serviceName,plannedNumberOfInstances);
-  displayer.printEvent("waiting_for_lifecycle_of_service",serviceName);
   while (!isDone) {
     try {
       inspector.waitForLifeCycleToEnd(actualTimeout);

@@ -2,9 +2,9 @@
   EventsCacheLoader loader=new EventsCacheLoader(new MockOneGridServiceContainerProvider());
   EventsCacheKey eventsCacheKey=new EventsCacheKey("deploymentId");
   EventsCacheValue loadedValue=loader.load(eventsCacheKey);
-  Assert.assertEquals(LOG_ENTRIES_BATCH_SIZE - 1,loadedValue.getLastEventIndex());
+  Assert.assertEquals(LOG_ENTRIES_BATCH_SIZE,loadedValue.getLastEventIndex());
   List<DeploymentEvent> events=loadedValue.getEvents().getEvents();
-  for (int i=0; i < LOG_ENTRIES_BATCH_SIZE; i++) {
+  for (int i=1; i < LOG_ENTRIES_BATCH_SIZE; i++) {
     DeploymentEvent event=EventsUtils.retrieveEventWithIndex(i,events);
     Assert.assertNotNull(event);
   }

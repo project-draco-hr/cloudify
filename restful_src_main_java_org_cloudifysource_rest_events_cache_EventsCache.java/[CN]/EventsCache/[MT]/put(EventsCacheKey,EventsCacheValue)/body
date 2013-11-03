@@ -1,5 +1,9 @@
 {
   if (!eventsLoadingCache.asMap().containsKey(key)) {
+    logger.finest("Putting new value in events cache for key " + key + " : "+ value);
     eventsLoadingCache.asMap().put(key,value);
+  }
+ else {
+    logger.finest("Not putting new value in events cache for key " + key + " . it already exists.");
   }
 }

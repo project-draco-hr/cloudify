@@ -21,7 +21,7 @@
     }
     if (lastException != null) {
       if (logger.isLoggable(Level.WARNING)) {
-        logger.warning("Execute get request to " + request.getURI() + " failed after "+ numOfTrials+ " tries. exception was: "+ lastException);
+        logger.warning("Failed executing " + request.getMethod() + " request to "+ request.getURI()+ " : "+ lastException.getMessage());
       }
       throw MessagesUtils.createRestClientIOException(RestClientMessageKeys.EXECUTION_FAILURE.getName(),lastException,request.getURI());
     }

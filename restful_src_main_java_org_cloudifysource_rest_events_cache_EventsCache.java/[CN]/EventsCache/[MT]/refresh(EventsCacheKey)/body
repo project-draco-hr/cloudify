@@ -1,3 +1,4 @@
 {
+  logger.finest("Refreshing events cache for entry " + key);
   eventsLoadingCache.refresh(key);
 }

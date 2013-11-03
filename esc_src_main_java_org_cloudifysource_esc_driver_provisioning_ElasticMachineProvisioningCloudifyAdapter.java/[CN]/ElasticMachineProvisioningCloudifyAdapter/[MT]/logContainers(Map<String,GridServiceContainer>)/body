@@ -3,7 +3,13 @@
   for (  final Map.Entry<String,GridServiceContainer> entry : undiscoveredAgentsContainersPerPUIName.entrySet()) {
     final GridServiceContainer container=entry.getValue();
     final String processingUnitInstanceName=entry.getKey();
-    builder.append("GridServiceContainer[uid=" + container.getUid() + "] agentId=["+ container.getAgentId()+ "] processingUnitInstanceName=["+ processingUnitInstanceName+ "]");
+    if (container == null) {
+      builder.append("GridServiceContainer is null");
+    }
+ else {
+      builder.append("GridServiceContainer[uid=" + container.getUid() + "] agentId=["+ container.getAgentId()+ "]");
+    }
+    builder.append(" processingUnitInstanceName=[" + processingUnitInstanceName + "]");
     builder.append(",");
   }
   return builder.toString();

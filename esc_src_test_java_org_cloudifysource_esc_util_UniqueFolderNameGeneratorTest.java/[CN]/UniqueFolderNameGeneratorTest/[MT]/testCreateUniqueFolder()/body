@@ -1,0 +1,21 @@
+{
+  try {
+    String uniqueFolderName=FileUtils.createUniqueFolderName(parentFolder,BASIC_FOLDER_NAME,MAX_APPENDER);
+    Assert.assertTrue(uniqueFolderName.equalsIgnoreCase(BASIC_FOLDER_NAME + 1));
+    File tempFolder1=new File(parentFolder,uniqueFolderName);
+    tempFolder1.deleteOnExit();
+    Assert.assertTrue(tempFolder1.mkdirs());
+    uniqueFolderName=FileUtils.createUniqueFolderName(parentFolder,BASIC_FOLDER_NAME,MAX_APPENDER);
+    Assert.assertTrue(uniqueFolderName.equalsIgnoreCase(BASIC_FOLDER_NAME + 2));
+    File tempFolder2=new File(parentFolder,uniqueFolderName);
+    tempFolder2.deleteOnExit();
+    Assert.assertTrue(tempFolder2.mkdirs());
+    uniqueFolderName=FileUtils.createUniqueFolderName(parentFolder,BASIC_FOLDER_NAME,MAX_APPENDER);
+    File tempFolderRandom=new File(parentFolder,uniqueFolderName);
+    tempFolderRandom.deleteOnExit();
+    Assert.assertTrue(tempFolderRandom.mkdirs());
+  }
+ catch (  IOException e) {
+    Assert.fail("Creating a unique folder in " + parentFolder.getAbsolutePath() + " failed: "+ e.getMessage());
+  }
+}

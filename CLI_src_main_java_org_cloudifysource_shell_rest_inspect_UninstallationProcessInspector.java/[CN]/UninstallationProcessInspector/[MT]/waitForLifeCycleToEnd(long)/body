@@ -32,7 +32,7 @@
         int currentRunningInstances=getNumberOfRunningInstances(serviceName);
         Integer lastUpdatedRunningInstances=currentRunningInstancesPerService.get(serviceName);
         if (currentRunningInstances < lastUpdatedRunningInstances) {
-          displayer.printEvent(serviceName + ": installed " + currentRunningInstances+ " planned "+ entry.getValue());
+          displayer.printEvent(serviceName + " : Installed " + currentRunningInstances+ " Planned "+ entry.getValue());
           currentRunningInstancesPerService.put(serviceName,currentRunningInstances);
         }
       }

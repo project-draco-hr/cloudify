@@ -1,0 +1,7 @@
+{
+  final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[waitForPu] waiting for processing unit with name " + absolutePuName + " to be created.");
+  }
+  return admin.getProcessingUnits().waitFor(absolutePuName,timeout,timeUnit) != null;
+}

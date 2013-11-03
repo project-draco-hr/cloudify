@@ -40,11 +40,16 @@
   installer.setInitialTimeout(timeoutInMinutes);
   installer.setRestClient(newRestClient);
   installer.setSession(session);
-  installer.install();
-  if (!applicationFile.isFile()) {
-    final boolean delete=packedFile.delete();
-    if (!delete) {
-      logger.info("Failed to delete application file: " + packedFile.getAbsolutePath());
+  try {
+    installer.install();
+  }
+  finally {
+    displayer.printEvent("");
+    if (!applicationFile.isFile()) {
+      final boolean delete=FileUtils.deleteQuietly(packedFile);
+      if (!delete) {
+        logger.info("Failed to delete application file: " + packedFile.getAbsolutePath());
+      }
     }
   }
   session.put(Constants.ACTIVE_APP,applicationName);

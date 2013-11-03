@@ -1,7 +1,7 @@
 {
-  String packedFileName=packedFile.getName();
+  final String packedFileName=packedFile.getName();
   String fileType="";
-  String[] split=packedFileName.split("\\.");
+  final String[] split=packedFileName.split("\\.");
   if (split.length > 1) {
     fileType="." + split[split.length - 1];
   }
