@@ -1,0 +1,37 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  sb.append("{\"server\":{");
+  if (StringUtils.isEmpty(name)) {
+    throw new IllegalStateException("The 'name' field is mandatory.");
+  }
+  sb.append("\"name\":\"").append(name).append("\"");
+  if (StringUtils.isEmpty(imageRef)) {
+    throw new IllegalStateException("The 'imageRef' field is mandatory.");
+  }
+  sb.append(",\"imageRef\":\"").append(imageRef).append("\"");
+  if (StringUtils.isEmpty(flavorRef)) {
+    throw new IllegalStateException("The 'flavorRef' field is mandatory.");
+  }
+  sb.append(",\"flavorRef\":\"").append(flavorRef).append("\"");
+  if (StringUtils.isNotEmpty(keyName)) {
+    sb.append(",\"key_name\":\"").append(keyName).append("\"");
+  }
+  if (!securityGroups.isEmpty()) {
+    sb.append(",\"security_groups\":[");
+    for (    final String securityGroup : securityGroups) {
+      sb.append("{\"name\":\"").append(securityGroup).append("\"},");
+    }
+    sb.setLength(sb.length() - 1);
+    sb.append("]");
+  }
+  if (!networks.isEmpty()) {
+    sb.append(",\"networks\":[");
+    for (    final String idNetwork : networks) {
+      sb.append("{\"uuid\":\"").append(idNetwork).append("\"},");
+    }
+    sb.setLength(sb.length() - 1);
+    sb.append("]");
+  }
+  sb.append("}}");
+  return sb.toString();
+}

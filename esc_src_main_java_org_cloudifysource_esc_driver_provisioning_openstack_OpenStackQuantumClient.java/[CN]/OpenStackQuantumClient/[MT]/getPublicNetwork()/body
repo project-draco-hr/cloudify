@@ -1,0 +1,11 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Requesting networks list");
+  }
+  final String response=this.getWebResource().path("networks").queryParam("router:external","true").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final NetworksResponse networkResponse=JsonUtils.mapJsonToObject(NetworksResponse.class,response);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Response for networks list: " + networkResponse);
+  }
+  return networkResponse;
+}

@@ -1,0 +1,13 @@
+{
+  if (JsonToken.START_OBJECT != jp.getCurrentToken()) {
+    throw ctxt.mappingException("Expected START OBJECT got: " + jp.getCurrentName());
+  }
+  final List<NovaServerAddress> addresses=new ArrayList<NovaServerAddress>();
+  while (JsonToken.END_OBJECT != jp.nextToken()) {
+    final List<NovaServerAddress> deserialized=this.deserializeResource(jp,ctxt);
+    if (deserialized != null) {
+      addresses.addAll(deserialized);
+    }
+  }
+  return addresses;
+}

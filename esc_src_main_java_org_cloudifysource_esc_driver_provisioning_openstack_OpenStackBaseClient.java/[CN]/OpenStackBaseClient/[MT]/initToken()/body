@@ -1,0 +1,16 @@
+{
+  final Client client=Client.create();
+  try {
+    logger.info("Request openstack " + this.getServiceName() + " new token.");
+    final WebResource webResource=client.resource(this.endpoint);
+    final String tokenJsonRequest="{\"auth\":{\"passwordCredentials\":" + "{\"username\": \"%s\", \"password\":\"%s\"}, \"tenantName\":\"%s\"}}";
+    final String input=String.format(tokenJsonRequest,username,password,tenant);
+    final String response=webResource.path("tokens").accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).post(String.class,input);
+    this.token=JsonUtils.mapJsonToObject(TokenResponse.class,response);
+  }
+  finally {
+    if (client != null) {
+      client.destroy();
+    }
+  }
+}

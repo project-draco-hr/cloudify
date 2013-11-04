@@ -1,0 +1,13 @@
+{
+  logger.severe("Of the required " + numberOfManagementMachines + " management machines, "+ numberOfErrors+ " failed to start.");
+  if (numberOfManagementMachines > numberOfErrors) {
+    logger.severe("Shutting down the other managememnt machines");
+    for (    final MachineDetails machineDetails : createdManagementMachines) {
+      if (machineDetails != null) {
+        logger.severe("Shutting down machine: " + machineDetails);
+        this.novaApi.deleteServer(machineDetails.getMachineId());
+      }
+    }
+  }
+  throw new CloudProvisioningException("One or more managememnt machines failed. The first encountered error was: " + firstCreationException.getMessage(),firstCreationException);
+}

@@ -1,0 +1,15 @@
+{
+  final WebResource webResource=this.getWebResource();
+  final String computeRequest=request.computeRequest();
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=createServer: " + computeRequest);
+  }
+  try {
+    final String response=webResource.path("servers").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,computeRequest);
+    final NovaServerResponse nsr=JsonUtils.mapJsonToObject(NovaServerResponse.class,response);
+    return nsr.getServer();
+  }
+ catch (  Exception e) {
+    throw new CloudProvisioningException("Could not create a new server",e);
+  }
+}

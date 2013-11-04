@@ -1,0 +1,14 @@
+{
+  final MachineDetails md=this.createMachineDetailsForTemplate(template);
+  md.setMachineId(server.getId());
+  md.setCloudifyInstalled(false);
+  md.setInstallationDirectory(null);
+  md.setOpenFilesLimit(template.getOpenFilesLimit());
+  final Network managementNetwork=quantumApi.getNetworkByName(this.managementNetworkName);
+  final Port managementPort=quantumApi.getPort(server.getId(),managementNetwork.getId());
+  final FixedIp fixedIp=managementPort.getFixedIps().get(0);
+  md.setPrivateAddress(fixedIp.getIpAddress());
+  md.setPublicAddress(quantumApi.getFloatingIpByPortId(managementPort.getId()));
+  this.handleServerCredentials(md,template);
+  return md;
+}

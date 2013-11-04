@@ -1,0 +1,4 @@
+{
+  this.remoteIpPrefix=remoteIpPrefix;
+  return this;
+}

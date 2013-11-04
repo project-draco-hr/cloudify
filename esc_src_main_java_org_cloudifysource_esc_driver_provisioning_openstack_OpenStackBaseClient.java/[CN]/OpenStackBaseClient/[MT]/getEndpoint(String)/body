@@ -1,0 +1,12 @@
+{
+  for (  TokenServiceCatalog tsc : this.token.getAccess().getServiceCatalog()) {
+    if (endpointType.equals(tsc.getName())) {
+      for (      TokenServiceCatalogEndpoint endpoint : tsc.getEndpoints()) {
+        if (this.region.equals(endpoint.getRegion())) {
+          return endpoint.getPublicURL();
+        }
+      }
+    }
+  }
+  return null;
+}

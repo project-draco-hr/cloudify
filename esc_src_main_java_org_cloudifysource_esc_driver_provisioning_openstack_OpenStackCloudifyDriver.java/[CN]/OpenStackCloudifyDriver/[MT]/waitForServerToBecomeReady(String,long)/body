@@ -1,0 +1,23 @@
+{
+  while (System.currentTimeMillis() < endTime) {
+    final NovaServer server=novaApi.getServerDetails(serverId);
+    if (server == null) {
+      logger.fine("Server Status (" + serverId + ") Not Found, please wait...");
+      Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
+      break;
+    }
+ else {
+switch (server.getStatus()) {
+case ACTIVE:
+        return server;
+case BUILD:
+      logger.fine("Server Status (" + serverId + ") still PENDING, please wait...");
+    Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
+  break;
+default :
+throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + server.getStatus().toString() + " state. Node details: "+ server);
+}
+}
+}
+throw new TimeoutException("Node failed to reach RUNNING mode in time");
+}

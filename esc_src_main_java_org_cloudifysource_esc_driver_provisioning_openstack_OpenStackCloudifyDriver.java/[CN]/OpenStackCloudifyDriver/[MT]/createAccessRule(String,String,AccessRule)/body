@@ -1,0 +1,52 @@
+{
+  final String securityGroupName=this.securityGroupNames.getServiceName();
+  final SecurityGroup securityGroup=quantumApi.getSecurityGroupsByName(securityGroupName);
+  final PortRange portRange=PortRangeFactory.createPortRange(accessRule.getPortRange());
+  String targetSecurityGroupId=securityGroup.getId();
+  String ip="0.0.0.0/0";
+  String group=null;
+switch (accessRule.getType()) {
+case PUBLIC:
+    final SecurityGroup servicePublicSecgroup=quantumApi.getSecurityGroupsByName(this.securityGroupNames.getServicePublicName());
+  targetSecurityGroupId=servicePublicSecgroup.getId();
+break;
+case SERVICE:
+group=this.securityGroupNames.getServiceName();
+break;
+case APPLICATION:
+group=this.securityGroupNames.getApplicationName();
+break;
+case CLUSTER:
+group=this.securityGroupNames.getClusterName();
+break;
+case GROUP:
+group=accessRule.getTarget();
+break;
+case RANGE:
+if (accessRule.getTarget() == null) {
+throw new IllegalStateException("No IP defined for the 'Range' access rule type :" + accessRule);
+}
+ip=accessRule.getTarget();
+break;
+case PRIVATE:
+default :
+throw new IllegalStateException("Unsupported type of rule '" + accessRule.getType() + "'");
+}
+SecurityGroup existingSecgroup=null;
+if (group != null) {
+existingSecgroup=this.quantumApi.getSecurityGroupsByName(group);
+if (existingSecgroup == null) {
+throw new IllegalStateException("Security group '" + group + "' does not exist.");
+}
+}
+for (final PortRangeEntry pre : portRange.getRanges()) {
+final SecurityGroupRulesRequest request=new SecurityGroupRulesRequest().setDirection(direction).setProtocol(protocol).setSecurityGroupId(targetSecurityGroupId).setPortRangeMax(pre.getTo() == null ? pre.getFrom().toString() : pre.getTo().toString()).setPortRangeMin(pre.getFrom().toString());
+if (existingSecgroup != null) {
+request.setRemoteGroupId(existingSecgroup.getId());
+}
+ else {
+request.setRemoteIpPrefix(ip);
+}
+quantumApi.createSecurityGroupRules(request);
+}
+}

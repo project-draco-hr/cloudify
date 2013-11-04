@@ -1,0 +1,24 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=getServerWithName");
+  }
+  final WebResource webResource=this.getWebResource();
+  try {
+    final String response=webResource.path("servers").queryParam("name",prefix).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+    final NovaServersResponse nsr=JsonUtils.mapJsonToObject(NovaServersResponse.class,response);
+    final NovaServer[] servers=nsr.getServers();
+    final List<NovaServer> list=new ArrayList<NovaServer>(servers.length);
+    for (    final NovaServer sv : servers) {
+      final NovaServer serverDetails=this.getServerDetails(sv.getId());
+      list.add(serverDetails);
+    }
+    return list;
+  }
+ catch (  final UniformInterfaceException e) {
+    if (RESOURCE_NOT_FOUND_STATUS == e.getResponse().getStatus()) {
+      logger.warning("Server (prefix=" + prefix + ") not found.");
+      return new ArrayList<NovaServer>(0);
+    }
+    throw new CloudProvisioningException(e);
+  }
+}

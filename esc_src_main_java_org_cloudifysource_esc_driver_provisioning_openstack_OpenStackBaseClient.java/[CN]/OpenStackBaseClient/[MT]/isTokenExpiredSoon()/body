@@ -1,0 +1,8 @@
+{
+  if (token == null) {
+    return true;
+  }
+  long current=System.currentTimeMillis() + TOKEN_TIMEOUT_MARGING;
+  long tokenExpires=token.getAccess().getToken().getExpires().getTime();
+  return current > tokenExpires;
+}

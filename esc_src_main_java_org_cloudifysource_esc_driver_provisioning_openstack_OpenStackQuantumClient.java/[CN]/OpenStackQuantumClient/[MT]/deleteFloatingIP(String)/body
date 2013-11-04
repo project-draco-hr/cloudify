@@ -1,0 +1,12 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Deleting floating id=" + floatingIPId);
+  }
+  final ClientResponse response=this.getWebResource().path("floatingips/" + floatingIPId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+  if (OK_STATUS != response.getStatus()) {
+    throw new OpenstackException("" + response.getStatus());
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted floating id=" + floatingIPId);
+  }
+}

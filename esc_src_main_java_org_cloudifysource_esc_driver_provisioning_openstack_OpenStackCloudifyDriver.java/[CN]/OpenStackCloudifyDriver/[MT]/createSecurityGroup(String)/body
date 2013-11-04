@@ -1,0 +1,4 @@
+{
+  final SecurityGroupsRequest request=new SecurityGroupsRequest().setName(secgroupName).setDescription("Security groups " + secgroupName);
+  return quantumApi.createSecurityGroupsIfNotExist(request);
+}

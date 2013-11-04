@@ -1,0 +1,29 @@
+{
+  if (networkId == null) {
+    throw new OpenstackException("Public network not found for deviceId=" + deviceId);
+  }
+  final String floatingNetworkId=this.getPublicNetworkId();
+  final Port port=this.getPort(deviceId,networkId);
+  if (port == null) {
+    throw new OpenstackException("Port not found for deviceId=" + deviceId);
+  }
+  try {
+    final String input=String.format("{\"floatingip\":{\"floating_network_id\":\"%s\",\"port_id\":\"%s\"}}",floatingNetworkId,port.getId());
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("Requesting creation and association request=" + input);
+    }
+    final String response=this.getWebResource().path("floatingips").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,input);
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("Response creation and association response=" + response);
+    }
+    final FloatingIpResponse floatingIpResponse=JsonUtils.mapJsonToObject(FloatingIpResponse.class,response);
+    return floatingIpResponse.getFloatingip().getFloatingIpAddress();
+  }
+ catch (  final UniformInterfaceException e) {
+    final ClientResponse response=e.getResponse();
+    if (FLOATING_IP_EXCEEDED_STATUS == response.getStatus()) {
+      throw new OpenstackException("Could not create Floating Ip. Quota exceeded.");
+    }
+    throw new OpenstackException("Couldn't create/associate floating Ip (status=" + response.getStatus() + ")",e);
+  }
+}

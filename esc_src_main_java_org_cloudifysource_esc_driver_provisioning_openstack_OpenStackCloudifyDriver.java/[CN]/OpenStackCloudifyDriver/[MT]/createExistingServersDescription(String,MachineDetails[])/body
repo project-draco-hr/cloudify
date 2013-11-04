@@ -1,0 +1,17 @@
+{
+  logger.info("Found existing servers matching the name: " + managementMachinePrefix);
+  final StringBuilder sb=new StringBuilder();
+  boolean first=true;
+  for (  final MachineDetails machineDetails : existingManagementServers) {
+    final String existingManagementServerDescription=createManagementServerDescription(machineDetails);
+    if (first) {
+      first=false;
+    }
+ else {
+      sb.append(", ");
+    }
+    sb.append("[").append(existingManagementServerDescription).append("]");
+  }
+  final String serverDescriptions=sb.toString();
+  return serverDescriptions;
+}

@@ -1,0 +1,29 @@
+{
+  super.setConfig(configuration);
+  final String serviceName;
+  if (!this.management) {
+    StringTokenizer st=new StringTokenizer(configuration.getServiceName(),".");
+    if (st.countTokens() == 2) {
+      applicationName=st.nextToken();
+      serviceName=st.nextToken();
+    }
+ else {
+      applicationName="default";
+      serviceName=st.nextToken();
+    }
+  }
+ else {
+    applicationName=null;
+    serviceName=null;
+  }
+  final String managementGroup=cloud.getProvider().getManagementGroup();
+  final String securityGroupPrefix=managementGroup == null ? MANAGMENT_MACHINE_PREFIX : managementGroup;
+  this.securityGroupNames=new SecurityGroupNames(securityGroupPrefix,applicationName,serviceName);
+  final String managementMachineTemplate=this.cloud.getConfiguration().getManagementMachineTemplate();
+  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(managementMachineTemplate);
+  this.managementNetworkName=(String)template.getOptions().get(OPT_PRIVATE_NETWORK);
+  this.managementNetworkName=this.managementNetworkName == null ? DEFAULT_MANAGEMENT_NETWORK : this.managementNetworkName;
+  if (!management) {
+    this.applicationNetworkName="cloudify-default-application-network";
+  }
+}

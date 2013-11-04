@@ -1,0 +1,3 @@
+{
+  super(endpoint,username,password,tenant,region);
+}

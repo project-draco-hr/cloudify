@@ -1,0 +1,18 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=getServerDetails: " + serverId);
+  }
+  final WebResource webResource=this.getWebResource();
+  final String response;
+  try {
+    response=webResource.path("servers/" + serverId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  }
+ catch (  final UniformInterfaceException e) {
+    if (RESOURCE_NOT_FOUND_STATUS == e.getResponse().getStatus()) {
+      return null;
+    }
+    throw new CloudProvisioningException(e);
+  }
+  final NovaServerResponse nsr=JsonUtils.mapJsonToObject(NovaServerResponse.class,response);
+  return nsr.getServer();
+}

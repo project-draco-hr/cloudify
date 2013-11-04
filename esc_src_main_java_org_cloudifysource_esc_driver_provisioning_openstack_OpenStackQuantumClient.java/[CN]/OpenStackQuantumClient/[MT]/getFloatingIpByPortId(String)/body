@@ -1,0 +1,9 @@
+{
+  final String response=this.getWebResource().path("floatingips").queryParam("port_id",portId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final FloatingIpsResponse floatingips=JsonUtils.mapJsonToObject(FloatingIpsResponse.class,response);
+  final List<FloatingIp> list=floatingips.getFloatingips();
+  if (list != null && !list.isEmpty()) {
+    return list.get(0).getFloatingIpAddress();
+  }
+  return null;
+}

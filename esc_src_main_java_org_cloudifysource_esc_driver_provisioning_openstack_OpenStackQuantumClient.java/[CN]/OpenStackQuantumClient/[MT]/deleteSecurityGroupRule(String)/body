@@ -1,0 +1,12 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Deleting security group rule id=" + securityGroupRuleId);
+  }
+  final ClientResponse response=this.getWebResource().path("security-group-rules/" + securityGroupRuleId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+  if (OK_STATUS != response.getStatus()) {
+    throw new OpenstackException("" + response.getStatus());
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted security group id=" + securityGroupRuleId);
+  }
+}

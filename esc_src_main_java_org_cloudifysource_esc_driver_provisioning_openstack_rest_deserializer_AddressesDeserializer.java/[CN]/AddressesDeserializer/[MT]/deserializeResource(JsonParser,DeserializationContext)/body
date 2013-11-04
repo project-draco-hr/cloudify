@@ -1,0 +1,13 @@
+{
+  final String addressName=jp.getText();
+  jp.nextToken();
+  final List<NovaServerAddress> list=new ArrayList<NovaServerAddress>();
+  while (JsonToken.END_ARRAY != jp.nextToken()) {
+    final JsonNode jsonNode=jp.readValueAsTree();
+    final ObjectCodec codec=jp.getCodec();
+    final NovaServerAddress address=codec.treeToValue(jsonNode,NovaServerAddress.class);
+    address.setName(addressName);
+    list.add(address);
+  }
+  return list;
+}

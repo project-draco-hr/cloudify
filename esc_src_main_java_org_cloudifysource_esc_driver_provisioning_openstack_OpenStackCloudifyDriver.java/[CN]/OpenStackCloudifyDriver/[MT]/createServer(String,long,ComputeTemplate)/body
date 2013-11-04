@@ -1,0 +1,40 @@
+{
+  final String imageId=template.getImageId().split("/")[1];
+  final String hardwareId=template.getHardwareId().split("/")[1];
+  final String keyName=(String)template.getOptions().get(OPT_KEY_PAIR);
+  String serverId=null;
+  try {
+    final Network managementNetwork=quantumApi.getNetworkByName(this.managementNetworkName);
+    final NovaServersResquest request=new NovaServersResquest();
+    request.setName(serverName);
+    request.setKeyName(keyName);
+    request.setImageRef(imageId);
+    request.setFlavorRef(hardwareId);
+    request.addNetworks(managementNetwork.getId());
+    if (!management) {
+      final Network appliNetwork=quantumApi.getNetworkByName(this.applicationNetworkName);
+      request.addNetworks(appliNetwork.getId());
+    }
+    NovaServer newServer=novaApi.createServer(request);
+    serverId=newServer.getId();
+    newServer=this.waitForServerToBecomeReady(serverId,endTime);
+    quantumApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
+    if (this.management) {
+      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName()});
+    }
+ else {
+      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getServicePublicName()});
+      final Network appliNetwork=quantumApi.getNetworkByName(this.applicationNetworkName);
+      this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
+    }
+    final MachineDetails md=this.createMachineDetails(template,newServer);
+    return md;
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
+    if (serverId != null) {
+      novaApi.deleteServer(serverId);
+    }
+    throw new CloudProvisioningException(e);
+  }
+}

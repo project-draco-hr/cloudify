@@ -1,0 +1,24 @@
+{
+  final String ssgName=this.securityGroupNames.getServiceName();
+  logger.info("Service '" + ssgName + "'is being uninstall.");
+  try {
+    final Applications applications=this.admin.getApplications();
+    final Application application=applications.getApplication(applicationName);
+    if (application == null) {
+      logger.info("No remaining services in the application. Delete the application security group.");
+      final String applicationName=this.securityGroupNames.getApplicationName();
+      final SecurityGroup secgroup=this.quantumApi.getSecurityGroupsByName(applicationName);
+      if (secgroup != null) {
+        quantumApi.deleteSecurityGroup(secgroup.getId());
+      }
+    }
+    logger.info("Clean service's security group :" + ssgName + "*");
+    final List<SecurityGroup> securityGroups=this.quantumApi.getSecurityGroupsByPrefix(ssgName);
+    for (    final SecurityGroup securityGroup : securityGroups) {
+      this.quantumApi.deleteSecurityGroup(securityGroup.getId());
+    }
+  }
+ catch (  Exception e) {
+    logger.log(Level.SEVERE,"Fail to clean security group resources of service " + ssgName,e);
+  }
+}

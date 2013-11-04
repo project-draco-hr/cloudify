@@ -1,0 +1,12 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Deleting security group id=" + securityGroupId);
+  }
+  final ClientResponse response=this.getWebResource().path("security-groups/" + securityGroupId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+  if (OK_STATUS != response.getStatus()) {
+    throw new OpenstackException("" + response.getStatus());
+  }
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted security group id=" + securityGroupId);
+  }
+}

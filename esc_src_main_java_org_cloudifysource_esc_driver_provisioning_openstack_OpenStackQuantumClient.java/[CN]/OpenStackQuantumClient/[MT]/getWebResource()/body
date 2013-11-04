@@ -1,0 +1,7 @@
+{
+  WebResource webResource=super.getWebResource();
+  if (this.quantumVersion != null) {
+    webResource=webResource.path(this.quantumVersion);
+  }
+  return webResource;
+}
