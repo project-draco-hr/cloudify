@@ -69,7 +69,9 @@ catch (    final UserAuthException e) {
 );
       File[] files=localDirectory.listFiles();
       for (      File file : files) {
-        uploadClient.copy(new FileSystemFile(file),details.getRemoteDir());
+        if (!excludedFiles.contains(file.getName())) {
+          uploadClient.copy(new FileSystemFile(file),details.getRemoteDir());
+        }
       }
       for (      File file : additionalFiles) {
         transfer.upload(new FileSystemFile(file),details.getRemoteDir());
