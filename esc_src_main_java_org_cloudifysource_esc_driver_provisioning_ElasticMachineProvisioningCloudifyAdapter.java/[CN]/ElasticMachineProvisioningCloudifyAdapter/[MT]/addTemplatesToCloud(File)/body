@@ -1,13 +1,19 @@
 {
-  logger.info("addTemplatesToCloud - adding templates from directory " + cloudConfigDirectory.getAbsolutePath());
-  final File additionalTemplatesFolder=new File(cloudConfigDirectory,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
+  File additionalTemplatesParentFolder=cloudConfigDirectory;
+  String persistentStoragePath=cloud.getConfiguration().getPersistentStoragePath();
+  if (persistentStoragePath != null) {
+    logger.severe("[addTemplatesToCloud] - using the persistent storage path as the additional templates parentFolder.");
+    additionalTemplatesParentFolder=new File(persistentStoragePath);
+  }
+  logger.info("[addTemplatesToCloud] - adding templates from directory " + additionalTemplatesParentFolder.getAbsolutePath());
+  final File additionalTemplatesFolder=new File(additionalTemplatesParentFolder,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
   if (!additionalTemplatesFolder.exists()) {
-    logger.info("addTemplatesToCloud - no additional templates to add from directory " + cloudConfigDirectory.getAbsolutePath());
+    logger.info("[addTemplatesToCloud] - no additional templates to add from directory " + additionalTemplatesParentFolder.getAbsolutePath());
     return;
   }
   final File[] listFiles=additionalTemplatesFolder.listFiles();
-  logger.info("addTemplatesToCloud - found files: " + Arrays.toString(listFiles));
+  logger.info("[addTemplatesToCloud] - found files: " + Arrays.toString(listFiles));
   final ComputeTemplatesReader reader=new ComputeTemplatesReader();
   final List<ComputeTemplate> addedTemplates=reader.addAdditionalTemplates(cloud,listFiles);
-  logger.info("addTemplatesToCloud - Added " + addedTemplates.size() + " templates to the cloud: "+ addedTemplates);
+  logger.info("[addTemplatesToCloud] - Added " + addedTemplates.size() + " templates to the cloud: "+ addedTemplates);
 }

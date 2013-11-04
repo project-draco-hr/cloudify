@@ -1,7 +1,7 @@
 {
   String cloudConfigDirectoryPath=properties.get(CloudifyConstants.ELASTIC_PROPERTIES_CLOUD_CONFIGURATION_DIRECTORY);
   if (cloudConfigDirectoryPath == null) {
-    logger.severe("Missing cloud configuration property. Properties are: " + this.properties);
+    logger.severe("[findCloudConfigDirectoryPath] - Missing cloud configuration property. Properties are: " + this.properties);
     throw new IllegalArgumentException("Cloud configuration directory was not set!");
   }
   if (ServiceUtils.isWindows()) {
