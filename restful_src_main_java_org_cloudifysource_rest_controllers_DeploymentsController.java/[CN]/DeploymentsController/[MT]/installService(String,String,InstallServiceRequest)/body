@@ -3,7 +3,7 @@
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
   String uploadKey=request.getServiceFolderUploadKey();
   if (StringUtils.isBlank(uploadKey)) {
-    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
+    throw new RestErrorException(CloudifyErrorMessages.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }
   final File servicePackedFolder=getFromRepo(uploadKey,CloudifyMessageKeys.WRONG_SERVICE_FOLDER_UPLOAD_KEY.getName(),absolutePuName);
   File serviceDir;

@@ -2,6 +2,6 @@
   validationContext.setOperationName("add-templates");
   super.validate(validationContext);
   if (validationContext.getRequest().getUploadKey() == null) {
-    throw new RestErrorException(CloudifyMessageKeys.UPLOAD_KEY_PARAMETER_MISSING.getName());
+    throw new RestErrorException(CloudifyErrorMessages.UPLOAD_KEY_PARAMETER_MISSING.getName());
   }
 }

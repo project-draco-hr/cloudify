@@ -1,0 +1,16 @@
+{
+  AddTemplatesValidationContext validationContext=new AddTemplatesValidationContext();
+  validationContext.setCloud(null);
+  validationContext.setOperationName("add-templates");
+  AddTemplatesRequest request=new AddTemplatesRequest();
+  request.setUploadKey("key");
+  validationContext.setRequest(request);
+  ValidateTemplateOperation validator=new ValidateTemplateOperation();
+  try {
+    validator.validate(validationContext);
+    Assert.fail("RestErrorException expected");
+  }
+ catch (  RestErrorException e) {
+    Assert.assertEquals(CloudifyErrorMessages.ILLEGAL_TEMPLATE_OPERATION_ON_LOCAL_CLOUD.getName(),e.getMessage());
+  }
+}

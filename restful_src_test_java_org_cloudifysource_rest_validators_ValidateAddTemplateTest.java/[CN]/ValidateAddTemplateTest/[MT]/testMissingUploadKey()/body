@@ -1,0 +1,16 @@
+{
+  AddTemplatesValidationContext validationContext=new AddTemplatesValidationContext();
+  validationContext.setCloud(new Cloud());
+  validationContext.setOperationName("add-templates");
+  AddTemplatesRequest request=new AddTemplatesRequest();
+  request.setUploadKey(null);
+  validationContext.setRequest(request);
+  ValidateAddTemplate validator=new ValidateAddTemplate();
+  try {
+    validator.validate(validationContext);
+    Assert.fail("RestErrorException expected");
+  }
+ catch (  RestErrorException e) {
+    Assert.assertEquals(CloudifyErrorMessages.UPLOAD_KEY_PARAMETER_MISSING.getName(),e.getMessage());
+  }
+}
