@@ -1,0 +1,12 @@
+{
+  List<String> ips=new ArrayList<String>(managers.size());
+  for (  final ControllerDetails managerDetails : managers) {
+    if (managerDetails.isBootstrapToPublicIp()) {
+      ips.add(managerDetails.getPublicIp());
+    }
+ else {
+      ips.add(managerDetails.getPrivateIp());
+    }
+  }
+  return ips.toString();
+}

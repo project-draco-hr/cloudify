@@ -2,7 +2,7 @@
   try {
     adminFacade.disconnect();
   }
- catch (  CLIException e) {
+ catch (  final CLIException e) {
   }
   session.put(Constants.ACTIVE_APP,CloudifyConstants.DEFAULT_APPLICATION_NAME);
   GigaShellMain.getInstance().setCurrentApplicationName(CloudifyConstants.DEFAULT_APPLICATION_NAME);

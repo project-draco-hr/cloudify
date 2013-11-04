@@ -1,0 +1,7 @@
+{
+  final String shutdownManagersUrl=getFormattedUrl(shutdownManagersControllerUrl,SHUTDOWN_MANAGERS_URL_FORMAT);
+  log(Level.FINE,"[shutdownManagers] - sending DELETE request to REST [" + shutdownManagersUrl + "]");
+  return executor.delete(shutdownManagersUrl,new TypeReference<Response<ShutdownManagementResponse>>(){
+  }
+);
+}

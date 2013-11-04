@@ -1,6 +1,7 @@
 {
-  final String listTempaltesInternalUrl=getFormattedUrl(versionedTemplatesControllerUrl,GET_TEMPALTE_URL_FORMAT,templateName);
-  return executor.get(listTempaltesInternalUrl,new TypeReference<Response<GetTemplateResponse>>(){
+  final String getTempalteInternalUrl=getFormattedUrl(versionedTemplatesControllerUrl,GET_TEMPALTE_URL_FORMAT,templateName);
+  log(Level.FINE,"[getTemplate] - sending GET request to REST [" + getTempalteInternalUrl + "]");
+  return executor.get(getTempalteInternalUrl,new TypeReference<Response<GetTemplateResponse>>(){
   }
 );
 }

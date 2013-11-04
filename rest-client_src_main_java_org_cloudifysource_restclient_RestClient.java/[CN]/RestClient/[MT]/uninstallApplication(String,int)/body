@@ -2,6 +2,7 @@
   final String url=versionedDeploymentControllerUrl + applicationName;
   final Map<String,String> requestParams=new HashMap<String,String>();
   requestParams.put(CloudifyConstants.REQ_PARAM_TIMEOUT_IN_MINUTES,String.valueOf(timeoutInMinutes));
+  log(Level.FINE,"[uninstallApplication] - sending DELETE request to REST [" + url + "]");
   return executor.delete(url,requestParams,new TypeReference<Response<UninstallApplicationResponse>>(){
   }
 );

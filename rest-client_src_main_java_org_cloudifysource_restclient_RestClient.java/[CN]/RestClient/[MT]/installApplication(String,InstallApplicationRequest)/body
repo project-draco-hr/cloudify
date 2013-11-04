@@ -1,5 +1,6 @@
 {
   final String installApplicationUrl=getFormattedUrl(versionedDeploymentControllerUrl,INSTALL_APPLICATION_URL_FORMAT,applicationName);
+  log(Level.FINE,"[installApplication] - sending POST request to REST [" + installApplicationUrl + "]");
   return executor.postObject(installApplicationUrl,request,new TypeReference<Response<InstallApplicationResponse>>(){
   }
 );

@@ -1,5 +1,7 @@
 {
-  executor.get(versionedDeploymentControllerUrl + "testrest",new TypeReference<Response<Void>>(){
+  String url=versionedDeploymentControllerUrl + "testrest";
+  log(Level.FINE,"[connect] - sending GET request to REST [" + url + "]");
+  executor.get(url,new TypeReference<Response<Void>>(){
   }
 );
 }

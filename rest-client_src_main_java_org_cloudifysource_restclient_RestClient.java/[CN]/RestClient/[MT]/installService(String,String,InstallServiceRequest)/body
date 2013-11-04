@@ -10,6 +10,7 @@
     throw new RestClientException("request_missing","install service is missing install request",null);
   }
   final String installServiceUrl=getFormattedUrl(versionedDeploymentControllerUrl,INSTALL_SERVICE_URL_FORMAT,effAppName,serviceName);
+  log(Level.FINE,"[installService] - sending POST request to REST [" + installServiceUrl + "]");
   return executor.postObject(installServiceUrl,request,new TypeReference<Response<InstallServiceResponse>>(){
   }
 );

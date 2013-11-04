@@ -1,0 +1,31 @@
+{
+  logger.info("[waitForShutdown] -  waiting for shutdown of all manaement machines [total " + managers.size() + " managers]");
+  final Set<ControllerDetails> managersStillUp=new HashSet<ControllerDetails>();
+  managersStillUp.addAll(managers);
+  final ConditionLatch conditionLatch=new ConditionLatch().verbose(verbose).pollingInterval(POLLING_INTERVAL_MILLI_SECONDS,TimeUnit.MILLISECONDS).timeout(timeout,TimeUnit.MINUTES).timeoutErrorMessage(CloudifyErrorMessages.SHUTDOWN_MANAGERS_TIMEOUT.getName());
+  conditionLatch.waitFor(new ConditionLatch.Predicate(){
+    @Override public boolean isDone() throws CLIException, InterruptedException {
+      final Iterator<ControllerDetails> iterator=managersStillUp.iterator();
+      while (iterator.hasNext()) {
+        final ControllerDetails manager=iterator.next();
+        final String host=manager.isBootstrapToPublicIp() ? manager.getPublicIp() : manager.getPrivateIp();
+        if (ServiceUtils.isPortFree(host,port)) {
+          iterator.remove();
+          displayer.printEvent(getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_MANAGER_DOWN.getName(),host));
+          if (managersStillUp.isEmpty()) {
+            logger.info("all ports are free, disconnecting");
+            disconnect();
+            return true;
+          }
+          logger.info("manager [" + host + "] port is free, "+ managersStillUp.size()+ " more to check");
+        }
+ else {
+          logger.info("manager [" + host + "] port is not free");
+          displayer.printNoChange();
+        }
+      }
+      return false;
+    }
+  }
+);
+}

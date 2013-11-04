@@ -1,5 +1,6 @@
 {
   final String removeTempalteUrl=getFormattedUrl(versionedTemplatesControllerUrl,REMOVE_TEMPALTE_URL_FORMAT,templateName);
+  log(Level.FINE,"[removeTemplate] - sending DELETE request to REST [" + removeTempalteUrl + "]");
   executor.delete(removeTempalteUrl,new TypeReference<Response<Void>>(){
   }
 );

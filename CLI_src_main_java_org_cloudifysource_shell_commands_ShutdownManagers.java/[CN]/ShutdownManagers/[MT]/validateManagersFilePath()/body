@@ -1,0 +1,7 @@
+{
+  if (existingManagersFile != null) {
+    if (existingManagersFile.exists() && !existingManagersFile.isFile()) {
+      throw new IllegalArgumentException("Expected " + existingManagersFile + " to be a file");
+    }
+  }
+}

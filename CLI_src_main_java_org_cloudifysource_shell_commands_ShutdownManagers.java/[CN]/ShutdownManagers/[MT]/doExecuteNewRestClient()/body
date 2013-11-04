@@ -1,19 +1,20 @@
 {
-  logger.info("[doExecute] - starting shutdown managers");
+  logger.info("[doExecuteNewRestClient] - starting shutdown managers");
   validateManagersFilePath();
-  if (this.adminFacade == null) {
-    adminFacade=getRestAdminFacade();
-  }
+  adminFacade=getRestAdminFacade();
   if (adminFacade.isConnected()) {
     adminFacade.verifyCloudAdmin();
   }
  else {
     throw new CLIException(getFormattedMessage(CloudifyErrorMessages.REST_NOT_CONNECTED.getName()));
   }
-  final List<ControllerDetails> managers=adminFacade.shutdownManagers();
+  final RestAdminFacade rest=(RestAdminFacade)this.adminFacade;
+  final RestClient newRestClient=rest.getNewRestClient();
+  final ShutdownManagementResponse shutdownManagementResponse=newRestClient.shutdownManagers();
+  final List<ControllerDetails> managers=Arrays.asList(shutdownManagementResponse.getControllers());
   final String managerIPs=getManagerIPs(managers);
   logger.info(getFormattedMessage(CloudifyMessageKeys.SHUTDOWN_MANAGERS_INITIATED.getName(),managerIPs));
   writeManagersToFile(managers);
-  waitForShutdown(managers,((RestAdminFacade)adminFacade).getUrl().getPort());
+  waitForShutdown(managers,rest.getUrl().getPort());
   return getFormattedMessage(CloudifyMessageKeys.SHUTDOWN_MANAGERS_SUCCESS.getName());
 }

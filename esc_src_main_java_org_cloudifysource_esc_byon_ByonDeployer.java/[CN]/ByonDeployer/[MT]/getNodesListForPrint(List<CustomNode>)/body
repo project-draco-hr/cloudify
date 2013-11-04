@@ -1,7 +1,14 @@
 {
   StringBuilder nodesStr=new StringBuilder();
+  boolean first=true;
   for (  CustomNode node : nodesToPrint) {
-    nodesStr.append(node.toShortString());
+    if (first) {
+      nodesStr.append("CustomNode[" + node.toShortString() + "]");
+      first=false;
+    }
+ else {
+      nodesStr.append(", CustomNode[" + node.toShortString() + "]");
+    }
   }
   return nodesStr.toString();
 }

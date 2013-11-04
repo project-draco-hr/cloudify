@@ -2,6 +2,7 @@
   final String addTempaltesUrl=getFormattedUrl(versionedTemplatesControllerUrl,ADD_TEMPALTES_URL_FORMAT);
   AddTemplatesResponse response=null;
   try {
+    log(Level.FINE,"[addTemplates] - sending POST request to REST [" + addTempaltesUrl + "]");
     return executor.postObject(addTempaltesUrl,request,new TypeReference<Response<AddTemplatesResponse>>(){
     }
 );

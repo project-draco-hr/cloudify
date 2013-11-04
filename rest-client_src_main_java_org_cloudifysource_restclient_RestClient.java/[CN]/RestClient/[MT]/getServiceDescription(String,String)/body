@@ -1,5 +1,6 @@
 {
   String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_SERVICE_DESCRIPTION_URL_FORMAT,appName,serviceName);
+  log(Level.FINE,"[getServiceDescription] - sending GET request to REST [" + url + "]");
   return executor.get(url,new TypeReference<Response<ServiceDescription>>(){
   }
 );

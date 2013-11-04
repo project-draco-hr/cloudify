@@ -3,6 +3,7 @@
     throw new IllegalArgumentException("request may not be null");
   }
   final String setInstancesUrl=getFormattedUrl(versionedDeploymentControllerUrl,SET_INSTANCES_URL_FORMAT,applicationName,serviceName);
+  log(Level.FINE,"[setServiceInstances] - sending POST request to REST [" + setInstancesUrl + "]");
   executor.postObject(setInstancesUrl,request,new TypeReference<Response<Void>>(){
   }
 );

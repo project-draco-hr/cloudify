@@ -1,0 +1,8 @@
+{
+  logger.info("[writeManagersToFile] -  writing managers to file [" + existingManagersFile + "]");
+  if (this.existingManagersFile != null) {
+    final ObjectMapper mapper=new ObjectMapper();
+    final String managersAsString=mapper.writeValueAsString(managers);
+    FileUtils.writeStringToFile(existingManagersFile,managersAsString);
+  }
+}
