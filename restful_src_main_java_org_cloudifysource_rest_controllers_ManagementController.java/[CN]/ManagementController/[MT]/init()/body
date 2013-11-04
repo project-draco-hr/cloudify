@@ -1,0 +1,4 @@
+{
+  this.admin=restConfig.getAdmin();
+  this.cloud=restConfig.getCloud();
+}

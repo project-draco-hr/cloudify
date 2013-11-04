@@ -1,0 +1,33 @@
+{
+  if (this.cloud == null) {
+    throw new RestErrorException(CloudifyErrorMessages.MANAGEMENT_SERVERS_SHUTDOWN_NOT_ALLOWED_ON_LOCALCLOUD.getName());
+  }
+  final ProcessingUnitInstance[] instances=getManagementInstances();
+  final ControllerDetails[] controllers=createControllerDetails(instances);
+  log(Level.INFO,"[shutdownManagers] - Controllers will be shut down in the following order: " + Arrays.toString(instances) + ". IP of current node is: "+ System.getenv("NIC_ADDR"));
+  ShutdownManagementResponse resposne=new ShutdownManagementResponse();
+  resposne.setControllers(controllers);
+  final GridServiceAgent[] agents=getAgents(instances);
+  new Thread(new Runnable(){
+    @Override public void run(){
+      log(Level.INFO,"[shutdownManagers] - Shutdown of management agent will commence in: " + MANAGEMENT_AGENT_SHUTDOWN_INTERNAL_SECONDS + " seconds");
+      try {
+        Thread.sleep(TimeUnit.SECONDS.toMillis(MANAGEMENT_AGENT_SHUTDOWN_INTERNAL_SECONDS));
+      }
+ catch (      final InterruptedException e) {
+      }
+      log(Level.INFO,"[shutdownManagers] - Initiating shutdown of management agents");
+      for (      final GridServiceAgent agent : agents) {
+        log(Level.INFO,"[shutdownManagers] - Shutting down agent: " + agent.getUid() + " at "+ agent.getMachine().getHostAddress()+ "/"+ agent.getMachine().getHostAddress());
+        try {
+          agent.shutdown();
+        }
+ catch (        final Exception e) {
+          log(Level.WARNING,"[shutdownManagers] - Attempt to shutdown management agent failed: " + e.getMessage(),e);
+        }
+      }
+    }
+  }
+).start();
+  return resposne;
+}
