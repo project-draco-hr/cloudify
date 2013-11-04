@@ -1,10 +1,19 @@
 {
   final Object prevObject=this.activeObject;
   final Set<String> prevSet=this.usedProperties;
+  final Object prevEntity=this.activeEntity;
   this.activeObject=obj;
   this.usedProperties=new HashSet<String>();
+  if (!(obj instanceof List<?>) && !(obj instanceof Map<?,?>)) {
+    this.activeEntity=obj;
+  }
   closure.setResolveStrategy(Closure.OWNER_FIRST);
   closure.call();
   activeObject=prevObject;
   this.usedProperties=prevSet;
+  this.activeEntity=prevEntity;
+  if (this.activeObject instanceof List<?>) {
+    @SuppressWarnings("unchecked") List<Object> list=(List<Object>)this.activeObject;
+    list.add(obj);
+  }
 }

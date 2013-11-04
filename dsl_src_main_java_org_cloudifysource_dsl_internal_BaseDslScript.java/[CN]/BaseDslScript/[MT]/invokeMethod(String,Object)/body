@@ -11,6 +11,12 @@
  catch (    final DSLException e) {
       throw new IllegalArgumentException("Failed to  set: " + name,e);
     }
+    if (retval == null) {
+      final Object targetMap=getMapOrListProperty(name,retval);
+      if (targetMap != null) {
+        retval=targetMap;
+      }
+    }
     if (retval != null) {
       if (this.rootObject == null) {
         this.rootObject=retval;

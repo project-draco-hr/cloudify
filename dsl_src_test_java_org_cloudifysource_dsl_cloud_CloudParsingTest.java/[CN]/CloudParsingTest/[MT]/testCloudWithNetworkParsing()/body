@@ -1,0 +1,16 @@
+{
+  final File testDebugPath=new File(TEST_NETWORK_PARSING);
+  final Cloud cloud=ServiceReader.readCloudFromDirectory(testDebugPath);
+  Assert.assertNotNull(cloud);
+  Assert.assertNotNull(cloud.getCloudNetwork());
+  Assert.assertNotNull(cloud.getCloudNetwork().getManagement());
+  Assert.assertNotNull(cloud.getCloudNetwork().getManagement().getNetworkConfiguration());
+  Assert.assertNotNull(cloud.getCloudNetwork().getManagement().getNetworkConfiguration().getName());
+  Assert.assertNotNull(cloud.getCloudNetwork().getManagement().getNetworkConfiguration().getSubnets());
+  Assert.assertEquals(2,cloud.getCloudNetwork().getManagement().getNetworkConfiguration().getSubnets().size());
+  Assert.assertEquals(2,cloud.getCloudCompute().getTemplates().get("SMALL_LINUX").getComputeNetwork().getNetworks().size());
+  Assert.assertEquals("10.5.5.1",cloud.getCloudNetwork().getManagement().getNetworkConfiguration().getSubnets().get(0).getOptions().get("gateway"));
+  Assert.assertEquals("10.5.5.2",cloud.getCloudNetwork().getManagement().getNetworkConfiguration().getSubnets().get(1).getOptions().get("gateway"));
+  Assert.assertEquals(2,cloud.getCloudNetwork().getTemplates().get("APPLICATION_NET").getSubnets().size());
+  Assert.assertEquals(3,cloud.getCloudNetwork().getTemplates().get("APPLICATION_NET2").getSubnets().size());
+}

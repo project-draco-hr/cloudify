@@ -1,4 +1,9 @@
 {
+  if (object instanceof Map<?,?>) {
+    Map<Object,Object> map=(Map<Object,Object>)object;
+    map.put(name,value);
+    return;
+  }
   if (!isProperyExistsInBean(object,name)) {
     throw new IllegalArgumentException("Could not find property: " + name + " on Object: "+ object);
   }

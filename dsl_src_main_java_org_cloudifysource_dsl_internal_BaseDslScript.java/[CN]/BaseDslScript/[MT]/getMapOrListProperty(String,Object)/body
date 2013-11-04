@@ -1,0 +1,27 @@
+{
+  if (this.activeObject != null) {
+    try {
+      PropertyDescriptor descriptor=PropertyUtils.getPropertyDescriptor(this.activeObject,name);
+      if (descriptor == null) {
+        return null;
+      }
+      if (Map.class.isAssignableFrom(descriptor.getPropertyType()) || List.class.isAssignableFrom(descriptor.getPropertyType())) {
+        final Object target=PropertyUtils.getProperty(this.activeObject,name);
+        if (target == null) {
+          throw new IllegalStateException("The field " + name + " in entity "+ this.activeObject.getClass()+ " was not initialized. It should be initialized to an empty list/map!");
+        }
+        return target;
+      }
+    }
+ catch (    IllegalAccessException e) {
+      throw new IllegalStateException(e);
+    }
+catch (    InvocationTargetException e) {
+      throw new IllegalStateException(e);
+    }
+catch (    NoSuchMethodException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+  return null;
+}

@@ -49,6 +49,11 @@
     addObjectInitializerForClass(dslObjectInitializersByName,RestComponent.class);
     addObjectInitializerForClass(dslObjectInitializersByName,AgentComponent.class);
     addObjectInitializerForClass(dslObjectInitializersByName,CloudTemplateInstallerConfiguration.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,CloudNetwork.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ManagementNetwork.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,NetworkConfiguration.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,Subnet.class);
+    addObjectInitializerForClass(dslObjectInitializersByName,ComputeTemplateNetwork.class);
   }
   return dslObjectInitializersByName;
 }
