@@ -49,6 +49,8 @@
     ((BaseServiceContext)this.context).init((Service)result);
   }
   this.dslClassLoader=gs.getClassLoader();
-  org.codehaus.groovy.reflection.ClassInfo.clearModifiedExpandos();
+synchronized (dslSingleton) {
+    org.codehaus.groovy.reflection.ClassInfo.clearModifiedExpandos();
+  }
   return result;
 }
