@@ -1,5 +1,4 @@
 {
-  logger.info("[doExecuteNewRestClient] - starting shutdown managers");
   validateManagersFilePath();
   adminFacade=getRestAdminFacade();
   if (adminFacade.isConnected()) {

@@ -1,5 +1,5 @@
 {
-  logger.info("[waitForShutdown] -  waiting for shutdown of all manaement machines [total " + managers.size() + " managers]");
+  logger.fine("[waitForShutdown] -  waiting for shutdown of all manaement machines [total " + managers.size() + " managers]");
   final Set<ControllerDetails> managersStillUp=new HashSet<ControllerDetails>();
   managersStillUp.addAll(managers);
   final ConditionLatch conditionLatch=new ConditionLatch().verbose(verbose).pollingInterval(POLLING_INTERVAL_MILLI_SECONDS,TimeUnit.MILLISECONDS).timeout(timeout,TimeUnit.MINUTES).timeoutErrorMessage(CloudifyErrorMessages.SHUTDOWN_MANAGERS_TIMEOUT.getName());
@@ -13,14 +13,14 @@
           iterator.remove();
           displayer.printEvent(getFormattedMessage(CloudifyErrorMessages.MANAGEMENT_SERVERS_MANAGER_DOWN.getName(),host));
           if (managersStillUp.isEmpty()) {
-            logger.info("all ports are free, disconnecting");
+            logger.fine("all ports are free, disconnecting");
             disconnect();
             return true;
           }
-          logger.info("manager [" + host + "] port is free, "+ managersStillUp.size()+ " more to check");
+          logger.fine("manager [" + host + "] port is free, "+ managersStillUp.size()+ " more to check");
         }
  else {
-          logger.info("manager [" + host + "] port is not free");
+          logger.fine("manager [" + host + "] port is not free");
           displayer.printNoChange();
         }
       }

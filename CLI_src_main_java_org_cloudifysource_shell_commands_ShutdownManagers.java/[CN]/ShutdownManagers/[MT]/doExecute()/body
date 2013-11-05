@@ -1,5 +1,4 @@
 {
-  logger.info("[doExecute] - starting shutdown managers");
   validateManagersFilePath();
   if (this.adminFacade == null) {
     adminFacade=getRestAdminFacade();
