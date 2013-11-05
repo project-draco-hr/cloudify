@@ -2,7 +2,7 @@
   InvokeServiceCommandResponse response=new InvokeServiceCommandResponse();
   final String absolutePuName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
   if (logger.isLoggable(Level.FINER)) {
-    logger.finer("received request to invoke bean " + beanName + " of service "+ absolutePuName+ " of application "+ applicationName);
+    logger.finer("received request to invoke command of service " + absolutePuName + " of application "+ applicationName);
   }
   final ProcessingUnit pu=admin.getProcessingUnits().waitFor(absolutePuName,PU_DISCOVERY_TIMEOUT_SEC,TimeUnit.SECONDS);
   if (pu == null) {
@@ -23,7 +23,7 @@
   for (  final ProcessingUnitInstance instance : instances) {
     final String serviceInstanceName=buildServiceInstanceName(instance);
     try {
-      final Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(beanName,params);
+      final Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,request.getParameters());
       futures.put(serviceInstanceName,future);
     }
  catch (    final Exception e) {

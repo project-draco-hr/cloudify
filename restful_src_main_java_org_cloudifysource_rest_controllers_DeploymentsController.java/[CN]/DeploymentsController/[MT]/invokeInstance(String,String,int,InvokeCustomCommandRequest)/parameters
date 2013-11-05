@@ -1,5 +1,4 @@
 String applicationName
 String serviceName
 int instanceId
-String beanName
-Map<String,Object> params
+InvokeCustomCommandRequest request
