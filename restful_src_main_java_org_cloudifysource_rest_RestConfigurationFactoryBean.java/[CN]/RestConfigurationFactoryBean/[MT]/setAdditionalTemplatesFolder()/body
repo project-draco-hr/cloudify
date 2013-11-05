@@ -1,0 +1,14 @@
+{
+  File additionalTempaltesFolderParent=config.getCloudConfigurationDir();
+  String persistentStoragePath=config.getCloud().getConfiguration().getPersistentStoragePath();
+  if (persistentStoragePath != null) {
+    logger.fine("[setAdditionalTemplatesFolder] - using the persistent storage folder [" + persistentStoragePath + "] as the parent of the additional templates folder.");
+    additionalTempaltesFolderParent=new File(persistentStoragePath);
+  }
+  File additionalTemplatesFodler=new File(additionalTempaltesFolderParent,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
+  if (!additionalTemplatesFodler.exists()) {
+    additionalTempaltesFolderParent.mkdirs();
+  }
+  logger.info("[setAdditionalTemplatesFolder] - setting the additional templates folder to [" + additionalTemplatesFodler + "]");
+  config.setAdditionalTemplatesFolder(additionalTemplatesFodler);
+}

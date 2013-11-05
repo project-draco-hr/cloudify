@@ -6,6 +6,7 @@
   Cloud cloud=readCloud();
   if (cloud != null) {
     config.setCloud(cloud);
+    setAdditionalTemplatesFolder();
     initCloudTemplates();
     CloudCompute cloudCompute=cloud.getCloudCompute();
     if (cloudCompute.getTemplates().isEmpty()) {

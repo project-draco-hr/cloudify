@@ -1,5 +1,5 @@
 {
-  final File templatesDirParent=getTemplatesFolder();
+  final File templatesDirParent=restConfig.getAdditionalTempaltesFolder();
   String folderName=CloudifyConstants.TEMPLATE_FOLDER_PREFIX + restConfig.getLastTemplateFileNum().incrementAndGet();
   File copiedtemplatesFolder=new File(templatesDirParent,folderName);
   while (copiedtemplatesFolder.exists()) {
