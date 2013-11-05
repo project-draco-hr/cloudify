@@ -1,0 +1,11 @@
+{
+  if (request == null) {
+    throw new IllegalArgumentException("request may not be null");
+  }
+  InvokeServiceCommandResponse result=null;
+  final String invokeCommandUrl=getFormattedUrl(versionedDeploymentControllerUrl,INVOKE_SERVICE_COMMAND_URL_FORMAT,applicationName,serviceName);
+  result=executor.postObject(invokeCommandUrl,request,new TypeReference<Response<InvokeServiceCommandResponse>>(){
+  }
+);
+  return result;
+}

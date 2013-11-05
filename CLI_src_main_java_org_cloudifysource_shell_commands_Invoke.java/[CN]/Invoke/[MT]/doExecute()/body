@@ -11,7 +11,7 @@
   }
   final StringBuilder invocationFailedStringBuilder=new StringBuilder();
   if (instanceId == null) {
-    final Map<String,InvocationResult> result=adminFacade.invokeServiceCommand(applicationName,serviceName,beanName,commandName,paramsMap);
+    final Map<String,InvocationResult> result=adminFacade.invokeServiceCommand(applicationName,serviceName,CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,commandName,paramsMap);
     final Collection<InvocationResult> values=result.values();
     final List<InvocationResult> valuesList=new ArrayList<InvocationResult>(values);
     Collections.sort(valuesList);
@@ -27,7 +27,7 @@
     }
   }
  else {
-    final InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,beanName,instanceId,commandName,paramsMap);
+    final InvocationResult invocationResult=adminFacade.invokeInstanceCommand(applicationName,serviceName,CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,instanceId,commandName,paramsMap);
     if (invocationResult.isSuccess()) {
       final String successMessage=getFormattedMessage("invocation_success",invocationResult.getInstanceId(),invocationResult.getInstanceName(),invocationResult.getResult());
       invocationSuccessStringBuilder.append(successMessage).append(System.getProperty("line.separator"));

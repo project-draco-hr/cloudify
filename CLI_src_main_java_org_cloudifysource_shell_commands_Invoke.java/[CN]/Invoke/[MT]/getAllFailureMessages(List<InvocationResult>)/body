@@ -1,10 +1,10 @@
 {
-  final StringBuilder invocationFailedStringBuilder=new StringBuilder("Invocation results: ");
+  final StringBuilder failureMessagesText=new StringBuilder();
   for (  final InvocationResult invocationResult : resultsList) {
     if (!invocationResult.isSuccess()) {
-      final String failureMessage=getFailureMessage(invocationResult);
-      invocationFailedStringBuilder.append(failureMessage).append(System.getProperty("line.separator"));
+      String failureMessage=getFailureMessage(invocationResult);
+      failureMessagesText.append(failureMessage).append(System.getProperty("line.separator"));
     }
   }
-  return invocationFailedStringBuilder.toString();
+  return failureMessagesText.toString();
 }

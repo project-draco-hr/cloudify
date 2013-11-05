@@ -1,6 +1,11 @@
 {
-  final String message=getMessageBundle().getString(messageCode);
-  if (message == null) {
+  String message=null;
+  try {
+    message=getMessageBundle().getString(messageCode);
+  }
+ catch (  MissingResourceException e) {
+  }
+  if (StringUtils.isBlank(message)) {
     logger.warning("Missing resource in messages resource bundle: " + messageCode);
     return messageCode;
   }
