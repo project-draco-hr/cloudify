@@ -8,7 +8,12 @@
     boolean found=false;
     try {
       final File serviceDir=new File(appDir,serviceName);
-      final File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.SERVICE_PROPERTIES_FILE_NAME_SUFFIX,serviceDir);
+      File servicePropertiesFile=DSLReader.findDefaultDSLFileIfExists(DSLUtils.SERVICE_PROPERTIES_FILE_NAME_SUFFIX,serviceDir);
+      if (servicePropertiesFile == null && (applicationOverridesFile != null || applicationPropertiesFile != null)) {
+        String propertiesFileName=DSLUtils.getPropertiesFileName(serviceDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+        logger.finer("Application [" + applicationName + "] has overrides or properties file but the service ["+ serviceName+ "], does not have properties file, so, creating an empty properties file ["+ propertiesFileName+ "] to contain the merge of the application's overrides and properties files.");
+        servicePropertiesFile=new File(serviceDir,propertiesFileName);
+      }
       PropertiesOverridesMerger merger=new PropertiesOverridesMerger(servicePropertiesFile,applicationPropertiesFile,servicePropertiesFile,applicationOverridesFile);
       merger.merge();
       final File packedFile=Packager.pack(service,serviceDir,absolutePUName,null);

@@ -15,10 +15,18 @@
     throw new RestErrorException(CloudifyMessageKeys.FAILED_TO_EXTRACT_PROJECT_FILE.getName(),absolutePuName);
   }
   final File serviceOverridesFile=getFromRepo(request.getServiceOverridesUploadKey(),CloudifyMessageKeys.WRONG_SERVICE_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
-  final DSLServiceCompilationResult readServiceResult=readService(new File(serviceDir,"ext"),request.getServiceFileName(),absolutePuName,null,serviceOverridesFile);
+  File workingProjectDir=new File(serviceDir,"ext");
+  final DSLServiceCompilationResult readServiceResult=readService(workingProjectDir,request.getServiceFileName(),absolutePuName,null,serviceOverridesFile);
   Service service=readServiceResult.getService();
-  validateInstallService(request,service,absolutePuName,readServiceResult.getServiceOverridesFile());
-  PropertiesOverridesMerger merger=new PropertiesOverridesMerger(readServiceResult.getServicePropertiesFile(),null,readServiceResult.getServicePropertiesFile(),readServiceResult.getServiceOverridesFile());
+  File overridesFile=readServiceResult.getServiceOverridesFile();
+  validateInstallService(request,service,absolutePuName,overridesFile);
+  File propertiesFile=readServiceResult.getServicePropertiesFile();
+  if (propertiesFile == null && overridesFile != null) {
+    String propertiesFileName=DSLUtils.getPropertiesFileName(workingProjectDir,DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX);
+    logger.finer("Service [" + serviceName + "] has overrides file but no proeprties file."+ "Creating an empty properties file ["+ propertiesFileName+ "] to contain the overrides file's content.");
+    propertiesFile=new File(workingProjectDir,propertiesFileName);
+  }
+  PropertiesOverridesMerger merger=new PropertiesOverridesMerger(propertiesFile,null,propertiesFile,overridesFile);
   merger.merge();
   File updatedPackedFile=servicePackedFolder;
   if (merger.isMerged()) {
