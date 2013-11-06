@@ -4,7 +4,29 @@
     return;
   }
   if (logger.isLoggable(Level.FINEST)) {
-    logger.finest("post handle request from " + request.getRequestURI() + " with model "+ modelAndView.getModel().toString()+ " and view "+ modelAndView.getView().toString());
+    String requestUri=request.getRequestURI();
+    Map<String,Object> model=modelAndView.getModel();
+    View view=modelAndView.getView();
+    StringBuilder message=new StringBuilder("post handle request");
+    if (requestUri == null) {
+      message.append(", requestUri is null");
+    }
+ else {
+      message.append(" from " + request.getRequestURI());
+    }
+    if (model == null) {
+      message.append(", model is null");
+    }
+ else {
+      message.append(" with model " + model.toString());
+    }
+    if (view == null) {
+      message.append(", view is null");
+    }
+ else {
+      message.append(" and view " + view.toString());
+    }
+    logger.finest(message.toString());
   }
   Object model=filterModel(modelAndView,handler);
   modelAndView.clear();
