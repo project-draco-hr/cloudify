@@ -5,7 +5,7 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   try {
-    final String groupName=createNewServerName();
+    final String groupName=serverNamePrefix + counter.incrementAndGet();
     logger.fine("Starting a new cloud server with group: " + groupName);
     final MachineDetails md=createServer(end,groupName,context.getLocationId());
     return md;
