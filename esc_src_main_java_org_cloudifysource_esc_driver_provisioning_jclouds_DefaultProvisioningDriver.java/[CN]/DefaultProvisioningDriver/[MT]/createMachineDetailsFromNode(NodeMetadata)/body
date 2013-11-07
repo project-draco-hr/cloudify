@@ -9,8 +9,10 @@
   final String password=createMachinePassword(node,template);
   md.setRemoteUsername(username);
   md.setRemotePassword(password);
-  final String locationId=node.getLocation().getId();
-  md.setLocationId(locationId);
+  Location location=node.getLocation();
+  if (location != null) {
+    md.setLocationId(location.getId());
+  }
   md.setOpenFilesLimit(template.getOpenFilesLimit());
   return md;
 }

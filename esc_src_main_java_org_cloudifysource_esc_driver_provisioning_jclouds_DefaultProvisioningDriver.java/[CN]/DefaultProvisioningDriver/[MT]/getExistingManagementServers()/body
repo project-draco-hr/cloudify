@@ -2,19 +2,17 @@
   final String managementMachinePrefix=this.serverNamePrefix;
   Set<? extends NodeMetadata> existingManagementServers=null;
   try {
-    existingManagementServers=this.deployer.getServers(new Predicate<ComputeMetadata>(){
+    Predicate<ComputeMetadata> filter=new Predicate<ComputeMetadata>(){
       @Override public boolean apply(      final ComputeMetadata input){
         final NodeMetadata node=(NodeMetadata)input;
         if (node.getGroup() == null) {
           return false;
         }
-        if (node.getStatus() == NodeMetadata.Status.RUNNING || node.getStatus() == NodeMetadata.Status.PENDING) {
-          return node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
-        }
-        return false;
+        return (node.getStatus() == NodeMetadata.Status.RUNNING || node.getStatus() == NodeMetadata.Status.PENDING) && node.getGroup().toLowerCase().startsWith(managementMachinePrefix.toLowerCase());
       }
     }
-);
+;
+    existingManagementServers=this.deployer.getServers(filter);
   }
  catch (  final Exception e) {
     throw new CloudProvisioningException("Failed to read existing management servers: " + e.getMessage(),e);

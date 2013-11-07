@@ -1,16 +1,15 @@
 {
-  boolean stopResult=false;
-  logger.info("Stop Machine - machineIp: " + serverIp);
-  logger.info("Looking up cloud server with IP: " + serverIp);
+  boolean stopResult;
+  logger.info("Received request to shutdown machine with ip " + serverIp);
   final NodeMetadata server=deployer.getServerWithIP(serverIp);
   if (server != null) {
-    logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to complete");
+    logger.info("Found machine : " + serverIp + "-"+ server.getId()+ ". Shutting it down and waiting for "+ "shutdown to complete");
     deployer.shutdownMachineAndWait(server.getId(),unit,duration);
-    logger.info("Server: " + server.getId() + " shutdown has finished.");
+    logger.info("Machine " + serverIp + "-"+ server.getId()+ " shutdown has finished.");
     stopResult=true;
   }
  else {
-    logger.log(Level.SEVERE,"Recieved scale in request for machine with ip " + serverIp + " but this IP could not be found in the Cloud server list");
+    logger.log(Level.SEVERE,"Received shutdown request for machine with ip " + serverIp + " but this IP could not be found in the Cloud machine list");
     stopResult=false;
   }
   return stopResult;

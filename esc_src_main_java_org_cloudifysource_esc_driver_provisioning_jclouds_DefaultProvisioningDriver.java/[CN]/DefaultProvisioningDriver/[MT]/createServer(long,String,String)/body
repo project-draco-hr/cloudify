@@ -9,15 +9,8 @@
   }
   NodeMetadata node;
   final MachineDetails machineDetails;
-  try {
-    logger.fine("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
-    publishEvent(EVENT_STARTING_MACHINE_WITH_NAME,groupName);
-    node=deployer.createServer(groupName,locationId);
-  }
- catch (  final InstallerException e) {
-    throw new CloudProvisioningException("Failed to create cloud server: " + e.getMessage(),e);
-  }
-  logger.fine("New node is allocated, group name: " + groupName);
+  publishEvent(EVENT_STARTING_MACHINE_WITH_NAME,groupName);
+  node=deployer.createServer(groupName,locationId);
   final String nodeId=node.getId();
   try {
     publishEvent(EVENT_WAITING_FOR_NODE_TO_BE_AVAILABLE,groupName);
@@ -35,7 +28,7 @@
     }
   }
  catch (  final Exception e) {
-    logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
+    logger.log(Level.SEVERE,"Cloud machine was started but an error occurred during initialization. Shutting " + "down machine",e);
     deployer.shutdownMachine(nodeId);
     throw new CloudProvisioningException(e);
   }

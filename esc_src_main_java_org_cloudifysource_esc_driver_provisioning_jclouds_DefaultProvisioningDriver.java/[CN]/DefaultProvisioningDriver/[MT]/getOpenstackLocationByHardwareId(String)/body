@@ -1,6 +1,6 @@
 {
   String region="";
-  if (hardwareId.indexOf("/") == -1) {
+  if (!hardwareId.contains("/")) {
     logger.info("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
     throw new IllegalArgumentException("HardwareId is: " + hardwareId + ". It must be formatted "+ "as region / profile id");
   }

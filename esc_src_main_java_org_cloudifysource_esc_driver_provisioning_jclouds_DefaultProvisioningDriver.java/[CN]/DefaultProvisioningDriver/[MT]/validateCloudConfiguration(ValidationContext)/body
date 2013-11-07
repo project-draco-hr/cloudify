@@ -1,6 +1,6 @@
 {
   final String providerName=cloud.getProvider().getProvider();
-  cloudFolder=CLOUDS_FOLDER_PATH + FILE_SEPARATOR + cloud.getName();
+  String cloudFolder=CLOUDS_FOLDER_PATH + FILE_SEPARATOR + cloud.getName();
   groovyFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.groovy";
   propertiesFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.properties";
   String apiId;

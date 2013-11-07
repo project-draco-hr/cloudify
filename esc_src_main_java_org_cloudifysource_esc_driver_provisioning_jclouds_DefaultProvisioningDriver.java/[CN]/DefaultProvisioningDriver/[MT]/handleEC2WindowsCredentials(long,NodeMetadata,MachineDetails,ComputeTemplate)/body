@@ -1,5 +1,5 @@
 {
-  File pemFile=null;
+  File pemFile;
   if (this.management) {
     final File localDirectory=new File(cloudTemplate.getAbsoluteUploadDir());
     pemFile=new File(localDirectory,cloudTemplate.getKeyFile());
@@ -11,7 +11,6 @@
     pemFile=new File(localDirectory,cloudTemplate.getKeyFile());
   }
   if (!pemFile.exists()) {
-    logger.severe("Could not find pem file: " + pemFile);
     throw new FileNotFoundException("Could not find key file: " + pemFile);
   }
   String password;

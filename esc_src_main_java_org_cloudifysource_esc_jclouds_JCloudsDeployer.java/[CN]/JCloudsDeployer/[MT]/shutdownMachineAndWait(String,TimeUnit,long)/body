@@ -1,15 +1,19 @@
 {
+  logger.fine("Retrieving data on node with id " + serverId);
+  NodeMetadata nodeMetadata=this.context.getComputeService().getNodeMetadata(serverId);
+  logger.fine("Invoking destroy node on " + serverId);
   this.context.getComputeService().destroyNode(serverId);
-  logger.info("Machine: " + serverId + " shutdown has started. Waiting for process to complete");
+  logger.info("Machine: " + nodeMetadata.getPrivateAddresses() + "-"+ serverId+ " shutdown has started. "+ "Waiting for process to complete");
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   NodeMetadata.Status state=null;
   while (System.currentTimeMillis() < endTime) {
+    logger.fine("Retrieving data on node with id " + serverId);
     final NodeMetadata node=this.context.getComputeService().getNodeMetadata(serverId);
     if (node == null) {
       return;
     }
     state=node.getStatus();
-    logger.info("Machine: " + serverId + " state is: "+ state);
+    logger.fine("Machine: " + node.getPrivateAddresses() + "-"+ serverId+ " state is: "+ state);
 switch (state) {
 case TERMINATED:
       return;
@@ -25,5 +29,5 @@ break;
 }
 Thread.sleep(SHUTDOWN_WAIT_POLLING_INTERVAL_MILLIS);
 }
-throw new TimeoutException("Termination of cloud node was requested, " + "but machine did not shut down in the required time. Last state was: " + state);
+throw new TimeoutException("Termination of cloud node with id " + serverId + " was requested, "+ "but machine did not shut down in the required time. Last state was : "+ state);
 }

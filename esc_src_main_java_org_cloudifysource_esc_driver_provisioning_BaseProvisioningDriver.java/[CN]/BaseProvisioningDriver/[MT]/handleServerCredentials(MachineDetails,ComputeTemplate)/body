@@ -12,7 +12,7 @@
     if (!keyFile.isAbsolute()) {
       keyFile=new File(template.getAbsoluteUploadDir(),keyFileStr);
     }
-    if (keyFile != null && !keyFile.exists()) {
+    if (!keyFile.exists()) {
       throw new CloudProvisioningException("The specified key file could not be found: " + keyFile.getAbsolutePath());
     }
   }

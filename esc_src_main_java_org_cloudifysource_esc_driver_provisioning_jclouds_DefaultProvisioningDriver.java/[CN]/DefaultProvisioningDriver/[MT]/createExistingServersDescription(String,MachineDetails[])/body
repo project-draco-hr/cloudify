@@ -12,6 +12,5 @@
     }
     sb.append("[").append(existingManagementServerDescription).append("]");
   }
-  final String serverDescriptions=sb.toString();
-  return serverDescriptions;
+  return sb.toString();
 }

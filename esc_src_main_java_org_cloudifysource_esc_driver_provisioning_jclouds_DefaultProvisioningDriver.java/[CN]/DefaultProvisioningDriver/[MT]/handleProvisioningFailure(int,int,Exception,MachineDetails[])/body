@@ -9,5 +9,5 @@
       }
     }
   }
-  throw new CloudProvisioningException("One or more managememnt machines failed. The first encountered error was: " + firstCreationException.getMessage(),firstCreationException);
+  throw new CloudProvisioningException("One or more managememnt machines failed. " + "The first encountered error was: " + firstCreationException.getMessage(),firstCreationException);
 }

@@ -1,5 +1,5 @@
 {
-  NodeMetadata node=null;
+  NodeMetadata node;
   while (System.currentTimeMillis() < end) {
     node=deployer.getServerByID(id);
     if (node == null) {

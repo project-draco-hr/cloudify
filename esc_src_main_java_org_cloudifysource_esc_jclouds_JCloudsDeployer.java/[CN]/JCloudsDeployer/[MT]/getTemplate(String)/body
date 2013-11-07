@@ -1,5 +1,5 @@
 {
-  logger.fine("Creating Cloud Template with locationId=" + locationId + ". This may take a few seconds");
+  logger.fine("Creating Cloud Template with locationId = " + locationId + ". This may take a few seconds");
   final TemplateBuilder builder=this.context.getComputeService().templateBuilder();
   if (imageId != null && !imageId.isEmpty()) {
     builder.imageId(imageId);

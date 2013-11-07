@@ -1,12 +1,13 @@
 {
+  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
   if (duration < 0) {
     throw new TimeoutException("Starting a new machine timed out");
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
-  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
+  logger.fine("Received request to start " + numberOfManagementMachines + " management machines");
   final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
   if (StringUtils.isBlank(managementMachinePrefix)) {
-    throw new CloudProvisioningException("The management group name is missing - can't locate existing servers!");
+    throw new CloudProvisioningException("The management group name is missing - " + "can't locate existing servers!");
   }
   publishEvent(EVENT_RETRIEVE_EXISTING_MANAGEMENT_MACHINES,managementMachinePrefix);
   final MachineDetails[] existingManagementServers=getExistingManagementServers();
@@ -14,8 +15,10 @@
     final String serverDescriptions=createExistingServersDescription(managementMachinePrefix,existingManagementServers);
     throw new CloudProvisioningException("Found existing servers matching group " + managementMachinePrefix + ": "+ serverDescriptions);
   }
+ else {
+    logger.fine("Did not find any existing management machines. continuing with bootstrap");
+  }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
-  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
   final MachineDetails[] createdMachines=doStartManagementMachines(endTime,numberOfManagementMachines);
   publishEvent(EVENT_MGMT_VMS_STARTED);
   return createdMachines;

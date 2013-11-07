@@ -6,7 +6,7 @@
     retry=false;
     try {
       if (logger.isLoggable(Level.FINE)) {
-        logger.fine("starting machine with template : " + template);
+        logger.fine("Starting machine with template : " + template);
       }
       nodes=this.context.getComputeService().createNodesInGroup(group,count,template);
     }
@@ -19,7 +19,6 @@
         }
         retryAttempts+=1;
         retry=true;
-        continue;
       }
  else {
         throw e;

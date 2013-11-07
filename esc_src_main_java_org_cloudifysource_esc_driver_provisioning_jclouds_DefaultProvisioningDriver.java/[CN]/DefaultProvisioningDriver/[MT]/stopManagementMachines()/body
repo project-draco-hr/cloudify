@@ -1,14 +1,15 @@
 {
   initDeployer(this.cloud);
   final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
+  logger.fine("Received request to stop management machines. timeout is " + stopManagementMachinesTimeoutInMinutes + " minutes");
   publishEvent(EVENT_RETRIEVE_EXISTING_MANAGEMENT_MACHINES,managementMachinePrefix);
   final MachineDetails[] managementServers=getExistingManagementServers();
   if (managementServers.length == 0) {
-    throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.serverNamePrefix + ")");
+    throw new CloudProvisioningException("Could not find any management machines for this " + "cloud (management machine prefix is: " + this.serverNamePrefix + ")");
   }
   final Set<String> machineIps=new HashSet<String>();
   for (  final MachineDetails machineDetails : managementServers) {
-    machineIps.add(machineDetails.getPrivateAddress());
+    machineIps.add(machineDetails.getPublicAddress());
   }
   publishEvent(EVENT_DESTROYING_MACHINES,machineIps.toString());
   try {
