@@ -10,4 +10,5 @@
   this.scriptLangeuage=ScriptLanguages.valueOf(IOUtils.readString(in));
   remoteDirectory=IOUtils.readString(in);
   locationId=IOUtils.readString(in);
+  openFilesLimit=IOUtils.readString(in);
 }

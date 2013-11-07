@@ -10,4 +10,5 @@
   IOUtils.writeString(out,scriptLangeuage.name());
   IOUtils.writeString(out,remoteDirectory);
   IOUtils.writeString(out,locationId);
+  IOUtils.writeString(out,openFilesLimit);
 }
