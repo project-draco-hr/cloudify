@@ -1,0 +1,7 @@
+{
+  NodeMetadata nodeMetadata=this.context.getComputeService().getNodeMetadata(id);
+  if (nodeMetadata != null) {
+    return nodeMetadata.getStatus();
+  }
+  return null;
+}

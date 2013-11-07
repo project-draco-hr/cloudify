@@ -1,0 +1,4 @@
+{
+  logger.fine("Destroying node " + id);
+  this.context.getComputeService().destroyNode(id);
+}

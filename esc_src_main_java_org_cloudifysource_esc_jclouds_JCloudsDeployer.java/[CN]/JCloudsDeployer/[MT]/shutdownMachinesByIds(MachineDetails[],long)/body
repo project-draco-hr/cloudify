@@ -1,0 +1,24 @@
+{
+  long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
+  List<MachineDetails> nonTerminatedNodes=new ArrayList<MachineDetails>();
+  for (  MachineDetails md : machines) {
+    nonTerminatedNodes.add(md);
+    shutdownNodeAsync(md.getMachineId());
+  }
+  logger.info("Shutdown of machines " + toIps(machines) + " has started. Waiting for them to terminate, "+ "it may take a few minutes.");
+  while (System.currentTimeMillis() < endTime) {
+    for (    MachineDetails md : new ArrayList<MachineDetails>(nonTerminatedNodes)) {
+      NodeMetadata.Status status=getNodeStatus(md.getMachineId());
+      if (NodeMetadata.Status.TERMINATED.equals(status) || status == null) {
+        logger.info("Machine " + md.getPublicAddress() + "/"+ md.getPrivateAddress()+ " has terminated"+ ".");
+        nonTerminatedNodes.remove(md);
+      }
+ else {
+        logger.fine("Machine: [" + md.getPublicAddress() + "/"+ md.getPrivateAddress()+ "]"+ " state is: "+ status);
+        Thread.sleep(SHUTDOWN_WAIT_POLLING_INTERVAL_MILLIS);
+      }
+    }
+    if (nonTerminatedNodes.isEmpty())     return;
+  }
+  throw new TimeoutException("Timed out while waiting for machines " + toIps(machines) + " to terminate. Make "+ "sure this machines are terminated.");
+}

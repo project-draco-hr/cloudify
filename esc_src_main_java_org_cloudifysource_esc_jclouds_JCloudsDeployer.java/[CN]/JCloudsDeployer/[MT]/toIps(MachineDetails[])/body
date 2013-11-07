@@ -1,0 +1,7 @@
+{
+  Set<String> ips=new HashSet<String>();
+  for (  MachineDetails md : machines) {
+    ips.add(md.getPublicAddress() + "/" + md.getPrivateAddress());
+  }
+  return ips;
+}
