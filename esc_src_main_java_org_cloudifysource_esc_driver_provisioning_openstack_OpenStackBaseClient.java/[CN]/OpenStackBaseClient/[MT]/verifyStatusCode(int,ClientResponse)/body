@@ -1,0 +1,6 @@
+{
+  if (expectedStatus != response.getStatus()) {
+    final String entity=response.getEntity(String.class);
+    throw new OpenstackServerException(expectedStatus,response.getStatus(),entity);
+  }
+}

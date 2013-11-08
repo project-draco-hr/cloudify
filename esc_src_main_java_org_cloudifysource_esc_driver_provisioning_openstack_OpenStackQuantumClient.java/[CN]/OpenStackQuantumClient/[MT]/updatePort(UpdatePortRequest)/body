@@ -1,5 +1,0 @@
-{
-  final String response=this.getWebResource().path("ports/" + request.getId()).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,request.computeRequest());
-  final PortResponse portResponse=JsonUtils.mapJsonToObject(PortResponse.class,response);
-  return portResponse.getPort();
-}

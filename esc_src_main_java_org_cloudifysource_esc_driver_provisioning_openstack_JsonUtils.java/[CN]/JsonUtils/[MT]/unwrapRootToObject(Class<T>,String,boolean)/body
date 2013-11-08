@@ -1,0 +1,21 @@
+{
+  if (response == null) {
+    return null;
+  }
+  T tokenResponse=null;
+  try {
+    final ObjectMapper mapper=new ObjectMapper();
+    if (!useCamelCase) {
+      mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+    }
+    mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+    mapper.configure(DeserializationConfig.Feature.USE_ANNOTATIONS,true);
+    mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,true);
+    mapper.configure(DeserializationConfig.Feature.USE_GETTERS_AS_SETTERS,false);
+    tokenResponse=mapper.readValue(response,clazz);
+  }
+ catch (  final Exception e) {
+    throw new OpenstackJsonSerializationException(e);
+  }
+  return tokenResponse;
+}

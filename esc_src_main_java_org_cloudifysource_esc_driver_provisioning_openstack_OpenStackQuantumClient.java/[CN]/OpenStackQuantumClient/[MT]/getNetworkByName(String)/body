@@ -3,14 +3,9 @@
     logger.fine("Requesting networks list");
   }
   final String response=this.getWebResource().path("networks").queryParam("name",networkName).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-  final NetworksResponse networkResponse=JsonUtils.mapJsonToObject(NetworksResponse.class,response);
-  if (logger.isLoggable(Level.FINE)) {
-    logger.fine("Response for networks list: " + networkResponse);
-  }
-  if (networkResponse.getNetworks().isEmpty()) {
+  final List<Network> networks=JsonUtils.unwrapRootToList(Network.class,response);
+  if (networks == null || networks.isEmpty()) {
     return null;
   }
- else {
-    return networkResponse.getNetworks().get(0);
-  }
+  return networks.get(0);
 }

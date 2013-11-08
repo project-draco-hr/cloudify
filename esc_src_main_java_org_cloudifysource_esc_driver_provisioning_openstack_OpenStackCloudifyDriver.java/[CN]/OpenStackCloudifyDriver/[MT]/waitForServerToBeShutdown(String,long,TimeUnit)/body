@@ -1,7 +1,13 @@
 {
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   while (System.currentTimeMillis() < endTime) {
-    final NovaServer server=novaApi.getServerDetails(serverId);
+    final NovaServer server;
+    try {
+      server=novaApi.getServerDetails(serverId);
+    }
+ catch (    final OpenstackJsonSerializationException e) {
+      throw new CloudProvisioningException(e);
+    }
     if (server == null) {
       logger.fine("Server Status (" + serverId + ") Not Found. Considered deleted.");
       return;

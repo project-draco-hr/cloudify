@@ -5,7 +5,12 @@
     for (    final MachineDetails machineDetails : createdManagementMachines) {
       if (machineDetails != null) {
         logger.severe("Shutting down machine: " + machineDetails);
-        this.novaApi.deleteServer(machineDetails.getMachineId());
+        try {
+          this.novaApi.deleteServer(machineDetails.getMachineId());
+        }
+ catch (        final OpenstackJsonSerializationException e) {
+          throw new CloudProvisioningException(e);
+        }
       }
     }
   }

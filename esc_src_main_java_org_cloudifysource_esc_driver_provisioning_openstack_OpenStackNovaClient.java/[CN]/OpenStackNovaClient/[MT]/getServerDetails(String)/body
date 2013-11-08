@@ -13,6 +13,6 @@
     }
     throw new CloudProvisioningException(e);
   }
-  final NovaServerResponse nsr=JsonUtils.mapJsonToObject(NovaServerResponse.class,response);
-  return nsr.getServer();
+  final NovaServer nsr=JsonUtils.unwrapRootToObject(NovaServer.class,response);
+  return nsr;
 }

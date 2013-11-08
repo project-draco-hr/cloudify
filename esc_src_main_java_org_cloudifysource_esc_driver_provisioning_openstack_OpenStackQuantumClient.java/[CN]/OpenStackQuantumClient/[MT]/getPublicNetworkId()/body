@@ -1,6 +1,6 @@
 {
-  final NetworksResponse networksResponse=this.getPublicNetwork();
-  for (  final Network network : networksResponse.getNetworks()) {
+  final List<Network> networks=this.getPublicNetwork();
+  for (  final Network network : networks) {
     return network.getId();
   }
   return null;

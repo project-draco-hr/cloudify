@@ -1,0 +1,4 @@
+{
+  final ClientResponse response=this.getWebResource().path("routers/" + routerId + "/remove_router_interface").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(ClientResponse.class,"{\"subnet_id\":\"" + subnetId + "\"}");
+  this.verifyStatusCode(CODE_200_STATUS,response);
+}

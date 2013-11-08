@@ -1,10 +1,10 @@
 {
   final Port port=quantumApi.getPort(serverId,network.getId());
-  final UpdatePortRequest request=new UpdatePortRequest();
-  request.setId(port.getId());
+  final Port updateRequest=new Port();
+  updateRequest.setId(port.getId());
   for (  final String sgn : securityGroupNames) {
     final SecurityGroup sg=quantumApi.getSecurityGroupsByName(sgn);
-    request.addSecurityGroupId(sg.getId());
+    updateRequest.addSecurityGroup(sg.getId());
   }
-  quantumApi.updatePort(request);
+  quantumApi.updatePort(updateRequest);
 }

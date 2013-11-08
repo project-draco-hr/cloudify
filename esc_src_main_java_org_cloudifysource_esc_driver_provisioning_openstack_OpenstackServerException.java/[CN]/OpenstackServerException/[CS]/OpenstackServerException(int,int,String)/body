@@ -1,0 +1,3 @@
+{
+  super(String.format("Error requesting Openstack. Expected code=%s got code=%s cause=%s",expectedStatusCode,actualStatusCode,entity));
+}

@@ -1,4 +1,0 @@
-{
-  this.remoteGroupId=remoteGroupId;
-  return this;
-}

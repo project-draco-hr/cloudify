@@ -5,7 +5,7 @@
   String serverId=null;
   try {
     final Network managementNetwork=quantumApi.getNetworkByName(this.managementNetworkName);
-    final NovaServersResquest request=new NovaServersResquest();
+    final NovaServerResquest request=new NovaServerResquest();
     request.setName(serverName);
     request.setKeyName(keyName);
     request.setImageRef(imageId);
@@ -33,7 +33,12 @@
  catch (  final Exception e) {
     logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
     if (serverId != null) {
-      novaApi.deleteServer(serverId);
+      try {
+        novaApi.deleteServer(serverId);
+      }
+ catch (      OpenstackJsonSerializationException e1) {
+        throw new CloudProvisioningException(e);
+      }
     }
     throw new CloudProvisioningException(e);
   }

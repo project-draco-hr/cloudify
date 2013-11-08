@@ -4,6 +4,6 @@
   }
   final WebResource webResource=this.getWebResource();
   final String response=webResource.path("servers").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-  final NovaServersResponse nsr=JsonUtils.mapJsonToObject(NovaServersResponse.class,response);
-  return Arrays.asList(nsr.getServers());
+  final List<NovaServer> list=JsonUtils.unwrapRootToList(NovaServer.class,response);
+  return list;
 }

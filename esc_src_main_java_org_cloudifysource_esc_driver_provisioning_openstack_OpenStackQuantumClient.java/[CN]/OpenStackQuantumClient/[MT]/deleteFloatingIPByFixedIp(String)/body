@@ -1,8 +1,8 @@
 {
   final String response=this.getWebResource().path("floatingips").queryParam("fixed_ip_address",fixedIp).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-  final FloatingIpsResponse floatingIPsResponse=JsonUtils.mapJsonToObject(FloatingIpsResponse.class,response);
-  if (floatingIPsResponse != null && floatingIPsResponse.getFloatingips() != null && floatingIPsResponse.getFloatingips().size() != 0) {
-    final String floatingIPId=floatingIPsResponse.getFloatingips().get(0).getId();
+  final List<FloatingIp> floatingIPs=JsonUtils.unwrapRootToList(FloatingIp.class,response);
+  if (floatingIPs != null && floatingIPs.size() != 0) {
+    final String floatingIPId=floatingIPs.get(0).getId();
     this.deleteFloatingIP(floatingIPId);
   }
  else {

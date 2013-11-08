@@ -28,7 +28,7 @@
   try {
     this.cleanAllSecurityGroups();
   }
- catch (  OpenstackException e) {
+ catch (  Exception e) {
     logger.warning("Couldn't clean security groups " + this.securityGroupNames.getPrefix() + "*");
   }
 }

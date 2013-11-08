@@ -1,6 +1,5 @@
 {
   final String response=this.getWebResource().path("security-groups").queryParam("id",securityGroupId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-  final SecurityGroupsResponse securityGroupsResponse=JsonUtils.mapJsonToObject(SecurityGroupsResponse.class,response);
-  List<SecurityGroup> secgroups=securityGroupsResponse.getSecurityGroups();
-  return secgroups.isEmpty() ? null : secgroups.get(0);
+  final SecurityGroup securityGroup=JsonUtils.unwrapRootToObject(SecurityGroup.class,response);
+  return securityGroup;
 }

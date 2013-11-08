@@ -2,20 +2,36 @@
   boolean stopResult=false;
   logger.info("Stop Machine - machineIp: " + serverIp);
   logger.info("Looking up cloud server with IP: " + serverIp);
-  final NovaServer server=novaApi.getServerByIp(serverIp);
+  final NovaServer server;
+  try {
+    server=novaApi.getServerByIp(serverIp);
+  }
+ catch (  OpenstackJsonSerializationException e) {
+    throw new CloudProvisioningException(e);
+  }
   if (server != null) {
     logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to complete");
-    final String floatingIp=quantumApi.getFloatingIpByFixedIpAddress(serverIp);
-    if (floatingIp != null) {
-      try {
-        logger.info("Deleting Floating Ip : " + floatingIp);
-        quantumApi.deleteFloatingIPByFixedIp(serverIp);
-      }
- catch (      Exception e) {
-        logger.warning("Couldn't delete floating IP : " + floatingIp);
+    try {
+      final String floatingIp=quantumApi.getFloatingIpByFixedIpAddress(serverIp);
+      if (floatingIp != null) {
+        try {
+          logger.info("Deleting Floating Ip : " + floatingIp);
+          quantumApi.deleteFloatingIPByFixedIp(serverIp);
+        }
+ catch (        Exception e) {
+          logger.warning("Couldn't delete floating IP : " + floatingIp);
+        }
       }
     }
-    novaApi.deleteServer(server.getId());
+ catch (    OpenstackJsonSerializationException e) {
+      logger.log(Level.WARNING,"Could not release floating Ip associated to server " + server.getName() + " ("+ server.getId()+ ")",e);
+    }
+    try {
+      novaApi.deleteServer(server.getId());
+    }
+ catch (    final OpenstackJsonSerializationException e) {
+      throw new CloudProvisioningException(e);
+    }
     this.waitForServerToBeShutdown(server.getId(),duration,unit);
     logger.info("Server: " + server.getId() + " shutdown has finished.");
     stopResult=true;

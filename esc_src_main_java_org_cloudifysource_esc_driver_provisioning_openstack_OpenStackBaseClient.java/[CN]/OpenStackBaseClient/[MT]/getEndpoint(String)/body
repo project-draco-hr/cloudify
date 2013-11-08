@@ -1,5 +1,5 @@
 {
-  for (  TokenServiceCatalog tsc : this.token.getAccess().getServiceCatalog()) {
+  for (  TokenServiceCatalog tsc : this.token.getServiceCatalog()) {
     if (endpointType.equals(tsc.getName())) {
       for (      TokenServiceCatalogEndpoint endpoint : tsc.getEndpoints()) {
         if (this.region.equals(endpoint.getRegion())) {

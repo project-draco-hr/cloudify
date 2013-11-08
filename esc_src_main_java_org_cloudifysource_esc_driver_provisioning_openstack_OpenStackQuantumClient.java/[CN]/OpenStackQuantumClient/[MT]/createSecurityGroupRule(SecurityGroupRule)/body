@@ -1,0 +1,20 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Create security group rule " + request);
+  }
+  try {
+    final String jsonRequest=JsonUtils.toJson(request);
+    final String response=this.getWebResource().path("security-group-rules").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,jsonRequest);
+    final SecurityGroupRule created=JsonUtils.unwrapRootToObject(SecurityGroupRule.class,response);
+    return created;
+  }
+ catch (  final UniformInterfaceException e) {
+    if (CONFLICT_STATUS == e.getResponse().getStatus()) {
+      logger.warning("Rule already exists or is conflincting with another one: " + request);
+      return null;
+    }
+ else {
+      throw e;
+    }
+  }
+}

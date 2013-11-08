@@ -3,6 +3,6 @@
     return true;
   }
   long current=System.currentTimeMillis() + TOKEN_TIMEOUT_MARGING;
-  long tokenExpires=token.getAccess().getToken().getExpires().getTime();
+  long tokenExpires=token.getToken().getExpires().getTime();
   return current > tokenExpires;
 }

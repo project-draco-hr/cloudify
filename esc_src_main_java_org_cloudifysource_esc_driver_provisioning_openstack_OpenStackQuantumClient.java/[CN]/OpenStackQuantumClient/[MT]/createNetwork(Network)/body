@@ -1,0 +1,6 @@
+{
+  String json=JsonUtils.toJson(request);
+  final String response=this.getWebResource().path("networks").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,json);
+  final Network network=JsonUtils.unwrapRootToObject(Network.class,response);
+  return network;
+}

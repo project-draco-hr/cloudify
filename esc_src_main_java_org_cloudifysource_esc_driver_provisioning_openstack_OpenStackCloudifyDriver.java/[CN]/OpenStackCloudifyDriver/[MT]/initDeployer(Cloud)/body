@@ -20,6 +20,11 @@
   final StringTokenizer st=new StringTokenizer(cloudUser,":");
   final String tenant=st.hasMoreElements() ? (String)st.nextToken() : null;
   final String username=st.hasMoreElements() ? (String)st.nextToken() : null;
-  this.novaApi=new OpenStackNovaClient(endpoint,username,password,tenant,region);
-  this.quantumApi=new OpenStackQuantumClient(endpoint,username,password,tenant,region,quantumVersion);
+  try {
+    this.novaApi=new OpenStackNovaClient(endpoint,username,password,tenant,region);
+    this.quantumApi=new OpenStackQuantumClient(endpoint,username,password,tenant,region,quantumVersion);
+  }
+ catch (  OpenstackJsonSerializationException e) {
+    throw new IllegalStateException(e);
+  }
 }

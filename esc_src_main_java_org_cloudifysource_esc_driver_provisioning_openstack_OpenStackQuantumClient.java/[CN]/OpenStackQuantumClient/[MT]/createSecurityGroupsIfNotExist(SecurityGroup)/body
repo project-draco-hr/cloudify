@@ -1,0 +1,22 @@
+{
+synchronized (MUTEX_CREATE_SECURITY_GROUPS) {
+    try {
+      final String jsonRequest=JsonUtils.toJson(request);
+      final SecurityGroup securityGroup=this.getSecurityGroupsByName(request.getName());
+      if (securityGroup != null) {
+        logger.info("Security group '" + request.getName() + "' already exists.");
+        return securityGroup;
+      }
+      logger.info("Create security group : " + request.getName());
+      final String response=this.getWebResource().path("security-groups").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,jsonRequest);
+      final SecurityGroup created=JsonUtils.unwrapRootToObject(SecurityGroup.class,response);
+      return created;
+    }
+ catch (    UniformInterfaceException e) {
+      if (CONFLICT_STATUS == e.getResponse().getStatus()) {
+        throw new CloudProvisioningException("Quota for security group might be exceeded.",e);
+      }
+      throw e;
+    }
+  }
+}

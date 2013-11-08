@@ -2,7 +2,13 @@
   String serverName=null;
   int attempts=0;
   boolean foundFreeName=false;
-  final List<NovaServer> servers=novaApi.getServers();
+  final List<NovaServer> servers;
+  try {
+    servers=novaApi.getServers();
+  }
+ catch (  final OpenstackJsonSerializationException e) {
+    throw new CloudProvisioningException(e);
+  }
   final Set<String> existingNames=new HashSet<String>(servers.size());
   for (  final NovaServer sv : servers) {
     existingNames.add(sv.getName());

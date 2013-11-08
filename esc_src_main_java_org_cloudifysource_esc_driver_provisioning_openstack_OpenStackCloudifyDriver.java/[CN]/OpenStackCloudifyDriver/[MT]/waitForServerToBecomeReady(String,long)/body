@@ -1,6 +1,12 @@
 {
   while (System.currentTimeMillis() < endTime) {
-    final NovaServer server=novaApi.getServerDetails(serverId);
+    final NovaServer server;
+    try {
+      server=novaApi.getServerDetails(serverId);
+    }
+ catch (    final OpenstackJsonSerializationException e) {
+      throw new CloudProvisioningException(e);
+    }
     if (server == null) {
       logger.fine("Server Status (" + serverId + ") Not Found, please wait...");
       Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);

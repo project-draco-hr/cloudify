@@ -5,20 +5,18 @@
   final WebResource webResource=this.getWebResource();
   try {
     final String response=webResource.path("servers").queryParam("name",prefix).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-    final NovaServersResponse nsr=JsonUtils.mapJsonToObject(NovaServersResponse.class,response);
-    final NovaServer[] servers=nsr.getServers();
-    final List<NovaServer> list=new ArrayList<NovaServer>(servers.length);
+    final List<NovaServer> servers=JsonUtils.unwrapRootToList(NovaServer.class,response);
+    final List<NovaServer> detailServers=new ArrayList<NovaServer>(servers.size());
     for (    final NovaServer sv : servers) {
       final NovaServer serverDetails=this.getServerDetails(sv.getId());
-      list.add(serverDetails);
+      detailServers.add(serverDetails);
     }
-    return list;
+    return detailServers;
   }
  catch (  final UniformInterfaceException e) {
     if (RESOURCE_NOT_FOUND_STATUS == e.getResponse().getStatus()) {
-      logger.warning("Server (prefix=" + prefix + ") not found.");
-      return new ArrayList<NovaServer>(0);
+      return null;
     }
-    throw new CloudProvisioningException(e);
+    throw this.createOpenstackServerException(e);
   }
 }

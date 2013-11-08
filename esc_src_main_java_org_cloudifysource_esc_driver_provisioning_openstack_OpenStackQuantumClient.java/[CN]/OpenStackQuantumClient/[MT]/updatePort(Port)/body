@@ -1,0 +1,13 @@
+{
+  final String portId=request.getId();
+  try {
+    request.setId(null);
+    final String jsonRequest=JsonUtils.toJson(request);
+    final String response=this.getWebResource().path("ports/" + portId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,jsonRequest);
+    final Port port=JsonUtils.unwrapRootToObject(Port.class,response);
+    return port;
+  }
+  finally {
+    request.setId(portId);
+  }
+}

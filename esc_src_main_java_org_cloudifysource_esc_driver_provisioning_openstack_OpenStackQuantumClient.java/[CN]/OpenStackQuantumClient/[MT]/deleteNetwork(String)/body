@@ -1,0 +1,10 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Deleting network with id=" + networkId);
+  }
+  final ClientResponse response=this.getWebResource().path("networks/" + networkId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+  this.verifyStatusCode(CODE_204_STATUS,response);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted network with id=" + networkId);
+  }
+}

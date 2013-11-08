@@ -3,18 +3,12 @@
     return null;
   }
   final ObjectMapper mapper=new ObjectMapper();
-  mapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+  mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES,false);
   T tokenResponse=null;
   try {
     tokenResponse=mapper.readValue(response,clazz);
   }
- catch (  JsonParseException e) {
-    e.printStackTrace();
-  }
-catch (  JsonMappingException e) {
-    e.printStackTrace();
-  }
-catch (  IOException e) {
+ catch (  final Exception e) {
     e.printStackTrace();
   }
   return tokenResponse;

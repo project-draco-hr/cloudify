@@ -1,9 +1,14 @@
 {
-  final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
-  final List<NovaServer> servers=novaApi.getServersByPrefix(this.serverNamePrefix);
-  final MachineDetails[] mds=new MachineDetails[servers.size()];
-  for (int i=0; i < servers.size(); i++) {
-    mds[i]=this.createMachineDetails(template,servers.get(i));
+  try {
+    final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
+    final List<NovaServer> servers=novaApi.getServersByPrefix(this.serverNamePrefix);
+    final MachineDetails[] mds=new MachineDetails[servers.size()];
+    for (int i=0; i < servers.size(); i++) {
+      mds[i]=this.createMachineDetails(template,servers.get(i));
+    }
+    return mds;
   }
-  return mds;
+ catch (  final Exception e) {
+    throw new CloudProvisioningException(e);
+  }
 }
