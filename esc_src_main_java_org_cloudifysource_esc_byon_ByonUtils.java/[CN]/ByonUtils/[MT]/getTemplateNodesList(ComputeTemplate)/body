@@ -1,12 +1,12 @@
 {
-  List<Map<String,String>> nodesList=null;
+  List<Map<Object,Object>> originalNodesList=null;
   final Map<String,Object> customSettings=template.getCustom();
   if (customSettings != null) {
-    @SuppressWarnings("unchecked") final List<Map<Object,Object>> originalNodesList=(List<Map<Object,Object>>)customSettings.get(NODES_LIST);
-    nodesList=ByonUtils.convertToStringMap(originalNodesList);
+    originalNodesList=(List<Map<Object,Object>>)customSettings.get(NODES_LIST);
   }
-  if (nodesList == null) {
+  if (originalNodesList == null || originalNodesList.isEmpty()) {
+    logger.warning("Nodes list is missing. custom = " + customSettings);
     throw new CloudProvisioningException("Nodes list not set");
   }
-  return nodesList;
+  return ByonUtils.convertToStringMap(originalNodesList);
 }

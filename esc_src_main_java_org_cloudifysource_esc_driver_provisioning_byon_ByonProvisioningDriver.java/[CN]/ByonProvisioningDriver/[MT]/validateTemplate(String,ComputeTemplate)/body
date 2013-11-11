@@ -1,4 +1,5 @@
 {
+  logger.fine("validating template [" + templateName + "]");
   boolean ipv6Used=false;
   try {
     List<CustomNode> nodes=ByonUtils.parseCloudNodes(template);
