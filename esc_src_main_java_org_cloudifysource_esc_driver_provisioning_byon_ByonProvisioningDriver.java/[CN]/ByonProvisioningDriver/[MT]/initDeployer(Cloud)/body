@@ -9,6 +9,7 @@
       }
     }
 ));
+    this.stopManagementTimeoutInMinutes=(Integer)super.cloud.getCustom().get(CloudifyConstants.STOP_MANAGEMENT_TIMEOUT_IN_MINUTES);
   }
  catch (  final Exception e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());

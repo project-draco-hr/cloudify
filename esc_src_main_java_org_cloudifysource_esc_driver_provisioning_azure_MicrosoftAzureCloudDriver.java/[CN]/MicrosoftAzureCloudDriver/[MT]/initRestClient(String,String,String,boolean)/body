@@ -1,6 +1,6 @@
 {
   if (azureClient == null) {
-    logger.fine("initializing Azure REST client");
+    logger.fine("Initializing Azure REST client");
     azureClient=new MicrosoftAzureRestClient(subscriptionId,pathToPfxFile,pfxPassword,CLOUDIFY_AFFINITY_PREFIX,CLOUDIFY_CLOUD_SERVICE_PREFIX,CLOUDIFY_STORAGE_ACCOUNT_PREFIX);
     if (enableWireLog) {
       azureClient.setLoggingFilter(logger);

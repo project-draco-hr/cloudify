@@ -1,5 +1,6 @@
 {
   super.setConfig(cloud,templateName,management,serviceName);
+  this.stopManagementTimeoutInMinutes=(Integer)super.cloud.getCustom().get(CloudifyConstants.STOP_MANAGEMENT_TIMEOUT_IN_MINUTES);
   this.availabilitySet=(String)this.template.getCustom().get(AZURE_AVAILABILITY_SET);
   String pfxFile=(String)this.template.getCustom().get(AZURE_PFX_FILE);
   if (pfxFile == null && management) {

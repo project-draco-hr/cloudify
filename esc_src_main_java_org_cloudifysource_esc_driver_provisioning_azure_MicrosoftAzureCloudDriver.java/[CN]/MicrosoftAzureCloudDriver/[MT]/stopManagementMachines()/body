@@ -1,5 +1,5 @@
 {
-  long endTime=System.currentTimeMillis() + DEFAULT_SHUTDOWN_DURATION;
+  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(stopManagementTimeoutInMinutes);
   boolean success=false;
   ExecutorService service=Executors.newCachedThreadPool();
   try {

@@ -1,5 +1,5 @@
 {
-  Set<CustomNode> managementServers=null;
+  Set<CustomNode> managementServers;
   try {
     managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
   }
@@ -7,9 +7,10 @@
     publishEvent("prov_management_lookup_failed");
     throw new CloudProvisioningException("Failed to lookup existing management servers.",e);
   }
+  final int stopTimeoutPerAgent=stopManagementTimeoutInMinutes / managementServers.size();
   for (  final CustomNode customNode : managementServers) {
     try {
-      stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP());
+      stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),stopTimeoutPerAgent);
     }
  catch (    final Exception e) {
       publishEvent("prov_failed_to_stop_management_machine");

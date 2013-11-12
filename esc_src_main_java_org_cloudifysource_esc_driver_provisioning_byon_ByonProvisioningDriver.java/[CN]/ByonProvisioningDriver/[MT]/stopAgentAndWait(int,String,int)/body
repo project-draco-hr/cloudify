@@ -11,7 +11,7 @@
     }
   }
   if (agent != null) {
-    logger.info("ByonProvisioningDriver: shutting down agent on server: " + ipAddress);
+    logger.info("Shutting down agent on server: " + ipAddress);
     try {
       admin.close();
       agent.shutdown();
@@ -22,7 +22,7 @@
         throw new AdminException("Failed to shutdown GSA",e);
       }
     }
-    final long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(AGENT_SHUTDOWN_TIMEOUT_IN_MINUTES);
+    final long end=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(timeoutInMinutes);
     boolean agentUp=isAgentUp(agent);
     while (agentUp && System.currentTimeMillis() < end) {
       logger.fine("next check in " + TimeUnit.MILLISECONDS.toSeconds(THREAD_WAITING_IDLE_TIME_IN_SECS) + " seconds");

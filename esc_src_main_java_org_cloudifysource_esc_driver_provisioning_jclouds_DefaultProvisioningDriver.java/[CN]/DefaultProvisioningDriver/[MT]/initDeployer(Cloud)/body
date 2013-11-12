@@ -3,6 +3,7 @@
     return;
   }
   try {
+    this.stopManagementMachinesTimeoutInMinutes=(Integer)cloud.getCustom().get(CloudifyConstants.STOP_MANAGEMENT_TIMEOUT_IN_MINUTES);
     this.deployer=createDeployer(cloud);
     initIPFilters(cloud);
   }
