@@ -1,5 +1,7 @@
 {
   Set<CustomNode> managementServers;
+  final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
+  publishEvent(EVENT_RETRIEVE_EXISTING_MANAGEMENT_MACHINES,managementMachinePrefix);
   try {
     managementServers=getExistingManagementServers(cloud.getProvider().getNumberOfManagementMachines());
   }

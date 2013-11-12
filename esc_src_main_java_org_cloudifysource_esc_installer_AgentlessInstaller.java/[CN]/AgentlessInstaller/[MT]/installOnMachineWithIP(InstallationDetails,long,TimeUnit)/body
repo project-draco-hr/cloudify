@@ -10,6 +10,7 @@
   }
   final int port=Utils.getFileTransferPort(details.getInstallerConfiguration(),details.getFileTransferMode());
   publishEvent("attempting_to_access_vm",targetHost);
+  logger.fine("Checking connection with target host " + targetHost);
   checkConnection(targetHost,port,details.getInstallerConfiguration(),CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
   File environmentFile=null;
   try {

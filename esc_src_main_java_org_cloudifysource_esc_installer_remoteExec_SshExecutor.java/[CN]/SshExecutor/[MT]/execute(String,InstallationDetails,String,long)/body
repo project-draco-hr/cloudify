@@ -1,6 +1,7 @@
 {
   final String fullCommand=(details.getScriptLanguage() == ScriptLanguages.LINUX_SHELL ? "chmod +x " + scriptPath + ";"+ scriptPath : ("cmd.exe /c " + EnvironmentFileBuilder.normalizeCygwinPath(scriptPath)).replace("\\","\\\\"));
   try {
+    logger.fine("Executing command '" + fullCommand + "' on target host "+ targetHost);
     Utils.executeSSHCommand(targetHost,fullCommand,details.getUsername(),details.getPassword(),details.getKeyFile(),endTimeMillis - System.currentTimeMillis(),TimeUnit.MILLISECONDS);
   }
  catch (  final BuildException e) {

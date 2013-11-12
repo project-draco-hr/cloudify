@@ -9,6 +9,7 @@
   }
   final String scriptPath=remoteDirectory + "/" + scriptFileName;
   final RemoteExecutor remoteExecutor=RemoteExecutorFactory.createRemoteExecutorProvider(details.getRemoteExecutionMode());
+  logger.fine("Initializing remote executor " + remoteExecutor);
   remoteExecutor.initialize(this,details);
   remoteExecutor.execute(targetHost,details,scriptPath,end);
   return;

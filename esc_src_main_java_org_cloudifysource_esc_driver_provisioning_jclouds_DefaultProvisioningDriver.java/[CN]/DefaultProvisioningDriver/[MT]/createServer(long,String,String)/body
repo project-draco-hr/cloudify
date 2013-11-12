@@ -11,6 +11,7 @@
   final MachineDetails machineDetails;
   try {
     logger.fine("Cloudify Deployer is creating a new server with tag: " + groupName + ". This may take a few minutes");
+    publishEvent(EVENT_STARTING_MACHINE_WITH_NAME,groupName);
     node=deployer.createServer(groupName,locationId);
   }
  catch (  final InstallerException e) {
@@ -19,7 +20,9 @@
   logger.fine("New node is allocated, group name: " + groupName);
   final String nodeId=node.getId();
   try {
+    publishEvent(EVENT_WAITING_FOR_NODE_TO_BE_AVAILABLE,groupName);
     node=waitForNodeToBecomeReady(nodeId,end);
+    publishEvent(EVENT_MACHINE_STARTED,node.getName(),node.getPublicAddresses());
     machineDetails=createMachineDetailsFromNode(node);
     final FileTransferModes fileTransfer=cloudTemplate.getFileTransfer();
     if (this.cloud.getProvider().getProvider().equals("aws-ec2") && fileTransfer == FileTransferModes.CIFS) {

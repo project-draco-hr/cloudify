@@ -1,5 +1,7 @@
 {
   initDeployer(this.cloud);
+  final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
+  publishEvent(EVENT_RETRIEVE_EXISTING_MANAGEMENT_MACHINES,managementMachinePrefix);
   final MachineDetails[] managementServers=getExistingManagementServers();
   if (managementServers.length == 0) {
     throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.serverNamePrefix + ")");
@@ -8,8 +10,10 @@
   for (  final MachineDetails machineDetails : managementServers) {
     machineIps.add(machineDetails.getPrivateAddress());
   }
+  publishEvent(EVENT_DESTROYING_MACHINES,machineIps.toString());
   try {
     this.deployer.shutdownMachinesByIds(managementServers,stopManagementMachinesTimeoutInMinutes);
+    publishEvent(EVENT_MACHINES_DESTROYED_SUCCESSFULLY,machineIps.toString());
   }
  catch (  final InterruptedException e) {
     throw new CloudProvisioningException(e);

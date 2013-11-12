@@ -8,6 +8,7 @@
   if (StringUtils.isBlank(managementMachinePrefix)) {
     throw new CloudProvisioningException("The management group name is missing - can't locate existing servers!");
   }
+  publishEvent(EVENT_RETRIEVE_EXISTING_MANAGEMENT_MACHINES,managementMachinePrefix);
   final MachineDetails[] existingManagementServers=getExistingManagementServers();
   if (existingManagementServers.length > 0) {
     final String serverDescriptions=createExistingServersDescription(managementMachinePrefix,existingManagementServers);
