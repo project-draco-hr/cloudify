@@ -37,6 +37,12 @@
         this.storageTemplateName=config.getStorageTemplateName();
         logger.info("storage provisioning driver created successfully.");
       }
+      final String networkDriverClassName=this.cloud.getConfiguration().getNetworkDriverClassName();
+      if (!StringUtils.isEmpty(networkDriverClassName)) {
+        logger.info("creating network provisioning driver of type " + networkDriverClassName);
+        this.networkDriver=(NetworkDriver)Class.forName(networkDriverClassName).newInstance();
+        logger.info("network provisioning driver was created succesfully.");
+      }
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
