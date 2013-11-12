@@ -1,0 +1,19 @@
+{
+  ComputeTemplate template=new ComputeTemplate();
+  Cloud cloud=new Cloud();
+  CloudCompute cloudCompute=new CloudCompute();
+  Map<String,ComputeTemplate> templates=new HashMap<String,ComputeTemplate>();
+  templates.put("template",template);
+  cloudCompute.setTemplates(templates);
+  cloud.setCloudCompute(cloudCompute);
+  try {
+    ByonProvisioningDriver driver=new ByonProvisioningDriver();
+    ByonDeployer deployer=new ByonDeployer();
+    driver.setDeployer(deployer);
+    driver.updateDeployerTemplates(cloud);
+  }
+ catch (  Exception e) {
+    String message=e.getMessage();
+    Assert.assertTrue("error message does not conatin Nodes list not set",message.contains("Nodes list not set"));
+  }
+}

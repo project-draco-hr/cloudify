@@ -3,7 +3,7 @@
     if (cleanGsFilesOnShutdown) {
       deleteGsFiles(cloudNode);
     }
-    deployer.shutdownServer(cloudTemplateName,cloudNode);
+    getDeployer().shutdownServer(cloudTemplateName,cloudNode);
   }
  catch (  final Exception e) {
     if (isManagement) {

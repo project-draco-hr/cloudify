@@ -2,14 +2,14 @@
   final CustomNode node;
   final MachineDetails machineDetails;
   logger.info("Cloudify Deployer is creating a machine named: " + serverName + ". This may take a few minutes");
-  node=deployer.createServer(cloudTemplateName,serverName);
+  node=getDeployer().createServer(cloudTemplateName,serverName);
   machineDetails=createMachineDetailsFromNode(node);
   try {
     handleServerCredentials(machineDetails,template);
   }
  catch (  final CloudProvisioningException e) {
     try {
-      deployer.invalidateServer(cloudTemplateName,node);
+      getDeployer().invalidateServer(cloudTemplateName,node);
     }
  catch (    final CloudProvisioningException ie) {
       logger.log(Level.SEVERE,"Failed to mark machine [" + machineDetails.getPublicAddress() + "/"+ machineDetails.getPrivateAddress()+ "] as Invalid.",ie);

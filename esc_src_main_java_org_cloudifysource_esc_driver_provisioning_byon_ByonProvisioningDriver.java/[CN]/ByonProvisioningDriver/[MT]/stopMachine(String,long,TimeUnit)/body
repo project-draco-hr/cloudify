@@ -3,7 +3,7 @@
   logger.info("Stop Machine - machineIp: " + serverIp);
   logger.info("Scale IN -- " + serverIp + " --");
   logger.info("Looking up cloud server with IP: " + serverIp);
-  final CustomNode cloudNode=deployer.getServerByIP(cloudTemplateName,serverIp);
+  final CustomNode cloudNode=getDeployer().getServerByIP(cloudTemplateName,serverIp);
   if (cloudNode != null) {
     logger.info("Found server: " + cloudNode.getId() + ". Shutting it down and waiting for shutdown to complete");
     shutdownServerGracefully(cloudNode,false);

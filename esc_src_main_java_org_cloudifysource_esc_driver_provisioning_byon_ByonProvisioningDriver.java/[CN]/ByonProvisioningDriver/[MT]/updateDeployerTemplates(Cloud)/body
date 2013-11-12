@@ -1,12 +1,12 @@
 {
   final Map<String,ComputeTemplate> cloudTemplatesMap=cloud.getCloudCompute().getTemplates();
   final List<String> cloudTemplateNames=new LinkedList<String>(cloudTemplatesMap.keySet());
-  final List<String> deployerTemplateNames=deployer.getTemplatesList();
+  final List<String> deployerTemplateNames=getDeployer().getTemplatesList();
   final List<String> redundantTemplates=new LinkedList<String>(deployerTemplateNames);
   redundantTemplates.removeAll(cloudTemplateNames);
   if (!redundantTemplates.isEmpty()) {
     logger.info("initDeployer - found redundant templates: " + redundantTemplates);
-    deployer.removeTemplates(redundantTemplates);
+    getDeployer().removeTemplates(redundantTemplates);
   }
   final List<String> missingTemplates=new LinkedList<String>(cloudTemplateNames);
   missingTemplates.removeAll(deployerTemplateNames);
@@ -17,6 +17,6 @@
       final ComputeTemplate cloudTemplate=cloudTemplatesMap.get(templateName);
       templatesMap.put(templateName,cloudTemplate);
     }
-    addTemplatesToDeployer(deployer,templatesMap);
+    addTemplatesToDeployer(getDeployer(),templatesMap);
   }
 }

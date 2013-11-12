@@ -2,9 +2,9 @@
   final long endTime=System.currentTimeMillis() + timeUnit.toMillis(timeout);
   logger.info(this.getClass().getName() + ": startMachine, management mode: " + management);
   final Set<String> activeMachinesIPs=admin.getMachines().getHostsByAddress().keySet();
-  deployer.setAllocated(cloudTemplateName,activeMachinesIPs);
+  getDeployer().setAllocated(cloudTemplateName,activeMachinesIPs);
   if (logger.isLoggable(Level.INFO)) {
-    logger.info("Verifying the active machines are not in the free pool: " + "\n Admin reports the currently used machines are: " + Arrays.toString(activeMachinesIPs.toArray()) + "\n Byon deployer reports the free machines for template "+ cloudTemplateName+ " are: "+ Arrays.toString(deployer.getFreeNodesByTemplateName(cloudTemplateName).toArray())+ "\n Byon deployer reports the currently used machines for template "+ cloudTemplateName+ " are:"+ Arrays.toString(deployer.getAllocatedNodesByTemplateName(cloudTemplateName).toArray())+ "\n Byon deployer reports the invalid used machines for template "+ cloudTemplateName+ " are: "+ Arrays.toString(deployer.getInvalidNodesByTemplateName(cloudTemplateName).toArray())+ ")");
+    logger.info("Verifying the active machines are not in the free pool: " + "\n Admin reports the currently used machines are: " + Arrays.toString(activeMachinesIPs.toArray()) + "\n Byon deployer reports the free machines for template "+ cloudTemplateName+ " are: "+ Arrays.toString(getDeployer().getFreeNodesByTemplateName(cloudTemplateName).toArray())+ "\n Byon deployer reports the currently used machines for template "+ cloudTemplateName+ " are:"+ Arrays.toString(getDeployer().getAllocatedNodesByTemplateName(cloudTemplateName).toArray())+ "\n Byon deployer reports the invalid used machines for template "+ cloudTemplateName+ " are: "+ Arrays.toString(getDeployer().getInvalidNodesByTemplateName(cloudTemplateName).toArray())+ ")");
   }
   final String newServerName=createNewServerName();
   logger.info("Attempting to start a new cloud machine");

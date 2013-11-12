@@ -1,5 +1,5 @@
 {
-  if (deployer != null) {
-    deployer.close();
+  if (getDeployer() != null) {
+    getDeployer().close();
   }
 }

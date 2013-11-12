@@ -1,6 +1,6 @@
 {
   final Set<CustomNode> existingManagementServers=new HashSet<CustomNode>();
-  final Set<CustomNode> allNodes=deployer.getAllNodesByTemplateName(cloudTemplateName);
+  final Set<CustomNode> allNodes=getDeployer().getAllNodesByTemplateName(cloudTemplateName);
   String managementIP=null;
   for (  final CustomNode server : allNodes) {
     try {
@@ -18,7 +18,7 @@
       final GridServiceManagers gsms=admin.getGridServiceManagers();
       gsms.waitForAtLeastOne(MANAGEMENT_LOCATION_TIMEOUT,TimeUnit.SECONDS);
       for (      final GridServiceManager gsm : gsms) {
-        final CustomNode managementServer=deployer.getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
+        final CustomNode managementServer=getDeployer().getServerByIP(cloudTemplateName,gsm.getMachine().getHostAddress());
         if (managementServer != null) {
           existingManagementServers.add(managementServer);
         }

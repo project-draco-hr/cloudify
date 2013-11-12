@@ -5,7 +5,7 @@
   while (attempts < MAX_SERVERS_LIMIT) {
     ++attempts;
     serverName=serverNamePrefix + BaseProvisioningDriver.counter.incrementAndGet();
-    final CustomNode existingNode=deployer.getServerByID(cloudTemplateName,serverName);
+    final CustomNode existingNode=getDeployer().getServerByID(cloudTemplateName,serverName);
     if (existingNode == null) {
       foundFreeName=true;
       break;

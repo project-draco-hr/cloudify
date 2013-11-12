@@ -1,7 +1,6 @@
 {
   validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
   ComputeTemplate template=null;
-  boolean ipv6Used=false;
   Map<String,ComputeTemplate> templatesMap=cloud.getCloudCompute().getTemplates();
   validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
   for (  Entry<String,ComputeTemplate> templateEntry : templatesMap.entrySet()) {
