@@ -1,0 +1,14 @@
+{
+  this.provider=provider;
+  this.account=account;
+  this.key=key;
+  this.overrides=overrides;
+  modules.add(new AbstractModule(){
+    @Override protected void configure(){
+      bind(AWSEC2ReviseParsedImage.class).to(WindowsServerEC2ReviseParsedImage.class);
+    }
+  }
+);
+  modules.add(new JDKLoggingModule());
+  this.context=ContextBuilder.newBuilder(provider).credentials(account,key).modules(modules).overrides(overrides).buildView(ComputeServiceContext.class);
+}

@@ -4,7 +4,7 @@
   logger.fine("Cloud Template: " + cloudTemplateName + ". Details: "+ cloudTemplate);
   final Properties props=new Properties();
   props.putAll(cloudTemplate.getOverrides());
-  deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+  JCloudsDeployer deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props,setupModules());
   deployer.setImageId(cloudTemplate.getImageId());
   deployer.setMinRamMegabytes(cloudTemplate.getMachineMemoryMB());
   deployer.setHardwareId(cloudTemplate.getHardwareId());

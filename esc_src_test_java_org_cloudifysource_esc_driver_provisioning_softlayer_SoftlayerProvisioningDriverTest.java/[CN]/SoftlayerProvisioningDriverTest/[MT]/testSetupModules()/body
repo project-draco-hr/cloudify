@@ -1,0 +1,17 @@
+{
+  SoftlayerProvisioningDriver driver=new SoftlayerProvisioningDriver();
+  Cloud cloud=createCloud();
+  driver.setCloudTemplateName("dummy");
+  driver.initDeployer(cloud);
+  ComputeService compute=((ComputeServiceContext)driver.getComputeContext()).getComputeService();
+  Set<? extends ComputeMetadata> computeMetadatas=compute.listNodes();
+  if (computeMetadatas.isEmpty()) {
+    throw new IllegalStateException("There are no nodes in the account");
+  }
+  for (  ComputeMetadata computeMetadata : computeMetadatas) {
+    NodeMetadata node=(NodeMetadata)computeMetadata;
+    Assert.assertNull(node.getLocation());
+    Assert.assertNull(node.getHardware());
+    Assert.assertNull(node.getImageId());
+  }
+}

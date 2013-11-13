@@ -6,7 +6,7 @@
     logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
     final Properties props=new Properties();
     props.putAll(computeTemplate.getOverrides());
-    deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props);
+    deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props,new HashSet<Module>());
   }
  catch (  final Exception e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
