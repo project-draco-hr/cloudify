@@ -1,0 +1,11 @@
+{
+  if (apiName.equals("Storage")) {
+    return this.storageProvisioning;
+  }
+ else   if (apiName.equals("Network")) {
+    return this.networkProvisioning;
+  }
+ else {
+    throw new UnsupportedOperationException("");
+  }
+}
