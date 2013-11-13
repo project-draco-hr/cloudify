@@ -1,5 +1,0 @@
-{
-  final GSAReservationId reservationId=null;
-  final ExactZonesConfig zones=new ExactZonesConfig();
-  return startMachine(zones,reservationId,duration,unit);
-}

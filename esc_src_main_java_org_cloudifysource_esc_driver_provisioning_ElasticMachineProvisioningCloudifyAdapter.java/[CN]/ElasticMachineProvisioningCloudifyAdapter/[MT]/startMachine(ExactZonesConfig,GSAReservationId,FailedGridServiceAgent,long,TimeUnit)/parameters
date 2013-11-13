@@ -1,4 +1,5 @@
 ExactZonesConfig zones
 GSAReservationId reservationId
+FailedGridServiceAgent failedAgent
 long duration
 TimeUnit unit
