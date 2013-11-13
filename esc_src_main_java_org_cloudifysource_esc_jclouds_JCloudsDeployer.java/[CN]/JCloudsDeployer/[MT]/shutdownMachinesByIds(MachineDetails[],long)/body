@@ -20,5 +20,5 @@
     if (nonTerminatedNodes.isEmpty())     return;
     Thread.sleep(SHUTDOWN_WAIT_POLLING_INTERVAL_MILLIS);
   }
-  throw new TimeoutException("Timed out while waiting for machines " + toIps(nonTerminatedNodes) + " to terminate. Make "+ "sure this machines are terminated.");
+  throw new TimeoutException("Timed out while waiting for machines " + toIps(nonTerminatedNodes) + " to terminate. Make "+ "sure these machines are terminated.");
 }
