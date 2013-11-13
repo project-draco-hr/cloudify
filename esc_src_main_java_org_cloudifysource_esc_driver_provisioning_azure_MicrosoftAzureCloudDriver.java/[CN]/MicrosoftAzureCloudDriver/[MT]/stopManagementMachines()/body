@@ -1,5 +1,5 @@
 {
-  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(stopManagementTimeoutInMinutes);
+  final long endTime=System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(stopManagementMachinesTimeoutInMinutes);
   boolean success=false;
   ExecutorService service=Executors.newCachedThreadPool();
   try {

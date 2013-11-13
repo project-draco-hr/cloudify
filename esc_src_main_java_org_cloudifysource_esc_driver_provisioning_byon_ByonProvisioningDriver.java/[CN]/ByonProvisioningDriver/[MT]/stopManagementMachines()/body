@@ -9,7 +9,7 @@
     publishEvent("prov_management_lookup_failed");
     throw new CloudProvisioningException("Failed to lookup existing management servers.",e);
   }
-  final int stopTimeoutPerAgent=stopManagementTimeoutInMinutes / managementServers.size();
+  final int stopTimeoutPerAgent=stopManagementMachinesTimeoutInMinutes / managementServers.size();
   for (  final CustomNode customNode : managementServers) {
     try {
       stopAgentAndWait(cloud.getProvider().getNumberOfManagementMachines(),customNode.getPrivateIP(),stopTimeoutPerAgent);

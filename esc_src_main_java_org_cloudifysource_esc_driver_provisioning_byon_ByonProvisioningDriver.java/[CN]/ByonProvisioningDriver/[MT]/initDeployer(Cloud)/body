@@ -9,7 +9,7 @@
       }
     }
 ));
-    this.stopManagementTimeoutInMinutes=(Integer)super.cloud.getCustom().get(CloudifyConstants.STOP_MANAGEMENT_TIMEOUT_IN_MINUTES);
+    this.stopManagementMachinesTimeoutInMinutes=Utils.getInteger(super.cloud.getCustom().get(CloudifyConstants.STOP_MANAGEMENT_TIMEOUT_IN_MINUTES),DEFAULT_STOP_MANAGEMENT_TIMEOUT);
   }
  catch (  final Exception e) {
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
