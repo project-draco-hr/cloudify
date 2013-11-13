@@ -1,6 +1,6 @@
 {
   if (storageFacade == null) {
-    this.storageFacade=getRemoteStorage();
+    this.storageFacade=(StorageFacade)getRemoteApi(CloudifyConstants.STORAGE_API_NAME);
   }
   return storageFacade;
 }
