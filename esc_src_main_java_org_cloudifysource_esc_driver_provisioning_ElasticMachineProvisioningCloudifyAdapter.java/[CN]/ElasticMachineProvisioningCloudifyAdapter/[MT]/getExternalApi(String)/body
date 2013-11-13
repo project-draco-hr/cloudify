@@ -1,0 +1,10 @@
+{
+  Object externalApi=null;
+  if (apiName.equals(CloudifyConstants.STORAGE_API_NAME)) {
+    externalApi=this.storageProvisioning;
+  }
+ else   if (apiName.equals(CloudifyConstants.NETWORK_API_NAME)) {
+    externalApi=this.networkProvisioning;
+  }
+  return externalApi;
+}

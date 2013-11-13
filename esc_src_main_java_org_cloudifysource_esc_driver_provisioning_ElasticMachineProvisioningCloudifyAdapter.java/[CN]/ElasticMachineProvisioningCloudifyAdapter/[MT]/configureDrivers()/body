@@ -17,5 +17,8 @@
     }
     this.storageProvisioning.setConfig(cloud,this.cloudTemplateName);
   }
+  if (this.networkProvisioning != null) {
+    this.networkProvisioning.setConfig(cloud,this.cloudTemplateName);
+  }
   this.driversConfigured=true;
 }

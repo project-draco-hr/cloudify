@@ -1,0 +1,3 @@
+{
+  return new String[]{CloudifyConstants.STORAGE_API_NAME,CloudifyConstants.NETWORK_API_NAME};
+}
