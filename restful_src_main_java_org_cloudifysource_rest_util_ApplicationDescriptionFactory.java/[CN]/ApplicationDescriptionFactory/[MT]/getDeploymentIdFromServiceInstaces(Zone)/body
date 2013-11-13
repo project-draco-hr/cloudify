@@ -1,0 +1,18 @@
+{
+  String deploymentId=null;
+  if (zone != null) {
+    for (    ProcessingUnitInstance processingUnitInstance : zone.getProcessingUnitInstances()) {
+      BeanLevelProperties beanLevelProps=processingUnitInstance.getProperties();
+      if (beanLevelProps != null) {
+        Properties ctxProps=beanLevelProps.getContextProperties();
+        if (ctxProps != null) {
+          deploymentId=ctxProps.getProperty(CloudifyConstants.CONTEXT_PROPERTY_DEPLOYMENT_ID);
+        }
+      }
+      if (deploymentId != null) {
+        break;
+      }
+    }
+  }
+  return deploymentId;
+}

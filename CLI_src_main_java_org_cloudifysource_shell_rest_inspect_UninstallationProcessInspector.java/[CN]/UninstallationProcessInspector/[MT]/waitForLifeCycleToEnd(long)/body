@@ -15,6 +15,9 @@
  else {
           displayer.printNoChange();
         }
+        if (!cloudResourcesReleased) {
+          printIfReleasingCloudResources();
+        }
         return ended;
       }
  catch (      final RestClientException e) {
@@ -25,14 +28,17 @@
         throw new CLIException(message,e,e.getVerbose());
       }
     }
-    private void printUnInstalledInstances() throws RestClientException {
+    private void printIfReleasingCloudResources() throws RestClientException {
       for (      Map.Entry<String,Integer> entry : plannedNumberOfInstancesPerService.entrySet()) {
         String serviceName=entry.getKey();
-        int currentRunningInstances=getNumberOfRunningInstances(serviceName);
-        Integer lastUpdatedRunningInstances=currentRunningInstancesPerService.get(serviceName);
-        if (currentRunningInstances < lastUpdatedRunningInstances) {
-          displayer.printEvent(serviceName + " : Installed " + currentRunningInstances+ " Planned "+ entry.getValue());
-          currentRunningInstancesPerService.put(serviceName,currentRunningInstances);
+        try {
+          restClient.getServiceDescription(applicationName,serviceName);
+        }
+ catch (        RestClientResponseException e) {
+          if (e.getStatusCode() == CloudifyConstants.HTTP_STATUS_NOT_FOUND) {
+            cloudResourcesReleased=true;
+            displayer.printEvent(serviceName + ": " + CloudifyConstants.RELEASING_CLOUD_RESOURCES_EVENT);
+          }
         }
       }
     }

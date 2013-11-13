@@ -11,8 +11,13 @@
   if (processingUnit == null) {
     processingUnit=admin.getProcessingUnits().getProcessingUnit(absolutePuName);
   }
-  if (processingUnit == null) {
+  if (processingUnit != null) {
+    return getServiceDescription(processingUnit);
+  }
+ else   if (processingUnit == null && zone != null) {
+    return getServiceDescription(zone);
+  }
+ else {
     throw new ResourceNotFoundException(absolutePuName);
   }
-  return getServiceDescription(processingUnit);
 }

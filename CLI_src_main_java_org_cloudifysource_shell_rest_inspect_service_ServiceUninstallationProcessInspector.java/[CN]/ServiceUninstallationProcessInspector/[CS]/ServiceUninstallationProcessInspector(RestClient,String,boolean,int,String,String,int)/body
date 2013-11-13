@@ -1,6 +1,5 @@
 {
-  super(restClient,deploymentId,verbose,createOneEntryMap(serviceName,0),createOneEntryMap(serviceName,currentNumberOfRunningInstance));
-  this.applicationName=applicationName;
+  super(restClient,deploymentId,applicationName,verbose,createOneEntryMap(serviceName,0),createOneEntryMap(serviceName,currentNumberOfRunningInstance));
   this.serviceName=serviceName;
   setLastEventIndex(nextEventIndex);
 }

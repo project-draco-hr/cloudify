@@ -1,5 +1,4 @@
 {
-  super(restClient,deploymentId,verbose,plannedNumberOfInstancesPerService,initWithZeros(plannedNumberOfInstancesPerService.keySet()));
-  this.applicationName=applicationName;
+  super(restClient,deploymentId,applicationName,verbose,plannedNumberOfInstancesPerService,initWithZeros(plannedNumberOfInstancesPerService.keySet()));
   this.numServices=plannedNumberOfInstancesPerService.entrySet().size();
 }

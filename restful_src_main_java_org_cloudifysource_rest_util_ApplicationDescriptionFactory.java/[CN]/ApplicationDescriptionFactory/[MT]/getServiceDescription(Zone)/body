@@ -1,0 +1,22 @@
+{
+  int plannedNumberOfInstances, numberOfServiceInstances;
+  DeploymentState serviceState;
+  ServiceDescription serviceDescription=new ServiceDescription();
+  plannedNumberOfInstances=0;
+  numberOfServiceInstances=zone.getProcessingUnitInstances().length;
+  List<InstanceDescription> serviceInstancesDescription=getServiceInstacesDescription(zone);
+  serviceState=DeploymentState.IN_PROGRESS;
+  logger.log(Level.FINE,"Service \"" + zone.getName() + "\" is in state: "+ serviceState);
+  serviceDescription.setPlannedInstances(plannedNumberOfInstances);
+  serviceDescription.setInstanceCount(numberOfServiceInstances);
+  FullServiceName fullServiceName=ServiceUtils.getFullServiceName(zone.getName());
+  final String applicationName=fullServiceName.getApplicationName();
+  final String serviceName=fullServiceName.getServiceName();
+  serviceDescription.setApplicationName(applicationName);
+  serviceDescription.setServiceName(serviceName);
+  serviceDescription.setInstancesDescription(serviceInstancesDescription);
+  serviceDescription.setServiceState(serviceState);
+  String deploymentId=getDeploymentIdFromServiceInstaces(zone);
+  serviceDescription.setDeploymentId(deploymentId);
+  return serviceDescription;
+}

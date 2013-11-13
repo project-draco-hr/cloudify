@@ -1,0 +1,3 @@
+{
+  super(restClient,deploymentId,applicationName,verbose,plannedNumberOfInstancesPerService,currentRunningInstancesPerService);
+}

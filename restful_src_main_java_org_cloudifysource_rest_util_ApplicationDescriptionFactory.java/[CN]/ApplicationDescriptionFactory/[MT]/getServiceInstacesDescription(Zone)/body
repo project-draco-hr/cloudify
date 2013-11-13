@@ -1,0 +1,10 @@
+{
+  List<InstanceDescription> instancesDescriptionList=new ArrayList<InstanceDescription>();
+  if (zone != null) {
+    for (    ProcessingUnitInstance processingUnitInstance : zone.getProcessingUnitInstances()) {
+      InstanceDescription instanceDescription=getInstanceDescription(processingUnitInstance);
+      instancesDescriptionList.add(instanceDescription);
+    }
+  }
+  return instancesDescriptionList;
+}

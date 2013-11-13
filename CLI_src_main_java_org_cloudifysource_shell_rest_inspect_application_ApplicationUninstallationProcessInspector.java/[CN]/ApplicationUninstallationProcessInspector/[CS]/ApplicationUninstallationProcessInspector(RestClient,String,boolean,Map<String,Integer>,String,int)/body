@@ -1,5 +1,4 @@
 {
-  super(restClient,deploymentId,verbose,initWithZeros(currentRunningInstancesPerService.keySet()),currentRunningInstancesPerService);
-  this.applicationName=applicationName;
+  super(restClient,deploymentId,applicationName,verbose,initWithZeros(currentRunningInstancesPerService.keySet()),currentRunningInstancesPerService);
   setLastEventIndex(nextEventId);
 }
