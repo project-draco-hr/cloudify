@@ -1,5 +1,6 @@
 {
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  final GridServiceAgent agent=startedAgent.getAgent();
   final String machineIp=agent.getMachine().getHostAddress();
   try {
     configureDrivers();
