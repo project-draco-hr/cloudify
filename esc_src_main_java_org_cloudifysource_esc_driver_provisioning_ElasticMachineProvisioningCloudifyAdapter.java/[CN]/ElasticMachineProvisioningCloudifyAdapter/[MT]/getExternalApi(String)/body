@@ -13,7 +13,7 @@ catch (  final StorageProvisioningException e) {
     externalApi=new RemoteStorageProvisioningDriverAdapter(storageProvisioning,cloud.getCloudStorage().getTemplates().get(storageTemplateName));
   }
  else   if (apiName.equals(CloudifyConstants.NETWORK_API_NAME)) {
-    externalApi=this.networkProvisioning;
+    externalApi=new RemoteNetworkProvisioningDriverAdapter(this.networkProvisioning);
   }
   return externalApi;
 }
