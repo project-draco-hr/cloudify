@@ -2,16 +2,22 @@
   ElasticServiceManager elasticServiceManager;
   if (admin != null) {
     elasticServiceManager=admin.getElasticServiceManagers().waitForAtLeastOne();
-    RemoteStorageProvisioningDriver storageApi=(RemoteStorageProvisioningDriver)((InternalElasticServiceManager)elasticServiceManager).getExternalApi(ServiceUtils.getAbsolutePUName(applicationName,serviceName),apiName);
+    Object remoteApi=null;
+    remoteApi=((InternalElasticServiceManager)elasticServiceManager).getExternalApi(ServiceUtils.getAbsolutePUName(applicationName,serviceName),apiName);
     if (logger.isLoggable(Level.FINE)) {
-      if (storageApi == null) {
+      if (remoteApi == null) {
         logger.fine(apiName + " was not found");
       }
  else {
         logger.fine(apiName + " successfully located");
       }
     }
-    return new StorageFacadeImpl(this,storageApi);
+    if (CloudifyConstants.STORAGE_API_NAME.equals(apiName)) {
+      return new StorageFacadeImpl(this,(RemoteStorageProvisioningDriver)remoteApi);
+    }
+ else     if (CloudifyConstants.NETWORK_API_NAME.equals(apiName)) {
+      return new NetworkFacadeImpl((RemoteNetworkProvisioningDriver)remoteApi);
+    }
   }
   return null;
 }

@@ -1,6 +1,6 @@
 {
   if (this.networkDriver == null) {
-    this.networkDriver=(NetworkProvisioningDriver)getRemoteApi(CloudifyConstants.NETWORK_API_NAME);
+    this.networkDriver=(NetworkFacade)getRemoteApi(CloudifyConstants.NETWORK_API_NAME);
   }
   return this.networkDriver;
 }
