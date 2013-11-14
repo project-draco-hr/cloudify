@@ -1,6 +1,6 @@
 {
   if (this.remoteNetworkProvisioningDriver == null) {
-    throw new IllegalStateException("No network provisioning driver configured, remote provisioning calls are not possible");
+    throw new IllegalStateException("No network provisioning driver configured. " + "remote network provisioning calls are not possible");
   }
   return this.remoteNetworkProvisioningDriver;
 }
