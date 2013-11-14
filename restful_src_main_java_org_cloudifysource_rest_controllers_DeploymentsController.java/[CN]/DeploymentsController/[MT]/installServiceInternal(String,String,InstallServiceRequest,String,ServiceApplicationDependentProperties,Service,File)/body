@@ -1,5 +1,4 @@
 {
-  String serviceName=service.getName();
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
   final String templateName=getTempalteNameFromService(service);
   final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);

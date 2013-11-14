@@ -41,5 +41,5 @@
   String effectiveAuthGroups=getEffectiveAuthGroups(request.getAuthGroups());
   request.setAuthGroups(effectiveAuthGroups);
   final String deploymentID=UUID.randomUUID().toString();
-  return installServiceInternal(appName,request,deploymentID,null,service,updatedPackedFile);
+  return installServiceInternal(appName,serviceName,request,deploymentID,null,service,updatedPackedFile);
 }

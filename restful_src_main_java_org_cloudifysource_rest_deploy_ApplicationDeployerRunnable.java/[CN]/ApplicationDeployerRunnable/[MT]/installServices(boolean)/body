@@ -22,7 +22,7 @@
       final InstallServiceRequest installServiceReq=createInstallServiceRequest();
       final ServiceApplicationDependentProperties serviceProps=new ServiceApplicationDependentProperties();
       serviceProps.setDependsOn(service.getDependsOn());
-      controller.installServiceInternal(applicationName,installServiceReq,deploymentID,serviceProps,service,packedFile);
+      controller.installServiceInternal(applicationName,serviceName,installServiceReq,deploymentID,serviceProps,service,packedFile);
       try {
         FileUtils.deleteDirectory(packedFile.getParentFile());
       }

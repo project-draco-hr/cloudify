@@ -1,4 +1,5 @@
 String appName
+String serviceName
 InstallServiceRequest request
 String deploymentID
 ServiceApplicationDependentProperties serviceProps
