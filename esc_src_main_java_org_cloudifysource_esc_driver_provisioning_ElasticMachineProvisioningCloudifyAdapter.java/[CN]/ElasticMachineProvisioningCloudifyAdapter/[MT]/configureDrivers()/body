@@ -18,7 +18,9 @@
     this.storageProvisioning.setConfig(cloud,this.cloudTemplateName);
   }
   if (this.networkProvisioning != null) {
-    this.networkProvisioning.setConfig(cloud,this.cloudTemplateName);
+    final NetworkDriverConfiguration networkConfig=new NetworkDriverConfiguration();
+    networkConfig.setCloud(cloud);
+    this.networkProvisioning.setConfig(networkConfig);
   }
   this.driversConfigured=true;
 }

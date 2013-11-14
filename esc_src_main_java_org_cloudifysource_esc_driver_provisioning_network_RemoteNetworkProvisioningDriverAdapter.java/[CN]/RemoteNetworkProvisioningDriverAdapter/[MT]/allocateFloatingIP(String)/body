@@ -1,6 +1,6 @@
 {
   try {
-    return this.driver.allocate(poolName,DEFAULT_NETWORK_OPERATION_TIMEOUT_MILLIS,TimeUnit.MILLISECONDS);
+    return this.driver.allocateFloatingIP(poolName,DEFAULT_NETWORK_OPERATION_TIMEOUT_MILLIS,TimeUnit.MILLISECONDS);
   }
  catch (  final NetworkProvisioningException e) {
     logger.warning("failed to allocate a new IP address from pool " + poolName + " : "+ e.getMessage());
