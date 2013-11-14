@@ -1,0 +1,4 @@
+{
+  final RemoteNetworkProvisioningDriver provisioningDriver=getRemoteNetworkProvisioningDriver();
+  provisioningDriver.releaseFloatingIP(ip);
+}

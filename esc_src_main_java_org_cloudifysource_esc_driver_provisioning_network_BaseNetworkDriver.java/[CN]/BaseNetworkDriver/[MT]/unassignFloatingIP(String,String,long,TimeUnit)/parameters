@@ -1,0 +1,4 @@
+String ip
+String instanceID
+long duration
+TimeUnit timeUnit

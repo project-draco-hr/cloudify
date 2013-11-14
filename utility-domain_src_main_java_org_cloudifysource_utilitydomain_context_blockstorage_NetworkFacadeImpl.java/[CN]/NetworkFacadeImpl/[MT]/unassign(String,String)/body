@@ -1,4 +1,0 @@
-{
-  final RemoteNetworkProvisioningDriver provisioningDriver=getRemoteNetworkProvisioningDriver();
-  provisioningDriver.unassign(ip,instanceID);
-}

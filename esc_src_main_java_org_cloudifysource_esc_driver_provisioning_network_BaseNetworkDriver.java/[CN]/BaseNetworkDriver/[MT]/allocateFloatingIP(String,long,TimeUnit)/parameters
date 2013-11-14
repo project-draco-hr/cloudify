@@ -1,0 +1,3 @@
+String poolName
+long duration
+TimeUnit timeUnit
