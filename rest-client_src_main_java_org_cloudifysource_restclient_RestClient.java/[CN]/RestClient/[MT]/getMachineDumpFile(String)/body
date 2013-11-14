@@ -1,5 +1,0 @@
-{
-  return executor.get(getMachineDumpFileURL,new TypeReference<Response<GetMachineDumpFileResponse>>(){
-  }
-);
-}
