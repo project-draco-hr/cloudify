@@ -11,4 +11,5 @@
   IOUtils.writeString(out,remoteDirectory);
   IOUtils.writeString(out,locationId);
   IOUtils.writeString(out,openFilesLimit);
+  IOUtils.writeMapStringString(out,environment);
 }

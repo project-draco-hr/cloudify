@@ -1,0 +1,16 @@
+{
+  final MachineDetails md=new MachineDetails();
+  md.getEnvironment().put("MARKER","MARKER_VALUE");
+  final Cloud cloud=new Cloud();
+  cloud.getProvider().setManagementOnlyFiles(new ArrayList<String>());
+  final ComputeTemplate template=new ComputeTemplate();
+  final ExactZonesConfig zones=new ExactZonesConfig();
+  zones.setZones(new HashSet<String>(Arrays.asList("Zone1")));
+  final File cloudFile=new File("no-cloud.groovy");
+  final GSAReservationId reservationId=new GSAReservationId("123456");
+  final String templateName="SMALL_LINUX";
+  final InstallationDetails result=Utils.createInstallationDetails(md,cloud,template,zones,"localhost:4177",null,false,cloudFile,reservationId,templateName,null,null,null,false);
+  Assert.assertNotNull(result.getExtraRemoteEnvironmentVariables());
+  Assert.assertTrue("Expected to find environment variable",result.getExtraRemoteEnvironmentVariables().containsKey("MARKER"));
+  Assert.assertEquals("MARKER_VALUE",result.getExtraRemoteEnvironmentVariables().get("MARKER"));
+}

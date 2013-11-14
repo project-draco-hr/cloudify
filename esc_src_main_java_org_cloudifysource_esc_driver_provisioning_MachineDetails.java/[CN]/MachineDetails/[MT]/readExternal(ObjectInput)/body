@@ -11,4 +11,5 @@
   remoteDirectory=IOUtils.readString(in);
   locationId=IOUtils.readString(in);
   openFilesLimit=IOUtils.readString(in);
+  environment=IOUtils.readMapStringString(in);
 }

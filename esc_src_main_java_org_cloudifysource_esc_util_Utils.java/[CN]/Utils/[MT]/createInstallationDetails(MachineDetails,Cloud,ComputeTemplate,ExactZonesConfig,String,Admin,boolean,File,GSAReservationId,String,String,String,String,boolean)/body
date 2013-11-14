@@ -107,6 +107,12 @@
     details.setInstallerConfiguration(template.getInstaller());
   }
   details.setOpenFilesLimit(md.getOpenFilesLimit());
+  if (md.getEnvironment() != null && !md.getEnvironment().isEmpty()) {
+    final Set<Entry<String,String>> environmentEntries=md.getEnvironment().entrySet();
+    for (    Entry<String,String> entry : environmentEntries) {
+      details.getExtraRemoteEnvironmentVariables().put(entry.getKey(),entry.getValue());
+    }
+  }
   logger.fine("Created InstallationDetails: " + details);
   return details;
 }
