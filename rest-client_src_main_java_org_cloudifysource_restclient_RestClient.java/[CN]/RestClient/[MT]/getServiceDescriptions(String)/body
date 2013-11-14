@@ -1,6 +1,6 @@
 {
   validateDeploymentID(deploymentId,"getServiceDescriptions(String)");
-  String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_SERVICES_DESCRIPTION_URL_FORMAT,deploymentId);
+  final String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_SERVICES_DESCRIPTION_URL_FORMAT,deploymentId);
   log(Level.FINE,"[getServiceDescriptions] - sending GET request to REST [" + url + "]");
   return executor.get(url,new TypeReference<Response<List<ServiceDescription>>>(){
   }

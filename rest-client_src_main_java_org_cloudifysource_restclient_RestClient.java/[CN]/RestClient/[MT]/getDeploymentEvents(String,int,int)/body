@@ -1,6 +1,6 @@
 {
   validateDeploymentID(deploymentId,"getDeploymentEvents(String,int,int)");
-  String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_DEPLOYMENT_EVENTS_URL_FORMAT,deploymentId,String.valueOf(from),String.valueOf(to));
+  final String url=getFormattedUrl(versionedDeploymentControllerUrl,GET_DEPLOYMENT_EVENTS_URL_FORMAT,deploymentId,String.valueOf(from),String.valueOf(to));
   log(Level.FINE,"[getDeploymentEvents] - sending GET request to REST [" + url + "]");
   return executor.get(url,new TypeReference<Response<DeploymentEvents>>(){
   }

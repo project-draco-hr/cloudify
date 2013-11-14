@@ -1,0 +1,3 @@
+{
+  return getMachinesDumpFile(CloudifyConstants.DEFAULT_DUMP_PROCESSORS,fileSizeLimit);
+}

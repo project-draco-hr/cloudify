@@ -1,0 +1,3 @@
+long fileSizeLimit
+Machine machine
+String[] actualProcessors

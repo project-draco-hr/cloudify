@@ -1,0 +1,7 @@
+{
+  final String getPUDumpFileUrl=getFormattedUrl(shutdownManagersControllerUrl,GET_PU_DUMP_FILE_URL_FORMAT,Long.toString(fileSizeLimit));
+  log(Level.FINE,"[getPUDumpFile] - sending GET request to REST [" + getPUDumpFileUrl + "]");
+  return executor.get(getPUDumpFileUrl,new TypeReference<Response<GetPUDumpFileResponse>>(){
+  }
+);
+}

@@ -1,0 +1,3 @@
+{
+  return getMachineDumpFile(ip,CloudifyConstants.DEFAULT_DUMP_PROCESSORS,CloudifyConstants.DEFAULT_DUMP_FILE_SIZE_LIMIT);
+}

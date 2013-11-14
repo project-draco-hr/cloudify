@@ -1,0 +1,8 @@
+{
+  log(Level.INFO,"[getPUDumpFile] - generating dump file of all the processing units");
+  final DumpResult dump=admin.generateDump("Rest Service user request",null,ProcessingUnitsDumpProcessor.NAME);
+  byte[] data=getDumpRawData(dump,fileSizeLimit);
+  final GetPUDumpFileResponse response=new GetPUDumpFileResponse();
+  response.setDumpData(data);
+  return response;
+}

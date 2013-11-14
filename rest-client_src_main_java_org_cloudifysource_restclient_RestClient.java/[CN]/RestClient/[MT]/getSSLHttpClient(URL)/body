@@ -1,12 +1,12 @@
 {
   try {
     final X509TrustManager trustManager=createTrustManager();
-    SSLContext ctx=SSLContext.getInstance("TLS");
+    final SSLContext ctx=SSLContext.getInstance("TLS");
     ctx.init(null,new TrustManager[]{trustManager},null);
-    SSLSocketFactory ssf=new SSLSocketFactory(ctx,createHostnameVerifier());
-    AbstractHttpClient base=new DefaultHttpClient();
-    ClientConnectionManager ccm=base.getConnectionManager();
-    SchemeRegistry sr=ccm.getSchemeRegistry();
+    final SSLSocketFactory ssf=new SSLSocketFactory(ctx,createHostnameVerifier());
+    final AbstractHttpClient base=new DefaultHttpClient();
+    final ClientConnectionManager ccm=base.getConnectionManager();
+    final SchemeRegistry sr=ccm.getSchemeRegistry();
     sr.register(new Scheme(HTTPS,url.getPort(),ssf));
     return new DefaultHttpClient(ccm,base.getParams());
   }

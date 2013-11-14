@@ -1,10 +1,10 @@
 {
-  Sigar sigar=SigarHolder.getSigar();
+  final Sigar sigar=SigarHolder.getSigar();
   final long myPid=sigar.getPid();
   logger.fine("PID of current process is: " + myPid);
   if (logger.isLoggable(Level.FINE)) {
     logger.fine("[sortInstances] - Original Order is: ");
-    for (    ProcessingUnitInstance instance : instances) {
+    for (    final ProcessingUnitInstance instance : instances) {
       logger.fine(instance.getMachine().getHostAddress());
     }
   }

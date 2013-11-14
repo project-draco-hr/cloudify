@@ -1,0 +1,31 @@
+{
+  File target;
+  log(Level.INFO,"[getDumpRawData] - downloading the dump into a temporary file");
+  try {
+    target=File.createTempFile("dump",".zip",restConfig.getRestTempFolder());
+  }
+ catch (  IOException e) {
+    log(Level.INFO,"[getDumpRawData] - failed to create temp file for storing the dump file. error was: " + e.getMessage());
+    throw new RestErrorException(CloudifyErrorMessages.FAILED_CREATE_DUMP_FILE.getName(),"failed to create temporary file [" + e.getMessage() + "]");
+  }
+  target.deleteOnExit();
+  dump.download(target,null);
+  try {
+    if (target.length() >= fileSizeLimit) {
+      throw new RestErrorException(CloudifyErrorMessages.DUMP_FILE_TOO_LARGE.getName(),Long.toString(target.length()),Long.toString(fileSizeLimit));
+    }
+    log(Level.INFO,"[getDumpRawData] - reading file content into byte array");
+    final byte[] dumpBytes=FileUtils.readFileToByteArray(target);
+    return dumpBytes;
+  }
+ catch (  IOException e) {
+    log(Level.WARNING,"[getDumpRawData] - failed to read the dump file into byte array");
+    throw new RestErrorException(CloudifyErrorMessages.FAILED_CREATE_DUMP_FILE.getName(),"failed to read file to byte array [" + e.getMessage() + "]");
+  }
+ finally {
+    final boolean tempFileDeleteResult=target.delete();
+    if (!tempFileDeleteResult) {
+      log(Level.WARNING,"[getDumpRawData] - Failed to download temporary dump file: " + target);
+    }
+  }
+}

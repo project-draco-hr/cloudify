@@ -1,5 +1,5 @@
 {
-  X509HostnameVerifier verifier=new X509HostnameVerifier(){
+  final X509HostnameVerifier verifier=new X509HostnameVerifier(){
     @Override public boolean verify(    final String arg0,    final SSLSession arg1){
       return true;
     }

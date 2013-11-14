@@ -5,7 +5,7 @@
   final ProcessingUnitInstance[] instances=getManagementInstances();
   final ControllerDetails[] controllers=createControllerDetails(instances);
   log(Level.INFO,"[shutdownManagers] - Controllers will be shut down in the following order: " + Arrays.toString(instances) + ". IP of current node is: "+ System.getenv("NIC_ADDR"));
-  ShutdownManagementResponse resposne=new ShutdownManagementResponse();
+  final ShutdownManagementResponse resposne=new ShutdownManagementResponse();
   resposne.setControllers(controllers);
   final GridServiceAgent[] agents=getAgents(instances);
   new Thread(new Runnable(){
