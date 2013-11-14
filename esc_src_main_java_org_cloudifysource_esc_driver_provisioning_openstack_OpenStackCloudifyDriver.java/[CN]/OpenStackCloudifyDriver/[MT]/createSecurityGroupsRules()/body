@@ -2,12 +2,12 @@
   final ServiceNetwork network=this.configuration.getNetwork();
   if (network != null) {
     for (    final AccessRule accessRule : network.getAccessRules().getIncoming()) {
-      this.createAccessRule("ingress",network.getProtocolDescription(),accessRule);
+      this.createAccessRule("ingress",accessRule);
     }
     for (    final AccessRule accessRule : network.getAccessRules().getOutgoing()) {
       this.deleteEgressRulesFromSecurityGroup(this.securityGroupNames.getServiceName());
       this.deleteEgressRulesFromSecurityGroup(this.securityGroupNames.getServicePublicName());
-      this.createAccessRule("egress",network.getProtocolDescription(),accessRule);
+      this.createAccessRule("egress",accessRule);
     }
   }
 }

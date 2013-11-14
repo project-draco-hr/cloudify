@@ -5,7 +5,7 @@
     request=new SecurityGroupRule();
     request.setSecurityGroupId(targetSecurityGroupId);
     request.setDirection("ingress");
-    request.setProtocol("tcp");
+    request.setProtocol(DEFAULT_PROTOCOL);
     request.setPortRangeMax(entry.getTo() == null ? entry.getFrom().toString() : entry.getTo().toString());
     request.setPortRangeMin(entry.getFrom().toString());
     if (cidr == null) {

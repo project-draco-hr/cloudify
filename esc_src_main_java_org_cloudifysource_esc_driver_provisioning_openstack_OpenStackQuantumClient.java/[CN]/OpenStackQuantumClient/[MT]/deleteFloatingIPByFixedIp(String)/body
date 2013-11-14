@@ -1,5 +1,5 @@
 {
-  final String response=this.getWebResource().path("floatingips").queryParam("fixed_ip_address",fixedIp).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final String response=this.doGet("floatingips",new String[]{"fixed_ip_address",fixedIp});
   final List<FloatingIp> floatingIPs=JsonUtils.unwrapRootToList(FloatingIp.class,response);
   if (floatingIPs != null && floatingIPs.size() != 0) {
     final String floatingIPId=floatingIPs.get(0).getId();

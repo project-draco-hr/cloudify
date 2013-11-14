@@ -2,8 +2,7 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.log(Level.FINER,"Request=getServerDetails");
   }
-  final WebResource webResource=this.getWebResource();
-  final String response=webResource.path("servers").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final String response=this.doGet("servers");
   final List<NovaServer> list=JsonUtils.unwrapRootToList(NovaServer.class,response);
   return list;
 }

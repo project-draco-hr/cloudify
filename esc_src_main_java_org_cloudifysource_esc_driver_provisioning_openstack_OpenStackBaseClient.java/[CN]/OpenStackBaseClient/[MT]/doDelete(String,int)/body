@@ -1,0 +1,13 @@
+{
+  try {
+    final WebResource webResource=this.getWebResource();
+    final ClientResponse response=webResource.path(path).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+    if (expectedStatus != response.getStatus()) {
+      final String entity=response.getEntity(String.class);
+      throw new OpenstackServerException(expectedStatus,response.getStatus(),entity);
+    }
+  }
+ catch (  final UniformInterfaceException e) {
+    throw this.createOpenstackServerException(e);
+  }
+}

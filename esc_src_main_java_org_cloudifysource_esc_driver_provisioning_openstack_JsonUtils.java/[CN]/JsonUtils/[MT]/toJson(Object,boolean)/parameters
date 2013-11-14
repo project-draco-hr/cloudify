@@ -1,2 +1,2 @@
 Object javabean
-boolean useCamelCase
+boolean translateCamelCase

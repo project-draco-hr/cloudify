@@ -1,5 +1,5 @@
 {
-  final String response=this.getWebResource().path("security-groups").queryParam("id",securityGroupId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final String response=this.doGet("security-groups",new String[]{"id",securityGroupId});
   final SecurityGroup securityGroup=JsonUtils.unwrapRootToObject(SecurityGroup.class,response);
   return securityGroup;
 }

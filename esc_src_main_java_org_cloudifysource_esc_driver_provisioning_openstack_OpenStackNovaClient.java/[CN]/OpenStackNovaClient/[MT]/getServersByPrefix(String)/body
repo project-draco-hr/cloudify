@@ -2,21 +2,21 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.log(Level.FINER,"Request=getServerWithName");
   }
-  final WebResource webResource=this.getWebResource();
+  final String response;
   try {
-    final String response=webResource.path("servers").queryParam("name",prefix).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
-    final List<NovaServer> servers=JsonUtils.unwrapRootToList(NovaServer.class,response);
-    final List<NovaServer> detailServers=new ArrayList<NovaServer>(servers.size());
-    for (    final NovaServer sv : servers) {
-      final NovaServer serverDetails=this.getServerDetails(sv.getId());
-      detailServers.add(serverDetails);
-    }
-    return detailServers;
+    response=this.doGet("servers",new String[]{"name",prefix});
   }
- catch (  final UniformInterfaceException e) {
-    if (RESOURCE_NOT_FOUND_STATUS == e.getResponse().getStatus()) {
+ catch (  OpenstackServerException e) {
+    if (RESOURCE_NOT_FOUND_STATUS == e.getStatusCode()) {
       return null;
     }
-    throw this.createOpenstackServerException(e);
+    throw e;
   }
+  final List<NovaServer> servers=JsonUtils.unwrapRootToList(NovaServer.class,response);
+  final List<NovaServer> detailServers=new ArrayList<NovaServer>(servers.size());
+  for (  final NovaServer sv : servers) {
+    final NovaServer serverDetails=this.getServerDetails(sv.getId());
+    detailServers.add(serverDetails);
+  }
+  return detailServers;
 }

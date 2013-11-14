@@ -1,3 +1,5 @@
 {
-  serviceClient.destroy();
+  if (serviceClient != null) {
+    serviceClient.destroy();
+  }
 }

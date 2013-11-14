@@ -1,0 +1,4 @@
+{
+  this.nexthop=nexthop;
+  this.destination=destination;
+}

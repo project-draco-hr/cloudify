@@ -6,7 +6,7 @@
   try {
     servers=novaApi.getServers();
   }
- catch (  final OpenstackJsonSerializationException e) {
+ catch (  final OpenstackException e) {
     throw new CloudProvisioningException(e);
   }
   final Set<String> existingNames=new HashSet<String>(servers.size());

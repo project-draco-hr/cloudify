@@ -2,8 +2,7 @@
   if (logger.isLoggable(Level.FINEST)) {
     logger.finest("Deleting router with id=" + routerId);
   }
-  final ClientResponse response=this.getWebResource().path("routers/" + routerId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
-  this.verifyStatusCode(CODE_204_STATUS,response);
+  this.doDelete("routers/" + routerId,CODE_OK_204);
   if (logger.isLoggable(Level.FINER)) {
     logger.finer("Deleted router with id=" + routerId);
   }

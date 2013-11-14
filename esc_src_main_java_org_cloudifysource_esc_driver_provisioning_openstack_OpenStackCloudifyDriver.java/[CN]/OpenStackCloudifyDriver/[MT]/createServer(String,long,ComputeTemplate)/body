@@ -36,8 +36,8 @@
       try {
         novaApi.deleteServer(serverId);
       }
- catch (      OpenstackJsonSerializationException e1) {
-        throw new CloudProvisioningException(e);
+ catch (      final OpenstackException e1) {
+        throw new CloudProvisioningException(e1);
       }
     }
     throw new CloudProvisioningException(e);

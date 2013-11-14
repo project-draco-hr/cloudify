@@ -1,8 +1,9 @@
 {
-  final String jsonRequest=JsonUtils.toJson(request);
+  String jsonRequest=JsonUtils.toJson(request);
+  jsonRequest=jsonRequest.replaceAll("\"gateway_ip\"\\s*:\\s*\"null\"","\"gateway_ip\" : null");
   Subnet subnet=null;
   try {
-    final String response=this.getWebResource().path("subnets").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).post(String.class,jsonRequest);
+    final String response=this.doPost("subnets",jsonRequest);
     subnet=JsonUtils.unwrapRootToObject(Subnet.class,response);
   }
  catch (  final UniformInterfaceException e) {

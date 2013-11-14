@@ -1,0 +1,9 @@
+{
+  try {
+    final String response=this.getWebResource().path(path).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,input);
+    return response;
+  }
+ catch (  final UniformInterfaceException e) {
+    throw this.createOpenstackServerException(e);
+  }
+}

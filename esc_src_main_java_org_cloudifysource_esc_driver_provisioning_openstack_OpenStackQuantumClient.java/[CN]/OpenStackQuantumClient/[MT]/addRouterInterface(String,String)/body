@@ -1,5 +1,7 @@
 {
-  final String response=this.getWebResource().path("routers/" + routerId + "/add_router_interface").type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,"{\"subnet_id\":\"" + subnetId + "\"}");
-  final Port port=JsonUtils.unwrapRootToObject(Port.class,response);
-  return port;
+  final String path="routers/" + routerId + "/add_router_interface";
+  final String input="{\"subnet_id\":\"" + subnetId + "\"}";
+  final String response=this.doPut(path,input);
+  final RouterInterface routerInterface=JsonUtils.mapJsonToObject(RouterInterface.class,response);
+  return routerInterface;
 }

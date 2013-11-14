@@ -8,7 +8,7 @@
         try {
           this.novaApi.deleteServer(machineDetails.getMachineId());
         }
- catch (        final OpenstackJsonSerializationException e) {
+ catch (        final OpenstackException e) {
           throw new CloudProvisioningException(e);
         }
       }

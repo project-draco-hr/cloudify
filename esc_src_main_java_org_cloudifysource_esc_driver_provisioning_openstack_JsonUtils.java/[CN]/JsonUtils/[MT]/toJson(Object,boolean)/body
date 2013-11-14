@@ -4,7 +4,7 @@
   }
   try {
     final ObjectMapper mapper=new ObjectMapper();
-    if (!useCamelCase) {
+    if (translateCamelCase) {
       mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
     }
     mapper.setSerializationInclusion(Inclusion.NON_EMPTY);

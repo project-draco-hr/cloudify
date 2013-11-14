@@ -1,5 +1,6 @@
 {
-  final String response=this.getWebResource().path("ports").queryParam("device_id",serverId).queryParam("network_id",networkId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final String[] params=new String[]{"device_id",serverId,"network_id",networkId};
+  final String response=this.doGet("ports",params);
   final List<Port> ports=JsonUtils.unwrapRootToList(Port.class,response);
   if (ports == null || ports.isEmpty()) {
     return null;

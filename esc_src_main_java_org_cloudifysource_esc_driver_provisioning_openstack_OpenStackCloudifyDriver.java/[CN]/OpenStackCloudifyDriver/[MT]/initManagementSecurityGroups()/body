@@ -12,20 +12,21 @@
     final SecurityGroup managementSecurityGroup=this.createSecurityGroup(managementSecgroupName);
     final String agentSecgroupName=this.securityGroupNames.getAgentName();
     final SecurityGroup agentSecurityGroup=this.createSecurityGroup(agentSecgroupName);
-    final List<Subnet> subnets=quantumApi.getSubnetsByNetworkName(this.managementNetworkName);
+    final NetworkConfiguration networkConfiguration=this.cloud.getCloudNetwork().getManagement().getNetworkConfiguration();
+    List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
     if (subnets == null || subnets.size() != 1) {
-      throw new CloudProvisioningException("Openstack management network must have one subnet");
+      throw new CloudProvisioningException("Management network must have one subnet");
     }
-    final Subnet mngSubnet=subnets.get(0);
+    final org.cloudifysource.domain.cloud.network.Subnet mngSubnet=subnets.get(0);
     @SuppressWarnings("unchecked") final Set<Object> managementPorts=new HashSet<Object>(Arrays.asList(agent.getPort(),deployer.getPort(),deployer.getWebsterPort(),discovery.getPort(),orchestrator.getPort(),usm.getPortRange(),"4150-4200"));
     final String managementPortRange=StringUtils.join(managementPorts,",");
-    this.createManagementRule(managementSecurityGroup.getId(),managementPortRange,mngSubnet.getCidr());
+    this.createManagementRule(managementSecurityGroup.getId(),managementPortRange,mngSubnet.getRange());
     @SuppressWarnings("unchecked") final Set<Object> agentPorts=new HashSet<Object>(Arrays.asList(agent.getPort(),deployer.getPort(),discovery.getPort(),usm.getPortRange()));
     for (    final FileTransferModes mode : FileTransferModes.values()) {
       agentPorts.add(mode.getDefaultPort());
     }
     final String agentPortRange=StringUtils.join(agentPorts,",");
-    this.createManagementRule(agentSecurityGroup.getId(),agentPortRange,mngSubnet.getCidr());
+    this.createManagementRule(agentSecurityGroup.getId(),agentPortRange,mngSubnet.getRange());
     final WebuiComponent webui=components.getWebui();
     final RestComponent rest=components.getRest();
     final String managementMachineTemplate=this.cloud.getConfiguration().getManagementMachineTemplate();

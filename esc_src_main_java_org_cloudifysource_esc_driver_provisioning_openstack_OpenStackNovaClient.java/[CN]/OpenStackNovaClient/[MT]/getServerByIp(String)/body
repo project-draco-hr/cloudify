@@ -5,12 +5,14 @@
   final List<NovaServer> servers=this.getServers();
   for (  final NovaServer server : servers) {
     final NovaServer serverDetails=this.getServerDetails(server.getId());
-    final List<NovaServerAddress> addresses=serverDetails.getAddresses();
-    if (addresses != null) {
-      for (      final NovaServerAddress novaServerAddress : addresses) {
-        final String addr=novaServerAddress.getAddr();
-        if (StringUtils.equals(addr,serverIp)) {
-          return serverDetails;
+    if (serverDetails != null) {
+      final List<NovaServerAddress> addresses=serverDetails.getAddresses();
+      if (addresses != null) {
+        for (        final NovaServerAddress novaServerAddress : addresses) {
+          final String addr=novaServerAddress.getAddr();
+          if (StringUtils.equals(addr,serverIp)) {
+            return serverDetails;
+          }
         }
       }
     }

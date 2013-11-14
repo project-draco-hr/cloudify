@@ -1,0 +1,2 @@
+org.cloudifysource.domain.cloud.network.Subnet subnetConfig
+String networkId

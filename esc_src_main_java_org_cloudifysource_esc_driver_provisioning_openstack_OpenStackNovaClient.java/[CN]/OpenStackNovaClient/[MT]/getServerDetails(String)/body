@@ -2,16 +2,15 @@
   if (logger.isLoggable(Level.FINER)) {
     logger.log(Level.FINER,"Request=getServerDetails: " + serverId);
   }
-  final WebResource webResource=this.getWebResource();
   final String response;
   try {
-    response=webResource.path("servers/" + serverId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+    response=doGet("servers/" + serverId);
   }
- catch (  final UniformInterfaceException e) {
-    if (RESOURCE_NOT_FOUND_STATUS == e.getResponse().getStatus()) {
+ catch (  final OpenstackServerException e) {
+    if (RESOURCE_NOT_FOUND_STATUS == e.getStatusCode()) {
       return null;
     }
-    throw new CloudProvisioningException(e);
+    throw e;
   }
   final NovaServer nsr=JsonUtils.unwrapRootToObject(NovaServer.class,response);
   return nsr;

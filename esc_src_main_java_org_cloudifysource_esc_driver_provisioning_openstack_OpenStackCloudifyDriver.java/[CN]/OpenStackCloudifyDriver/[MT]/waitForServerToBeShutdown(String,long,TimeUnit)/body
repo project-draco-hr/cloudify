@@ -5,7 +5,7 @@
     try {
       server=novaApi.getServerDetails(serverId);
     }
- catch (    final OpenstackJsonSerializationException e) {
+ catch (    final OpenstackException e) {
       throw new CloudProvisioningException(e);
     }
     if (server == null) {

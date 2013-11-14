@@ -6,7 +6,7 @@
     final String tokenJsonRequest="{\"auth\":{\"passwordCredentials\":" + "{\"username\": \"%s\", \"password\":\"%s\"}, \"tenantName\":\"%s\"}}";
     final String input=String.format(tokenJsonRequest,username,password,tenant);
     final String response=webResource.path("tokens").accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).post(String.class,input);
-    this.token=JsonUtils.unwrapRootToObject(TokenAccess.class,response,true);
+    this.token=JsonUtils.unwrapRootToObject(TokenAccess.class,response,false);
   }
   finally {
     if (client != null) {

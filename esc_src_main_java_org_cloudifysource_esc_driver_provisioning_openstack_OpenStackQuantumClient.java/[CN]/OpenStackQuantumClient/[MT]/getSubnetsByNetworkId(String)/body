@@ -1,5 +1,5 @@
 {
-  final String response=this.getWebResource().path("subnets").queryParam("network_id",networkId).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+  final String response=this.doGet("subnets",new String[]{"network_id",networkId});
   final List<Subnet> subnets=JsonUtils.unwrapRootToList(Subnet.class,response);
   return subnets;
 }

@@ -3,12 +3,7 @@
   final SecurityGroupRule[] securityGroupRules=securityGroup.getSecurityGroupRules();
   for (  final SecurityGroupRule rule : securityGroupRules) {
     if ("egress".equals(rule.getDirection())) {
-      try {
-        quantumApi.deleteSecurityGroupRule(rule.getId());
-      }
- catch (      Exception e) {
-        throw new CloudProvisioningException(e);
-      }
+      quantumApi.deleteSecurityGroupRule(rule.getId());
     }
   }
 }

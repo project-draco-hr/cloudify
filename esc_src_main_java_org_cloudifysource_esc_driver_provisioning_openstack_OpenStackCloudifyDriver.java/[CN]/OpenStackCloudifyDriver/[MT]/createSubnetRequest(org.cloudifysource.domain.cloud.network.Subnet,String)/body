@@ -1,0 +1,20 @@
+{
+  final Subnet subnetRequest=new Subnet();
+  subnetRequest.setNetworkId(networkId);
+  subnetRequest.setCidr(subnetConfig.getRange());
+  subnetRequest.setName(subnetConfig.getName());
+  subnetRequest.setEnableDhcp(true);
+  subnetRequest.addDnsNameservers("8.8.8.8");
+  if (subnetConfig.getOptions().containsKey("gateway")) {
+    final String gatewayStr=subnetConfig.getOptions().get("gateway");
+    if (StringUtils.isNotEmpty(gatewayStr) && !"null".equals(gatewayStr)) {
+      subnetRequest.setGatewayIp(gatewayStr);
+      subnetRequest.addHostRoute(gatewayStr,"0.0.0.0/0");
+    }
+ else {
+      subnetRequest.setGatewayIp("null");
+    }
+  }
+  subnetRequest.setIpVersion("4");
+  return subnetRequest;
+}
