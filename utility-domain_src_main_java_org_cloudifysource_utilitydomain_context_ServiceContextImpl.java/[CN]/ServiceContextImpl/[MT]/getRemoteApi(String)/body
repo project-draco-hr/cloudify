@@ -12,10 +12,10 @@
         logger.fine(apiName + " successfully located");
       }
     }
-    if (CloudifyConstants.STORAGE_API_NAME.equals(apiName)) {
+    if (CloudifyConstants.ESM_STORAGE_API_KEY.equals(apiName)) {
       return new StorageFacadeImpl(this,(RemoteStorageProvisioningDriver)remoteApi);
     }
- else     if (CloudifyConstants.NETWORK_API_NAME.equals(apiName)) {
+ else     if (CloudifyConstants.ESM_NETWORK_API_KEY.equals(apiName)) {
       return new NetworkFacadeImpl((RemoteNetworkProvisioningDriver)remoteApi);
     }
   }
