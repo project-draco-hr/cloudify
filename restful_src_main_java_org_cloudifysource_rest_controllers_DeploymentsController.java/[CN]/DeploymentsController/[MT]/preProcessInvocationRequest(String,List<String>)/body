@@ -1,0 +1,12 @@
+{
+  int index=0;
+  final Map<String,Object> invocationParamsMap=new HashMap<String,Object>();
+  invocationParamsMap.put(CloudifyConstants.INVOCATION_PARAMETER_COMMAND_NAME,commandName);
+  if (parameters != null) {
+    for (    final String param : parameters) {
+      invocationParamsMap.put(CloudifyConstants.INVOCATION_PARAMETERS_KEY + index,param);
+      ++index;
+    }
+  }
+  return invocationParamsMap;
+}

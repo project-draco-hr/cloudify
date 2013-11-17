@@ -23,7 +23,8 @@
   for (  final ProcessingUnitInstance instance : instances) {
     final String serviceInstanceName=buildServiceInstanceName(instance);
     try {
-      final Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,request.getParameters());
+      Map<String,Object> invocationArgs=preProcessInvocationRequest(request.getCommandName(),request.getParameters());
+      final Future<Object> future=((DefaultProcessingUnitInstance)instance).invoke(CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,invocationArgs);
       futures.put(serviceInstanceName,future);
     }
  catch (    final Exception e) {

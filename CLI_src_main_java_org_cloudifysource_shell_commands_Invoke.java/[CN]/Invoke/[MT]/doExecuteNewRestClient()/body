@@ -4,7 +4,8 @@
   logger.fine("Invoking command " + commandName + " using the new rest client");
   final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
   InvokeCustomCommandRequest request=new InvokeCustomCommandRequest();
-  request.setParameters(buildCustomCommandParams(commandName,getParamsMap(params)));
+  request.setCommandName(commandName);
+  request.setParameters(params);
   String applicationName=this.getCurrentApplicationName();
   if (applicationName == null) {
     applicationName="default";
