@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Deleting network with id=" + networkId);
+  }
+  this.doDelete("networks/" + networkId,CODE_OK_204);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted network with id=" + networkId);
+  }
+}

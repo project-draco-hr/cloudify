@@ -1,0 +1,8 @@
+{
+  this.endpoint=endpoint;
+  this.username=username;
+  this.password=password;
+  this.tenant=tenant;
+  this.region=region;
+  this.initToken();
+}

@@ -1,0 +1,2 @@
+String managementMachinePrefix
+MachineDetails[] existingManagementServers

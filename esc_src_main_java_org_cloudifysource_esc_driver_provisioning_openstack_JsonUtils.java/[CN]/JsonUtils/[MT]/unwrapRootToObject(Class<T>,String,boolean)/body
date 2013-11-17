@@ -1,0 +1,16 @@
+{
+  if (jsonString == null) {
+    return null;
+  }
+  try {
+    final ObjectMapper mapper=createDefaultDeserializationMapper();
+    mapper.configure(DeserializationConfig.Feature.UNWRAP_ROOT_VALUE,true);
+    if (translateCamelCase) {
+      mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+    }
+    return mapper.readValue(jsonString,clazz);
+  }
+ catch (  final Exception e) {
+    throw new OpenstackJsonSerializationException(e);
+  }
+}

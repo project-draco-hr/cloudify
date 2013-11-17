@@ -1,0 +1,11 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Requesting networks list");
+  }
+  final String response=this.doGet("networks",new String[]{"router:external","true"});
+  final List<Network> networks=JsonUtils.unwrapRootToList(Network.class,response);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Response for networks list: " + networks);
+  }
+  return networks;
+}

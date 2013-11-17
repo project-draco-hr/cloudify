@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Deleting security group id=" + securityGroupId);
+  }
+  this.doDelete("security-groups/" + securityGroupId,CODE_OK_204);
+  if (logger.isLoggable(Level.FINER)) {
+    logger.finer("Deleted security group id=" + securityGroupId);
+  }
+}

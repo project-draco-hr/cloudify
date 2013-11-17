@@ -1,0 +1,5 @@
+{
+  this.prefix=securityGroupPrefix;
+  this.applicationName=applicationName;
+  this.serviceName=serviceName;
+}

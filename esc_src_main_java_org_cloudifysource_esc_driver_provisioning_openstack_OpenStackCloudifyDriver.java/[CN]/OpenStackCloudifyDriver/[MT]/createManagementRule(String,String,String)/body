@@ -1,0 +1,19 @@
+{
+  final PortRange portRange=PortRangeFactory.createPortRange(portRangeString);
+  SecurityGroupRule request;
+  for (  final PortRangeEntry entry : portRange.getRanges()) {
+    request=new SecurityGroupRule();
+    request.setSecurityGroupId(targetSecurityGroupId);
+    request.setDirection("ingress");
+    request.setProtocol(DEFAULT_PROTOCOL);
+    request.setPortRangeMax(entry.getTo() == null ? entry.getFrom().toString() : entry.getTo().toString());
+    request.setPortRangeMin(entry.getFrom().toString());
+    if (cidr == null) {
+      request.setRemoteIpPrefix("0.0.0.0/0");
+    }
+ else {
+      request.setRemoteIpPrefix(cidr);
+    }
+    quantumApi.createSecurityGroupRule(request);
+  }
+}

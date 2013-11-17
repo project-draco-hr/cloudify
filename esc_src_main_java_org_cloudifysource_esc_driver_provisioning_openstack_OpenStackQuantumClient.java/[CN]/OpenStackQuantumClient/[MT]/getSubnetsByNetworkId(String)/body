@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("subnets",new String[]{"network_id",networkId});
+  final List<Subnet> subnets=JsonUtils.unwrapRootToList(Subnet.class,response);
+  return subnets;
+}

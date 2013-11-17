@@ -1,0 +1,3 @@
+{
+  this.hostRoutes.add(new HostRoute(nexthop,destination));
+}

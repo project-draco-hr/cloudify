@@ -1,0 +1,8 @@
+{
+  final String response=this.doGet("routers",new String[]{"name",name});
+  final List<Router> routers=JsonUtils.unwrapRootToList(Router.class,response);
+  if (routers == null || routers.isEmpty()) {
+    return null;
+  }
+  return routers.get(0);
+}

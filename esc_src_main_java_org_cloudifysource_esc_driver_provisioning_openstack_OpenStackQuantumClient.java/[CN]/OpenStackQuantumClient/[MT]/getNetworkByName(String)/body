@@ -1,0 +1,15 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Requesting networks list");
+  }
+  final String response=this.doGet("networks",new String[]{"name",networkName});
+  final List<Network> networks=JsonUtils.unwrapRootToList(Network.class,response);
+  if (networks != null) {
+    for (    final Network network : networks) {
+      if (networkName.equals(network.getName())) {
+        return network;
+      }
+    }
+  }
+  return null;
+}

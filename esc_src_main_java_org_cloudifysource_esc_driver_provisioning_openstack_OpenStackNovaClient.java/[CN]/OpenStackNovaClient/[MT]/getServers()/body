@@ -1,0 +1,8 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=getServerDetails");
+  }
+  final String response=this.doGet("servers");
+  final List<NovaServer> list=JsonUtils.unwrapRootToList(NovaServer.class,response);
+  return list;
+}

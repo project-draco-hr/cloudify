@@ -1,0 +1,6 @@
+{
+  final Network network=this.getNetworkByName(networkName);
+  if (network != null) {
+    this.deleteNetwork(network.getId());
+  }
+}

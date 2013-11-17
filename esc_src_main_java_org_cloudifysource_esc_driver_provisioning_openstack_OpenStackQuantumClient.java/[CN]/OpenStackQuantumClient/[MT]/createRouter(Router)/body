@@ -1,0 +1,6 @@
+{
+  final String jsonRequest=JsonUtils.toJson(request);
+  final String response=this.doPost("routers",jsonRequest);
+  final Router router=JsonUtils.unwrapRootToObject(Router.class,response);
+  return router;
+}

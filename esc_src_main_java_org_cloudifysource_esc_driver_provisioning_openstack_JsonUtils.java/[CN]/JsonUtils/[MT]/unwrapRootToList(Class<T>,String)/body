@@ -1,0 +1,19 @@
+{
+  List<T> list=null;
+  try {
+    final ObjectMapper mapper=createDefaultDeserializationMapper();
+    mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+    final JsonNode readTree=mapper.readTree(jsonString);
+    if (readTree != null && readTree.getElements().hasNext()) {
+      final JavaType type=mapper.getTypeFactory().constructCollectionType(List.class,clazz);
+      JsonNode next=readTree.getElements().next();
+      if (!"[0]".equals(next.toString())) {
+        list=mapper.readValue(next,type);
+      }
+    }
+  }
+ catch (  final Exception e) {
+    throw new OpenstackJsonSerializationException(e);
+  }
+  return list;
+}

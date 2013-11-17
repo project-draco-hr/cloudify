@@ -1,0 +1,19 @@
+{
+  if (duration < 0) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
+  final MachineDetails[] existingManagementServers=this.getExistingManagementServers();
+  if (existingManagementServers.length > 0) {
+    final String serverDescriptions=this.createExistingServersDescription(this.serverNamePrefix,existingManagementServers);
+    throw new CloudProvisioningException("Found existing servers matching group " + this.serverNamePrefix + ": "+ serverDescriptions);
+  }
+  this.initManagementSecurityGroups();
+  this.createManagementNetwork();
+  publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
+  final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();
+  final MachineDetails[] createdMachines=this.doStartManagementMachines(endTime,numberOfManagementMachines);
+  publishEvent(EVENT_MGMT_VMS_STARTED);
+  return createdMachines;
+}

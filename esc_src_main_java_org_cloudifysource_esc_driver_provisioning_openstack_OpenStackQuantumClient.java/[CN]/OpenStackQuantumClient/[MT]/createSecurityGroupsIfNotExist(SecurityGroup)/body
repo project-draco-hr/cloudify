@@ -1,0 +1,19 @@
+{
+synchronized (MUTEX_CREATE_SECURITY_GROUPS) {
+    try {
+      final String jsonRequest=JsonUtils.toJson(request);
+      final SecurityGroup securityGroup=this.getSecurityGroupsByName(request.getName());
+      if (securityGroup != null) {
+        logger.info("Security group '" + request.getName() + "' already exists.");
+        return null;
+      }
+      logger.info("Create security group : " + request.getName());
+      final String response=this.doPost("security-groups",jsonRequest);
+      final SecurityGroup created=JsonUtils.unwrapRootToObject(SecurityGroup.class,response);
+      return created;
+    }
+ catch (    UniformInterfaceException e) {
+      throw this.createOpenstackServerException(e);
+    }
+  }
+}

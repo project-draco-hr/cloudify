@@ -1,0 +1,22 @@
+{
+  logger.fine(this.getClass().getName() + ": startMachine, management mode: " + management);
+  final long end=System.currentTimeMillis() + unit.toMillis(duration);
+  if (System.currentTimeMillis() > end) {
+    throw new TimeoutException("Starting a new machine timed out");
+  }
+  try {
+    this.createSecurityGroup(this.securityGroupNames.getApplicationName());
+    this.createSecurityGroup(this.securityGroupNames.getServiceName());
+    this.createSecurityGroup(this.securityGroupNames.getServicePublicName());
+    this.createSecurityGroupsRules();
+    this.createNetwork();
+    final String groupName=this.createNewServerName();
+    logger.fine("Starting a new cloud server with group: " + groupName);
+    final ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
+    final MachineDetails md=this.createServer(groupName,end,computeTemplate);
+    return md;
+  }
+ catch (  final OpenstackException e) {
+    throw new CloudProvisioningException("Failed to start cloud machine",e);
+  }
+}

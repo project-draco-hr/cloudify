@@ -1,0 +1,13 @@
+{
+  final String portId=request.getId();
+  try {
+    request.setId(null);
+    final String jsonRequest=JsonUtils.toJson(request);
+    final String response=this.doPut("ports/" + portId,jsonRequest);
+    final Port port=JsonUtils.unwrapRootToObject(Port.class,response);
+    return port;
+  }
+  finally {
+    request.setId(portId);
+  }
+}

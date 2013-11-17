@@ -1,0 +1,17 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=getServerDetails: " + serverId);
+  }
+  final String response;
+  try {
+    response=doGet("servers/" + serverId);
+  }
+ catch (  final OpenstackServerException e) {
+    if (RESOURCE_NOT_FOUND_STATUS == e.getStatusCode()) {
+      return null;
+    }
+    throw e;
+  }
+  final NovaServer nsr=JsonUtils.unwrapRootToObject(NovaServer.class,response);
+  return nsr;
+}

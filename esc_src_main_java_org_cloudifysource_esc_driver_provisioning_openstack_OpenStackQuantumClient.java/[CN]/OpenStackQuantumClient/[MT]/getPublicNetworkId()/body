@@ -1,0 +1,7 @@
+{
+  final List<Network> networks=this.getPublicNetwork();
+  for (  final Network network : networks) {
+    return network.getId();
+  }
+  return null;
+}

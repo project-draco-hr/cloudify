@@ -1,0 +1,41 @@
+{
+  super.setConfig(configuration);
+  final String serviceName;
+  if (!this.management) {
+    StringTokenizer st=new StringTokenizer(configuration.getServiceName(),".");
+    if (st.countTokens() == 2) {
+      applicationName=st.nextToken();
+      serviceName=st.nextToken();
+    }
+ else {
+      applicationName="default";
+      serviceName=st.nextToken();
+    }
+  }
+ else {
+    applicationName=null;
+    serviceName=null;
+  }
+  String managementGroup=cloud.getProvider().getManagementGroup();
+  managementGroup=managementGroup == null ? MANAGMENT_MACHINE_PREFIX : managementGroup;
+  this.securityGroupNames=new SecurityGroupNames(managementGroup,applicationName,serviceName);
+  final ManagementNetwork managementNetwork=this.cloud.getCloudNetwork().getManagement();
+  final NetworkConfiguration managementNetworkConfig=managementNetwork.getNetworkConfiguration();
+  this.managementNetworkName=managementGroup + managementNetworkConfig.getName();
+  if (!management) {
+    final CloudNetwork cloudNetwork=this.cloud.getCloudNetwork();
+    final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
+    if (templates == null || templates.isEmpty()) {
+      throw new IllegalStateException("No network template found.");
+    }
+    final ServiceNetwork serviceNetwork=this.configuration.getNetwork();
+    if (serviceNetwork == null || StringUtils.isEmpty(serviceNetwork.getTemplate())) {
+      final String networkTemplateName=templates.keySet().iterator().next();
+      this.networkConfiguration=templates.get(networkTemplateName);
+    }
+ else {
+      this.networkConfiguration=templates.get(serviceNetwork.getTemplate());
+    }
+    this.applicationNetworkName=this.securityGroupNames.getPrefix() + networkConfiguration.getName();
+  }
+}

@@ -1,0 +1,4 @@
+{
+  this.renewTokenIfNeeded();
+  return this.token.getToken().getId();
+}

@@ -1,0 +1,5 @@
+{
+  final ClientResponse client=e.getResponse();
+  final String responseMessage=client.getEntity(String.class);
+  return new OpenstackServerException(client.getStatus(),responseMessage,e);
+}

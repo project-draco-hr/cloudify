@@ -1,0 +1,11 @@
+{
+  final String response=this.doGet("floatingips",new String[]{"fixed_ip_address",fixedIp});
+  final List<FloatingIp> floatingIPs=JsonUtils.unwrapRootToList(FloatingIp.class,response);
+  if (floatingIPs != null && floatingIPs.size() != 0) {
+    final String floatingIPId=floatingIPs.get(0).getId();
+    this.deleteFloatingIP(floatingIPId);
+  }
+ else {
+    logger.warning("No Floating IP found for fixedIp=" + fixedIp);
+  }
+}

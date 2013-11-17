@@ -1,0 +1,45 @@
+{
+  try {
+    final MachineDetails[] managementServers=this.getExistingManagementServers();
+    if (managementServers.length == 0) {
+      throw new CloudProvisioningException("Could not find any management machines for this cloud (management machine prefix is: " + this.serverNamePrefix + ")");
+    }
+    for (    final MachineDetails md : managementServers) {
+      try {
+        try {
+          quantumApi.deleteFloatingIPByFixedIp(md.getPrivateAddress());
+        }
+ catch (        final Exception e) {
+          logger.warning("Couldn't delete floating IP : " + md.getPublicAddress());
+        }
+        this.novaApi.deleteServer(md.getMachineId());
+      }
+ catch (      final Exception e) {
+        throw new CloudProvisioningException(e);
+      }
+    }
+    for (    final MachineDetails md : managementServers) {
+      try {
+        this.waitForServerToBeShutdown(md.getMachineId(),MANAGEMENT_SHUTDOWN_TIMEOUT,TimeUnit.SECONDS);
+      }
+ catch (      final InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    }
+    try {
+      this.cleanAllSecurityGroups();
+      this.cleanAllNetworks();
+    }
+ catch (    final Exception e) {
+      logger.warning("Couldn't clean security groups " + this.securityGroupNames.getPrefix() + "*");
+    }
+  }
+  finally {
+    if (this.novaApi != null) {
+      this.novaApi.close();
+    }
+    if (this.quantumApi != null) {
+      this.quantumApi.close();
+    }
+  }
+}

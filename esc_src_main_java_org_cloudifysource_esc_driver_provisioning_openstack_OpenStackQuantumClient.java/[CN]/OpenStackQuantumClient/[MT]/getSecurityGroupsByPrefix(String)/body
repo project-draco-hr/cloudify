@@ -1,0 +1,13 @@
+{
+  final String response=this.doGet("security-groups");
+  final List<SecurityGroup> securityGroupsResponse=JsonUtils.unwrapRootToList(SecurityGroup.class,response);
+  final List<SecurityGroup> list=new ArrayList<SecurityGroup>();
+  if (securityGroupsResponse != null) {
+    for (    final SecurityGroup securityGroup : securityGroupsResponse) {
+      if (securityGroup.getName().startsWith(prefix)) {
+        list.add(securityGroup);
+      }
+    }
+  }
+  return list;
+}

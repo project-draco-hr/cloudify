@@ -1,0 +1,14 @@
+{
+  final String networkName=this.networkConfiguration.getName();
+  final Network networkRequest=new Network();
+  networkRequest.setName(this.securityGroupNames.getPrefix() + networkName);
+  networkRequest.setAdminStateUp(true);
+  final Network network=quantumApi.createNetworkIfNotExists(networkRequest);
+  if (network != null) {
+    final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=this.networkConfiguration.getSubnets();
+    for (    final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : subnets) {
+      final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
+      quantumApi.createSubnet(subnetRequest);
+    }
+  }
+}

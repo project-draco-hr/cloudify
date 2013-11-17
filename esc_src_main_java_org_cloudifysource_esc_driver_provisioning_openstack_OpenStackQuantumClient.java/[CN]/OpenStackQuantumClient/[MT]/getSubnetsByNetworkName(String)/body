@@ -1,0 +1,7 @@
+{
+  final Network network=this.getNetworkByName(networkName);
+  if (network != null) {
+    return this.getSubnetsByNetworkId(network.getId());
+  }
+  return null;
+}

@@ -1,0 +1,13 @@
+{
+  if (serviceWebResource == null) {
+    this.renewTokenIfNeeded();
+    final String endpoint=this.getEndpoint(this.getServiceName());
+    if (endpoint == null) {
+      throw new OpenstackException("Cannot find endpoint for service '" + this.getServiceName() + "' in the service catalog.");
+    }
+    this.serviceClient=Client.create();
+    this.serviceWebResource=serviceClient.resource(endpoint);
+    logger.info("Openstack " + this.getServiceName() + " endpoint: "+ endpoint);
+  }
+  return serviceWebResource;
+}

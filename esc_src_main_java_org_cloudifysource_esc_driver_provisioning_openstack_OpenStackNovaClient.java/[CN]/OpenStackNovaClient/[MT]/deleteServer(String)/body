@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(Level.FINER)) {
+    logger.log(Level.FINER,"Request=deleteServer: " + serverId);
+  }
+  this.doDelete("servers/" + serverId,CODE_OK_204);
+}

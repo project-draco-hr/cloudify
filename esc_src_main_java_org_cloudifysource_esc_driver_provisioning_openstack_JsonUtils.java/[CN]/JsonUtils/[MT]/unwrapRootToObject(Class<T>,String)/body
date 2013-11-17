@@ -1,0 +1,3 @@
+{
+  return unwrapRootToObject(clazz,jsonString,true);
+}

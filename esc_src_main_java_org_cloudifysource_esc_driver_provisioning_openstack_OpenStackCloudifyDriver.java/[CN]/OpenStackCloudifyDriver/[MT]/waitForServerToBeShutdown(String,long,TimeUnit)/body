@@ -1,0 +1,32 @@
+{
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  while (System.currentTimeMillis() < endTime) {
+    final NovaServer server;
+    try {
+      server=novaApi.getServerDetails(serverId);
+    }
+ catch (    final OpenstackException e) {
+      throw new CloudProvisioningException(e);
+    }
+    if (server == null) {
+      logger.fine("Server Status (" + serverId + ") Not Found. Considered deleted.");
+      return;
+    }
+ else {
+switch (server.getStatus()) {
+case STOPPED:
+case DELETED:
+        return;
+case ERROR:
+case UNKNOWN:
+case UNRECOGNIZED:
+      throw new CloudProvisioningException("Failed to allocate server - Cloud reported node in " + server.getStatus().toString() + " state. Node details: "+ server);
+default :
+    logger.fine("Server Status (" + serverId + ") is "+ server.getStatus()+ ", please wait until shutdown...");
+  Thread.sleep(CLOUD_NODE_STATE_POLLING_INTERVAL);
+break;
+}
+}
+}
+throw new TimeoutException("Node failed to reach RUNNING mode in time");
+}
