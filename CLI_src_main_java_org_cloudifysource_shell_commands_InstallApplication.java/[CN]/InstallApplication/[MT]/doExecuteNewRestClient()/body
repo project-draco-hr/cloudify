@@ -27,7 +27,6 @@
   request.setDebugEvents(debugEvents);
   request.setDebugMode(debugModeString);
   request.setSelfHealing(!disableSelfHealing);
-  request.setTimeoutInMillis(TimeUnit.MINUTES.toMillis(timeoutInMinutes));
   final InstallApplicationResponse installApplicationResponse=newRestClient.installApplication(applicationName,request);
   Application application=((Application)nameAndPackedFileResolver.getDSLObject());
   printApplicationInfo(application);

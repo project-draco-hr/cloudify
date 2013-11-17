@@ -17,7 +17,6 @@
   request.setServiceOverridesUploadKey(overridesFileKey);
   request.setServiceFolderUploadKey(recipeFileKey);
   request.setSelfHealing(!disableSelfHealing);
-  request.setTimeoutInMillis(timeoutInMinutes * DateUtils.MILLIS_PER_MINUTE);
   InstallServiceResponse installServiceResponse=newRestClient.installService(getCurrentApplicationName(),serviceName,request);
   CLIServiceInstaller installer=new CLIServiceInstaller();
   installer.setApplicationName(getCurrentApplicationName());
