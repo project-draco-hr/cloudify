@@ -1,6 +1,6 @@
 {
   if (this.networkDriver == null) {
-    this.networkDriver=(NetworkFacade)getRemoteApi(CloudifyConstants.ESM_NETWORK_API_KEY);
+    this.networkDriver=(NetworkFacade)getRemoteApi(CloudifyConstants.NETWORK_REMOTE_API_KEY);
   }
   return this.networkDriver;
 }

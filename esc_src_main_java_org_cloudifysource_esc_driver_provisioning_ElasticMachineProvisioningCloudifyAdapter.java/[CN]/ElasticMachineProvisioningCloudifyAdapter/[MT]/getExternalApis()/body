@@ -1,3 +1,0 @@
-{
-  return new String[]{CloudifyConstants.ESM_STORAGE_API_KEY,CloudifyConstants.ESM_NETWORK_API_KEY};
-}
