@@ -5,7 +5,7 @@
     logger.fine("[addTemplatesToCloud] - using the persistent storage folder [" + persistentStoragePath + "] as the parent of the additional templates folder.");
     additionalTemplatesParentFolder=new File(persistentStoragePath);
   }
-  logger.info("[addTemplatesToCloud] - adding templates from directory [" + additionalTemplatesParentFolder.getAbsolutePath() + "]");
+  logger.info("[addTemplatesToCloud] - adding templates from directory " + "[" + additionalTemplatesParentFolder.getAbsolutePath() + "]");
   final File additionalTemplatesFolder=new File(additionalTemplatesParentFolder,CloudifyConstants.ADDITIONAL_TEMPLATES_FOLDER_NAME);
   if (!additionalTemplatesFolder.exists()) {
     logger.info("[addTemplatesToCloud] - no additional templates to add from directory " + additionalTemplatesParentFolder.getAbsolutePath());
