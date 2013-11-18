@@ -1,5 +1,6 @@
 {
   String successMessages="";
+  String unexpectedMessages="";
   String failureMessages="";
   logger.fine("Invoking command " + commandName + " using the new rest client");
   final RestClient newRestClient=((RestAdminFacade)getRestAdminFacade()).getNewRestClient();
@@ -16,23 +17,30 @@
     final List<InvocationResult> resultsList=new ArrayList<InvocationResult>(invocationResults.values());
     Collections.sort(resultsList);
     successMessages=getAllSuccessMessages(resultsList);
+    unexpectedMessages=getAllUnexpectedMessages(resultsList);
     failureMessages=getAllFailureMessages(resultsList);
   }
  else {
     InvokeInstanceCommandResponse response=newRestClient.invokeInstanceCommand(applicationName,serviceName,instanceId,request);
-    final InvocationResult invocationResult=parseInvocationResult(response.getInvocationResult());
-    if (invocationResult.isSuccess()) {
+    final InvocationResult invocationResult=parseInvocationResult(instanceId,response.getInvocationResult());
+    if (invocationResult.getInvocationStatus() == InvocationStatus.SUCCESS) {
       successMessages=getSuccessMessage(invocationResult);
+    }
+ else     if (invocationResult.getInvocationStatus() == InvocationStatus.UNEXPECTED) {
+      unexpectedMessages=getUnexpectedMessage(invocationResult);
     }
  else {
       failureMessages=getFailureMessage(invocationResult);
     }
   }
+  if (failureMessages.length() > 0) {
+    throw new CLIStatusException("some_invocations_failed",this.serviceName,System.getProperty("line.separator") + failureMessages);
+  }
+  if (unexpectedMessages.length() > 0) {
+    throw new CLIStatusException("some_invocations_status_unexpected",this.serviceName,System.getProperty("line.separator") + unexpectedMessages);
+  }
   if (successMessages.length() > 0) {
     logger.info("Invocation results: " + System.getProperty("line.separator") + successMessages);
-  }
-  if (failureMessages.length() > 0) {
-    throw new CLIStatusException("not_all_invocations_completed_successfully",this.serviceName,"Invocation results: " + System.getProperty("line.separator") + failureMessages);
   }
   return getFormattedMessage("all_invocations_completed_successfully");
 }

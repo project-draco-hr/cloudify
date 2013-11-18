@@ -4,7 +4,12 @@
   res.exceptionMessage=map.get(CloudifyConstants.INVOCATION_RESPONSE_EXCEPTION);
   res.instanceId=Integer.parseInt(map.get(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_ID));
   res.result=map.get(CloudifyConstants.INVOCATION_RESPONSE_RESULT);
-  res.success=Boolean.parseBoolean(map.get(CloudifyConstants.INVOCATION_RESPONSE_STATUS));
+  if (Boolean.parseBoolean(map.get(CloudifyConstants.INVOCATION_RESPONSE_STATUS))) {
+    res.invocationStatus=InvocationStatus.SUCCESS;
+  }
+ else {
+    res.invocationStatus=InvocationStatus.FAILURE;
+  }
   res.instanceName=map.get(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_NAME);
   return res;
 }

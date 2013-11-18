@@ -1,0 +1,7 @@
+{
+  InvocationResult res=new InvocationResult();
+  res.invocationStatus=InvocationStatus.UNEXPECTED;
+  res.instanceName=instanceName;
+  res.result=result.toString();
+  return res;
+}

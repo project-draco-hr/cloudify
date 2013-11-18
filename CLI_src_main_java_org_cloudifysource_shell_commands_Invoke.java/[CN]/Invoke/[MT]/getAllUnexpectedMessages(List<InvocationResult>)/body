@@ -1,0 +1,10 @@
+{
+  final StringBuilder unexpectedMessagesText=new StringBuilder();
+  for (  final InvocationResult invocationResult : resultsList) {
+    if (invocationResult.getInvocationStatus() == InvocationStatus.UNEXPECTED) {
+      String unexpectedMessage=getUnexpectedMessage(invocationResult);
+      unexpectedMessagesText.append(unexpectedMessage).append(System.getProperty("line.separator"));
+    }
+  }
+  return unexpectedMessagesText.toString();
+}

@@ -1,7 +1,7 @@
 {
   final StringBuilder failureMessagesText=new StringBuilder();
   for (  final InvocationResult invocationResult : resultsList) {
-    if (!invocationResult.isSuccess()) {
+    if (invocationResult.getInvocationStatus() == InvocationStatus.FAILURE) {
       String failureMessage=getFailureMessage(invocationResult);
       failureMessagesText.append(failureMessage).append(System.getProperty("line.separator"));
     }

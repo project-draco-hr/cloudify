@@ -1,7 +1,7 @@
 {
   InvocationResult invocationResult=null;
   if (restInvocationResult == null || !(restInvocationResult instanceof Map<?,?>)) {
-    logger.severe("Received an unexpected return value to the invoke command: " + restInvocationResult);
+    invocationResult=InvocationResult.createInvocationResult(Integer.toString(instanceId),restInvocationResult);
   }
  else {
     invocationResult=InvocationResult.createInvocationResult((Map<String,String>)restInvocationResult);
