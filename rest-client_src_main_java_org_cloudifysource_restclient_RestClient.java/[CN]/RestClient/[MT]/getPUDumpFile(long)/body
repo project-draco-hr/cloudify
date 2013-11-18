@@ -1,5 +1,9 @@
 {
-  final String getPUDumpFileUrl=getFormattedUrl(shutdownManagersControllerUrl,GET_PU_DUMP_FILE_URL_FORMAT,Long.toString(fileSizeLimit));
+  long actualFileSizeLimit=fileSizeLimit;
+  if (fileSizeLimit == 0) {
+    actualFileSizeLimit=CloudifyConstants.DEFAULT_DUMP_FILE_SIZE_LIMIT;
+  }
+  final String getPUDumpFileUrl=getFormattedUrl(shutdownManagersControllerUrl,GET_PU_DUMP_FILE_URL_FORMAT,Long.toString(actualFileSizeLimit));
   log(Level.FINE,"[getPUDumpFile] - sending GET request to REST [" + getPUDumpFileUrl + "]");
   return executor.get(getPUDumpFileUrl,new TypeReference<Response<GetPUDumpFileResponse>>(){
   }

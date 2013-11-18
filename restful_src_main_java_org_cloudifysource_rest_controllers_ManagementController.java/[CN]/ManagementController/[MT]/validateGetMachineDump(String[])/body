@@ -1,0 +1,7 @@
+{
+  DumpMachineValidationContext validationContext=new DumpMachineValidationContext();
+  validationContext.setProcessors(processors);
+  for (  DumpMachineValidator validator : dumpValidators) {
+    validator.validate(validationContext);
+  }
+}

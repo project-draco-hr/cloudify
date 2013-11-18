@@ -1,0 +1,15 @@
+{
+  validateGetMachineDump(processors);
+  String[] actualProcessors=processors;
+  if (processors == null) {
+    actualProcessors=CloudifyConstants.DEFAULT_DUMP_PROCESSORS;
+  }
+  Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
+  if (machine == null) {
+    throw new RestErrorException(CloudifyErrorMessages.MACHINE_NOT_FOUND.getName(),ip);
+  }
+  final byte[] dumpBytes=generateMachineDumpData(fileSizeLimit,machine,actualProcessors);
+  GetMachineDumpFileResponse response=new GetMachineDumpFileResponse();
+  response.setDumpBytes(dumpBytes);
+  return response;
+}

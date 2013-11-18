@@ -1,0 +1,12 @@
+{
+  String[] processors=validationContext.getProcessors();
+  if (processors == null) {
+    return;
+  }
+  for (  String processor : processors) {
+    ProcessorTypes type=ProcessorTypes.fromString(processor);
+    if (type == null) {
+      throw new RestErrorException(CloudifyErrorMessages.UNKNOWN_PROCESSOR_TYPE.getName(),processor);
+    }
+  }
+}

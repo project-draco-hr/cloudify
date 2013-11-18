@@ -1,7 +1,0 @@
-{
-  final String getMachineDumpFileURL=getFormattedUrl(shutdownManagersControllerUrl,GET_MACHINE_DUMP_FILE_URL_FORMAT,ip,processors,Long.toString(fileSizeLimit));
-  log(Level.FINE,"[getPUDumpFile] - sending GET request to REST [" + getMachineDumpFileURL + "]");
-  return executor.get(getMachineDumpFileURL,new TypeReference<Response<GetMachineDumpFileResponse>>(){
-  }
-);
-}

@@ -1,3 +1,0 @@
-{
-  return getPUDumpFile(CloudifyConstants.DEFAULT_DUMP_FILE_SIZE_LIMIT);
-}
