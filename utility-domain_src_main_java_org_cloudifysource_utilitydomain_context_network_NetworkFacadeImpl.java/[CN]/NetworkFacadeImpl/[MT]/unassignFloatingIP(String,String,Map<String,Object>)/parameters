@@ -1,0 +1,3 @@
+String instanceIPAddress
+String floatingIP
+Map<String,Object> context

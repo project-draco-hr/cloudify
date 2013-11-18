@@ -1,9 +1,0 @@
-{
-  try {
-    this.driver.releaseFloatingIP(ip,duration,timeUnit);
-  }
- catch (  final NetworkProvisioningException e) {
-    logger.warning("failed releasing IP address " + ip + " : "+ e.getMessage());
-    throw new RemoteNetworkOperationException("failed releasing IP address " + ip + " : "+ e.getMessage(),e);
-  }
-}

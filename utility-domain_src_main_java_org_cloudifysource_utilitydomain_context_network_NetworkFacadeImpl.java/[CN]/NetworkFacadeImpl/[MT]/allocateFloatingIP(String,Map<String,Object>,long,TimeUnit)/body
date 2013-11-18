@@ -1,0 +1,4 @@
+{
+  final RemoteNetworkProvisioningDriver provisioningDriver=getRemoteNetworkProvisioningDriver();
+  return provisioningDriver.allocateFloatingIP(poolName,context,duration,timeUnit);
+}

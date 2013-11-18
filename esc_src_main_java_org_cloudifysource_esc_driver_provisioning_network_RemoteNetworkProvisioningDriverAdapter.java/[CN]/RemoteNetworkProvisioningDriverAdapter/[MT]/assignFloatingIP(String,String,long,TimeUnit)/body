@@ -1,9 +1,0 @@
-{
-  try {
-    this.driver.assignFloatingIP(ip,instanceID,duration,timeUnit);
-  }
- catch (  final NetworkProvisioningException e) {
-    logger.warning("failed to assign IP " + ip + " to instance with ID "+ instanceID+ ". Error was "+ e.getMessage());
-    throw new RemoteNetworkOperationException("failed to assign IP " + ip + " to instance with ID "+ instanceID+ " : "+ e.getMessage(),e);
-  }
-}
