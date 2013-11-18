@@ -1,5 +1,5 @@
 {
-  final ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId);
+  final ProvisioningContextImpl ctx=setUpProvisioningContext(locationId,reservationId,previousMachineDetails);
   MachineDetails machineDetails;
   try {
     machineDetails=cloudifyProvisioning.startMachine(ctx,duration,unit);

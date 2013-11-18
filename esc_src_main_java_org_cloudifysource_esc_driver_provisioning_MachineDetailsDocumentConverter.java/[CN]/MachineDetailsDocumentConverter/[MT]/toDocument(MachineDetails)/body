@@ -1,0 +1,7 @@
+{
+  if (md == null) {
+    return null;
+  }
+  final SpaceDocument document=com.gigaspaces.document.DocumentObjectConverter.instance().toSpaceDocument(md);
+  return document;
+}

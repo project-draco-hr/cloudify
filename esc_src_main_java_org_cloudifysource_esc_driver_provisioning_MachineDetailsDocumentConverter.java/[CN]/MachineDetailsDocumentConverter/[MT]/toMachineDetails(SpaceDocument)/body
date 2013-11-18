@@ -1,0 +1,14 @@
+{
+  if (document == null) {
+    return null;
+  }
+  final Object mdObject=com.gigaspaces.document.DocumentObjectConverter.instance().toObject(document);
+  if (mdObject == null) {
+    return null;
+  }
+  if (!(mdObject instanceof MachineDetails)) {
+    throw new IllegalStateException("Unsupported object received in failed agent context. Was expecting MachineDetails but got: " + mdObject.getClass().getName());
+  }
+  final MachineDetails md=(MachineDetails)mdObject;
+  return md;
+}

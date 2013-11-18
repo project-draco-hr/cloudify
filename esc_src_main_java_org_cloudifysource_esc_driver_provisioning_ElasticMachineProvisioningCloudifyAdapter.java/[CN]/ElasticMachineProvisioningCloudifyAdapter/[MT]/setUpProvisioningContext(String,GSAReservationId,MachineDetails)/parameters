@@ -1,2 +1,3 @@
 String locationId
 GSAReservationId reservationId
+MachineDetails previousMachineDetails
