@@ -3,7 +3,10 @@
     return new LinkedHashMap<Object,Object>();
   }
   try {
-    final ConfigObject config=new ConfigSlurper().parse(propertiesFile.toURI().toURL());
+    GroovyClassLoader gcl=new GroovyClassLoader();
+    Script script=(Script)gcl.parseClass(propertiesFile).newInstance();
+    ConfigObject config=new ConfigSlurper().parse(script);
+    GroovySystem.getMetaClassRegistry().removeMetaClass(script.getClass());
     return config;
   }
  catch (  final Exception e) {
