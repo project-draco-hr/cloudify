@@ -26,21 +26,22 @@
     }
     try {
       final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
-      this.cloudifyProvisioning=builder.build(cloudConfigDirectoryPath,this.cloud.getConfiguration().getClassName());
+      final Object computeProvisioningInstance=builder.build(cloudConfigDirectoryPath,this.cloud.getConfiguration().getClassName());
+      this.cloudifyProvisioning=ComputeDriverProvisioningAdapter.create(computeProvisioningInstance);
       final ProvisioningDriverClassContext provisioningDriverContext=lazyCreateProvisioningDriverClassContext(cloudifyProvisioning);
       this.cloudifyProvisioning.setProvisioningDriverClassContext(provisioningDriverContext);
       handleServiceCloudConfiguration();
       final String storageClassName=this.cloud.getConfiguration().getStorageClassName();
       if (StringUtils.isNotBlank(storageClassName)) {
         logger.info("creating storage provisioning driver.");
-        this.storageProvisioning=(StorageProvisioningDriver)Class.forName(storageClassName).newInstance();
+        this.storageProvisioning=(StorageProvisioningDriver)builder.build(cloudConfigDirectoryPath,storageClassName);
         this.storageTemplateName=config.getStorageTemplateName();
         logger.info("storage provisioning driver created successfully.");
       }
       final String networkDriverClassName=this.cloud.getConfiguration().getNetworkDriverClassName();
       if (!StringUtils.isEmpty(networkDriverClassName)) {
         logger.info("creating network provisioning driver of type " + networkDriverClassName);
-        this.networkProvisioning=(BaseNetworkDriver)Class.forName(networkDriverClassName).newInstance();
+        this.networkProvisioning=(BaseNetworkDriver)builder.build(cloudConfigDirectoryPath,networkDriverClassName);
         logger.info("network provisioning driver was created succesfully.");
       }
     }

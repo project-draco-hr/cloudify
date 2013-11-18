@@ -1,5 +1,3 @@
 {
-  final Object createdInstance=Class.forName(className).newInstance();
-  final BaseComputeDriver instanceAfterAdapter=ComputeDriverProvisioningAdapter.create(createdInstance);
-  return instanceAfterAdapter;
+  return Class.forName(className).newInstance();
 }
