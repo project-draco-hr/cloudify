@@ -6,5 +6,5 @@
   if (context == null) {
     return null;
   }
-  return null;
+  return (MachineDetails)context;
 }
