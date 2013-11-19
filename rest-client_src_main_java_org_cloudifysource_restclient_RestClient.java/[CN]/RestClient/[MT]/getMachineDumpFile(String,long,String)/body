@@ -6,15 +6,11 @@
   if (fileSizeLimit == 0) {
     actualSizeLimit=CloudifyConstants.DEFAULT_DUMP_FILE_SIZE_LIMIT;
   }
-  String[] actualProcessors=processors;
-  if (processors == null) {
-    actualProcessors=CloudifyConstants.DEFAULT_DUMP_PROCESSORS;
+  String actualProcessors=processors;
+  if (StringUtils.isBlank(processors)) {
+    actualProcessors=ProcessorTypes.DEFAULT_PROCESSORS;
   }
-  int length=actualProcessors.length;
-  String[] ipArray={ip};
-  String[] args=(String[])ArrayUtils.addAll(ipArray,actualProcessors);
-  args=(String[])ArrayUtils.add(args,Long.toString(actualSizeLimit));
-  final String getMachineDumpFileURL=getFormattedUrl(shutdownManagersControllerUrl,GET_MACHINE_DUMP_FILE_URL_FORMAT,args);
+  final String getMachineDumpFileURL=getFormattedUrl(shutdownManagersControllerUrl,GET_MACHINE_DUMP_FILE_URL_FORMAT,ip,actualProcessors,Long.toString(actualSizeLimit));
   log(Level.FINE,"[getPUDumpFile] - sending GET request to REST [" + getMachineDumpFileURL + "]");
   return executor.get(getMachineDumpFileURL,new TypeReference<Response<GetMachineDumpFileResponse>>(){
   }

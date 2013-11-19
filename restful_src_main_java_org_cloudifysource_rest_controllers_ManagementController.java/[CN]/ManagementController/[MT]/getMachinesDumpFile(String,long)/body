@@ -1,9 +1,6 @@
 {
-  validateGetMachineDump(processors);
-  String[] actualProcessors=processors;
-  if (processors == null) {
-    actualProcessors=CloudifyConstants.DEFAULT_DUMP_PROCESSORS;
-  }
+  String[] actualProcessors=ProcessorTypes.fromStringList(processors);
+  validateGetMachineDump(actualProcessors);
   long totalSize=0;
   final Iterator<Machine> iterator=this.admin.getMachines().iterator();
   final Map<String,byte[]> map=new HashMap<String,byte[]>();

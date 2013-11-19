@@ -1,9 +1,6 @@
 {
-  validateGetMachineDump(processors);
-  String[] actualProcessors=processors;
-  if (processors == null) {
-    actualProcessors=CloudifyConstants.DEFAULT_DUMP_PROCESSORS;
-  }
+  String[] actualProcessors=ProcessorTypes.fromStringList(processors);
+  validateGetMachineDump(actualProcessors);
   Machine machine=this.admin.getMachines().getHostsByAddress().get(ip);
   if (machine == null) {
     throw new RestErrorException(CloudifyErrorMessages.MACHINE_NOT_FOUND.getName(),ip);

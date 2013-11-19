@@ -1,0 +1,15 @@
+{
+  long actualSizeLimit=fileSizeLimit;
+  if (fileSizeLimit == 0) {
+    actualSizeLimit=CloudifyConstants.DEFAULT_DUMP_FILE_SIZE_LIMIT;
+  }
+  String actualProcessors=processors;
+  if (StringUtils.isBlank(processors)) {
+    actualProcessors=ProcessorTypes.DEFAULT_PROCESSORS;
+  }
+  final String getMachinesDumpFileURL=getFormattedUrl(shutdownManagersControllerUrl,GET_MACHINES_DUMP_FILE_URL_FORMAT,actualProcessors,Long.toString(actualSizeLimit));
+  log(Level.FINE,"[getPUDumpFile] - sending GET request to REST [" + getMachinesDumpFileURL + "]");
+  return executor.get(getMachinesDumpFileURL,new TypeReference<Response<GetMachinesDumpFileResponse>>(){
+  }
+);
+}

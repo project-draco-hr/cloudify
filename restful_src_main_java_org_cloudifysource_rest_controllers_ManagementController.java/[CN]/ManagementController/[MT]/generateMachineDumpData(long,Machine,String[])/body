@@ -1,5 +1,5 @@
 {
-  final DumpResult dump=machine.generateDump("Rest_API",null,actualProcessors);
+  final DumpResult dump=machine.generateDump("Rest_API",null,processors);
   final byte[] data=getDumpRawData(dump,fileSizeLimit);
   return data;
 }
