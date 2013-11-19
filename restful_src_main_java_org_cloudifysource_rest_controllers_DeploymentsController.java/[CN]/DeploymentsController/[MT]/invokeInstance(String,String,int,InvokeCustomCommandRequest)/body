@@ -21,16 +21,18 @@
     throw new RestErrorException(ResponseConstants.SERVICE_INSTANCE_UNAVAILABLE,applicationName,absolutePuName,Integer.toString(instanceId));
   }
   final String instanceName=buildServiceInstanceName(pui);
+  Object invocationResult;
   try {
     Map<String,Object> invocationArgs=preProcessInvocationRequest(request.getCommandName(),request.getParameters());
     final Future<?> future=pui.invoke(CloudifyConstants.INVOCATION_PARAMETER_BEAN_NAME_USM,invocationArgs);
-    final Object invocationResult=future.get();
-    final Object finalResult=postProcessInvocationResult(invocationResult,instanceName);
+    invocationResult=future.get();
+    Map<String,String> finalResult=postProcessInvocationResult(instanceName,invocationResult);
     response.setInvocationResult(finalResult);
   }
  catch (  final Exception e) {
-    logger.severe("Error invoking pu instance " + absolutePuName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName());
-    throw new RestErrorException(FAILED_TO_INVOKE_INSTANCE,absolutePuName,Integer.toString(instanceId),e.getMessage());
+    String errorMessage="Error occurred while invoking custom command on pu instance " + absolutePuName + ":"+ instanceId+ " on host "+ pui.getVirtualMachine().getMachine().getHostName()+ ". Reported error: "+ e.getMessage();
+    logger.severe(errorMessage);
+    throw new RestErrorException(ResponseConstants.FAILED_TO_INVOKE_INSTANCE,absolutePuName,Integer.toString(instanceId),e.getMessage());
   }
   return response;
 }

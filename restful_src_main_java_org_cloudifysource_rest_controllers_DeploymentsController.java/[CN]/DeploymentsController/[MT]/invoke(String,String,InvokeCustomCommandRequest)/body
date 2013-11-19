@@ -28,20 +28,25 @@
       futures.put(serviceInstanceName,future);
     }
  catch (    final Exception e) {
-      logger.severe("Error invoking service " + serviceName + ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName());
-      response.setInvocationResult(serviceInstanceName,"pu_instance_invocation_failure");
+      String errorMessage="Error occurred while invoking custom command on service " + serviceName + ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName()+ ". Reported error: "+ e.getMessage();
+      logger.severe(errorMessage);
+      Map<String,String> processedResult=postProcessInvocationResult(serviceInstanceName,errorMessage);
+      response.setInvocationResult(serviceInstanceName,processedResult);
     }
   }
   for (  final Map.Entry<String,Future<Object>> entry : futures.entrySet()) {
     String serviceInstanceName=entry.getKey();
+    Object invocationResult;
     try {
-      Object invocationResult=entry.getValue().get();
-      invocationResult=postProcessInvocationResult(invocationResult,entry.getKey());
-      response.setInvocationResult(serviceInstanceName,invocationResult);
+      invocationResult=entry.getValue().get();
     }
  catch (    final Exception e) {
-      response.setInvocationResult(serviceInstanceName,"Invocation failure: " + e.getMessage());
+      String errorMessage="Error occurred while invoking custom command on service " + serviceName + ":"+ serviceInstanceName+ ". Reported error: "+ e.getMessage();
+      logger.severe(errorMessage);
+      invocationResult=errorMessage;
     }
+    Map<String,String> processedResult=postProcessInvocationResult(serviceInstanceName,invocationResult);
+    response.setInvocationResult(serviceInstanceName,processedResult);
   }
   return response;
 }

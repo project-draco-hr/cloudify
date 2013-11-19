@@ -1,0 +1,7 @@
+{
+  InvocationResult invocationResult=null;
+  if (restInvocationResult != null) {
+    invocationResult=InvocationResult.createInvocationResult(restInvocationResult);
+  }
+  return invocationResult;
+}

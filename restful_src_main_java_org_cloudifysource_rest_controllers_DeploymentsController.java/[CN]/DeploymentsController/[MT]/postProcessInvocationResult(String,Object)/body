@@ -1,0 +1,27 @@
+{
+  final Map<String,String> resultsMap=new HashMap<String,String>();
+  resultsMap.put(CloudifyConstants.INVOCATION_RESPONSE_INSTANCE_NAME,instanceName);
+  if (result instanceof Map<?,?>) {
+    @SuppressWarnings("unchecked") final Set<Entry<String,Object>> entries=((Map<String,Object>)result).entrySet();
+    for (    final Entry<String,Object> subEntry : entries) {
+      String key=subEntry.getKey();
+      String safeValue=subEntry.getValue() == null ? null : subEntry.getValue().toString();
+      if (key.equalsIgnoreCase(CloudifyConstants.INVOCATION_RESPONSE_STATUS)) {
+        if (Boolean.parseBoolean(safeValue)) {
+          resultsMap.put(key,InvocationStatus.SUCCESS.toString());
+        }
+ else {
+          resultsMap.put(key,InvocationStatus.FAILURE.toString());
+        }
+      }
+ else {
+        resultsMap.put(key,safeValue);
+      }
+    }
+  }
+ else {
+    resultsMap.put(CloudifyConstants.INVOCATION_RESPONSE_STATUS,InvocationStatus.UNEXPECTED.toString());
+    resultsMap.put(CloudifyConstants.INVOCATION_RESPONSE_RESULT,result == null ? null : result.toString());
+  }
+  return resultsMap;
+}

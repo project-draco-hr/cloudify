@@ -1,2 +1,2 @@
 String serviceInstanceName
-Object result
+Map<String,String> result

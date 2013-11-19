@@ -22,7 +22,7 @@
   }
  else {
     InvokeInstanceCommandResponse response=newRestClient.invokeInstanceCommand(applicationName,serviceName,instanceId,request);
-    final InvocationResult invocationResult=parseInvocationResult(instanceId,response.getInvocationResult());
+    final InvocationResult invocationResult=parseInvocationResult(response.getInvocationResult());
     if (invocationResult.getInvocationStatus() == InvocationStatus.SUCCESS) {
       successMessages=getSuccessMessage(invocationResult);
     }
@@ -33,13 +33,13 @@
       failureMessages=getFailureMessage(invocationResult);
     }
   }
-  if (failureMessages.length() > 0) {
+  if (StringUtils.isNotBlank(failureMessages)) {
     throw new CLIStatusException("some_invocations_failed",this.serviceName,System.getProperty("line.separator") + failureMessages);
   }
-  if (unexpectedMessages.length() > 0) {
-    throw new CLIStatusException("some_invocations_status_unexpected",this.serviceName,System.getProperty("line.separator") + unexpectedMessages);
+  if (StringUtils.isNotBlank(unexpectedMessages)) {
+    throw new CLIStatusException("some_invocations_failed",this.serviceName,System.getProperty("line.separator") + unexpectedMessages);
   }
-  if (successMessages.length() > 0) {
+  if (StringUtils.isNotBlank(successMessages)) {
     logger.info("Invocation results: " + System.getProperty("line.separator") + successMessages);
   }
   return getFormattedMessage("all_invocations_completed_successfully");

@@ -1,0 +1,9 @@
+{
+  final Map<String,InvocationResult> invocationResultsMap=new LinkedHashMap<String,InvocationResult>();
+  for (  final Map.Entry<String,Map<String,String>> entry : restInvocationResultsPerInstance.entrySet()) {
+    final String instanceName=entry.getKey();
+    final Map<String,String> restInvocationResult=entry.getValue();
+    invocationResultsMap.put(instanceName,parseInvocationResult(restInvocationResult));
+  }
+  return invocationResultsMap;
+}
