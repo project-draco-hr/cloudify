@@ -22,8 +22,7 @@
   validateInstallService(request,service,absolutePuName,overridesFile);
   File propertiesFile=readServiceResult.getServicePropertiesFile();
   if (propertiesFile == null) {
-    String propetiesFileNamePrefix=StringUtils.substringBeforeLast(servicePackedFolder.getName(),".");
-    propertiesFile=new File(workingProjectDir,propetiesFileNamePrefix + DSLUtils.SERVICE_PROPERTIES_FILE_NAME_SUFFIX);
+    propertiesFile=DSLUtils.getPropertiesFile(workingProjectDir);
   }
   PropertiesOverridesMerger merger=new PropertiesOverridesMerger(propertiesFile,null,propertiesFile,overridesFile);
   merger.merge();

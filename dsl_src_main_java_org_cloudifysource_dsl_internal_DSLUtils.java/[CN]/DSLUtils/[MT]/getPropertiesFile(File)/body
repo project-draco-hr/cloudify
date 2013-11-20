@@ -1,0 +1,6 @@
+{
+  File dslFile=DSLReader.findDefaultDSLFile(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX,dslDirectory);
+  String groovyFileName=dslFile.getName();
+  String dslName=groovyFileName.substring(0,groovyFileName.indexOf(DSLUtils.SERVICE_DSL_FILE_NAME_SUFFIX));
+  return new File(dslDirectory,dslName + DSLUtils.SERVICE_PROPERTIES_FILE_NAME_SUFFIX);
+}
