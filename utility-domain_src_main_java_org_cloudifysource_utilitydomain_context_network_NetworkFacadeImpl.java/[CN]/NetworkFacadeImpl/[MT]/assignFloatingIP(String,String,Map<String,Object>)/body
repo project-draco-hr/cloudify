@@ -1,4 +1,4 @@
 {
   final RemoteNetworkProvisioningDriver provisioningDriver=getRemoteNetworkProvisioningDriver();
-  provisioningDriver.assignFloatingIP(floatingIP,instanceIPAddress,context);
+  provisioningDriver.assignFloatingIP(instanceIPAddress,floatingIP,context);
 }

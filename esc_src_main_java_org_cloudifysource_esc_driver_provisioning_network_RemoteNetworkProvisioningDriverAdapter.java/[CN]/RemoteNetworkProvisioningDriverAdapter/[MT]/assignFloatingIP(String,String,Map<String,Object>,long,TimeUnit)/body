@@ -1,6 +1,6 @@
 {
   try {
-    this.driver.assignFloatingIP(floatingIP,instanceIPAddress,context,duration,timeUnit);
+    this.driver.assignFloatingIP(instanceIPAddress,floatingIP,context,duration,timeUnit);
   }
  catch (  final NetworkProvisioningException e) {
     logger.warning("failed to assign IP " + floatingIP + " to instance with ID "+ instanceIPAddress+ ". Error was "+ e.getMessage());
