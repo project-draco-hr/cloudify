@@ -28,7 +28,7 @@
         throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.NO_PERMISSION_ACCESS_DENIED.getName());
       }
  else       if (statusCode == CloudifyConstants.HTTP_STATUS_UNAUTHORIZED) {
-        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,CloudifyErrorMessages.UNAUTHORIZED.getName());
+        throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,CloudifyErrorMessages.UNAUTHORIZED.getName(),reasonPhrase,requestUri);
       }
  else {
         throw MessagesUtils.createRestClientHttpException(e,statusCode,reasonPhrase,responseBody,RestClientMessageKeys.HTTP_FAILURE.getName(),reasonPhrase,requestUri);
