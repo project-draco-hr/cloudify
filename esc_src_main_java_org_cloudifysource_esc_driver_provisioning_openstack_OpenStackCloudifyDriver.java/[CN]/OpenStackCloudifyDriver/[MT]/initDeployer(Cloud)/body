@@ -12,7 +12,8 @@
   if (overrides != null && !overrides.isEmpty()) {
     endpoint=(String)overrides.get(JCLOUDS_ENDPOINT);
   }
-  final String quantumVersion=(String)cloudTemplate.getOptions().get(OPT_QUANTUM_VERSION);
+  final String networkApiVersion=(String)cloudTemplate.getOptions().get(OPT_NETWORK_API_VERSION);
+  final String serviceName=(String)cloudTemplate.getOptions().get(OPT_NETWORK_SERVICE_NAME);
   final String cloudImageId=cloudTemplate.getImageId();
   final String region=cloudImageId.split("/")[0];
   final String cloudUser=cloud.getUser().getUser();
@@ -21,8 +22,8 @@
   final String tenant=st.hasMoreElements() ? (String)st.nextToken() : null;
   final String username=st.hasMoreElements() ? (String)st.nextToken() : null;
   try {
-    this.novaApi=new OpenStackNovaClient(endpoint,username,password,tenant,region);
-    this.quantumApi=new OpenStackQuantumClient(endpoint,username,password,tenant,region,quantumVersion);
+    this.computeApi=new OpenStackComputeClient(endpoint,username,password,tenant,region);
+    this.networkApi=new OpenStackNetworkClient(endpoint,username,password,tenant,region,serviceName,networkApiVersion);
   }
  catch (  OpenstackJsonSerializationException e) {
     throw new IllegalStateException(e);

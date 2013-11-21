@@ -1,0 +1,8 @@
+{
+  List<Network> list=JsonUtils.unwrapRootToList(Network.class,"{\"networks\":[{\"name\":\"test\"}]}");
+  Assert.assertNotNull(list);
+  Assert.assertEquals(1,list.size());
+  Assert.assertEquals("test",list.get(0).getName());
+  list=JsonUtils.unwrapRootToList(Network.class,"{\"networks\": [0]}");
+  Assert.assertNull(list);
+}

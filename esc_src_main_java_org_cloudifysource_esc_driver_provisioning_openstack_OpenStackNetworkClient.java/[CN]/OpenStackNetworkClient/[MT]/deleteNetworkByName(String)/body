@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Delete network=" + networkName);
+  }
+  final Network network=this.getNetworkByName(networkName);
+  if (network != null) {
+    this.deleteNetwork(network.getId());
+  }
+}

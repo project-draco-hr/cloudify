@@ -1,9 +1,9 @@
 {
-  final SecurityGroup securityGroup=quantumApi.getSecurityGroupsByName(securityGroupName);
+  final SecurityGroup securityGroup=networkApi.getSecurityGroupsByName(securityGroupName);
   final SecurityGroupRule[] securityGroupRules=securityGroup.getSecurityGroupRules();
   for (  final SecurityGroupRule rule : securityGroupRules) {
     if ("egress".equals(rule.getDirection())) {
-      quantumApi.deleteSecurityGroupRule(rule.getId());
+      networkApi.deleteSecurityGroupRule(rule.getId());
     }
   }
 }

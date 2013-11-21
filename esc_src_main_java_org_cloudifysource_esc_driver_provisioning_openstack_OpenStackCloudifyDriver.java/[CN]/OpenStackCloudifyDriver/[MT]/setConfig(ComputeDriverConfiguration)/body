@@ -2,15 +2,9 @@
   super.setConfig(configuration);
   final String serviceName;
   if (!this.management) {
-    StringTokenizer st=new StringTokenizer(configuration.getServiceName(),".");
-    if (st.countTokens() == 2) {
-      applicationName=st.nextToken();
-      serviceName=st.nextToken();
-    }
- else {
-      applicationName="default";
-      serviceName=st.nextToken();
-    }
+    final FullServiceName fsn=ServiceUtils.getFullServiceName(configuration.getServiceName());
+    applicationName=fsn.getApplicationName();
+    serviceName=fsn.getServiceName();
   }
  else {
     applicationName=null;
@@ -38,4 +32,9 @@
     }
     this.applicationNetworkName=this.securityGroupNames.getPrefix() + networkConfiguration.getName();
   }
+ else {
+    this.networkConfiguration=managementNetworkConfig;
+  }
+  final String associateFloatingIp=this.networkConfiguration.getCustom().get("associateFloatingIpOnBootstrap");
+  this.associateFloatingIp=BooleanUtils.toBoolean(associateFloatingIp);
 }

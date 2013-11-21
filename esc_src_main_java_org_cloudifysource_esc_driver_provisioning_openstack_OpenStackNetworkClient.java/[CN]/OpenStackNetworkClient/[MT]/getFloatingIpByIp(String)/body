@@ -1,0 +1,8 @@
+{
+  final String response=this.doGet("floatingips",new String[]{"floating_ip_address",floatingIp});
+  final List<FloatingIp> floatingips=JsonUtils.unwrapRootToList(FloatingIp.class,response);
+  if (floatingips != null && !floatingips.isEmpty()) {
+    return floatingips.get(0);
+  }
+  return null;
+}

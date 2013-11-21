@@ -1,9 +1,0 @@
-{
-  if (logger.isLoggable(Level.FINE)) {
-    logger.fine("Deleting floating id=" + floatingIPId);
-  }
-  this.doDelete("floatingips/" + floatingIPId,CODE_OK_204);
-  if (logger.isLoggable(Level.FINER)) {
-    logger.finer("Deleted floating id=" + floatingIPId);
-  }
-}

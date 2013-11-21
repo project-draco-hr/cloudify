@@ -3,8 +3,9 @@
   final String hardwareId=template.getHardwareId().split("/")[1];
   final String keyName=(String)template.getOptions().get(OPT_KEY_PAIR);
   String serverId=null;
+  Port createdPort=null;
   try {
-    final Network managementNetwork=quantumApi.getNetworkByName(this.managementNetworkName);
+    final Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
     final NovaServerResquest request=new NovaServerResquest();
     request.setName(serverName);
     request.setKeyName(keyName);
@@ -12,19 +13,31 @@
     request.setFlavorRef(hardwareId);
     request.addNetworks(managementNetwork.getId());
     if (!management) {
-      final Network appliNetwork=quantumApi.getNetworkByName(this.applicationNetworkName);
-      request.addNetworks(appliNetwork.getId());
+      final Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+      final Port port=new Port();
+      port.setNetworkId(appliNetwork.getId());
+      for (      final String subnetId : appliNetwork.getSubnets()) {
+        final RouteFixedIp fixedIp=new RouteFixedIp();
+        fixedIp.setSubnetId(subnetId);
+        port.addFixedIp(fixedIp);
+      }
+      createdPort=networkApi.createPort(port);
+      final NovaServerNetwork nsn=new NovaServerNetwork();
+      nsn.setPort(createdPort.getId());
+      request.addNetworks(nsn);
     }
-    NovaServer newServer=novaApi.createServer(request);
+    NovaServer newServer=computeApi.createServer(request);
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
-    quantumApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
+    if (this.associateFloatingIp) {
+      networkApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
+    }
     if (this.management) {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName()});
+      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName(),this.securityGroupNames.getClusterName()});
     }
  else {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getServicePublicName()});
-      final Network appliNetwork=quantumApi.getNetworkByName(this.applicationNetworkName);
+      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getServiceName()});
+      final Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
       this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
     }
     final MachineDetails md=this.createMachineDetails(template,newServer);
@@ -34,7 +47,15 @@
     logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
     if (serverId != null) {
       try {
-        novaApi.deleteServer(serverId);
+        computeApi.deleteServer(serverId);
+      }
+ catch (      final OpenstackException e1) {
+        throw new CloudProvisioningException(e1);
+      }
+    }
+ else     if (createdPort != null) {
+      try {
+        networkApi.deletePort(createdPort.getId());
       }
  catch (      final OpenstackException e1) {
         throw new CloudProvisioningException(e1);

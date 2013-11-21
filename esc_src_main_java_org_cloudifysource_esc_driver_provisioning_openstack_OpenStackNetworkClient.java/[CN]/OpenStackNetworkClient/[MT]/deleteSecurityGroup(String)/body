@@ -1,0 +1,3 @@
+{
+  this.doDelete("security-groups/" + securityGroupId,CODE_OK_204);
+}

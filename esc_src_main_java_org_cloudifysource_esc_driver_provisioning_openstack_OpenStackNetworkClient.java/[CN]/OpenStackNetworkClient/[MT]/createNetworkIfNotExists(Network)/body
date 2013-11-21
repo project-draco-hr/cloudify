@@ -1,0 +1,19 @@
+{
+  if (request.getName() == null) {
+    throw new IllegalArgumentException("Network templates should have names.");
+  }
+synchronized (MUTEX_CREATE_NETWORK) {
+    final Network existingNetwork=this.getNetworkByName(request.getName());
+    if (existingNetwork != null) {
+      logger.info("Network '" + request.getName() + "' already exists.");
+      return null;
+    }
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("Create network=" + request);
+    }
+    final String json=JsonUtils.toJson(request);
+    final String response=this.doPost("networks",json);
+    final Network network=JsonUtils.unwrapRootToObject(Network.class,response);
+    return network;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Add interface subnetId=" + subnetId + " from routerId="+ routerId);
+  }
+  final String path="routers/" + routerId + "/add_router_interface";
+  final String input="{\"subnet_id\":\"" + subnetId + "\"}";
+  final String response=this.doPut(path,input);
+  final RouterInterface routerInterface=JsonUtils.mapJsonToObject(RouterInterface.class,response);
+  return routerInterface;
+}

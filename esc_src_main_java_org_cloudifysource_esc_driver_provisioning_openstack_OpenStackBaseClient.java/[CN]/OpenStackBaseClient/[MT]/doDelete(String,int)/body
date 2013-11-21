@@ -1,7 +1,13 @@
 {
   try {
     final WebResource webResource=this.getWebResource();
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("DELETE request: '" + webResource + "'");
+    }
     final ClientResponse response=webResource.path(path).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).delete(ClientResponse.class);
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("DELETE '" + webResource + "' got response status: "+ response.getStatus());
+    }
     if (expectedStatus != response.getStatus()) {
       final String entity=response.getEntity(String.class);
       throw new OpenstackServerException(expectedStatus,response.getStatus(),entity);

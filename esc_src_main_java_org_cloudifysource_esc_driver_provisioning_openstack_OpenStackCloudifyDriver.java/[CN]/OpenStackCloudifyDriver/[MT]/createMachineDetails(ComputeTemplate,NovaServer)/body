@@ -5,11 +5,22 @@
     md.setCloudifyInstalled(false);
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
-    final Network managementNetwork=quantumApi.getNetworkByName(this.managementNetworkName);
-    final Port managementPort=quantumApi.getPort(server.getId(),managementNetwork.getId());
+    final Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
+    final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
     final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
     md.setPrivateAddress(fixedIp.getIpAddress());
-    md.setPublicAddress(quantumApi.getFloatingIpByPortId(managementPort.getId()));
+    FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
+    if (floatingIp != null) {
+      md.setPublicAddress(floatingIp.getFloatingIpAddress());
+    }
+    if (!management) {
+      final Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+      final Port appliPort=networkApi.getPort(server.getId(),appliNetwork.getId());
+      final RouteFixedIp appliFixedIp=appliPort.getFixedIps().get(0);
+      Map<String,String> env=new HashMap<String,String>();
+      env.put("CLOUDIFY_APPLICATION_NETWORK_IP",appliFixedIp.getIpAddress());
+      md.setEnvironment(env);
+    }
     this.handleServerCredentials(md,template);
     return md;
   }

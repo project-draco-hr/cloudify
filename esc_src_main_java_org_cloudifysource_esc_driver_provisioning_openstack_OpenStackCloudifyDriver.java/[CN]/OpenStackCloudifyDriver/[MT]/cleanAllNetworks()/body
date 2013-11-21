@@ -1,17 +1,19 @@
 {
   try {
-    final Router router=quantumApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
-    final Network network=quantumApi.getNetworkByName(this.managementNetworkName);
+    final Router router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+    final Network network=networkApi.getNetworkByName(this.managementNetworkName);
     if (router != null) {
-      quantumApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
-      quantumApi.deleteRouter(router.getId());
+      if (network != null) {
+        networkApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
+      }
+      networkApi.deleteRouter(router.getId());
     }
     if (network != null) {
-      quantumApi.deleteNetwork(network.getId());
+      networkApi.deleteNetwork(network.getId());
     }
-    List<Network> appliNetworks=quantumApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
+    List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
     for (    Network n : appliNetworks) {
-      quantumApi.deleteNetwork(n.getId());
+      networkApi.deleteNetwork(n.getId());
     }
   }
  catch (  final Exception e) {

@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Delete routerId=" + routerId);
+  }
+  this.doDelete("routers/" + routerId,CODE_OK_204);
+}

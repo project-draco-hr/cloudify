@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Terminate serverId=" + serverId);
+  }
+  this.doDelete("servers/" + serverId,CODE_OK_204);
+}

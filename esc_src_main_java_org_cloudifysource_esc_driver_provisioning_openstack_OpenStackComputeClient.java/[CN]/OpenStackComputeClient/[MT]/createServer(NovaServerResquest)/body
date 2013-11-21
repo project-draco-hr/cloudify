@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Launch instance=" + request);
+  }
+  final String computeRequest=JsonUtils.toJson(request,false);
+  final String response=this.doPost("servers",computeRequest);
+  final NovaServer nsr=JsonUtils.unwrapRootToObject(NovaServer.class,response);
+  return nsr;
+}

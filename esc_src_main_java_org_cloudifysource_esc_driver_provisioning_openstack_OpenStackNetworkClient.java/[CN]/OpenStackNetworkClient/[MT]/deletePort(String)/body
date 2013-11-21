@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Delete portId=" + portId);
+  }
+  this.doDelete("ports/" + portId,CODE_OK_204);
+}

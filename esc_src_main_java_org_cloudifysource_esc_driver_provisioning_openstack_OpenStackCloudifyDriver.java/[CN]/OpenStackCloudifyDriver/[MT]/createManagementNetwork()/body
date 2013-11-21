@@ -9,17 +9,17 @@
     final Network networkRequest=new Network();
     networkRequest.setName(this.managementNetworkName);
     networkRequest.setAdminStateUp(true);
-    final Network network=quantumApi.createNetworkIfNotExists(networkRequest);
+    final Network network=networkApi.createNetworkIfNotExists(networkRequest);
     final org.cloudifysource.domain.cloud.network.Subnet subnetConfig=networkConfiguration.getSubnets().get(0);
     final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
-    final Subnet subnet=quantumApi.createSubnet(subnetRequest);
-    final String publicNetworkId=quantumApi.getPublicNetworkId();
+    final Subnet subnet=networkApi.createSubnet(subnetRequest);
+    final String publicNetworkId=networkApi.getPublicNetworkId();
     final Router request=new Router();
     request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     request.setAdminStateUp(true);
     request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
-    final Router router=quantumApi.createRouter(request);
-    quantumApi.addRouterInterface(router.getId(),subnet.getId());
+    final Router router=networkApi.createRouter(request);
+    networkApi.addRouterInterface(router.getId(),subnet.getId());
   }
  catch (  final Exception e) {
     throw new CloudProvisioningException(e);

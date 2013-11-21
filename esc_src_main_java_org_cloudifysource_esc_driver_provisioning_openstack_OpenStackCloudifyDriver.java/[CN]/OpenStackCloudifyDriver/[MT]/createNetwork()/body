@@ -3,12 +3,13 @@
   final Network networkRequest=new Network();
   networkRequest.setName(this.securityGroupNames.getPrefix() + networkName);
   networkRequest.setAdminStateUp(true);
-  final Network network=quantumApi.createNetworkIfNotExists(networkRequest);
+  final Network network=networkApi.createNetworkIfNotExists(networkRequest);
   if (network != null) {
     final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=this.networkConfiguration.getSubnets();
     for (    final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : subnets) {
+      logger.info("Create subnet " + subnetConfig.getName());
       final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
-      quantumApi.createSubnet(subnetRequest);
+      networkApi.createSubnet(subnetRequest);
     }
   }
 }

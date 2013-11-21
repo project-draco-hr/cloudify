@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("networks",new String[]{"router:external","true"});
+  final List<Network> networks=JsonUtils.unwrapRootToList(Network.class,response);
+  return networks;
+}

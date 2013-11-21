@@ -8,33 +8,33 @@
       logger.info("No remaining services in the application.");
       logger.info("Delete the application security group.");
       final String applicationName=this.securityGroupNames.getApplicationName();
-      final SecurityGroup secgroup=this.quantumApi.getSecurityGroupsByName(applicationName);
+      final SecurityGroup secgroup=this.networkApi.getSecurityGroupsByName(applicationName);
       if (secgroup != null) {
-        quantumApi.deleteSecurityGroup(secgroup.getId());
+        networkApi.deleteSecurityGroup(secgroup.getId());
       }
       logger.info("Delete the network.");
       try {
-        quantumApi.deleteNetworkByName(this.applicationNetworkName);
+        networkApi.deleteNetworkByName(this.applicationNetworkName);
       }
  catch (      final Exception e) {
         logger.warning("Network '" + this.applicationNetworkName + "' was not deleted: "+ e.getMessage());
       }
     }
     logger.info("Clean service's security group :" + ssgName + "*");
-    final List<SecurityGroup> securityGroups=this.quantumApi.getSecurityGroupsByPrefix(ssgName);
+    final List<SecurityGroup> securityGroups=this.networkApi.getSecurityGroupsByPrefix(ssgName);
     for (    final SecurityGroup securityGroup : securityGroups) {
-      this.quantumApi.deleteSecurityGroup(securityGroup.getId());
+      this.networkApi.deleteSecurityGroup(securityGroup.getId());
     }
   }
  catch (  Exception e) {
     logger.log(Level.SEVERE,"Fail to clean security group resources of service " + ssgName,e);
   }
  finally {
-    if (this.novaApi != null) {
-      this.novaApi.close();
+    if (this.computeApi != null) {
+      this.computeApi.close();
     }
-    if (this.quantumApi != null) {
-      this.quantumApi.close();
+    if (this.networkApi != null) {
+      this.networkApi.close();
     }
   }
 }

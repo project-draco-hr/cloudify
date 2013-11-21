@@ -1,9 +1,10 @@
 {
+  logger.finer("Wait server '" + serverId + "' to shutdown ("+ duration+ " "+ unit+ ")");
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   while (System.currentTimeMillis() < endTime) {
     final NovaServer server;
     try {
-      server=novaApi.getServerDetails(serverId);
+      server=computeApi.getServerDetails(serverId);
     }
  catch (    final OpenstackException e) {
       throw new CloudProvisioningException(e);
@@ -28,5 +29,5 @@ break;
 }
 }
 }
-throw new TimeoutException("Node failed to reach RUNNING mode in time");
+throw new TimeoutException("Node failed to reach SHUTDOWN mode in time");
 }

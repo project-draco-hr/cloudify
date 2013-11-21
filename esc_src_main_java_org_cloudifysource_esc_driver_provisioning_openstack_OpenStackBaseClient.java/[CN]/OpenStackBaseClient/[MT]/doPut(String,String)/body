@@ -1,6 +1,13 @@
 {
   try {
-    final String response=this.getWebResource().path(path).type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,input);
+    final WebResource webResource=this.getWebResource().path(path);
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("PUT '" + webResource + "' with body: '"+ input+ "'");
+    }
+    final String response=webResource.type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).put(String.class,input);
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("PUT '" + webResource + "' with body: '"+ input+ "' got response: "+ response);
+    }
     return response;
   }
  catch (  final UniformInterfaceException e) {

@@ -1,0 +1,3 @@
+{
+  return MANAGMENT_MACHINE_PREFIX;
+}

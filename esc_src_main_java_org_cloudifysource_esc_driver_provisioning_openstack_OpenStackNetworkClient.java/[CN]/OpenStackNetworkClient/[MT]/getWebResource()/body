@@ -1,0 +1,7 @@
+{
+  WebResource webResource=super.getWebResource();
+  if (this.networkApiVersion != null) {
+    webResource=webResource.path(this.networkApiVersion);
+  }
+  return webResource;
+}

@@ -1,5 +1,0 @@
-{
-  super(endpoint,username,password,tenant,region);
-  this.quantumVersion=quantumVersion;
-  logger.info("Openstack quantum version: " + this.quantumVersion);
-}

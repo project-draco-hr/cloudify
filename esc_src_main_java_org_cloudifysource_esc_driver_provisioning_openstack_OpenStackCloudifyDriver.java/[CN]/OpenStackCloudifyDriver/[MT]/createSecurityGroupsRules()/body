@@ -1,13 +1,26 @@
 {
+  final String serviceSecgroupName=this.securityGroupNames.getServiceName();
+  final SecurityGroup serviceSecGroup=networkApi.getSecurityGroupsByName(serviceSecgroupName);
+  final String managementSecgroupName=this.securityGroupNames.getManagementName();
+  final SecurityGroup managementSecGroup=networkApi.getSecurityGroupsByName(managementSecgroupName);
+  final ComputeTemplate cloudTemplate=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
+  final String port=Integer.toString(cloudTemplate.getFileTransfer().getDefaultPort());
+  final SecurityGroupRule request=new SecurityGroupRule();
+  request.setSecurityGroupId(serviceSecGroup.getId());
+  request.setDirection("ingress");
+  request.setProtocol(DEFAULT_PROTOCOL);
+  request.setPortRangeMax(port);
+  request.setPortRangeMin(port);
+  request.setRemoteGroupId(managementSecGroup.getId());
+  networkApi.createSecurityGroupRule(request);
   final ServiceNetwork network=this.configuration.getNetwork();
   if (network != null) {
     for (    final AccessRule accessRule : network.getAccessRules().getIncoming()) {
-      this.createAccessRule("ingress",accessRule);
+      this.createAccessRule(serviceSecGroup.getId(),"ingress",accessRule);
     }
     for (    final AccessRule accessRule : network.getAccessRules().getOutgoing()) {
       this.deleteEgressRulesFromSecurityGroup(this.securityGroupNames.getServiceName());
-      this.deleteEgressRulesFromSecurityGroup(this.securityGroupNames.getServicePublicName());
-      this.createAccessRule("egress",accessRule);
+      this.createAccessRule(serviceSecGroup.getId(),"egress",accessRule);
     }
   }
 }

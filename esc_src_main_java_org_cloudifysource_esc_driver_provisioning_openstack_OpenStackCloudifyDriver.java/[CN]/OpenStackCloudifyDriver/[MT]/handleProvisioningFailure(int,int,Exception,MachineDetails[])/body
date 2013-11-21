@@ -6,7 +6,7 @@
       if (machineDetails != null) {
         logger.severe("Shutting down machine: " + machineDetails);
         try {
-          this.novaApi.deleteServer(machineDetails.getMachineId());
+          this.computeApi.deleteServer(machineDetails.getMachineId());
         }
  catch (        final OpenstackException e) {
           throw new CloudProvisioningException(e);

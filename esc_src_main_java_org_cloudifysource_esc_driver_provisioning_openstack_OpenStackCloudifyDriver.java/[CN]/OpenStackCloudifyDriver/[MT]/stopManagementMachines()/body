@@ -6,13 +6,8 @@
     }
     for (    final MachineDetails md : managementServers) {
       try {
-        try {
-          quantumApi.deleteFloatingIPByFixedIp(md.getPrivateAddress());
-        }
- catch (        final Exception e) {
-          logger.warning("Couldn't delete floating IP : " + md.getPublicAddress());
-        }
-        this.novaApi.deleteServer(md.getMachineId());
+        this.releaseFloatingIpsForServerId(md.getMachineId());
+        this.computeApi.deleteServer(md.getMachineId());
       }
  catch (      final Exception e) {
         throw new CloudProvisioningException(e);
@@ -35,11 +30,11 @@
     }
   }
   finally {
-    if (this.novaApi != null) {
-      this.novaApi.close();
+    if (this.computeApi != null) {
+      this.computeApi.close();
     }
-    if (this.quantumApi != null) {
-      this.quantumApi.close();
+    if (this.networkApi != null) {
+      this.networkApi.close();
     }
   }
 }

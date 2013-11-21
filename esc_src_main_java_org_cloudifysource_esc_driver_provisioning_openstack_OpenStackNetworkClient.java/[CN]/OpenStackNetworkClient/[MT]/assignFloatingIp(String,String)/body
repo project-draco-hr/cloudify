@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Assign floating ip for floatingId=" + floatingId + " to portId="+ portId);
+  }
+  final String input=String.format("{\"floatingip\":{\"port_id\":\"%s\"}}",portId);
+  final String response=this.doPut("floatingips/" + floatingId,input);
+  final FloatingIp floatingIp=JsonUtils.unwrapRootToObject(FloatingIp.class,response);
+  return floatingIp;
+}
