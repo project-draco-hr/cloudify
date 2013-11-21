@@ -3,7 +3,8 @@
     throw new IllegalStateException("Management services must be installed on management zone");
   }
   final File puFile=getManagementSpacePUFile();
-  final ProcessingUnitDeployment deployment=new ProcessingUnitDeployment(puFile).name(serviceName).addZone(serviceName);
+  final int numberOfBackups=highlyAvailable ? 1 : 0;
+  final ProcessingUnitDeployment deployment=new ProcessingUnitDeployment(puFile).name(serviceName).addZone(serviceName).partitioned(1,numberOfBackups);
   for (  final Entry<Object,Object> prop : getContextProperties().entrySet()) {
     deployment.setContextProperty(prop.getKey().toString(),prop.getValue().toString());
   }

@@ -1,0 +1,11 @@
+{
+  final GridServiceContainerOptions options=new GridServiceContainerOptions().vmInputArgument("-Xmx" + MANAGEMENT_SPACE_MEMORY_IN_MB + "m").vmInputArgument("-Xms" + MANAGEMENT_SPACE_MEMORY_IN_MB + "m").vmInputArgument("-Dcom.gs.zones=" + MANAGEMENT_SPACE_NAME);
+  final String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
+  if (!org.apache.commons.lang.StringUtils.isEmpty(gscLrmiCommandLineArg)) {
+    options.vmInputArgument(gscLrmiCommandLineArg);
+  }
+  final GridServiceContainer container=agent.startGridServiceAndWait(options,timeout,timeunit);
+  if (container == null) {
+    throw new TimeoutException(CONTAINER_TIMEOUT_ERROR_MESSAGE);
+  }
+}
