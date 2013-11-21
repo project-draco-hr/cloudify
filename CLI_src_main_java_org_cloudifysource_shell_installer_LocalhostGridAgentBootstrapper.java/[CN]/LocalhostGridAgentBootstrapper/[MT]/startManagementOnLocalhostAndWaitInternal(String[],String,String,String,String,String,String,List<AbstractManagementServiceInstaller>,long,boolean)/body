@@ -21,9 +21,12 @@
   finally {
       connectionLogs.restoreConnectionErrors();
     }
-    waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    waitForGsmLus(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
     if (isLocalCloud) {
       startLocalCloudManagementServicesContainerAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    }
+ else {
+      startManagementSpaceContainerAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
     }
     String cloudName=null;
     if (this.cloud != null) {
@@ -34,9 +37,6 @@
     }
     connectionLogs.supressConnectionErrors();
     try {
-      if (!isLocalCloud) {
-        startManagementSpaceContainerAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
-      }
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
       if (!noManagementSpace) {
         final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
@@ -68,6 +68,7 @@
           }
         }
       }
+      waitForEsm(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
       if (!noWebServices) {
         installWebServices(username,password,isLocalCloud,ShellUtils.isSecureConnection(securityProfile),agent,managementServicesInstallers,cloudName);
       }
