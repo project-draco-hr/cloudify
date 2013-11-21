@@ -9,12 +9,18 @@
       break;
     }
  catch (    final Exception ex) {
+      logger.info("******** getExistingManagementServers failed to connect to byon node: " + server.getPrivateIP() + " on port "+ this.restPort+ ". Reported error: "+ ex.getMessage());
+      logger.info("******** This is OK if this is not a management machine, othewise this indicates a " + "communication " + "error");
+      ex.printStackTrace();
     }
   }
   if (StringUtils.isNotBlank(managementIP)) {
+    logger.info("******** found management machine: " + managementIP);
     final Integer discoveryPort=getLusPort();
+    logger.info("******** Attempting to create admin with locator " + IPUtils.getSafeIpAddress(managementIP) + ":"+ discoveryPort);
     final Admin admin=Utils.getAdminObject(managementIP,expectedGsmCount,discoveryPort);
     try {
+      logger.info("******** trying to discover GSMs");
       final GridServiceManagers gsms=admin.getGridServiceManagers();
       gsms.waitForAtLeastOne(MANAGEMENT_LOCATION_TIMEOUT,TimeUnit.SECONDS);
       for (      final GridServiceManager gsm : gsms) {
@@ -24,7 +30,10 @@
         }
       }
     }
-  finally {
+ catch (    Exception e) {
+      logger.info("******** Exception thrown while trying to discover GSMs, reported error: " + e.getMessage());
+    }
+ finally {
       admin.close();
     }
   }
