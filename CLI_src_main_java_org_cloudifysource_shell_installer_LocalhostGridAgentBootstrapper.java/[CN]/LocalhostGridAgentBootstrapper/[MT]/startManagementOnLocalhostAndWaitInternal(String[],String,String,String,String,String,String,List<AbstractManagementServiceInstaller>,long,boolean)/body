@@ -58,7 +58,7 @@
           }
         }
         try {
-          managementSpaceInstaller.installSpace();
+          managementSpaceInstaller.install();
           managementServicesInstallers.add(managementSpaceInstaller);
         }
  catch (        final ProcessingUnitAlreadyDeployedException e) {
