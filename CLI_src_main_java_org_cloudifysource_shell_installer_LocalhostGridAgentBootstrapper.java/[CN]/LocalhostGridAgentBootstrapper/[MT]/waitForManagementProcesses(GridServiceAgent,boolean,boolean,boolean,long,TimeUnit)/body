@@ -6,21 +6,21 @@
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       boolean isDone=true;
-      if (!isDone(admin.getLookupServices(),"LUS")) {
+      if (waitForLus && !isDone(admin.getLookupServices(),"LUS")) {
         if (verbose) {
           logger.fine("Waiting for Lookup Service");
           publishEvent("Waiting for Lookup Service");
         }
         isDone=false;
       }
-      if (!isDone(admin.getGridServiceManagers(),"GSM")) {
+      if (waitForGsm && !isDone(admin.getGridServiceManagers(),"GSM")) {
         if (verbose) {
           logger.fine("Waiting for Grid Service Manager");
           publishEvent("Waiting for Grid Service Manager");
         }
         isDone=false;
       }
-      if (admin.getElasticServiceManagers().isEmpty()) {
+      if (waitForEsm && admin.getElasticServiceManagers().isEmpty()) {
         if (verbose) {
           logger.fine("Waiting for Elastic Service Manager");
           publishEvent("Waiting for Elastic Service Manager");

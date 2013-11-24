@@ -1,0 +1,6 @@
+GridServiceAgent agent
+boolean waitForLus
+boolean waitForGsm
+boolean waitForEsm
+long timeout
+TimeUnit timeunit

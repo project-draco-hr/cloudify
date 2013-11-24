@@ -21,9 +21,12 @@
   finally {
       connectionLogs.restoreConnectionErrors();
     }
-    waitForManagementProcesses(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    waitForGsmLus(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
     if (isLocalCloud) {
-      startLocalCloudManagementServicesContainer(agent);
+      startLocalCloudManagementServicesContainerAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
+    }
+ else {
+      startManagementSpaceContainerAndWait(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
     }
     String cloudName=null;
     if (this.cloud != null) {
@@ -35,39 +38,35 @@
     connectionLogs.supressConnectionErrors();
     try {
       ManagementSpaceServiceInstaller managementSpaceInstaller=null;
-      if (!noManagementSpace) {
-        final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
-        final String gscLrmiCommandLineArg=getGscLrmiCommandLineArg();
-        managementSpaceInstaller=new ManagementSpaceServiceInstaller();
-        managementSpaceInstaller.setAdmin(agent.getAdmin());
-        managementSpaceInstaller.setVerbose(verbose);
-        managementSpaceInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
-        managementSpaceInstaller.setMemory(CloudifyConstants.MANAGEMENT_SPACE_MEMORY_IN_MB,MemoryUnit.MEGABYTES);
-        managementSpaceInstaller.setServiceName(MANAGEMENT_SPACE_NAME);
-        managementSpaceInstaller.setManagementZone(MANAGEMENT_ZONE);
-        managementSpaceInstaller.setHighlyAvailable(highlyAvailable);
-        managementSpaceInstaller.addListeners(this.eventsListenersList);
-        managementSpaceInstaller.setIsLocalCloud(isLocalCloud);
-        managementSpaceInstaller.setLrmiCommandLineArgument(gscLrmiCommandLineArg);
-        managementSpaceInstaller.setCloudName(cloudName);
-        if (!this.isLocalCloud) {
-          final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
-          if (persistentStoragePath != null) {
-            final String spaceStoragePath=persistentStoragePath + "/management-space/db.h2";
-            managementSpaceInstaller.setPersistentStoragePath(spaceStoragePath);
-          }
-        }
-        try {
-          managementSpaceInstaller.installSpace();
-          managementServicesInstallers.add(managementSpaceInstaller);
-        }
- catch (        final ProcessingUnitAlreadyDeployedException e) {
-          if (verbose) {
-            logger.fine("Service " + MANAGEMENT_SPACE_NAME + " already installed");
-            publishEvent("Service " + MANAGEMENT_SPACE_NAME + " already installed");
-          }
+      final boolean highlyAvailable=!isLocalCloud && !notHighlyAvailableManagementSpace;
+      managementSpaceInstaller=new ManagementSpaceServiceInstaller();
+      managementSpaceInstaller.setAdmin(agent.getAdmin());
+      managementSpaceInstaller.setVerbose(verbose);
+      managementSpaceInstaller.setProgress(progressInSeconds,TimeUnit.SECONDS);
+      managementSpaceInstaller.setServiceName(MANAGEMENT_SPACE_NAME);
+      managementSpaceInstaller.setManagementZone(MANAGEMENT_ZONE);
+      managementSpaceInstaller.setHighlyAvailable(highlyAvailable);
+      managementSpaceInstaller.addListeners(this.eventsListenersList);
+      managementSpaceInstaller.setIsLocalCloud(isLocalCloud);
+      managementSpaceInstaller.setCloudName(cloudName);
+      if (!this.isLocalCloud) {
+        final String persistentStoragePath=this.cloud.getConfiguration().getPersistentStoragePath();
+        if (persistentStoragePath != null) {
+          final String spaceStoragePath=persistentStoragePath + "/management-space/db.h2";
+          managementSpaceInstaller.setPersistentStoragePath(spaceStoragePath);
         }
       }
+      try {
+        managementSpaceInstaller.install();
+        managementServicesInstallers.add(managementSpaceInstaller);
+      }
+ catch (      final ProcessingUnitAlreadyDeployedException e) {
+        if (verbose) {
+          logger.fine("Service " + MANAGEMENT_SPACE_NAME + " already installed");
+          publishEvent("Service " + MANAGEMENT_SPACE_NAME + " already installed");
+        }
+      }
+      waitForEsm(agent,ShellUtils.millisUntil(TIMEOUT_ERROR_MESSAGE,end),TimeUnit.MILLISECONDS);
       if (!noWebServices) {
         installWebServices(username,password,isLocalCloud,ShellUtils.isSecureConnection(securityProfile),agent,managementServicesInstallers,cloudName);
       }

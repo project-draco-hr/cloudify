@@ -26,7 +26,6 @@
   installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL_SECONDS);
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.setNoWebServices(noWebServices);
-  installer.setNoManagementSpace(noManagementSpace);
   installer.setNotHighlyAvailableManagementSpace(isNotHAManagementSpace());
   installer.setWaitForWebui(true);
   installer.setCloudFilePath(cloudFileName);

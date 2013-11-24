@@ -1,0 +1,7 @@
+{
+  final GridServiceContainerOptions options=new GridServiceContainerOptions().vmInputArgument("-Xmx" + CloudifyConstants.DEFAULT_LOCALCLOUD_REST_WEBUI_SPACE_MEMORY_IN_MB + "m").vmInputArgument("-Xms" + CloudifyConstants.DEFAULT_LOCALCLOUD_REST_WEBUI_SPACE_MEMORY_IN_MB + "m").vmInputArgument("-Dcom.gs.zones=" + MANAGEMENT_REST_SERVICE_NAME + ","+ MANAGEMENT_WEBUI_SERVICE_NAME+ ","+ MANAGEMENT_SPACE_NAME);
+  final GridServiceContainer container=agent.startGridServiceAndWait(options,timeout,timeunit);
+  if (container == null) {
+    throw new TimeoutException(CONTAINER_TIMEOUT_ERROR_MESSAGE);
+  }
+}

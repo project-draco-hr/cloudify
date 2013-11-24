@@ -1,0 +1,3 @@
+{
+  waitForManagementProcesses(agent,true,true,false,timeout,timeunit);
+}
