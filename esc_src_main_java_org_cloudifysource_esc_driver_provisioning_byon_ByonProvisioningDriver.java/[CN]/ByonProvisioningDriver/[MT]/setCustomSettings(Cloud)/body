@@ -1,5 +1,5 @@
 {
-  initRestPort(cloud.getConfiguration().getComponents().getRest().getPort());
+  initRestPort(cloud.getConfiguration().getComponents().getDiscovery().getPort());
   final Map<String,Object> customSettings=cloud.getCustom();
   if (customSettings != null) {
     if (customSettings.containsKey(CLEAN_GS_FILES_ON_SHUTDOWN)) {
