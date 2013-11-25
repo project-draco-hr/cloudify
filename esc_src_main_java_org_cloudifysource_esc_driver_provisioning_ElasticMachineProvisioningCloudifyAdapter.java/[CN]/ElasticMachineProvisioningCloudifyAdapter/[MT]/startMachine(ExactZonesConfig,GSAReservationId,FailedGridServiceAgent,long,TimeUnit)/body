@@ -66,7 +66,7 @@ catch (  final StorageProvisioningException e) {
     if (gsa.getVirtualMachine().getDetails().getEnvironmentVariables().get(CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME) == null) {
       throw new ElasticGridServiceAgentProvisioningException("an agent was started. but the property " + CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME + " was missing from its environment variables.");
     }
-    final Object context=null;
+    final Object context=new MachineDetailsDocumentConverter().toDocument(machineDetails);
     return new StartedGridServiceAgent(gsa,context);
   }
  catch (  final ElasticMachineProvisioningException e) {

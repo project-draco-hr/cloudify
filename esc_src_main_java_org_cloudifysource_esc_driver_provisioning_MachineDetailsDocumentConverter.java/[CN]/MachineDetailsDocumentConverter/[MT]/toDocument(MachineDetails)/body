@@ -2,6 +2,8 @@
   if (md == null) {
     return null;
   }
-  final SpaceDocument document=com.gigaspaces.document.DocumentObjectConverter.instance().toSpaceDocument(md);
+  final PersistentMachineDetails pmd=new PersistentMachineDetails();
+  pmd.populateFromMachineDetails(md);
+  final SpaceDocument document=com.gigaspaces.document.DocumentObjectConverter.instance().toSpaceDocument(pmd);
   return document;
 }

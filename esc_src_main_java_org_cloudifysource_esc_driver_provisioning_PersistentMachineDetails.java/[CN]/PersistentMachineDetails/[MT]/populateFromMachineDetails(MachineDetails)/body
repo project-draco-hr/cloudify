@@ -1,0 +1,18 @@
+{
+  try {
+    PropertyUtils.copyProperties(this,md);
+  }
+ catch (  IllegalAccessException e) {
+    throw new IllegalStateException("Failed to create persistent machine details: " + e.getMessage(),e);
+  }
+catch (  InvocationTargetException e) {
+    throw new IllegalStateException("Failed to create persistent machine details: " + e.getMessage(),e);
+  }
+catch (  NoSuchMethodException e) {
+    throw new IllegalStateException("Failed to create persistent machine details: " + e.getMessage(),e);
+  }
+  if (this.getKeyFile() != null) {
+    this.setKeyFileName(this.getKeyFile().getAbsolutePath());
+    this.setKeyFile(null);
+  }
+}

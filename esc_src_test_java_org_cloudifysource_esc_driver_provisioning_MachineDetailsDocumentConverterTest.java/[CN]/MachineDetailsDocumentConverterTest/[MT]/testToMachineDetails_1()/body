@@ -1,0 +1,6 @@
+{
+  MachineDetailsDocumentConverter fixture=new MachineDetailsDocumentConverter();
+  SpaceDocument document=null;
+  MachineDetails result=fixture.toMachineDetails(document);
+  assertEquals(null,result);
+}

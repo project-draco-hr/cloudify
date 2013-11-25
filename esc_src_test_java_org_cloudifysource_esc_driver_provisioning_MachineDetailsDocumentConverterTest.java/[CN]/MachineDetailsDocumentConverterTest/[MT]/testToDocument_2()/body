@@ -1,0 +1,10 @@
+{
+  MachineDetailsDocumentConverter fixture=new MachineDetailsDocumentConverter();
+  MachineDetails md=new MachineDetails();
+  SpaceDocument result=fixture.toDocument(md);
+  assertNotNull(result);
+  assertEquals("SpaceDocument [typeName=org.cloudifysource.esc.driver.provisioning.PersistentMachineDetails, version=0, transient=false, properties=DocumentProperties {keyFile=null,machineId=null,agentRunning=false,privateAddress=null,remoteDirectory=null,locationId=null,remoteExecutionMode=SSH,remoteUsername=null,keyFileName=null,remotePassword=null,publicAddress=null,scriptLangeuage=LINUX_SHELL,installationDirectory=null,cloudifyInstalled=false,fileTransferMode=SFTP,environment={},cleanRemoteDirectoryOnStart=false,openFilesLimit=null}]",result.toString());
+  assertEquals("org.cloudifysource.esc.driver.provisioning.PersistentMachineDetails",result.getTypeName());
+  assertEquals(false,result.isTransient());
+  assertEquals(0,result.getVersion());
+}

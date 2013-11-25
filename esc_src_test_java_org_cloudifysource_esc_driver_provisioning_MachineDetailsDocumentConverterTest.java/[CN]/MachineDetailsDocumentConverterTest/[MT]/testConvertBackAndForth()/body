@@ -1,0 +1,10 @@
+{
+  MachineDetailsDocumentConverter fixture=new MachineDetailsDocumentConverter();
+  MachineDetails md=new MachineDetails();
+  md.setMachineId("12345");
+  md.setLocationId("abcde");
+  SpaceDocument document=fixture.toDocument(md);
+  MachineDetails md2=fixture.toMachineDetails(document);
+  Assert.assertEquals(md.getMachineId(),md2.getMachineId());
+  Assert.assertEquals(md.getLocationId(),md2.getLocationId());
+}

@@ -1,0 +1,23 @@
+{
+  MachineDetailsDocumentConverter fixture=new MachineDetailsDocumentConverter();
+  MachineDetails md=new MachineDetails();
+  md.setMachineId("12345");
+  md.setLocationId("abcde");
+  final File tmpFile=new File("someTempFile");
+  final String tempFilePath=tmpFile.getAbsolutePath();
+  md.setKeyFile(tmpFile);
+  SpaceDocument document=fixture.toDocument(md);
+  Assert.assertEquals(PersistentMachineDetails.class.getName(),document.getTypeName());
+  Assert.assertTrue(document.containsProperty("keyFile"));
+  Assert.assertTrue(document.containsProperty("keyFileName"));
+  Assert.assertEquals(tempFilePath,document.getProperty("keyFileName"));
+  Assert.assertNull(document.getProperty("keyFile"));
+  MachineDetails md2=fixture.toMachineDetails(document);
+  Assert.assertEquals(md.getMachineId(),md2.getMachineId());
+  Assert.assertEquals(md.getLocationId(),md2.getLocationId());
+  Assert.assertNotNull(md2.getKeyFile());
+  Assert.assertTrue(md2 instanceof MachineDetails);
+  Assert.assertFalse(md2 instanceof PersistentMachineDetails);
+  final String filePath2=md2.getKeyFile().getAbsolutePath();
+  Assert.assertEquals(tempFilePath,filePath2);
+}
