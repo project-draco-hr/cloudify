@@ -1,0 +1,8 @@
+{
+  ComputeTemplate computeTemplate=configuration.getCloud().getCloudCompute().getTemplates().get(configuration.getCloudTemplate());
+  bareMetal=Utils.getBoolean(computeTemplate.getCustom().get("org.cloudifysource.softlayer.bmi"),false);
+  if (bareMetal) {
+    configuration.getCloud().getProvider().setProvider("softlayer-bmi");
+  }
+  super.setConfig(configuration);
+}
