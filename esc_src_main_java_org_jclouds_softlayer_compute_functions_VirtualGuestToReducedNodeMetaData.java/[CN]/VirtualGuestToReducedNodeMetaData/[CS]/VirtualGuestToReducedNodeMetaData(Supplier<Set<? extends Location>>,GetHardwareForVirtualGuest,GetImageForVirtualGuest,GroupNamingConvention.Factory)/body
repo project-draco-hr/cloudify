@@ -1,3 +1,4 @@
 {
   super(locations,hardware,images,namingConvention);
+  this.nodeNamingConvention=checkNotNull(namingConvention,"namingConvention").createWithoutPrefix();
 }

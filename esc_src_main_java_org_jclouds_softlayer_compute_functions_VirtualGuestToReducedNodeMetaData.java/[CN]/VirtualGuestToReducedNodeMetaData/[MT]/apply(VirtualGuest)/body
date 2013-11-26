@@ -4,6 +4,7 @@
   builder.name(from.getHostname());
   builder.hostname(from.getHostname());
   builder.status(serverStateToNodeStatus.get(from.getPowerState().getKeyName()));
+  builder.group(nodeNamingConvention.groupInUniqueNameOrNull(from.getHostname()));
   if (from.getPrimaryIpAddress() != null)   builder.publicAddresses(ImmutableSet.<String>of(from.getPrimaryIpAddress()));
   if (from.getPrimaryBackendIpAddress() != null)   builder.privateAddresses(ImmutableSet.<String>of(from.getPrimaryBackendIpAddress()));
   return builder.build();
