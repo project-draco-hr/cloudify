@@ -1,4 +1,5 @@
 {
+  throttler.acquire();
   logger.info("Cloudify Adapter is starting a new machine with zones " + zones.getZones() + " and reservation id "+ reservationId);
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");

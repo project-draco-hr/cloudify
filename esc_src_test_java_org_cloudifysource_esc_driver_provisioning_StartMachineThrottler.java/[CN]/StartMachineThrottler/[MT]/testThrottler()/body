@@ -1,0 +1,9 @@
+{
+  final long startTime=System.currentTimeMillis();
+  for (int i=0; i < NUMBER_OF_CALLS; i++) {
+    startMachine();
+  }
+  final long endTime=System.currentTimeMillis() - startTime;
+  boolean throttled=TimeUnit.MILLISECONDS.toSeconds(endTime) >= 1;
+  Assert.assertTrue("'for' loop ended in less then a second. throttling didn't work.",throttled);
+}
