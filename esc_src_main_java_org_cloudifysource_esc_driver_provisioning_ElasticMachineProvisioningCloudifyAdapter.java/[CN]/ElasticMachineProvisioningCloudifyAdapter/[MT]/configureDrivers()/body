@@ -1,7 +1,4 @@
 {
-  if (this.driversConfigured) {
-    return;
-  }
   final ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
   configuration.setAdmin(getGlobalAdminInstance(originalESMAdmin));
   configuration.setCloud(cloud);
@@ -22,5 +19,4 @@
     networkConfig.setCloud(cloud);
     this.networkProvisioning.setConfig(networkConfig);
   }
-  this.driversConfigured=true;
 }
