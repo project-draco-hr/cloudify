@@ -1,22 +1,25 @@
 {
-  try {
-    final Router router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
-    final Network network=networkApi.getNetworkByName(this.managementNetworkName);
-    if (router != null) {
-      if (network != null) {
-        networkApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
-      }
+  final Router router;
+  if (this.externalRouterName == null) {
+    router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+  }
+ else {
+    router=networkApi.getRouterByName(this.externalRouterName);
+  }
+  final Network network=networkApi.getNetworkByName(this.managementNetworkName);
+  if (router != null) {
+    if (network != null) {
+      networkApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
+    }
+    if (this.externalRouterName == null) {
       networkApi.deleteRouter(router.getId());
     }
-    if (network != null) {
-      networkApi.deleteNetwork(network.getId());
-    }
-    List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
-    for (    Network n : appliNetworks) {
-      networkApi.deleteNetwork(n.getId());
-    }
   }
- catch (  final Exception e) {
-    throw new CloudProvisioningException(e);
+  if (network != null) {
+    networkApi.deleteNetwork(network.getId());
+  }
+  List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
+  for (  Network n : appliNetworks) {
+    networkApi.deleteNetwork(n.getId());
   }
 }

@@ -28,6 +28,12 @@
     this.createManagementRule(managementSecurityGroup.getId(),publicPortRange,null);
   }
  catch (  final Exception e) {
+    try {
+      this.cleanAllSecurityGroups();
+    }
+ catch (    OpenstackException e1) {
+      logger.warning("Couldn't clean all security groups: " + e1.getMessage());
+    }
     throw new CloudProvisioningException(e);
   }
 }

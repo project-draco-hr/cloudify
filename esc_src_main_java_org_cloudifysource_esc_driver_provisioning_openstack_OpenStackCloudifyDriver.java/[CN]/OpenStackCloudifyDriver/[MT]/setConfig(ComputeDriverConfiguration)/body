@@ -33,6 +33,11 @@
     this.applicationNetworkName=this.securityGroupNames.getPrefix() + networkConfiguration.getName();
   }
  else {
+    final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
+    final String extRouterName=(String)template.getOptions().get(OPT_EXTERNAL_ROUTER_NAME);
+    this.externalRouterName=StringUtils.isEmpty(extRouterName) ? null : extRouterName;
+    final String extNetName=(String)template.getOptions().get(OPT_EXTERNAL_NETWORK_NAME);
+    this.externalNetworkName=StringUtils.isEmpty(extNetName) ? null : extNetName;
     this.networkConfiguration=managementNetworkConfig;
   }
   final String associateFloatingIp=this.networkConfiguration.getCustom().get("associateFloatingIpOnBootstrap");
