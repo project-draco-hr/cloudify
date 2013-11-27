@@ -2,15 +2,6 @@
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   final GridServiceAgent agent=startedAgent.getAgent();
   final String machineIp=agent.getMachine().getHostAddress();
-  try {
-    configureDrivers();
-  }
- catch (  final CloudProvisioningException e) {
-    throw new ElasticMachineProvisioningException("Failed to configure cloud driver for first use: " + e.getMessage(),e);
-  }
-catch (  StorageProvisioningException e) {
-    throw new ElasticMachineProvisioningException("Failed to configure storage driver for first use: " + e.getMessage(),e);
-  }
   Exception failedToShutdownAgentException=null;
   final GridServiceAgentStopRequestedEvent agentStopEvent=new GridServiceAgentStopRequestedEvent();
   agentStopEvent.setHostAddress(machineIp);
