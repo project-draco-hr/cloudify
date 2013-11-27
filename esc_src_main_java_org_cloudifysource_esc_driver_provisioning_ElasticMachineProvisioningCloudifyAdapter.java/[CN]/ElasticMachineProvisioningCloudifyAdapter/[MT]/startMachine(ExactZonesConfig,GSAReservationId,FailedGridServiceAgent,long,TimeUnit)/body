@@ -1,8 +1,5 @@
 {
   logger.info("Cloudify Adapter is starting a new machine with zones " + zones.getZones() + " and reservation id "+ reservationId);
-  logger.fine("throttling start-machine request. limit is one request every ten seconds.");
-  throttler.acquire();
-  logger.fine("start-machine request throttling ended. starting new instance.");
   final long end=System.currentTimeMillis() + unit.toMillis(duration);
   logger.info("Calling provisioning implementation for new machine");
   MachineDetails machineDetails;
