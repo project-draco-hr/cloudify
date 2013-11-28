@@ -1,0 +1,5 @@
+String instanceIPAddress
+String floatingIp
+Map<String,Object> context
+long duration
+TimeUnit timeUnit

@@ -1,0 +1,16 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Create subnet=" + request);
+  }
+  String jsonRequest=JsonUtils.toJson(request);
+  jsonRequest=jsonRequest.replaceAll("\"gateway_ip\"\\s*:\\s*\"null\"","\"gateway_ip\" : null");
+  Subnet subnet=null;
+  try {
+    final String response=this.doPost("subnets",jsonRequest);
+    subnet=JsonUtils.unwrapRootToObject(Subnet.class,response);
+  }
+ catch (  final UniformInterfaceException e) {
+    throw this.createOpenstackServerException(e);
+  }
+  return subnet;
+}

@@ -1,3 +1,3 @@
-String targetSecurityGroupId
+String targetSecgroupId
 String portRangeString
-String cidr
+String remoteGroupId

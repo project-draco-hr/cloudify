@@ -1,0 +1,20 @@
+{
+  try {
+    final List<Port> ports=networkApi.getPortsByServerId(serverId);
+    for (    final Port port : ports) {
+      final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(port.getId());
+      if (floatingIp != null) {
+        try {
+          logger.info("Deleting Floating ip: " + floatingIp);
+          networkApi.deleteFloatingIP(floatingIp.getId());
+        }
+ catch (        final Exception e) {
+          logger.warning("Couldn't delete floating ip: " + floatingIp + " cause: "+ e.getMessage());
+        }
+      }
+    }
+  }
+ catch (  final OpenstackException e) {
+    logger.log(Level.WARNING,"Could not release floating ip associated to server id='" + serverId + "'",e);
+  }
+}

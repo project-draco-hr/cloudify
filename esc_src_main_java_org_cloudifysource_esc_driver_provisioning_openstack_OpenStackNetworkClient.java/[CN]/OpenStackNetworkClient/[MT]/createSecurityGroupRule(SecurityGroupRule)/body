@@ -1,0 +1,18 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Create securityGroupRule=" + request);
+  }
+  final String jsonRequest=JsonUtils.toJson(request);
+  String response=null;
+  try {
+    response=this.doPost("security-group-rules",jsonRequest);
+  }
+ catch (  final OpenstackServerException e) {
+    if (e.getMessage().contains("already exists")) {
+      logger.warning("Rule already exists: " + request);
+      return null;
+    }
+  }
+  final SecurityGroupRule created=JsonUtils.unwrapRootToObject(SecurityGroupRule.class,response);
+  return created;
+}

@@ -2,7 +2,7 @@
   try {
     final String mngTemplateName=this.cloud.getConfiguration().getManagementMachineTemplate();
     final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(mngTemplateName);
-    final List<NovaServer> servers=novaApi.getServersByPrefix(this.serverNamePrefix);
+    final List<NovaServer> servers=computeApi.getServersByPrefix(this.serverNamePrefix);
     final MachineDetails[] mds=new MachineDetails[servers.size()];
     for (int i=0; i < servers.size(); i++) {
       mds[i]=this.createMachineDetails(template,servers.get(i));

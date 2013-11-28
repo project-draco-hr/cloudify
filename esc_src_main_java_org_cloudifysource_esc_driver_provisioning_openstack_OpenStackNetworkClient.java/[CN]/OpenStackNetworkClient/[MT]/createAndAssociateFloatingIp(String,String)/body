@@ -1,0 +1,22 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Create and associate floating ip for devideId=" + deviceId + "/networkId="+ networkId);
+  }
+  if (networkId == null) {
+    throw new OpenstackException("Public network not found for deviceId=" + deviceId);
+  }
+  final String floatingNetworkId=this.getPublicNetworkId();
+  final Port port=this.getPort(deviceId,networkId);
+  if (port == null) {
+    throw new OpenstackException("Port not found for deviceId=" + deviceId);
+  }
+  try {
+    final String input=String.format("{\"floatingip\":{\"floating_network_id\":\"%s\",\"port_id\":\"%s\"}}",floatingNetworkId,port.getId());
+    final String response=this.doPost("floatingips",input);
+    final FloatingIp floatingIp=JsonUtils.unwrapRootToObject(FloatingIp.class,response);
+    return floatingIp.getFloatingIpAddress();
+  }
+ catch (  final UniformInterfaceException e) {
+    throw this.createOpenstackServerException(e);
+  }
+}

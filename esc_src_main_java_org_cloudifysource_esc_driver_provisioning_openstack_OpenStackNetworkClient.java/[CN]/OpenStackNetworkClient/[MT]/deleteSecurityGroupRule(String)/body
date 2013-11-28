@@ -1,0 +1,3 @@
+{
+  this.doDelete("security-group-rules/" + securityGroupRuleId,CODE_OK_204);
+}

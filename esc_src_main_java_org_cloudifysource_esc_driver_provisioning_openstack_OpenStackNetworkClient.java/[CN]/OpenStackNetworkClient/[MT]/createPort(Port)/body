@@ -1,0 +1,9 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Create port=" + request);
+  }
+  final String jsonRequest=JsonUtils.toJson(request);
+  final String response=this.doPost("ports",jsonRequest);
+  final Port port=JsonUtils.unwrapRootToObject(Port.class,response);
+  return port;
+}

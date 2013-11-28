@@ -1,0 +1,6 @@
+{
+  final String[] params=new String[]{"device_id",serverId};
+  final String response=this.doGet("ports",params);
+  final List<Port> ports=JsonUtils.unwrapRootToList(Port.class,response);
+  return ports;
+}

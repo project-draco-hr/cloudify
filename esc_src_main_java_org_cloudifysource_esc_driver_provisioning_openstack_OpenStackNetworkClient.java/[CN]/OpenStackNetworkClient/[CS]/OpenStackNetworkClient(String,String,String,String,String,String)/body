@@ -1,0 +1,3 @@
+{
+  this(endpoint,username,password,tenant,region,serviceName,null);
+}

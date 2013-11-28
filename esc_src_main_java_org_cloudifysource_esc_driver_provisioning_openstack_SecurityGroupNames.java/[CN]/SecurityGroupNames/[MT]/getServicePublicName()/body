@@ -1,3 +1,0 @@
-{
-  return this.prefix + this.applicationName + "-"+ this.serviceName+ "-public";
-}

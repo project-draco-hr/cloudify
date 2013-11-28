@@ -1,0 +1,12 @@
+{
+  try {
+    final FloatingIp floatingIp=networkApi.allocateFloatingIp(poolName);
+    if (floatingIp == null) {
+      throw new NetworkProvisioningException("Floating ip has not been created from the pool '" + poolName + "'");
+    }
+    return floatingIp.getFloatingIpAddress();
+  }
+ catch (  final OpenstackException e) {
+    throw new NetworkProvisioningException(e);
+  }
+}

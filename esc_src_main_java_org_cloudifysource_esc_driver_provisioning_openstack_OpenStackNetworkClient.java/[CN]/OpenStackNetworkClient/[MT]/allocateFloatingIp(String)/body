@@ -1,0 +1,13 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Allocate floatingIp from network=" + extNetworkName);
+  }
+  final Network extNetwork=this.getNetworkByName(extNetworkName);
+  if (extNetwork == null) {
+    throw new OpenstackException("External network not found: " + extNetworkName);
+  }
+  final String input=String.format("{\"floatingip\":{\"floating_network_id\":\"%s\"}}",extNetwork.getId());
+  final String response=doPost("floatingips",input);
+  final FloatingIp floatingIp=JsonUtils.unwrapRootToObject(FloatingIp.class,response);
+  return floatingIp;
+}

@@ -1,7 +1,7 @@
 {
   final String prefix=this.securityGroupNames.getPrefix();
-  final List<SecurityGroup> securityGroupsByName=this.quantumApi.getSecurityGroupsByPrefix(prefix);
+  final List<SecurityGroup> securityGroupsByName=this.networkApi.getSecurityGroupsByPrefix(prefix);
   for (  final SecurityGroup securityGroup : securityGroupsByName) {
-    this.quantumApi.deleteSecurityGroup(securityGroup.getId());
+    this.networkApi.deleteSecurityGroup(securityGroup.getId());
   }
 }

@@ -10,7 +10,13 @@
         webResource=webResource.queryParam(params[i],params[i + 1]);
       }
     }
+    if (logger.isLoggable(Level.FINER)) {
+      logger.finer("GET '" + webResource + "'");
+    }
     final String response=webResource.type(MediaType.APPLICATION_JSON_TYPE).accept(MediaType.APPLICATION_JSON).header("X-Auth-Token",this.getTokenId()).get(String.class);
+    if (logger.isLoggable(Level.FINEST)) {
+      logger.finest("GET '" + webResource + "' got response: "+ response);
+    }
     return response;
   }
  catch (  final UniformInterfaceException e) {

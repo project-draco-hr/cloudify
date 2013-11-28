@@ -1,5 +1,0 @@
-{
-  final String path="routers/" + routerId + "/remove_router_interface";
-  final String input="{\"subnet_id\":\"" + subnetId + "\"}";
-  this.doPut(path,input);
-}

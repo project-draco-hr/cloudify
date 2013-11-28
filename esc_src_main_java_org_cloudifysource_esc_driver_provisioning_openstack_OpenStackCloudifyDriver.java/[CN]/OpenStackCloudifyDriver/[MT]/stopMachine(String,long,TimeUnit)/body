@@ -4,40 +4,28 @@
   logger.info("Looking up cloud server with IP: " + serverIp);
   final NovaServer server;
   try {
-    server=novaApi.getServerByIp(serverIp);
+    server=computeApi.getServerByIpAndSecurityGroup(serverIp,this.securityGroupNames.getServiceName());
   }
- catch (  OpenstackException e) {
+ catch (  final OpenstackException e) {
     throw new CloudProvisioningException(e);
   }
   if (server != null) {
     logger.info("Found server: " + server.getId() + ". Shutting it down and waiting for shutdown to complete");
+    this.releaseFloatingIpsForServerId(server.getId());
     try {
-      final String floatingIp=quantumApi.getFloatingIpByFixedIpAddress(serverIp);
-      if (floatingIp != null) {
-        try {
-          logger.info("Deleting Floating Ip : " + floatingIp);
-          quantumApi.deleteFloatingIPByFixedIp(serverIp);
-        }
- catch (        Exception e) {
-          logger.warning("Couldn't delete floating IP : " + floatingIp);
-        }
-      }
-    }
- catch (    OpenstackException e) {
-      logger.log(Level.WARNING,"Could not release floating Ip associated to server " + server.getName() + " ("+ server.getId()+ ")",e);
-    }
-    try {
-      novaApi.deleteServer(server.getId());
+      computeApi.deleteServer(server.getId());
     }
  catch (    final OpenstackException e) {
       throw new CloudProvisioningException(e);
     }
-    this.waitForServerToBeShutdown(server.getId(),duration,unit);
-    logger.info("Server: " + server.getId() + " shutdown has finished.");
+    if (duration != 0) {
+      this.waitForServerToBeShutdown(server.getId(),duration,unit);
+    }
+    logger.info("Server: " + server.getId() + " is shutdown.");
     stopResult=true;
   }
  else {
-    logger.log(Level.SEVERE,"Recieved scale in request for machine with ip " + serverIp + " but this IP could not be found in the Cloud server list");
+    logger.log(Level.SEVERE,"Received scale in request for machine with ip " + serverIp + " but this IP could not be found in the Cloud server list");
     stopResult=false;
   }
   return stopResult;

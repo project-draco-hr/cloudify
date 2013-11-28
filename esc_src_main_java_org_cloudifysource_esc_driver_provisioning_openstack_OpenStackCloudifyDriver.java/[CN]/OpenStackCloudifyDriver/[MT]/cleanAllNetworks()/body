@@ -1,20 +1,25 @@
 {
-  try {
-    final Router router=quantumApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
-    final Network network=quantumApi.getNetworkByName(this.managementNetworkName);
-    if (router != null) {
-      quantumApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
-      quantumApi.deleteRouter(router.getId());
-    }
+  final Router router;
+  if (this.externalRouterName == null) {
+    router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+  }
+ else {
+    router=networkApi.getRouterByName(this.externalRouterName);
+  }
+  final Network network=networkApi.getNetworkByName(this.managementNetworkName);
+  if (router != null) {
     if (network != null) {
-      quantumApi.deleteNetwork(network.getId());
+      networkApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
     }
-    List<Network> appliNetworks=quantumApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
-    for (    Network n : appliNetworks) {
-      quantumApi.deleteNetwork(n.getId());
+    if (this.externalRouterName == null) {
+      networkApi.deleteRouter(router.getId());
     }
   }
- catch (  final Exception e) {
-    throw new CloudProvisioningException(e);
+  if (network != null) {
+    networkApi.deleteNetwork(network.getId());
+  }
+  List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
+  for (  Network n : appliNetworks) {
+    networkApi.deleteNetwork(n.getId());
   }
 }

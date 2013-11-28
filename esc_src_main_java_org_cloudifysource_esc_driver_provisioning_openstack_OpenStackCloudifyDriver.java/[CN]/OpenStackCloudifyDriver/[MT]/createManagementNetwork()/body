@@ -9,19 +9,47 @@
     final Network networkRequest=new Network();
     networkRequest.setName(this.managementNetworkName);
     networkRequest.setAdminStateUp(true);
-    final Network network=quantumApi.createNetworkIfNotExists(networkRequest);
+    final Network network=networkApi.createNetworkIfNotExists(networkRequest);
     final org.cloudifysource.domain.cloud.network.Subnet subnetConfig=networkConfiguration.getSubnets().get(0);
     final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
-    final Subnet subnet=quantumApi.createSubnet(subnetRequest);
-    final String publicNetworkId=quantumApi.getPublicNetworkId();
-    final Router request=new Router();
-    request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
-    request.setAdminStateUp(true);
-    request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
-    final Router router=quantumApi.createRouter(request);
-    quantumApi.addRouterInterface(router.getId(),subnet.getId());
+    final Subnet subnet=networkApi.createSubnet(subnetRequest);
+    final Router router;
+    if (this.externalRouterName == null) {
+      final String publicNetworkId;
+      if (this.externalNetworkName == null) {
+        publicNetworkId=networkApi.getPublicNetworkId();
+      }
+ else {
+        Network extNetwork=networkApi.getNetworkByName(this.externalNetworkName);
+        if (extNetwork == null) {
+          throw new CloudProvisioningException("Couldn't find external network '" + this.externalNetworkName + "'");
+        }
+        if (!BooleanUtils.toBoolean(extNetwork.getRouterExternal())) {
+          throw new CloudProvisioningException("The network '" + this.externalNetworkName + "' is not an external network");
+        }
+        publicNetworkId=extNetwork.getId();
+      }
+      final Router request=new Router();
+      request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+      request.setAdminStateUp(true);
+      request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
+      router=networkApi.createRouter(request);
+    }
+ else {
+      router=networkApi.getRouterByName(this.externalRouterName);
+      if (router == null) {
+        throw new CloudProvisioningException("Couldn't find external router '" + this.externalRouterName + "'");
+      }
+    }
+    networkApi.addRouterInterface(router.getId(),subnet.getId());
   }
  catch (  final Exception e) {
+    try {
+      this.cleanAllNetworks();
+    }
+ catch (    OpenstackException e1) {
+      logger.warning("Couldn't clean all networks: " + e1.getMessage());
+    }
     throw new CloudProvisioningException(e);
   }
 }

@@ -1,9 +1,0 @@
-{
-  final String computeRequest=JsonUtils.toJson(request,false);
-  if (logger.isLoggable(Level.FINER)) {
-    logger.log(Level.FINER,"Request=createServer: " + computeRequest);
-  }
-  final String response=this.doPost("servers",computeRequest);
-  final NovaServer nsr=JsonUtils.unwrapRootToObject(NovaServer.class,response);
-  return nsr;
-}

@@ -1,0 +1,14 @@
+{
+  try {
+    final FloatingIp floatingIp=networkApi.getFloatingIpByIp(floatingIP);
+    if (floatingIp == null) {
+      logger.warning("Floating ip not found ip='" + floatingIP + "'. May already be released.");
+    }
+ else {
+      networkApi.releaseFloatingIp(floatingIp.getId());
+    }
+  }
+ catch (  final OpenstackException e) {
+    throw new NetworkProvisioningException(e);
+  }
+}

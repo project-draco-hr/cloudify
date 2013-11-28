@@ -1,0 +1,6 @@
+{
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("Delete networkId=" + networkId);
+  }
+  this.doDelete("networks/" + networkId,CODE_OK_204);
+}

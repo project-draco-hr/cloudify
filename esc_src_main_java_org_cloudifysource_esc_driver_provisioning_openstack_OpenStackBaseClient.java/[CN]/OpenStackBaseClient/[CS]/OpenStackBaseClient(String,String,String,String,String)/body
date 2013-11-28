@@ -4,5 +4,4 @@
   this.password=password;
   this.tenant=tenant;
   this.region=region;
-  this.initToken();
 }

@@ -1,0 +1,5 @@
+{
+  Network network=JsonUtils.unwrapRootToObject(Network.class,"{\"network\":{\"name\":\"test\"}}");
+  Assert.assertNotNull(network);
+  Assert.assertEquals("test",network.getName());
+}
