@@ -5,9 +5,12 @@
   final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(cloud.getConfiguration().getManagementMachineTemplate());
   final int numOfManagementMachines=machines.length;
   final InstallationDetails[] installations=createInstallationDetails(numOfManagementMachines,machines,template,securityProfile,keystorePassword);
-  int i=isNoWebServices() ? 0 : 1;
-  for (; i < installations.length; i++) {
+  if (isNoWebServices() && installations.length > 0) {
+    installations[0].setNoWebServices(true);
+  }
+  for (int i=1; i < installations.length; i++) {
     installations[i].setNoWebServices(true);
+    installations[i].setNoManagementSpace(true);
   }
   final String lookup=createLocatorsString(installations);
   for (  final InstallationDetails detail : installations) {
