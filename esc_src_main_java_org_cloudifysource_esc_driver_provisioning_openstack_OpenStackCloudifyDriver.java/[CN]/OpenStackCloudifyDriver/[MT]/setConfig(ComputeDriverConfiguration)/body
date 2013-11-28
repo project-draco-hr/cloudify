@@ -16,7 +16,17 @@
   final ManagementNetwork managementNetwork=this.cloud.getCloudNetwork().getManagement();
   final NetworkConfiguration managementNetworkConfig=managementNetwork.getNetworkConfiguration();
   this.managementNetworkName=managementGroup + managementNetworkConfig.getName();
-  if (!management) {
+  if (management) {
+    final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
+    final String extRouterName=(String)template.getOptions().get(OPT_EXTERNAL_ROUTER_NAME);
+    this.externalRouterName=StringUtils.isEmpty(extRouterName) ? null : extRouterName;
+    final String extNetName=(String)template.getOptions().get(OPT_EXTERNAL_NETWORK_NAME);
+    this.externalNetworkName=StringUtils.isEmpty(extNetName) ? null : extNetName;
+    final String skipExtNetStr=(String)template.getOptions().get(OPT_SKIP_EXTERNAL_NETWORKING);
+    this.skipExternalNetworking=BooleanUtils.toBoolean(skipExtNetStr);
+    this.networkConfiguration=managementNetworkConfig;
+  }
+ else {
     final CloudNetwork cloudNetwork=this.cloud.getCloudNetwork();
     final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
     if (templates == null || templates.isEmpty()) {
@@ -31,14 +41,6 @@
       this.networkConfiguration=templates.get(serviceNetwork.getTemplate());
     }
     this.applicationNetworkName=this.securityGroupNames.getPrefix() + networkConfiguration.getName();
-  }
- else {
-    final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
-    final String extRouterName=(String)template.getOptions().get(OPT_EXTERNAL_ROUTER_NAME);
-    this.externalRouterName=StringUtils.isEmpty(extRouterName) ? null : extRouterName;
-    final String extNetName=(String)template.getOptions().get(OPT_EXTERNAL_NETWORK_NAME);
-    this.externalNetworkName=StringUtils.isEmpty(extNetName) ? null : extNetName;
-    this.networkConfiguration=managementNetworkConfig;
   }
   final String associateFloatingIp=this.networkConfiguration.getCustom().get("associateFloatingIpOnBootstrap");
   this.associateFloatingIp=BooleanUtils.toBoolean(associateFloatingIp);
