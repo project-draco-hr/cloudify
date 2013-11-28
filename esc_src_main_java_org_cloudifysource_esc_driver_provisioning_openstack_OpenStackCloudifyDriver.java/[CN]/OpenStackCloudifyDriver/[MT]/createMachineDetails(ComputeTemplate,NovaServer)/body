@@ -9,7 +9,7 @@
     final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
     final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
     md.setPrivateAddress(fixedIp.getIpAddress());
-    FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
+    final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
     if (floatingIp != null) {
       md.setPublicAddress(floatingIp.getFloatingIpAddress());
     }
