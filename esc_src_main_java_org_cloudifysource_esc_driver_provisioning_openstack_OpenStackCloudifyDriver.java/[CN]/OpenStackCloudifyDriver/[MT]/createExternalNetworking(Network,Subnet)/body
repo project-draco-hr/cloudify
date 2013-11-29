@@ -1,0 +1,34 @@
+{
+  final Router router;
+  if (this.externalRouterName == null) {
+    final String publicNetworkId;
+    if (this.externalNetworkName == null) {
+      publicNetworkId=networkApi.getPublicNetworkId();
+    }
+ else {
+      Network extNetwork=networkApi.getNetworkByName(this.externalNetworkName);
+      if (extNetwork == null) {
+        throw new CloudProvisioningException("Couldn't find external network '" + this.externalNetworkName + "'");
+      }
+      if (!BooleanUtils.toBoolean(extNetwork.getRouterExternal())) {
+        throw new CloudProvisioningException("The network '" + this.externalNetworkName + "' is not an external network");
+      }
+      publicNetworkId=extNetwork.getId();
+    }
+    final Router request=new Router();
+    request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+    request.setAdminStateUp(true);
+    request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
+    router=networkApi.createRouter(request);
+  }
+ else {
+    router=networkApi.getRouterByName(this.externalRouterName);
+    if (router == null) {
+      throw new CloudProvisioningException("Couldn't find external router '" + this.externalRouterName + "'");
+    }
+  }
+  if (subnet == null) {
+    throw new CloudProvisioningException("Cannot add router interface because the network '" + network.getName() + "' don't have any subnets");
+  }
+  networkApi.addRouterInterface(router.getId(),subnet.getId());
+}

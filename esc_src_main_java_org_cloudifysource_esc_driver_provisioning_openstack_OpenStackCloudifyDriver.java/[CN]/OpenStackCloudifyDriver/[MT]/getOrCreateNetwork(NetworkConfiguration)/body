@@ -1,0 +1,10 @@
+{
+  Network network=networkApi.getNetworkByName(networkConfiguration.getName());
+  if (network == null) {
+    final Network networkRequest=new Network();
+    networkRequest.setName(this.securityGroupNames.getPrefix() + networkConfiguration.getName());
+    networkRequest.setAdminStateUp(true);
+    network=networkApi.createNetworkIfNotExists(networkRequest);
+  }
+  return network;
+}

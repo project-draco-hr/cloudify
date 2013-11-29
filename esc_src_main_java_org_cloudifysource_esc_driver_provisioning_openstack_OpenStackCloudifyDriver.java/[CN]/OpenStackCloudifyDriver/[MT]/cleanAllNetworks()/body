@@ -1,5 +1,10 @@
 {
-  final Network network=networkApi.getNetworkByName(this.managementNetworkName);
+  boolean deleteManagementNetwork=false;
+  Network network=networkApi.getNetworkByName(this.networkConfiguration.getName());
+  if (network == null) {
+    network=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
+    deleteManagementNetwork=true;
+  }
   if (!this.skipExternalNetworking) {
     final Router router;
     if (this.externalRouterName == null) {
@@ -10,14 +15,23 @@
     }
     if (router != null) {
       if (network != null) {
-        networkApi.deleteRouterInterface(router.getId(),network.getSubnets()[0]);
+        final List<org.cloudifysource.domain.cloud.network.Subnet> configSubnets=networkConfiguration.getSubnets();
+        final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
+        for (        final org.cloudifysource.domain.cloud.network.Subnet subConf : configSubnets) {
+          for (          final Subnet subnet : subnets) {
+            if (StringUtils.equals(subnet.getName(),subConf.getName()) && subnet.getName() != null) {
+              networkApi.deleteRouterInterface(router.getId(),subnet.getId());
+              break;
+            }
+          }
+        }
       }
       if (this.externalRouterName == null) {
         networkApi.deleteRouter(router.getId());
       }
     }
   }
-  if (network != null) {
+  if (deleteManagementNetwork && network != null) {
     networkApi.deleteNetwork(network.getId());
   }
   List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());

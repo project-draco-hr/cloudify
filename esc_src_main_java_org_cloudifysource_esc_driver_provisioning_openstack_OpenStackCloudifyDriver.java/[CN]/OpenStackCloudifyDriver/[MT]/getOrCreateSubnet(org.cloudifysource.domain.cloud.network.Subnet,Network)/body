@@ -1,0 +1,23 @@
+{
+  Subnet subnet=null;
+  if (subnetConfig == null) {
+    final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
+    if (subnets != null && subnets.size() != 0) {
+      subnet=subnets.get(0);
+    }
+  }
+ else {
+    final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
+    for (    Subnet sn : subnets) {
+      if (subnetConfig.getName().equals(sn.getName())) {
+        subnet=sn;
+        break;
+      }
+    }
+    if (subnet == null) {
+      final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
+      subnet=networkApi.createSubnet(subnetRequest);
+    }
+  }
+  return subnet;
+}

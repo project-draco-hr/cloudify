@@ -6,7 +6,7 @@ synchronized (MUTEX_CREATE_NETWORK) {
     final Network existingNetwork=this.getNetworkByName(request.getName());
     if (existingNetwork != null) {
       logger.info("Network '" + request.getName() + "' already exists.");
-      return null;
+      return existingNetwork;
     }
     if (logger.isLoggable(Level.FINE)) {
       logger.fine("Create network=" + request);

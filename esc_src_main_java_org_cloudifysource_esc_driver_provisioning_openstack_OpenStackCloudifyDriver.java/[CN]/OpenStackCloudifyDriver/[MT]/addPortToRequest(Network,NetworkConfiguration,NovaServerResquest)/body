@@ -1,0 +1,26 @@
+{
+  Port createdPort=null;
+  final Port port=new Port();
+  final List<org.cloudifysource.domain.cloud.network.Subnet> configSubnets=networkConfiguration.getSubnets();
+  final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
+  for (  final org.cloudifysource.domain.cloud.network.Subnet subConf : configSubnets) {
+    for (    Subnet subnet : subnets) {
+      if (StringUtils.equals(subnet.getName(),subConf.getName()) && subnet.getName() != null) {
+        final RouteFixedIp fixedIp=new RouteFixedIp();
+        fixedIp.setSubnetId(subnet.getId());
+        port.addFixedIp(fixedIp);
+      }
+    }
+  }
+  if (port.getFixedIps() != null && !port.getFixedIps().isEmpty()) {
+    port.setNetworkId(network.getId());
+    createdPort=networkApi.createPort(port);
+    final NovaServerNetwork nsn=new NovaServerNetwork();
+    nsn.setPort(createdPort.getId());
+    request.addNetworks(nsn);
+  }
+ else {
+    request.addNetworks(network.getId());
+  }
+  return createdPort;
+}

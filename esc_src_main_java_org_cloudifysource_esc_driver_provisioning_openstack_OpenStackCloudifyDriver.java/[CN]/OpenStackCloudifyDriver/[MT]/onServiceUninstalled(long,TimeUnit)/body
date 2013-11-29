@@ -12,12 +12,18 @@
       if (secgroup != null) {
         networkApi.deleteSecurityGroup(secgroup.getId());
       }
-      logger.info("Delete the network.");
-      try {
-        networkApi.deleteNetworkByName(this.applicationNetworkName);
-      }
- catch (      final Exception e) {
-        logger.warning("Network '" + this.applicationNetworkName + "' was not deleted: "+ e.getMessage());
+      if (!this.managementNetworkName.equals(this.applicationNetworkName)) {
+        logger.info("Delete the network.");
+        try {
+          Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+          if (appliNetwork == null) {
+            appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+          }
+          networkApi.deleteNetwork(appliNetwork.getId());
+        }
+ catch (        final Exception e) {
+          logger.warning("Network '" + this.applicationNetworkName + "' was not deleted: "+ e.getMessage());
+        }
       }
     }
     logger.info("Clean service's security group :" + ssgName + "*");

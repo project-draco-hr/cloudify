@@ -15,8 +15,11 @@
   this.securityGroupNames=new SecurityGroupNames(managementGroup,applicationName,serviceName);
   final ManagementNetwork managementNetwork=this.cloud.getCloudNetwork().getManagement();
   final NetworkConfiguration managementNetworkConfig=managementNetwork.getNetworkConfiguration();
-  this.managementNetworkName=managementGroup + managementNetworkConfig.getName();
+  this.managementNetworkName=managementNetworkConfig.getName();
   if (management) {
+    if (this.managementNetworkName == null) {
+      throw new CloudProvisioningException("The management network network must be provided");
+    }
     final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloud.getConfiguration().getManagementMachineTemplate());
     final String extRouterName=(String)template.getOptions().get(OPT_EXTERNAL_ROUTER_NAME);
     this.externalRouterName=StringUtils.isEmpty(extRouterName) ? null : extRouterName;
@@ -40,7 +43,7 @@
  else {
       this.networkConfiguration=templates.get(serviceNetwork.getTemplate());
     }
-    this.applicationNetworkName=this.securityGroupNames.getPrefix() + networkConfiguration.getName();
+    this.applicationNetworkName=networkConfiguration.getName();
   }
   final String associateFloatingIp=this.networkConfiguration.getCustom().get("associateFloatingIpOnBootstrap");
   this.associateFloatingIp=BooleanUtils.toBoolean(associateFloatingIp);

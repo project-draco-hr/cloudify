@@ -5,7 +5,11 @@
     md.setCloudifyInstalled(false);
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
-    final Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
+    final String prefix=this.securityGroupNames.getPrefix();
+    Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
+    if (managementNetwork == null) {
+      managementNetwork=networkApi.getNetworkByName(prefix + this.managementNetworkName);
+    }
     final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
     final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
     md.setPrivateAddress(fixedIp.getIpAddress());
@@ -14,7 +18,10 @@
       md.setPublicAddress(floatingIp.getFloatingIpAddress());
     }
     if (!management) {
-      final Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+      Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+      if (appliNetwork == null) {
+        appliNetwork=networkApi.getNetworkByName(prefix + this.applicationNetworkName);
+      }
       final Port appliPort=networkApi.getPort(server.getId(),appliNetwork.getId());
       final RouteFixedIp appliFixedIp=appliPort.getFixedIps().get(0);
       Map<String,String> env=new HashMap<String,String>();
