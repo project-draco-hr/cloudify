@@ -1,0 +1,7 @@
+{
+  CloudifyUserDetails cloudifyUserDetails=users.get(username.toLowerCase());
+  if (cloudifyUserDetails == null) {
+    throw new UsernameNotFoundException(username);
+  }
+  return new CloudifyUser(cloudifyUserDetails);
+}
