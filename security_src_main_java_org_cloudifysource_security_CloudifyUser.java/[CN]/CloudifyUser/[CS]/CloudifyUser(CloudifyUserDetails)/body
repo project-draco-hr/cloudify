@@ -1,0 +1,5 @@
+{
+  delegateUser=new User(cloudifyUserDetails.getUsername(),cloudifyUserDetails.getPassword(),cloudifyUserDetails.getAuthorities());
+  this.authGroups=cloudifyUserDetails.getAuthGroups();
+  logger.warning("***** In CloudifyUser(CloudifyUserDetails) ctor, not good");
+}

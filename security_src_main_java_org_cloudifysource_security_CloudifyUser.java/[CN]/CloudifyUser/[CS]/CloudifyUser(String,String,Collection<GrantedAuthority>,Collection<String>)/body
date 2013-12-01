@@ -1,0 +1,4 @@
+{
+  delegateUser=new User(username,password,authorities);
+  this.authGroups=authGroups;
+}

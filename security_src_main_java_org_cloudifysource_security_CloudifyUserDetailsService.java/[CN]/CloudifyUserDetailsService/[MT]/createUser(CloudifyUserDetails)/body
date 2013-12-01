@@ -1,0 +1,4 @@
+{
+  Assert.isTrue(!userExists(cloudifyUserDetails.getUsername()));
+  users.put(cloudifyUserDetails.getUsername().toLowerCase(),new CloudifyUser(cloudifyUserDetails));
+}

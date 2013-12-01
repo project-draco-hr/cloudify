@@ -1,0 +1,10 @@
+{
+  Collection<GrantedAuthority> grantedAuthorities=new ArrayList<GrantedAuthority>();
+  Set<String> roleNames=splitAndTrim(roles,VALUES_SEPARATOR);
+  for (  String role : roleNames) {
+    grantedAuthorities.add(new SimpleGrantedAuthority(role));
+  }
+  delegateUser=new User(username,password,grantedAuthorities);
+  this.authGroups=splitAndTrim(authGroups,VALUES_SEPARATOR);
+  logger.warning("***** In CloudifyUser full ctor; username: " + username + ", password: "+ password+ ", roles: "+ roles+ ", authGroups: "+ authGroups);
+}

@@ -1,0 +1,5 @@
+{
+  for (  CloudifyUserDetails user : users) {
+    createUser(user);
+  }
+}
