@@ -1,4 +1,0 @@
-String username
-String password
-Collection<GrantedAuthority> authorities
-Collection<String> authGroups

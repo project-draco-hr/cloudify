@@ -6,5 +6,4 @@
   }
   delegateUser=new User(username,password,grantedAuthorities);
   this.authGroups=splitAndTrim(authGroups,VALUES_SEPARATOR);
-  logger.warning("***** In CloudifyUser full ctor; username: " + username + ", password: "+ password+ ", roles: "+ roles+ ", authGroups: "+ authGroups);
 }
