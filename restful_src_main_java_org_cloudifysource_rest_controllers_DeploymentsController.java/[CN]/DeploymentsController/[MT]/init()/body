@@ -1,16 +1,13 @@
 {
   gigaSpace=restConfig.getGigaSpace();
   permissionEvaluator=restConfig.getPermissionEvaluator();
+  File restTempFolder=restConfig.getRestTempFolder();
+  repo.setBaseDir(restTempFolder);
   repo.init();
-  if (restConfig.getCloud() != null) {
-    repo.setBaseDir(restConfig.getRestTempFolder());
-    logger.fine("starting DeolpymentsController, injecting rest temp folder to uploadrepo: " + restConfig.getRestTempFolder().getAbsolutePath());
-  }
-  repo.createUploadDir();
   this.admin=restConfig.getAdmin();
   this.eventsCache=new EventsCache(admin);
   this.controllerHelper=new ControllerHelper(gigaSpace,admin);
-  this.extractedFodler=new File(restConfig.getRestTempFolder(),CloudifyConstants.EXTRACTED_FILES_FOLDER_NAME);
+  this.extractedFodler=new File(restTempFolder,CloudifyConstants.EXTRACTED_FILES_FOLDER_NAME);
   extractedFodler.mkdirs();
   extractedFodler.deleteOnExit();
 }

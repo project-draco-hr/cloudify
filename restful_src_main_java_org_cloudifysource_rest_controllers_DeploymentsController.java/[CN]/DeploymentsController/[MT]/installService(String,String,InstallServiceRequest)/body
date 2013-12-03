@@ -18,6 +18,7 @@
   File workingProjectDir=new File(serviceDir,"ext");
   final DSLServiceCompilationResult readServiceResult=readService(workingProjectDir,request.getServiceFileName(),absolutePuName,null,serviceOverridesFile);
   Service service=readServiceResult.getService();
+  logger.finest("[installService] - performing validations for service " + serviceName);
   File overridesFile=readServiceResult.getServiceOverridesFile();
   validateInstallService(request,service,absolutePuName,overridesFile);
   File propertiesFile=readServiceResult.getServicePropertiesFile();
@@ -29,6 +30,7 @@
   File updatedPackedFile=servicePackedFolder;
   if (merger.isMerged()) {
     try {
+      logger.finest("[installService] - re-pack directory with the updated properties file after merge.");
       updatedPackedFile=Packager.createZipFile(absolutePuName,serviceDir);
     }
  catch (    IOException e) {
