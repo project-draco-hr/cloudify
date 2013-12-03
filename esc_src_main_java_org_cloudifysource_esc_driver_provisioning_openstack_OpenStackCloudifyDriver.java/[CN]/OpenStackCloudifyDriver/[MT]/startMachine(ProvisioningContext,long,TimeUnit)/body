@@ -8,7 +8,9 @@
     this.createSecurityGroup(this.securityGroupNames.getApplicationName());
     this.createSecurityGroup(this.securityGroupNames.getServiceName());
     this.createSecurityGroupsRules();
-    this.createNetwork();
+    if (computeNetworks == null) {
+      this.createNetwork();
+    }
     final String groupName=serverNamePrefix + this.configuration.getServiceName() + "-"+ counter.incrementAndGet();
     logger.fine("Starting a new cloud server with group: " + groupName);
     final ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);

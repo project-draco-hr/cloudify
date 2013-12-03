@@ -6,18 +6,27 @@
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
     final String prefix=this.securityGroupNames.getPrefix();
-    Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
-    if (managementNetwork == null) {
-      managementNetwork=networkApi.getNetworkByName(prefix + this.managementNetworkName);
+    if (this.computeNetworks == null) {
+      Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
+      if (managementNetwork == null) {
+        managementNetwork=networkApi.getNetworkByName(prefix + this.managementNetworkName);
+      }
+      final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
+      final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
+      md.setPrivateAddress(fixedIp.getIpAddress());
+      final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
+      if (floatingIp != null) {
+        md.setPublicAddress(floatingIp.getFloatingIpAddress());
+      }
     }
-    final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
-    final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
-    md.setPrivateAddress(fixedIp.getIpAddress());
-    final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
-    if (floatingIp != null) {
-      md.setPublicAddress(floatingIp.getFloatingIpAddress());
+ else {
+      final String networkName=this.computeNetworks.get(0);
+      final Network network=networkApi.getNetworkByName(networkName);
+      final Port port=networkApi.getPort(server.getId(),network.getId());
+      final RouteFixedIp fixedIp=port.getFixedIps().get(0);
+      md.setPrivateAddress(fixedIp.getIpAddress());
     }
-    if (!management) {
+    if (!management && this.computeNetworks == null) {
       Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
       if (appliNetwork == null) {
         appliNetwork=networkApi.getNetworkByName(prefix + this.applicationNetworkName);

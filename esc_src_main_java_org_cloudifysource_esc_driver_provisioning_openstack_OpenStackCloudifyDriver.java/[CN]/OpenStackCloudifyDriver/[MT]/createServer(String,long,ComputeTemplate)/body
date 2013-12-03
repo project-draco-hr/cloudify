@@ -6,41 +6,72 @@
   Port createdMngPort=null;
   Port createdPort=null;
   try {
-    Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
-    if (managementNetwork == null) {
-      managementNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
+    Network managementNetwork=null;
+    if (this.computeNetworks == null) {
+      managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
+      if (managementNetwork == null) {
+        managementNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
+      }
     }
     final NovaServerResquest request=new NovaServerResquest();
     request.setName(serverName);
     request.setKeyName(keyName);
     request.setImageRef(imageId);
     request.setFlavorRef(hardwareId);
-    createdMngPort=this.addPortToRequest(managementNetwork,this.cloud.getCloudNetwork().getManagement().getNetworkConfiguration(),request);
-    if (!management) {
-      if (!this.managementNetworkName.equals(this.applicationNetworkName)) {
-        Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-        if (appliNetwork == null) {
-          appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+    if (this.computeNetworks == null) {
+      createdMngPort=this.addPortToRequest(managementNetwork,this.cloud.getCloudNetwork().getManagement().getNetworkConfiguration(),request);
+      if (!management) {
+        if (!this.managementNetworkName.equals(this.applicationNetworkName)) {
+          Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+          if (appliNetwork == null) {
+            appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+          }
+          createdPort=this.addPortToRequest(appliNetwork,this.networkConfiguration,request);
         }
-        createdPort=this.addPortToRequest(appliNetwork,this.networkConfiguration,request);
+      }
+    }
+ else {
+      for (      final String networkName : computeNetworks) {
+        final Network network=this.networkApi.getNetworkByName(networkName);
+        if (network == null) {
+          throw new CloudProvisioningException("The network '" + networkName + "' does not exist");
+        }
+        request.addNetworks(network.getId());
+      }
+      if (management) {
+        request.addSecurityGroup(this.securityGroupNames.getManagementName());
+        request.addSecurityGroup(this.securityGroupNames.getClusterName());
+      }
+ else {
+        request.addSecurityGroup(this.securityGroupNames.getAgentName());
+        request.addSecurityGroup(this.securityGroupNames.getClusterName());
+        request.addSecurityGroup(this.securityGroupNames.getApplicationName());
+        request.addSecurityGroup(this.securityGroupNames.getServiceName());
       }
     }
     NovaServer newServer=computeApi.createServer(request);
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
-    if (this.associateFloatingIp) {
-      networkApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
-    }
-    if (this.management) {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName(),this.securityGroupNames.getClusterName()});
-    }
- else {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getServiceName()});
-      Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-      if (appliNetwork == null) {
-        appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+    if (this.computeNetworks == null) {
+      if (this.associateFloatingIp) {
+        networkApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
       }
-      this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
+      if (this.management) {
+        this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName(),this.securityGroupNames.getClusterName()});
+      }
+ else {
+        this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getServiceName()});
+        Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
+        if (appliNetwork == null) {
+          appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+        }
+        if (appliNetwork.getName().equals(managementNetwork.getName())) {
+          this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
+        }
+ else {
+          this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
+        }
+      }
     }
     final MachineDetails md=this.createMachineDetails(template,newServer);
     return md;
