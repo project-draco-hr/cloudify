@@ -1,0 +1,12 @@
+{
+  if (networkConfiguration != null) {
+    List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
+    if (subnets != null && !subnets.isEmpty()) {
+      for (      org.cloudifysource.domain.cloud.network.Subnet sn : subnets) {
+        if (sn.getName() == null || sn.getName().trim().equals("")) {
+          throw new IllegalStateException("The name of the Subnet must be provided, Please check network block :'" + networkConfiguration.getName() + "'");
+        }
+      }
+    }
+  }
+}

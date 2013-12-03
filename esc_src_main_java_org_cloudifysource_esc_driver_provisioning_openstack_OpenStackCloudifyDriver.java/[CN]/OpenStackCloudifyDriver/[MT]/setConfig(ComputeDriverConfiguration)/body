@@ -1,4 +1,5 @@
 {
+  ValidationUtil.validateAllNetworkNames(configuration);
   super.setConfig(configuration);
   final String serviceName;
   if (!this.management) {
@@ -46,7 +47,7 @@
       final CloudNetwork cloudNetwork=this.cloud.getCloudNetwork();
       final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
       if (templates == null || templates.isEmpty()) {
-        throw new IllegalStateException("No network template found.");
+        throw new CloudProvisioningException("No network template found.");
       }
       final ServiceNetwork serviceNetwork=this.configuration.getNetwork();
       if (serviceNetwork == null || StringUtils.isEmpty(serviceNetwork.getTemplate())) {
@@ -54,7 +55,11 @@
         this.networkConfiguration=templates.get(networkTemplateName);
       }
  else {
-        this.networkConfiguration=templates.get(serviceNetwork.getTemplate());
+        NetworkConfiguration nc=templates.get(serviceNetwork.getTemplate());
+        if (nc == null) {
+          throw new CloudProvisioningException("The network template name '" + serviceNetwork.getTemplate() + "' was not found");
+        }
+        this.networkConfiguration=nc;
       }
       this.applicationNetworkName=networkConfiguration.getName();
     }

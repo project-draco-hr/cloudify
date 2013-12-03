@@ -1,0 +1,10 @@
+{
+  ManagementNetwork mn=configuration.getCloud().getCloudNetwork().getManagement();
+  validatMangementeNetworkName(mn);
+  Collection<NetworkConfiguration> templates=configuration.getCloud().getCloudNetwork().getTemplates().values();
+  if (templates != null && !templates.isEmpty()) {
+    for (    NetworkConfiguration nc : templates) {
+      validateNetworkName(nc);
+    }
+  }
+}

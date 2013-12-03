@@ -1,0 +1,5 @@
+{
+  if (managementNetwork != null) {
+    validateNetworkName(managementNetwork.getNetworkConfiguration());
+  }
+}
