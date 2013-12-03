@@ -23,4 +23,7 @@
  catch (  final Exception e) {
     logger.log(Level.WARNING,"Machine Provisioning failed. " + "An error was encountered while trying to shutdown the new machine ( " + machineDetails.toString() + "). Error was: "+ e.getMessage(),e);
   }
+ finally {
+    blockStartMachineOnException();
+  }
 }

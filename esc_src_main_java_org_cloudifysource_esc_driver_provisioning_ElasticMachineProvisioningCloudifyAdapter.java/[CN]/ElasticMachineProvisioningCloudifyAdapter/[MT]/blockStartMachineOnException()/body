@@ -1,0 +1,15 @@
+{
+  final long invocationTimeoutMin=TimeUnit.SECONDS.toMinutes((long)(START_MACHINE_FAILURE_THROTTLING_TIMEOUT_SEC));
+  final boolean acquired=exceptionThrottler.tryAcquire();
+  if (!acquired) {
+    logger.warning("Maximum number of failed requests to start a machine " + "has been reached for service '" + serviceName + "'. Next attempt will be blocked for a cool-down period of "+ invocationTimeoutMin+ " minutes.");
+  }
+  exceptionThrottler.acquire();
+  if (!acquired) {
+    logger.info("Cool-down period has expired. Start-machine requests are permitted.");
+    initExceptionThrottler();
+  }
+ else {
+    logger.fine("Start-machine failure has been registered. One more failure is allowed for service '" + serviceName + "' for the period of "+ invocationTimeoutMin+ " minutes.");
+  }
+}

@@ -44,6 +44,7 @@
         this.networkProvisioning=(BaseNetworkDriver)builder.build(cloudConfigDirectoryPath,networkDriverClassName);
         logger.info("network provisioning driver was created succesfully.");
       }
+      initExceptionThrottler();
     }
  catch (    final ClassNotFoundException e) {
       throw new BeanConfigurationException("Failed to load provisioning class for cloud: " + this.cloud.getName() + ". Class not found: "+ this.cloud.getConfiguration().getClassName(),e);
