@@ -6,7 +6,10 @@
   final ZonesConfig defaultZones=config.getGridServiceAgentZones();
   logger.fine("default zones = " + defaultZones.getZones());
   if (!defaultZones.isSatisfiedBy(zones)) {
-    throw new IllegalArgumentException("The specified zones " + zones + " does not satisfy the configuration zones "+ defaultZones);
+    final String errorMessage="The specified zones " + zones + " do not satisfy the configuration zones "+ defaultZones;
+    logger.warning(errorMessage);
+    blockStartMachineOnException();
+    throw new IllegalArgumentException(errorMessage);
   }
   final ComputeTemplate template=cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
   final String locationId=findLocationIdInZones(zones,template);
@@ -17,11 +20,13 @@
     if (!machineDetails.isAgentRunning()) {
       validateMachineIp(machineDetails);
     }
-    if (machineDetails != null && machineDetails.getInstallerConfiguration() == null) {
+    if (machineDetails.getInstallerConfiguration() == null) {
       machineDetails.setInstallerConfigutation(template.getInstaller());
     }
   }
  catch (  final Exception e) {
+    logger.log(Level.WARNING,"Failed to provision machine: " + e.getMessage(),e);
+    blockStartMachineOnException();
     throw new ElasticMachineProvisioningException("Failed to provision machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
@@ -33,7 +38,10 @@
     machineIp=machineDetails.getPublicAddress();
   }
   if (machineIp == null) {
-    throw new IllegalStateException("The IP of the new machine is null! Machine Details are: " + machineDetails + " .");
+    final String errorMessage="The IP of the new machine is null! Machine Details are: " + machineDetails + ".";
+    logger.warning(errorMessage);
+    blockStartMachineOnException();
+    throw new IllegalStateException(errorMessage);
   }
   fireMachineStartedEvent(machineDetails,machineIp);
   fireGSAStartRequestedEvent(machineIp);
@@ -58,6 +66,7 @@
       throw new ElasticGridServiceAgentProvisioningException("an agent was started. but the property " + CloudifyConstants.GIGASPACES_CLOUD_TEMPLATE_NAME + " was missing from its environment variables.");
     }
     final Object context=new MachineDetailsDocumentConverter().toDocument(machineDetails);
+    initExceptionThrottler();
     return new StartedGridServiceAgent(gsa,context);
   }
  catch (  final ElasticMachineProvisioningException e) {
