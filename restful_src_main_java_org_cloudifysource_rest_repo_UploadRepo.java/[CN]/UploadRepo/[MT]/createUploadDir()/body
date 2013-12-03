@@ -1,21 +1,24 @@
 {
+  log(Level.FINER,"[createUploadDir] - creating rest uploads directory in - " + baseDir);
   restUploadDir=new File(baseDir,CloudifyConstants.UPLOADS_FOLDER_NAME);
-  logger.fine("starting uploadReop, setting restUploadDir to: " + restUploadDir.getAbsolutePath());
+  final String absolutePath=restUploadDir.getAbsolutePath();
+  log(Level.FINER,"[createUploadDir] - setting restUploadDir to: " + absolutePath);
   restUploadDir.deleteOnExit();
   if (restUploadDir.exists()) {
-    FileUtils.deleteDirectory(restUploadDir);
+    try {
+      FileUtils.deleteDirectory(restUploadDir);
+    }
+ catch (    IOException e) {
+      log(Level.WARNING,"[createUploadDir] - failed to delete uploads directory [" + absolutePath + "].");
+      throw new RestErrorException(CloudifyMessageKeys.UPLOAD_DIRECTORY_CREATION_FAILED.getName(),absolutePath);
+    }
   }
   final boolean mkdirs=restUploadDir.mkdirs();
-  final String absolutePath=restUploadDir.getAbsolutePath();
   if (mkdirs) {
-    if (logger.isLoggable(Level.INFO)) {
-      logger.log(Level.INFO,"created rest uploads directory - " + absolutePath);
-    }
+    log(Level.FINE,"[createUploadDir] - created rest uploads directory - " + absolutePath);
   }
  else {
-    if (logger.isLoggable(Level.WARNING)) {
-      logger.warning("failed to create rest uploads directory at " + absolutePath);
-    }
+    log(Level.WARNING,"[createUploadDir] - failed to create rest uploads directory at " + absolutePath);
     throw new RestErrorException(CloudifyMessageKeys.UPLOAD_DIRECTORY_CREATION_FAILED.getName(),absolutePath);
   }
 }

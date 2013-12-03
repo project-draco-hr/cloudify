@@ -1,13 +1,16 @@
 {
+  String absolutePath=null;
+  if (restUploadDir != null) {
+    absolutePath=restUploadDir.getAbsolutePath();
+  }
+  log(Level.FINE,"[createScheduledExecutor] - " + "creating cleanup thread that will clean all files from rest upload directory [" + absolutePath + "] every "+ cleanupTimeoutMillis+ " millis.");
   final CleanUploadDirRunnable cleanupThread=new CleanUploadDirRunnable(restUploadDir,cleanupTimeoutMillis);
   executor=Executors.newSingleThreadScheduledExecutor();
   try {
     executor.scheduleAtFixedRate(cleanupThread,0,cleanupTimeoutMillis,TimeUnit.MILLISECONDS);
   }
  catch (  final RejectedExecutionException e) {
-    if (logger.isLoggable(Level.WARNING)) {
-      logger.log(Level.WARNING,"failed to scheduled for execution - " + e.getMessage());
-    }
+    log(Level.WARNING,"failed to scheduled for execution - " + e.getMessage());
     throw e;
   }
 }
