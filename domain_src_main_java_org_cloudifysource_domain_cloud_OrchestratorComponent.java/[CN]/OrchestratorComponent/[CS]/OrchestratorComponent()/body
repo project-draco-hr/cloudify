@@ -1,5 +1,7 @@
 {
   this.setMaxMemory("128m");
   this.setMinMemory("128m");
+  this.setStartMachineTimeoutInSeconds(1800);
+  this.setStopMachineTimeoutInSeconds(1800);
   this.setPort(7003);
 }
