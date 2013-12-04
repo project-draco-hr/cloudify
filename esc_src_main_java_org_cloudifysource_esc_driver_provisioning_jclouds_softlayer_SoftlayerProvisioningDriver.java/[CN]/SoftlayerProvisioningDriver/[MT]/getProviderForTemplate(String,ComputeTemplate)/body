@@ -1,0 +1,7 @@
+{
+  boolean bareMetal=Utils.getBoolean(template.getCustom().get("org.cloudifysource.softlayer.bmi"),false);
+  if (bareMetal) {
+    return "softlayer-bmi";
+  }
+  return "softlayer";
+}
