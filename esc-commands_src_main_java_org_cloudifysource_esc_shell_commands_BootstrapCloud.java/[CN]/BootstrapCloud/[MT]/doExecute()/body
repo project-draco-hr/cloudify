@@ -48,6 +48,7 @@
   installer.setCloud(cloud);
   installer.setCloudFile(cloudFile);
   installer.setNoWebServices(noWebServices);
+  installer.setNoManagementSpace(noManagementSpace);
   installer.setUseExisting(this.useExistingManagers);
   installer.setExistingManagersFile(this.existingManagersFile);
   limitLoggingLevel();

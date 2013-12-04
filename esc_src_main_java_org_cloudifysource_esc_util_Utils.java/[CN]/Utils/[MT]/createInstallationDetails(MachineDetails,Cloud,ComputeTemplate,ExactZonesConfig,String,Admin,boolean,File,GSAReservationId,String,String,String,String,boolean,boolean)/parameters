@@ -12,3 +12,4 @@ String securityProfile
 String keystorePassword
 String authGroups
 boolean rebootstrapping
+boolean isNoManagementSpace
