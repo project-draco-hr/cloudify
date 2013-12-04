@@ -1,5 +1,8 @@
 {
-  String prefix="Failed to read template file [" + templateFileName + "] from folder";
+  String prefix="Failed to read template file";
+  if (!StringUtils.isEmpty(templateFileName)) {
+    prefix+=" [" + templateFileName + "] from folder";
+  }
   Assert.assertTrue("error message [" + message + "] does not start with: "+ prefix,message.startsWith(prefix));
   Assert.assertTrue("error message [" + message + "] does not conatin: "+ errMsgContains,message.contains(errMsgContains));
 }

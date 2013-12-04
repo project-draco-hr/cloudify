@@ -7,7 +7,8 @@
     Assert.fail("Templates folder missing an upload folder yield no exception.");
   }
  catch (  DSLException e) {
-    Assert.assertTrue(e.getMessage().startsWith("There is no template files"));
+    String message=e.getMessage();
+    Assert.assertTrue("message [" + message + "] does not start with \"There is no template files\"",message.startsWith("There is no template files"));
   }
 catch (  Exception e) {
     Assert.fail("Got " + e.getClass().getName() + " instead of DSLValidationException "+ "(The case is templates folder is empty)");
