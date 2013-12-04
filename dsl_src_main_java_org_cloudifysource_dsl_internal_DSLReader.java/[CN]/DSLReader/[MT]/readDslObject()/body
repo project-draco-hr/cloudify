@@ -50,7 +50,8 @@
   }
   this.dslClassLoader=gs.getClassLoader();
 synchronized (dslSingleton) {
-    org.codehaus.groovy.reflection.ClassInfo.clearModifiedExpandos();
+    GroovySystem.getMetaClassRegistry().removeMetaClass(result.getClass());
+    gs.resetLoadedClasses();
   }
   return result;
 }
