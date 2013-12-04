@@ -2,8 +2,9 @@
   Object result=null;
   if (this.dslContents == null) {
     SequenceInputStream sis=null;
+    FileInputStream fis=null;
     try {
-      final FileInputStream fis=new FileInputStream(dslFile);
+      fis=new FileInputStream(dslFile);
       final ByteArrayInputStream bis=new ByteArrayInputStream(GROOVY_SERVICE_PREFIX.getBytes());
       sis=new SequenceInputStream(bis,fis);
       result=gs.evaluate(sis,"dslEntity");
@@ -27,6 +28,13 @@ catch (    final CompilationFailedException e) {
       if (sis != null) {
         try {
           sis.close();
+        }
+ catch (        final IOException e) {
+        }
+      }
+      if (fis != null) {
+        try {
+          fis.close();
         }
  catch (        final IOException e) {
         }

@@ -5,6 +5,6 @@
     Assert.fail("Duplicate templates yielded no exception.");
   }
  catch (  DSLException e) {
-    Assert.assertTrue(e.getMessage().startsWith("Template with name [TOMCAT] already exist in folder"));
+    assertRightError(e.getMessage(),"template with the name [TOMCAT] already exist in folder","tomcat-template.groovy");
   }
 }

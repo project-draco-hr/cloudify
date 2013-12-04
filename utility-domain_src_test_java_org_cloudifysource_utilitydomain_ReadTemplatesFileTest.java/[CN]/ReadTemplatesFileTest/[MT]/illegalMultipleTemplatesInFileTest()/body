@@ -5,6 +5,6 @@
     Assert.fail("Multiple templates in one file yielded no exception.");
   }
  catch (  DSLException e) {
-    Assert.assertTrue(e.getMessage().startsWith("Too many templates in one groovy file"));
+    assertRightError(e.getMessage(),"Too many templates in one groovy file","multiple-template.groovy");
   }
 }

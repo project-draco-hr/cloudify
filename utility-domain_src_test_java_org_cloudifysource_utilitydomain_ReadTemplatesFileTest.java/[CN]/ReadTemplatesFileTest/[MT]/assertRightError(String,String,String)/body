@@ -1,0 +1,4 @@
+{
+  Assert.assertTrue(message.startsWith("Failed to read template file [" + templateFileName + "] from folder"));
+  Assert.assertTrue(message.contains(errMsgContains));
+}

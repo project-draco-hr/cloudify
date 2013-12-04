@@ -11,11 +11,17 @@
   }
   Map<String,ComputeTemplateHolder> cloudTemplatesMap=new HashMap<String,ComputeTemplateHolder>();
   for (  File templateFile : templateFiles) {
-    List<ComputeTemplateHolder> cloudTemplatesFromFile=readCloudTemplatesFromFile(templateFile);
+    List<ComputeTemplateHolder> cloudTemplatesFromFile;
+    try {
+      cloudTemplatesFromFile=readCloudTemplatesFromFile(templateFile);
+    }
+ catch (    Exception e) {
+      throw new DSLException("Failed to read template file [" + templateFile.getName() + "] from folder ["+ templatesDir.getAbsolutePath()+ "]. Reason: "+ e.getMessage(),e);
+    }
     for (    ComputeTemplateHolder cloudTemplateHolder : cloudTemplatesFromFile) {
       String name=cloudTemplateHolder.getName();
       if (cloudTemplatesMap.containsKey(name)) {
-        throw new DSLException("Template with name [" + name + "] already exist in folder ["+ templatesDir+ "]");
+        throw new DSLException("Failed to read template file [" + templateFile.getName() + "] from folder ["+ templatesDir.getAbsolutePath()+ "]. Reason: template with the name ["+ name+ "] already exist in folder.");
       }
       cloudTemplatesMap.put(name,cloudTemplateHolder);
     }

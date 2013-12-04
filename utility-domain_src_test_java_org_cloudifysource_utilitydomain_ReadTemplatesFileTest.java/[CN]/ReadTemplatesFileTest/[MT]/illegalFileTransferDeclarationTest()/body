@@ -1,0 +1,11 @@
+{
+  try {
+    File templatesFolder=new File(TEMPLATES_FOLDER_PATH);
+    ComputeTemplatesReader reader=new ComputeTemplatesReader();
+    reader.readCloudTemplatesFromDirectory(templatesFolder);
+    Assert.fail("Folder with illegal template yielded no exception.");
+  }
+ catch (  Exception e) {
+    assertRightError(e.getMessage(),"Could not resolve DSL entry with name: org","wrongFileTransferPackage-template.groovy");
+  }
+}
