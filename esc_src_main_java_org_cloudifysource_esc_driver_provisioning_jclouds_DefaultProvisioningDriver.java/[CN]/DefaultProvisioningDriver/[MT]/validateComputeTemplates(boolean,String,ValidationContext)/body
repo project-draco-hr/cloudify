@@ -20,15 +20,16 @@
         final Map<String,Object> templateOverrides=template.getOverrides();
         templateProps.putAll(templateOverrides);
         logger.fine("Creating a new cloud deployer");
-        deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps,setupModules());
-        logger.log(Level.FINE,"making API call");
+        String providerForTemplate=getProviderForTemplate(templateName,template);
+        deployer=new JCloudsDeployer(providerForTemplate,cloud.getUser().getUser(),cloud.getUser().getApiKey(),templateProps,setupModules(templateName,template));
+        logger.log(Level.WARNING,"Making an API call to verify credentials");
         deployer.getAllLocations();
         validationContext.validationEventEnd(ValidationResultType.OK);
       }
  catch (      Exception e) {
         closeDeployer(deployer);
         validationContext.validationEventEnd(ValidationResultType.ERROR);
-        throw new CloudProvisioningException(getFormattedMessage("error_cloud_credentials_validation",groovyFile,propertiesFile));
+        throw new CloudProvisioningException(getFormattedMessage("error_cloud_credentials_validation",groovyFile,propertiesFile),e);
       }
       imageId=template.getImageId();
       hardwareId=template.getHardwareId();
