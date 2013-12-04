@@ -1,6 +1,6 @@
 {
   final ExactZonesConfigurer configurer=new ExactZonesConfigurer().addZones(this.zones);
   final ExactZonesConfig zonesConfig=configurer.create();
-  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zonesConfig,lookupLocatorsString,admin,isManagement,cloudFile,reservationId,templateName,securityProfile,keystorePassword,authGroups,this.isRebootstrapping);
+  final InstallationDetails details=Utils.createInstallationDetails(md,cloud,template,zonesConfig,lookupLocatorsString,admin,isManagement,cloudFile,reservationId,templateName,securityProfile,keystorePassword,authGroups,this.isRebootstrapping,false);
   return details;
 }
