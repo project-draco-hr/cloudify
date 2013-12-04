@@ -17,7 +17,7 @@
     final String machineTemplateName=this.cloud.getConfiguration().getManagementMachineTemplate();
     final ComputeTemplate mngTemplate=this.cloud.getCloudCompute().getTemplates().get(machineTemplateName);
     final ComputeTemplateNetwork computeNetwork=mngTemplate.getComputeNetwork();
-    if (computeNetwork == null) {
+    if (computeNetwork == null || computeNetwork.getNetworks() == null || computeNetwork.getNetworks().isEmpty()) {
       final String extRouterName=(String)mngTemplate.getOptions().get(OPT_EXTERNAL_ROUTER_NAME);
       this.externalRouterName=StringUtils.isEmpty(extRouterName) ? null : extRouterName;
       final String extNetName=(String)mngTemplate.getOptions().get(OPT_EXTERNAL_NETWORK_NAME);
@@ -34,15 +34,15 @@
     }
  else {
       computeNetworks=computeNetwork.getNetworks();
-      if (this.computeNetworks == null || computeNetworks.isEmpty()) {
-        throw new CloudProvisioningException("No network configuration found in template '" + machineTemplateName + "'. You must either use a networkTemplate"+ " or declare a computeNetwork in your computeTemplate.");
-      }
     }
   }
  else {
     final ComputeTemplate template=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
     final ComputeTemplateNetwork computeNetwork=template.getComputeNetwork();
-    if (computeNetwork == null) {
+    if (computeNetwork == null || computeNetwork.getNetworks() == null || computeNetwork.getNetworks().isEmpty()) {
+      final ManagementNetwork managementNetwork=this.cloud.getCloudNetwork().getManagement();
+      final NetworkConfiguration managementNetworkConfig=managementNetwork.getNetworkConfiguration();
+      this.managementNetworkName=managementNetworkConfig.getName();
       final CloudNetwork cloudNetwork=this.cloud.getCloudNetwork();
       final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
       if (templates == null || templates.isEmpty()) {

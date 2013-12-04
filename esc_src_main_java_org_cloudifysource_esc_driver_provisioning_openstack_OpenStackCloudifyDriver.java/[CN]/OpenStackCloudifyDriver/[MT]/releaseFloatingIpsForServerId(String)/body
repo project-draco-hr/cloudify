@@ -1,6 +1,6 @@
 {
   try {
-    final List<Port> ports=networkApi.getPortsByServerId(serverId);
+    final List<Port> ports=networkApi.getPortsByDeviceId(serverId);
     for (    final Port port : ports) {
       final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(port.getId());
       if (floatingIp != null) {
