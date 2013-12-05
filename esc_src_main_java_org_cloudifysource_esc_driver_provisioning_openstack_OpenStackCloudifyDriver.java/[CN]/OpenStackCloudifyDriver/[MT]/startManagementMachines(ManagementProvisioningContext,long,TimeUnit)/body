@@ -10,8 +10,8 @@
     throw new CloudProvisioningException("Found existing servers matching group " + this.serverNamePrefix + ": "+ serverDescriptions);
   }
   this.initManagementSecurityGroups();
-  if (computeNetworks == null) {
-    this.createManagementNetwork();
+  if (networkHelper.useManagementNetwork()) {
+    this.createManagementNetworkAndSubnets();
   }
   publishEvent(EVENT_ATTEMPT_START_MGMT_VMS);
   final int numberOfManagementMachines=this.cloud.getProvider().getNumberOfManagementMachines();

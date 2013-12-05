@@ -13,12 +13,12 @@
   request.setPortRangeMin(port);
   request.setRemoteGroupId(managementSecGroup.getId());
   networkApi.createSecurityGroupRule(request);
-  final ServiceNetwork network=this.configuration.getNetwork();
-  if (network != null) {
-    for (    final AccessRule accessRule : network.getAccessRules().getIncoming()) {
+  final AccessRules accessRules=this.networkHelper.getServiceAccessRules();
+  if (accessRules != null) {
+    for (    final AccessRule accessRule : accessRules.getIncoming()) {
       this.createAccessRule(serviceSecGroup.getId(),"ingress",accessRule);
     }
-    for (    final AccessRule accessRule : network.getAccessRules().getOutgoing()) {
+    for (    final AccessRule accessRule : accessRules.getOutgoing()) {
       this.deleteEgressRulesFromSecurityGroup(this.securityGroupNames.getServiceName());
       this.createAccessRule(serviceSecGroup.getId(),"egress",accessRule);
     }

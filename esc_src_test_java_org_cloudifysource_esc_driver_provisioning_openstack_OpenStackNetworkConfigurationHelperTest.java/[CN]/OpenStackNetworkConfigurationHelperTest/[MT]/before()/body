@@ -1,0 +1,9 @@
+{
+  cloud=ServiceReader.readCloudFromDirectory("src/test/resources/openstack/networks-configuration");
+  cloudNetwork=cloud.getCloudNetwork();
+  Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
+  mngComputeNetwork=templates.get(MNG_COMPUTE_TEMPLATE).getComputeNetwork().getNetworks();
+  appliComputeNetwork=templates.get(APPLI_COMPUTE_TEMPLATE).getComputeNetwork().getNetworks();
+  mngNetConfig=cloud.getCloudNetwork().getManagement().getNetworkConfiguration();
+  appliNetConfig=cloud.getCloudNetwork().getTemplates().get(APPLICATION_NET);
+}

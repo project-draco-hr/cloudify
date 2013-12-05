@@ -1,0 +1,24 @@
+{
+  if (this.management) {
+    return null;
+  }
+ else {
+    if (this.serviceUseNetworkTemplate) {
+      return this.getNetworkConfiguration().getName();
+    }
+ else {
+      if (!this.getComputeNetworks().isEmpty()) {
+        return this.getComputeNetworks().get(0);
+      }
+ else       if (this.isServiceAndManagementNotSameNetwork()) {
+        return this.serviceNetworkConfiguration.getName();
+      }
+ else       if (this.useManagementNetwork()) {
+        return this.managementNetworkConfiguration.getName();
+      }
+ else {
+        return managementComputeNetworks.get(0);
+      }
+    }
+  }
+}

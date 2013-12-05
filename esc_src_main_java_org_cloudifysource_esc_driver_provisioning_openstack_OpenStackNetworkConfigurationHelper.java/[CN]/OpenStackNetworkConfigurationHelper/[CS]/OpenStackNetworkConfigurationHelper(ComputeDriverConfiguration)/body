@@ -1,0 +1,8 @@
+{
+  this.validateNetworkNames(configuration.getCloud().getCloudNetwork());
+  this.initManagementNetworkConfig(configuration);
+  this.management=configuration.isManagement();
+  if (!this.management) {
+    this.initServiceNetworkConfig(configuration);
+  }
+}

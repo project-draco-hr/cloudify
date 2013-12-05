@@ -1,0 +1,3 @@
+{
+  return management ? this.managementNetworkConfiguration : this.serviceNetworkConfiguration;
+}

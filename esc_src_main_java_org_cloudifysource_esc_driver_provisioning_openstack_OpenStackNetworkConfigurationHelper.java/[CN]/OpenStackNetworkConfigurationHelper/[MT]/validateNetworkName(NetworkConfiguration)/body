@@ -1,0 +1,15 @@
+{
+  if (networkConfiguration != null) {
+    if (networkConfiguration.getName() == null && !networkConfiguration.getSubnets().isEmpty()) {
+      throw new CloudProvisioningException("Network templates must have name.");
+    }
+    final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
+    if (subnets != null && !subnets.isEmpty()) {
+      for (      final org.cloudifysource.domain.cloud.network.Subnet sn : subnets) {
+        if (sn.getName() == null || sn.getName().trim().equals("")) {
+          throw new CloudProvisioningException("The name of the Subnet must be provided, Please check network block :'" + networkConfiguration.getName() + "'");
+        }
+      }
+    }
+  }
+}

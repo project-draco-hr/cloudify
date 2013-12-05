@@ -1,0 +1,12 @@
+{
+  cloud.getCloudCompute().getTemplates().get(APPLI_COMPUTE_TEMPLATE).getComputeNetwork().setNetworks(new ArrayList<String>());
+  ComputeDriverConfiguration configuration=createConfiguration(cloud,null,false);
+  OpenStackNetworkConfigurationHelper helper=new OpenStackNetworkConfigurationHelper(configuration);
+  Assert.assertEquals(appliNetConfig,helper.getNetworkConfiguration());
+  Assert.assertTrue(helper.getComputeNetworks().isEmpty());
+  Assert.assertEquals(TEMPLATE_APPLI_NAME,helper.getApplicationNetworkName());
+  Assert.assertEquals(TEMPLATE_MNG_NAME,helper.getManagementNetworkName());
+  Assert.assertEquals(TEMPLATE_MNG_NAME,helper.getPrivateIpNetworkName());
+  Assert.assertEquals(true,helper.useServiceNetworkTemplate());
+  Assert.assertEquals(true,helper.useManagementNetwork());
+}

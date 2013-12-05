@@ -1,41 +1,27 @@
 {
-  boolean deleteManagementNetwork=false;
-  Network network=networkApi.getNetworkByName(this.networkConfiguration.getName());
-  if (network == null) {
-    network=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
-    deleteManagementNetwork=true;
-  }
-  if (!this.skipExternalNetworking) {
+  if (!this.networkHelper.skipExternalNetworking()) {
     final Router router;
-    if (this.externalRouterName == null) {
+    if (this.networkHelper.isCreateExternalRouter()) {
       router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     }
  else {
-      router=networkApi.getRouterByName(this.externalRouterName);
+      router=networkApi.getRouterByName(this.networkHelper.getExternalRouterName());
     }
     if (router != null) {
-      if (network != null) {
-        final List<org.cloudifysource.domain.cloud.network.Subnet> configSubnets=networkConfiguration.getSubnets();
-        final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
-        for (        final org.cloudifysource.domain.cloud.network.Subnet subConf : configSubnets) {
-          for (          final Subnet subnet : subnets) {
-            if (StringUtils.equals(subnet.getName(),subConf.getName()) && subnet.getName() != null) {
-              networkApi.deleteRouterInterface(router.getId(),subnet.getId());
-              break;
-            }
-          }
-        }
+      try {
+        final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
+        final Network privateIpNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
+        networkApi.deleteRouterInterface(router.getId(),privateIpNetwork.getSubnets()[0]);
       }
-      if (this.externalRouterName == null) {
+ catch (      CloudProvisioningException e) {
+      }
+      if (this.networkHelper.isCreateExternalRouter()) {
         networkApi.deleteRouter(router.getId());
       }
     }
   }
-  if (deleteManagementNetwork && network != null) {
-    networkApi.deleteNetwork(network.getId());
-  }
-  List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
-  for (  Network n : appliNetworks) {
+  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
+  for (  final Network n : appliNetworks) {
     networkApi.deleteNetwork(n.getId());
   }
 }

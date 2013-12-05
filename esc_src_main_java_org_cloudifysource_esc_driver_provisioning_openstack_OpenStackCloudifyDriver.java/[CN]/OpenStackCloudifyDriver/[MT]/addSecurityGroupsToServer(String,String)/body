@@ -1,0 +1,12 @@
+{
+  final List<Port> ports=networkApi.getPortsByDeviceId(serverId);
+  for (  final Port port : ports) {
+    final Port updateRequest=new Port();
+    updateRequest.setId(port.getId());
+    for (    final String sgn : securityGroupNames) {
+      final SecurityGroup sg=networkApi.getSecurityGroupsByName(sgn);
+      updateRequest.addSecurityGroup(sg.getId());
+    }
+    networkApi.updatePort(updateRequest);
+  }
+}

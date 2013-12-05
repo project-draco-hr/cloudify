@@ -1,0 +1,14 @@
+{
+  ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
+  configuration.setCloud(cloud);
+  configuration.setManagement(isManagement);
+  if (!isManagement) {
+    configuration.setCloudTemplate(APPLI_COMPUTE_TEMPLATE);
+  }
+  if (serviceNetworkTemplate != null) {
+    ServiceNetwork network=new ServiceNetwork();
+    network.setTemplate(serviceNetworkTemplate);
+    configuration.setNetwork(network);
+  }
+  return configuration;
+}

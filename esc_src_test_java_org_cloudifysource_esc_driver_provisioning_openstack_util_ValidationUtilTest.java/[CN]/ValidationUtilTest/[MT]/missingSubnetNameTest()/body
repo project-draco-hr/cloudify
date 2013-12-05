@@ -1,7 +1,0 @@
-{
-  final Cloud cloud=ServiceReader.readCloudFromDirectory("src/test/resources/openstack/openstack-no-subnet-name");
-  final ComputeDriverConfiguration configuration=new ComputeDriverConfiguration();
-  configuration.setCloud(cloud);
-  ValidationUtil.validateAllNetworkNames(configuration);
-  Assert.fail("IllegalStateException should be thrown, since subnet name is missing");
-}

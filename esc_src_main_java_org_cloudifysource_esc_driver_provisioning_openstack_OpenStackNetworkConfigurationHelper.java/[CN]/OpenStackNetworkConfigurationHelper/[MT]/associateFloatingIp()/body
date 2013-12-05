@@ -1,0 +1,11 @@
+{
+  if (management && this.managementNetworkConfiguration != null) {
+    final String associate=this.managementNetworkConfiguration.getCustom().get(ASSOCIATE_FLOATING_IP_ON_BOOTSTRAP);
+    return BooleanUtils.toBoolean(associate);
+  }
+ else   if (this.serviceNetworkConfiguration != null) {
+    final String associate=this.serviceNetworkConfiguration.getCustom().get(ASSOCIATE_FLOATING_IP_ON_BOOTSTRAP);
+    return BooleanUtils.toBoolean(associate);
+  }
+  return false;
+}

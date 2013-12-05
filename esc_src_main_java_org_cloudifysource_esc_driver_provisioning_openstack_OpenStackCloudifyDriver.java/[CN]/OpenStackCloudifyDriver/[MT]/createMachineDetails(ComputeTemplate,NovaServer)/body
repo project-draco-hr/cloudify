@@ -5,32 +5,18 @@
     md.setCloudifyInstalled(false);
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
-    final String prefix=this.securityGroupNames.getPrefix();
-    if (this.computeNetworks == null) {
-      Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
-      if (managementNetwork == null) {
-        managementNetwork=networkApi.getNetworkByName(prefix + this.managementNetworkName);
-      }
-      final Port managementPort=networkApi.getPort(server.getId(),managementNetwork.getId());
-      final RouteFixedIp fixedIp=managementPort.getFixedIps().get(0);
-      md.setPrivateAddress(fixedIp.getIpAddress());
-      final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(managementPort.getId());
-      if (floatingIp != null) {
-        md.setPublicAddress(floatingIp.getFloatingIpAddress());
-      }
+    final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
+    final Network privateIpNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
+    final Port privateIpPort=networkApi.getPort(server.getId(),privateIpNetwork.getId());
+    final RouteFixedIp fixedIp=privateIpPort.getFixedIps().get(0);
+    md.setPrivateAddress(fixedIp.getIpAddress());
+    if (this.networkHelper.associateFloatingIp()) {
+      final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(privateIpPort.getId());
+      md.setPublicAddress(floatingIp.getFloatingIpAddress());
     }
- else {
-      final String networkName=this.computeNetworks.get(0);
-      final Network network=networkApi.getNetworkByName(networkName);
-      final Port port=networkApi.getPort(server.getId(),network.getId());
-      final RouteFixedIp fixedIp=port.getFixedIps().get(0);
-      md.setPrivateAddress(fixedIp.getIpAddress());
-    }
-    if (!management && this.computeNetworks == null) {
-      Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-      if (appliNetwork == null) {
-        appliNetwork=networkApi.getNetworkByName(prefix + this.applicationNetworkName);
-      }
+    final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
+    if (applicationNetworkName != null) {
+      final Network appliNetwork=this.getNetworkByNameThenPrefix(applicationNetworkName);
       final Port appliPort=networkApi.getPort(server.getId(),appliNetwork.getId());
       final RouteFixedIp appliFixedIp=appliPort.getFixedIps().get(0);
       Map<String,String> env=new HashMap<String,String>();

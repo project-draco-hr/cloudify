@@ -1,0 +1,26 @@
+{
+  String name=null;
+  if (this.useManagementNetwork()) {
+    name=managementNetworkConfiguration.getName();
+  }
+ else {
+    if (this.management) {
+      name=managementComputeNetworks.get(0);
+    }
+ else {
+      if (this.serviceUseNetworkTemplate) {
+        name=serviceNetworkConfiguration.getName();
+      }
+ else       if (!serviceComputeNetworks.isEmpty()) {
+        name=serviceComputeNetworks.get(0);
+      }
+ else       if (this.isServiceAndManagementNotSameNetwork()) {
+        name=this.serviceNetworkConfiguration.getName();
+      }
+ else {
+        name=managementComputeNetworks.get(0);
+      }
+    }
+  }
+  return name;
+}

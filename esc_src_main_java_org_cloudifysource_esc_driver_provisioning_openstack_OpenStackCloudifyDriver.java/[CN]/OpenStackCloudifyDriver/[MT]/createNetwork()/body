@@ -1,9 +1,0 @@
-{
-  final Network network=this.getOrCreateNetwork(networkConfiguration);
-  if (network != null) {
-    final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=this.networkConfiguration.getSubnets();
-    for (    final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : subnets) {
-      this.getOrCreateSubnet(subnetConfig,network);
-    }
-  }
-}

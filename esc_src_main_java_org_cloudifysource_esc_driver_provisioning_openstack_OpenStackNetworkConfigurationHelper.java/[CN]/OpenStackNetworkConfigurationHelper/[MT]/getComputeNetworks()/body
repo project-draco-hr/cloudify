@@ -1,0 +1,3 @@
+{
+  return management ? this.managementComputeNetworks : this.serviceComputeNetworks;
+}

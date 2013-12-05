@@ -1,0 +1,40 @@
+{
+  final Map<String,ComputeTemplate> computeTemplates=configuration.getCloud().getCloudCompute().getTemplates();
+  final ComputeTemplate computeTemplate=computeTemplates.get(configuration.getCloudTemplate());
+  if (computeTemplate != null) {
+    final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
+    if (computeNetwork != null) {
+      this.serviceComputeNetworks=computeNetwork.getNetworks();
+    }
+  }
+  if (this.serviceComputeNetworks == null) {
+    this.serviceComputeNetworks=new ArrayList<String>();
+  }
+  final ServiceNetwork serviceNetwork=configuration.getNetwork();
+  if (serviceNetwork != null) {
+    this.serviceAccessRules=serviceNetwork.getAccessRules();
+  }
+  final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
+  if (cloudNetwork != null && serviceNetwork != null && serviceNetwork.getTemplate() != null) {
+    final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
+    this.serviceNetworkConfiguration=templates.get(serviceNetwork.getTemplate());
+    this.serviceUseNetworkTemplate=true;
+    if (this.serviceNetworkConfiguration == null) {
+      throw new CloudProvisioningException("Service network template not found '" + serviceNetwork.getTemplate() + "'");
+    }
+  }
+ else   if (this.serviceComputeNetworks.isEmpty()) {
+    if (cloudNetwork != null && cloudNetwork.getTemplates() != null && !cloudNetwork.getTemplates().isEmpty()) {
+      this.serviceUseNetworkTemplate=true;
+      this.serviceNetworkConfiguration=cloudNetwork.getTemplates().values().iterator().next();
+    }
+ else {
+      if (this.useManagementNetwork()) {
+        this.serviceNetworkConfiguration=this.managementNetworkConfiguration;
+      }
+ else {
+        this.serviceComputeNetworks=this.managementComputeNetworks;
+      }
+    }
+  }
+}

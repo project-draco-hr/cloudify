@@ -1,0 +1,26 @@
+{
+  try {
+    this.cleanAllNetworks();
+    final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
+    final Network network=this.getOrCreateNetwork(networkConfiguration);
+    final Subnet subnet;
+    if (networkConfiguration.getSubnets() == null || networkConfiguration.getSubnets().isEmpty()) {
+      subnet=this.getOrCreateSubnet(null,network);
+    }
+ else {
+      subnet=this.getOrCreateSubnet(networkConfiguration.getSubnets().get(0),network);
+    }
+    if (!this.networkHelper.skipExternalNetworking()) {
+      this.createExternalNetworking(network,subnet);
+    }
+  }
+ catch (  final Exception e) {
+    try {
+      this.cleanAllNetworks();
+    }
+ catch (    OpenstackException e1) {
+      logger.warning("Couldn't clean all networks: " + e1.getMessage());
+    }
+    throw new CloudProvisioningException(e);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  Network network;
+  network=networkApi.getNetworkByName(networkName);
+  if (network == null) {
+    network=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + networkName);
+  }
+  if (network == null) {
+    throw new CloudProvisioningException("Network '" + networkName + "' or '"+ this.securityGroupNames.getPrefix()+ networkName+ "' not found");
+  }
+  return network;
+}

@@ -1,0 +1,4 @@
+{
+  cloud.getCloudNetwork().getManagement().getNetworkConfiguration().setName(null);
+  cloud.getCloudNetwork().getManagement().getNetworkConfiguration().setSubnets(new ArrayList<Subnet>());
+}

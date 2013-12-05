@@ -1,0 +1,12 @@
+{
+  final RouteFixedIp fixedIp=new RouteFixedIp();
+  fixedIp.setSubnetId(subnetId);
+  final Port port=new Port();
+  port.addFixedIp(fixedIp);
+  port.setNetworkId(networkId);
+  final Port createdPort=this.networkApi.createPort(port);
+  final NovaServerNetwork nsn=new NovaServerNetwork();
+  nsn.setPort(createdPort.getId());
+  request.addNetworks(nsn);
+  return createdPort;
+}

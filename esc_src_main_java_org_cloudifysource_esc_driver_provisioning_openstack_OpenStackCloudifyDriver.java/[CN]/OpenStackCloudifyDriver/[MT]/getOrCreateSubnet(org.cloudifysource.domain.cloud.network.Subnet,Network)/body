@@ -5,6 +5,9 @@
     if (subnets != null && subnets.size() != 0) {
       subnet=subnets.get(0);
     }
+ else {
+      throw new CloudProvisioningException("The network '" + network.getName() + "' must have a subnet");
+    }
   }
  else {
     final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());

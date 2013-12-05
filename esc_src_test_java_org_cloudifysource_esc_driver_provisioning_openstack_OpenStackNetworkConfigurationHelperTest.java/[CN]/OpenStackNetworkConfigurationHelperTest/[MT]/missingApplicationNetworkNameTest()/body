@@ -1,0 +1,4 @@
+{
+  cloudNetwork.getTemplates().get(APPLICATION_NET).setName(null);
+  new OpenStackNetworkConfigurationHelper().validateNetworkNames(cloudNetwork);
+}

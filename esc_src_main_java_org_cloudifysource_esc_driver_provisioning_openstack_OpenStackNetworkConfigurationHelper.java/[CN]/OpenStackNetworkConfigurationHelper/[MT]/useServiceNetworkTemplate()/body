@@ -1,0 +1,8 @@
+{
+  if (management) {
+    return this.useManagementNetwork();
+  }
+ else {
+    return this.serviceUseNetworkTemplate;
+  }
+}
