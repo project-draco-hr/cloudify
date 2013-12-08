@@ -1,0 +1,6 @@
+{
+  logger.finest("starting createSuccessfulAuthentication");
+  final CustomAuthenticationToken customAuthToken=new CustomAuthenticationToken(user,authentication.getCredentials(),user.getAuthorities(),user.getAuthGroups());
+  customAuthToken.setDetails(authentication.getDetails());
+  return customAuthToken;
+}

@@ -1,0 +1,3 @@
+{
+  Assert.notNull(this.cloudifyUserDetailsService,"A UserDetailsService must be set");
+}

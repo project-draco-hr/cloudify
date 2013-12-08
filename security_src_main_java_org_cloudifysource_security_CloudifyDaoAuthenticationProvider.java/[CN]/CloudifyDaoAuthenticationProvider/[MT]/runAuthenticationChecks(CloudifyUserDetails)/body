@@ -1,0 +1,18 @@
+{
+  if (!user.isAccountNonLocked()) {
+    logger.warning("User account is locked");
+    throw new LockedException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.locked","User account is locked"));
+  }
+  if (!user.isEnabled()) {
+    logger.warning("User account is disabled");
+    throw new DisabledException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.disabled","User is disabled"));
+  }
+  if (!user.isAccountNonExpired()) {
+    logger.warning("User account is expired");
+    throw new AccountExpiredException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.expired","User account has expired"));
+  }
+  if (!user.isCredentialsNonExpired()) {
+    logger.warning("User account credentials have expired");
+    throw new CredentialsExpiredException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.credentialsExpired","User credentials have expired"));
+  }
+}

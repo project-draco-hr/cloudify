@@ -1,0 +1,16 @@
+{
+  CloudifyUserDetails loadedUser;
+  try {
+    loadedUser=this.getCloudifyUserDetailsService().loadUserByUsername(username);
+  }
+ catch (  final UsernameNotFoundException e) {
+    throw e;
+  }
+catch (  final Exception repositoryProblem) {
+    throw new AuthenticationServiceException(repositoryProblem.getMessage(),repositoryProblem);
+  }
+  if (loadedUser == null) {
+    throw new AuthenticationServiceException("CloudifyUserDetailsService returned null, which is an interface contract violation");
+  }
+  return loadedUser;
+}

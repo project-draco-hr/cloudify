@@ -1,0 +1,22 @@
+{
+  Assert.isInstanceOf(UsernamePasswordAuthenticationToken.class,authentication,messages.getMessage("AbstractUserDetailsAuthenticationProvider.onlySupports","Only UsernamePasswordAuthenticationToken is supported"));
+  logger.finest("CloudifyDaoAuthenticationProvider: authenticate");
+  final UsernamePasswordAuthenticationToken userToken=(UsernamePasswordAuthenticationToken)authentication;
+  final CloudifyUserDetails user;
+  final String username=userToken.getName();
+  final String password=(String)authentication.getCredentials();
+  if (StringUtils.isBlank(username)) {
+    throw new IllegalArgumentException("Empty username not allowed");
+  }
+  Assert.notNull(password,"Null password was supplied in authentication token");
+  logger.fine("Processing authentication request for user: " + username);
+  try {
+    user=retrieveUser(username);
+  }
+ catch (  final UsernameNotFoundException e) {
+    logger.warning("User '" + username + "' not found");
+    throw e;
+  }
+  runAuthenticationChecks(user);
+  return createSuccessfulAuthentication(userToken,user);
+}
