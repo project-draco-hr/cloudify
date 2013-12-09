@@ -20,6 +20,9 @@
     }
     for (    final String networkName : this.networkHelper.getComputeNetworks()) {
       final Network network=this.networkApi.getNetworkByName(networkName);
+      if (network == null) {
+        throw new CloudProvisioningException("Couldn't find network '" + networkName + "'");
+      }
       for (      final String subnetId : network.getSubnets()) {
         final Port port=this.addPortToRequest(request,network.getId(),subnetId);
         reservedPortIds.add(port.getId());

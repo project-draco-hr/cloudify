@@ -12,7 +12,9 @@
     md.setPrivateAddress(fixedIp.getIpAddress());
     if (this.networkHelper.associateFloatingIp()) {
       final FloatingIp floatingIp=networkApi.getFloatingIpByPortId(privateIpPort.getId());
-      md.setPublicAddress(floatingIp.getFloatingIpAddress());
+      if (floatingIp != null) {
+        md.setPublicAddress(floatingIp.getFloatingIpAddress());
+      }
     }
     final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
     if (applicationNetworkName != null) {
