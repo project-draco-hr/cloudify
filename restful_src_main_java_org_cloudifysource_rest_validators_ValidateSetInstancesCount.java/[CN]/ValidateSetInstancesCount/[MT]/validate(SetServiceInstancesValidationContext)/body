@@ -1,0 +1,6 @@
+{
+  int count=validationContext.getRequest().getCount();
+  if (count <= 0) {
+    throw new RestErrorException(CloudifyErrorMessages.INVALID_INSTANCES_COUNT.getName(),count);
+  }
+}

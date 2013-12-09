@@ -1,0 +1,8 @@
+{
+  SetServiceInstancesValidationContext context=new SetServiceInstancesValidationContext();
+  SetServiceInstancesRequest request=new SetServiceInstancesRequest();
+  request.setCount(0);
+  context.setRequest(request);
+  SetServiceInstancesValidator validator=new ValidateSetInstancesCount();
+  ValidatorsTestsUtils.validate(validator,context,ERR_MSG);
+}
