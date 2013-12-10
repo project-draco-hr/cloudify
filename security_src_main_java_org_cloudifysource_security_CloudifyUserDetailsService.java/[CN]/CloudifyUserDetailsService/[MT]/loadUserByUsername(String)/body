@@ -3,6 +3,8 @@
   if (cloudifyUserDetails == null) {
     throw new UsernameNotFoundException(username);
   }
-  logger.finest("CloudifyUserDetailsService: loading user: " + username + ", roles: "+ Arrays.toString(cloudifyUserDetails.getAuthorities().toArray())+ ", authgroups: "+ Arrays.toString(cloudifyUserDetails.getAuthGroups().toArray()));
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("CloudifyUserDetailsService: loading user: " + username + ", roles: "+ Arrays.toString(cloudifyUserDetails.getAuthorities().toArray())+ ", authgroups: "+ Arrays.toString(cloudifyUserDetails.getAuthGroups().toArray()));
+  }
   return new CloudifyUser(cloudifyUserDetails);
 }

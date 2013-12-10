@@ -3,7 +3,7 @@
     logger.warning("Anonymous user is not supported");
     throw new AccessDeniedException("Anonymous user is not supported");
   }
-  if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
+  if (!(authentication instanceof CustomAuthenticationToken)) {
     logger.warning("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
     throw new AccessDeniedException("Authentication object type not supported. " + "Verify your Spring configuration is valid.");
   }
@@ -11,10 +11,5 @@
   for (  GrantedAuthority authority : authentication.getAuthorities()) {
     roles.add(authority.getAuthority());
   }
-  if (authentication instanceof CustomAuthenticationToken) {
-    authGroups=((CustomAuthenticationToken)authentication).getAuthGroups();
-  }
- else {
-    authGroups.addAll(roles);
-  }
+  authGroups=((CustomAuthenticationToken)authentication).getAuthGroups();
 }

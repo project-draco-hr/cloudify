@@ -12,6 +12,11 @@
   logger.fine("Processing authentication request for user: " + username);
   try {
     user=retrieveUser(username);
+    String retrievedUserPassword=user.getPassword();
+    if (!password.equals(retrievedUserPassword)) {
+      logger.warning("Authentication failed: password does not match stored value");
+      throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials","Bad credentials"));
+    }
   }
  catch (  final UsernameNotFoundException e) {
     logger.warning("User '" + username + "' not found");
