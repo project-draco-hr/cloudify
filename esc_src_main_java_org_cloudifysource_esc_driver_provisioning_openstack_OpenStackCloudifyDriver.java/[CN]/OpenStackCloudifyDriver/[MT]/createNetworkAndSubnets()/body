@@ -1,5 +1,8 @@
 {
   final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
+  if (!management) {
+    networkConfiguration.setName(securityGroupNames.getApplicationName() + "-" + networkConfiguration.getName());
+  }
   final Network network=this.getOrCreateNetwork(networkConfiguration);
   if (network != null) {
     final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
