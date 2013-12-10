@@ -1,7 +1,7 @@
 {
   final Cloud cloud=configuration.getCloud();
-  final String template=cloud.getConfiguration().getManagementMachineTemplate();
-  final ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(template);
+  final String templateName=cloud.getConfiguration().getManagementMachineTemplate();
+  final ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(templateName);
   if (computeTemplate != null) {
     final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
     if (computeNetwork != null) {
@@ -18,5 +18,11 @@
   }
   if (this.managementNetworkConfiguration == null && managementComputeNetworks.isEmpty()) {
     throw new CloudProvisioningException("A network must be provided to the management machines " + "(use either cloudNetwork templates or computeNetwork configuration).");
+  }
+  if (this.useManagementNetwork()) {
+    logger.info("Using management network : " + this.managementNetworkConfiguration.getName());
+  }
+ else {
+    logger.info("Using computeNetwork of template '" + templateName + "' : "+ this.managementComputeNetworks);
   }
 }

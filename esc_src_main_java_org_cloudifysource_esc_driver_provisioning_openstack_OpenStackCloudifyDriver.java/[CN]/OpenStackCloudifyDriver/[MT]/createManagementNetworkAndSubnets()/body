@@ -3,15 +3,15 @@
     this.cleanAllNetworks();
     final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
     final Network network=this.getOrCreateNetwork(networkConfiguration);
-    final Subnet subnet;
-    if (networkConfiguration.getSubnets() == null || networkConfiguration.getSubnets().isEmpty()) {
-      subnet=this.getOrCreateSubnet(null,network);
-    }
- else {
-      subnet=this.getOrCreateSubnet(networkConfiguration.getSubnets().get(0),network);
+    final List<Subnet> subnets=new ArrayList<Subnet>();
+    if (networkConfiguration.getSubnets() != null) {
+      for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkConfiguration.getSubnets()) {
+        Subnet subnet=this.getOrCreateSubnet(subnetConfig,network);
+        subnets.add(subnet);
+      }
     }
     if (!this.networkHelper.skipExternalNetworking()) {
-      this.createExternalNetworking(network,subnet);
+      this.createExternalNetworking(network,subnets.get(0));
     }
   }
  catch (  final Exception e) {

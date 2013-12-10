@@ -37,4 +37,5 @@
       }
     }
   }
+  logger.info("Service '" + configuration.getServiceName() + "' using network '"+ this.getPrivateIpNetworkName()+ "' for private ip");
 }

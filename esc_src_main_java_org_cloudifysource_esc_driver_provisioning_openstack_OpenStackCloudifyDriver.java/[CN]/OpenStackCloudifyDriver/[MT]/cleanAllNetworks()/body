@@ -10,10 +10,21 @@
     if (router != null) {
       try {
         final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
-        final Network privateIpNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
-        networkApi.deleteRouterInterface(router.getId(),privateIpNetwork.getSubnets()[0]);
+        Network privateNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
+        String[] privateNetSubnetIds=privateNetwork.getSubnets();
+        final List<Port> ports=networkApi.getPortsByDeviceId(router.getId());
+        for (        final Port port : ports) {
+          for (          final RouteFixedIp fixedIp : port.getFixedIps()) {
+            for (            final String id : privateNetSubnetIds) {
+              if (id.equals(fixedIp.getSubnetId())) {
+                networkApi.deleteRouterInterface(router.getId(),fixedIp.getSubnetId());
+              }
+            }
+          }
+        }
       }
- catch (      CloudProvisioningException e) {
+ catch (      final Exception e) {
+        logger.log(Level.WARNING,"Could not remove an interface from external router",e);
       }
       if (this.networkHelper.isCreateExternalRouter()) {
         networkApi.deleteRouter(router.getId());

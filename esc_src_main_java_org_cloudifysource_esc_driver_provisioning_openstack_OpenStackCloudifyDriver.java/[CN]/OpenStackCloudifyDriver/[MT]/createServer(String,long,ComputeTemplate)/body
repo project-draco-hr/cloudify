@@ -13,28 +13,22 @@
     if (this.networkHelper.useManagementNetwork()) {
       final String managementNetworkName=this.networkHelper.getManagementNetworkName();
       final Network managementNetwork=this.getNetworkByNameThenPrefix(managementNetworkName);
-      for (      final String subnetId : managementNetwork.getSubnets()) {
-        final Port port=this.addPortToRequest(request,managementNetwork.getId(),subnetId);
-        reservedPortIds.add(port.getId());
-      }
+      final Port port=this.addPortToRequest(request,managementNetwork.getId(),managementNetwork.getSubnets());
+      reservedPortIds.add(port.getId());
     }
     for (    final String networkName : this.networkHelper.getComputeNetworks()) {
       final Network network=this.networkApi.getNetworkByName(networkName);
       if (network == null) {
         throw new CloudProvisioningException("Couldn't find network '" + networkName + "'");
       }
-      for (      final String subnetId : network.getSubnets()) {
-        final Port port=this.addPortToRequest(request,network.getId(),subnetId);
-        reservedPortIds.add(port.getId());
-      }
+      final Port port=this.addPortToRequest(request,network.getId(),network.getSubnets());
+      reservedPortIds.add(port.getId());
     }
     if (!management && this.networkHelper.useServiceNetworkTemplate()) {
       final NetworkConfiguration netConfig=this.networkHelper.getNetworkConfiguration();
       final Network templateNetwork=this.getNetworkByNameThenPrefix(netConfig.getName());
-      for (      final String subnetId : templateNetwork.getSubnets()) {
-        final Port port=this.addPortToRequest(request,templateNetwork.getId(),subnetId);
-        reservedPortIds.add(port.getId());
-      }
+      final Port port=this.addPortToRequest(request,templateNetwork.getId(),templateNetwork.getSubnets());
+      reservedPortIds.add(port.getId());
     }
     NovaServer newServer=computeApi.createServer(request);
     serverId=newServer.getId();

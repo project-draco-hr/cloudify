@@ -1,4 +1,6 @@
 {
+  String name=configuration.isManagement() ? "managers" : configuration.getServiceName();
+  logger.info("Setup network configuration for " + name);
   this.validateNetworkNames(configuration.getCloud().getCloudNetwork());
   this.initManagementNetworkConfig(configuration);
   this.management=configuration.isManagement();
