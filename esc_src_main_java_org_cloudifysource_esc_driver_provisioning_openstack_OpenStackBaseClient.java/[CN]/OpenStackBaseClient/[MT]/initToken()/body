@@ -1,5 +1,8 @@
 {
   final Client client=Client.create();
+  if (WIRE_LOGGER.isLoggable(Level.FINE)) {
+    this.serviceClient.addFilter(new LoggingFilter(WIRE_LOGGER));
+  }
   try {
     logger.info("Request openstack " + this.getServiceName() + " new token.");
     final WebResource webResource=client.resource(this.endpoint);
