@@ -4,11 +4,6 @@
     if (floatingIp == null) {
       throw new NetworkProvisioningException("Floating ip not found ip='" + floatingIP + "'");
     }
-    final Network networkByName=this.getManagementNetwork();
-    final Port port=networkApi.getPort(instanceIPAddress,networkByName.getId());
-    if (port == null) {
-      logger.warning("Could not unassigned floating ip. No floating ip '" + floatingIP + "' assiciated to instance '"+ instanceIPAddress+ "'");
-    }
     networkApi.unassignFloatingIp(floatingIp.getId());
   }
  catch (  final OpenstackException e) {

@@ -4,17 +4,17 @@
   }
  else {
     if (this.serviceUseNetworkTemplate) {
-      return this.getNetworkConfiguration().getName();
+      return this.applicationNetworkPrefixName + this.getNetworkConfiguration().getName();
     }
  else {
       if (!this.getComputeNetworks().isEmpty()) {
         return this.getComputeNetworks().get(0);
       }
  else       if (this.isServiceAndManagementNotSameNetwork()) {
-        return this.serviceNetworkConfiguration.getName();
+        return this.applicationNetworkPrefixName + this.serviceNetworkConfiguration.getName();
       }
  else       if (this.useManagementNetwork()) {
-        return this.managementNetworkConfiguration.getName();
+        return this.getManagementNetworkName();
       }
  else {
         return managementComputeNetworks.get(0);

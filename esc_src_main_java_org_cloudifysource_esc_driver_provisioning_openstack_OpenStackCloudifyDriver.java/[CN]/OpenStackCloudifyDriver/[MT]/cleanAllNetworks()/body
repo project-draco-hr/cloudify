@@ -2,7 +2,7 @@
   if (!this.networkHelper.skipExternalNetworking()) {
     final Router router;
     if (this.networkHelper.isCreateExternalRouter()) {
-      router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+      router=networkApi.getRouterByName(this.openstackPrefixNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     }
  else {
       router=networkApi.getRouterByName(this.networkHelper.getExternalRouterName());
@@ -10,7 +10,7 @@
     if (router != null) {
       try {
         final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
-        Network privateNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
+        Network privateNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
         String[] privateNetSubnetIds=privateNetwork.getSubnets();
         final List<Port> ports=networkApi.getPortsByDeviceId(router.getId());
         for (        final Port port : ports) {
@@ -31,7 +31,7 @@
       }
     }
   }
-  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
+  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.openstackPrefixNames.getPrefix());
   for (  final Network n : appliNetworks) {
     networkApi.deleteNetwork(n.getId());
   }

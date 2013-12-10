@@ -7,10 +7,10 @@
     final OrchestratorComponent orchestrator=components.getOrchestrator();
     final UsmComponent usm=components.getUsm();
     this.cleanAllSecurityGroups();
-    final SecurityGroup clusterSecgroup=this.createSecurityGroup(this.securityGroupNames.getClusterName());
-    final String managementSecgroupName=this.securityGroupNames.getManagementName();
+    final SecurityGroup clusterSecgroup=this.createSecurityGroup(this.openstackPrefixNames.getClusterName());
+    final String managementSecgroupName=this.openstackPrefixNames.getManagementName();
     final SecurityGroup managementSecurityGroup=this.createSecurityGroup(managementSecgroupName);
-    final String agentSecgroupName=this.securityGroupNames.getAgentName();
+    final String agentSecgroupName=this.openstackPrefixNames.getAgentName();
     final SecurityGroup agentSecurityGroup=this.createSecurityGroup(agentSecgroupName);
     @SuppressWarnings("unchecked") final Set<Object> managementPorts=new HashSet<Object>(Arrays.asList(agent.getPort(),deployer.getPort(),deployer.getWebsterPort(),discovery.getPort(),discovery.getDiscoveryPort(),orchestrator.getPort(),usm.getPortRange()));
     final String managementPortRange=StringUtils.join(managementPorts,",");

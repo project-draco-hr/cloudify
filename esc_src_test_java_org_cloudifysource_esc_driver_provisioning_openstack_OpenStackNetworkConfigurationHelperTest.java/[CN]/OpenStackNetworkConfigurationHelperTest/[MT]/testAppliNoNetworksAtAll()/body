@@ -5,9 +5,9 @@
   OpenStackNetworkConfigurationHelper helper=new OpenStackNetworkConfigurationHelper(configuration);
   Assert.assertEquals(mngNetConfig,helper.getNetworkConfiguration());
   Assert.assertTrue(helper.getComputeNetworks().isEmpty());
-  Assert.assertEquals(TEMPLATE_MNG_NAME,helper.getApplicationNetworkName());
-  Assert.assertEquals(TEMPLATE_MNG_NAME,helper.getManagementNetworkName());
-  Assert.assertEquals(TEMPLATE_MNG_NAME,helper.getPrivateIpNetworkName());
+  Assert.assertEquals(prefixedMngNetTemplateName,helper.getApplicationNetworkName());
+  Assert.assertEquals(prefixedMngNetTemplateName,helper.getManagementNetworkName());
+  Assert.assertEquals(prefixedMngNetTemplateName,helper.getPrivateIpNetworkName());
   Assert.assertEquals(false,helper.useServiceNetworkTemplate());
   Assert.assertEquals(true,helper.useManagementNetwork());
 }

@@ -4,7 +4,7 @@
   logger.info("Looking up cloud server with IP: " + serverIp);
   final NovaServer server;
   try {
-    server=computeApi.getServerByIpAndSecurityGroup(serverIp,this.securityGroupNames.getServiceName());
+    server=computeApi.getServerByIpAndSecurityGroup(serverIp,this.openstackPrefixNames.getServiceName());
   }
  catch (  final OpenstackException e) {
     throw new CloudProvisioningException(e);

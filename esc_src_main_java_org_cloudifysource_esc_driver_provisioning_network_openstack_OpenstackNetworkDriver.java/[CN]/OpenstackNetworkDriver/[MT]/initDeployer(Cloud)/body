@@ -8,6 +8,7 @@
   }
   final String networkVersion=(String)cloudTemplate.getOptions().get(OpenStackCloudifyDriver.OPT_NETWORK_API_VERSION);
   final String networkServiceName=(String)cloudTemplate.getOptions().get(OpenStackCloudifyDriver.OPT_NETWORK_SERVICE_NAME);
+  final String computeServiceName=(String)cloudTemplate.getOptions().get(OpenStackCloudifyDriver.OPT_COMPUTE_SERVICE_NAME);
   final String cloudImageId=cloudTemplate.getImageId();
   final String region=cloudImageId.split("/")[0];
   final String cloudUser=cloud.getUser().getUser();
@@ -16,6 +17,7 @@
   final String tenant=st.hasMoreElements() ? (String)st.nextToken() : null;
   final String username=st.hasMoreElements() ? (String)st.nextToken() : null;
   try {
+    this.computeApi=new OpenStackComputeClient(endpoint,username,password,tenant,region,computeServiceName);
     this.networkApi=new OpenStackNetworkClient(endpoint,username,password,tenant,region,networkServiceName,networkVersion);
   }
  catch (  OpenstackJsonSerializationException e) {

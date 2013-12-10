@@ -4,7 +4,10 @@
   this.validateNetworkNames(configuration.getCloud().getCloudNetwork());
   this.initManagementNetworkConfig(configuration);
   this.management=configuration.isManagement();
+  this.managementNetworkPrefixName=configuration.getCloud().getProvider().getManagementGroup();
   if (!this.management) {
+    final FullServiceName fsn=ServiceUtils.getFullServiceName(configuration.getServiceName());
+    this.applicationNetworkPrefixName=this.managementNetworkPrefixName + fsn.getApplicationName() + "-";
     this.initServiceNetworkConfig(configuration);
   }
 }

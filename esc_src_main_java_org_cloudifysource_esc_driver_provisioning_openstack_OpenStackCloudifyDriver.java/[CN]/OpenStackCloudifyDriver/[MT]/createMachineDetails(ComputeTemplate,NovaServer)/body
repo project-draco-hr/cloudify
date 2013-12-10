@@ -6,7 +6,7 @@
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
     final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
-    final Network privateIpNetwork=this.getNetworkByNameThenPrefix(privateIpNetworkName);
+    final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
     final Port privateIpPort=networkApi.getPort(server.getId(),privateIpNetwork.getId());
     final RouteFixedIp fixedIp=privateIpPort.getFixedIps().get(0);
     md.setPrivateAddress(fixedIp.getIpAddress());
@@ -18,7 +18,7 @@
     }
     final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
     if (applicationNetworkName != null) {
-      final Network appliNetwork=this.getNetworkByNameThenPrefix(applicationNetworkName);
+      final Network appliNetwork=this.networkApi.getNetworkByName(applicationNetworkName);
       final Port appliPort=networkApi.getPort(server.getId(),appliNetwork.getId());
       final RouteFixedIp appliFixedIp=appliPort.getFixedIps().get(0);
       Map<String,String> env=new HashMap<String,String>();

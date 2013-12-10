@@ -1,8 +1,8 @@
 {
   try {
     this.cleanAllNetworks();
+    final Network network=this.getOrCreateNetwork(this.networkHelper.getManagementNetworkName());
     final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
-    final Network network=this.getOrCreateNetwork(networkConfiguration);
     final List<Subnet> subnets=new ArrayList<Subnet>();
     if (networkConfiguration.getSubnets() != null) {
       for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkConfiguration.getSubnets()) {

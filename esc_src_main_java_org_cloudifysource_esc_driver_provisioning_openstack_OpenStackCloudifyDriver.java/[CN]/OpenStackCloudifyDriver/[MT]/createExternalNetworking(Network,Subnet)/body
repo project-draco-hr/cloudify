@@ -16,7 +16,7 @@
       publicNetworkId=extNetwork.getId();
     }
     final Router request=new Router();
-    request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+    request.setName(this.openstackPrefixNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     request.setAdminStateUp(true);
     request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
     router=networkApi.createRouter(request);

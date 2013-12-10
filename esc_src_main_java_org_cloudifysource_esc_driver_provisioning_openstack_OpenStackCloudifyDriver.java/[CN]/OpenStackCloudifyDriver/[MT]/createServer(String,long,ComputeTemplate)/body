@@ -12,7 +12,7 @@
     request.setFlavorRef(hardwareId);
     if (this.networkHelper.useManagementNetwork()) {
       final String managementNetworkName=this.networkHelper.getManagementNetworkName();
-      final Network managementNetwork=this.getNetworkByNameThenPrefix(managementNetworkName);
+      final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);
       final Port port=this.addPortToRequest(request,managementNetwork.getId(),managementNetwork.getSubnets());
       reservedPortIds.add(port.getId());
     }
@@ -25,8 +25,8 @@
       reservedPortIds.add(port.getId());
     }
     if (!management && this.networkHelper.useServiceNetworkTemplate()) {
-      final NetworkConfiguration netConfig=this.networkHelper.getNetworkConfiguration();
-      final Network templateNetwork=this.getNetworkByNameThenPrefix(netConfig.getName());
+      final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
+      final Network templateNetwork=this.networkApi.getNetworkByName(applicationNetworkName);
       final Port port=this.addPortToRequest(request,templateNetwork.getId(),templateNetwork.getSubnets());
       reservedPortIds.add(port.getId());
     }
@@ -34,14 +34,14 @@
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
     if (management) {
-      this.addSecurityGroupsToServer(serverId,this.securityGroupNames.getManagementName(),this.securityGroupNames.getClusterName());
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixNames.getManagementName(),this.openstackPrefixNames.getClusterName());
     }
  else {
-      this.addSecurityGroupsToServer(serverId,this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName());
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixNames.getAgentName(),this.openstackPrefixNames.getClusterName(),this.openstackPrefixNames.getApplicationName(),this.openstackPrefixNames.getServiceName());
     }
     if (this.networkHelper.associateFloatingIp()) {
       final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();
-      final Network privateIpNetwork=this.getNetworkByNameThenPrefix(privateIPNetworkName);
+      final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIPNetworkName);
       networkApi.createAndAssociateFloatingIp(serverId,privateIpNetwork.getId());
     }
     final MachineDetails md=this.createMachineDetails(template,newServer);

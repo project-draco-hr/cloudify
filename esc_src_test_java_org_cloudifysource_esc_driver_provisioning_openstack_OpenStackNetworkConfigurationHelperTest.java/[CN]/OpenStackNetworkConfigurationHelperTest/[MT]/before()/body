@@ -6,4 +6,7 @@
   appliComputeNetwork=templates.get(APPLI_COMPUTE_TEMPLATE).getComputeNetwork().getNetworks();
   mngNetConfig=cloud.getCloudNetwork().getManagement().getNetworkConfiguration();
   appliNetConfig=cloud.getCloudNetwork().getTemplates().get(APPLICATION_NET);
+  String managementGroup=cloud.getProvider().getManagementGroup();
+  prefixedMngNetTemplateName=managementGroup + TEMPLATE_MNG_NAME;
+  prefixedAppliNetTemplateName=managementGroup + APPLI_NAME + "-"+ TEMPLATE_APPLI_NAME;
 }

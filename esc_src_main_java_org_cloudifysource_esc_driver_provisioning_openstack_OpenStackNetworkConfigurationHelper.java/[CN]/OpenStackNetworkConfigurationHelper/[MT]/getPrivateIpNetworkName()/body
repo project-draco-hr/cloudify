@@ -1,7 +1,7 @@
 {
   String name=null;
   if (this.useManagementNetwork()) {
-    name=managementNetworkConfiguration.getName();
+    name=this.getManagementNetworkName();
   }
  else {
     if (this.management) {
@@ -9,13 +9,10 @@
     }
  else {
       if (this.serviceUseNetworkTemplate) {
-        name=serviceNetworkConfiguration.getName();
+        name=applicationNetworkPrefixName + serviceNetworkConfiguration.getName();
       }
  else       if (!serviceComputeNetworks.isEmpty()) {
         name=serviceComputeNetworks.get(0);
-      }
- else       if (this.isServiceAndManagementNotSameNetwork()) {
-        name=this.serviceNetworkConfiguration.getName();
       }
  else {
         name=managementComputeNetworks.get(0);

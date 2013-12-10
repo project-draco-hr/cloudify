@@ -5,11 +5,18 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   try {
-    this.createSecurityGroup(this.securityGroupNames.getApplicationName());
-    this.createSecurityGroup(this.securityGroupNames.getServiceName());
+    this.createSecurityGroup(this.openstackPrefixNames.getApplicationName());
+    this.createSecurityGroup(this.openstackPrefixNames.getServiceName());
     this.createSecurityGroupsRules();
     if (networkHelper.useServiceNetworkTemplate()) {
-      this.createNetworkAndSubnets();
+      final Network network=this.getOrCreateNetwork(this.networkHelper.getApplicationNetworkName());
+      if (network != null) {
+        final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
+        final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
+        for (        final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : subnets) {
+          this.getOrCreateSubnet(subnetConfig,network);
+        }
+      }
     }
     final String groupName=serverNamePrefix + this.configuration.getServiceName() + "-"+ counter.incrementAndGet();
     logger.fine("Starting a new cloud server with group: " + groupName);

@@ -3,6 +3,7 @@
   configuration.setCloud(cloud);
   configuration.setManagement(isManagement);
   if (!isManagement) {
+    configuration.setServiceName(APPLI_NAME + "." + SERVICE_NAME);
     configuration.setCloudTemplate(APPLI_COMPUTE_TEMPLATE);
   }
   if (serviceNetworkTemplate != null) {
