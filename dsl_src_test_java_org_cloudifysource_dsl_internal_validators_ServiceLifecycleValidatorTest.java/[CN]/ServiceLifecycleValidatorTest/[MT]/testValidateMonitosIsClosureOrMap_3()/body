@@ -1,0 +1,8 @@
+{
+  ServiceLifecycleValidator fixture=new ServiceLifecycleValidator();
+  ServiceLifecycle dslEntity=new ServiceLifecycle();
+  dslEntity.setMonitors(new HashMap<Object,Object>());
+  fixture.setDSLEntity(dslEntity);
+  DSLValidationContext validationContext=new DSLValidationContext();
+  fixture.validateMonitorsIsClosureOrMap(validationContext);
+}

@@ -1,0 +1,8 @@
+{
+  ServiceLifecycleValidator fixture=new ServiceLifecycleValidator();
+  ServiceLifecycle dslEntity=new ServiceLifecycle();
+  dslEntity.setStopDetection(ExecutableDSLEntryFactory.createEntry("x.groovy","stopDetection",new File(".")));
+  fixture.setDSLEntity(dslEntity);
+  DSLValidationContext validationContext=new DSLValidationContext();
+  fixture.validateStopDetectorIsClosure(validationContext);
+}

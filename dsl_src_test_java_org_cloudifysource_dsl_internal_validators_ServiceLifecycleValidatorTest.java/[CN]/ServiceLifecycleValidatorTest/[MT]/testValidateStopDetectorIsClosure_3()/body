@@ -1,0 +1,11 @@
+{
+  ServiceLifecycleValidator fixture=new ServiceLifecycleValidator();
+  ServiceLifecycle dslEntity=new ServiceLifecycle();
+  dslEntity.setStopDetection(ExecutableDSLEntryFactory.createEntry(new Closure<Object>(null){
+    private static final long serialVersionUID=1L;
+  }
+,"monitors",new File(".")));
+  fixture.setDSLEntity(dslEntity);
+  DSLValidationContext validationContext=new DSLValidationContext();
+  fixture.validateStopDetectorIsClosure(validationContext);
+}

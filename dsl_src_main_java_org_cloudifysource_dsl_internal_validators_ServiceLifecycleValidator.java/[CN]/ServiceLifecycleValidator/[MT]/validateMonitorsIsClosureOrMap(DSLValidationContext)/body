@@ -1,0 +1,13 @@
+{
+  Object monitors=this.entity.getMonitors();
+  if (monitors == null) {
+    return;
+  }
+  if (monitors instanceof ClosureExecutableEntry) {
+    return;
+  }
+  if (monitors instanceof Map<?,?>) {
+    return;
+  }
+  throw new DSLValidationException("The monitors event only supports execution of closures or returning a map of executable entries");
+}

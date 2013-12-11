@@ -1,0 +1,6 @@
+{
+  ServiceLifecycleValidator fixture=new ServiceLifecycleValidator();
+  fixture.setDSLEntity(new ServiceLifecycle());
+  Object dslEntity=new ServiceLifecycle();
+  fixture.setDSLEntity(dslEntity);
+}
