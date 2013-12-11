@@ -1,3 +1,0 @@
-{
-  return !this.serviceNetworkConfiguration.getName().equals(this.managementNetworkConfiguration.getName());
-}

@@ -1,23 +1,10 @@
 {
   String name=null;
   if (this.useManagementNetwork()) {
-    name=this.getManagementNetworkName();
+    name=this.getManagementNetworkPrefixedName();
   }
  else {
-    if (this.management) {
-      name=managementComputeNetworks.get(0);
-    }
- else {
-      if (this.serviceUseNetworkTemplate) {
-        name=applicationNetworkPrefixName + serviceNetworkConfiguration.getName();
-      }
- else       if (!serviceComputeNetworks.isEmpty()) {
-        name=serviceComputeNetworks.get(0);
-      }
- else {
-        name=managementComputeNetworks.get(0);
-      }
-    }
+    name=computeNetworks.get(0);
   }
   return name;
 }

@@ -12,9 +12,9 @@
       if (secgroup != null) {
         networkApi.deleteSecurityGroup(secgroup.getId());
       }
-      if (this.networkHelper.useServiceNetworkTemplate()) {
+      if (this.networkHelper.useApplicationNetworkTemplate()) {
         logger.info("Delete the network.");
-        final String prefixedNetworkName=this.openstackPrefixNames.getPrefix() + this.networkHelper.getNetworkConfiguration().getName();
+        final String prefixedNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
         try {
           final Network appliNetwork=networkApi.getNetworkByName(prefixedNetworkName);
           networkApi.deleteNetwork(appliNetwork.getId());

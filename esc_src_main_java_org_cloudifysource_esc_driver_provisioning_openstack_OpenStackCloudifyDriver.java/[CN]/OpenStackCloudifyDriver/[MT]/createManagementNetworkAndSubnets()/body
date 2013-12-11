@@ -1,11 +1,11 @@
 {
   try {
     this.cleanAllNetworks();
-    final Network network=this.getOrCreateNetwork(this.networkHelper.getManagementNetworkName());
-    final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
+    final Network network=this.getOrCreateNetwork(this.networkHelper.getManagementNetworkPrefixedName());
+    final NetworkConfiguration networkTemplate=this.networkHelper.getManagementNetworkTemplate();
     final List<Subnet> subnets=new ArrayList<Subnet>();
-    if (networkConfiguration.getSubnets() != null) {
-      for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkConfiguration.getSubnets()) {
+    if (networkTemplate.getSubnets() != null) {
+      for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkTemplate.getSubnets()) {
         Subnet subnet=this.getOrCreateSubnet(subnetConfig,network);
         subnets.add(subnet);
       }

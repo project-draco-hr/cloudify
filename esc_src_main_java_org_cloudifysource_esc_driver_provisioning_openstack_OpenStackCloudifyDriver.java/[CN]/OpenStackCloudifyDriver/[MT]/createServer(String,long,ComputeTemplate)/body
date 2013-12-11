@@ -11,7 +11,7 @@
     request.setImageRef(imageId);
     request.setFlavorRef(hardwareId);
     if (this.networkHelper.useManagementNetwork()) {
-      final String managementNetworkName=this.networkHelper.getManagementNetworkName();
+      final String managementNetworkName=this.networkHelper.getManagementNetworkPrefixedName();
       final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);
       final Port port=this.addPortToRequest(request,managementNetwork.getId(),managementNetwork.getSubnets());
       reservedPortIds.add(port.getId());
@@ -24,9 +24,9 @@
       final Port port=this.addPortToRequest(request,network.getId(),network.getSubnets());
       reservedPortIds.add(port.getId());
     }
-    if (!management && this.networkHelper.useServiceNetworkTemplate()) {
-      final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
-      final Network templateNetwork=this.networkApi.getNetworkByName(applicationNetworkName);
+    if (!management && this.networkHelper.useApplicationNetworkTemplate()) {
+      final String prefixedAppliNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
+      final Network templateNetwork=this.networkApi.getNetworkByName(prefixedAppliNetworkName);
       final Port port=this.addPortToRequest(request,templateNetwork.getId(),templateNetwork.getSubnets());
       reservedPortIds.add(port.getId());
     }

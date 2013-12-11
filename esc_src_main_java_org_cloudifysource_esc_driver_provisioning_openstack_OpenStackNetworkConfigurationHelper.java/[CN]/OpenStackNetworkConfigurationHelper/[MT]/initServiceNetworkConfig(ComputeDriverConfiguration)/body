@@ -4,11 +4,14 @@
   if (computeTemplate != null) {
     final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
     if (computeNetwork != null) {
-      this.serviceComputeNetworks=computeNetwork.getNetworks();
+      this.computeNetworks=computeNetwork.getNetworks();
     }
   }
-  if (this.serviceComputeNetworks == null) {
-    this.serviceComputeNetworks=new ArrayList<String>();
+  if (this.computeNetworks == null) {
+    this.computeNetworks=new ArrayList<String>();
+  }
+  if (!this.useManagementNetwork() && computeNetworks.isEmpty()) {
+    throw new CloudProvisioningException(configuration.getServiceName() + " has no networks for cloudify communications." + " You need to define a management network or a computeNetwork.");
   }
   final ServiceNetwork serviceNetwork=configuration.getNetwork();
   if (serviceNetwork != null) {
@@ -17,24 +20,9 @@
   final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
   if (cloudNetwork != null && serviceNetwork != null && serviceNetwork.getTemplate() != null) {
     final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
-    this.serviceNetworkConfiguration=templates.get(serviceNetwork.getTemplate());
-    this.serviceUseNetworkTemplate=true;
-    if (this.serviceNetworkConfiguration == null) {
+    this.applicationNetworkConfiguration=templates.get(serviceNetwork.getTemplate());
+    if (this.applicationNetworkConfiguration == null) {
       throw new CloudProvisioningException("Service network template not found '" + serviceNetwork.getTemplate() + "'");
-    }
-  }
- else   if (this.serviceComputeNetworks.isEmpty()) {
-    if (cloudNetwork != null && cloudNetwork.getTemplates() != null && !cloudNetwork.getTemplates().isEmpty()) {
-      this.serviceUseNetworkTemplate=true;
-      this.serviceNetworkConfiguration=cloudNetwork.getTemplates().values().iterator().next();
-    }
- else {
-      if (this.useManagementNetwork()) {
-        this.serviceNetworkConfiguration=this.managementNetworkConfiguration;
-      }
- else {
-        this.serviceComputeNetworks=this.managementComputeNetworks;
-      }
     }
   }
   logger.info("Service '" + configuration.getServiceName() + "' using network '"+ this.getPrivateIpNetworkName()+ "' for private ip");

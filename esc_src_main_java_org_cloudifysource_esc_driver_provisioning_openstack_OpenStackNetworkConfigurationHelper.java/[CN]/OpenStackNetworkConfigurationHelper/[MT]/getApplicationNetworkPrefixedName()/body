@@ -1,0 +1,6 @@
+{
+  if (this.applicationNetworkConfiguration != null) {
+    return applicationNetworkPrefixName + applicationNetworkConfiguration.getName();
+  }
+  return null;
+}

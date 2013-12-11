@@ -1,28 +1,32 @@
 {
   final Cloud cloud=configuration.getCloud();
   final String templateName=cloud.getConfiguration().getManagementMachineTemplate();
-  final ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(templateName);
-  if (computeTemplate != null) {
-    final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
-    if (computeNetwork != null) {
-      this.managementComputeNetworks=computeNetwork.getNetworks();
+  if (configuration.isManagement()) {
+    final ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(templateName);
+    if (computeTemplate != null) {
+      final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
+      if (computeNetwork != null) {
+        this.computeNetworks=computeNetwork.getNetworks();
+      }
+      this.managementNetworkOptions=computeTemplate.getOptions();
     }
-    this.managementNetworkOptions=computeTemplate.getOptions();
-  }
-  if (managementComputeNetworks == null) {
-    this.managementComputeNetworks=new ArrayList<String>();
+    if (computeNetworks == null) {
+      this.computeNetworks=new ArrayList<String>();
+    }
   }
   final NetworkConfiguration mngConfig=cloud.getCloudNetwork().getManagement().getNetworkConfiguration();
   if (mngConfig != null && mngConfig.getName() != null && mngConfig.getSubnets() != null && !mngConfig.getSubnets().isEmpty()) {
     this.managementNetworkConfiguration=mngConfig;
   }
-  if (this.managementNetworkConfiguration == null && managementComputeNetworks.isEmpty()) {
+  if (configuration.isManagement() && this.managementNetworkConfiguration == null && computeNetworks.isEmpty()) {
     throw new CloudProvisioningException("A network must be provided to the management machines " + "(use either cloudNetwork templates or computeNetwork configuration).");
   }
-  if (this.useManagementNetwork()) {
-    logger.info("Using management network : " + this.managementNetworkConfiguration.getName());
-  }
+  if (this.management) {
+    if (this.useManagementNetwork()) {
+      logger.info("Using management network : " + this.managementNetworkConfiguration.getName());
+    }
  else {
-    logger.info("Using computeNetwork of template '" + templateName + "' : "+ this.managementComputeNetworks);
+      logger.info("Using computeNetwork of template '" + templateName + "' : "+ this.computeNetworks);
+    }
   }
 }

@@ -1,6 +1,6 @@
 {
   final Port port=new Port();
-  for (  String subnetId : subnetIds) {
+  for (  final String subnetId : subnetIds) {
     final RouteFixedIp fixedIp=new RouteFixedIp();
     fixedIp.setSubnetId(subnetId);
     port.addFixedIp(fixedIp);

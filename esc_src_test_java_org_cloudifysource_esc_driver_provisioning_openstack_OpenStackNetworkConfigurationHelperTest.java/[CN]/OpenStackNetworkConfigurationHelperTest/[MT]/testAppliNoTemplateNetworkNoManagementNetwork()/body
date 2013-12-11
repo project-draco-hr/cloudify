@@ -1,8 +1,8 @@
 {
-  removaApplicationNetworkTemplate();
-  removeApplicationComputeNetworkBlock();
+  this.removeManagementNetworkConfiguration();
+  this.removeApplicationComputeNetworkBlock();
+  ComputeDriverConfiguration configuration=createConfiguration(cloud,null,false);
   try {
-    ComputeDriverConfiguration configuration=createConfiguration(cloud,null,false);
     new OpenStackNetworkConfigurationHelper(configuration);
   }
  catch (  Exception e) {

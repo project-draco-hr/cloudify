@@ -16,7 +16,7 @@
         md.setPublicAddress(floatingIp.getFloatingIpAddress());
       }
     }
-    final String applicationNetworkName=this.networkHelper.getApplicationNetworkName();
+    final String applicationNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
     if (applicationNetworkName != null) {
       final Network appliNetwork=this.networkApi.getNetworkByName(applicationNetworkName);
       final Port appliPort=networkApi.getPort(server.getId(),appliNetwork.getId());

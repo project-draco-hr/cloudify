@@ -8,11 +8,11 @@
     this.createSecurityGroup(this.openstackPrefixNames.getApplicationName());
     this.createSecurityGroup(this.openstackPrefixNames.getServiceName());
     this.createSecurityGroupsRules();
-    if (networkHelper.useServiceNetworkTemplate()) {
-      final Network network=this.getOrCreateNetwork(this.networkHelper.getApplicationNetworkName());
+    if (networkHelper.useApplicationNetworkTemplate()) {
+      final Network network=this.getOrCreateNetwork(this.networkHelper.getApplicationNetworkPrefixedName());
       if (network != null) {
-        final NetworkConfiguration networkConfiguration=this.networkHelper.getNetworkConfiguration();
-        final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkConfiguration.getSubnets();
+        final NetworkConfiguration networkTemplate=this.networkHelper.getApplicationNetworkTemplate();
+        final List<org.cloudifysource.domain.cloud.network.Subnet> subnets=networkTemplate.getSubnets();
         for (        final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : subnets) {
           this.getOrCreateSubnet(subnetConfig,network);
         }

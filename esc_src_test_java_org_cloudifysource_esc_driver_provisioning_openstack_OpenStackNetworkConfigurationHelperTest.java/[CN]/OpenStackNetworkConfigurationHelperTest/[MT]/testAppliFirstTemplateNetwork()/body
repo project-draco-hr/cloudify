@@ -1,12 +1,9 @@
 {
-  cloud.getCloudCompute().getTemplates().get(APPLI_COMPUTE_TEMPLATE).getComputeNetwork().setNetworks(new ArrayList<String>());
-  ComputeDriverConfiguration configuration=createConfiguration(cloud,null,false);
-  OpenStackNetworkConfigurationHelper helper=new OpenStackNetworkConfigurationHelper(configuration);
-  Assert.assertEquals(appliNetConfig,helper.getNetworkConfiguration());
-  Assert.assertTrue(helper.getComputeNetworks().isEmpty());
-  Assert.assertEquals(prefixedAppliNetTemplateName,helper.getApplicationNetworkName());
-  Assert.assertEquals(prefixedMngNetTemplateName,helper.getManagementNetworkName());
-  Assert.assertEquals(prefixedMngNetTemplateName,helper.getPrivateIpNetworkName());
-  Assert.assertEquals(true,helper.useServiceNetworkTemplate());
-  Assert.assertEquals(true,helper.useManagementNetwork());
+  try {
+    ComputeDriverConfiguration configuration=createConfiguration(cloud,"WRONG_TEMPLATE_NAME",false);
+    new OpenStackNetworkConfigurationHelper(configuration);
+  }
+ catch (  Exception e) {
+    Assert.assertTrue(e.getMessage().contains("Service network template not found"));
+  }
 }

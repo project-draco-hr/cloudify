@@ -1,6 +1,6 @@
 {
   this.removeManagementNetworkConfiguration();
-  cloud.getCloudCompute().getTemplates().get(MNG_COMPUTE_TEMPLATE).getComputeNetwork().setNetworks(new ArrayList<String>());
+  this.removeManagementComputeNetworkBlock();
   ComputeDriverConfiguration configuration=createConfiguration(cloud,null,true);
   try {
     new OpenStackNetworkConfigurationHelper(configuration);

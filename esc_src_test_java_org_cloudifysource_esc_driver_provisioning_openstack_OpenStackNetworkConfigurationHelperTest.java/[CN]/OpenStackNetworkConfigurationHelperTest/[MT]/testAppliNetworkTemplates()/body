@@ -1,11 +1,12 @@
 {
   ComputeDriverConfiguration configuration=createConfiguration(cloud,APPLICATION_NET,false);
   OpenStackNetworkConfigurationHelper helper=new OpenStackNetworkConfigurationHelper(configuration);
-  Assert.assertEquals(appliNetConfig,helper.getNetworkConfiguration());
+  Assert.assertEquals(mngNetConfig,helper.getManagementNetworkTemplate());
+  Assert.assertEquals(appliNetConfig,helper.getApplicationNetworkTemplate());
   Assert.assertEquals(appliComputeNetwork,helper.getComputeNetworks());
-  Assert.assertEquals(prefixedAppliNetTemplateName,helper.getApplicationNetworkName());
-  Assert.assertEquals(prefixedMngNetTemplateName,helper.getManagementNetworkName());
+  Assert.assertEquals(prefixedAppliNetTemplateName,helper.getApplicationNetworkPrefixedName());
+  Assert.assertEquals(prefixedMngNetTemplateName,helper.getManagementNetworkPrefixedName());
   Assert.assertEquals(prefixedMngNetTemplateName,helper.getPrivateIpNetworkName());
-  Assert.assertEquals(true,helper.useServiceNetworkTemplate());
+  Assert.assertEquals(true,helper.useApplicationNetworkTemplate());
   Assert.assertEquals(true,helper.useManagementNetwork());
 }
