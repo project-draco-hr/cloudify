@@ -2,16 +2,13 @@
 synchronized (this.webResourceMutex) {
     if (this.serviceWebResource == null) {
       this.renewTokenIfNeeded();
-      final String endpoint=this.getEndpoint(this.getServiceName());
-      if (endpoint == null) {
-        throw new OpenstackException("Cannot find endpoint for service '" + this.getServiceName() + "' in the service catalog.");
-      }
+      this.endpoint=this.getEndpoint();
       this.serviceClient=Client.create();
       if (WIRE_LOGGER.isLoggable(Level.FINE)) {
         this.serviceClient.addFilter(new LoggingFilter(WIRE_LOGGER));
       }
       this.serviceWebResource=this.serviceClient.resource(endpoint);
-      logger.info("Openstack " + this.getServiceName() + " endpoint: "+ endpoint);
+      logger.info("Openstack endpoint: " + endpoint);
     }
     return serviceWebResource;
   }

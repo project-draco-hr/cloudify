@@ -1,0 +1,16 @@
+{
+  final String endpointType=this.getServiceType();
+  if (logger.isLoggable(Level.FINEST)) {
+    logger.finest("Trying to get service endpoint by type '" + endpointType + "'");
+  }
+  for (  final TokenServiceCatalog tsc : this.token.getServiceCatalog()) {
+    if (endpointType.equals(tsc.getType())) {
+      for (      final TokenServiceCatalogEndpoint endpoint : tsc.getEndpoints()) {
+        if (this.region.equals(endpoint.getRegion())) {
+          return endpoint.getPublicURL();
+        }
+      }
+    }
+  }
+  return null;
+}

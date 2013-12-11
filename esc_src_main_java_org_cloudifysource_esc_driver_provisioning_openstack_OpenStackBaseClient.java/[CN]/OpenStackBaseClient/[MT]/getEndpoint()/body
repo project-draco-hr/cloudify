@@ -1,0 +1,11 @@
+{
+  String endpoint=null;
+  endpoint=this.getEndpointByName();
+  if (endpoint == null) {
+    endpoint=this.getEndpointByType();
+  }
+  if (endpoint == null) {
+    throw new OpenstackException("Cannot find endpoint for service '" + this.getServiceType() + "' in Openstack service catalog.");
+  }
+  return endpoint;
+}
