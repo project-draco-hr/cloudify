@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("flavors/" + flavorId);
+  final Flavor flavor=JsonUtils.unwrapRootToObject(Flavor.class,response);
+  return flavor;
+}

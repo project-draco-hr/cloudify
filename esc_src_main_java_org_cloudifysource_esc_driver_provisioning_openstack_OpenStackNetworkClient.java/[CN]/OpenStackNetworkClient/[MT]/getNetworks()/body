@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("networks");
+  final List<Network> list=JsonUtils.unwrapRootToList(Network.class,response);
+  return list;
+}

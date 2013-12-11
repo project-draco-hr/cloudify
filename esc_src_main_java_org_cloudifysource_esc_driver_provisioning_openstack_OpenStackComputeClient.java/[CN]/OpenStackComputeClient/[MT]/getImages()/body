@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("images");
+  final List<Image> image=JsonUtils.unwrapRootToList(Image.class,response);
+  return image;
+}
