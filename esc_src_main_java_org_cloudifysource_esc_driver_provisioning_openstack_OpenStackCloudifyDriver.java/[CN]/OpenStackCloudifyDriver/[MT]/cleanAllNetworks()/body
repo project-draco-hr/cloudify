@@ -2,7 +2,7 @@
   if (!this.networkHelper.skipExternalNetworking()) {
     final Router router;
     if (this.networkHelper.isCreateExternalRouter()) {
-      router=networkApi.getRouterByName(this.openstackPrefixNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+      router=networkApi.getRouterByName(this.openstackPrefixes.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     }
  else {
       router=networkApi.getRouterByName(this.networkHelper.getExternalRouterName());
@@ -31,7 +31,7 @@
       }
     }
   }
-  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.openstackPrefixNames.getPrefix());
+  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.openstackPrefixes.getPrefix());
   for (  final Network n : appliNetworks) {
     networkApi.deleteNetwork(n.getId());
   }

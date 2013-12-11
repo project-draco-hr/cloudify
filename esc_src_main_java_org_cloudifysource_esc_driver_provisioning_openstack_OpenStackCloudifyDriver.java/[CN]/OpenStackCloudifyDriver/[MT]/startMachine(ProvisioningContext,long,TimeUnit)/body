@@ -5,8 +5,8 @@
     throw new TimeoutException("Starting a new machine timed out");
   }
   try {
-    this.createSecurityGroup(this.openstackPrefixNames.getApplicationName());
-    this.createSecurityGroup(this.openstackPrefixNames.getServiceName());
+    this.createSecurityGroup(this.openstackPrefixes.getApplicationName());
+    this.createSecurityGroup(this.openstackPrefixes.getServiceName());
     this.createSecurityGroupsRules();
     if (networkHelper.useApplicationNetworkTemplate()) {
       final Network network=this.getOrCreateNetwork(this.networkHelper.getApplicationNetworkPrefixedName());

@@ -1,5 +1,5 @@
 {
-  final String ssgName=this.openstackPrefixNames.getServiceName();
+  final String ssgName=this.openstackPrefixes.getServiceName();
   logger.info("Service '" + ssgName + "'is being uninstall.");
   try {
     final Applications applications=this.admin.getApplications();
@@ -7,7 +7,7 @@
     if (application == null) {
       logger.info("No remaining services in the application.");
       logger.info("Delete the application security group.");
-      final String applicationName=this.openstackPrefixNames.getApplicationName();
+      final String applicationName=this.openstackPrefixes.getApplicationName();
       final SecurityGroup secgroup=this.networkApi.getSecurityGroupsByName(applicationName);
       if (secgroup != null) {
         networkApi.deleteSecurityGroup(secgroup.getId());

@@ -34,10 +34,19 @@
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
     if (management) {
-      this.addSecurityGroupsToServer(serverId,this.openstackPrefixNames.getManagementName(),this.openstackPrefixNames.getClusterName());
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getManagementName(),this.openstackPrefixes.getClusterName());
     }
  else {
-      this.addSecurityGroupsToServer(serverId,this.openstackPrefixNames.getAgentName(),this.openstackPrefixNames.getClusterName(),this.openstackPrefixNames.getApplicationName(),this.openstackPrefixNames.getServiceName());
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getAgentName(),this.openstackPrefixes.getClusterName(),this.openstackPrefixes.getApplicationName(),this.openstackPrefixes.getServiceName());
+    }
+    Object securityGroupsObj=template.getOptions().get("securityGroupNames");
+    if (securityGroupsObj == null) {
+      securityGroupsObj=template.getOptions().get("securityGroups");
+    }
+    if (securityGroupsObj != null) {
+      if (securityGroupsObj instanceof String[]) {
+        this.addSecurityGroupsToServer(serverId,(String[])securityGroupsObj);
+      }
     }
     if (this.networkHelper.associateFloatingIp()) {
       final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();

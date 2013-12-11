@@ -9,5 +9,5 @@
   }
   String managementGroup=cloud.getProvider().getManagementGroup();
   managementGroup=managementGroup == null ? MANAGMENT_MACHINE_PREFIX : managementGroup;
-  this.openstackPrefixNames=new GroupNamesPrefixing(managementGroup,applicationName,serviceName);
+  this.openstackPrefixes=new OpenStackResourcePrefixes(managementGroup,applicationName,serviceName);
 }

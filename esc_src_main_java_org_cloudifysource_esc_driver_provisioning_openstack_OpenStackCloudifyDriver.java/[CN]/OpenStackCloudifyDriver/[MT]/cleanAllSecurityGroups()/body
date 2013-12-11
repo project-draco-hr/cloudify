@@ -1,5 +1,5 @@
 {
-  final String prefix=this.openstackPrefixNames.getPrefix();
+  final String prefix=this.openstackPrefixes.getPrefix();
   final List<SecurityGroup> securityGroupsByName=this.networkApi.getSecurityGroupsByPrefix(prefix);
   for (  final SecurityGroup securityGroup : securityGroupsByName) {
     this.networkApi.deleteSecurityGroup(securityGroup.getId());

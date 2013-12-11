@@ -4,5 +4,4 @@
   this.initDeployer(cloud);
   String mngGroup=cloud.getProvider().getManagementGroup();
   mngGroup=mngGroup == null ? OpenStackCloudifyDriver.getDefaultMangementPrefix() : mngGroup;
-  this.securityGroupNames=new GroupNamesPrefixing(mngGroup,null,null);
 }
