@@ -2,7 +2,10 @@
   final EventResult result=new DSLEntryExecutor(locator,launcher,puExtDir,LifecycleEvents.PROCESS_LOCATOR).run();
   if (result.isSuccess()) {
     final Object retval=result.getResult();
-    if (retval instanceof List<?>) {
+    if (retval == null) {
+      throw new IllegalArgumentException("A process locator returned an unexpected result that is not a list of longs, " + " or a comma aeparated list of longs. Result was: null");
+    }
+ else     if (retval instanceof List<?>) {
       final List<?> closureResultList=(List<?>)retval;
       final List<Long> targetList=new ArrayList<Long>(closureResultList.size());
       for (      final Object listItem : closureResultList) {

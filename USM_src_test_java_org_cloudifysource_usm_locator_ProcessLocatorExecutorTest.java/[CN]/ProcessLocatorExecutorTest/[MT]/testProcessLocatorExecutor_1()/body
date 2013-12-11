@@ -1,0 +1,14 @@
+{
+  final ExecutableDSLEntry locator=ExecutableDSLEntryFactory.createEntry(new Closure<Object>(null){
+    private static final long serialVersionUID=1L;
+    @Override public Object call(    final Object... params){
+      return null;
+    }
+  }
+,"locator",new File("."));
+  final ProcessLauncher launcher=new DefaultProcessLauncher();
+  final File puExtDir=new File("");
+  final ProcessLocatorExecutor result=new ProcessLocatorExecutor(locator,launcher,puExtDir);
+  assertNotNull(result);
+  result.getProcessIDs();
+}
