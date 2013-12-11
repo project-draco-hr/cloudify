@@ -1,0 +1,14 @@
+{
+  if (endpointName != null & !StringUtils.isEmpty(endpointName)) {
+    for (    TokenServiceCatalog tsc : this.token.getServiceCatalog()) {
+      if (endpointName.equals(tsc.getName())) {
+        for (        TokenServiceCatalogEndpoint endpoint : tsc.getEndpoints()) {
+          if (this.region.equals(endpoint.getRegion())) {
+            return endpoint.getPublicURL();
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
