@@ -1,41 +1,38 @@
 {
-  boolean deleteManagementNetwork=false;
-  Network network=networkApi.getNetworkByName(this.networkConfiguration.getName());
-  if (network == null) {
-    network=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
-    deleteManagementNetwork=true;
-  }
-  if (!this.skipExternalNetworking) {
+  if (!this.networkHelper.skipExternalNetworking()) {
     final Router router;
-    if (this.externalRouterName == null) {
-      router=networkApi.getRouterByName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+    if (this.networkHelper.isCreateExternalRouter()) {
+      router=networkApi.getRouterByName(this.openstackPrefixes.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     }
  else {
-      router=networkApi.getRouterByName(this.externalRouterName);
+      router=networkApi.getRouterByName(this.networkHelper.getExternalRouterName());
     }
     if (router != null) {
-      if (network != null) {
-        final List<org.cloudifysource.domain.cloud.network.Subnet> configSubnets=networkConfiguration.getSubnets();
-        final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
-        for (        final org.cloudifysource.domain.cloud.network.Subnet subConf : configSubnets) {
-          for (          final Subnet subnet : subnets) {
-            if (StringUtils.equals(subnet.getName(),subConf.getName()) && subnet.getName() != null) {
-              networkApi.deleteRouterInterface(router.getId(),subnet.getId());
-              break;
+      try {
+        final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
+        Network privateNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
+        String[] privateNetSubnetIds=privateNetwork.getSubnets();
+        final List<Port> ports=networkApi.getPortsByDeviceId(router.getId());
+        for (        final Port port : ports) {
+          for (          final RouteFixedIp fixedIp : port.getFixedIps()) {
+            for (            final String id : privateNetSubnetIds) {
+              if (id.equals(fixedIp.getSubnetId())) {
+                networkApi.deleteRouterInterface(router.getId(),fixedIp.getSubnetId());
+              }
             }
           }
         }
       }
-      if (this.externalRouterName == null) {
+ catch (      final Exception e) {
+        logger.log(Level.WARNING,"Could not remove an interface from external router",e);
+      }
+      if (this.networkHelper.isCreateExternalRouter()) {
         networkApi.deleteRouter(router.getId());
       }
     }
   }
-  if (deleteManagementNetwork && network != null) {
-    networkApi.deleteNetwork(network.getId());
-  }
-  List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.securityGroupNames.getPrefix());
-  for (  Network n : appliNetworks) {
+  final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.openstackPrefixes.getPrefix());
+  for (  final Network n : appliNetworks) {
     networkApi.deleteNetwork(n.getId());
   }
 }

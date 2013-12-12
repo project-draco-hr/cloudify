@@ -1,0 +1,11 @@
+{
+  this.removeManagementNetworkConfiguration();
+  this.removeApplicationComputeNetworkBlock();
+  ComputeDriverConfiguration configuration=createConfiguration(cloud,null,false);
+  try {
+    new OpenStackNetworkConfigurationHelper(configuration);
+  }
+ catch (  Exception e) {
+    Assert.assertTrue(e.getMessage().contains("no networks for cloudify communications"));
+  }
+}

@@ -1,0 +1,13 @@
+{
+  this.management=configuration.isManagement();
+  final String name=configuration.isManagement() ? "managers" : configuration.getServiceName();
+  logger.info("Setup network configuration for " + name);
+  this.validateNetworkNames(configuration.getCloud().getCloudNetwork());
+  this.initManagementNetworkConfig(configuration);
+  this.managementNetworkPrefixName=configuration.getCloud().getProvider().getManagementGroup();
+  if (!this.management) {
+    final FullServiceName fsn=ServiceUtils.getFullServiceName(configuration.getServiceName());
+    this.applicationNetworkPrefixName=this.managementNetworkPrefixName + fsn.getApplicationName() + "-";
+    this.initServiceNetworkConfig(configuration);
+  }
+}

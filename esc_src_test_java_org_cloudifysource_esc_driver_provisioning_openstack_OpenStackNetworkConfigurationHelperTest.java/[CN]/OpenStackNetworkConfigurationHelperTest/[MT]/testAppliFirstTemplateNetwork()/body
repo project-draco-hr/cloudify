@@ -1,0 +1,9 @@
+{
+  try {
+    ComputeDriverConfiguration configuration=createConfiguration(cloud,"WRONG_TEMPLATE_NAME",false);
+    new OpenStackNetworkConfigurationHelper(configuration);
+  }
+ catch (  Exception e) {
+    Assert.assertTrue(e.getMessage().contains("Service network template not found"));
+  }
+}

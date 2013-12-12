@@ -26,7 +26,7 @@
       this.cleanAllNetworks();
     }
  catch (    final Exception e) {
-      logger.warning("Couldn't clean security groups " + this.securityGroupNames.getPrefix() + "*");
+      logger.warning("Couldn't clean security groups " + this.openstackPrefixes.getPrefix() + "*");
     }
   }
   finally {

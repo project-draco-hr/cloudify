@@ -1,0 +1,6 @@
+{
+  if (this.managementNetworkConfiguration != null) {
+    return managementNetworkPrefixName + managementNetworkConfiguration.getName();
+  }
+  return null;
+}

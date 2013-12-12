@@ -1,28 +1,26 @@
 {
-  final String ssgName=this.securityGroupNames.getServiceName();
+  final String ssgName=this.openstackPrefixes.getServiceName();
   logger.info("Service '" + ssgName + "'is being uninstall.");
   try {
     final Applications applications=this.admin.getApplications();
-    final Application application=applications.getApplication(applicationName);
+    final Application application=applications.getApplication(this.applicationName);
     if (application == null) {
       logger.info("No remaining services in the application.");
       logger.info("Delete the application security group.");
-      final String applicationName=this.securityGroupNames.getApplicationName();
+      final String applicationName=this.openstackPrefixes.getApplicationName();
       final SecurityGroup secgroup=this.networkApi.getSecurityGroupsByName(applicationName);
       if (secgroup != null) {
         networkApi.deleteSecurityGroup(secgroup.getId());
       }
-      if (!this.managementNetworkName.equals(this.applicationNetworkName)) {
+      if (this.networkHelper.useApplicationNetworkTemplate()) {
         logger.info("Delete the network.");
+        final String prefixedNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
         try {
-          Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-          if (appliNetwork == null) {
-            appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
-          }
+          final Network appliNetwork=networkApi.getNetworkByName(prefixedNetworkName);
           networkApi.deleteNetwork(appliNetwork.getId());
         }
  catch (        final Exception e) {
-          logger.warning("Network '" + this.applicationNetworkName + "' was not deleted: "+ e.getMessage());
+          logger.warning("Network '" + prefixedNetworkName + "' was not deleted: "+ e.getMessage());
         }
       }
     }

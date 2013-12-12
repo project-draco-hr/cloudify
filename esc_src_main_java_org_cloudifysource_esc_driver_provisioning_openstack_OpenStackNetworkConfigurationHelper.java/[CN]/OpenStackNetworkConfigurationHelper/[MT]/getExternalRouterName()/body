@@ -1,0 +1,7 @@
+{
+  if (management) {
+    final String extRouterName=(String)managementNetworkOptions.get(OpenStackCloudifyDriver.OPT_EXTERNAL_ROUTER_NAME);
+    return StringUtils.isEmpty(extRouterName) ? null : extRouterName;
+  }
+  return null;
+}

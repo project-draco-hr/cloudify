@@ -1,0 +1,12 @@
+{
+  final ManagementNetwork mn=cloudNetwork.getManagement();
+  if (mn != null) {
+    this.validateNetworkName(mn.getNetworkConfiguration());
+  }
+  final Collection<NetworkConfiguration> templates=cloudNetwork.getTemplates().values();
+  if (templates != null && !templates.isEmpty()) {
+    for (    NetworkConfiguration nc : templates) {
+      this.validateNetworkName(nc);
+    }
+  }
+}

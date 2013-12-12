@@ -1,0 +1,11 @@
+{
+  this.removeManagementNetworkConfiguration();
+  this.removeManagementComputeNetworkBlock();
+  ComputeDriverConfiguration configuration=createConfiguration(cloud,null,true);
+  try {
+    new OpenStackNetworkConfigurationHelper(configuration);
+  }
+ catch (  CloudProvisioningException e) {
+    Assert.assertTrue("Expected CloudProvisioningException",e.getMessage().contains("A network must be provided to the management machines"));
+  }
+}

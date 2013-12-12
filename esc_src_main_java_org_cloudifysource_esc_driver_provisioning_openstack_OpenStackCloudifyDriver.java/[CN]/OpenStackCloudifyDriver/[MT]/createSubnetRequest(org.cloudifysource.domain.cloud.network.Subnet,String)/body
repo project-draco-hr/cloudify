@@ -4,9 +4,13 @@
   subnetRequest.setCidr(subnetConfig.getRange());
   subnetRequest.setName(subnetConfig.getName());
   subnetRequest.setEnableDhcp(true);
-  subnetRequest.addDnsNameservers("8.8.8.8");
-  if (subnetConfig.getOptions().containsKey("gateway")) {
-    final String gatewayStr=subnetConfig.getOptions().get("gateway");
+  final Map<String,String> options=subnetConfig.getOptions();
+  if (options.containsKey("dnsNameServers")) {
+    final String dnsNameServers=options.get("dnsNameServers");
+    subnetRequest.addDnsNameservers(dnsNameServers);
+  }
+  if (options.containsKey("gateway")) {
+    final String gatewayStr=options.get("gateway");
     if (StringUtils.isNotEmpty(gatewayStr) && !"null".equals(gatewayStr)) {
       subnetRequest.setGatewayIp(gatewayStr);
       subnetRequest.addHostRoute(gatewayStr,"0.0.0.0/0");

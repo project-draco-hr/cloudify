@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("routers");
+  final List<Router> routers=JsonUtils.unwrapRootToList(Router.class,response);
+  return routers;
+}

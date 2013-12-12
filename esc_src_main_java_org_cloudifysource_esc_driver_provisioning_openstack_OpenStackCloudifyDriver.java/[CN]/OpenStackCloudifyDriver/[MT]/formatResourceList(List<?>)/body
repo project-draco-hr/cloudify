@@ -1,0 +1,8 @@
+{
+  final StringBuilder sb=new StringBuilder();
+  for (  final Object resource : resources) {
+    sb.append(System.getProperty("line.separator"));
+    sb.append(resource);
+  }
+  return sb.toString();
+}

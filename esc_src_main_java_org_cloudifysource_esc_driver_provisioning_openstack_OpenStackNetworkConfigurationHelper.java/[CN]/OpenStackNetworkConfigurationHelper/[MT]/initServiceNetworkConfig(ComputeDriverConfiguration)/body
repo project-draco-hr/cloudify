@@ -1,0 +1,29 @@
+{
+  final Map<String,ComputeTemplate> computeTemplates=configuration.getCloud().getCloudCompute().getTemplates();
+  final ComputeTemplate computeTemplate=computeTemplates.get(configuration.getCloudTemplate());
+  if (computeTemplate != null) {
+    final ComputeTemplateNetwork computeNetwork=computeTemplate.getComputeNetwork();
+    if (computeNetwork != null) {
+      this.computeNetworks=computeNetwork.getNetworks();
+    }
+  }
+  if (this.computeNetworks == null) {
+    this.computeNetworks=new ArrayList<String>();
+  }
+  if (!this.useManagementNetwork() && computeNetworks.isEmpty()) {
+    throw new CloudProvisioningException(configuration.getServiceName() + " has no networks for cloudify communications." + " You need to define a management network or a computeNetwork.");
+  }
+  final ServiceNetwork serviceNetwork=configuration.getNetwork();
+  if (serviceNetwork != null) {
+    this.serviceAccessRules=serviceNetwork.getAccessRules();
+  }
+  final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
+  if (cloudNetwork != null && serviceNetwork != null && serviceNetwork.getTemplate() != null) {
+    final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
+    this.applicationNetworkConfiguration=templates.get(serviceNetwork.getTemplate());
+    if (this.applicationNetworkConfiguration == null) {
+      throw new CloudProvisioningException("Service network template not found '" + serviceNetwork.getTemplate() + "'");
+    }
+  }
+  logger.info("Service '" + configuration.getServiceName() + "' using network '"+ this.getPrivateIpNetworkName()+ "' for private ip");
+}

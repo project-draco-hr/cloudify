@@ -3,73 +3,76 @@
   final String hardwareId=template.getHardwareId().split("/")[1];
   final String keyName=(String)template.getOptions().get(OPT_KEY_PAIR);
   String serverId=null;
-  Port createdMngPort=null;
-  Port createdPort=null;
+  final List<String> reservedPortIds=new ArrayList<String>();
   try {
-    Network managementNetwork=networkApi.getNetworkByName(this.managementNetworkName);
-    if (managementNetwork == null) {
-      managementNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.managementNetworkName);
-    }
     final NovaServerResquest request=new NovaServerResquest();
     request.setName(serverName);
     request.setKeyName(keyName);
     request.setImageRef(imageId);
     request.setFlavorRef(hardwareId);
-    createdMngPort=this.addPortToRequest(managementNetwork,this.cloud.getCloudNetwork().getManagement().getNetworkConfiguration(),request);
-    if (!management) {
-      if (!this.managementNetworkName.equals(this.applicationNetworkName)) {
-        Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-        if (appliNetwork == null) {
-          appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
-        }
-        createdPort=this.addPortToRequest(appliNetwork,this.networkConfiguration,request);
+    if (this.networkHelper.useManagementNetwork()) {
+      final String managementNetworkName=this.networkHelper.getManagementNetworkPrefixedName();
+      final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);
+      final Port port=this.addPortToRequest(request,managementNetwork.getId(),managementNetwork.getSubnets());
+      reservedPortIds.add(port.getId());
+    }
+    for (    final String networkName : this.networkHelper.getComputeNetworks()) {
+      final Network network=this.networkApi.getNetworkByName(networkName);
+      if (network == null) {
+        throw new CloudProvisioningException("Couldn't find network '" + networkName + "'");
       }
+      final Port port=this.addPortToRequest(request,network.getId(),network.getSubnets());
+      reservedPortIds.add(port.getId());
+    }
+    if (!management && this.networkHelper.useApplicationNetworkTemplate()) {
+      final String prefixedAppliNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
+      final Network templateNetwork=this.networkApi.getNetworkByName(prefixedAppliNetworkName);
+      final Port port=this.addPortToRequest(request,templateNetwork.getId(),templateNetwork.getSubnets());
+      reservedPortIds.add(port.getId());
     }
     NovaServer newServer=computeApi.createServer(request);
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
-    if (this.associateFloatingIp) {
-      networkApi.createAndAssociateFloatingIp(serverId,managementNetwork.getId());
-    }
-    if (this.management) {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getManagementName(),this.securityGroupNames.getClusterName()});
+    if (management) {
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getManagementName(),this.openstackPrefixes.getClusterName());
     }
  else {
-      this.addSecurityGroupsToNetwork(serverId,managementNetwork,new String[]{this.securityGroupNames.getAgentName(),this.securityGroupNames.getClusterName(),this.securityGroupNames.getServiceName()});
-      Network appliNetwork=networkApi.getNetworkByName(this.applicationNetworkName);
-      if (appliNetwork == null) {
-        appliNetwork=networkApi.getNetworkByName(this.securityGroupNames.getPrefix() + this.applicationNetworkName);
+      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getAgentName(),this.openstackPrefixes.getClusterName(),this.openstackPrefixes.getApplicationName(),this.openstackPrefixes.getServiceName());
+    }
+    Object securityGroupsObj=template.getOptions().get("securityGroupNames");
+    if (securityGroupsObj == null) {
+      securityGroupsObj=template.getOptions().get("securityGroups");
+    }
+    if (securityGroupsObj != null) {
+      if (securityGroupsObj instanceof String[]) {
+        this.addSecurityGroupsToServer(serverId,(String[])securityGroupsObj);
       }
-      this.addSecurityGroupsToNetwork(serverId,appliNetwork,new String[]{this.securityGroupNames.getClusterName(),this.securityGroupNames.getApplicationName(),this.securityGroupNames.getServiceName()});
+    }
+    if (this.networkHelper.associateFloatingIp()) {
+      final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();
+      final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIPNetworkName);
+      networkApi.createAndAssociateFloatingIp(serverId,privateIpNetwork.getId());
     }
     final MachineDetails md=this.createMachineDetails(template,newServer);
     return md;
   }
  catch (  final Exception e) {
-    logger.log(Level.SEVERE,"Cloud machine was started but an error occured during initialization. Shutting down machine",e);
+    logger.log(Level.SEVERE,"An error occured during initialization." + " Shutting down machine and cleaning openstack resources",e);
     if (serverId != null) {
       try {
         computeApi.deleteServer(serverId);
       }
  catch (      final OpenstackException e1) {
-        throw new CloudProvisioningException(e1);
+        logger.log(Level.WARNING,"Cleaning after error. Could not delete server.",e1);
       }
     }
  else {
-      if (createdPort != null) {
+      for (      final String portId : reservedPortIds) {
         try {
-          networkApi.deletePort(createdPort.getId());
+          networkApi.deletePort(portId);
         }
  catch (        final OpenstackException e1) {
-          throw new CloudProvisioningException(e1);
-        }
-      }
-      if (createdMngPort != null) {
-        try {
-          networkApi.deletePort(createdMngPort.getId());
-        }
- catch (        final OpenstackException e1) {
-          throw new CloudProvisioningException(e1);
+          logger.log(Level.WARNING,"Cleaning after error. Could not delete server.",e1);
         }
       }
     }

@@ -1,0 +1,7 @@
+{
+  if (management) {
+    final String skipExtNetStr=(String)managementNetworkOptions.get(OpenStackCloudifyDriver.OPT_SKIP_EXTERNAL_NETWORKING);
+    return BooleanUtils.toBoolean(skipExtNetStr);
+  }
+  return false;
+}

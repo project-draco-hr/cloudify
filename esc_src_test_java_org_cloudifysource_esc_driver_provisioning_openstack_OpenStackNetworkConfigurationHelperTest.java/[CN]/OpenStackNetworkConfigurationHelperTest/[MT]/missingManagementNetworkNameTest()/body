@@ -1,0 +1,4 @@
+{
+  cloudNetwork.getManagement().getNetworkConfiguration().setName(null);
+  new OpenStackNetworkConfigurationHelper().validateNetworkNames(cloudNetwork);
+}

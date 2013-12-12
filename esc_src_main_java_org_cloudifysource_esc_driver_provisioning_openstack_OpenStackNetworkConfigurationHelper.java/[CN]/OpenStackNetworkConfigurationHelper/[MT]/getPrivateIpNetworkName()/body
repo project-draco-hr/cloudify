@@ -1,0 +1,10 @@
+{
+  String name=null;
+  if (this.useManagementNetwork()) {
+    name=this.getManagementNetworkPrefixedName();
+  }
+ else {
+    name=computeNetworks.get(0);
+  }
+  return name;
+}

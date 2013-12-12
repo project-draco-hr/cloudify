@@ -1,5 +1,7 @@
 {
-  if (serviceClient != null) {
-    serviceClient.destroy();
+synchronized (this.webResourceMutex) {
+    if (this.serviceClient != null) {
+      this.serviceClient.destroy();
+    }
   }
 }

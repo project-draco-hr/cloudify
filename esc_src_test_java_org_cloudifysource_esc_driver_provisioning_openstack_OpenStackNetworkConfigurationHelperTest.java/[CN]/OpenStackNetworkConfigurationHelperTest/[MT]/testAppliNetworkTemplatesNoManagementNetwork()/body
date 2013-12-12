@@ -1,0 +1,13 @@
+{
+  this.removeManagementNetworkConfiguration();
+  ComputeDriverConfiguration configuration=createConfiguration(cloud,APPLICATION_NET,false);
+  OpenStackNetworkConfigurationHelper helper=new OpenStackNetworkConfigurationHelper(configuration);
+  Assert.assertEquals(null,helper.getManagementNetworkTemplate());
+  Assert.assertEquals(appliNetConfig,helper.getApplicationNetworkTemplate());
+  Assert.assertEquals(appliComputeNetwork,helper.getComputeNetworks());
+  Assert.assertEquals(prefixedAppliNetTemplateName,helper.getApplicationNetworkPrefixedName());
+  Assert.assertEquals(null,helper.getManagementNetworkPrefixedName());
+  Assert.assertEquals(COMPUTE_NET2,helper.getPrivateIpNetworkName());
+  Assert.assertEquals(true,helper.useApplicationNetworkTemplate());
+  Assert.assertEquals(false,helper.useManagementNetwork());
+}

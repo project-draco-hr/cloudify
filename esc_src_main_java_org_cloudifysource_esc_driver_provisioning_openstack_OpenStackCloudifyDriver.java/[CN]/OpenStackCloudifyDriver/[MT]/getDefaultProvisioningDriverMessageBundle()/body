@@ -1,0 +1,6 @@
+{
+  if (defaultProvisioningDriverMessageBundle == null) {
+    defaultProvisioningDriverMessageBundle=ResourceBundle.getBundle("DefaultProvisioningDriverMessages",Locale.getDefault());
+  }
+  return defaultProvisioningDriverMessageBundle;
+}

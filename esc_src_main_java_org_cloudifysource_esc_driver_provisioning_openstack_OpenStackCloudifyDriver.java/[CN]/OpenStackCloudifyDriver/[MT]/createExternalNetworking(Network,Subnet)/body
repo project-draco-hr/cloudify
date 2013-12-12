@@ -1,30 +1,30 @@
 {
   final Router router;
-  if (this.externalRouterName == null) {
+  if (this.networkHelper.isCreateExternalRouter()) {
     final String publicNetworkId;
-    if (this.externalNetworkName == null) {
+    if (this.networkHelper.isExternalNetworkNameSpecified()) {
       publicNetworkId=networkApi.getPublicNetworkId();
     }
  else {
-      Network extNetwork=networkApi.getNetworkByName(this.externalNetworkName);
+      Network extNetwork=networkApi.getNetworkByName(this.networkHelper.getExternalNetworkName());
       if (extNetwork == null) {
-        throw new CloudProvisioningException("Couldn't find external network '" + this.externalNetworkName + "'");
+        throw new CloudProvisioningException("Couldn't find external network '" + this.networkHelper.getExternalNetworkName() + "'");
       }
       if (!BooleanUtils.toBoolean(extNetwork.getRouterExternal())) {
-        throw new CloudProvisioningException("The network '" + this.externalNetworkName + "' is not an external network");
+        throw new CloudProvisioningException("The network '" + this.networkHelper.getExternalNetworkName() + "' is not an external network");
       }
       publicNetworkId=extNetwork.getId();
     }
     final Router request=new Router();
-    request.setName(this.securityGroupNames.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
+    request.setName(this.openstackPrefixes.getPrefix() + MANAGEMENT_PUBLIC_ROUTER_NAME);
     request.setAdminStateUp(true);
     request.setExternalGatewayInfo(new RouterExternalGatewayInfo(publicNetworkId));
     router=networkApi.createRouter(request);
   }
  else {
-    router=networkApi.getRouterByName(this.externalRouterName);
+    router=networkApi.getRouterByName(this.networkHelper.getExternalRouterName());
     if (router == null) {
-      throw new CloudProvisioningException("Couldn't find external router '" + this.externalRouterName + "'");
+      throw new CloudProvisioningException("Couldn't find external router '" + this.networkHelper.getExternalRouterName() + "'");
     }
   }
   if (subnet == null) {

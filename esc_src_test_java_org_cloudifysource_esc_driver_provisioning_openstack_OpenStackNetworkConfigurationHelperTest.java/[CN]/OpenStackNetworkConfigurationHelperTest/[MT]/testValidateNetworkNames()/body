@@ -1,0 +1,9 @@
+{
+  try {
+    new OpenStackNetworkConfigurationHelper().validateNetworkNames(cloudNetwork);
+    new OpenStackNetworkConfigurationHelper().validateNetworkNames(new CloudNetwork());
+  }
+ catch (  CloudProvisioningException e) {
+    Assert.fail("Test should pass but got " + e.getMessage());
+  }
+}

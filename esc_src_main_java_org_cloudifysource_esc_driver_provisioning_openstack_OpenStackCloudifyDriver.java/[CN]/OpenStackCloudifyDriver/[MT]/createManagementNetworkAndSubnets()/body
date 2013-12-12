@@ -1,0 +1,26 @@
+{
+  try {
+    this.cleanAllNetworks();
+    final Network network=this.getOrCreateNetwork(this.networkHelper.getManagementNetworkPrefixedName());
+    final NetworkConfiguration networkTemplate=this.networkHelper.getManagementNetworkTemplate();
+    final List<Subnet> subnets=new ArrayList<Subnet>();
+    if (networkTemplate.getSubnets() != null) {
+      for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkTemplate.getSubnets()) {
+        Subnet subnet=this.getOrCreateSubnet(subnetConfig,network);
+        subnets.add(subnet);
+      }
+    }
+    if (!this.networkHelper.skipExternalNetworking()) {
+      this.createExternalNetworking(network,subnets.get(0));
+    }
+  }
+ catch (  final Exception e) {
+    try {
+      this.cleanAllNetworks();
+    }
+ catch (    OpenstackException e1) {
+      logger.warning("Couldn't clean all networks: " + e1.getMessage());
+    }
+    throw new CloudProvisioningException(e);
+  }
+}

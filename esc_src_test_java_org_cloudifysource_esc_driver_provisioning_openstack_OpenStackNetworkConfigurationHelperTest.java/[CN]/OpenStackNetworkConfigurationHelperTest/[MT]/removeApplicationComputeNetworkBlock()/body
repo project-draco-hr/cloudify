@@ -1,0 +1,3 @@
+{
+  cloud.getCloudCompute().getTemplates().get(APPLI_COMPUTE_TEMPLATE).getComputeNetwork().setNetworks(new ArrayList<String>());
+}

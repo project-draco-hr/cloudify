@@ -7,13 +7,13 @@ switch (accessRule.getType()) {
 case PUBLIC:
     break;
 case SERVICE:
-  group=this.securityGroupNames.getServiceName();
+  group=this.openstackPrefixes.getServiceName();
 break;
 case APPLICATION:
-group=this.securityGroupNames.getApplicationName();
+group=this.openstackPrefixes.getApplicationName();
 break;
 case CLUSTER:
-group=this.securityGroupNames.getClusterName();
+group=this.openstackPrefixes.getClusterName();
 break;
 case GROUP:
 group=accessRule.getTarget();

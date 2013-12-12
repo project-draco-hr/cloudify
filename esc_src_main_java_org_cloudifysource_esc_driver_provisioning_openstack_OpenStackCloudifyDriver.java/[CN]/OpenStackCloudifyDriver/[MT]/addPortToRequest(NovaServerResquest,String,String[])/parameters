@@ -1,0 +1,3 @@
+NovaServerResquest request
+String networkId
+String[] subnetIds

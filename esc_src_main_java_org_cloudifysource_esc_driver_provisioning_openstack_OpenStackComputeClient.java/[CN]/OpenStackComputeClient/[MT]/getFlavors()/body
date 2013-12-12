@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("flavors");
+  final List<Flavor> flavors=JsonUtils.unwrapRootToList(Flavor.class,response);
+  return flavors;
+}

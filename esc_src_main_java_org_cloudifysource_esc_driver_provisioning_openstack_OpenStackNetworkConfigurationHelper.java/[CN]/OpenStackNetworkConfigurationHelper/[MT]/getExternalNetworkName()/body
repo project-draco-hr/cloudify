@@ -1,0 +1,7 @@
+{
+  if (management) {
+    final String extNetName=(String)managementNetworkOptions.get(OpenStackCloudifyDriver.OPT_EXTERNAL_NETWORK_NAME);
+    return StringUtils.isEmpty(extNetName) ? null : extNetName;
+  }
+  return null;
+}

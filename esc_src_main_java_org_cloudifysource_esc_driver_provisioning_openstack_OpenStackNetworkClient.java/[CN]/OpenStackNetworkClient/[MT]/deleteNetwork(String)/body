@@ -2,5 +2,9 @@
   if (logger.isLoggable(Level.FINE)) {
     logger.fine("Delete networkId=" + networkId);
   }
+  final List<Port> ports=getPortsByNetworkId(networkId);
+  for (  final Port port : ports) {
+    this.deletePort(port.getId());
+  }
   this.doDelete("networks/" + networkId,CODE_OK_204);
 }
