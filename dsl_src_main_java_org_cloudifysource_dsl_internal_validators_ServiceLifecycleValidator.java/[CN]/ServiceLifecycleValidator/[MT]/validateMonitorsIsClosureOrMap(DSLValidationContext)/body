@@ -3,7 +3,7 @@
   if (monitors == null) {
     return;
   }
-  if (monitors instanceof ClosureExecutableEntry) {
+  if (monitors instanceof Closure<?>) {
     return;
   }
   if (monitors instanceof Map<?,?>) {
