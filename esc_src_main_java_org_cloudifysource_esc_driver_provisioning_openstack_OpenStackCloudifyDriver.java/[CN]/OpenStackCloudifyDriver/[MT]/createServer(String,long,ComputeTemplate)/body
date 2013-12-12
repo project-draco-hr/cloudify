@@ -33,20 +33,27 @@
     NovaServer newServer=computeApi.createServer(request);
     serverId=newServer.getId();
     newServer=this.waitForServerToBecomeReady(serverId,endTime);
-    if (management) {
-      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getManagementName(),this.openstackPrefixes.getClusterName());
-    }
- else {
-      this.addSecurityGroupsToServer(serverId,this.openstackPrefixes.getAgentName(),this.openstackPrefixes.getClusterName(),this.openstackPrefixes.getApplicationName(),this.openstackPrefixes.getServiceName());
-    }
     Object securityGroupsObj=template.getOptions().get("securityGroupNames");
     if (securityGroupsObj == null) {
       securityGroupsObj=template.getOptions().get("securityGroups");
     }
+    final List<String> securityGroups=new ArrayList<String>();
     if (securityGroupsObj != null) {
       if (securityGroupsObj instanceof String[]) {
-        this.addSecurityGroupsToServer(serverId,(String[])securityGroupsObj);
+        securityGroups.addAll(Arrays.asList(((String[])securityGroupsObj)));
       }
+    }
+    if (management) {
+      securityGroups.add(this.openstackPrefixes.getManagementName());
+      securityGroups.add(this.openstackPrefixes.getClusterName());
+      this.setSecurityGroupsToServer(serverId,securityGroups.toArray(new String[securityGroups.size()]));
+    }
+ else {
+      securityGroups.add(this.openstackPrefixes.getAgentName());
+      securityGroups.add(this.openstackPrefixes.getClusterName());
+      securityGroups.add(this.openstackPrefixes.getApplicationName());
+      securityGroups.add(this.openstackPrefixes.getServiceName());
+      this.setSecurityGroupsToServer(serverId,securityGroups.toArray(new String[securityGroups.size()]));
     }
     if (this.networkHelper.associateFloatingIp()) {
       final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();
