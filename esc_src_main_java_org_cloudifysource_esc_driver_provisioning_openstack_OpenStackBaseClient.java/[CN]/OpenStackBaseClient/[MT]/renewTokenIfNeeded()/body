@@ -1,7 +1,7 @@
 {
   if (this.isTokenExpiredSoon()) {
     if (logger.isLoggable(Level.FINEST)) {
-      logger.finest("Token expired. Request a new token");
+      logger.finest("Token not found or expired. Request a new token");
     }
     this.initToken();
   }

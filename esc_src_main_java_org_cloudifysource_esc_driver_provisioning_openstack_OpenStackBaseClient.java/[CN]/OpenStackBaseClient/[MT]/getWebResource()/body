@@ -8,7 +8,9 @@ synchronized (this.webResourceMutex) {
         this.serviceClient.addFilter(new LoggingFilter(WIRE_LOGGER));
       }
       this.serviceWebResource=this.serviceClient.resource(endpoint);
-      logger.info("Openstack endpoint: " + endpoint);
+      if (logger.isLoggable(Level.FINE)) {
+        logger.fine("Openstack endpoint: " + endpoint);
+      }
     }
     return serviceWebResource;
   }
