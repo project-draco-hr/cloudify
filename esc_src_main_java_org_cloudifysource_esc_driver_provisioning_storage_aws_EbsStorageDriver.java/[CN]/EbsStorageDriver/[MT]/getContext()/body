@@ -1,0 +1,6 @@
+{
+  if (this.context == null) {
+    throw new IllegalStateException("jClouds context was not initialized");
+  }
+  return this.context;
+}

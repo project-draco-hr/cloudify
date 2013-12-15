@@ -1,6 +1,6 @@
 {
   String locationId=this.computeTemplate.getLocationId();
-  RestContext<EC2Client,EC2AsyncClient> unwrapped=this.context.unwrap();
+  RestContext<EC2Client,EC2AsyncClient> unwrapped=getContext().unwrap();
   try {
     EC2Client ec2ClientApi=unwrapped.getApi();
     this.region=JCloudsUtils.getEC2region(ec2ClientApi,locationId);

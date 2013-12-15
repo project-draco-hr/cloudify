@@ -1,6 +1,6 @@
 {
   try {
-    ElasticBlockStoreClient ebsClient=EC2Client.class.cast(this.context.unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getElasticBlockStoreServices();
+    ElasticBlockStoreClient ebsClient=EC2Client.class.cast(getContext().unwrap(EC2ApiMetadata.CONTEXT_TOKEN).getApi()).getElasticBlockStoreServices();
     this.ebsClient=ebsClient;
   }
  catch (  Exception e) {
