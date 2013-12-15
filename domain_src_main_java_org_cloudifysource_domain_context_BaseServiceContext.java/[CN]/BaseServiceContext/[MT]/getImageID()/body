@@ -1,3 +1,4 @@
 {
-  throw new UnsupportedOperationException("getImageID context method is not supported for" + " services running outside a GSC.");
+  unsupported();
+  return null;
 }
