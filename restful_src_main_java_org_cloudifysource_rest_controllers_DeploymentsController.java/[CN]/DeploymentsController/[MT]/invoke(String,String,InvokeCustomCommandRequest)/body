@@ -28,7 +28,7 @@
       futures.put(serviceInstanceName,future);
     }
  catch (    final Exception e) {
-      String errorMessage="Error occurred while invoking custom command on service " + serviceName + ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName()+ ". Reported error: "+ e.getMessage();
+      String errorMessage="Error occurred while invoking custom command '" + request.getCommandName() + "' on service "+ serviceName+ ":"+ instance.getInstanceId()+ " on host "+ instance.getVirtualMachine().getMachine().getHostName()+ ". Reported error: "+ e.getMessage();
       logger.severe(errorMessage);
       Map<String,String> processedResult=postProcessInvocationResult(serviceInstanceName,errorMessage);
       response.setInvocationResult(serviceInstanceName,processedResult);
