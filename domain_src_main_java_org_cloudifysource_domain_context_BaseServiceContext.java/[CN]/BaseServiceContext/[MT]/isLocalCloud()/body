@@ -1,3 +1,4 @@
 {
-  return true;
+  unsupported();
+  return false;
 }
