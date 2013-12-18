@@ -1,0 +1,51 @@
+{
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating management network configuration");
+  boolean isNetworkExistsForManager=false;
+  if (cloudNetwork != null) {
+    final ManagementNetwork managementNetwork=cloudNetwork.getManagement();
+    if (managementNetwork != null) {
+      final NetworkConfiguration managementNetworkConfiguration=managementNetwork.getNetworkConfiguration();
+      if (managementNetworkConfiguration != null && (managementNetworkConfiguration.getName() != null || (managementNetworkConfiguration.getSubnets() != null && !managementNetworkConfiguration.getSubnets().isEmpty()) || !managementNetworkConfiguration.getCustom().isEmpty())) {
+        isNetworkExistsForManager=true;
+        final String mngNetName=managementNetworkConfiguration.getName();
+        if (mngNetName == null || StringUtils.isEmpty(mngNetName.trim())) {
+          validationContext.validationEventEnd(ValidationResultType.ERROR);
+          throw new CloudProvisioningException("The name of Management network is missing. " + "Please check management network configuration in CloudNetwork block.");
+        }
+        List<org.cloudifysource.domain.cloud.network.Subnet> managementNetwokSubnets=managementNetworkConfiguration.getSubnets();
+        if (managementNetwokSubnets != null) {
+          if (managementNetwokSubnets.isEmpty()) {
+            validationContext.validationEventEnd(ValidationResultType.ERROR);
+            throw new CloudProvisioningException(String.format("Subnets list is empty. At least one subnet is required." + " Please check management network configuration in '%s'.",mngNetName));
+          }
+ else {
+            for (            org.cloudifysource.domain.cloud.network.Subnet mSub : managementNetwokSubnets) {
+              if (!networkHelper.isValidSubnetName(mSub)) {
+                validationContext.validationEventEnd(ValidationResultType.ERROR);
+                throw new CloudProvisioningException(String.format("The Name of subnet is missing." + " Please check subnet in management network " + "configuration '%s.",managementNetwork.getNetworkConfiguration().getName()));
+              }
+              if (!networkHelper.isValidSubnetRange(mSub)) {
+                validationContext.validationEventEnd(ValidationResultType.ERROR);
+                throw new CloudProvisioningException(String.format("The range is missing in subnet '%s'. " + "Please check subnet range in management network " + "configuration.",mSub.getName()));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (!isNetworkExistsForManager) {
+    if (managementComputeTemplate != null) {
+      final ComputeTemplateNetwork computeNetwork=managementComputeTemplate.getComputeNetwork();
+      List<String> computeNetworks=computeNetwork.getNetworks();
+      if (computeNetworks != null && !computeNetworks.isEmpty()) {
+        isNetworkExistsForManager=true;
+      }
+    }
+    if (!isNetworkExistsForManager) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException("A network must be provided to the management machines " + "(use either cloudNetwork templates or computeNetwork configuration).");
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

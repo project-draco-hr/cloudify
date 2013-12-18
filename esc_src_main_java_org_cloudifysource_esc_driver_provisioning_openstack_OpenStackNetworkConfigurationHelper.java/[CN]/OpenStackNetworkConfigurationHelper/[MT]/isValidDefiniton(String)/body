@@ -1,0 +1,6 @@
+{
+  if (definition == null || StringUtils.trim(definition).isEmpty()) {
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,52 @@
+{
+  final Map<String,Object> computeOptions=computeTemplate.getOptions();
+  if (computeOptions != null) {
+    Object securityGroups=computeOptions.get("securityGroupNames");
+    if (securityGroups == null) {
+      securityGroups=computeOptions.get("securityGroups");
+    }
+    if (securityGroups != null) {
+      if (securityGroups instanceof String[] && ((String[])securityGroups).length > 0) {
+        final String[] scgArray=(String[])securityGroups;
+        if (scgArray.length == 1) {
+          validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_group",scgArray[0]));
+        }
+ else {
+          validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_groups",org.cloudifysource.esc.util.StringUtils.arrayToString(scgArray,", ")));
+        }
+        try {
+          final Set<String> missingList=new HashSet<String>();
+          final List<SecurityGroup> existingList=networkApi.getSecurityGroups();
+          for (int i=0; i < scgArray.length; i++) {
+            boolean found=false;
+            if (existingList != null) {
+              for (              final SecurityGroup existing : existingList) {
+                if (scgArray[i].equals(existing.getName())) {
+                  found=true;
+                  break;
+                }
+              }
+            }
+            if (!found || existingList == null || existingList.isEmpty()) {
+              missingList.add(scgArray[i]);
+            }
+          }
+          if (!missingList.isEmpty()) {
+            validationContext.validationEventEnd(ValidationResultType.ERROR);
+            if (missingList.size() == 1) {
+              throw new CloudProvisioningException(getFormattedMessage("error_security_group_validation",missingList.iterator().next(),groovyFile,propertiesFile));
+            }
+ else             if (missingList.size() > 1) {
+              throw new CloudProvisioningException(getFormattedMessage("error_security_groups_validation",Arrays.toString(missingList.toArray()),groovyFile,propertiesFile));
+            }
+          }
+        }
+ catch (        final OpenstackException e) {
+          validationContext.validationEventEnd(ValidationResultType.ERROR);
+          throw new CloudProvisioningException("Error requesting security groups.",e);
+        }
+      }
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+  }
+}

@@ -18,9 +18,6 @@
   if (mngConfig != null && mngConfig.getName() != null && mngConfig.getSubnets() != null && !mngConfig.getSubnets().isEmpty()) {
     this.managementNetworkConfiguration=mngConfig;
   }
-  if (configuration.isManagement() && this.managementNetworkConfiguration == null && computeNetworks.isEmpty()) {
-    throw new CloudProvisioningException("A network must be provided to the management machines " + "(use either cloudNetwork templates or computeNetwork configuration).");
-  }
   if (this.management) {
     if (this.useManagementNetwork()) {
       logger.info("Using management network : " + this.managementNetworkConfiguration.getName());

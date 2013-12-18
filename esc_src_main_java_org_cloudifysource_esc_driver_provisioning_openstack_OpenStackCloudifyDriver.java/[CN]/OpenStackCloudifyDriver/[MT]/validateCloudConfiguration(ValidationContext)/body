@@ -1,131 +1,16 @@
 {
-  String templateName;
   String cloudFolder=CLOUDS_FOLDER_PATH + FILE_SEPARATOR + cloud.getName();
   String groovyFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.groovy";
   String propertiesFile=cloudFolder + FILE_SEPARATOR + cloud.getName()+ "-cloud.properties";
   validationContext.validationEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_all_templates"));
   final Map<String,ComputeTemplate> templates=cloud.getCloudCompute().getTemplates();
-  for (  Entry<String,ComputeTemplate> entry : templates.entrySet()) {
-    final ComputeTemplate computeTemplate=entry.getValue();
-    templateName=entry.getKey();
-    validationContext.validationEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_template",templateName));
-    final String imageLocation=computeTemplate.getImageId();
-    final String imageId=imageLocation.split("/")[1];
-    final String hardwareId=computeTemplate.getHardwareId().split("/")[1];
-    final String locationId=imageLocation.split("/")[0];
-    validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_image_hardware_location_combination",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId));
-    try {
-      if (imageId != null) {
-        try {
-          computeApi.getImage(imageId);
-        }
- catch (        final OpenstackException e) {
-          validationContext.validationEventEnd(ValidationResultType.ERROR);
-          final String availableResources=this.formatResourceList(computeApi.getImages());
-          throw new CloudProvisioningException(getFormattedMessage("error_image_id_validation",imageId == null ? "" : imageId,availableResources));
-        }
-      }
-      if (hardwareId != null) {
-        try {
-          computeApi.getFlavor(hardwareId);
-        }
- catch (        final OpenstackException e) {
-          validationContext.validationEventEnd(ValidationResultType.ERROR);
-          final String availableResources=this.formatResourceList(computeApi.getFlavors());
-          throw new CloudProvisioningException(getFormattedMessage("error_hardware_id_validation",hardwareId == null ? "" : hardwareId,availableResources));
-        }
-      }
-    }
- catch (    final OpenstackException ex) {
-      validationContext.validationEventEnd(ValidationResultType.ERROR);
-      throw new CloudProvisioningException(getFormattedMessage("error_image_hardware_location_combination_validation",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId,groovyFile,propertiesFile),ex);
-    }
-    validationContext.validationEventEnd(ValidationResultType.OK);
-    final Map<String,Object> computeOptions=computeTemplate.getOptions();
-    if (computeOptions != null) {
-      Object securityGroups=computeOptions.get("securityGroupNames");
-      if (securityGroups == null) {
-        securityGroups=computeOptions.get("securityGroups");
-      }
-      if (securityGroups != null) {
-        if (securityGroups instanceof String[] && ((String[])securityGroups).length > 0) {
-          final String[] scgArray=(String[])securityGroups;
-          if (scgArray.length == 1) {
-            validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_group",scgArray[0]));
-          }
- else {
-            validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_groups",org.cloudifysource.esc.util.StringUtils.arrayToString(scgArray,", ")));
-          }
-          try {
-            final Set<String> missingList=new HashSet<String>();
-            final List<SecurityGroup> existingList=networkApi.getSecurityGroups();
-            for (int i=0; i < scgArray.length; i++) {
-              boolean found=false;
-              if (existingList != null) {
-                for (                final SecurityGroup existing : existingList) {
-                  if (scgArray[i].equals(existing.getName())) {
-                    found=true;
-                    break;
-                  }
-                }
-              }
-              if (!found || existingList == null || existingList.isEmpty()) {
-                missingList.add(scgArray[i]);
-              }
-            }
-            if (!missingList.isEmpty()) {
-              validationContext.validationEventEnd(ValidationResultType.ERROR);
-              if (missingList.size() == 1) {
-                throw new CloudProvisioningException(getFormattedMessage("error_security_group_validation",missingList.iterator().next(),groovyFile,propertiesFile));
-              }
- else               if (missingList.size() > 1) {
-                throw new CloudProvisioningException(getFormattedMessage("error_security_groups_validation",Arrays.toString(missingList.toArray()),groovyFile,propertiesFile));
-              }
-            }
-          }
- catch (          final OpenstackException e) {
-            validationContext.validationEventEnd(ValidationResultType.ERROR);
-            throw new CloudProvisioningException("Error requesting security groups.",e);
-          }
-        }
-        validationContext.validationEventEnd(ValidationResultType.OK);
-      }
-    }
-    final List<String> networks=computeTemplate.getComputeNetwork().getNetworks();
-    if (networks != null && !networks.isEmpty()) {
-      validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating network(s): " + networks.toString());
-      try {
-        final Set<String> missingList=new HashSet<String>();
-        final List<Network> existingList=networkApi.getNetworks();
-        for (        final String networkName : networks) {
-          boolean found=false;
-          if (existingList != null) {
-            for (            final Network network : existingList) {
-              if (networkName.equals(network.getName())) {
-                found=true;
-                break;
-              }
-            }
-          }
-          if (!found || existingList == null || existingList.isEmpty()) {
-            missingList.add(networkName);
-          }
-        }
-        if (!missingList.isEmpty()) {
-          validationContext.validationEventEnd(ValidationResultType.ERROR);
-          if (missingList.size() == 1) {
-            throw new CloudProvisioningException(String.format("Network \"%s\" does not exist. Please create it or rename in %s or in %s",missingList.iterator().next(),groovyFile,propertiesFile));
-          }
- else           if (missingList.size() > 1) {
-            throw new CloudProvisioningException(String.format("Networks %s do not exist. Please create them or rename in %s or in %s",Arrays.toString(missingList.toArray()),groovyFile,propertiesFile));
-          }
-        }
-      }
- catch (      final OpenstackException ex) {
-        validationContext.validationEventEnd(ValidationResultType.ERROR);
-        throw new CloudProvisioningException("Error requesting networks.",ex);
-      }
-      validationContext.validationEventEnd(ValidationResultType.OK);
-    }
+  final String mangementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
+  final ComputeTemplate managementComputeTemplate=cloud.getCloudCompute().getTemplates().get(mangementTemplateName);
+  this.validateOpenstackEndpoint(validationContext,managementComputeTemplate);
+  final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
+  this.validateManagementNetwork(validationContext,managementComputeTemplate,cloudNetwork);
+  if (cloudNetwork != null) {
+    this.validateTemplateNetworks(validationContext,cloudNetwork);
   }
+  this.validateComputeTemplates(validationContext,groovyFile,propertiesFile,templates);
 }
