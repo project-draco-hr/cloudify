@@ -1,12 +1,16 @@
 {
   try {
     this.cleanAllNetworks();
-    final Network network=this.getOrCreateNetwork(this.networkHelper.getManagementNetworkPrefixedName());
+    final String managementNetworkPrefixedName=this.networkHelper.getManagementNetworkPrefixedName();
+    final Network network=this.getOrCreateNetwork(managementNetworkPrefixedName);
+    if (network == null) {
+      throw new CloudProvisioningException("Fail to create '" + managementNetworkPrefixedName + "' network");
+    }
     final NetworkConfiguration networkTemplate=this.networkHelper.getManagementNetworkTemplate();
     final List<Subnet> subnets=new ArrayList<Subnet>();
     if (networkTemplate.getSubnets() != null) {
-      for (      org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkTemplate.getSubnets()) {
-        Subnet subnet=this.getOrCreateSubnet(subnetConfig,network);
+      for (      final org.cloudifysource.domain.cloud.network.Subnet subnetConfig : networkTemplate.getSubnets()) {
+        final Subnet subnet=this.getOrCreateSubnet(subnetConfig,network);
         subnets.add(subnet);
       }
     }
