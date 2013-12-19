@@ -20,6 +20,7 @@
     final Map<Object,Object> env=new HashMap<Object,Object>();
     env.putAll(System.getenv());
     env.put("CLASSPATH",classpath);
+    env.put(CloudifyConstants.GIGASPACES_CLOUD_MACHINE_ID,"localcloud");
     if (!env.containsKey(JAVA_HOME_ENV_VAR_NAME)) {
       final String javaHomeDirectory=getJavaHomeDirectory();
       logger.warning("JAVA_HOME system variables is not set. adding JAVA_HOME with value " + javaHomeDirectory);
