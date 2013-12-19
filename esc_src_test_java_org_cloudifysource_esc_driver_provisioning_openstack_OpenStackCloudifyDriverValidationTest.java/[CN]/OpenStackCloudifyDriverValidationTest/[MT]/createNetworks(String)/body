@@ -1,0 +1,9 @@
+{
+  List<Network> networks=new ArrayList<Network>(names.length);
+  for (  String name : names) {
+    Network net=new Network();
+    net.setName(name);
+    networks.add(net);
+  }
+  return networks;
+}

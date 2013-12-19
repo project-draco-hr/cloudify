@@ -1,0 +1,12 @@
+{
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingApplicationNetworkName",false);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("The name of template network configuration is missing")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+  }
+}

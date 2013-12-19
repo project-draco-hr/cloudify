@@ -1,0 +1,4 @@
+{
+  this.serviceName="neutron";
+  this.networkApiVersion="v2.0";
+}

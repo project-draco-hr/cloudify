@@ -1,0 +1,12 @@
+{
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingApplicationSubnetName",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("The name of the subnet is missing")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+  }
+}
