@@ -1,3 +1,14 @@
 {
-  Assert.fail("To be implemented");
+  try {
+    Mockito.when(this.computeApi.getServers()).thenThrow(new OpenstackServerException(200,401,null));
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("wrongCredentials",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("Authentification operation failed. Please check credentials informations")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
 }

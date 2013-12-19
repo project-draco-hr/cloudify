@@ -1,3 +1,12 @@
 {
-  Assert.fail("To be implemented");
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingManagementNetworkName",false);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("The name of Management network is missing. Please check management network configuration")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+  }
 }

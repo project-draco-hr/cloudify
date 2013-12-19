@@ -4,7 +4,7 @@
     String openstackProperty=(String)managementComputeTemplate.getOverrides().get(OPENSTACK_ENDPOINT);
     if (openstackProperty == null || openstackProperty.trim().isEmpty()) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);
-      throw new CloudProvisioningException((String.format("The openstack endpoint option '%s' is missing. " + "Please check overrides block in management template '%s'. ",OPENSTACK_ENDPOINT,cloud.getConfiguration().getManagementMachineTemplate())));
+      throw new CloudProvisioningException((String.format("The openstack endpoint '%s' is missing. " + "Please check overrides block in management template '%s'. ",OPENSTACK_ENDPOINT,cloud.getConfiguration().getManagementMachineTemplate())));
     }
     validationContext.validationEventEnd(ValidationResultType.OK);
   }

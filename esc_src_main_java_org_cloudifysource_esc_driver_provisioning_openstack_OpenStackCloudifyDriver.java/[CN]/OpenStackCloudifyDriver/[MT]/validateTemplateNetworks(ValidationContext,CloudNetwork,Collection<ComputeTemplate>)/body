@@ -1,6 +1,6 @@
 {
   Map<String,NetworkConfiguration> templateNetworkConfigurations=cloudNetwork.getTemplates();
-  if (templateNetworkConfigurations != null) {
+  if (templateNetworkConfigurations != null && !templateNetworkConfigurations.isEmpty()) {
     validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating templates network configuration");
     for (    Entry<String,NetworkConfiguration> networkConfigurationEntry : templateNetworkConfigurations.entrySet()) {
       if (!networkHelper.isValidNetworkName(networkConfigurationEntry.getValue())) {
@@ -23,6 +23,22 @@
         }
       }
     }
-    validationContext.validationEventEnd(ValidationResultType.OK);
   }
+  ManagementNetwork managementNetwork=cloud.getCloudNetwork().getManagement();
+  if (managementNetwork.getNetworkConfiguration() != null && managementNetwork.getNetworkConfiguration().getName() == null && managementNetwork.getNetworkConfiguration().getSubnets() != null && managementNetwork.getNetworkConfiguration().getSubnets().isEmpty()) {
+    boolean isNetworkInTemplates=true;
+    for (    ComputeTemplate template : templates) {
+      if (template.getComputeNetwork() != null) {
+        List<String> networks=template.getComputeNetwork().getNetworks();
+        if (networks == null || networks.isEmpty()) {
+          isNetworkInTemplates=false;
+        }
+      }
+    }
+    if (!isNetworkInTemplates) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException("A network must be provided for all templates," + " since management network is missing.");
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
 }

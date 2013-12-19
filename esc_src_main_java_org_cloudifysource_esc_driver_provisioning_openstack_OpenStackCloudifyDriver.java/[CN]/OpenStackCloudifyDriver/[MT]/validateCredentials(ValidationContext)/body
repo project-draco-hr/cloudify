@@ -1,0 +1,18 @@
+{
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"validating credentials");
+  try {
+    this.computeApi.getServers();
+  }
+ catch (  OpenstackServerException e) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    if (e.getStatusCode() == HTTP_AUTHENTIFICATION_ERROR) {
+      throw new CloudProvisioningException("Authentification operation failed. Please check credentials informations.");
+    }
+    throw new CloudProvisioningException("Could not request Openstack",e);
+  }
+catch (  final OpenstackException e) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException("Could not request Openstack",e);
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

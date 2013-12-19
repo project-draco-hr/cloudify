@@ -7,10 +7,11 @@
   final String mangementTemplateName=cloud.getConfiguration().getManagementMachineTemplate();
   final ComputeTemplate managementComputeTemplate=cloud.getCloudCompute().getTemplates().get(mangementTemplateName);
   this.validateOpenstackEndpoint(validationContext,managementComputeTemplate);
+  validateCredentials(validationContext);
   final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
   this.validateManagementNetwork(validationContext,managementComputeTemplate,cloudNetwork);
   if (cloudNetwork != null) {
-    this.validateTemplateNetworks(validationContext,cloudNetwork);
+    this.validateTemplateNetworks(validationContext,cloudNetwork,templates.values());
   }
   this.validateComputeTemplates(validationContext,groovyFile,propertiesFile,templates);
 }

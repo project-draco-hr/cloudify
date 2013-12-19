@@ -1,3 +1,13 @@
 {
-  Assert.fail("To be implemented");
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingNetworksForApplications",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("A network must be provided for all templates")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
 }

@@ -1,3 +1,13 @@
 {
-  Assert.fail("To be implemented");
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingNetworksForManagements",false);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("has no networks for cloudify communications")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
 }

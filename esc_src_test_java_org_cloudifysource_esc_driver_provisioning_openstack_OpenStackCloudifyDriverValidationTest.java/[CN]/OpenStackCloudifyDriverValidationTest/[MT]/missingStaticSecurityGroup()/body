@@ -1,3 +1,14 @@
 {
-  Assert.fail("To be implemented");
+  try {
+    Mockito.when(networkApi.getSecurityGroups()).thenThrow(new OpenstackException());
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("wrongSecurityGroops",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  Exception e) {
+    if (!e.getMessage().contains("Error requesting security groups")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
 }

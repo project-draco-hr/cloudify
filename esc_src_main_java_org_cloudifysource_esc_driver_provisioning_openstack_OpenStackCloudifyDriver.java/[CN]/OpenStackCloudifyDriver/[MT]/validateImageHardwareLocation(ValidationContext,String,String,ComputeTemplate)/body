@@ -1,15 +1,7 @@
 {
-  final String imageLocation=computeTemplate.getImageId();
-  if (!imageLocation.contains("/")) {
-    throw new CloudProvisioningException("'imageId' should be formatted as region/imageId");
-  }
-  final String hardwareLocation=computeTemplate.getHardwareId();
-  if (!hardwareLocation.contains("/")) {
-    throw new CloudProvisioningException("'hardwareId' should be formatted as region/flavorId");
-  }
-  final String imageId=imageLocation.split("/")[1];
-  final String hardwareId=hardwareLocation.split("/")[1];
-  final String locationId=imageLocation.split("/")[0];
+  final String imageId=computeTemplate.getImageId().split("/")[1];
+  final String hardwareId=computeTemplate.getHardwareId().split("/")[1];
+  final String locationId=computeTemplate.getImageId().split("/")[0];
   validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_image_hardware_location_combination",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId));
   try {
     if (imageId != null) {
