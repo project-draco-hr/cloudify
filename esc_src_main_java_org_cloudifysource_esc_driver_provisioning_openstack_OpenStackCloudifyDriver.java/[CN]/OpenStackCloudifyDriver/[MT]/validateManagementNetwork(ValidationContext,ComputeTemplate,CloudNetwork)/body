@@ -22,7 +22,7 @@
             for (            org.cloudifysource.domain.cloud.network.Subnet mSub : managementNetwokSubnets) {
               if (!networkHelper.isValidSubnetName(mSub)) {
                 validationContext.validationEventEnd(ValidationResultType.ERROR);
-                throw new CloudProvisioningException(String.format("The Name of subnet is missing." + " Please check subnet in management network " + "configuration '%s.",managementNetwork.getNetworkConfiguration().getName()));
+                throw new CloudProvisioningException(String.format("The name of subnet is missing." + " Please check subnet in management network " + "configuration '%s'.",managementNetwork.getNetworkConfiguration().getName()));
               }
               if (!networkHelper.isValidSubnetRange(mSub)) {
                 validationContext.validationEventEnd(ValidationResultType.ERROR);

@@ -3,10 +3,11 @@
     OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingApplicationSubnetRange",false);
     newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
   }
- catch (  Exception e) {
+ catch (  CloudProvisioningException e) {
     if (!e.getMessage().contains("The range is missing in subnet")) {
       e.printStackTrace();
       Assert.fail("Validation must fail: " + e.getMessage());
     }
+    throw e;
   }
 }

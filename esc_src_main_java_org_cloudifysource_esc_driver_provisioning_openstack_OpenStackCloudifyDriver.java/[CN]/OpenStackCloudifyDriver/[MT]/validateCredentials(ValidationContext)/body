@@ -1,5 +1,5 @@
 {
-  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"validating credentials");
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating credentials");
   try {
     this.computeApi.getServers();
   }

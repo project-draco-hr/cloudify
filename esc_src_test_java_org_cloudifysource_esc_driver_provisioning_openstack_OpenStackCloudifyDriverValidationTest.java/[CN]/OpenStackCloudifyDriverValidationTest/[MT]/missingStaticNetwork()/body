@@ -6,10 +6,11 @@
     OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
     newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
   }
- catch (  Exception e) {
+ catch (  CloudProvisioningException e) {
     if (!e.getMessage().contains("Network \"SOME_INTERNAL_NETWORK_1\" does not exist")) {
       e.printStackTrace();
       Assert.fail("Validation must fail: " + e.getMessage());
     }
+    throw e;
   }
 }
