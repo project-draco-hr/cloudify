@@ -10,9 +10,6 @@
   if (this.computeNetworks == null) {
     this.computeNetworks=new ArrayList<String>();
   }
-  if (!this.useManagementNetwork() && computeNetworks.isEmpty()) {
-    throw new CloudProvisioningException(configuration.getServiceName() + " has no networks for cloudify communications." + " You need to define a management network or a computeNetwork.");
-  }
   final ServiceNetwork serviceNetwork=configuration.getNetwork();
   if (serviceNetwork != null) {
     this.serviceAccessRules=serviceNetwork.getAccessRules();
@@ -22,7 +19,9 @@
     final Map<String,NetworkConfiguration> templates=cloudNetwork.getTemplates();
     this.applicationNetworkConfiguration=templates.get(serviceNetwork.getTemplate());
     if (this.applicationNetworkConfiguration == null) {
-      throw new CloudProvisioningException("Service network template not found '" + serviceNetwork.getTemplate() + "'");
+      final String message="Service network template not found '" + serviceNetwork.getTemplate() + "'";
+      logger.severe(message);
+      throw new CloudProvisioningException(message);
     }
   }
   logger.info("Service '" + configuration.getServiceName() + "' using network '"+ this.getPrivateIpNetworkName()+ "' for private ip");

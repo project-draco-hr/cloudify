@@ -9,4 +9,5 @@
   Assert.assertEquals(prefixedMngNetTemplateName,helper.getPrivateIpNetworkName());
   Assert.assertEquals(false,helper.useApplicationNetworkTemplate());
   Assert.assertEquals(true,helper.useManagementNetwork());
+  Assert.assertEquals(false,helper.associateFloatingIp());
 }

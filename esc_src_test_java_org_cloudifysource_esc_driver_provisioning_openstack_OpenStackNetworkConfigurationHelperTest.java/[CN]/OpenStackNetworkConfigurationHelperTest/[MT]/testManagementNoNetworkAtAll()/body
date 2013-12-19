@@ -7,5 +7,6 @@
   }
  catch (  CloudProvisioningException e) {
     Assert.assertTrue("Expected CloudProvisioningException",e.getMessage().contains("A network must be provided to the management machines"));
+    throw e;
   }
 }

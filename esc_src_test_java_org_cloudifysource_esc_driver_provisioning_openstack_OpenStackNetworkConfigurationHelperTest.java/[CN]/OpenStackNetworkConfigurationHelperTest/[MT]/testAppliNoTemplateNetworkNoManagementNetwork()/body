@@ -5,7 +5,8 @@
   try {
     new OpenStackNetworkConfigurationHelper(configuration);
   }
- catch (  Exception e) {
+ catch (  CloudProvisioningException e) {
     Assert.assertTrue(e.getMessage().contains("no networks for cloudify communications"));
+    throw e;
   }
 }

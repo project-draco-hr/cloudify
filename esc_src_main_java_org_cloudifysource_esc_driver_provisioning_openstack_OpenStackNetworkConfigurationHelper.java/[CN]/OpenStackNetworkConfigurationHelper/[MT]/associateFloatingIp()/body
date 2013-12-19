@@ -7,5 +7,9 @@
     final String associate=this.applicationNetworkConfiguration.getCustom().get(ASSOCIATE_FLOATING_IP_ON_BOOTSTRAP);
     return BooleanUtils.toBoolean(associate);
   }
+ else   if (!management && this.applicationNetworkConfiguration == null && this.computeNetworks.isEmpty()) {
+    final String associate=this.managementNetworkConfiguration.getCustom().get(ASSOCIATE_FLOATING_IP_ON_BOOTSTRAP);
+    return BooleanUtils.toBoolean(associate);
+  }
   return false;
 }
