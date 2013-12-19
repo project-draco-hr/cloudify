@@ -12,6 +12,9 @@
   if (overrides != null && !overrides.isEmpty()) {
     endpoint=(String)overrides.get(OPENSTACK_ENDPOINT);
   }
+  if (endpoint == null) {
+    throw new IllegalStateException("No endpoint defined");
+  }
   final String networkApiVersion=(String)cloudTemplate.getOptions().get(OPT_NETWORK_API_VERSION);
   final String networkServiceName=(String)cloudTemplate.getOptions().get(OPT_NETWORK_SERVICE_NAME);
   final String computeServiceName=(String)cloudTemplate.getOptions().get(OPT_COMPUTE_SERVICE_NAME);
@@ -20,7 +23,7 @@
   final String cloudUser=cloud.getUser().getUser();
   final String password=cloud.getUser().getApiKey();
   if (cloudUser == null || password == null) {
-    throw new IllegalStateException("Cloud user or password not found.");
+    throw new IllegalStateException("Cloud user or password not found");
   }
   final StringTokenizer st=new StringTokenizer(cloudUser,":");
   final String tenant=st.hasMoreElements() ? (String)st.nextToken() : null;

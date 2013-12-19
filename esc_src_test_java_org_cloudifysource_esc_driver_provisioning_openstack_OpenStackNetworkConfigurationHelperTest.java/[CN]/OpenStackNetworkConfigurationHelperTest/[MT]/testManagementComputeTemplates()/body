@@ -10,4 +10,5 @@
   Assert.assertEquals(COMPUTE_NET1,helper.getPrivateIpNetworkName());
   Assert.assertEquals(false,helper.useApplicationNetworkTemplate());
   Assert.assertEquals(false,helper.useManagementNetwork());
+  Assert.assertEquals(false,helper.associateFloatingIp());
 }
