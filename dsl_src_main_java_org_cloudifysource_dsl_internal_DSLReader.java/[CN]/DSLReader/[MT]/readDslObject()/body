@@ -50,7 +50,7 @@
   }
   this.dslClassLoader=gs.getClassLoader();
 synchronized (dslSingleton) {
-    GroovySystem.getMetaClassRegistry().removeMetaClass(result.getClass());
+    GroovySystem.getMetaClassRegistry().removeMetaClass(Object.class);
     gs.resetLoadedClasses();
   }
   return result;
