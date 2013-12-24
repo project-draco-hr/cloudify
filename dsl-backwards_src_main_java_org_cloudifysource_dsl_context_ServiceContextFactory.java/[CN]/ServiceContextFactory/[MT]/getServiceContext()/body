@@ -1,0 +1,3 @@
+{
+  return org.cloudifysource.utilitydomain.context.ServiceContextFactory.getServiceContext();
+}
