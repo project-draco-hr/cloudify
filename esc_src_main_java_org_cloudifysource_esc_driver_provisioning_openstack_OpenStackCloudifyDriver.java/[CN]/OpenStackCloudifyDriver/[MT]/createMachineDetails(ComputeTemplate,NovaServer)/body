@@ -7,7 +7,16 @@
     md.setOpenFilesLimit(template.getOpenFilesLimit());
     final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
     final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
+    if (privateIpNetwork == null) {
+      throw new CloudProvisioningException("Couldn't find network '" + privateIpNetworkName + "' to set private IP.");
+    }
     final Port privateIpPort=networkApi.getPort(server.getId(),privateIpNetwork.getId());
+    if (privateIpPort == null) {
+      throw new CloudProvisioningException("Server '" + server.getName() + "' has no port on network '"+ privateIpNetwork.getName()+ "'.");
+    }
+    if (privateIpPort.getFixedIps() == null || privateIpPort.getFixedIps().isEmpty()) {
+      throw new CloudProvisioningException("No fixed IP found on the port which link server '" + server.getName() + "' tonetwork '"+ privateIpNetwork.getName()+ "'.");
+    }
     final RouteFixedIp fixedIp=privateIpPort.getFixedIps().get(0);
     md.setPrivateAddress(fixedIp.getIpAddress());
     if (this.networkHelper.associateFloatingIp()) {

@@ -1,13 +1,7 @@
 {
   Subnet subnet=null;
   if (subnetConfig == null) {
-    final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
-    if (subnets != null && subnets.size() != 0) {
-      subnet=subnets.get(0);
-    }
- else {
-      throw new CloudProvisioningException("The network '" + network.getName() + "' must have a subnet");
-    }
+    throw new CloudProvisioningException("The network '" + network.getName() + "' is missing subnet configuration.");
   }
  else {
     final List<Subnet> subnets=networkApi.getSubnetsByNetworkId(network.getId());
@@ -21,6 +15,9 @@
       final Subnet subnetRequest=this.createSubnetRequest(subnetConfig,network.getId());
       subnet=networkApi.createSubnet(subnetRequest);
     }
+  }
+  if (subnet == null) {
+    throw new CloudProvisioningException("Missing subnets for network '" + network.getName() + "'.");
   }
   return subnet;
 }

@@ -6,7 +6,7 @@
       publicNetworkId=networkApi.getPublicNetworkId();
     }
  else {
-      Network extNetwork=networkApi.getNetworkByName(this.networkHelper.getExternalNetworkName());
+      final Network extNetwork=networkApi.getNetworkByName(this.networkHelper.getExternalNetworkName());
       if (extNetwork == null) {
         throw new CloudProvisioningException("Couldn't find external network '" + this.networkHelper.getExternalNetworkName() + "'");
       }

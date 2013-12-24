@@ -1,0 +1,15 @@
+{
+  try {
+    Mockito.reset(this.computeApi);
+    Mockito.when(this.computeApi.getFlavor(Mockito.anyString())).thenThrow(new OpenstackException());
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  CloudProvisioningException e) {
+    if (!e.getMessage().contains("Hardware ID \"hardwareId\" is invalid")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

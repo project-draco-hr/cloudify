@@ -13,6 +13,12 @@
     if (this.networkHelper.useManagementNetwork()) {
       final String managementNetworkName=this.networkHelper.getManagementNetworkPrefixedName();
       final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);
+      if (managementNetwork == null) {
+        throw new CloudProvisioningException("Unexpected missing management network '" + managementNetworkName + "'");
+      }
+      if (managementNetwork.getSubnets() == null || managementNetwork.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in management network '" + managementNetworkName + "'");
+      }
       if (managementNetwork.getSubnets().length == 1) {
         request.addNetworks(managementNetwork.getId());
       }
@@ -26,6 +32,9 @@
       if (network == null) {
         throw new CloudProvisioningException("Couldn't find network '" + networkName + "'");
       }
+      if (network.getSubnets() == null || network.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in network '" + networkName + "'");
+      }
       if (network.getSubnets().length == 1) {
         request.addNetworks(network.getId());
       }
@@ -37,6 +46,12 @@
     if (!management && this.networkHelper.useApplicationNetworkTemplate()) {
       final String prefixedAppliNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
       final Network templateNetwork=this.networkApi.getNetworkByName(prefixedAppliNetworkName);
+      if (templateNetwork == null) {
+        throw new CloudProvisioningException("Unexpected missing management network '" + prefixedAppliNetworkName + "'");
+      }
+      if (templateNetwork.getSubnets() == null || templateNetwork.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in management network '" + prefixedAppliNetworkName + "'");
+      }
       if (templateNetwork.getSubnets().length == 1) {
         request.addNetworks(templateNetwork.getId());
       }
@@ -73,6 +88,9 @@
     if (this.networkHelper.associateFloatingIp()) {
       final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();
       final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIPNetworkName);
+      if (privateIpNetwork == null) {
+        throw new CloudProvisioningException("Couldn't find network '" + privateIPNetworkName + "' to assign floating IP.");
+      }
       networkApi.createAndAssociateFloatingIp(serverId,privateIpNetwork.getId());
     }
     final MachineDetails md=this.createMachineDetails(template,newServer);

@@ -1,0 +1,15 @@
+{
+  try {
+    Mockito.reset(this.computeApi);
+    Mockito.when(this.computeApi.getImage(Mockito.anyString())).thenThrow(new OpenstackException());
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  CloudProvisioningException e) {
+    if (!e.getMessage().contains("Image ID \"imageId\" is invalid")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

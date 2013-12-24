@@ -1,14 +1,15 @@
 {
   final PortRange portRange=PortRangeFactory.createPortRange(accessRule.getPortRange());
-  String targetSecurityGroupId=serviceSecgroupId;
-  String ip="0.0.0.0/0";
-  String group=null;
+  if (portRange != null && !portRange.getRanges().isEmpty()) {
+    String targetSecurityGroupId=serviceSecgroupId;
+    String ip="0.0.0.0/0";
+    String group=null;
 switch (accessRule.getType()) {
 case PUBLIC:
-    break;
+      break;
 case SERVICE:
-  group=this.openstackPrefixes.getServiceName();
-break;
+    group=this.openstackPrefixes.getServiceName();
+  break;
 case APPLICATION:
 group=this.openstackPrefixes.getApplicationName();
 break;
@@ -20,19 +21,19 @@ group=accessRule.getTarget();
 break;
 case RANGE:
 if (accessRule.getTarget() == null) {
-throw new IllegalStateException("No IP defined for the 'Range' access rule type :" + accessRule);
+throw new CloudProvisioningException("No IP defined for the 'Range' access rule type :" + accessRule);
 }
 ip=accessRule.getTarget();
 break;
 case PRIVATE:
 default :
-throw new IllegalStateException("Unsupported type of rule '" + accessRule.getType() + "'");
+throw new CloudProvisioningException("Unsupported type of rule '" + accessRule.getType() + "'");
 }
 SecurityGroup existingSecgroup=null;
 if (group != null) {
 existingSecgroup=this.networkApi.getSecurityGroupsByName(group);
 if (existingSecgroup == null) {
-throw new IllegalStateException("Security group '" + group + "' does not exist.");
+throw new CloudProvisioningException("Security group '" + group + "' does not exist.");
 }
 }
 for (final PortRangeEntry pre : portRange.getRanges()) {
@@ -49,5 +50,6 @@ request.setRemoteGroupId(existingSecgroup.getId());
 request.setRemoteIpPrefix(ip);
 }
 networkApi.createSecurityGroupRule(request);
+}
 }
 }

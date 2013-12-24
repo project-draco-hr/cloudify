@@ -10,14 +10,20 @@
     if (router != null) {
       try {
         final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
-        Network privateNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
-        String[] privateNetSubnetIds=privateNetwork.getSubnets();
-        final List<Port> ports=networkApi.getPortsByDeviceId(router.getId());
-        for (        final Port port : ports) {
-          for (          final RouteFixedIp fixedIp : port.getFixedIps()) {
-            for (            final String id : privateNetSubnetIds) {
-              if (id.equals(fixedIp.getSubnetId())) {
-                networkApi.deleteRouterInterface(router.getId(),fixedIp.getSubnetId());
+        final Network privateNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
+        if (privateNetwork != null) {
+          final String[] privateNetSubnetIds=privateNetwork.getSubnets();
+          if (privateNetSubnetIds != null && privateNetSubnetIds.length > 0) {
+            final List<Port> ports=networkApi.getPortsByDeviceId(router.getId());
+            if (ports != null) {
+              for (              final Port port : ports) {
+                for (                final RouteFixedIp fixedIp : port.getFixedIps()) {
+                  for (                  final String id : privateNetSubnetIds) {
+                    if (id.equals(fixedIp.getSubnetId())) {
+                      networkApi.deleteRouterInterface(router.getId(),fixedIp.getSubnetId());
+                    }
+                  }
+                }
               }
             }
           }
@@ -32,7 +38,9 @@
     }
   }
   final List<Network> appliNetworks=networkApi.getNetworkByPrefix(this.openstackPrefixes.getPrefix());
-  for (  final Network n : appliNetworks) {
-    networkApi.deleteNetwork(n.getId());
+  if (appliNetworks != null) {
+    for (    final Network n : appliNetworks) {
+      networkApi.deleteNetwork(n.getId());
+    }
   }
 }

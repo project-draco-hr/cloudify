@@ -19,6 +19,9 @@
   final String region=cloudImageId.split("/")[0];
   final String cloudUser=cloud.getUser().getUser();
   final String password=cloud.getUser().getApiKey();
+  if (cloudUser == null || password == null) {
+    throw new IllegalStateException("Cloud user or password not found");
+  }
   final StringTokenizer st=new StringTokenizer(cloudUser,":");
   final String tenant=st.hasMoreElements() ? (String)st.nextToken() : null;
   final String username=st.hasMoreElements() ? (String)st.nextToken() : null;

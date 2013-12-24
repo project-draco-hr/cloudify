@@ -1,0 +1,4 @@
+ValidationContext validationContext
+String groovyFile
+String propertiesFile
+Map<String,ComputeTemplate> templates

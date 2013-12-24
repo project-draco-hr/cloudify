@@ -1,9 +1,13 @@
 {
   final SecurityGroup securityGroup=networkApi.getSecurityGroupsByName(securityGroupName);
-  final SecurityGroupRule[] securityGroupRules=securityGroup.getSecurityGroupRules();
-  for (  final SecurityGroupRule rule : securityGroupRules) {
-    if ("egress".equals(rule.getDirection())) {
-      networkApi.deleteSecurityGroupRule(rule.getId());
+  if (securityGroup != null) {
+    final SecurityGroupRule[] securityGroupRules=securityGroup.getSecurityGroupRules();
+    if (securityGroupRules != null) {
+      for (      final SecurityGroupRule rule : securityGroupRules) {
+        if ("egress".equals(rule.getDirection())) {
+          networkApi.deleteSecurityGroupRule(rule.getId());
+        }
+      }
     }
   }
 }

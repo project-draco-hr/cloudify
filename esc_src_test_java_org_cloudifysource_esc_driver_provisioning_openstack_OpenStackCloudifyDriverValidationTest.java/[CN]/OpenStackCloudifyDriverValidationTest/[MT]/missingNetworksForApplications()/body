@@ -1,0 +1,13 @@
+{
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingNetworksForApplications",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  CloudProvisioningException e) {
+    if (!e.getMessage().contains("network must be provided for all templates: [APPLI, APPLI2]")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

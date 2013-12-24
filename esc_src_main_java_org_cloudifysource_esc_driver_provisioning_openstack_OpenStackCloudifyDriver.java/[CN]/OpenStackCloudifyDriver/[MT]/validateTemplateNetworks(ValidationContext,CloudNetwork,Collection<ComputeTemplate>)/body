@@ -1,0 +1,28 @@
+{
+  Map<String,NetworkConfiguration> templateNetworkConfigurations=cloudNetwork.getTemplates();
+  if (templateNetworkConfigurations != null && !templateNetworkConfigurations.isEmpty()) {
+    validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating templates network configuration");
+    for (    Entry<String,NetworkConfiguration> networkConfigurationEntry : templateNetworkConfigurations.entrySet()) {
+      if (!networkHelper.isValidNetworkName(networkConfigurationEntry.getValue())) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException(String.format("The name of template network configuration is missing. " + "Please check template network in '%s'",networkConfigurationEntry.getKey()));
+      }
+      List<org.cloudifysource.domain.cloud.network.Subnet> templateNetworkSubnets=networkConfigurationEntry.getValue().getSubnets();
+      if (templateNetworkSubnets == null || templateNetworkSubnets.isEmpty()) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException(String.format("Subnets list is empty. At least one subnet is required. " + "Please check template network configuration in '%s'.",networkConfigurationEntry.getValue().getName()));
+      }
+      for (      org.cloudifysource.domain.cloud.network.Subnet mSub : templateNetworkSubnets) {
+        if (!networkHelper.isValidSubnetName(mSub)) {
+          validationContext.validationEventEnd(ValidationResultType.ERROR);
+          throw new CloudProvisioningException(String.format("The name of the subnet is missing." + " Please check subnet name in template network " + "configuration '%s' ",networkConfigurationEntry.getValue().getName()));
+        }
+        if (mSub.getRange() == null || StringUtils.trim(mSub.getRange()).isEmpty()) {
+          validationContext.validationEventEnd(ValidationResultType.ERROR);
+          throw new CloudProvisioningException(String.format("The range is missing in subnet '%s'. " + "Please check subnet range in template network " + "configuration '%s' ",mSub.getName(),networkConfigurationEntry.getKey()));
+        }
+      }
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

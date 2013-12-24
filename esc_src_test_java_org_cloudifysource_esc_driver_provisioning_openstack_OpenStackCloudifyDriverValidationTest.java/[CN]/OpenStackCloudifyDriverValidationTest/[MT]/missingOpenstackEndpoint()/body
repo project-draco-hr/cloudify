@@ -1,0 +1,14 @@
+{
+  String openstackEndPoint="openstack.endpoint";
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingOpenstackEndpoint",false);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  CloudProvisioningException e) {
+    if (!e.getMessage().contains(String.format("The openstack endpoint '%s' is missing",openstackEndPoint))) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

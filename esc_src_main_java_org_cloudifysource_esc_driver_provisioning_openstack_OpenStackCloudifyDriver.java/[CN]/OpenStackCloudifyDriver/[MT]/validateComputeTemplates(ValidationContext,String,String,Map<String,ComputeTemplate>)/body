@@ -1,0 +1,41 @@
+{
+  ManagementNetwork managementNetwork=cloud.getCloudNetwork().getManagement();
+  boolean isManagementNetwork=true;
+  if (managementNetwork.getNetworkConfiguration() != null && managementNetwork.getNetworkConfiguration().getName() == null && managementNetwork.getNetworkConfiguration().getSubnets() != null && managementNetwork.getNetworkConfiguration().getSubnets().isEmpty()) {
+    isManagementNetwork=false;
+  }
+  List<String> missingNetworks=new ArrayList<String>();
+  for (  Entry<String,ComputeTemplate> entry : templates.entrySet()) {
+    final ComputeTemplate computeTemplate=entry.getValue();
+    String templateName=entry.getKey();
+    validationContext.validationEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_template",templateName));
+    final String imageLocation=computeTemplate.getImageId();
+    if (!imageLocation.contains("/")) {
+      throw new CloudProvisioningException("'imageId' should be formatted as region/imageId." + " Verify the cloud template : " + templateName);
+    }
+    final String hardwareLocation=computeTemplate.getHardwareId();
+    if (!hardwareLocation.contains("/")) {
+      throw new CloudProvisioningException("'hardwareId' should be formatted as region/flavorId." + " Verify the cloud template : " + templateName);
+    }
+    this.validateImageHardwareLocation(validationContext,groovyFile,propertiesFile,computeTemplate);
+    this.validateStaticSecgroups(validationContext,groovyFile,propertiesFile,computeTemplate);
+    this.validateStaticNetworks(validationContext,groovyFile,propertiesFile,computeTemplate);
+    if (!isManagementNetwork && computeTemplate.getComputeNetwork() != null) {
+      final List<String> networks=computeTemplate.getComputeNetwork().getNetworks();
+      if (networks == null || networks.isEmpty()) {
+        missingNetworks.add(templateName);
+      }
+    }
+  }
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating cloud compute network configuration");
+  if (!missingNetworks.isEmpty()) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    if (missingNetworks.size() == 1) {
+      throw new CloudProvisioningException("Since management network is missing, a network must be provided for the template: " + missingNetworks.get(0));
+    }
+ else {
+      throw new CloudProvisioningException("Since management network is missing, a network must be provided for all templates: " + missingNetworks);
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

@@ -5,6 +5,9 @@
     updateRequest.setId(port.getId());
     for (    final String sgn : securityGroupNames) {
       final SecurityGroup sg=networkApi.getSecurityGroupsByName(sgn);
+      if (sg == null) {
+        throw new CloudProvisioningException("Couldn't find security group '" + sgn + "'");
+      }
       updateRequest.addSecurityGroup(sg.getId());
     }
     networkApi.updatePort(updateRequest);

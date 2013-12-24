@@ -1,0 +1,33 @@
+{
+  final String imageId=computeTemplate.getImageId().split("/")[1];
+  final String hardwareId=computeTemplate.getHardwareId().split("/")[1];
+  final String locationId=computeTemplate.getImageId().split("/")[0];
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_image_hardware_location_combination",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId));
+  try {
+    if (imageId != null) {
+      try {
+        computeApi.getImage(imageId);
+      }
+ catch (      final OpenstackException e) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        final String availableResources=this.formatResourceList(computeApi.getImages());
+        throw new CloudProvisioningException(getFormattedMessage("error_image_id_validation",imageId == null ? "" : imageId,availableResources));
+      }
+    }
+    if (hardwareId != null) {
+      try {
+        computeApi.getFlavor(hardwareId);
+      }
+ catch (      final OpenstackException e) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        final String availableResources=this.formatResourceList(computeApi.getFlavors());
+        throw new CloudProvisioningException(getFormattedMessage("error_hardware_id_validation",hardwareId == null ? "" : hardwareId,availableResources));
+      }
+    }
+  }
+ catch (  final OpenstackException ex) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException(getFormattedMessage("error_image_hardware_location_combination_validation",imageId == null ? "" : imageId,hardwareId == null ? "" : hardwareId,locationId == null ? "" : locationId,groovyFile,propertiesFile),ex);
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

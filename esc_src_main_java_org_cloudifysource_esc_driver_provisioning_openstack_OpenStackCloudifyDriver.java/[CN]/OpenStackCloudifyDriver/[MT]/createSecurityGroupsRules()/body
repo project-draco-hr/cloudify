@@ -1,8 +1,14 @@
 {
   final String serviceSecgroupName=this.openstackPrefixes.getServiceName();
   final SecurityGroup serviceSecGroup=networkApi.getSecurityGroupsByName(serviceSecgroupName);
+  if (serviceSecGroup == null) {
+    throw new CloudProvisioningException("Couldn't find security group '" + serviceSecgroupName + "'");
+  }
   final String managementSecgroupName=this.openstackPrefixes.getManagementName();
   final SecurityGroup managementSecGroup=networkApi.getSecurityGroupsByName(managementSecgroupName);
+  if (managementSecGroup == null) {
+    throw new CloudProvisioningException("Couldn't find security group '" + managementSecgroupName + "'");
+  }
   final ComputeTemplate cloudTemplate=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
   final String port=Integer.toString(cloudTemplate.getFileTransfer().getDefaultPort());
   final SecurityGroupRule request=new SecurityGroupRule();

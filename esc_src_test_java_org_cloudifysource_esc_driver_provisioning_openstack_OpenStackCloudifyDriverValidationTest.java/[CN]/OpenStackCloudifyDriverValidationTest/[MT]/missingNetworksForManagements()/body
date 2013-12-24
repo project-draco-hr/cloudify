@@ -1,0 +1,13 @@
+{
+  try {
+    OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("missingNetworksForManagements",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  CloudProvisioningException e) {
+    if (!e.getMessage().contains("A network must be provided to the management machines")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

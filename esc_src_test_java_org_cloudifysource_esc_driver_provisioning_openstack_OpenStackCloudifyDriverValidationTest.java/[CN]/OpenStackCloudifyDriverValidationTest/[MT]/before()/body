@@ -1,0 +1,6 @@
+{
+  computeApi=Mockito.mock(OpenStackComputeClient.class,Mockito.RETURNS_MOCKS);
+  networkApi=Mockito.mock(OpenStackNetworkClient.class,Mockito.RETURNS_MOCKS);
+  List<Network> createNetworks=this.createNetworks("SOME_INTERNAL_NETWORK_1","SOME_INTERNAL_NETWORK_2");
+  Mockito.when(networkApi.getNetworks()).thenReturn(createNetworks);
+}

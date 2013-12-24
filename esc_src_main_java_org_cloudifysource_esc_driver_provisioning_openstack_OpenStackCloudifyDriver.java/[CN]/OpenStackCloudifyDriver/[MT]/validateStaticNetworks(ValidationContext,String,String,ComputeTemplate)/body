@@ -1,0 +1,38 @@
+{
+  final List<String> networks=computeTemplate.getComputeNetwork().getNetworks();
+  if (networks != null && !networks.isEmpty()) {
+    validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,"Validating network(s): " + networks.toString());
+    try {
+      final Set<String> missingList=new HashSet<String>();
+      final List<Network> existingList=networkApi.getNetworks();
+      for (      final String networkName : networks) {
+        boolean found=false;
+        if (existingList != null) {
+          for (          final Network network : existingList) {
+            if (networkName.equals(network.getName())) {
+              found=true;
+              break;
+            }
+          }
+        }
+        if (!found || existingList == null || existingList.isEmpty()) {
+          missingList.add(networkName);
+        }
+      }
+      if (!missingList.isEmpty()) {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        if (missingList.size() == 1) {
+          throw new CloudProvisioningException(String.format("Network \"%s\" does not exist. Please create it or rename in %s or in %s",missingList.iterator().next(),groovyFile,propertiesFile));
+        }
+ else         if (missingList.size() > 1) {
+          throw new CloudProvisioningException(String.format("Networks %s do not exist. Please create them or rename in %s or in %s",Arrays.toString(missingList.toArray()),groovyFile,propertiesFile));
+        }
+      }
+    }
+ catch (    final OpenstackException ex) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException("Error requesting networks.",ex);
+    }
+    validationContext.validationEventEnd(ValidationResultType.OK);
+  }
+}
