@@ -5,11 +5,22 @@
  */
     @Override public boolean isDone() throws CLIException, InterruptedException {
       final Space space=admin.getSpaces().getSpaceByName(serviceName);
+      logger.fine("Looking for a space instance that belongs to agent " + agent.getUid());
       if (space != null) {
-        final SpacePartition partition=space.getPartition(0);
-        if (partition != null && partition.getPrimary() != null) {
-          gigaspace=space.getGigaSpace();
-          return true;
+        final SpaceInstance[] spaceInstances=space.getInstances();
+        if (spaceInstances == null || spaceInstances.length == 0) {
+          logger.fine("Did not find any " + serviceName + " instances");
+          return false;
+        }
+        for (        SpaceInstance instance : spaceInstances) {
+          GridServiceAgent instanceAgent=instance.getMachine().getGridServiceAgent();
+          if (instanceAgent != null && agent.getUid().equals(instanceAgent.getUid())) {
+            gigaspace=space.getGigaSpace();
+            return true;
+          }
+ else           if (instanceAgent != null) {
+            logger.fine("Found space instance " + instance.getSpaceInstanceName() + " on agent "+ instanceAgent.getUid());
+          }
         }
       }
       logger.fine("Connecting to management space.");
