@@ -17,6 +17,9 @@
   }
   for (  String host : hosts) {
     host=host.trim();
+    if (host.isEmpty()) {
+      continue;
+    }
     if (useIdAsTemplate) {
       currnentId=MessageFormat.format(nodeId,index);
     }
