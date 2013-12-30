@@ -4,6 +4,7 @@
     return volumeDetails.getId();
   }
  catch (  final StorageProvisioningException e) {
+    logSevere(e);
     throw new RemoteStorageOperationException("Failed creating volume in location " + locationId + " : "+ e.getMessage(),e);
   }
 }
