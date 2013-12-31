@@ -1,0 +1,10 @@
+{
+  final File cloudFile=new File("src/test/resources/cloud_driver/ec2-cloud.groovy");
+  final Cloud cloud=ServiceReader.readCloud(cloudFile);
+  final Boolean enabled=(Boolean)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_ENABLED);
+  final Long timeFrame=(Long)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_TIME_FRAME_SEC);
+  final Integer requests=(Integer)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_NUM_REQUESTS);
+  Assert.assertTrue(enabled);
+  Assert.assertTrue(timeFrame == 300);
+  Assert.assertTrue(requests == 5);
+}

@@ -1,0 +1,4 @@
+{
+  this.numRequests=numRequests;
+  this.throttler=RateLimiter.create(1.0 / unit.toSeconds(timeFrame));
+}

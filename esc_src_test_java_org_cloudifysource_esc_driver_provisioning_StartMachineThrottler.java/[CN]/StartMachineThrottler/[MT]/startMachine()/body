@@ -1,3 +1,0 @@
-{
-  throttler.acquire();
-}

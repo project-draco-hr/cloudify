@@ -1,13 +1,16 @@
 {
-  final long invocationTimeoutMin=TimeUnit.SECONDS.toMinutes(START_MACHINE_FAILURE_THROTTLING_TIMEOUT_SEC);
-  final boolean acquired=exceptionThrottler.tryAcquire();
-  if (!acquired) {
-    logger.warning("Maximum number of failed requests to start a machine " + "has been reached for service '" + serviceName + "'. Next attempt will be blocked for a cool-down period of "+ invocationTimeoutMin+ " minutes.");
+  final Boolean throttlerEnabled=(Boolean)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_ENABLED);
+  if (throttlerEnabled != null && !throttlerEnabled) {
+    return;
   }
-  exceptionThrottler.acquire();
-  if (!acquired) {
-    logger.info("Cool-down period has expired. Start-machine requests are permitted.");
-    initExceptionThrottler();
+  final long invocationTimeoutMin=TimeUnit.SECONDS.toMinutes(exceptionThrottler.getDuration());
+  final boolean blockRequired=exceptionThrottler.tryBlock();
+  if (blockRequired) {
+    logger.warning("Maximum number of failed requests to start a machine " + "has been reached for service '" + serviceName + "'. Next attempt will be blocked for the remaining cool-down period of "+ invocationTimeoutMin+ " minutes.");
+  }
+  exceptionThrottler.block();
+  if (blockRequired) {
+    logger.info("Cool-down period has expired. Start-machine requests are now permitted.");
   }
  else {
     logger.fine("Start-machine failure has been registered. One more failure is allowed for service '" + serviceName + "' for the period of "+ invocationTimeoutMin+ " minutes.");

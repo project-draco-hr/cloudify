@@ -1,4 +1,13 @@
 {
   logger.fine("initilizing start-machine exception throttler.");
-  exceptionThrottler=RateLimiter.create(1.0 / START_MACHINE_FAILURE_THROTTLING_TIMEOUT_SEC);
+  Integer numRequests=(Integer)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_NUM_REQUESTS);
+  if (numRequests == null || numRequests <= 0) {
+    numRequests=DEFAULT_START_MACHINE_ALLOWED_FAILED_REQUESTS_IN_TIMEFRAME;
+  }
+  Long timeFrame=(Long)cloud.getCustom().get(CloudifyConstants.CUSTOM_PROPERTY_START_MACHINE_THROTTLING_TIME_FRAME_SEC);
+  if (timeFrame == null || timeFrame <= 0) {
+    timeFrame=DEFAULT_START_MACHINE_FAILURE_THROTTLING_TIMEFRAME_SEC;
+  }
+  exceptionThrottler=new RequestRateLimiter(numRequests,timeFrame,TimeUnit.SECONDS);
+  exceptionThrottler.init();
 }

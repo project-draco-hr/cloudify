@@ -1,0 +1,10 @@
+{
+  incrementRetryCounter();
+  if (isThrottlingRequired()) {
+    logger.fine("Request limit has been reached. Rate limit is being enforced.");
+    throttler.acquire();
+    logger.fine("Rate limit enforcement has ended.");
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,5 @@
+{
+  final long duration=System.currentTimeMillis() - startTime;
+  final long durationSec=TimeUnit.MILLISECONDS.toSeconds(duration);
+  Assert.assertTrue("Rate limit was not enforced.",durationSec >= (COOL_DOWN_PERIOD_SECONDS * blockAttempts) && durationSec <= ((COOL_DOWN_PERIOD_SECONDS + 1) * blockAttempts));
+}
