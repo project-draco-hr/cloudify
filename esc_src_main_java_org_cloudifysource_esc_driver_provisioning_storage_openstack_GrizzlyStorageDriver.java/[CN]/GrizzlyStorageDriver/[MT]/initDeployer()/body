@@ -6,16 +6,12 @@
     logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
     final Properties props=new Properties();
     String endpoint=(String)computeTemplate.getOverrides().get(OpenStackCloudifyDriver.OPENSTACK_ENDPOINT);
-    props.put("jclouds.api-version","2");
-    props.put("jclouds.endpoint",endpoint);
-    logger.info("***** GrizzlyStorageDriver.initDeployer: props after adding: " + props);
+    props.put(API_VERSION_KEY,API_VERSION_VALUE);
+    props.put(ENDPOINT_KEY,endpoint);
     deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props,new HashSet<Module>());
   }
  catch (  final Exception e) {
-    logger.info("***** GrizzlyStorageDriver.initDeployer Failed! exception message: " + e.getMessage());
-    e.printStackTrace();
     publishEvent("connection_to_cloud_api_failed",cloud.getProvider().getProvider());
     throw new IllegalStateException("Failed to create cloud Deployer",e);
   }
-  logger.info("***** GrizzlyStorageDriver.initDeployer completed successfully");
 }

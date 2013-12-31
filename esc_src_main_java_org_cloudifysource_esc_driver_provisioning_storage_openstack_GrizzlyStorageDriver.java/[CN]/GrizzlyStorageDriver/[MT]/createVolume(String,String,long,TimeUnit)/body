@@ -1,5 +1,4 @@
 {
-  logger.info("***** createVolume starting");
   final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
   final VolumeDetails volumeDetails=new VolumeDetails();
   Volume volume;
@@ -38,6 +37,5 @@
       throw new StorageProvisioningException(e);
     }
   }
-  logger.info("***** createVolume completed");
   return volumeDetails;
 }

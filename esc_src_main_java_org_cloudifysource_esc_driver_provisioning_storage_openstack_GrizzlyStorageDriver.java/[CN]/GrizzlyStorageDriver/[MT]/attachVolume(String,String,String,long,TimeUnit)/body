@@ -1,5 +1,4 @@
 {
-  logger.info("***** Grizzly attach volume starting");
   final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
   NodeMetadata node=deployer.getServerWithIP(machineIp);
   if (node == null) {
