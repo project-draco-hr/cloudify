@@ -10,6 +10,10 @@
     request.setKeyName(keyName);
     request.setImageRef(imageId);
     request.setFlavorRef(hardwareId);
+    String availabilityZone=getAvailabilityZone(template);
+    if (StringUtils.isNotBlank(availabilityZone)) {
+      request.setAvailabilityZone(getAvailabilityZone(template));
+    }
     if (this.networkHelper.useManagementNetwork()) {
       final String managementNetworkName=this.networkHelper.getManagementNetworkPrefixedName();
       final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);

@@ -1,0 +1,9 @@
+{
+  validateNotWindows();
+  if (!serviceContext.isPrivileged()) {
+    throw new IllegalStateException("Cannot partition when not running in privileged mode");
+  }
+  logger.info("Partitioning device " + device);
+  VolumeUtils.partition(device);
+  changeStateOfVolumeWithDevice(device,VolumeState.PARTITIONED);
+}

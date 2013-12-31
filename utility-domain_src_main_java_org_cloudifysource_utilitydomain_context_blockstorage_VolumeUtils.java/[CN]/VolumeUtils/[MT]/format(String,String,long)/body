@@ -1,4 +1,4 @@
 {
   checkFileSystemSupported(fileSystem);
-  executeCommandLine("sudo mkfs -F -t " + fileSystem + " "+ device,timeoutInMillis);
+  executeCommandLine("sudo mkfs -t " + fileSystem + " "+ device,timeoutInMillis);
 }

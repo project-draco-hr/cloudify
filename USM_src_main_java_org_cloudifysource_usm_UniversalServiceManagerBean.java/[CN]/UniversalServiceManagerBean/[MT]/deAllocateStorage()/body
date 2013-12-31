@@ -19,34 +19,16 @@ switch (serviceVolume.getState()) {
 case MOUNTED:
           getUsmLifecycleBean().log("Unmounting volume from " + template.getPath());
         storage.unmount(serviceVolume.getDevice());
+case ATTACHED:
+case PARTITIONED:
+case FORMATTED:
       getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
     storage.detachVolume(serviceVolume.getId());
+case CREATED:
   if (deleteStorage) {
     getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
     storage.deleteVolume(serviceVolume.getId());
   }
-break;
-case ATTACHED:
-getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
-storage.detachVolume(serviceVolume.getId());
-if (deleteStorage) {
-getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
-storage.deleteVolume(serviceVolume.getId());
-}
-break;
-case FORMATTED:
-getUsmLifecycleBean().log("Detaching volume from  " + serviceVolume.getDevice());
-storage.detachVolume(serviceVolume.getId());
-if (deleteStorage) {
-getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
-storage.deleteVolume(serviceVolume.getId());
-}
-break;
-case CREATED:
-if (deleteStorage) {
-getUsmLifecycleBean().log("Deleting volume with id " + serviceVolume.getId());
-storage.deleteVolume(serviceVolume.getId());
-}
 break;
 default :
 throw new IllegalStateException("Unexpected state of service volume : " + serviceVolume.getState());

@@ -1,0 +1,12 @@
+{
+  try {
+    File tempScriptFile=File.createTempFile("partitionvolume",".sh");
+    FileUtils.writeStringToFile(tempScriptFile,"(echo o; echo n; echo p; echo 1; echo; echo; echo w) | sudo fdisk " + device);
+    tempScriptFile.setExecutable(true);
+    tempScriptFile.deleteOnExit();
+    executeCommandLine(tempScriptFile.getAbsolutePath(),timeoutInMillis);
+  }
+ catch (  IOException e) {
+    logger.warning("Ignoring fdisk exception: " + e.getMessage());
+  }
+}
