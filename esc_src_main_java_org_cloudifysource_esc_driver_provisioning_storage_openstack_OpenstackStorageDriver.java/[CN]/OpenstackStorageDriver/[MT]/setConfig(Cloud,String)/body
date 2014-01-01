@@ -1,10 +1,13 @@
 {
   logger.fine("Initializing storage provisioning on Openstack");
   this.cloud=cloud;
-  publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
-  publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,cloud.getProvider().getProvider());
-  novaContext=this.computeContext.unwrap();
+  final String provider=cloud.getProvider().getProvider();
   computeTemplate=cloud.getCloudCompute().getTemplates().get(computeTemplateName);
+  publishEvent(EVENT_ATTEMPT_CONNECTION_TO_CLOUD_API,provider);
+  publishEvent(EVENT_ACCOMPLISHED_CONNECTION_TO_CLOUD_API,provider);
+  logger.fine("Creating JClouds context");
   initDeployer();
+  computeContext=deployer.getContext();
+  novaContext=this.computeContext.unwrap();
   region=getRegionFromHardwareId(computeTemplate.getHardwareId());
 }

@@ -1,5 +1,0 @@
-String volumeId
-String device
-String machineIp
-long duration
-TimeUnit timeUnit

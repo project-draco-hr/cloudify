@@ -3,11 +3,13 @@
   Map<String,Object> customSettings=template.getCustom();
   if (customSettings != null) {
     Object zoneObj=customSettings.get(OPENSTACK_COMPUTE_ZONE);
-    if (zoneObj instanceof String) {
-      zone=(String)zoneObj;
-    }
+    if (zoneObj != null) {
+      if (zoneObj instanceof String) {
+        zone=(String)zoneObj;
+      }
  else {
-      throw new IllegalArgumentException("Custom property " + OPENSTACK_COMPUTE_ZONE + " must be of type String");
+        throw new IllegalArgumentException("Custom property " + OPENSTACK_COMPUTE_ZONE + " must be of type String");
+      }
     }
   }
   return zone;

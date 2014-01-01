@@ -5,7 +5,9 @@
   try {
     logger.fine("Creating JClouds context deployer for Openstack with user: " + cloud.getUser().getUser());
     final Properties props=new Properties();
-    props.putAll(computeTemplate.getOverrides());
+    String endpoint=(String)computeTemplate.getOverrides().get(OpenStackCloudifyDriver.OPENSTACK_ENDPOINT);
+    props.put(API_VERSION_KEY,API_VERSION_VALUE);
+    props.put(ENDPOINT_KEY,endpoint);
     deployer=new JCloudsDeployer(cloud.getProvider().getProvider(),cloud.getUser().getUser(),cloud.getUser().getApiKey(),props,new HashSet<Module>());
   }
  catch (  final Exception e) {

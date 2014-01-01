@@ -9,7 +9,7 @@
   if (!volumeApi.isPresent() || !volumeAttachmentApi.isPresent()) {
     throw new StorageProvisioningException("Failed to attach volume " + volumeId + ", Openstack API is not initialized.");
   }
-  logger.fine("Attaching volume on Openstack");
+  logger.info("Attaching volume on Openstack");
   volumeAttachmentApi.get().attachVolumeToServerAsDevice(volumeId,node.getProviderId(),device);
   try {
     waitForVolumeToReachStatus(Volume.Status.IN_USE,volumeApi,volumeId,endTime);
