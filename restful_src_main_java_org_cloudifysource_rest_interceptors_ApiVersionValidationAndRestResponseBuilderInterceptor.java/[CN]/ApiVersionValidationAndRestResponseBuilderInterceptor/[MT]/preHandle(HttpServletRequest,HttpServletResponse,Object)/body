@@ -1,6 +1,6 @@
 {
   String requestVersion=extractVersionFromRequest(request);
-  if (CloudifyConstants.SERVICE_CONTROLLER_URL.equals(requestVersion)) {
+  if (CloudifyConstants.SERVICE_CONTROLLER_URL.equals(requestVersion) || CloudifyConstants.ADMIN_API_CONTROLLER_URL.equals(requestVersion)) {
     return true;
   }
   if (logger.isLoggable(Level.FINEST)) {
