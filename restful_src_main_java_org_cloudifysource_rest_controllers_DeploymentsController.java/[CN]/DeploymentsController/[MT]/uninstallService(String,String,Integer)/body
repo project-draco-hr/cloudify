@@ -18,10 +18,15 @@
   final FutureTask<Boolean> undeployTask=new FutureTask<Boolean>(new Callable<Boolean>(){
     @Override public Boolean call() throws Exception {
       boolean result=processingUnit.undeployAndWait(timeoutInMinutes,TimeUnit.MINUTES);
-      deleteServiceAttributes(appName,serviceName);
-      DeploymentEvent undeployFinishedEvent=new DeploymentEvent();
-      undeployFinishedEvent.setDescription(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT);
-      eventsCache.add(new EventsCacheKey(deploymentId),undeployFinishedEvent);
+      if (!result) {
+        logger.warning("Failed undeploying processing unit " + processingUnit.getName() + "in "+ timeoutInMinutes+ " minutes. Please consult the logs.");
+      }
+ else {
+        deleteServiceAttributes(appName,serviceName);
+        DeploymentEvent undeployFinishedEvent=new DeploymentEvent();
+        undeployFinishedEvent.setDescription(CloudifyConstants.UNDEPLOYED_SUCCESSFULLY_EVENT);
+        eventsCache.add(new EventsCacheKey(deploymentId),undeployFinishedEvent);
+      }
       return result;
     }
   }
