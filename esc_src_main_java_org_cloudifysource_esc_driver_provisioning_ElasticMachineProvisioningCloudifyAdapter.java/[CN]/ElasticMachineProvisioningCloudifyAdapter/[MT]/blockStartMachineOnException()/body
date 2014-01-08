@@ -13,6 +13,6 @@
     logger.info("Cool-down period has expired. Start-machine requests are now permitted.");
   }
  else {
-    logger.fine("Start-machine failure has been registered. One more failure is allowed for service '" + serviceName + "' for the period of "+ invocationTimeoutMin+ " minutes.");
+    logger.fine("Start-machine failure has been registered. " + exceptionThrottler.getRemainingRetries() + " failures are allowed for service '"+ serviceName+ "' for the period of "+ invocationTimeoutMin+ " minutes.");
   }
 }

@@ -1,6 +1,5 @@
 {
   requestRateLimiter=new RequestRateLimiter(NUM_RETRIES,COOL_DOWN_PERIOD_SECONDS,TimeUnit.SECONDS);
-  requestRateLimiter.init();
   final long startTime=System.currentTimeMillis();
   for (int i=0; i < TOTAL_NUMBER_OF_CALLS; i++) {
     requestRateLimiter.block();

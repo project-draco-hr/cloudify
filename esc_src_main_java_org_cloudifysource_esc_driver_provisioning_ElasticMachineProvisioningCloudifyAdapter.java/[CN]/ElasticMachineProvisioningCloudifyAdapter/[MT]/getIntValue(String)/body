@@ -1,0 +1,7 @@
+{
+  Object number=cloud.getCustom().get(customProperty);
+  if (number == null || !(number instanceof Integer)) {
+    return 0;
+  }
+  return (Integer)number;
+}

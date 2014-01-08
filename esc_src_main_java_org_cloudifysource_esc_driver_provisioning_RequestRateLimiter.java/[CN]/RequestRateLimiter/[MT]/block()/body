@@ -1,5 +1,8 @@
 {
   incrementRetryCounter();
+  if (isInitRequired()) {
+    init();
+  }
   if (isThrottlingRequired()) {
     logger.fine("Request limit has been reached. Rate limit is being enforced.");
     throttler.acquire();

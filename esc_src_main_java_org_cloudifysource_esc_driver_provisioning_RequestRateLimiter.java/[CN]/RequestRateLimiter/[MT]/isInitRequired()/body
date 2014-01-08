@@ -1,0 +1,6 @@
+{
+  if ((this.requestCounter % this.getNumRequests()) == 1) {
+    return true;
+  }
+  return false;
+}

@@ -1,3 +1,6 @@
 {
-  this.throttler.acquire();
+  boolean acquired=this.throttler.tryAcquire();
+  if (acquired) {
+    this.throttler.acquire();
+  }
 }
