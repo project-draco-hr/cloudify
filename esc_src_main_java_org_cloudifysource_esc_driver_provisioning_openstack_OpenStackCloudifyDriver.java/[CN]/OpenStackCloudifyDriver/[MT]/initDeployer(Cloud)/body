@@ -10,7 +10,7 @@
  else {
     cloudTemplate=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
     if (cloudTemplate == null) {
-      throw new IllegalStateException("Template with name <" + cloudTemplate + "> could not be found.");
+      throw new IllegalStateException("Template with name <" + cloudTemplateName + "> could not be found.");
     }
   }
   String endpoint=null;
