@@ -1,12 +1,15 @@
 {
   try {
-    File tempScriptFile=File.createTempFile("partitionvolume",".sh");
-    FileUtils.writeStringToFile(tempScriptFile,"(echo o; echo n; echo p; echo 1; echo; echo; echo w) | sudo fdisk " + device);
-    tempScriptFile.setExecutable(true);
-    tempScriptFile.deleteOnExit();
-    executeCommandLine(tempScriptFile.getAbsolutePath(),timeoutInMillis);
+    File tempParitioningScript=File.createTempFile("partitionvolume",".sh");
+    FileUtils.writeStringToFile(tempParitioningScript,"(echo o; echo n; echo p; echo 1; echo; echo; echo w) | sudo fdisk " + device);
+    tempParitioningScript.setExecutable(true);
+    tempParitioningScript.deleteOnExit();
+    executeCommandLine(tempParitioningScript.getAbsolutePath(),timeoutInMillis);
   }
- catch (  IOException e) {
-    logger.warning("Ignoring fdisk exception: " + e.getMessage());
+ catch (  IOException ioe) {
+    logger.info("inspecting fdisk command exception: " + ioe.getMessage());
+    if (!verifyDevicePartitioning(device,timeoutInMillis)) {
+      throw new LocalStorageOperationException("Failed to partition device " + device + ", reported error: "+ ioe.getMessage(),ioe);
+    }
   }
 }

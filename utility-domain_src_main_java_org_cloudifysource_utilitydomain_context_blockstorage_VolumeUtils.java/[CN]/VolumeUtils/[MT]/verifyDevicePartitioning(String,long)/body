@@ -1,0 +1,17 @@
+{
+  boolean deviceFormatted=false;
+  try {
+    File tempDeviceListScript=File.createTempFile("getPartitionStatus",".sh");
+    FileUtils.writeStringToFile(tempDeviceListScript,"sudo fdisk -l | grep " + device);
+    tempDeviceListScript.setExecutable(true);
+    tempDeviceListScript.deleteOnExit();
+    String fdiskOutput=executeSilentCommandLineReturnOutput(tempDeviceListScript.getAbsolutePath(),timeoutInMillis);
+    if (fdiskOutput.contains(device + ":") && !fdiskOutput.contains(device + " doesn't contain a valid partition table")) {
+      deviceFormatted=true;
+    }
+  }
+ catch (  Exception e) {
+    throw new LocalStorageOperationException("Failed verifying paritioning of device: " + device,e);
+  }
+  return deviceFormatted;
+}
