@@ -5,7 +5,7 @@
     httpClient=getSSLHttpClient();
   }
  else {
-    httpClient=new DefaultHttpClient();
+    httpClient=new SystemDefaultHttpClient();
   }
   httpClient.addRequestInterceptor(new HttpRequestInterceptor(){
     @Override public void process(    HttpRequest request,    HttpContext context) throws HttpException, IOException {

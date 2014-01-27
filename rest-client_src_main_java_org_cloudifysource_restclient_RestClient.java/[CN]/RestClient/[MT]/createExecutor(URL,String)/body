@@ -1,5 +1,5 @@
 {
-  DefaultHttpClient httpClient;
+  SystemDefaultHttpClient httpClient;
   if (HTTPS.equals(url.getProtocol())) {
     httpClient=getSSLHttpClient(url);
   }
