@@ -1,9 +1,17 @@
 {
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_WORK_CPU_TIME,systemCpuWorkTime);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_TOTAL_CPU_TIME,totalSystemCpuTime);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_CPU_USAGE,processCpuUsage);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_CPU_KERNEL_TIME,processCpuKernelTime);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_TOTAL_CPU_TIME,totalProcessCpuTime);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_GROUP_ID,processGroupId);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_USER_ID,processUserId);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_FREE_MEMORY,systemFreeMemory);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_ACTUAL_FREE_MEMORY,systemActualFreeMemory);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_USED_MEMORY,systemUsedMemory);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_ACTUAL_USED_MEMORY,systemActualUsedMemory);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_RANDOM_ACCESS_MEMORY,systemRandomAccessMemory);
+  monitorMap.put(CloudifyConstants.USM_METRIC_SYSTEM_TOTAL_MEMORY,totalSystemMemory);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_TOTAL_PAGE_FAULTS,totalNumOfPageFaults);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_TOTAL_RESIDENTAL_MEMORY,totalProcessResidentalMemory);
   monitorMap.put(CloudifyConstants.USM_METRIC_PROCESS_TOTAL_SHARED_MEMORY,totalProcessSharedMemory);

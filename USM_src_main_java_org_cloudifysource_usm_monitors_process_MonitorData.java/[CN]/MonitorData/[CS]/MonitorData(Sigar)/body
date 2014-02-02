@@ -1,10 +1,9 @@
 {
   try {
     gatherSystemData(sigar);
-    gatherProcessData(sigar,pid);
   }
  catch (  final SigarException e) {
-    final String msg="Failed to read external system and process data via Sigar: " + e;
+    final String msg="Failed to read external system data via Sigar: " + e;
     logger.severe(msg);
     throw new MonitorException(msg,e);
   }

@@ -1,0 +1,30 @@
+{
+  try {
+    final Cpu cpu=sigar.getCpu();
+    systemCpuWorkTime=cpu.getUser() + cpu.getNice() + cpu.getSys();
+    logger.finest("systemCpuWorkTime: " + systemCpuWorkTime);
+    totalSystemCpuTime=cpu.getTotal();
+    logger.finest("totalSystemCpuTime: " + totalSystemCpuTime);
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather system CPU info from Sigar, error: " + e.getMessage(),e);
+  }
+  try {
+    final Mem mem=sigar.getMem();
+    systemFreeMemory=mem.getFree();
+    logger.finest("systemFreeMemory: " + systemFreeMemory);
+    systemActualFreeMemory=mem.getActualFree();
+    logger.finest("systemActualFreeMemory: " + systemActualFreeMemory);
+    systemUsedMemory=mem.getUsed();
+    logger.finest("systemUsedMemory: " + systemUsedMemory);
+    systemActualUsedMemory=mem.getActualUsed();
+    logger.finest("systemActualUsedMemory: " + systemActualUsedMemory);
+    systemRandomAccessMemory=mem.getRam();
+    logger.finest("systemRandomAccessMemory: " + systemRandomAccessMemory);
+    totalSystemMemory=mem.getTotal();
+    logger.finest("totalSystemMemory: " + totalSystemMemory);
+  }
+ catch (  final SigarException e) {
+    logger.log(Level.FINE,"Failed to gather system memory info from Sigar, error: " + e.getMessage(),e);
+  }
+}
