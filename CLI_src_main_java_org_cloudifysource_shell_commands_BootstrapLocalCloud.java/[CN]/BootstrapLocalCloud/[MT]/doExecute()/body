@@ -14,7 +14,7 @@
   installer.setLookupGroups(lookupGroups);
   installer.setNicAddress(nicAddress);
   installer.setProgressInSeconds(DEFAULT_PROGRESS_INTERVAL);
-  installer.setWaitForWebui(true);
+  installer.setWaitForWebui(!noWaitForWebui);
   installer.addListener(new CLILocalhostBootstrapperListener());
   installer.setAdminFacade((AdminFacade)session.get(Constants.ADMIN_FACADE));
   installer.startLocalCloudOnLocalhostAndWait(securityProfile,securityFilePath,username,password,keystoreFilePath,keystorePassword,timeoutInMinutes,TimeUnit.MINUTES);
