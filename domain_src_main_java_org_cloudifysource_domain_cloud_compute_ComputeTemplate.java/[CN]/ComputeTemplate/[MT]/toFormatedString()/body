@@ -23,6 +23,7 @@
   sb.append(getFormatedLine("absoluteUploadDir",absoluteUploadDir));
   sb.append(getFormatedLine("env ",env));
   sb.append(getFormatedLine("machineMemoryMB",machineMemoryMB));
+  sb.append(getFormatedLine("availabilityZones",availabilityZones));
   final String str=sb.substring(0,sb.lastIndexOf(","));
   return str + newLine + "}";
 }

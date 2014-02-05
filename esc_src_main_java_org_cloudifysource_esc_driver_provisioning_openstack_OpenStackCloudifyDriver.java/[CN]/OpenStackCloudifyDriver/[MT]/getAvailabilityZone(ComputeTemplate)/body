@@ -12,5 +12,8 @@
       }
     }
   }
+  if (StringUtils.isBlank(zone)) {
+    zone=super.getAvailabilityZone(template);
+  }
   return zone;
 }
