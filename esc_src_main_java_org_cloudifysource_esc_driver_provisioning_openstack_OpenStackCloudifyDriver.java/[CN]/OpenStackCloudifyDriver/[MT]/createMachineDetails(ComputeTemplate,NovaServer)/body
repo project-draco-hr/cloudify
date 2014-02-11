@@ -5,6 +5,7 @@
     md.setCloudifyInstalled(false);
     md.setInstallationDirectory(null);
     md.setOpenFilesLimit(template.getOpenFilesLimit());
+    md.setLocationId(server.getAvailabilityZone());
     final String privateIpNetworkName=this.networkHelper.getPrivateIpNetworkName();
     final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIpNetworkName);
     if (privateIpNetwork == null) {

@@ -11,8 +11,10 @@
   }
   StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(templateName);
   String volumeName=storageTemplate.getNamePrefix() + System.currentTimeMillis();
-  CreateVolumeOptions options=CreateVolumeOptions.Builder.name(volumeName).description(VOLUME_DESCRIPTION).availabilityZone(getStorageZone(templateName));
-  volume=volumeApi.get().create(storageTemplate.getSize(),options);
+  int size=storageTemplate.getSize();
+  logger.fine("Creating new volume in availability zone \"" + availabilityZone + "\" of size "+ size+ " GB, with name \""+ volumeName+ "\"");
+  CreateVolumeOptions options=CreateVolumeOptions.Builder.name(volumeName).description(VOLUME_DESCRIPTION).availabilityZone(availabilityZone);
+  volume=volumeApi.get().create(size,options);
   try {
     waitForVolumeToReachStatus(Volume.Status.AVAILABLE,volumeApi,volume.getId(),endTime);
     volume=volumeApi.get().get(volume.getId());
