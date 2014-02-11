@@ -1,0 +1,9 @@
+{
+  logger.log(Level.SEVERE,message,e);
+  if (isSerializable(e)) {
+    throw new RemoteStorageOperationException(message,e);
+  }
+ else {
+    throw new RemoteStorageOperationException(message);
+  }
+}

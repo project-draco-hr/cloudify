@@ -1,10 +1,11 @@
 {
+  String volumeId="-1";
   try {
     VolumeDetails volumeDetails=storageProvisioningDriver.createVolume(templateName,locationId,timeoutInMillis,TimeUnit.MILLISECONDS);
-    return volumeDetails.getId();
+    volumeId=volumeDetails.getId();
   }
- catch (  final StorageProvisioningException e) {
-    logSevere(e);
-    throw new RemoteStorageOperationException("Failed creating volume in location " + locationId + " : "+ e.getMessage(),e);
+ catch (  final Exception e) {
+    logSevereAndThrow("Failed creating volume in location " + locationId + " : "+ e.getMessage(),e);
   }
+  return volumeId;
 }

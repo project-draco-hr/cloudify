@@ -1,0 +1,10 @@
+{
+  boolean serializable=false;
+  try {
+    new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(obj);
+    serializable=true;
+  }
+ catch (  Exception e) {
+  }
+  return serializable;
+}

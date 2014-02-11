@@ -3,7 +3,6 @@
     storageProvisioningDriver.detachVolume(volumeId,ip,DEFAULT_STORAGE_OPERATION_TIMEOUT * 2,TimeUnit.MILLISECONDS);
   }
  catch (  final Exception e) {
-    logSevere(e);
-    throw new RemoteStorageOperationException("Failed detaching volume with id " + volumeId + " to instance with ip "+ ip,e);
+    logSevereAndThrow("Failed detaching volume with id " + volumeId + " to instance with ip "+ ip+ ", reported error: "+ e.getMessage(),e);
   }
 }
