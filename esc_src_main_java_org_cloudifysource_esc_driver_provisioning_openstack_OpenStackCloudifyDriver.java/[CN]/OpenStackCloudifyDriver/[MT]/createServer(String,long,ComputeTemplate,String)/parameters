@@ -1,0 +1,4 @@
+String serverName
+long endTime
+ComputeTemplate template
+String locationId

@@ -21,7 +21,7 @@
     final String groupName=serverNamePrefix + this.configuration.getServiceName() + "-"+ counter.incrementAndGet();
     logger.fine("Starting a new cloud server with group: " + groupName);
     final ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
-    final MachineDetails md=this.createServer(groupName,end,computeTemplate);
+    final MachineDetails md=this.createServer(groupName,end,computeTemplate,context.getLocationId());
     return md;
   }
  catch (  final OpenstackException e) {

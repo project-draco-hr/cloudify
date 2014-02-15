@@ -1,0 +1,131 @@
+{
+  final String imageId=template.getImageId().split("/")[1];
+  final String hardwareId=template.getHardwareId().split("/")[1];
+  final String keyName=(String)template.getOptions().get(OPT_KEY_PAIR);
+  String serverId=null;
+  final List<String> reservedPortIds=new ArrayList<String>();
+  try {
+    final NovaServerResquest request=new NovaServerResquest();
+    request.setName(serverName);
+    request.setKeyName(keyName);
+    request.setImageRef(imageId);
+    request.setFlavorRef(hardwareId);
+    String zone=locationId;
+    logger.finest("locationId received from Cloudify adapter: " + locationId);
+    if (StringUtils.isBlank(zone)) {
+      zone=getAvailabilityZone(template);
+      logger.finest("using template availability zone: " + zone);
+    }
+    if (StringUtils.isNotBlank(zone)) {
+      logger.fine("setting new instance availability zone: " + zone);
+      request.setAvailabilityZone(zone);
+    }
+    if (this.networkHelper.useManagementNetwork()) {
+      final String managementNetworkName=this.networkHelper.getManagementNetworkPrefixedName();
+      final Network managementNetwork=this.networkApi.getNetworkByName(managementNetworkName);
+      if (managementNetwork == null) {
+        throw new CloudProvisioningException("Unexpected missing management network '" + managementNetworkName + "'");
+      }
+      if (managementNetwork.getSubnets() == null || managementNetwork.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in management network '" + managementNetworkName + "'");
+      }
+      if (managementNetwork.getSubnets().length == 1) {
+        request.addNetworks(managementNetwork.getId());
+      }
+ else {
+        final Port port=this.addPortToRequest(request,managementNetwork.getId(),managementNetwork.getSubnets());
+        reservedPortIds.add(port.getId());
+      }
+    }
+    for (    final String networkName : this.networkHelper.getComputeNetworks()) {
+      final Network network=this.networkApi.getNetworkByName(networkName);
+      if (network == null) {
+        throw new CloudProvisioningException("Couldn't find network '" + networkName + "'");
+      }
+      if (network.getSubnets() == null || network.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in network '" + networkName + "'");
+      }
+      if (network.getSubnets().length == 1) {
+        request.addNetworks(network.getId());
+      }
+ else {
+        final Port port=this.addPortToRequest(request,network.getId(),network.getSubnets());
+        reservedPortIds.add(port.getId());
+      }
+    }
+    if (!management && this.networkHelper.useApplicationNetworkTemplate()) {
+      final String prefixedAppliNetworkName=this.networkHelper.getApplicationNetworkPrefixedName();
+      final Network templateNetwork=this.networkApi.getNetworkByName(prefixedAppliNetworkName);
+      if (templateNetwork == null) {
+        throw new CloudProvisioningException("Unexpected missing management network '" + prefixedAppliNetworkName + "'");
+      }
+      if (templateNetwork.getSubnets() == null || templateNetwork.getSubnets().length <= 0) {
+        throw new CloudProvisioningException("Unexpected missing subnet in management network '" + prefixedAppliNetworkName + "'");
+      }
+      if (templateNetwork.getSubnets().length == 1) {
+        request.addNetworks(templateNetwork.getId());
+      }
+ else {
+        final Port port=this.addPortToRequest(request,templateNetwork.getId(),templateNetwork.getSubnets());
+        reservedPortIds.add(port.getId());
+      }
+    }
+    NovaServer newServer=computeApi.createServer(request);
+    serverId=newServer.getId();
+    newServer=this.waitForServerToBecomeReady(serverId,endTime);
+    Object securityGroupsObj=template.getOptions().get("securityGroupNames");
+    if (securityGroupsObj == null) {
+      securityGroupsObj=template.getOptions().get("securityGroups");
+    }
+    final List<String> securityGroups=new ArrayList<String>();
+    if (securityGroupsObj != null) {
+      if (securityGroupsObj instanceof String[]) {
+        securityGroups.addAll(Arrays.asList(((String[])securityGroupsObj)));
+      }
+    }
+    if (management) {
+      securityGroups.add(this.openstackPrefixes.getManagementName());
+      securityGroups.add(this.openstackPrefixes.getClusterName());
+      this.setSecurityGroupsToServer(serverId,securityGroups.toArray(new String[securityGroups.size()]));
+    }
+ else {
+      securityGroups.add(this.openstackPrefixes.getAgentName());
+      securityGroups.add(this.openstackPrefixes.getClusterName());
+      securityGroups.add(this.openstackPrefixes.getApplicationName());
+      securityGroups.add(this.openstackPrefixes.getServiceName());
+      this.setSecurityGroupsToServer(serverId,securityGroups.toArray(new String[securityGroups.size()]));
+    }
+    if (this.networkHelper.associateFloatingIp()) {
+      final String privateIPNetworkName=this.networkHelper.getPrivateIpNetworkName();
+      final Network privateIpNetwork=this.networkApi.getNetworkByName(privateIPNetworkName);
+      if (privateIpNetwork == null) {
+        throw new CloudProvisioningException("Couldn't find network '" + privateIPNetworkName + "' to assign floating IP.");
+      }
+      networkApi.createAndAssociateFloatingIp(serverId,privateIpNetwork.getId());
+    }
+    final MachineDetails md=this.createMachineDetails(template,newServer);
+    return md;
+  }
+ catch (  final Exception e) {
+    logger.log(Level.SEVERE,"An error occured during initialization." + " Shutting down machine and cleaning openstack resources",e);
+    if (serverId != null) {
+      try {
+        computeApi.deleteServer(serverId);
+      }
+ catch (      final OpenstackException e1) {
+        logger.log(Level.WARNING,"Cleaning after error. Could not delete server.",e1);
+      }
+    }
+ else {
+      for (      final String portId : reservedPortIds) {
+        try {
+          networkApi.deletePort(portId);
+        }
+ catch (        final OpenstackException e1) {
+          logger.log(Level.WARNING,"Cleaning after error. Could not delete server.",e1);
+        }
+      }
+    }
+    throw new CloudProvisioningException(e);
+  }
+}
