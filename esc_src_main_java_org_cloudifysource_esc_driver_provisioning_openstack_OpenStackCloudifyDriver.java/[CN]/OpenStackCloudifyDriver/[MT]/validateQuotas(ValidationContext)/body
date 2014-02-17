@@ -1,0 +1,11 @@
+{
+  validationContext.validationEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_quotas",asdad));
+  try {
+    Quota quota=networkApi.getQuotas();
+    validateRoutersQuota(Integer.parseInt(quota.getRouter()),validationContext);
+  }
+ catch (  OpenstackException ex) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException(message);
+  }
+}

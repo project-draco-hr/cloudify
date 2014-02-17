@@ -1,0 +1,4 @@
+{
+  final String response=this.doGet("quotas/" + tenantId);
+  return JsonUtils.unwrapRootToObject(Quota.class,response);
+}

@@ -1,0 +1,7 @@
+{
+  String tenantId=null;
+  if (token != null) {
+    tenantId=token.getToken().getTenant().getId();
+  }
+  return tenantId;
+}

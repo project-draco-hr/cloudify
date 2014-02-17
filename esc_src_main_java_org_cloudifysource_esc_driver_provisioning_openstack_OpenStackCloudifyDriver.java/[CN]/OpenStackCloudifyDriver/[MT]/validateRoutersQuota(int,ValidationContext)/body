@@ -1,0 +1,23 @@
+{
+  try {
+    validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_routers",asdad));
+    if (networkHelper.isCreateExternalRouter()) {
+      logger.finest("routers quota: " + routersQuota);
+      int plannedRouters=1;
+      logger.finest("planned routers: " + plannedRouters);
+      int routersUsage=networkApi.getRouters().size();
+      logger.finest("routers usage: " + routersUsage);
+      if (routersQuota - routersUsage >= plannedRouters) {
+        validationContext.validationEventEnd(ValidationResultType.OK);
+      }
+ else {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException(message);
+      }
+    }
+  }
+ catch (  OpenstackException ex) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException(message);
+  }
+}
