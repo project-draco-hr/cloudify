@@ -35,9 +35,6 @@
     windowsProvisioningSet.setUserName(userName);
     windowsProvisioningSet.setUserPassword(password);
     windowsProvisioningSet.setAdminPassword(password);
-    System.err.println("XXXXXXXXXXXXXXXXXXXXXXXXXX computerName " + computerName + "        "+ roleName);
-    Thread.dumpStack();
-    System.err.println("XXXXXXXXXXXXXXXXXXXXXXXXXX computerName " + computerName + "        "+ roleName);
     windowsProvisioningSet.setComputerName(computerName);
     configurationSets.getConfigurationSets().add(windowsProvisioningSet);
     WinRm winRm=new WinRm();
