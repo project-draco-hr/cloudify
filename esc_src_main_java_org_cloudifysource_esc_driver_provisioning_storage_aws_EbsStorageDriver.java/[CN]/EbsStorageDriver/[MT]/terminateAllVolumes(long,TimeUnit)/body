@@ -1,0 +1,31 @@
+{
+  Set<String> cloudifyVolumes=new HashSet<String>();
+  Set<String> volumePrefixes=new HashSet<String>();
+  Collection<StorageTemplate> storageTemplates=this.cloud.getCloudStorage().getTemplates().values();
+  for (  StorageTemplate template : storageTemplates) {
+    volumePrefixes.add(template.getNamePrefix());
+  }
+  Set<VolumeDetails> allVolumes=listAllVolumes();
+  if (allVolumes != null) {
+    for (    VolumeDetails volumeDetails : allVolumes) {
+      for (      String volumePrefix : volumePrefixes) {
+        if (volumeDetails.getName().startsWith(volumePrefix)) {
+          cloudifyVolumes.add(volumeDetails.getId());
+          break;
+        }
+      }
+    }
+  }
+  for (  String volumeId : cloudifyVolumes) {
+    deleteVolume(volumeId);
+  }
+  final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
+  for (  String volumeId : cloudifyVolumes) {
+    try {
+      waitForVolumeToReachStatus(Status.DELETING,endTime,volumeId);
+    }
+ catch (    final StorageProvisioningException e) {
+    }
+    logger.fine("Volume with id " + volumeId + " deleted successfully");
+  }
+}

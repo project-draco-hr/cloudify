@@ -1,0 +1,32 @@
+{
+  Set<String> cloudifyVolumes=new HashSet<String>();
+  Set<String> volumePrefixes=new HashSet<String>();
+  Optional<? extends VolumeApi> volumeApi=getVolumeApi();
+  if (!volumeApi.isPresent()) {
+    throw new StorageProvisioningException("Failed to terminate volumes. Openstack API is not initialized.");
+  }
+  Collection<StorageTemplate> storageTemplates=this.cloud.getCloudStorage().getTemplates().values();
+  for (  StorageTemplate template : storageTemplates) {
+    volumePrefixes.add(template.getNamePrefix());
+  }
+  FluentIterable<? extends Volume> volumesList=volumeApi.get().list();
+  if (volumesList != null) {
+    for (    Volume volume : volumesList) {
+      for (      String volumePrefix : volumePrefixes) {
+        if (volume.getName().startsWith(volumePrefix)) {
+          cloudifyVolumes.add(volume.getId());
+          break;
+        }
+      }
+    }
+  }
+  for (  String volumeId : cloudifyVolumes) {
+    if (!volumeApi.get().delete(volumeId)) {
+      logger.log(Level.WARNING,"Error while deleting volume: " + volumeId + ".It may be leaking.");
+    }
+  }
+  final long endTime=System.currentTimeMillis() + timeUnit.toMillis(duration);
+  for (  String volumeId : cloudifyVolumes) {
+    waitForVolumeToBeDeleted(volumeApi,volumeId,endTime);
+  }
+}

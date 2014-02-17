@@ -1,0 +1,13 @@
+{
+  if (storageDriver != null) {
+    try {
+      storageDriver.terminateAllVolumes(timeout,timeoutUnit);
+    }
+ catch (    final StorageProvisioningException e) {
+      throw new CLIException("Failed to terminate volume during tear down of cloud: " + e.getMessage(),e);
+    }
+  }
+ else {
+    logger.fine("Storage driver is not initialized, volumes are not distroyed");
+  }
+}

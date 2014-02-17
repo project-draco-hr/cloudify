@@ -2,4 +2,7 @@
   if (this.provisioning != null) {
     this.provisioning.close();
   }
+  if (this.storageDriver != null) {
+    this.storageDriver.close();
+  }
 }

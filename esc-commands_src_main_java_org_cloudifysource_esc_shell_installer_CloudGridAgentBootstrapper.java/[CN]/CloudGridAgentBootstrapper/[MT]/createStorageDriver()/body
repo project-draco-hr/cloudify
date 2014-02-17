@@ -1,0 +1,20 @@
+{
+  logger.fine("creating storage provisioning driver.");
+  String storageClassName=cloud.getConfiguration().getStorageClassName();
+  try {
+    final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
+    Object storageProvisioningInstance=builder.build(providerDirectory.getAbsolutePath(),storageClassName);
+    if (storageProvisioningInstance instanceof BaseStorageDriver) {
+      storageDriver=(BaseStorageDriver)storageProvisioningInstance;
+      logger.fine("storage provisioning driver created successfully.");
+      storageDriver.setComputeContext(provisioning.getComputeContext());
+      storageDriver.setConfig(cloud,cloud.getConfiguration().getManagementMachineTemplate());
+    }
+  }
+ catch (  final ClassNotFoundException e) {
+    throw new CLIException("Failed to load storage provisioning class for cloud: " + cloud.getName() + ". Class not found: "+ storageClassName,e);
+  }
+catch (  final Exception e) {
+    throw new CLIException("Failed to load storage provisioning class for cloud: " + cloud.getName() + " class name: "+ storageClassName,e);
+  }
+}
