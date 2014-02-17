@@ -3,22 +3,45 @@
   if (this.endpoints != null) {
     for (    Map<String,String> endpointMap : this.endpoints) {
       String name=endpointMap.get("name");
-      int port=Integer.parseInt(endpointMap.get("port"));
       String protocol=endpointMap.get("protocol");
-      InputEndpoint endpoint=new InputEndpoint();
-      endpoint.setLocalPort(port);
-      endpoint.setPort(port);
-      endpoint.setName(name);
-      endpoint.setProtocol(protocol);
-      inputEndpoints.getInputEndpoints().add(endpoint);
+      String port=endpointMap.get("port");
+      if (!"".equals(port) && port.contains("-")) {
+        String[] portsRange=port.split("-");
+        int portStart=Integer.parseInt(portsRange[0]);
+        int portEnd=Integer.parseInt(portsRange[1]);
+        if (portsRange.length == 2 && portStart <= portEnd) {
+          InputEndpoint endpoint=null;
+          for (int i=portStart; i <= portEnd; i++) {
+            endpoint=new InputEndpoint();
+            endpoint.setLocalPort(i);
+            endpoint.setPort(i);
+            endpoint.setName(name + i);
+            endpoint.setProtocol(protocol);
+            inputEndpoints.getInputEndpoints().add(endpoint);
+          }
+        }
+      }
+ else {
+        if (!"".equals(port)) {
+          int portNumber=Integer.parseInt(port);
+          InputEndpoint endpoint=new InputEndpoint();
+          endpoint.setLocalPort(portNumber);
+          endpoint.setPort(portNumber);
+          endpoint.setName(name);
+          endpoint.setProtocol(protocol);
+          inputEndpoints.getInputEndpoints().add(endpoint);
+        }
+      }
     }
   }
-  InputEndpoint sshEndpoint=new InputEndpoint();
-  sshEndpoint.setLocalPort(SSH_PORT);
-  sshEndpoint.setPort(SSH_PORT);
-  sshEndpoint.setName("SSH");
-  sshEndpoint.setProtocol("TCP");
-  inputEndpoints.getInputEndpoints().add(sshEndpoint);
+  if (!isWindowsVM()) {
+    InputEndpoint sshEndpoint=new InputEndpoint();
+    sshEndpoint.setLocalPort(SSH_PORT);
+    sshEndpoint.setPort(SSH_PORT);
+    sshEndpoint.setName("SSH");
+    sshEndpoint.setProtocol("TCP");
+    inputEndpoints.getInputEndpoints().add(sshEndpoint);
+  }
   if (this.management) {
     InputEndpoint webuiEndpoint=new InputEndpoint();
     webuiEndpoint.setLocalPort(WEBUI_PORT);

@@ -2,18 +2,31 @@
   if (adaptedConfigurationSet == null) {
     return null;
   }
-  if (adaptedConfigurationSet.inputEndpoints != null) {
-    NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();
-    networkConfigurationSet.setConfigurationSetType(adaptedConfigurationSet.configurationSetType);
-    networkConfigurationSet.setInputEndpoints(adaptedConfigurationSet.inputEndpoints);
-    return networkConfigurationSet;
-  }
- else {
+  if (ConfigurationSet.LINUX_PROVISIONING_CONFIGURATION.equals(adaptedConfigurationSet.configurationSetType)) {
     LinuxProvisioningConfigurationSet linuxProvisioningConfigurationSet=new LinuxProvisioningConfigurationSet();
     linuxProvisioningConfigurationSet.setDisableSshPasswordAuthentication(adaptedConfigurationSet.disableSshPasswordAuthentication);
     linuxProvisioningConfigurationSet.setHostName(adaptedConfigurationSet.hostName);
     linuxProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
     linuxProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
+  }
+ else   if (ConfigurationSet.WINDOWS_PROVISIONING_CONFIGURATION.equals(adaptedConfigurationSet.configurationSetType)) {
+    WindowsProvisioningConfigurationSet windowsProvisioningConfigurationSet=new WindowsProvisioningConfigurationSet();
+    windowsProvisioningConfigurationSet.setDisableSshPasswordAuthentication(adaptedConfigurationSet.disableSshPasswordAuthentication);
+    windowsProvisioningConfigurationSet.setHostName(adaptedConfigurationSet.hostName);
+    windowsProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
+    windowsProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
+    System.err.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZz computerName " + adaptedConfigurationSet + "    "+ adaptedConfigurationSet.computerName);
+    Thread.dumpStack();
+    System.err.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZz computerName " + adaptedConfigurationSet + "    "+ adaptedConfigurationSet.computerName);
+    windowsProvisioningConfigurationSet.setComputerName(adaptedConfigurationSet.computerName);
+    windowsProvisioningConfigurationSet.setAdminPassword(adaptedConfigurationSet.adminPassword);
+    windowsProvisioningConfigurationSet.setWinRm(adaptedConfigurationSet.winRm);
+  }
+ else {
+    NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();
+    networkConfigurationSet.setConfigurationSetType(adaptedConfigurationSet.configurationSetType);
+    networkConfigurationSet.setInputEndpoints(adaptedConfigurationSet.inputEndpoints);
+    return networkConfigurationSet;
   }
   return null;
 }

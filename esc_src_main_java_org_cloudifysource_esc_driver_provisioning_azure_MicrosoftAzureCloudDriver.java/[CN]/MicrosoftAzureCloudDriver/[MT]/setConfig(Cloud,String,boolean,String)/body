@@ -12,6 +12,7 @@
     throw new IllegalArgumentException("Custom field '" + AZURE_PFX_PASSWORD + "' must be set");
   }
   this.deploymentSlot=(String)this.template.getCustom().get(AZURE_DEPLOYMENT_SLOT);
+  this.deploymentName=(String)this.template.getCustom().get(AZURE_DEPLOYMENT_NAME);
   if (StringUtils.isBlank(deploymentSlot)) {
     deploymentSlot="Staging";
   }
@@ -21,10 +22,39 @@
     }
   }
   this.endpoints=(List<Map<String,String>>)this.template.getCustom().get(AZURE_ENDPOINTS);
+  boolean winRmEndpoint=false;
+  String endPointPort="";
+  for (  Map<String,String> endpointMap : endpoints) {
+    endPointPort=endpointMap.get("port");
+    if (!endPointPort.contains("-") && RemoteExecutionModes.WINRM.getDefaultPort() == Integer.parseInt(endPointPort))     winRmEndpoint=true;
+  }
+  if (endpoints == null || !winRmEndpoint) {
+    throw new IllegalArgumentException("Custom field '" + AZURE_ENDPOINTS + "' must be set at least with WinRM port "+ RemoteExecutionModes.WINRM.getDefaultPort());
+  }
+  if (this.management) {
+    this.firewallPorts=(List<Map<String,String>>)this.template.getCustom().get(AZURE_FIREWALL_PORTS);
+    boolean cloudifyWebuiPort=false;
+    boolean cloudifyRestApiPort=false;
+    String port;
+    for (    Map<String,String> firewallPort : firewallPorts) {
+      port=firewallPort.get("port");
+      if (!port.contains("-")) {
+        int p=Integer.parseInt(port);
+        if (p == WEBUI_PORT)         cloudifyWebuiPort=true;
+        if (p == REST_PORT)         cloudifyRestApiPort=true;
+      }
+    }
+    if (firewallPorts == null || !(cloudifyWebuiPort && cloudifyRestApiPort)) {
+      throw new IllegalArgumentException("Custom field '" + AZURE_FIREWALL_PORTS + "' must be set at least with "+ WEBUI_PORT+ " and "+ REST_PORT);
+    }
+  }
   this.imageName=this.template.getImageId();
   this.userName=this.template.getUsername();
   this.password=this.template.getPassword();
   this.size=this.template.getHardwareId();
+  this.fileTransferMode=this.template.getFileTransfer();
+  this.remoteExecutionMode=this.template.getRemoteExecution();
+  this.scriptLanguage=this.template.getScriptLanguage();
   this.subscriptionId=this.cloud.getUser().getUser();
   this.cleanup=Boolean.parseBoolean((String)this.cloud.getCustom().get(AZURE_CLEANUP_ON_TEARDOWN));
   this.location=(String)this.cloud.getCustom().get(AZURE_AFFINITY_LOCATION);

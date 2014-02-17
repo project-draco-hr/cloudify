@@ -1,0 +1,35 @@
+{
+  final RemoteExecutor remoteExecutor=RemoteExecutorFactory.createRemoteExecutorProvider(RemoteExecutionModes.WINRM);
+  String localBootstrapScript=this.template.getAbsoluteUploadDir();
+  InstallationDetails details=new InstallationDetails();
+  details.setUsername(userName);
+  details.setPassword(password);
+  details.setLocalDir(localBootstrapScript);
+  remoteExecutor.execute(machineDetails.getPublicAddress(),details,COMMAND_ACTIVATE_SHARING,DEFAULT_COMMAND_TIMEOUT);
+  String cmd="";
+  if (this.firewallPorts != null) {
+    for (    Map<String,String> firewallPortsMap : this.firewallPorts) {
+      String name=firewallPortsMap.get("name");
+      String protocol=firewallPortsMap.get("protocol");
+      String port=firewallPortsMap.get("port");
+      if (!"".equals(port) && port.contains("-")) {
+        String[] portsRange=port.split("-");
+        int portStart=Integer.parseInt(portsRange[0]);
+        int portEnd=Integer.parseInt(portsRange[1]);
+        if (portsRange.length == 2 && portStart <= portEnd) {
+          for (int i=portStart; i <= portEnd; i++) {
+            cmd=COMMAND_OPEN_FIREWALL_PORT + " " + protocol+ " "+ i+ " "+ (name + i);
+            remoteExecutor.execute(machineDetails.getPublicAddress(),details,cmd,DEFAULT_COMMAND_TIMEOUT);
+          }
+        }
+      }
+ else {
+        if (!"".equals(port)) {
+          int portNumber=Integer.parseInt(port);
+          cmd=COMMAND_OPEN_FIREWALL_PORT + " " + protocol+ " "+ portNumber+ " "+ name;
+          remoteExecutor.execute(machineDetails.getPublicAddress(),details,cmd,DEFAULT_COMMAND_TIMEOUT);
+        }
+      }
+    }
+  }
+}

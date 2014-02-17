@@ -11,7 +11,9 @@
     logger.log(Level.FINE,"Running on windows, modifying remote directory config. Original was: " + remoteDir);
     remoteDir=getWindowsRemoteDirPath(managementTemplateRemoteDirectory);
   }
-  logger.log(Level.INFO,"Setting cloud configuration directory to: " + remoteDir);
+ else {
+    remoteDir=template.getRemoteDirectory();
+  }
   setCloudConfigurationDirectory(remoteDir);
   setCloudTemplateName(cloudTemplateName);
 }

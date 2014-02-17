@@ -11,6 +11,17 @@
     adaptedConfigurationSet.userName=linuxProvisioningConfigurationSet.getUserName();
     adaptedConfigurationSet.userPassword=linuxProvisioningConfigurationSet.getUserPassword();
   }
+ else   if (configurationSet instanceof WindowsProvisioningConfigurationSet) {
+    WindowsProvisioningConfigurationSet WindowsProvisioningConfigurationSet=(WindowsProvisioningConfigurationSet)configurationSet;
+    adaptedConfigurationSet.configurationSetType=WindowsProvisioningConfigurationSet.getConfigurationSetType();
+    adaptedConfigurationSet.disableSshPasswordAuthentication=WindowsProvisioningConfigurationSet.isDisableSshPasswordAuthentication();
+    adaptedConfigurationSet.hostName=WindowsProvisioningConfigurationSet.getHostName();
+    adaptedConfigurationSet.userName=WindowsProvisioningConfigurationSet.getUserName();
+    adaptedConfigurationSet.userPassword=WindowsProvisioningConfigurationSet.getUserPassword();
+    adaptedConfigurationSet.adminPassword=WindowsProvisioningConfigurationSet.getAdminPassword();
+    adaptedConfigurationSet.computerName=WindowsProvisioningConfigurationSet.getComputerName();
+    adaptedConfigurationSet.winRm=WindowsProvisioningConfigurationSet.getWinRm();
+  }
  else {
     NetworkConfigurationSet networkConfigurationSet=(NetworkConfigurationSet)configurationSet;
     adaptedConfigurationSet.inputEndpoints=networkConfigurationSet.getInputEndpoints();

@@ -1,0 +1,3 @@
+{
+  return RemoteExecutionModes.WINRM.equals(this.remoteExecutionMode) || ScriptLanguages.WINDOWS_BATCH.equals(this.scriptLanguage);
+}
