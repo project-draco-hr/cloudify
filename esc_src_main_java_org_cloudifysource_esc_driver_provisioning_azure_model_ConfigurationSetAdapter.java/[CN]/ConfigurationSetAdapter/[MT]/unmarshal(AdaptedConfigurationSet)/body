@@ -16,6 +16,7 @@
     windowsProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
     windowsProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
     windowsProvisioningConfigurationSet.setComputerName(adaptedConfigurationSet.computerName);
+    windowsProvisioningConfigurationSet.setAdminUsername(adaptedConfigurationSet.adminUsername);
     windowsProvisioningConfigurationSet.setAdminPassword(adaptedConfigurationSet.adminPassword);
     windowsProvisioningConfigurationSet.setWinRm(adaptedConfigurationSet.winRm);
   }

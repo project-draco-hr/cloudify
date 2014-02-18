@@ -34,6 +34,7 @@
     windowsProvisioningSet.setHostName(roleName);
     windowsProvisioningSet.setUserName(userName);
     windowsProvisioningSet.setUserPassword(password);
+    windowsProvisioningSet.setAdminUsername(userName);
     windowsProvisioningSet.setAdminPassword(password);
     windowsProvisioningSet.setComputerName(computerName);
     configurationSets.getConfigurationSets().add(windowsProvisioningSet);

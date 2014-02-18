@@ -18,6 +18,7 @@
     adaptedConfigurationSet.hostName=WindowsProvisioningConfigurationSet.getHostName();
     adaptedConfigurationSet.userName=WindowsProvisioningConfigurationSet.getUserName();
     adaptedConfigurationSet.userPassword=WindowsProvisioningConfigurationSet.getUserPassword();
+    adaptedConfigurationSet.adminUsername=WindowsProvisioningConfigurationSet.getAdminUsername();
     adaptedConfigurationSet.adminPassword=WindowsProvisioningConfigurationSet.getAdminPassword();
     adaptedConfigurationSet.computerName=WindowsProvisioningConfigurationSet.getComputerName();
     adaptedConfigurationSet.winRm=WindowsProvisioningConfigurationSet.getWinRm();
