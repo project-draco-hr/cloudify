@@ -41,7 +41,7 @@
     Listeners listeners=new Listeners();
     Listener listener=new Listener();
     listener.setCertificateThumbprint(null);
-    listener.setType("HTTP");
+    listener.setType("Http");
     listeners.getListeners().add(listener);
     winRm.setListeners(listeners);
     windowsProvisioningSet.setWinRm(winRm);
