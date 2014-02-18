@@ -43,6 +43,10 @@
     listener.setCertificateThumbprint(null);
     listener.setProtocol("Http");
     listeners.getListeners().add(listener);
+    listener=new Listener();
+    listener.setCertificateThumbprint(null);
+    listener.setProtocol("Https");
+    listeners.getListeners().add(listener);
     winRm.setListeners(listeners);
     windowsProvisioningSet.setWinRm(winRm);
   }
