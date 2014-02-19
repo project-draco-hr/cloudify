@@ -5,10 +5,12 @@
   while (System.currentTimeMillis() < endTime) {
     final Volume volume=volumeApi.get().get(volumeId);
     if (volume == null) {
+      statusReached=true;
+      break;
     }
  else {
       volumeStatus=volume.getStatus();
-      if (volumeStatus == Volume.Status.DELETING) {
+      if (volumeStatus.equals(Volume.Status.DELETING)) {
         statusReached=true;
         break;
       }

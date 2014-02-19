@@ -1,6 +1,6 @@
 {
-  logger.fine("creating storage provisioning driver.");
   String storageClassName=cloud.getConfiguration().getStorageClassName();
+  logger.fine("creating storage provisioning driver.");
   try {
     final ProvisioningDriverClassBuilder builder=new ProvisioningDriverClassBuilder();
     Object storageProvisioningInstance=builder.build(providerDirectory.getAbsolutePath(),storageClassName);

@@ -1,8 +1,10 @@
 {
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   createProvisioningDriver(false);
-  createStorageDriver();
   ShellUtils.checkNotNull("providerDirectory",providerDirectory);
   destroyManagementServers(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
-  destroyVolumes(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  if (StringUtils.isNotBlank(cloud.getConfiguration().getStorageClassName())) {
+    createStorageDriver();
+    destroyVolumes(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
 }
