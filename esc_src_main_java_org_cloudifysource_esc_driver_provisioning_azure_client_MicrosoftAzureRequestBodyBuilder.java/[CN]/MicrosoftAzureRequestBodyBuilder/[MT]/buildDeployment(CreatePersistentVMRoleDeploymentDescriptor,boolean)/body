@@ -30,8 +30,6 @@
     String[] computerNameArray=roleName.split("_");
     String computerName=(computerNameArray[2]).toUpperCase();
     WindowsProvisioningConfigurationSet windowsProvisioningSet=new WindowsProvisioningConfigurationSet();
-    windowsProvisioningSet.setDisableSshPasswordAuthentication(true);
-    windowsProvisioningSet.setHostName(roleName);
     windowsProvisioningSet.setAdminUsername(userName);
     windowsProvisioningSet.setAdminPassword(password);
     windowsProvisioningSet.setComputerName(computerName);
