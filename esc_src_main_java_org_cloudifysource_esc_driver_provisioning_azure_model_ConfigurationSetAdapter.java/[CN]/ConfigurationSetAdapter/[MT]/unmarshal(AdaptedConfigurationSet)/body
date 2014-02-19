@@ -11,10 +11,6 @@
   }
  else   if (ConfigurationSet.WINDOWS_PROVISIONING_CONFIGURATION.equals(adaptedConfigurationSet.configurationSetType)) {
     WindowsProvisioningConfigurationSet windowsProvisioningConfigurationSet=new WindowsProvisioningConfigurationSet();
-    windowsProvisioningConfigurationSet.setDisableSshPasswordAuthentication(adaptedConfigurationSet.disableSshPasswordAuthentication);
-    windowsProvisioningConfigurationSet.setHostName(adaptedConfigurationSet.hostName);
-    windowsProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
-    windowsProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
     windowsProvisioningConfigurationSet.setComputerName(adaptedConfigurationSet.computerName);
     windowsProvisioningConfigurationSet.setAdminUsername(adaptedConfigurationSet.adminUsername);
     windowsProvisioningConfigurationSet.setAdminPassword(adaptedConfigurationSet.adminPassword);

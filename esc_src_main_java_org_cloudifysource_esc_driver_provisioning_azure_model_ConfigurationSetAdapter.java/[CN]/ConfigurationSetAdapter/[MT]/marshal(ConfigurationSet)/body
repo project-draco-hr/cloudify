@@ -14,10 +14,6 @@
  else   if (configurationSet instanceof WindowsProvisioningConfigurationSet) {
     WindowsProvisioningConfigurationSet WindowsProvisioningConfigurationSet=(WindowsProvisioningConfigurationSet)configurationSet;
     adaptedConfigurationSet.configurationSetType=WindowsProvisioningConfigurationSet.getConfigurationSetType();
-    adaptedConfigurationSet.disableSshPasswordAuthentication=WindowsProvisioningConfigurationSet.isDisableSshPasswordAuthentication();
-    adaptedConfigurationSet.hostName=WindowsProvisioningConfigurationSet.getHostName();
-    adaptedConfigurationSet.userName=WindowsProvisioningConfigurationSet.getUserName();
-    adaptedConfigurationSet.userPassword=WindowsProvisioningConfigurationSet.getUserPassword();
     adaptedConfigurationSet.adminUsername=WindowsProvisioningConfigurationSet.getAdminUsername();
     adaptedConfigurationSet.adminPassword=WindowsProvisioningConfigurationSet.getAdminPassword();
     adaptedConfigurationSet.computerName=WindowsProvisioningConfigurationSet.getComputerName();
