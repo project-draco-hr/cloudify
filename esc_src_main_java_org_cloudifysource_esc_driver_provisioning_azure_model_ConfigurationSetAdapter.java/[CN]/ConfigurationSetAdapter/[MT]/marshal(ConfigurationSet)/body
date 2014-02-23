@@ -5,6 +5,7 @@
   AdaptedConfigurationSet adaptedConfigurationSet=new AdaptedConfigurationSet();
   if (configurationSet instanceof LinuxProvisioningConfigurationSet) {
     LinuxProvisioningConfigurationSet linuxProvisioningConfigurationSet=(LinuxProvisioningConfigurationSet)configurationSet;
+    adaptedConfigurationSet.type=linuxProvisioningConfigurationSet.getType();
     adaptedConfigurationSet.configurationSetType=linuxProvisioningConfigurationSet.getConfigurationSetType();
     adaptedConfigurationSet.disableSshPasswordAuthentication=linuxProvisioningConfigurationSet.isDisableSshPasswordAuthentication();
     adaptedConfigurationSet.hostName=linuxProvisioningConfigurationSet.getHostName();
@@ -13,6 +14,7 @@
   }
  else   if (configurationSet instanceof WindowsProvisioningConfigurationSet) {
     WindowsProvisioningConfigurationSet WindowsProvisioningConfigurationSet=(WindowsProvisioningConfigurationSet)configurationSet;
+    adaptedConfigurationSet.type=WindowsProvisioningConfigurationSet.getType();
     adaptedConfigurationSet.configurationSetType=WindowsProvisioningConfigurationSet.getConfigurationSetType();
     adaptedConfigurationSet.adminUsername=WindowsProvisioningConfigurationSet.getAdminUsername();
     adaptedConfigurationSet.adminPassword=WindowsProvisioningConfigurationSet.getAdminPassword();
