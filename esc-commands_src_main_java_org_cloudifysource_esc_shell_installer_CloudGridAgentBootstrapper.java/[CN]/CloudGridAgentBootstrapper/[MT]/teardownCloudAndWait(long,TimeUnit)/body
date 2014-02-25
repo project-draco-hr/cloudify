@@ -2,7 +2,17 @@
   final long end=System.currentTimeMillis() + timeoutUnit.toMillis(timeout);
   createProvisioningDriver(false);
   ShellUtils.checkNotNull("providerDirectory",providerDirectory);
-  destroyManagementServers(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  if (terminateNow) {
+    try {
+      provisioning.terminateAllResources(timeout,timeoutUnit);
+    }
+ catch (    final CloudProvisioningException e) {
+      throw new CLIException("Failed to terminate resources: " + e.getMessage(),e);
+    }
+  }
+ else {
+    destroyManagementServers(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);
+  }
   if (StringUtils.isNotBlank(cloud.getConfiguration().getStorageClassName())) {
     createStorageDriver();
     destroyVolumes(CalcUtils.millisUntil(end),TimeUnit.MILLISECONDS);

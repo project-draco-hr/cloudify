@@ -1,0 +1,30 @@
+{
+  logger.info("Attempting to terminate all cloud resources (timeout set to " + duration + " "+ unit+ ")");
+  final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
+  try {
+    terminateMachinesByPrefix(cloud.getProvider().getManagementGroup(),endTime);
+    terminateMachinesByPrefix(cloud.getProvider().getMachineNamePrefix(),endTime);
+    try {
+      this.cleanAllSecurityGroups();
+    }
+ catch (    final Exception e) {
+      logger.warning("Couldn't clean security groups " + this.openstackPrefixes.getPrefix() + "*");
+      logger.warning("Reported error: " + e.getMessage() + ", stack trace: "+ e.getStackTrace());
+    }
+    try {
+      this.cleanAllNetworks();
+    }
+ catch (    final Exception e) {
+      logger.warning("Couldn't clean networks " + this.openstackPrefixes.getPrefix() + "*");
+      logger.warning("Reported error: " + e.getMessage() + ", stack trace: "+ e.getStackTrace());
+    }
+  }
+  finally {
+    if (this.computeApi != null) {
+      this.computeApi.close();
+    }
+    if (this.networkApi != null) {
+      this.networkApi.close();
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  try {
+    List<String> serverIds=getServerIdsByPrefix(prefix);
+    for (    String serverId : serverIds) {
+      try {
+        this.releaseFloatingIpsForServerId(serverId);
+        this.computeApi.deleteServer(serverId);
+        this.waitForServerToBeShutdown(serverId,endTime);
+      }
+ catch (      final InterruptedException e) {
+        logger.warning("thread was interrupted while waiting for machine (" + serverId + ") to shutdown."+ " continuing...");
+      }
+catch (      final Exception e) {
+        logger.warning("Couldn't terminate machine " + serverId + ". Continuing to terminate resourcse."+ " reported error: "+ e.getMessage()+ ", stack trace: "+ e.getStackTrace());
+      }
+    }
+  }
+ catch (  CloudProvisioningException e) {
+    logger.warning("Failed to terminate servers with prefix: " + prefix + ", error while searching servers: "+ e.getMessage()+ ", stack trace: "+ e.getStackTrace());
+  }
+}
