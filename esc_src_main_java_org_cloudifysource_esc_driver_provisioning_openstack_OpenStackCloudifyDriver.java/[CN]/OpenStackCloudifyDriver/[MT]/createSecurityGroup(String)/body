@@ -1,6 +1,7 @@
 {
   final SecurityGroup request=new SecurityGroup();
-  request.setName(secgroupName);
-  request.setDescription("Security groups " + secgroupName);
+  final String validSecGroupName=secgroupName.replace('.','-');
+  request.setName(validSecGroupName);
+  request.setDescription("Security groups " + validSecGroupName);
   return networkApi.createSecurityGroupsIfNotExist(request);
 }
