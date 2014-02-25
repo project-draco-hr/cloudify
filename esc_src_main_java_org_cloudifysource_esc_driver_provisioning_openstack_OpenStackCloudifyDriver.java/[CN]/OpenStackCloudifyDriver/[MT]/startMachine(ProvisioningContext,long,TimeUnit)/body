@@ -22,7 +22,7 @@
     final String validGroupName=groupName.replace('.','-');
     logger.fine("Starting a new cloud server with group: " + validGroupName);
     final ComputeTemplate computeTemplate=this.cloud.getCloudCompute().getTemplates().get(this.cloudTemplateName);
-    final MachineDetails md=this.createServer(groupName,end,computeTemplate,context.getLocationId());
+    final MachineDetails md=this.createServer(validGroupName,end,computeTemplate,context.getLocationId());
     return md;
   }
  catch (  final OpenstackException e) {
