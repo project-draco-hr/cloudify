@@ -1,7 +1,0 @@
-{
-  String tenantId=getTenantId();
-  if (StringUtils.isBlank(tenantId)) {
-    throw new OpenstackException("Tenant id not found");
-  }
-  return getQuotasForTenant(tenantId);
-}

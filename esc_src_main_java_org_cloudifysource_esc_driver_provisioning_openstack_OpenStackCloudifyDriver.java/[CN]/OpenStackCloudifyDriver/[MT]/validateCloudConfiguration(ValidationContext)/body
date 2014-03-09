@@ -8,7 +8,6 @@
   final ComputeTemplate managementComputeTemplate=cloud.getCloudCompute().getTemplates().get(mangementTemplateName);
   this.validateOpenstackEndpoint(validationContext,managementComputeTemplate);
   validateCredentials(validationContext);
-  validateQuotas(validationContext);
   final CloudNetwork cloudNetwork=configuration.getCloud().getCloudNetwork();
   this.validateManagementNetwork(validationContext,managementComputeTemplate,cloudNetwork);
   if (cloudNetwork != null) {
