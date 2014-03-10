@@ -2,7 +2,7 @@
   final Router router;
   if (this.networkHelper.isCreateExternalRouter()) {
     final String publicNetworkId;
-    if (this.networkHelper.isExternalNetworkNameSpecified()) {
+    if (this.networkHelper.isCreateExternalNetwork()) {
       publicNetworkId=networkApi.getPublicNetworkId();
     }
  else {

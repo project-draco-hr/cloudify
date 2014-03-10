@@ -1,0 +1,3 @@
+ValidationContext validationContext
+int rulesQuota
+String tenantId

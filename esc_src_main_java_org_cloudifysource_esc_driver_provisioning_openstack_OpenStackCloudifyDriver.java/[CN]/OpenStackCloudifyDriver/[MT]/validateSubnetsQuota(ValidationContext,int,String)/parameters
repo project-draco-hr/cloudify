@@ -1,2 +1,3 @@
 ValidationContext validationContext
-int limit
+int subnetsQuota
+String tenantId

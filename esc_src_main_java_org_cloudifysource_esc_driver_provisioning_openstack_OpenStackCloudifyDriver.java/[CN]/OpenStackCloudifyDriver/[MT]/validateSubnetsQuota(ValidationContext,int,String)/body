@@ -1,0 +1,29 @@
+{
+  int subnetsUsage=0;
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_subnets"));
+  logger.finest("subnets quota: " + subnetsQuota);
+  if (UNLIMITED_RESOURCE_QUOTA == subnetsQuota) {
+    validationContext.validationEventEnd(ValidationResultType.OK);
+  }
+ else {
+    int plannedSubnetsCount=this.cloud.getProvider().getNumberOfManagementMachines();
+    logger.finest("planned management subnets count: " + plannedSubnetsCount);
+    try {
+      List<Subnet> subnets=networkApi.getSubnetsByTenantId(tenantId);
+      if (subnets != null) {
+        subnetsUsage=subnets.size();
+      }
+    }
+ catch (    OpenstackException e) {
+      throw new CloudProvisioningException("Error getting subnets usage from openstack",e);
+    }
+    logger.finest("subnets usage: " + subnetsUsage);
+    if (subnetsQuota - subnetsUsage >= plannedSubnetsCount) {
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+ else {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","subnets",subnetsQuota,subnetsUsage,plannedSubnetsCount));
+    }
+  }
+}

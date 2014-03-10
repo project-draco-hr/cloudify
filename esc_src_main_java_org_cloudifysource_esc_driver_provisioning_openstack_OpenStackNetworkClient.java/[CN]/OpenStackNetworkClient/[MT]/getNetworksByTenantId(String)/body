@@ -1,0 +1,4 @@
+{
+  final String response=this.doGet("networks",new String[]{"tenant_id",tenantId});
+  return JsonUtils.unwrapRootToList(Network.class,response);
+}

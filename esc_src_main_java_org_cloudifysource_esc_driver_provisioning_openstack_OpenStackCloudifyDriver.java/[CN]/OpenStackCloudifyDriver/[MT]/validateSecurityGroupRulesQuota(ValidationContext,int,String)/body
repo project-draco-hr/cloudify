@@ -1,0 +1,29 @@
+{
+  int rulesUsage=0;
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_group_rules_quota"));
+  logger.finest("security-group rules quota: " + rulesQuota);
+  if (UNLIMITED_RESOURCE_QUOTA == rulesQuota) {
+    validationContext.validationEventEnd(ValidationResultType.OK);
+  }
+ else {
+    int plannedSecurityRulesCount=DEFAULT_SECURITY_GROUP_RULES;
+    logger.finest("planned security-groups rule count: " + plannedSecurityRulesCount);
+    try {
+      final List<SecurityGroupRule> securityRules=networkApi.getSecurityGroupRulesByTenantId(tenantId);
+      if (securityRules != null) {
+        rulesUsage=securityRules.size();
+      }
+    }
+ catch (    OpenstackException e) {
+      throw new CloudProvisioningException("Error requesting security groups rules",e);
+    }
+    logger.finest("security-group rules usage: " + rulesUsage);
+    if (rulesQuota - rulesUsage >= plannedSecurityRulesCount) {
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+ else {
+      throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","Security-group rules",rulesQuota,rulesUsage,plannedSecurityRulesCount));
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

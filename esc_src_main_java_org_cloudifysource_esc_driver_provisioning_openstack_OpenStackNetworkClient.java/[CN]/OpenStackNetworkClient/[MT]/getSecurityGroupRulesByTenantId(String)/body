@@ -1,0 +1,4 @@
+{
+  final String response=this.doGet("security-group-rules",new String[]{"tenant_id",tenantId});
+  return JsonUtils.unwrapRootToList(SecurityGroupRule.class,response);
+}

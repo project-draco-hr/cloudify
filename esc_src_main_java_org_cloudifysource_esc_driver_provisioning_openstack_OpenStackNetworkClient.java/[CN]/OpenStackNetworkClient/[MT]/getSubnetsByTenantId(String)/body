@@ -1,0 +1,8 @@
+{
+  final List<Subnet> subnets=new ArrayList<Subnet>();
+  final List<Network> tenantNetworks=this.getNetworksByTenantId(tenantId);
+  for (  Network tenantNetwork : tenantNetworks) {
+    subnets.addAll(getSubnetsByNetworkId(tenantNetwork.getId()));
+  }
+  return subnets;
+}

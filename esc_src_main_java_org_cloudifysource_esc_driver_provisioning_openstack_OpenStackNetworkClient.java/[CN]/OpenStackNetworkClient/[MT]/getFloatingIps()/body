@@ -1,0 +1,5 @@
+{
+  final String response=this.doGet("floatingips");
+  final List<FloatingIp> floatingips=JsonUtils.unwrapRootToList(FloatingIp.class,response);
+  return floatingips;
+}

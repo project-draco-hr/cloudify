@@ -1,0 +1,34 @@
+{
+  int floatingIpsUsage=0;
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_floating_ips"));
+  logger.finest("floating IPs quota: " + floatingIpsQuota);
+  if (UNLIMITED_RESOURCE_QUOTA == floatingIpsQuota) {
+    validationContext.validationEventEnd(ValidationResultType.OK);
+  }
+ else {
+    if (!this.networkHelper.associateFloatingIp()) {
+      validationContext.validationEventEnd(ValidationResultType.OK);
+    }
+ else {
+      int plannedFloatingIpsCount=this.cloud.getProvider().getNumberOfManagementMachines();
+      logger.finest("planned management floating IPs count: " + plannedFloatingIpsCount);
+      try {
+        List<FloatingIp> floatingIps=networkApi.getFloatingIps();
+        if (floatingIps != null) {
+          floatingIpsUsage=floatingIps.size();
+        }
+      }
+ catch (      OpenstackException e) {
+        throw new CloudProvisioningException("Error getting floating IPs usage from openstack",e);
+      }
+      logger.finest("floating IPs usage: " + floatingIpsUsage);
+      if (floatingIpsQuota - floatingIpsUsage >= plannedFloatingIpsCount) {
+        validationContext.validationEventEnd(ValidationResultType.OK);
+      }
+ else {
+        validationContext.validationEventEnd(ValidationResultType.ERROR);
+        throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","floating IPs",floatingIpsQuota,floatingIpsUsage,plannedFloatingIpsCount));
+      }
+    }
+  }
+}

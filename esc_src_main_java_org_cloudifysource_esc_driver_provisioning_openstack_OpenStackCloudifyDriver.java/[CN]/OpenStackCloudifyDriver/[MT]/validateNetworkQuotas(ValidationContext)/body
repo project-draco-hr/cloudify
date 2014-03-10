@@ -1,11 +1,16 @@
 {
   try {
-    final Quota quotas=this.networkApi.getQuotasForTenant(this.computeApi.getTenantId());
+    final String tenantId=computeApi.getTenantId();
+    final Quota quotas=this.networkApi.getQuotasForTenant(tenantId);
     if (quotas == null) {
       throw new OpenstackException("Failed getting network quotas.");
     }
-    validateSecurityGroupsQuota(validationContext,quotas.getSecurityGroup());
-    validateSecurityGroupRulesQuota(validationContext,quotas.getSecurityGroupRule());
+    validateSecurityGroupsQuota(validationContext,quotas.getSecurityGroup(),tenantId);
+    validateSecurityGroupRulesQuota(validationContext,quotas.getSecurityGroupRule(),tenantId);
+    validateRoutersQuota(validationContext,quotas.getRouter(),tenantId);
+    validateNetworksQuota(validationContext,quotas.getNetwork(),tenantId);
+    validateSubnetsQuota(validationContext,quotas.getSubnet(),tenantId);
+    validateFloatingIpsQuota(validationContext,quotas.getFloatingip());
   }
  catch (  final OpenstackException e) {
     validationContext.validationEventEnd(ValidationResultType.ERROR);
