@@ -1,2 +1,12 @@
 {
+  try {
+    final ComputeLimits limits=this.computeApi.getLimits();
+    if (limits == null) {
+      throw new OpenstackException("Failed getting cloud compute quotas.");
+    }
+  }
+ catch (  final OpenstackException e) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException("Failed validating cloud compute resources. Reason: " + e.getMessage(),e);
+  }
 }
