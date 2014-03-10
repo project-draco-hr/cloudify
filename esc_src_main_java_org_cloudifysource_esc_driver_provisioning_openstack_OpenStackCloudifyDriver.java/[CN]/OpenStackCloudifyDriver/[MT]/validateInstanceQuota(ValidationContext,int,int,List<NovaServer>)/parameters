@@ -1,0 +1,4 @@
+ValidationContext validationContext
+int instanceLimit
+int numOfManagementMachines
+List<NovaServer> servers

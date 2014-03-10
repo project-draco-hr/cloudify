@@ -1,0 +1,6 @@
+ValidationContext validationContext
+ComputeTemplate managementComputeTemplate
+int coreLimit
+int ramLimit
+int numOfManagementMachines
+List<NovaServer> servers
