@@ -1,0 +1,15 @@
+{
+  try {
+    final Quota quotas=this.networkApi.getQuotasForTenant(this.computeApi.getTenantId());
+    if (quotas == null) {
+      throw new OpenstackException("Failed getting network quotas.");
+    }
+    validateSecurityGroupsQuota(validationContext,quotas.getSecurityGroup());
+    validateSecurityGroupRulesQuota(validationContext,quotas.getSecurityGroupRule());
+  }
+ catch (  final OpenstackException e) {
+    validationContext.validationEventEnd(ValidationResultType.ERROR);
+    throw new CloudProvisioningException("Failed validating cloud network resources. Reason: " + e.getMessage(),e);
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

@@ -1,0 +1,14 @@
+{
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_groups_quota"));
+  final List<SecurityGroup> securityGroups;
+  try {
+    securityGroups=this.networkApi.getSecurityGroups();
+  }
+ catch (  OpenstackException e) {
+    throw new CloudProvisioningException("Error requesting security groups.",e);
+  }
+  if (securityGroups.size() + DEFAULT_SECURITY_GROUPS_COUNT > limit) {
+    throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","Security-groups",limit,securityGroups.size(),DEFAULT_SECURITY_GROUPS_COUNT));
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

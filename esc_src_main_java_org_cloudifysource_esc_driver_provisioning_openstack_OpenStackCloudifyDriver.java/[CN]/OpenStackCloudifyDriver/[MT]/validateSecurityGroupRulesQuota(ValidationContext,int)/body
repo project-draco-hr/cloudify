@@ -1,0 +1,18 @@
+{
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_security_group_rules_quota"));
+  final List<SecurityGroup> securityGroups;
+  try {
+    securityGroups=this.networkApi.getSecurityGroups();
+  }
+ catch (  OpenstackException e) {
+    throw new CloudProvisioningException("Error requesting security groups.",e);
+  }
+  int ruleCount=0;
+  for (  final SecurityGroup securityGroup : securityGroups) {
+    ruleCount+=securityGroup.getSecurityGroupRules().length;
+  }
+  if (ruleCount + DEFAULT_SECURITY_GROUP_RULES > limit) {
+    throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","Security-group rules",limit,ruleCount,DEFAULT_SECURITY_GROUP_RULES));
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}
