@@ -10,13 +10,12 @@
     final int coreLimit=limits.getLimits().getMaxTotalCores();
     final int ramLimit=limits.getLimits().getMaxTotalRAMSize();
     final int instanceLimit=limits.getLimits().getMaxTotalInstances();
-    final int numOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
     final List<NovaServer> servers=this.computeApi.getServers();
     if (servers == null) {
       throw new OpenstackException("Failed getting list of servers");
     }
-    validateInstanceQuota(validationContext,instanceLimit,numOfManagementMachines,servers);
-    validateCoreAndRamQuota(validationContext,managementComputeTemplate,coreLimit,ramLimit,numOfManagementMachines,servers);
+    validateInstanceQuota(validationContext,instanceLimit,servers);
+    validateCoreAndRamQuota(validationContext,managementComputeTemplate,coreLimit,ramLimit,servers);
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
  catch (  final OpenstackException e) {

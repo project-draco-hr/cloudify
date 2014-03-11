@@ -1,0 +1,2 @@
+List<Flavor> flavors
+String flavorId

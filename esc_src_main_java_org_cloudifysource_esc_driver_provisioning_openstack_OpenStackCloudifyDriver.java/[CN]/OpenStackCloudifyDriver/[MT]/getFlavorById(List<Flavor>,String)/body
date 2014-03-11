@@ -1,0 +1,8 @@
+{
+  for (  final Flavor flavor : flavors) {
+    if (flavor.getId().equals(flavorId)) {
+      return flavor;
+    }
+  }
+  throw new OpenstackException("Could not find flavor with ID: " + flavorId);
+}
