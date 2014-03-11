@@ -8,6 +8,7 @@
     try {
       validatePortIsFree(host,port);
       connectionEstablished=true;
+      break;
     }
  catch (    UnknownHostException uhe) {
       throw uhe;
