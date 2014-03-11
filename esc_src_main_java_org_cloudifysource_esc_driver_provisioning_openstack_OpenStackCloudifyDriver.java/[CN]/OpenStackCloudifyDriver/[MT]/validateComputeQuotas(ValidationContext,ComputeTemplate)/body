@@ -1,6 +1,6 @@
 {
   try {
-    validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,"Validating compute quotas");
+    validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_compute_quotas"));
     final ComputeLimits limits=this.computeApi.getLimits();
     if (limits == null) {
       validationContext.validationEventEnd(ValidationResultType.ERROR);

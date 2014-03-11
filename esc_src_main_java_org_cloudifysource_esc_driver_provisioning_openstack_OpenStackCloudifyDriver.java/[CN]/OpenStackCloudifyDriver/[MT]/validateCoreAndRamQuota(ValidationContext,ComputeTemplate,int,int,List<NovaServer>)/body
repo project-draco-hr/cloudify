@@ -18,6 +18,7 @@
   final Flavor managementFlavor=getFlavorById(flavors,managementHardwareId);
   final int numOfManagementMachines=cloud.getProvider().getNumberOfManagementMachines();
   final int requiredVcpus=managementFlavor.getVcpus() * numOfManagementMachines;
+  logger.finest("used cores amount to: " + existingVcpus + ". Required: "+ requiredVcpus);
   if (coreLimit != UNLIMITED_RESOURCE_QUOTA) {
     if (existingVcpus + requiredVcpus > coreLimit) {
       throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","virtual cpus",coreLimit,existingVcpus,requiredVcpus));
@@ -27,6 +28,7 @@
   validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_total_ram_quota"));
   logger.finest("RAM quota limit is: " + ramLimit);
   final int requiredRam=managementFlavor.getRam() * numOfManagementMachines;
+  logger.finest("used RAM amounts to: " + existingRam + ". Required: "+ requiredRam);
   if (ramLimit != UNLIMITED_RESOURCE_QUOTA) {
     if (existingRam + requiredRam > ramLimit) {
       throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","RAM",ramLimit,existingRam,requiredRam));
