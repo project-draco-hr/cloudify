@@ -1,25 +1,23 @@
 {
   try {
-    validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,getFormattedMessage("validating_compute_quotas"));
+    validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_compute_quotas"));
     final ComputeLimits limits=this.computeApi.getLimits();
     if (limits == null) {
-      validationContext.validationEventEnd(ValidationResultType.ERROR);
-      logger.warning("Failed to retrieve compute limits, skipping compute quotas validation");
-      return;
+      throw new OpenstackException("Error requesting compute limits");
     }
     final int coreLimit=limits.getLimits().getMaxTotalCores();
     final int ramLimit=limits.getLimits().getMaxTotalRAMSize();
     final int instanceLimit=limits.getLimits().getMaxTotalInstances();
     final List<NovaServer> servers=this.computeApi.getServers();
     if (servers == null) {
-      throw new OpenstackException("Failed getting list of servers");
+      throw new CloudProvisioningException("Failed requesting list of servers");
     }
     validateInstanceQuota(validationContext,instanceLimit,servers);
     validateCoreAndRamQuota(validationContext,managementComputeTemplate,coreLimit,ramLimit,servers);
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
  catch (  final OpenstackException e) {
-    validationContext.validationEventEnd(ValidationResultType.ERROR);
-    throw new CloudProvisioningException("Failed validating cloud compute resources. Reason: " + e.getMessage(),e);
+    validationContext.validationEventEnd(ValidationResultType.WARNING);
+    logger.log(Level.INFO,"Cannot validate compute quotas on this provider.");
   }
 }

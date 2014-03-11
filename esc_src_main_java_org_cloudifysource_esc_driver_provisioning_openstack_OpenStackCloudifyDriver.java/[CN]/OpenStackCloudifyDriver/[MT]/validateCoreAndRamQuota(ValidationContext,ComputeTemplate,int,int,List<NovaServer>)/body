@@ -3,11 +3,23 @@
   logger.finest("virtual-cores quota limit is: " + coreLimit);
   int existingVcpus=0;
   int existingRam=0;
-  final List<Flavor> flavors=computeApi.getFlavors();
+  List<Flavor> flavors;
+  try {
+    flavors=computeApi.getFlavors();
+  }
+ catch (  final OpenstackException e) {
+    throw new CloudProvisioningException("Error requesting flavors.",e);
+  }
   for (  final NovaServer novaServer : servers) {
-    final NovaServer serverDetails=this.computeApi.getServerDetails(novaServer.getId());
+    NovaServer serverDetails=null;
+    try {
+      serverDetails=this.computeApi.getServerDetails(novaServer.getId());
+    }
+ catch (    final OpenstackException e) {
+      throw new CloudProvisioningException("Error requesting server details",e);
+    }
     if (serverDetails == null) {
-      throw new OpenstackException("Failed getting running server's details for server with ID: " + novaServer.getId());
+      throw new CloudProvisioningException("Error requesting server details for server with ID: " + novaServer.getId());
     }
     logger.finest("Getting flavor details for server instance with ID: " + novaServer.getId());
     final Flavor flavor=getFlavorById(flavors,serverDetails.getFlavor().getId());

@@ -1,9 +1,9 @@
 {
   try {
-    validationContext.validationOngoingEvent(ValidationMessageType.GROUP_VALIDATION_MESSAGE,"Validating network quotas");
+    validationContext.validationOngoingEvent(ValidationMessageType.TOP_LEVEL_VALIDATION_MESSAGE,getFormattedMessage("validating_network_quotas"));
     final String tenantId=computeApi.getTenantId();
     if (StringUtils.isBlank(tenantId)) {
-      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      validationContext.validationEventEnd(ValidationResultType.WARNING);
       logger.info("Failed to retrieve tenant id, skipping network quotas validation");
       return;
     }
@@ -20,8 +20,7 @@
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
  catch (  final OpenstackException e) {
-    validationContext.validationEventEnd(ValidationResultType.ERROR);
-    logger.info("Failed to retrieve tenant id, skipping network quotas validation");
-    throw new CloudProvisioningException("Failed validating cloud network resources. Reason: " + e.getMessage(),e);
+    validationContext.validationEventEnd(ValidationResultType.WARNING);
+    logger.info("Cannot validate network quotas on this provider.");
   }
 }

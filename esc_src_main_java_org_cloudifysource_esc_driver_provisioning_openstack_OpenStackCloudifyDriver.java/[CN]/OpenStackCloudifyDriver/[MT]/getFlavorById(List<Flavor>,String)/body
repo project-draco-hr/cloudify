@@ -4,5 +4,5 @@
       return flavor;
     }
   }
-  throw new OpenstackException("Could not find flavor with ID: " + flavorId);
+  throw new CloudProvisioningException("Could not find flavor with ID: " + flavorId);
 }
