@@ -4,6 +4,6 @@
     throw new IllegalStateException("Cannot partition when not running in privileged mode");
   }
   logger.info("Partitioning device " + device);
-  VolumeUtils.partition(device,timeoutInMillis);
-  changeStateOfVolumeWithDevice(device,VolumeState.PARTITIONED);
+  VolumeUtils.partition(device);
+  changeStateOfVolumeWithId(volumeId,VolumeState.PARTITIONED);
 }

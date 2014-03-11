@@ -1,6 +1,0 @@
-{
-  ServiceVolume serviceVolume=new ServiceVolume();
-  serviceVolume.setDevice(deviceName);
-  logger.fine("Changing state of volume with device " + deviceName + " to "+ newState);
-  managementSpace.change(serviceVolume,new ChangeSet().set("state",newState));
-}
