@@ -1,0 +1,11 @@
+{
+  final int requiredVcpus=managementFlavorVcpus * numOfManagementMachines;
+  logger.finest("used cores amount to: " + existingVcpus + ". Required: "+ requiredVcpus);
+  if (coreLimit != UNLIMITED_RESOURCE_QUOTA) {
+    if (existingVcpus + requiredVcpus > coreLimit) {
+      validationContext.validationEventEnd(ValidationResultType.ERROR);
+      throw new CloudProvisioningException(getFormattedMessage("resource_validation_failure","virtual CPUs",coreLimit,existingVcpus,requiredVcpus));
+    }
+  }
+  validationContext.validationEventEnd(ValidationResultType.OK);
+}

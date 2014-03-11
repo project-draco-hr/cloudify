@@ -12,12 +12,24 @@
     if (servers == null) {
       throw new CloudProvisioningException("Failed requesting list of servers");
     }
-    validateInstanceQuota(validationContext,instanceLimit,servers);
-    validateCoreAndRamQuota(validationContext,managementComputeTemplate,coreLimit,ramLimit,servers);
+    if (instanceLimit == 0) {
+      logger.warning("Failed to retrieve instances quota, skipping instance quota validation");
+      validationContext.validationEventEnd(ValidationResultType.WARNING);
+    }
+ else {
+      validateInstanceQuota(validationContext,instanceLimit,servers);
+    }
+    if (coreLimit == 0 && ramLimit == 0) {
+      logger.warning("Failed to retrieve vCPUs and RAM quotas, skipping vCPUs and RAM validations");
+      validationContext.validationEventEnd(ValidationResultType.WARNING);
+    }
+ else {
+      validateCoreAndRamQuota(validationContext,managementComputeTemplate,coreLimit,ramLimit,servers);
+    }
     validationContext.validationEventEnd(ValidationResultType.OK);
   }
  catch (  final OpenstackException e) {
     validationContext.validationEventEnd(ValidationResultType.WARNING);
-    logger.log(Level.INFO,"Cannot validate compute quotas on this provider.");
+    logger.log(Level.WARNING,"Cannot validate compute quotas on this provider.");
   }
 }

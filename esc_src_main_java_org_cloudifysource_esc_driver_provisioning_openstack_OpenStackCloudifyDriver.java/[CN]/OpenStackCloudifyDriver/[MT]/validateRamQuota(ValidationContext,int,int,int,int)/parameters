@@ -1,0 +1,5 @@
+ValidationContext validationContext
+int ramLimit
+int existingRam
+int managementFlavorRAM
+int numOfManagementMachines

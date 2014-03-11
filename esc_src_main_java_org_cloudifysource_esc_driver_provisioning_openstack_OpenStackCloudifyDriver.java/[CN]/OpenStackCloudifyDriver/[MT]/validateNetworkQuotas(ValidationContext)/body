@@ -4,7 +4,7 @@
     final String tenantId=computeApi.getTenantId();
     if (StringUtils.isBlank(tenantId)) {
       validationContext.validationEventEnd(ValidationResultType.WARNING);
-      logger.info("Failed to retrieve tenant id, skipping network quotas validation");
+      logger.warning("Failed to retrieve tenant id, skipping network quotas validation");
       return;
     }
     final Quota quotas=this.networkApi.getQuotasForTenant(tenantId);
