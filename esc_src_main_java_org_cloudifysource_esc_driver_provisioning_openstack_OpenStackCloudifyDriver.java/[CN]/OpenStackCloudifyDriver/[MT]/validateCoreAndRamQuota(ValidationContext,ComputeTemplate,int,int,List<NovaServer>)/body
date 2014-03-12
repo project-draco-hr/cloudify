@@ -1,6 +1,4 @@
 {
-  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_total_cores_quota"));
-  logger.finest("virtual-cores quota limit is: " + coreLimit);
   int existingVcpus=0;
   int existingRam=0;
   List<Flavor> flavors;

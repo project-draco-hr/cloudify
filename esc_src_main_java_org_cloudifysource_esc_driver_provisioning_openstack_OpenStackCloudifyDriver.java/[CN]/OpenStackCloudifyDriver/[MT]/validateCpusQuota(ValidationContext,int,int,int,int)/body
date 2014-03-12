@@ -1,4 +1,6 @@
 {
+  validationContext.validationOngoingEvent(ValidationMessageType.ENTRY_VALIDATION_MESSAGE,getFormattedMessage("validating_total_cores_quota"));
+  logger.finest("virtual-cores quota limit is: " + coreLimit);
   final int requiredVcpus=managementFlavorVcpus * numOfManagementMachines;
   logger.finest("used cores amount to: " + existingVcpus + ". Required: "+ requiredVcpus);
   if (coreLimit != UNLIMITED_RESOURCE_QUOTA) {
