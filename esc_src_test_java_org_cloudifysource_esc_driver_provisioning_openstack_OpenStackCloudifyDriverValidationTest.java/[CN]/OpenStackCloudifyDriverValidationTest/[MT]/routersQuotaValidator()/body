@@ -1,0 +1,22 @@
+{
+  try {
+    final OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+    final Quota quota=new Quota();
+    quota.setRouter(1);
+    Mockito.when(computeApi.getTenantId()).thenReturn("tenantId");
+    Mockito.when(networkApi.getQuotasForTenant("tenantId")).thenReturn(quota);
+    Mockito.when(networkHelper.isCreateExternalRouter()).thenReturn(true);
+    final List<Router> existingRouters=new ArrayList<Router>();
+    existingRouters.add(new Router());
+    Mockito.when(networkApi.getRoutersByTenantId("tenantId")).thenReturn(existingRouters);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  final CloudProvisioningException e) {
+    if (!e.getMessage().contains("routers resource quota exceeded its limit.")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

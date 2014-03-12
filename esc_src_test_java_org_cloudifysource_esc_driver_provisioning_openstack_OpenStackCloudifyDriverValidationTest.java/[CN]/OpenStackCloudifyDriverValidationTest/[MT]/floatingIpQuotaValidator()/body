@@ -1,0 +1,22 @@
+{
+  try {
+    final OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+    final Quota quota=new Quota();
+    quota.setFloatingip(1);
+    Mockito.when(computeApi.getTenantId()).thenReturn("tenantId");
+    Mockito.when(networkApi.getQuotasForTenant("tenantId")).thenReturn(quota);
+    Mockito.when(this.networkHelper.associateFloatingIp()).thenReturn(true);
+    final List<FloatingIp> existingFloatingIps=new ArrayList<FloatingIp>();
+    existingFloatingIps.add(new FloatingIp());
+    Mockito.when(networkApi.getFloatingIps()).thenReturn(existingFloatingIps);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  final CloudProvisioningException e) {
+    if (!e.getMessage().contains("floating IPs resource quota exceeded its limit.")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

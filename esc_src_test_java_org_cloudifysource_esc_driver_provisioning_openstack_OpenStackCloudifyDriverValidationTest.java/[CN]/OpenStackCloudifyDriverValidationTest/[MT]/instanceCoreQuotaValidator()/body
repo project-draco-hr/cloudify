@@ -1,0 +1,36 @@
+{
+  try {
+    final OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+    final List<NovaServer> existingServers=new ArrayList<NovaServer>();
+    final NovaServer server=new NovaServer();
+    server.setId("ServerID");
+    existingServers.add(server);
+    Mockito.when(computeApi.getServers()).thenReturn(existingServers);
+    final NovaServer serverDetails=new NovaServer();
+    serverDetails.setId("ServerID");
+    final ServerFlavor flavor=new ServerFlavor();
+    flavor.setId("hardwareId");
+    serverDetails.setFlavor(flavor);
+    Mockito.when(computeApi.getServerDetails("ServerID")).thenReturn(serverDetails);
+    final Flavor existingFlavor=new Flavor();
+    existingFlavor.setId("hardwareId");
+    existingFlavor.setVcpus(2);
+    List<Flavor> existingFlavors=new ArrayList<Flavor>();
+    existingFlavors.add(existingFlavor);
+    Mockito.when(computeApi.getFlavors()).thenReturn(existingFlavors);
+    final ComputeLimits computeLimits=new ComputeLimits();
+    final Limits limits=new Limits();
+    limits.setMaxTotalCores(1);
+    computeLimits.setLimits(limits);
+    Mockito.when(computeApi.getLimits()).thenReturn(computeLimits);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  final CloudProvisioningException e) {
+    if (!e.getMessage().contains("virtual CPUs resource quota exceeded its limit.")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  try {
+    final OpenStackCloudifyDriver newDriverInstance=this.newDriverInstance("ok",true);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+    final Quota quota=new Quota();
+    quota.setSecurityGroup(20);
+    Mockito.when(computeApi.getTenantId()).thenReturn("tenantId");
+    Mockito.when(networkApi.getQuotasForTenant("tenantId")).thenReturn(quota);
+    final List<SecurityGroup> existingSecurityGroups=new ArrayList<SecurityGroup>();
+    for (int i=0; i < 20; i++) {
+      existingSecurityGroups.add(new SecurityGroup());
+    }
+    Mockito.when(networkApi.getSecurityGroupsByTenantId("tenantId")).thenReturn(existingSecurityGroups);
+    newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
+  }
+ catch (  final CloudProvisioningException e) {
+    if (!e.getMessage().contains("Security-groups resource quota exceeded its limit.")) {
+      e.printStackTrace();
+      Assert.fail("Validation must fail: " + e.getMessage());
+    }
+    throw e;
+  }
+}
