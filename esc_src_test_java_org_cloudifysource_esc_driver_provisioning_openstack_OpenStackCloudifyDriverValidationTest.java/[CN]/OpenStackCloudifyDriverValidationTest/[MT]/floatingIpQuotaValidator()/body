@@ -6,7 +6,6 @@
     quota.setFloatingip(1);
     Mockito.when(computeApi.getTenantId()).thenReturn("tenantId");
     Mockito.when(networkApi.getQuotasForTenant("tenantId")).thenReturn(quota);
-    Mockito.when(this.networkHelper.associateFloatingIp()).thenReturn(true);
     final List<FloatingIp> existingFloatingIps=new ArrayList<FloatingIp>();
     existingFloatingIps.add(new FloatingIp());
     Mockito.when(networkApi.getFloatingIps()).thenReturn(existingFloatingIps);

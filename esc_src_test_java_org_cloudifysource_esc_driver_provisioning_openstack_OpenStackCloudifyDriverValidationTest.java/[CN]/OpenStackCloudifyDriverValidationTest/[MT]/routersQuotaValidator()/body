@@ -6,7 +6,6 @@
     quota.setRouter(1);
     Mockito.when(computeApi.getTenantId()).thenReturn("tenantId");
     Mockito.when(networkApi.getQuotasForTenant("tenantId")).thenReturn(quota);
-    Mockito.when(networkHelper.isCreateExternalRouter()).thenReturn(true);
     final List<Router> existingRouters=new ArrayList<Router>();
     existingRouters.add(new Router());
     Mockito.when(networkApi.getRoutersByTenantId("tenantId")).thenReturn(existingRouters);
