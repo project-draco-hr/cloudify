@@ -5,5 +5,10 @@
   }
   logger.info("Mounting device " + device + " to mount point "+ path);
   VolumeUtils.mount(device,path);
-  changeStateOfVolumeWithId(volumeId,VolumeState.MOUNTED);
+  if (volumeId != null) {
+    changeStateOfVolumeWithId(volumeId,VolumeState.MOUNTED);
+  }
+ else {
+    changeStateOfVolumeWithDevice(device,VolumeState.MOUNTED);
+  }
 }

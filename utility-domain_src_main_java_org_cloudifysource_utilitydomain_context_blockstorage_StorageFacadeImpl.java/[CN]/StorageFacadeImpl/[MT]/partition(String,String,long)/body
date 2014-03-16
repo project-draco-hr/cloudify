@@ -5,5 +5,10 @@
   }
   logger.info("Partitioning device " + device);
   VolumeUtils.partition(device,timeoutInMillis);
-  changeStateOfVolumeWithId(volumeId,VolumeState.PARTITIONED);
+  if (volumeId != null) {
+    changeStateOfVolumeWithId(volumeId,VolumeState.PARTITIONED);
+  }
+ else {
+    changeStateOfVolumeWithDevice(device,VolumeState.PARTITIONED);
+  }
 }

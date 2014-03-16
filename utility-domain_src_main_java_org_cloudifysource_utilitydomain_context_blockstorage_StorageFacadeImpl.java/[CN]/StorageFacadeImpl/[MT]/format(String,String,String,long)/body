@@ -5,5 +5,10 @@
   }
   logger.info("Formatting device " + device + " to File System "+ fileSystem);
   VolumeUtils.format(device,fileSystem,timeoutInMillis);
-  changeStateOfVolumeWithId(volumeId,VolumeState.FORMATTED);
+  if (volumeId != null) {
+    changeStateOfVolumeWithId(volumeId,VolumeState.FORMATTED);
+  }
+ else {
+    changeStateOfVolumeWithDevice(device,VolumeState.FORMATTED);
+  }
 }
