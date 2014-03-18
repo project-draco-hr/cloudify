@@ -1,0 +1,8 @@
+{
+  final String sysprop=System.getProperty(CloudifyConstants.SYSTEM_PROPERTY_CLI_REST_API_VERSION);
+  if (sysprop != null) {
+    return sysprop;
+  }
+  final String platformVersion=PlatformVersion.getVersion();
+  return platformVersion;
+}
