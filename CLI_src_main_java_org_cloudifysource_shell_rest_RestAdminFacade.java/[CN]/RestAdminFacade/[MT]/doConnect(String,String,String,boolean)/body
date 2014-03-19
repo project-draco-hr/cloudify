@@ -1,8 +1,10 @@
 {
   try {
     this.urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
-    client=new GSRestClient(user,password,getUrl(),PlatformVersion.getVersionNumber());
-    newRestClient=new RestClient(urlObj,user,password,PlatformVersion.getVersion());
+    final APIVersionResolver apiResolver=new APIVersionResolver();
+    final String version=apiResolver.resolveAPIVersion();
+    client=new GSRestClient(user,password,getUrl(),version);
+    newRestClient=new RestClient(urlObj,user,password,version);
     client.get(SERVICE_CONTROLLER_URL + "testrest");
     if (user != null || password != null) {
       reconnect(user,password);
