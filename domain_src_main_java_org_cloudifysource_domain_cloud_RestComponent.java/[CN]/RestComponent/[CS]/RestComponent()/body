@@ -1,4 +1,5 @@
 {
   this.setMaxMemory("128m");
   this.setMinMemory("128m");
+  this.setServiceDiscoveryTimeoutInSeconds(60);
 }

@@ -1,0 +1,9 @@
+{
+  Integer serviceDiscoveryTimeoutInSeconds=new Integer(CloudifyConstants.DEFAULT_SERVICE_DISCOVERY_TIMEOUT_SEC);
+  Cloud cloud=restConfig.getCloud();
+  if (cloud != null) {
+    serviceDiscoveryTimeoutInSeconds=cloud.getConfiguration().getComponents().getRest().getServiceDiscoveryTimeoutInSeconds();
+  }
+  logger.finest("serviceDiscoveryTimeoutInSeconds value is set to: " + serviceDiscoveryTimeoutInSeconds);
+  return serviceDiscoveryTimeoutInSeconds;
+}
