@@ -38,9 +38,6 @@
     Listeners listeners=new Listeners();
     Listener listener=new Listener();
     listener.setCertificateThumbprint(null);
-    listener.setProtocol("Http");
-    listeners.getListeners().add(listener);
-    listener.setCertificateThumbprint(null);
     listener.setProtocol("Https");
     listeners.getListeners().add(listener);
     winRM.setListeners(listeners);
