@@ -14,7 +14,7 @@
     windowsProvisioningConfigurationSet.setComputerName(adaptedConfigurationSet.computerName);
     windowsProvisioningConfigurationSet.setAdminUsername(adaptedConfigurationSet.adminUsername);
     windowsProvisioningConfigurationSet.setAdminPassword(adaptedConfigurationSet.adminPassword);
-    windowsProvisioningConfigurationSet.setWinRm(adaptedConfigurationSet.winRm);
+    windowsProvisioningConfigurationSet.setWinRM(adaptedConfigurationSet.winRM);
   }
  else {
     NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();

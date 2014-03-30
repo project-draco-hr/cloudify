@@ -19,7 +19,7 @@
     adaptedConfigurationSet.adminUsername=WindowsProvisioningConfigurationSet.getAdminUsername();
     adaptedConfigurationSet.adminPassword=WindowsProvisioningConfigurationSet.getAdminPassword();
     adaptedConfigurationSet.computerName=WindowsProvisioningConfigurationSet.getComputerName();
-    adaptedConfigurationSet.winRm=WindowsProvisioningConfigurationSet.getWinRm();
+    adaptedConfigurationSet.winRM=WindowsProvisioningConfigurationSet.getWinRM();
   }
  else {
     NetworkConfigurationSet networkConfigurationSet=(NetworkConfigurationSet)configurationSet;

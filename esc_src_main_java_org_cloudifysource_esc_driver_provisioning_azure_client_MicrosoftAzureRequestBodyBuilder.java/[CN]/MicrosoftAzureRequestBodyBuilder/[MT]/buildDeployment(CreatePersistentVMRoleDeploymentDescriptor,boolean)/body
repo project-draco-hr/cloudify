@@ -34,18 +34,17 @@
     windowsProvisioningSet.setAdminPassword(password);
     windowsProvisioningSet.setComputerName(computerName);
     configurationSets.getConfigurationSets().add(windowsProvisioningSet);
-    WinRm winRm=new WinRm();
+    WinRM winRM=new WinRM();
     Listeners listeners=new Listeners();
     Listener listener=new Listener();
     listener.setCertificateThumbprint(null);
     listener.setProtocol("Http");
     listeners.getListeners().add(listener);
-    listener=new Listener();
     listener.setCertificateThumbprint(null);
     listener.setProtocol("Https");
     listeners.getListeners().add(listener);
-    winRm.setListeners(listeners);
-    windowsProvisioningSet.setWinRm(winRm);
+    winRM.setListeners(listeners);
+    windowsProvisioningSet.setWinRM(winRM);
   }
  else {
     LinuxProvisioningConfigurationSet linuxProvisioningSet=new LinuxProvisioningConfigurationSet();
