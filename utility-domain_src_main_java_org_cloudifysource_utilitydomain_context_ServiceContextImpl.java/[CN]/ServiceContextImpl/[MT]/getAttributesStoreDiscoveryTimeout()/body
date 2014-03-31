@@ -1,0 +1,3 @@
+{
+  return System.getenv(CloudifyConstants.USM_ATTRIBUTES_STORE_DISCOVERY_TIMEOUT_ENV_VAR);
+}

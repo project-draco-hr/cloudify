@@ -48,6 +48,7 @@
  else {
     details.setConnectedToPrivateIp(cloud.getConfiguration().isConnectToPrivateIp());
   }
+  details.setAttributesStoreDiscoveryTimeout(componentsConfig.getUsm().getAttributesStoreDiscoveryTimeoutInSeconds());
   String agentCommandlineArgs=gridCommandBuilder.getAgentCommandlineArgs(componentsConfig.getAgent(),details.isManagement() ? MANAGEMENT_ZONE : details.getZones(),reservationId);
   details.setGsaCommandlineArgs(agentCommandlineArgs);
   final Set<Entry<String,Object>> customEntries=template.getCustom().entrySet();
