@@ -1,4 +1,13 @@
 {
-  USMState instanceState=getInstanceUsmState(pui);
-  return (instanceState == CloudifyConstants.USMState.RUNNING);
+  boolean isInstanceRunning=false;
+  try {
+    USMState instanceState=getInstanceUsmState(pui);
+    if (instanceState != null) {
+      isInstanceRunning=(instanceState == CloudifyConstants.USMState.RUNNING);
+    }
+  }
+ catch (  AdminException e) {
+    logger.finest("instance is not available for monitoring, so it's not considered running. " + "reported error: " + e.getMessage());
+  }
+  return isInstanceRunning;
 }
