@@ -1,0 +1,7 @@
+{
+  logger.finest("Handling compute resources following machine failure");
+  super.onMachineFailure(context,duration,unit);
+  MachineDetails previoudMachineDetails=context.getPreviousMachineDetails();
+  logger.info("Releasing floating IPs following failure of machine: " + previoudMachineDetails.getMachineId());
+  releaseFloatingIpsForServerId(context.getPreviousMachineDetails().getMachineId());
+}

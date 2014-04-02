@@ -1,0 +1,21 @@
+{
+  String machineIp;
+  if (cloud.getConfiguration().isConnectToPrivateIp()) {
+    machineIp=machineDetails.getPrivateAddress();
+  }
+ else {
+    machineIp=machineDetails.getPublicAddress();
+  }
+  if (machineIp == null) {
+    String errorMessage="Failed to get IP address for machine: " + machineDetails;
+    if (cloud.getConfiguration().isConnectToPrivateIp()) {
+      errorMessage+=", which should be bound on its private IP";
+    }
+ else {
+      errorMessage+=", which should be bound on its public IP";
+    }
+    logger.warning(errorMessage);
+    throw new IllegalStateException(errorMessage);
+  }
+  return machineIp;
+}

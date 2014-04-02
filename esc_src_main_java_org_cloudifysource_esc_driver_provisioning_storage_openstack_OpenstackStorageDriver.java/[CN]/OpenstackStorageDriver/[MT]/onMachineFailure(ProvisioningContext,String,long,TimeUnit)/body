@@ -1,0 +1,20 @@
+{
+  logger.finest("Handling storage resource cleanup following machine failure");
+  super.onMachineFailure(context,templateName,duration,timeunit);
+  MachineDetails previoudMachineDetails=context.getPreviousMachineDetails();
+  String previousMachineId=previoudMachineDetails.getMachineId();
+  String attachedVolumeId=previoudMachineDetails.getAttachedVolumeId();
+  logger.finest("previous machine id: " + previousMachineId + ", volume id: "+ attachedVolumeId);
+  if (StringUtils.isNotBlank(attachedVolumeId)) {
+    StorageTemplate storageTemplate=this.cloud.getCloudStorage().getTemplates().get(templateName);
+    final boolean deleteStorage=storageTemplate.isDeleteOnExit();
+    if (deleteStorage) {
+      logger.info("Deleting volume: " + attachedVolumeId + " following failure of machine: "+ previousMachineId);
+      deleteVolume(previoudMachineDetails.getLocationId(),attachedVolumeId,duration,timeunit);
+      logger.finest("Volume " + attachedVolumeId + " deleted");
+    }
+ else {
+      logger.finest("DeleteOnExit set to false, volume " + attachedVolumeId + " remains available for re-attachment");
+    }
+  }
+}

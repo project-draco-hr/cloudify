@@ -30,19 +30,7 @@
     throw new ElasticMachineProvisioningException("Failed to provision machine: " + e.getMessage(),e);
   }
   logger.info("Machine was provisioned by implementation. Machine is: " + machineDetails);
-  String machineIp;
-  if (cloud.getConfiguration().isConnectToPrivateIp()) {
-    machineIp=machineDetails.getPrivateAddress();
-  }
- else {
-    machineIp=machineDetails.getPublicAddress();
-  }
-  if (machineIp == null) {
-    final String errorMessage="The IP of the new machine is null! Machine Details are: " + machineDetails + ".";
-    logger.warning(errorMessage);
-    blockStartMachineOnException();
-    throw new IllegalStateException(errorMessage);
-  }
+  String machineIp=getBindIpAddress(machineDetails);
   fireMachineStartedEvent(machineDetails,machineIp);
   fireGSAStartRequestedEvent(machineIp);
   final String volumeId=null;

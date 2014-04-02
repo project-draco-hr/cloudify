@@ -1,0 +1,19 @@
+{
+  final ServiceVolume serviceVolume=new ServiceVolume();
+  final String[] serviceNameParts=StringUtils.split(serviceName,".");
+  final String applicationName=serviceNameParts[0];
+  final String shortServiceName=serviceNameParts[1];
+  serviceVolume.setApplicationName(applicationName);
+  serviceVolume.setServiceName(shortServiceName);
+  serviceVolume.setDynamic(false);
+  serviceVolume.setIp(getBindIpAddress(previousMachineDetails));
+  logger.info("Retrieving service volume from the management space, using volume template : " + serviceVolume);
+  ServiceVolume spaceServiceVolume=managementSpace.read(serviceVolume);
+  if (spaceServiceVolume != null) {
+    logger.finest("Found matching service volume in space, volume details: " + serviceVolume);
+  }
+ else {
+    logger.finest("A matching volume was not found");
+  }
+  return spaceServiceVolume;
+}
