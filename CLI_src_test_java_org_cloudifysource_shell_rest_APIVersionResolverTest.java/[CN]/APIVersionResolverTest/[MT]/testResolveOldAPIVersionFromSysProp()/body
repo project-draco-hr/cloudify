@@ -1,0 +1,18 @@
+{
+  APIVersionResolver fixture=new APIVersionResolver();
+  final String sysPropBefore=System.getProperty(CloudifyConstants.SYSTEM_PROPERTY_CLI_OLD_REST_API_VERSION);
+  String value="10.0.0";
+  System.setProperty(CloudifyConstants.SYSTEM_PROPERTY_CLI_OLD_REST_API_VERSION,value);
+  String result=fixture.resolveOldAPIVersion();
+  try {
+    Assert.assertEquals(value,result);
+  }
+  finally {
+    if (sysPropBefore == null) {
+      System.clearProperty(CloudifyConstants.SYSTEM_PROPERTY_CLI_OLD_REST_API_VERSION);
+    }
+ else {
+      System.setProperty(CloudifyConstants.SYSTEM_PROPERTY_CLI_OLD_REST_API_VERSION,sysPropBefore);
+    }
+  }
+}
