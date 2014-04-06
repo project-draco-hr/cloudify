@@ -8,5 +8,8 @@
     cloudConfigDirectoryPath=EnvironmentFileBuilder.normalizeCygwinPath(cloudConfigDirectoryPath);
     cloudConfigDirectoryPath=EnvironmentFileBuilder.normalizeLocalAbsolutePath(cloudConfigDirectoryPath);
   }
+ else {
+    cloudConfigDirectoryPath=EnvironmentFileBuilder.normalizeLinuxPath(cloudConfigDirectoryPath);
+  }
   return cloudConfigDirectoryPath;
 }

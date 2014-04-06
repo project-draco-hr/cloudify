@@ -1,0 +1,3 @@
+{
+  return RemoteExecutionModes.WINRM.equals(computeTemplate.getRemoteExecution()) || ScriptLanguages.WINDOWS_BATCH.equals(computeTemplate.getScriptLanguage());
+}

@@ -1,6 +1,6 @@
 {
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
-  final String cloudConfigDirectoryPath=findCloudConfigDirectoryPath();
+  String cloudConfigDirectoryPath=findCloudConfigDirectoryPath();
   try {
     final String cloudOverridesPerService=config.getCloudOverridesPerService();
     initCloudObject(cloudConfigDirectoryPath,cloudOverridesPerService);
@@ -57,6 +57,6 @@ catch (    final Exception e) {
   }
  catch (  final DSLException e) {
     logger.severe("Could not parse the provided cloud configuration from : " + cloudConfigDirectoryPath + ": "+ e.getMessage());
-    throw new BeanConfigurationException("Could not parse the prvided cloud configuration: " + cloudConfigDirectoryPath + ": "+ e.getMessage(),e);
+    throw new BeanConfigurationException("Could not parse the provided cloud configuration: " + cloudConfigDirectoryPath + ": "+ e.getMessage(),e);
   }
 }
