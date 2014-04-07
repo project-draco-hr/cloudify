@@ -7,6 +7,7 @@
   if (lookupLocators != null) {
     adminFactory.addLocators(lookupLocators);
   }
+  adminFactory.setDiscoveryServices(serviceTypes);
   final Admin admin=adminFactory.create();
   if (verbose) {
     if (admin.getLocators().length > 0) {

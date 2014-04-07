@@ -3,7 +3,7 @@
   setDefaultNicAddress();
   final ConnectionLogsFilter connectionLogs=new ConnectionLogsFilter();
   connectionLogs.supressConnectionErrors();
-  final Admin admin=createAdmin();
+  final Admin admin=createAdmin(GridServiceAgent.class);
   try {
     setLookupDefaults(admin);
     final List<CloudifyMachineValidator> preValidatorsList=CloudifyMachineValidatorsFactory.getValidators(false,nicAddress);
