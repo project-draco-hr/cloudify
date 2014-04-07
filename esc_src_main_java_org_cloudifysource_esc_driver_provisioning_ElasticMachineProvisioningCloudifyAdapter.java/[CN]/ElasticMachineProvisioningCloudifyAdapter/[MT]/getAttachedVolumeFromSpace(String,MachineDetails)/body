@@ -1,19 +1,26 @@
 {
-  final ServiceVolume serviceVolume=new ServiceVolume();
+  final ServiceVolume serviceVolumeTemplate=new ServiceVolume();
+  ServiceVolume spaceServiceVolume=null;
+  if (managementSpace == null) {
+    logger.fine("managementSpace is null, getAttachedVolumeFromSpace is aborted");
+    return null;
+  }
   final String[] serviceNameParts=StringUtils.split(serviceName,".");
   final String applicationName=serviceNameParts[0];
   final String shortServiceName=serviceNameParts[1];
-  serviceVolume.setApplicationName(applicationName);
-  serviceVolume.setServiceName(shortServiceName);
-  serviceVolume.setDynamic(false);
-  serviceVolume.setIp(getBindIpAddress(previousMachineDetails));
-  logger.info("Retrieving service volume from the management space, using volume template : " + serviceVolume);
-  ServiceVolume spaceServiceVolume=managementSpace.read(serviceVolume);
-  if (spaceServiceVolume != null) {
-    logger.finest("Found matching service volume in space, volume details: " + serviceVolume);
-  }
+  serviceVolumeTemplate.setApplicationName(applicationName);
+  serviceVolumeTemplate.setServiceName(shortServiceName);
+  serviceVolumeTemplate.setDynamic(false);
+  serviceVolumeTemplate.setIp(getBindIpAddress(previousMachineDetails));
+  logger.info("Retrieving service volume from the management space, using volume template : " + serviceVolumeTemplate);
+  if (managementSpace != null) {
+    spaceServiceVolume=managementSpace.read(serviceVolumeTemplate);
+    if (spaceServiceVolume != null) {
+      logger.fine("Found matching service volume in space, volume details: " + spaceServiceVolume);
+    }
  else {
-    logger.finest("A matching volume was not found");
+      logger.fine("A matching volume was not found");
+    }
   }
   return spaceServiceVolume;
 }
