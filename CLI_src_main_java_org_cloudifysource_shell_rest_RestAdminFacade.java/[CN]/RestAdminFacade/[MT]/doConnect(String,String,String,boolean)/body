@@ -3,7 +3,8 @@
     this.urlObj=new URL(ShellUtils.getFormattedRestUrl(url,sslUsed));
     final APIVersionResolver apiResolver=new APIVersionResolver();
     final String version=apiResolver.resolveAPIVersion();
-    client=new GSRestClient(user,password,getUrl(),version);
+    final String oldVersion=apiResolver.resolveOldAPIVersion();
+    client=new GSRestClient(user,password,getUrl(),oldVersion);
     newRestClient=new RestClient(urlObj,user,password,version);
     client.get(SERVICE_CONTROLLER_URL + "testrest");
     if (user != null || password != null) {
