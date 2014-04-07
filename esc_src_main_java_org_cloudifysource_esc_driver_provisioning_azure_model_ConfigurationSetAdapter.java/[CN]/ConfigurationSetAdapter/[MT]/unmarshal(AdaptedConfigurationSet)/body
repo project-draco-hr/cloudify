@@ -2,18 +2,25 @@
   if (adaptedConfigurationSet == null) {
     return null;
   }
-  if (adaptedConfigurationSet.inputEndpoints != null) {
-    NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();
-    networkConfigurationSet.setConfigurationSetType(adaptedConfigurationSet.configurationSetType);
-    networkConfigurationSet.setInputEndpoints(adaptedConfigurationSet.inputEndpoints);
-    return networkConfigurationSet;
-  }
- else {
+  if (ConfigurationSet.LINUX_PROVISIONING_CONFIGURATION.equals(adaptedConfigurationSet.configurationSetType)) {
     LinuxProvisioningConfigurationSet linuxProvisioningConfigurationSet=new LinuxProvisioningConfigurationSet();
     linuxProvisioningConfigurationSet.setDisableSshPasswordAuthentication(adaptedConfigurationSet.disableSshPasswordAuthentication);
     linuxProvisioningConfigurationSet.setHostName(adaptedConfigurationSet.hostName);
     linuxProvisioningConfigurationSet.setUserName(adaptedConfigurationSet.userName);
     linuxProvisioningConfigurationSet.setUserPassword(adaptedConfigurationSet.userPassword);
+  }
+ else   if (ConfigurationSet.WINDOWS_PROVISIONING_CONFIGURATION.equals(adaptedConfigurationSet.configurationSetType)) {
+    WindowsProvisioningConfigurationSet windowsProvisioningConfigurationSet=new WindowsProvisioningConfigurationSet();
+    windowsProvisioningConfigurationSet.setComputerName(adaptedConfigurationSet.computerName);
+    windowsProvisioningConfigurationSet.setAdminUsername(adaptedConfigurationSet.adminUsername);
+    windowsProvisioningConfigurationSet.setAdminPassword(adaptedConfigurationSet.adminPassword);
+    windowsProvisioningConfigurationSet.setWinRM(adaptedConfigurationSet.winRM);
+  }
+ else {
+    NetworkConfigurationSet networkConfigurationSet=new NetworkConfigurationSet();
+    networkConfigurationSet.setConfigurationSetType(adaptedConfigurationSet.configurationSetType);
+    networkConfigurationSet.setInputEndpoints(adaptedConfigurationSet.inputEndpoints);
+    return networkConfigurationSet;
   }
   return null;
 }

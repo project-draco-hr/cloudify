@@ -9,10 +9,11 @@
     m.marshal(body,doc);
     String xml=getStringFromDocument(doc);
     if (network) {
-      xml=addNameSpaceToRootElement(xml,"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration");
+      xml=addNameSpaceToRootElement(xml,"xmlns=\"http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration\"");
     }
  else {
-      xml=addNameSpaceToRootElement(xml,"http://schemas.microsoft.com/windowsazure");
+      xml=addNameSpaceToRootElement(xml,"xmlns=\"http://schemas.microsoft.com/windowsazure\"");
+      xml=addNameSpaceToRootElement(xml,"xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\"");
     }
     return xml;
   }

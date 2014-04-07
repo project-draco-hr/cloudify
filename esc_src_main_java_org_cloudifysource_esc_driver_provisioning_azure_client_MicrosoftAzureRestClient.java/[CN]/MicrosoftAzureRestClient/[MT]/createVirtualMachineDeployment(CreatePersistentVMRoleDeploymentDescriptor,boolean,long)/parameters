@@ -1,2 +1,3 @@
 CreatePersistentVMRoleDeploymentDescriptor deplyomentDesc
+boolean isWindows
 long endTime

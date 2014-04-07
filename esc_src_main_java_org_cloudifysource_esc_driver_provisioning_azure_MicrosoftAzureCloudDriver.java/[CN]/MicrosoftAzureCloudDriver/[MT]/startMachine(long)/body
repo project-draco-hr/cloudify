@@ -6,6 +6,7 @@
     desc=new CreatePersistentVMRoleDeploymentDescriptor();
     desc.setRoleName(serverNamePrefix + "_role");
     desc.setDeploymentSlot(deploymentSlot);
+    desc.setDeploymentName(deploymentName);
     desc.setImageName(imageName);
     desc.setAvailabilitySetName(availabilitySet);
     desc.setAffinityGroup(affinityGroup);
@@ -17,7 +18,8 @@
     desc.setStorageAccountName(storageAccountName);
     desc.setUserName(userName);
     logger.info("Launching a new virtual machine");
-    roleAddressDetails=azureClient.createVirtualMachineDeployment(desc,endTime);
+    boolean isWindows=isWindowsVM();
+    roleAddressDetails=azureClient.createVirtualMachineDeployment(desc,isWindows,endTime);
     machineDetails.setPrivateAddress(roleAddressDetails.getPrivateIp());
     machineDetails.setPublicAddress(roleAddressDetails.getPublicIp());
     machineDetails.setMachineId(roleAddressDetails.getId());
@@ -27,6 +29,10 @@
     machineDetails.setRemoteDirectory(this.template.getRemoteDirectory());
     machineDetails.setRemotePassword(password);
     machineDetails.setRemoteUsername(userName);
+    machineDetails.setRemoteExecutionMode(this.remoteExecutionMode);
+    machineDetails.setFileTransferMode(this.fileTransferMode);
+    machineDetails.setScriptLangeuage(this.scriptLanguage);
+    openFirewallPorts(machineDetails);
     machineDetails.setOpenFilesLimit(this.template.getOpenFilesLimit());
     return machineDetails;
   }

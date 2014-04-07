@@ -11,6 +11,7 @@
   String roleName=desc.getRoleName();
   Deployment deployment=new Deployment();
   deployment.setDeploymentSlot(deploymentSlot);
+  deployment.setDeploymentName(roleName);
   deployment.setVirtualNetworkName(networkName);
   deployment.setLabel(deploymentName);
   deployment.setName(deploymentName);
@@ -25,14 +26,33 @@
   osVirtualHardDisk.setMediaLink(mediaLink);
   role.setOSVirtualHardDisk(osVirtualHardDisk);
   ConfigurationSets configurationSets=new ConfigurationSets();
-  LinuxProvisioningConfigurationSet linuxProvisioningConfiguration=new LinuxProvisioningConfigurationSet();
-  linuxProvisioningConfiguration.setDisableSshPasswordAuthentication(false);
-  linuxProvisioningConfiguration.setHostName(roleName);
-  linuxProvisioningConfiguration.setUserName(userName);
-  linuxProvisioningConfiguration.setUserPassword(password);
+  if (isWindows) {
+    String[] computerNameArray=roleName.split("_");
+    String computerName=(computerNameArray[2]).toUpperCase();
+    WindowsProvisioningConfigurationSet windowsProvisioningSet=new WindowsProvisioningConfigurationSet();
+    windowsProvisioningSet.setAdminUsername(userName);
+    windowsProvisioningSet.setAdminPassword(password);
+    windowsProvisioningSet.setComputerName(computerName);
+    configurationSets.getConfigurationSets().add(windowsProvisioningSet);
+    WinRM winRM=new WinRM();
+    Listeners listeners=new Listeners();
+    Listener listener=new Listener();
+    listener.setCertificateThumbprint(null);
+    listener.setProtocol("Https");
+    listeners.getListeners().add(listener);
+    winRM.setListeners(listeners);
+    windowsProvisioningSet.setWinRM(winRM);
+  }
+ else {
+    LinuxProvisioningConfigurationSet linuxProvisioningSet=new LinuxProvisioningConfigurationSet();
+    linuxProvisioningSet.setDisableSshPasswordAuthentication(true);
+    linuxProvisioningSet.setHostName(roleName);
+    linuxProvisioningSet.setUserName(userName);
+    linuxProvisioningSet.setUserPassword(password);
+    configurationSets.getConfigurationSets().add(linuxProvisioningSet);
+  }
   NetworkConfigurationSet networkConfiguration=new NetworkConfigurationSet();
   networkConfiguration.setInputEndpoints(endPoints);
-  configurationSets.getConfigurationSets().add(linuxProvisioningConfiguration);
   configurationSets.getConfigurationSets().add(networkConfiguration);
   role.setConfigurationSets(configurationSets);
   roleList.getRoles().add(role);
