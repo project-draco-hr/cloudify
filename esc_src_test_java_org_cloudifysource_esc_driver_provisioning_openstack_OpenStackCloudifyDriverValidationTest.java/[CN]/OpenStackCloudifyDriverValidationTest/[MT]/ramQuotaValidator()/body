@@ -27,7 +27,7 @@
     newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
   }
  catch (  final CloudProvisioningException e) {
-    if (!e.getMessage().contains("RAM resource quota exceeded its limit.")) {
+    if (!e.getMessage().contains("RAM quota limit exceeded")) {
       e.printStackTrace();
       Assert.fail("Validation must fail: " + e.getMessage());
     }

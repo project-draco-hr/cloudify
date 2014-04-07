@@ -12,7 +12,7 @@
     newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
   }
  catch (  final CloudProvisioningException e) {
-    if (!e.getMessage().contains("routers resource quota exceeded its limit.")) {
+    if (!e.getMessage().contains("routers quota limit exceeded")) {
       e.printStackTrace();
       Assert.fail("Validation must fail: " + e.getMessage());
     }

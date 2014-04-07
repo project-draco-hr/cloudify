@@ -14,7 +14,7 @@
     newDriverInstance.validateCloudConfiguration(new ValidationContextStub());
   }
  catch (  final CloudProvisioningException e) {
-    if (!e.getMessage().contains("server instances resource quota exceeded its limit")) {
+    if (!e.getMessage().contains("server instances quota limit exceeded")) {
       e.printStackTrace();
       Assert.fail("Validation must fail: " + e.getMessage());
     }
