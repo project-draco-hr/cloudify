@@ -21,7 +21,7 @@
   }
   try {
     final ChannelExec channel;
-    session.setTimeout((int)maxwait);
+    session.setTimeout(CalcUtils.safeLongToInt(maxwait,true));
     channel=(ChannelExec)session.openChannel("exec");
     channel.setCommand(cmd);
     channel.setOutputStream(tee);
