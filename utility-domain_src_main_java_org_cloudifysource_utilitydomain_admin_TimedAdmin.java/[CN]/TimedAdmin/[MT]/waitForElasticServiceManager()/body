@@ -1,0 +1,4 @@
+{
+  initAdmin();
+  return admin.getElasticServiceManagers().waitForAtLeastOne();
+}

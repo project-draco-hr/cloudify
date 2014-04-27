@@ -1,0 +1,8 @@
+{
+  if (admin == null) {
+    return false;
+  }
+ else {
+    return true;
+  }
+}

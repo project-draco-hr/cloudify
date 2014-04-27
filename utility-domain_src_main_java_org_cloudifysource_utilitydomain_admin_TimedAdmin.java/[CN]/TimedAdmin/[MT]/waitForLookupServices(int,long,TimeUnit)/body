@@ -1,0 +1,5 @@
+{
+  validateTimeout(timeout,timeunit,"waiting for lookup service");
+  initAdmin();
+  return admin.getLookupServices().waitFor(numberOfLookupServices,timeout,timeunit);
+}

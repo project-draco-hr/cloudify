@@ -36,7 +36,8 @@
     if (clusterInfoToUseInGsc.getName() == null) {
       clusterInfoToUseInGsc.setName(ServiceUtils.getAbsolutePUName(CloudifyConstants.DEFAULT_APPLICATION_NAME,service.getName()));
     }
-    ((ServiceContextImpl)serviceContext).init(service,USMUtils.getAdmin(),clusterInfoToUseInGsc);
+    logger.info("handleDsl is getting timed admin...");
+    ((ServiceContextImpl)serviceContext).init(service,USMUtils.getTimedAdmin(),clusterInfoToUseInGsc);
   }
  else {
     ((ServiceContextImpl)serviceContext).initInIntegratedContainer(service);

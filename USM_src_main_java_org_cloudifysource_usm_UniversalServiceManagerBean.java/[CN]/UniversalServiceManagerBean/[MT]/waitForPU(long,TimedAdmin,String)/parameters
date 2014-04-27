@@ -1,0 +1,3 @@
+long endTime
+TimedAdmin timedAdmin
+String dependantService

@@ -1,0 +1,5 @@
+{
+  validateTimeout(timeout,timeunit,"waiting for space instance");
+  initAdmin();
+  return admin.getSpaces().waitFor(spaceName,timeout,timeunit);
+}

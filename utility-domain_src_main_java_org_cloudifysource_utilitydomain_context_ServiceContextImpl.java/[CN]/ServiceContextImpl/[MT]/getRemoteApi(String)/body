@@ -1,7 +1,7 @@
 {
   ElasticServiceManager elasticServiceManager;
-  if (admin != null) {
-    elasticServiceManager=admin.getElasticServiceManagers().waitForAtLeastOne();
+  if (timedAdmin != null) {
+    elasticServiceManager=timedAdmin.waitForElasticServiceManager();
     String puName=ServiceUtils.getAbsolutePUName(applicationName,serviceName);
     Object remoteApi=null;
     remoteApi=((InternalElasticServiceManager)elasticServiceManager).getRemoteApi(puName,apiName);

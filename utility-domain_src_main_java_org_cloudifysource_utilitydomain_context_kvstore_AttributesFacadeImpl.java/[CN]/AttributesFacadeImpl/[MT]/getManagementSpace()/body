@@ -10,13 +10,13 @@ synchronized (managementSpaceLock) {
     long timeout=getAttributesStoreDiscoveryTimeout();
     logger.finest("attempting to get attributes store, timeout: " + timeout);
     for (int i=0; i < CloudifyConstants.MANAGEMENT_SPACE_FIND_REPEAT; ++i) {
-      space=admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,timeout,TimeUnit.SECONDS);
+      space=timedAdmin.waitForSpace(CloudifyConstants.MANAGEMENT_SPACE_NAME,timeout,TimeUnit.SECONDS);
       if (space != null) {
         break;
       }
     }
     if (space == null) {
-      space=admin.getSpaces().getSpaceByName(CloudifyConstants.MANAGEMENT_SPACE_NAME);
+      space=timedAdmin.getSpaceByName(CloudifyConstants.MANAGEMENT_SPACE_NAME);
       if (space == null) {
         throw new IllegalStateException("No management space located");
       }

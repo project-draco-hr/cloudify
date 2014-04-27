@@ -18,7 +18,7 @@ catch (    DSLException e) {
       throw new IllegalArgumentException("Failed to read service",e);
     }
     ServiceContextImpl newContext=new ServiceContextImpl(info,new File(".").getAbsolutePath());
-    newContext.init(service,getAdmin(),info);
+    newContext.init(service,getTimedAdmin(),info);
     context=newContext;
   }
   return context;

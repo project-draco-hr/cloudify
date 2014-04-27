@@ -1,6 +1,7 @@
 {
-  final Admin admin=USMUtils.getAdmin();
-  final ProcessingUnit pu=admin.getProcessingUnits().waitFor(this.clusterName,30,TimeUnit.SECONDS);
+  logger.info("registerPostPUILifecycleTask is getting timed admin");
+  final TimedAdmin timedAdmin=USMUtils.getTimedAdmin();
+  final ProcessingUnit pu=timedAdmin.waitForPU(this.clusterName,30,TimeUnit.SECONDS);
   final int instanceIdToMatch=this.instanceId;
   if (pu == null) {
     throw new IllegalStateException("Could not find Processing Unit with name: " + this.clusterName + " to register event listener. This may indicate a discovery problem with your network. "+ "Please contact the system administrator");

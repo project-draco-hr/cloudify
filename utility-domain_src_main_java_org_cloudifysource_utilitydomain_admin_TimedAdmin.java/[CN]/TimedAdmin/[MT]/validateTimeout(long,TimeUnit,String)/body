@@ -1,0 +1,5 @@
+{
+  if (timeunit.toMillis(timeout) >= MAX_IDLE_TIME_MILLIS) {
+    logger.warning("Admin object might expire prematurely! The specified timeout for " + actionDescription + " was set to "+ timeout+ " "+ timeunit.toString()+ " while the admin timeout is "+ MAX_IDLE_TIME_MILLIS / 1000 + " seconds");
+  }
+}

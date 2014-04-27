@@ -1,0 +1,10 @@
+{
+  logger.finest("getting admin object");
+  if (admin == null) {
+    createAdmin();
+  }
+ else {
+    logger.info("Using a cached Admin object");
+  }
+  updateTimestamp();
+}

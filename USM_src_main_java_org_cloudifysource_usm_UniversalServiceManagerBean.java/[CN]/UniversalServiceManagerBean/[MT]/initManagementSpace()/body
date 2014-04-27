@@ -3,8 +3,9 @@
     managementSpace=((AttributesFacadeImpl)getUsmLifecycleBean().getConfiguration().getServiceContext().getAttributes()).getManagementSpace();
   }
  else {
-    final Admin admin=USMUtils.getAdmin();
-    Space space=admin.getSpaces().waitFor(CloudifyConstants.MANAGEMENT_SPACE_NAME,MANAGEMENT_SPACE_LOOKUP_TIMEOUT,TimeUnit.SECONDS);
+    logger.info("initManagementSpace is getting timed admin");
+    final TimedAdmin timedAdmin=USMUtils.getTimedAdmin();
+    Space space=timedAdmin.waitForSpace(CloudifyConstants.MANAGEMENT_SPACE_NAME,MANAGEMENT_SPACE_LOOKUP_TIMEOUT,TimeUnit.SECONDS);
     if (space == null) {
       final String testRecipeIndicator=System.getProperty(CloudifyConstants.TEST_RECIPE_TIMEOUT_SYSPROP);
       if (StringUtils.isBlank(testRecipeIndicator)) {

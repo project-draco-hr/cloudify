@@ -1,8 +1,4 @@
 {
-  if (admin == null) {
-    return;
-  }
-  admin.close();
-  admin=null;
-  logger.info("USM Admin API instance was shut down");
+  timedAdmin.close();
+  logger.info("USM timed Admin instance was shut down");
 }

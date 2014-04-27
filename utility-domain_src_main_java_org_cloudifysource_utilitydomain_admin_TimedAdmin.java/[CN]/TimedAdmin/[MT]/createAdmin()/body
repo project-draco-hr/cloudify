@@ -1,0 +1,25 @@
+{
+  logger.info("Creating a new Admin object...");
+  final AdminFactory factory=new AdminFactory();
+  factory.useDaemonThreads(true);
+  if (StringUtils.isNotBlank(groups)) {
+    factory.addGroups(groups);
+  }
+  if (StringUtils.isNotBlank(locators)) {
+    factory.addLocators(locators);
+  }
+  if (adminFilter != null) {
+    factory.adminFilter(adminFilter);
+  }
+  if (discoveryServices != null) {
+    factory.setDiscoveryServices(discoveryServices);
+  }
+  if (discoverUnmanagedSpaces) {
+    factory.discoverUnmanagedSpaces();
+  }
+  this.admin=factory.createAdmin();
+  this.admin.setStatisticsHistorySize(statisticsHistorySize);
+  logger.info("Created new Admin Object with groups: " + Arrays.toString(this.admin.getGroups()) + " and Locators: "+ Arrays.toString(this.admin.getLocators()));
+  updateTimestamp();
+  startTimingThread();
+}

@@ -1,0 +1,23 @@
+{
+  this.service=service;
+  this.timedAdmin=timedAdmin;
+  if (clusterInfo == null) {
+    this.applicationName=CloudifyConstants.DEFAULT_APPLICATION_NAME;
+    this.serviceName=service.getName();
+  }
+ else {
+    logger.fine("Parsing full service name from PU name: " + clusterInfo.getName());
+    final FullServiceName fullServiceName=ServiceUtils.getFullServiceName(clusterInfo.getName());
+    logger.fine("Got full service name: " + fullServiceName);
+    this.serviceName=fullServiceName.getServiceName();
+    this.applicationName=fullServiceName.getApplicationName();
+  }
+  if (timedAdmin != null) {
+    final boolean found=this.timedAdmin.waitForLookupServices(1,30,TimeUnit.SECONDS);
+    if (!found) {
+      throw new AdminException("A service context could not be created as the Admin API could not find a lookup service " + "in the network, using groups: " + Arrays.toString(timedAdmin.getAdminGroups()) + " and locators: "+ Arrays.toString(timedAdmin.getAdminLocators()));
+    }
+  }
+  this.attributesFacade=new AttributesFacadeImpl(this,timedAdmin);
+  initialized=true;
+}
