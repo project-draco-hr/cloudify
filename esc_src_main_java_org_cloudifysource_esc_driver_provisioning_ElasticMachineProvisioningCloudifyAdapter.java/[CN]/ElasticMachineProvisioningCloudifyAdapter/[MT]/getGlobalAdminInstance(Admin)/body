@@ -10,6 +10,7 @@ synchronized (GLOBAL_ADMIN_MUTEX) {
         factory.addLocator(IPUtils.getSafeIpAddress(locator.getHost()) + ":" + locator.getPort());
       }
       globalAdminInstance=factory.createAdmin();
+      globalAdminInstance.setStatisticsHistorySize(0);
       waitForAgentsToBeDiscovered(esmAdminInstance,globalAdminInstance);
     }
     return globalAdminInstance;
