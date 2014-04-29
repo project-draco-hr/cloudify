@@ -1,5 +1,12 @@
 {
-  executor=Executors.newFixedThreadPool(1);
+  executor=Executors.newSingleThreadExecutor(new ThreadFactory(){
+    @Override public Thread newThread(    Runnable runnable){
+      Thread thread=Executors.defaultThreadFactory().newThread(runnable);
+      thread.setDaemon(true);
+      return thread;
+    }
+  }
+);
   executor.execute(new Runnable(){
     @Override public void run(){
       running=true;
