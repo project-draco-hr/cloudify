@@ -2,12 +2,14 @@
   executor=Executors.newFixedThreadPool(1);
   executor.execute(new Runnable(){
     @Override public void run(){
+      running=true;
       while (running) {
         try {
           if (admin != null && (lastUsed + MAX_IDLE_TIME_MILLIS < System.currentTimeMillis())) {
             logger.info("Closing expired admin object");
             admin.close();
             admin=null;
+            running=false;
           }
           Thread.sleep(POLLING_INTERVAL_MILLIS);
         }

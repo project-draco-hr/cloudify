@@ -1,0 +1,14 @@
+{
+  if (openAdmin != null) {
+    logger.info("using a cached un-timed Admin");
+    return openAdmin;
+  }
+  logger.fine("creating a new un-timed Admin object");
+  final AdminFactory factory=new AdminFactory();
+  factory.useDaemonThreads(true);
+  factory.discoverUnmanagedSpaces();
+  openAdmin=factory.createAdmin();
+  openAdmin.setStatisticsHistorySize(0);
+  logger.info("Created a new un-timed Admin object with groups: " + Arrays.toString(timedAdmin.getAdminGroups()) + " and Locators: "+ Arrays.toString(timedAdmin.getAdminLocators()));
+  return openAdmin;
+}

@@ -4,5 +4,5 @@
     admin.close();
     admin=null;
   }
-  executor.shutdown();
+  running=false;
 }
