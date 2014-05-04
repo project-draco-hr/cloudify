@@ -32,7 +32,9 @@
     machineDetails.setRemoteExecutionMode(this.remoteExecutionMode);
     machineDetails.setFileTransferMode(this.fileTransferMode);
     machineDetails.setScriptLangeuage(this.scriptLanguage);
-    openFirewallPorts(machineDetails);
+    if (isWindows) {
+      openFirewallPorts(machineDetails);
+    }
     machineDetails.setOpenFilesLimit(this.template.getOpenFilesLimit());
     return machineDetails;
   }
