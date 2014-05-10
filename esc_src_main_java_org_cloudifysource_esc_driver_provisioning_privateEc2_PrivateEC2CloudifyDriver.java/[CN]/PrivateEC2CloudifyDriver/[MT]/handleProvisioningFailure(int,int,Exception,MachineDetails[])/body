@@ -7,7 +7,7 @@
         logger.severe("Shutting down machine: " + machineDetails);
         final TerminateInstancesRequest terminateInstancesRequest=new TerminateInstancesRequest();
         terminateInstancesRequest.setInstanceIds(Arrays.asList(machineDetails.getMachineId()));
-        ec2.terminateInstances(terminateInstancesRequest);
+        ec2Client.terminateInstances(terminateInstancesRequest);
       }
     }
   }

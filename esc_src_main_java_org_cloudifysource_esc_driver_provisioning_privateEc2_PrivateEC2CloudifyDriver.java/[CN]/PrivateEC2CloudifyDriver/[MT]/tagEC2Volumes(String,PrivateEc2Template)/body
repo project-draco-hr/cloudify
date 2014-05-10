@@ -3,7 +3,7 @@
   if (volumeMappings != null) {
     final DescribeVolumesRequest request=new DescribeVolumesRequest();
     request.withFilters(new Filter("attachment.instance-id",Arrays.asList(instanceId)));
-    final DescribeVolumesResult describeVolumes=ec2.describeVolumes(request);
+    final DescribeVolumesResult describeVolumes=ec2Client.describeVolumes(request);
     for (    final Volume volume : describeVolumes.getVolumes()) {
       String volumeRef=null;
       for (      final VolumeMapping vMap : volumeMappings) {

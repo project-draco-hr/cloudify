@@ -3,5 +3,5 @@
   this.agentPort=agentPort;
   this.instanceId=instanceId;
   this.logHeader="[" + instanceId + "] ";
-  this.ec2=createAmazonEC2();
+  this.ec2=createAmazonEC2Client(cloud,getManagerComputeTemplate());
 }

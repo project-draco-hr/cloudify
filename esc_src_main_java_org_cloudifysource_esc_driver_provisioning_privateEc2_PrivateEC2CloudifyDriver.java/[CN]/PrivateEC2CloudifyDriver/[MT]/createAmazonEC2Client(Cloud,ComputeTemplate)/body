@@ -1,0 +1,35 @@
+{
+  AmazonEC2 ec2;
+  final CloudUser user=cloud.getUser();
+  final AWSCredentials credentials=new BasicAWSCredentials(user.getUser(),user.getApiKey());
+  String ec2LocationId=managementTemplate.getLocationId();
+  if (StringUtils.isBlank(ec2LocationId)) {
+    throw new IllegalArgumentException("Location Id not set on the management template");
+  }
+  logger.info("creating EC2 client");
+  final String protocol=(String)cloud.getCustom().get("protocol");
+  if (StringUtils.isNotBlank(protocol)) {
+    logger.info("setting the EC2 client protocol to: " + protocol);
+    ClientConfiguration clientConfig=new ClientConfiguration();
+    clientConfig.setProtocol(Protocol.valueOf(protocol));
+    ec2=new AmazonEC2Client(credentials,clientConfig);
+  }
+ else {
+    logger.info("using the default protocol for the EC2 client (https)");
+    ec2=new AmazonEC2Client(credentials);
+  }
+  final String endpoint=(String)cloud.getCustom().get("endpoint");
+  if (StringUtils.isNotBlank(endpoint)) {
+    logger.info("setting EC2 endpoint: " + endpoint);
+    ec2.setEndpoint(endpoint);
+  }
+ else   if (StringUtils.isNotBlank(ec2LocationId)) {
+    Region region=RegionUtils.convertLocationId2Region(ec2LocationId);
+    logger.info("setting EC2 region: " + region);
+    ec2.setRegion(region);
+  }
+ else {
+    logger.warning("EC2 endpoint and location not set, please set one of them");
+  }
+  return ec2;
+}

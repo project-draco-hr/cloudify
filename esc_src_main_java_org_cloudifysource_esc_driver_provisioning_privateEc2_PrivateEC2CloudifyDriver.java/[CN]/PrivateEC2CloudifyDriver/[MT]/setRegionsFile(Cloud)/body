@@ -1,0 +1,16 @@
+{
+  String regionsFileName="";
+  if (cloud.getCustom() != null) {
+    regionsFileName=(String)cloud.getCustom().get(REGIONS_FILE);
+  }
+  if (StringUtils.isNotBlank(regionsFileName)) {
+    File regionsFile=new File(regionsFileName);
+    if (regionsFile.isFile()) {
+      logger.info("setting regions overrides file: " + regionsFile.getAbsolutePath());
+      System.setProperty(REGIONS_OVERRIDES_SYSTEM_PROPERTY,regionsFile.getAbsolutePath());
+    }
+ else {
+      throw new IllegalArgumentException("Failed to resolve regions file: " + regionsFileName);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  if (!management) {
+    this.privateEc2Template=cfnTemplatePerService.get(this.serviceName);
+    if (this.privateEc2Template != null) {
+      logger.fine("Found service-specific template for service: " + serviceName);
+      return;
+    }
+  }
+  String cfnTemplateFileName=null;
+  File cloudDirectory=null;
+  if (management) {
+    ComputeTemplate computeTemplate=this.getManagerComputeTemplate();
+    cfnTemplateFileName=(String)computeTemplate.getCustom().get("cfnManagerTemplate");
+    if (StringUtils.isBlank(cfnTemplateFileName)) {
+      throw new CloudProvisioningException("cfnManagerTemplate value not set on management template");
+    }
+    cloudDirectory=new ProvisioningContextAccess().getManagementProvisioiningContext().getCloudFile().getParentFile();
+  }
+ else {
+    logger.fine("Using template: " + cloudTemplateName);
+    ComputeTemplate computeTemplate=cloud.getCloudCompute().getTemplates().get(cloudTemplateName);
+    cfnTemplateFileName=(String)computeTemplate.getCustom().get("cfnTemplate");
+    if (StringUtils.isBlank(cfnTemplateFileName)) {
+      throw new CloudProvisioningException("cfnTemplate value not set on template: " + cloudTemplateName);
+    }
+    cloudDirectory=new ProvisioningContextAccess().getProvisioiningContext().getCloudFile().getParentFile();
+  }
+  try {
+    logger.fine("using template: " + cfnTemplateFileName + " from directory: "+ cloudDirectory);
+    this.cloud.getCustom().put("###CLOUD_DIRECTORY###",cloudDirectory);
+    this.privateEc2Template=this.getPrivateEc2TemplateFromFile(cloudDirectory,cfnTemplateFileName);
+  }
+ catch (  Exception e) {
+    throw new CloudProvisioningException("Failed to read template from file : " + cfnTemplateFileName + ", reported error: "+ e.getMessage(),e);
+  }
+}

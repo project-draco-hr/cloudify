@@ -1,6 +1,6 @@
 {
-  if (ec2 != null) {
-    ec2.shutdown();
+  if (ec2Client != null) {
+    ec2Client.shutdown();
   }
   if (debugExecutors != null) {
     if (logger.isLoggable(Level.FINEST)) {

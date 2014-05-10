@@ -4,19 +4,9 @@
   }
   final long endTime=System.currentTimeMillis() + unit.toMillis(duration);
   logger.fine("DefaultCloudProvisioning: startMachine - management == " + management);
-  try {
-    final File cloudDirectory=new ProvisioningContextAccess().getManagementProvisioiningContext().getCloudFile().getParentFile();
-    this.cloud.getCustom().put("###CLOUD_DIRECTORY###",cloudDirectory);
-    this.privateEc2Template=this.getManagerPrivateEc2Template(cloudDirectory,this.managerCfnTemplateFileName);
-  }
- catch (  PrivateEc2ParserException e) {
-    throw new CloudProvisioningException("Failed to read management template: " + e.getMessage(),e);
-  }
-catch (  IOException e) {
-    throw new CloudProvisioningException("Failed to read management template: " + e.getMessage(),e);
-  }
+  setPrivateEc2Template();
   final String managementMachinePrefix=this.cloud.getProvider().getManagementGroup();
-  if (org.apache.commons.lang.StringUtils.isBlank(managementMachinePrefix)) {
+  if (StringUtils.isBlank(managementMachinePrefix)) {
     throw new CloudProvisioningException("The management group name is missing - can't locate existing servers!");
   }
   final MachineDetails[] existingManagementServers=this.getManagementServersMachineDetails();

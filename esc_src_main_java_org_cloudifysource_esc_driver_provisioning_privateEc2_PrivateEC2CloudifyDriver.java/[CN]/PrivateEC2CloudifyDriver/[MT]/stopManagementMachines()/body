@@ -7,5 +7,5 @@
   final TerminateInstancesRequest terminateInstancesRequest=new TerminateInstancesRequest();
   terminateInstancesRequest.setInstanceIds(ids);
   logger.info("Terminating management instances... " + terminateInstancesRequest);
-  ec2.terminateInstances(terminateInstancesRequest);
+  ec2Client.terminateInstances(terminateInstancesRequest);
 }

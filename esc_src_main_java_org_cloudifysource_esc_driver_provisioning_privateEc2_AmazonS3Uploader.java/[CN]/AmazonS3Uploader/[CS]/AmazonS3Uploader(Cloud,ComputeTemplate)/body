@@ -1,0 +1,33 @@
+{
+  final CloudUser user=cloud.getUser();
+  accessKey=user.getUser();
+  final AWSCredentials credentials=new BasicAWSCredentials(accessKey,user.getApiKey());
+  String s3LocationId=(String)managementTemplate.getCustom().get("s3LocationId");
+  if (StringUtils.isBlank(s3LocationId)) {
+    throw new IllegalArgumentException("S3 Location Id not set on the management template");
+  }
+  final String protocol=(String)cloud.getCustom().get("protocol");
+  if (StringUtils.isNotBlank(protocol)) {
+    logger.info("setting the S3 client protocol to: " + protocol);
+    ClientConfiguration clientConfig=new ClientConfiguration();
+    clientConfig.setProtocol(Protocol.valueOf(protocol));
+    this.s3client=new AmazonS3Client(credentials,clientConfig);
+  }
+ else {
+    logger.info("using the default protocol for the S3 client (https)");
+    this.s3client=new AmazonS3Client(credentials);
+  }
+  final String endpoint=(String)cloud.getCustom().get("s3endpoint");
+  if (StringUtils.isNotBlank(endpoint)) {
+    logger.info("setting S3 endpoint: " + endpoint);
+    s3client.setEndpoint(endpoint);
+  }
+ else   if (StringUtils.isNotBlank(s3LocationId)) {
+    Region s3Region=RegionUtils.convertLocationId2Region(s3LocationId);
+    logger.info("setting S3 region: " + s3Region);
+    this.s3client.setRegion(s3Region);
+  }
+ else {
+    logger.warning("S3 endpoint and location not set, please set one of them");
+  }
+}

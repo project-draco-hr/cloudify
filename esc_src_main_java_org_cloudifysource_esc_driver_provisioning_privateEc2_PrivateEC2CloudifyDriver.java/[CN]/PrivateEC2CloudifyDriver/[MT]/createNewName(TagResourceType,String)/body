@@ -17,7 +17,7 @@ throw new CloudProvisioningException("ResourceType not supported");
 final DescribeTagsRequest tagRequest=new DescribeTagsRequest();
 tagRequest.withFilters(new Filter("resource-type",Arrays.asList(resourceType.getValue())));
 tagRequest.withFilters(new Filter("value",Arrays.asList(newName)));
-final DescribeTagsResult describeTags=ec2.describeTags(tagRequest);
+final DescribeTagsResult describeTags=ec2Client.describeTags(tagRequest);
 final List<TagDescription> tags=describeTags.getTags();
 if (tags == null || tags.isEmpty()) {
 foundFreeName=true;

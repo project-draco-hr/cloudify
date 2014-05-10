@@ -3,7 +3,7 @@
   while (System.currentTimeMillis() < endTime) {
     final DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
     describeRequest.withInstanceIds(instanceId);
-    final DescribeInstancesResult describeInstances=ec2.describeInstances(describeRequest);
+    final DescribeInstancesResult describeInstances=ec2Client.describeInstances(describeRequest);
     for (    final Reservation resa : describeInstances.getReservations()) {
       for (      final Instance instance : resa.getInstances()) {
         final InstanceStateType state=InstanceStateType.valueOf(instance.getState().getCode());

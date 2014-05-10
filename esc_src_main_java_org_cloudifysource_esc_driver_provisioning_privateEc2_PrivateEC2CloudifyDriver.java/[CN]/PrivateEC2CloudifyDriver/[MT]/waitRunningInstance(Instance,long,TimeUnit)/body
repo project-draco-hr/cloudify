@@ -4,7 +4,7 @@
     this.sleep();
     final DescribeInstancesRequest describeRequest=new DescribeInstancesRequest();
     describeRequest.setInstanceIds(Arrays.asList(ec2instance.getInstanceId()));
-    final DescribeInstancesResult describeInstances=this.ec2.describeInstances(describeRequest);
+    final DescribeInstancesResult describeInstances=this.ec2Client.describeInstances(describeRequest);
     for (    final Reservation resa : describeInstances.getReservations()) {
       for (      final Instance instance : resa.getInstances()) {
         final InstanceStateType state=InstanceStateType.valueOf(instance.getState().getCode());
