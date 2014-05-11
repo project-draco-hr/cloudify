@@ -7,13 +7,7 @@
   configuration.setServiceName(serviceName);
   final ServiceNetwork network=createNetworkObject();
   configuration.setNetwork(network);
-  try {
-    this.cloudifyProvisioning.setConfig(configuration);
-  }
- catch (  Exception e) {
-    logger.fine("Cloud driver configuration failed with error: " + e.getMessage());
-    throw new CloudProvisioningException(e);
-  }
+  this.cloudifyProvisioning.setConfig(configuration);
   if (this.storageProvisioning != null) {
     if (this.storageProvisioning instanceof BaseStorageDriver) {
       ((BaseStorageDriver)this.storageProvisioning).setComputeContext(cloudifyProvisioning.getComputeContext());

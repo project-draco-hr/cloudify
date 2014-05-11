@@ -3,9 +3,11 @@
     configureDrivers();
   }
  catch (  final CloudProvisioningException e) {
-    throw new ElasticMachineProvisioningException("Failed to configure cloud driver for first use: " + e.getMessage(),e);
+    logger.log(Level.WARNING,e.getMessage(),e);
+    throw new ElasticMachineProvisioningException("Failed to configure compute cloud driver for first use: " + e.getMessage(),e);
   }
 catch (  final StorageProvisioningException e) {
+    logger.log(Level.WARNING,e.getMessage(),e);
     throw new ElasticMachineProvisioningException("Failed to configure storage driver for first use: " + e.getMessage(),e);
   }
 }
