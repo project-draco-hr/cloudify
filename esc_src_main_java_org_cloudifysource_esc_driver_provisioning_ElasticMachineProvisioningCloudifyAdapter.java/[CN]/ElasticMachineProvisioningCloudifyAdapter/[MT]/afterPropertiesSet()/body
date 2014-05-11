@@ -1,6 +1,7 @@
 {
   logger=java.util.logging.Logger.getLogger(ElasticMachineProvisioningCloudifyAdapter.class.getName());
   String cloudConfigDirectoryPath=findCloudConfigDirectoryPath();
+  logger.fine("cloudConfigDirectoryPath is set to: " + cloudConfigDirectoryPath);
   try {
     final String cloudOverridesPerService=config.getCloudOverridesPerService();
     initCloudObject(cloudConfigDirectoryPath,cloudOverridesPerService);
