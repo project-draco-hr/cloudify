@@ -3,6 +3,7 @@
   final List<CustomNode> unresolvedNodes=new ArrayList<CustomNode>();
   List<CustomNode> parsedNodes=ByonUtils.parseCloudNodes(nodesList);
   parsedNodes=removeDuplicates(parsedNodes);
+  logger.fine("Attempting to set template " + templateName + " with the following pool: "+ getNodesListForPrint(parsedNodes));
   for (  CustomNode node : parsedNodes) {
     try {
       node.resolve();
