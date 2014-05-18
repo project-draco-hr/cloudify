@@ -2,11 +2,11 @@
   while (true) {
     final long waitForPUIPeriod=endTime - System.currentTimeMillis();
     if (waitForPUIPeriod <= 0) {
-      throw new IllegalStateException("Could not find dependency " + dependantService + " required for this service");
+      throw new IllegalStateException("Could not find dependency " + dependencyService + " required for this service");
     }
-    logger.info("Waiting for PUI of service: " + dependantService + " for "+ waitForPUIPeriod+ " Milliseconds");
-    final boolean found=pu.waitFor(1,2,TimeUnit.MILLISECONDS);
-    logger.info("Timeout ended. processing unit " + dependantService + " found result is "+ found);
+    logger.info("Waiting for PUI of service: " + dependencyService + " for "+ waitForPUIPeriod+ " Milliseconds");
+    final boolean found=timedAdmin.waitForPUI(pu,1,1,TimeUnit.SECONDS);
+    logger.info("Timeout ended. processing unit " + dependencyService + " found result is "+ found);
     if (found) {
       final ProcessingUnitInstance[] puis=pu.getInstances();
       logger.info("Found " + puis.length + " instances");
@@ -23,7 +23,7 @@
             final USMState usmState=USMState.values()[stateIndex];
             logger.info("PUI is in state: " + usmState);
             if (usmState == USMState.RUNNING) {
-              logger.info("Found a running instance of dependant service: " + dependantService);
+              logger.info("Found a running instance of dependency service: " + dependencyService);
               return;
             }
           }
@@ -31,7 +31,7 @@
       }
     }
  else {
-      logger.info("Could not find a running instance of service: " + dependantService + ". Sleeping before trying again");
+      logger.info("Could not find a running instance of service: " + dependencyService + ". Sleeping before trying again");
     }
     try {
       Thread.sleep(WAIT_FOR_DEPENDENCIES_INTERVAL_MILLIS);

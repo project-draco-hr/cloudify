@@ -1,5 +1,5 @@
 {
-  validateTimeout(timeout,timeunit,"waiting for PU instance");
+  validateTimeout(timeout,timeunit,"waiting for PU");
   initAdmin();
   return admin.getProcessingUnits().waitFor(puName,timeout,timeunit);
 }
