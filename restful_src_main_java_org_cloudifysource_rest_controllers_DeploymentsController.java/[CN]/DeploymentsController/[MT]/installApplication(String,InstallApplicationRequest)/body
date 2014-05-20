@@ -1,4 +1,7 @@
 {
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[installApplication] starting deployment of application: " + appName);
+  }
   final String applcationFileUploadKey=request.getApplcationFileUploadKey();
   final File applicationFile=getFromRepo(applcationFileUploadKey,CloudifyMessageKeys.WRONG_APPLICTION_FILE_UPLOAD_KEY.getName(),appName);
   final String applicationOverridesFileKey=request.getApplicationOverridesUploadKey();
@@ -29,16 +32,28 @@
   applicationDeployerRequest.setServices(services);
   final ApplicationDeployerRunnable installer=new ApplicationDeployerRunnable(applicationDeployerRequest);
   if (installer.isAsyncInstallPossibleForApplication()) {
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("[installApplication] Async install is possible for the application, running the installer");
+    }
     installer.run();
   }
  else {
+    if (logger.isLoggable(Level.FINE)) {
+      logger.fine("[installApplication] Async install not possible for the application, calling the installer on another thread");
+    }
     restConfig.getExecutorService().execute(installer);
   }
   String firstServiceName=services.get(0).getName();
   String firstPuName=ServiceUtils.getAbsolutePUName(appName,firstServiceName);
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[installApplication] waiting for PU: " + firstPuName);
+  }
   final boolean firstPuCreated=waitForPu(appName,firstServiceName,WAIT_FOR_PU_SECONDS,TimeUnit.SECONDS);
   if (!firstPuCreated) {
     throw new RestErrorException(CloudifyErrorMessages.FAILED_WAIT_FOR_PU.getName(),firstPuName);
+  }
+  if (logger.isLoggable(Level.FINE)) {
+    logger.fine("[installApplication] found PU: " + firstPuName);
   }
   final InstallApplicationResponse response=new InstallApplicationResponse();
   response.setDeploymentID(deploymentID);

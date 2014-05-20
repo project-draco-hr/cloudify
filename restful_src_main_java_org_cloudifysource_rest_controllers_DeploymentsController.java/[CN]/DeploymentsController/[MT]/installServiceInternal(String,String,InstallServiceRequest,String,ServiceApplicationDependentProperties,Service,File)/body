@@ -1,4 +1,5 @@
 {
+  logger.fine("[installServiceInternal] started internal service install of: " + serviceName);
   final String absolutePuName=ServiceUtils.getAbsolutePUName(appName,serviceName);
   final String templateName=getTempalteNameFromService(service);
   final File cloudOverridesFile=getFromRepo(request.getCloudOverridesUploadKey(),CloudifyMessageKeys.WRONG_CLOUD_OVERRIDES_UPLOAD_KEY.getName(),absolutePuName);
@@ -40,7 +41,9 @@
     throw new RestErrorException("Failed creating deployment object.",e);
   }
   try {
+    logger.fine("[installServiceInternal] deploying and waiting for : " + serviceName);
     ProcessingUnit processingUnit=deployAndWait(serviceName,deployment);
+    logger.fine("[installServiceInternal] populating events cache with deployment ID: " + deploymentID);
     populateEventsCache(deploymentID,processingUnit);
   }
  catch (  final TimeoutException e) {
@@ -48,5 +51,6 @@
   }
   final InstallServiceResponse installServiceResponse=new InstallServiceResponse();
   installServiceResponse.setDeploymentID(deploymentID);
+  logger.fine("[installServiceInternal] installServiceInternal completed PU deployment for " + serviceName + ", the service deployment is just starting!");
   return installServiceResponse;
 }
