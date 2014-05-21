@@ -1,0 +1,17 @@
+{
+  int restClientSocketTimeout;
+  final String restClientSocketTimeoutSysProp=System.getProperty(CloudifyConstants.SYSTEM_PROPERTY_REST_CLIENT_SOCKET_TIMEOUT_MILLIS);
+  if (StringUtils.isNotBlank(restClientSocketTimeoutSysProp)) {
+    try {
+      restClientSocketTimeout=Integer.parseInt(restClientSocketTimeoutSysProp);
+    }
+ catch (    final NumberFormatException nfe) {
+      restClientSocketTimeout=CloudifyConstants.DEFAULT_HTTP_READ_TIMEOUT;
+      logger.severe("Failed to parse integer system property: " + CloudifyConstants.SYSTEM_PROPERTY_REST_CLIENT_SOCKET_TIMEOUT_MILLIS + ". Value was: "+ restClientSocketTimeoutSysProp+ ". Using default value "+ CloudifyConstants.DEFAULT_HTTP_READ_TIMEOUT+ " instead");
+    }
+  }
+ else {
+    restClientSocketTimeout=CloudifyConstants.DEFAULT_HTTP_READ_TIMEOUT;
+  }
+  return restClientSocketTimeout;
+}
