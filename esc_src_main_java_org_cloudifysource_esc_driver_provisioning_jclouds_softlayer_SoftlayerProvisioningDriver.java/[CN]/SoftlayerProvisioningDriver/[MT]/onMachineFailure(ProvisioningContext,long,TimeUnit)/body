@@ -1,0 +1,5 @@
+{
+  logger.finest("Handling compute resources following machine failure");
+  super.onMachineFailure(context,duration,unit);
+  runCleanupScriptOnMachineFailure(context.getPreviousMachineDetails());
+}

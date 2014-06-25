@@ -1,0 +1,34 @@
+{
+  final BufferedReader br=new BufferedReader(new InputStreamReader(process.getInputStream()));
+  final StringBuilder consoleOutput=new StringBuilder("");
+  final AtomicReference<Throwable> exception=new AtomicReference<Throwable>();
+  int exitcode=-1;
+  try {
+    Thread thread=new Thread(new Runnable(){
+      String line=null;
+      @Override public void run(){
+        try {
+          while ((line=br.readLine()) != null) {
+            consoleOutput.append(line + "\n");
+          }
+        }
+ catch (        Throwable e) {
+          exception.set(e);
+        }
+      }
+    }
+);
+    thread.setDaemon(true);
+    thread.start();
+    exitcode=process.waitFor();
+    thread.join(5000);
+  }
+ catch (  InterruptedException e) {
+    logger.warning("Failed to get process output. output = " + consoleOutput + ", reported error: "+ exception.get().getMessage());
+  }
+  if (exception.get() != null) {
+    logger.warning("Failed to get process output. output = " + consoleOutput + ", reported error: "+ exception.get().getMessage());
+  }
+  String stdout=consoleOutput.toString();
+  return new ProcessResult(stdout,exitcode);
+}

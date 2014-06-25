@@ -1,0 +1,9 @@
+{
+  Map<String,String> envVars=new HashMap<String,String>();
+  envVars.put(FAILED_MACHINE_PRIVATE_ADDRESS,failedMachineDetails.getPrivateAddress());
+  envVars.put(FAILED_MACHINE_PUBLIC_ADDRESS,failedMachineDetails.getPublicAddress());
+  envVars.put(FAILED_MACHINE_ID,failedMachineDetails.getMachineId());
+  envVars.put(FAILED_MACHINE_LOCATION_ID,failedMachineDetails.getLocationId());
+  envVars.put(FAILED_MACHINE_ENV_VARS,Arrays.toString(failedMachineDetails.getEnvironment().entrySet().toArray()));
+  return envVars;
+}

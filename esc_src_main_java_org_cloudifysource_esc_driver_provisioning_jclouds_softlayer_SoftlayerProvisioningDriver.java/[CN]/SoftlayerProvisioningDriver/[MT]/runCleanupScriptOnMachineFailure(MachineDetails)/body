@@ -1,0 +1,18 @@
+{
+  String cleanupScript=getCleanupScriptValue();
+  File scriptFile=new File(cleanupScript);
+  if (!scriptFile.isFile()) {
+    String errMsg="The cleanup script file denoted by \"" + cleanupScript + "\" does not exist or is not a file";
+    logger.warning(errMsg);
+    throw new CloudProvisioningException(errMsg);
+  }
+  logger.info("Executing cleanup script following failure of machine: " + failedMachineDetails.toString());
+  Map<String,String> commandEnvVars=machineDetailsToEnvVars(failedMachineDetails);
+  try {
+    runScriptInSubProcess(scriptFile.getAbsolutePath(),commandEnvVars);
+  }
+ catch (  Exception e) {
+    String errMsg="An error encountered during the execution of cleanup script \"" + cleanupScript + "\", "+ e.getMessage();
+    throw new CloudProvisioningException(errMsg,e);
+  }
+}

@@ -1,0 +1,18 @@
+{
+  String cleanupScriptValue="";
+  final Map<String,Object> customSettings=cloud.getCustom();
+  if (customSettings != null) {
+    if (customSettings.containsKey(CLEANUP_SCRIPT_ON_MACHINE_FAILURE)) {
+      final Object cleanupScriptObj=customSettings.get(CLEANUP_SCRIPT_ON_MACHINE_FAILURE);
+      if (cleanupScriptObj != null) {
+        if (cleanupScriptObj instanceof String) {
+          cleanupScriptValue=(String)cleanupScriptObj;
+        }
+ else {
+          throw new IllegalArgumentException("Unexpected value for Softlayer cloud driver property: " + CLEANUP_SCRIPT_ON_MACHINE_FAILURE + ". A String value was expected, but got: "+ cleanupScriptValue.getClass().getName());
+        }
+      }
+    }
+  }
+  return cleanupScriptValue;
+}

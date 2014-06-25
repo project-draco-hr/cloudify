@@ -1,0 +1,21 @@
+{
+  String cmdLine=command;
+  if (isWindows()) {
+    cmdLine="cmd /c call " + cmdLine;
+  }
+  final String[] parts=cmdLine.split(" ");
+  final ProcessBuilder pb=new ProcessBuilder(parts);
+  pb.redirectErrorStream(true);
+  for (  Entry<String,String> envVar : envVars.entrySet()) {
+    pb.environment().put(envVar.getKey(),envVar.getValue());
+  }
+  logger.info("command " + command + " will be executed with env: \""+ pb.environment()+ "\"");
+  final Process process=pb.start();
+  ProcessResult processResult=getProcessResult(process);
+  if (processResult.getExitcode() == 0) {
+    logger.info("script output: " + processResult.getOutput());
+  }
+ else {
+    logger.warning("Execution of cleanup script " + command + "did not end succesfully, exit code was "+ processResult.getExitcode()+ "output is "+ processResult.getOutput());
+  }
+}

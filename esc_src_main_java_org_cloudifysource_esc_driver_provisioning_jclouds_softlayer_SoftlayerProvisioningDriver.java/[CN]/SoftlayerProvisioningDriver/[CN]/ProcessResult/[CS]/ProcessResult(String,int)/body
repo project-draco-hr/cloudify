@@ -1,0 +1,4 @@
+{
+  this.output=output;
+  this.exitcode=exitcode;
+}
