@@ -7,7 +7,7 @@
     volumeName=getVolumeName(id);
   }
  catch (  StorageProvisioningException e) {
-    logger.info("Could not obtain volume name for node with id: " + id + ". Reason: "+ e.getMessage());
+    logger.fine("Could not obtain volume name for node with id: " + id + ". Reason: "+ e.getMessage());
   }
   VolumeDetails volumeDetails=new VolumeDetails();
   volumeDetails.setLocation(availabilityZone);
