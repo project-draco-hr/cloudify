@@ -1,6 +1,13 @@
 {
   final StringBuilder sb=new StringBuilder();
-  final BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream()));
+  InputStreamReader streamReader;
+  if (streamType.equals(IoStreamType.ERROR)) {
+    streamReader=new InputStreamReader(p.getErrorStream());
+  }
+ else {
+    streamReader=new InputStreamReader(p.getInputStream());
+  }
+  final BufferedReader reader=new BufferedReader(streamReader);
   try {
     final String newline=System.getProperty("line.separator");
     while (true) {

@@ -1,0 +1,35 @@
+{
+  logger.info("Checking WinRM connectivity to " + targetHost + " ...");
+  List<String> commandLine=getPowershellConnectionCheckCommandLine(targetHost,username,password,localDir);
+  final ProcessBuilder pb=new ProcessBuilder(commandLine);
+  logger.fine("Enabling trusted host: " + targetHost);
+  enableTrustedHost(targetHost);
+  PowershellClientException lastException=null;
+  boolean connected=false;
+  int attemptIndex=1;
+  while (System.currentTimeMillis() < endTime) {
+    try {
+      logger.fine("Attempting WinRM connection, attempt #" + attemptIndex + "...");
+      winrmConnect(pb);
+      connected=true;
+      break;
+    }
+ catch (    final PowershellClientException e) {
+      logger.fine("Connection attempt #" + attemptIndex + " failed, retrying...");
+      lastException=e;
+      Thread.sleep(testInterval);
+    }
+    attemptIndex++;
+  }
+  if (connected) {
+    logger.info("WinRM connection established");
+  }
+ else {
+    if (lastException == null) {
+      throw new PowershellClientException("WinRM connection check not performed, " + "increase the timeout set by \"remoteExecutionConnectionTimeoutMillis\"" + " in the cloud configuration file");
+    }
+ else {
+      throw new PowershellClientException("WinRM connection attempts failed. Review the logs and consider" + " increasing the timeout set by \"remoteExecutionConnectionTimeoutMillis\" in the cloud" + " configuration file",lastException);
+    }
+  }
+}

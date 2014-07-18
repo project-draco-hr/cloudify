@@ -3,9 +3,10 @@
   final List<String> fullCommand=getPowershellCommandLine(targetHost,username,password,command,localDir);
   final ProcessBuilder pb=new ProcessBuilder(fullCommand);
   pb.redirectErrorStream(true);
+  enableTrustedHost(targetHost);
   try {
     final Process p=pb.start();
-    final String output=readProcessOutput(p,true);
+    final String output=readProcessStream(p,true,IoStreamType.OUTPUT);
     final int exitCode=p.waitFor();
     if (exitCode != 0) {
       throw new PowershellClientException("Remote installation failed with exit code: " + exitCode + ". Execution output: "+ output);

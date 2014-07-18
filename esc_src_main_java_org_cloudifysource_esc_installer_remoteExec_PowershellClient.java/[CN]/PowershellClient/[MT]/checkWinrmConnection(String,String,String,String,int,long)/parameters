@@ -1,0 +1,6 @@
+String targetHost
+String username
+String password
+String localDir
+int testInterval
+long endTime

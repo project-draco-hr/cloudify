@@ -7,6 +7,19 @@
     }
   }
 );
+  CloudTemplateInstallerConfiguration installerConfiguration=details.getInstallerConfiguration();
+  if (installerConfiguration.isTestRemoteExecutionConnection()) {
+    int connectionTestIntervalMillis=installerConfiguration.getConnectionTestIntervalMillis();
+    int remoteExecConnectionTimeoutMillis=installerConfiguration.getRemoteExecutionConnectionTimeoutMillis();
+    long end=System.currentTimeMillis() + remoteExecConnectionTimeoutMillis;
+    try {
+      client.checkWinrmConnection(targetHost,details.getUsername(),details.getPassword(),details.getLocalDir(),connectionTestIntervalMillis,end);
+    }
+ catch (    final PowershellClientException e) {
+      throw new InstallerException("WinRM connection failed",e);
+    }
+  }
+  logger.fine("Invoking remote powershell command " + fullCommand + " on target host: "+ targetHost);
   try {
     client.invokeRemotePowershellCommand(targetHost,fullCommand,details.getUsername(),details.getPassword(),details.getLocalDir());
   }

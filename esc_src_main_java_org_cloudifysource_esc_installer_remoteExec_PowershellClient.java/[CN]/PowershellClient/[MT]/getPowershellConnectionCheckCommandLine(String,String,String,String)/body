@@ -1,0 +1,8 @@
+{
+  final File clientScriptFile=new File(localDir,POWERSHELL_CHECK_WINRM_CONNECTION_SCRIPT);
+  if (!clientScriptFile.exists()) {
+    throw new IllegalArgumentException("Could not find expected powershell client script in local directory. Was expecting file: " + clientScriptFile.getAbsolutePath());
+  }
+  final String[] commandLineParts={"powershell.exe","-inputformat","none","-File",clientScriptFile.getAbsolutePath(),"-target",target,"-password",quoteString(password),"-username",quoteString(username)};
+  return Arrays.asList(commandLineParts);
+}

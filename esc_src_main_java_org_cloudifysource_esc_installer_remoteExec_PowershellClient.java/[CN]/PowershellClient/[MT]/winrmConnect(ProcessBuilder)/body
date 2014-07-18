@@ -1,0 +1,16 @@
+{
+  try {
+    final Process p=pb.start();
+    final String errorStr=readProcessStream(p,true,IoStreamType.ERROR);
+    final int exitCode=p.waitFor();
+    if (exitCode != 0) {
+      throw new PowershellClientException("WinRM connection failed with exit code: " + exitCode + ". Execution error: "+ errorStr);
+    }
+    if (errorStr != null && errorStr.trim().length() > 0) {
+      throw new PowershellClientException("WinRM connection failed with error: \n" + errorStr);
+    }
+  }
+ catch (  final IOException e) {
+    throw new PowershellClientException("Failed to invoke remote installation: " + e.getMessage(),e);
+  }
+}
