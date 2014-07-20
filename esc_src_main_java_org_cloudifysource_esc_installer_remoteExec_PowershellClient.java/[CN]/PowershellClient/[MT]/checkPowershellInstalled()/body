@@ -15,7 +15,7 @@
  catch (  final IOException e) {
     throw new PowershellClientException("Failed to start powershell - it may not be installed",e);
   }
-  final String output=readProcessStream(p,false,IoStreamType.OUTPUT);
+  final String output=readProcessOutput(p,false);
   logger.fine("Finished reading output");
   final int retval=p.waitFor();
   logger.fine("Powershell installed command exit value: " + retval);

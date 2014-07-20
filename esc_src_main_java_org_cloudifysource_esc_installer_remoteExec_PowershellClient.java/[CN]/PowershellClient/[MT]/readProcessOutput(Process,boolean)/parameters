@@ -1,3 +1,2 @@
 Process p
 boolean notifyOnOutput
-IoStreamType streamType
