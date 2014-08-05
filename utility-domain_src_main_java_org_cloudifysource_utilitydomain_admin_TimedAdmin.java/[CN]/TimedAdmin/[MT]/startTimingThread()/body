@@ -14,7 +14,7 @@
       while (running) {
         try {
           if (admin != null && (lastUsed + MAX_IDLE_TIME_MILLIS < System.currentTimeMillis())) {
-            logger.info("Closing expired admin object");
+            logger.fine("Closing expired admin object");
             admin.close();
             admin=null;
             running=false;

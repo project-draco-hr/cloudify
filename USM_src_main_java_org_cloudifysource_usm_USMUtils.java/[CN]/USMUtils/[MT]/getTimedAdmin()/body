@@ -1,9 +1,9 @@
 {
   if (timedAdmin != null) {
-    logger.info("using a cached instance of TimedAdmin");
+    logger.fine("using a cached instance of TimedAdmin");
     return timedAdmin;
   }
-  logger.info("creating a new instance of TimedAdmin");
+  logger.fine("creating a new instance of TimedAdmin");
   timedAdmin=new TimedAdmin();
   timedAdmin.discoverUnmanagedSpaces();
   final Class[] discoveryServices=new Class[]{GridServiceManager.class,GridServiceContainer.class,ElasticServiceManager.class,ProcessingUnit.class,Space.class};

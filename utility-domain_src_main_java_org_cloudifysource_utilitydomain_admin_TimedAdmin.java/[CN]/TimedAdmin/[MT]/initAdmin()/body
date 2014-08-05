@@ -4,7 +4,7 @@
     createAdmin();
   }
  else {
-    logger.info("Using a cached Admin object");
+    logger.finest("Using a cached Admin object");
   }
   updateTimestamp();
 }

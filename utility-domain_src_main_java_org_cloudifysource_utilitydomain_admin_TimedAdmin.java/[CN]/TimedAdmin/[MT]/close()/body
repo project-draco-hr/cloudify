@@ -1,5 +1,5 @@
 {
-  logger.info("Closing the admin object and stopping the timing thread");
+  logger.finest("Closing the admin object and stopping the timing thread");
   if (admin != null) {
     admin.close();
     admin=null;

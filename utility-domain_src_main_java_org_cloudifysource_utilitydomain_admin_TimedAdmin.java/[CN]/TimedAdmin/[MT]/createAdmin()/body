@@ -1,5 +1,5 @@
 {
-  logger.info("Creating a new Admin object...");
+  logger.finest("Creating a new Admin object...");
   final AdminFactory factory=new AdminFactory();
   factory.useDaemonThreads(true);
   if (StringUtils.isNotBlank(groups)) {
@@ -19,7 +19,7 @@
   }
   this.admin=factory.createAdmin();
   this.admin.setStatisticsHistorySize(statisticsHistorySize);
-  logger.info("Created new Admin Object with groups: " + Arrays.toString(this.admin.getGroups()) + " and Locators: "+ Arrays.toString(this.admin.getLocators()));
+  logger.finest("Created new Admin Object with groups: " + Arrays.toString(this.admin.getGroups()) + " and Locators: "+ Arrays.toString(this.admin.getLocators()));
   updateTimestamp();
   startTimingThread();
 }
